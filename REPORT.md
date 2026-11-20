@@ -276,3 +276,14 @@ A removes exactly `factory/nodeFactory.ts:7490:45`, `:71`, and `:93` in baseline
 B removes exactly `checker.ts:19948:30` and `:37`. The checker mutant restores the original callee. Its entire source inventory then matches the unadapted tree, so its run also serves as the shared baseline. The restored stream includes the `:37` array refusal and the `:30` optional-field refusal. Both adaptations add zero observations across all rules.
 
 Raw streams are `scan-split-before.json.gz`, `scan-split-a.json.gz`, `scan-split-a-mutant.json.gz`, and `scan-split-b.json.gz`.
+
+## Split reproducibility and product checks
+
+Each change ran the complete `stage3/apply.sh --adapt-checkout` pipeline twice on independent clean checkouts of the pinned TypeScript commit. The working-tree inventory includes content hashes, file modes and symlink targets. Git administrative metadata is outside that inventory, and the refs matched separately. Both first runs also matched the corresponding scanner input by every file under `src/`.
+
+| Change | Commit | Matching paths across full applies | Working-tree inventory SHA-256 | Independent product |
+| --- | --- | ---: | --- | --- |
+| A | `af557aaa4` | 81,506 | `58fb5b3033c8af879de03b124b137403ac35e8c0a7440e93a50570a9f1fa5244` | `42f0571e4120`, pass |
+| B | `3b721657e` | 81,506 | `72b7f9c5468746e066ef4ae91df04b6869ae7f683898c7d4e52cbb67ab1e2fa9` | `428ec65beb58`, pass |
+
+Both independent `TestProduct_Stage3AdaptedTree` tests built and passed. Both ran again after the second apply using the resulting cached product and passed. `python3 -B stage3/lane/generate_shards.py --check` passed on each commit. The lane files did not move, so the split proof uses the requested unfiltered counting oracle for B and the product and manifest checks for both.
