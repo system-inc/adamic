@@ -16,24 +16,66 @@ static void range_error(void) {
 	adamic_panic(message, sizeof message - 1);
 }
 
+// A sanitizer's allocator ends the program on a request past its own largest, where calloc returns
+// NULL (compiler-rt's kMaxAllowedMallocSize, 1 << 40 bytes on the 64-bit hosts the sanitizers run on),
+// unless the box sets allocator_may_return_null. adamic_typed_array_try_make refuses past it first
+// there, so a sanitized build fails the size as an unsanitized one's calloc does.
+#if defined(__has_feature)
+#if __has_feature(address_sanitizer) || __has_feature(thread_sanitizer)
+#define SANITIZER_ALLOCATOR 1
+#endif
+#endif
+#if defined(__SANITIZE_ADDRESS__) || defined(__SANITIZE_THREAD__)
+#define SANITIZER_ALLOCATOR 1
+#endif
+#ifndef SANITIZER_ALLOCATOR
+#define SANITIZER_ALLOCATOR 0
+#endif
+
+// allocate is make's body once the length's bytes fit in a size_t: a zeroed owner, or NULL, with
+// nothing allocated or counted, when calloc fails. Its data counts toward the backing only once it's
+// there.
+static adamic_typed_array *allocate(enum adamic_typed_array_kind kind, size_t length) {
+	size_t size = width(kind);
+	// A zero-length owner still has a valid base for empty views; never add to NULL.
+	void *data = calloc(length == 0 ? 1 : length, size);
+	if (data == NULL) {
+		return NULL;
+	}
+	adamic_typed_array *array = adamic_allocate(sizeof *array, adamic_kind_typed_array);
+	array->kind = kind;
+	array->length = length;
+	array->owner = NULL;
+	array->data = data;
+	adamic_host_backing_add(length * size);
+	return array;
+}
+
 adamic_typed_array *adamic_typed_array_make(enum adamic_typed_array_kind kind, size_t length) {
 	size_t size = width(kind);
 	if (length > SIZE_MAX / size) {
 		static const char message[] = "RangeError: Invalid typed array length";
 		adamic_panic(message, sizeof message - 1);
 	}
-	adamic_typed_array *array = adamic_allocate(sizeof *array, adamic_kind_typed_array);
-	array->kind = kind;
-	array->length = length;
-	array->owner = NULL;
-	// A zero-length owner still has a valid base for empty views; never add to NULL.
-	array->data = calloc(length == 0 ? 1 : length, size);
-	if (array->data == NULL) {
+	adamic_typed_array *array = allocate(kind, length);
+	if (array == NULL) {
 		static const char message[] = "out of memory";
 		adamic_panic(message, sizeof message - 1);
 	}
-	adamic_host_backing_add(length * size);
 	return array;
+}
+
+adamic_typed_array *adamic_typed_array_try_make(enum adamic_typed_array_kind kind, size_t length) {
+	size_t size = width(kind);
+	if (length > SIZE_MAX / size) {
+		return NULL;
+	}
+#if SANITIZER_ALLOCATOR
+	if ((uint64_t)length * size > ((uint64_t)1 << 40)) {
+		return NULL;
+	}
+#endif
+	return allocate(kind, length);
 }
 
 adamic_typed_array *adamic_typed_array_new(enum adamic_typed_array_kind kind, double length) {

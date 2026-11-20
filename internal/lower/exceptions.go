@@ -286,6 +286,8 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			found = found || node.Throws
 		case ir.NodeFSFile:
 			found = found || node.MayThrow()
+		case ir.NodeBufferCall:
+			found = found || node.MayThrow()
 		case ir.ToFixed:
 			found = found || node.MayThrow()
 		case ir.NumberFormat:

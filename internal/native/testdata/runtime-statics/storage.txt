@@ -601,6 +601,8 @@
 `exceptions.c:error_json_lock:1`
 `exceptions.c:error_shape_json:1`
 `exceptions.c:absent_message_shape_json:1`
+`exceptions.c:coded_error_shape_json:1`
+`exceptions.c:plain_coded_error_shape_json:1`
 `process.c:shape_json:1`
 `node_fs_directory.c:coded_error_shape_json:1`
 `node_fs_file.c:shape_json:1`
