@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/javascript"
 )
 
 const kindSetTypes = `enum K { A=1, B=2, C=3 }
@@ -155,6 +156,7 @@ func TestKindSetPredicateFallbacksKeepFamilyOne(t *testing.T) {
 		{"two_fields", "return n.kind===K.A || n.other===K.B;", ""},
 		{"two_enums", "return n.kind===K.A || n.kind===L.B;", "enum L { B=2, D=4 }\n"},
 		{"duplicate_case", "switch(n.kind) { case K.A: return false; case K.A: return true; default: return false; }", ""},
+		{"k04", "switch(n.kind) { case K.A: return false; case K.D: return true; default: return false; }", ""},
 		{"duplicate_case_true_first", "switch(n.kind) { case K.A: return true; case K.A: return false; default: return false; }", ""},
 		{"primitive_guard", "return !!n && (n.length===K.A || n.length===K.B);", ""},
 		{"not_equal", "return n.kind!==K.C;", ""},
@@ -162,6 +164,9 @@ func TestKindSetPredicateFallbacksKeepFamilyOne(t *testing.T) {
 		t.Run(p.name, func(t *testing.T) {
 			t.Parallel()
 			types := kindSetTypes
+			if p.name == "k04" {
+				types = strings.Replace(types, "C=3", "C=3, D=1", 1)
+			}
 			if p.name == "two_fields" {
 				types = strings.ReplaceAll(types, "readonly kind:", "readonly other:K; readonly kind:")
 			}
@@ -180,9 +185,9 @@ func TestKindSetPredicateFallbacksKeepFamilyOne(t *testing.T) {
 					}
 				}
 			}
-			if p.name == "primitive_guard" {
+			if p.name == "primitive_guard" || p.name == "k04" {
 				return
-			} // This pin isolates the nullish-guard recognizer.
+			} // These pins isolate the recognizer from unrelated later fences.
 			if _, err := lowerSourceAs(t, source, ".ts"); err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
 				t.Fatalf("kind-set fallback %s: want family 1, got %v", p.name, err)
 			}
@@ -297,5 +302,87 @@ func TestKindSetClosedSourcesIgnoreKindsOutsideDomain(t *testing.T) {
 	program := lowersAndAgreesWithNodeAs(t, source, ".ts")
 	if code, out, errs := brandedNative(t, program); code != 0 || out != "block\nx\n" {
 		t.Fatalf("outside closed kind: exit=%d stdout=%q stderr=%q", code, out, errs)
+	}
+}
+
+// Equal-valued tags make isD true for A at runtime. The existing checked-view
+// boundary stops the missing string read; neither singleton nor set reads garbage.
+func TestKindSetEqualValueTagsStopAtCheckedRead(t *testing.T) {
+	t.Parallel()
+	const common = `enum K { A=1, B=2, D=1 }
+interface A { readonly kind: K.A; readonly a: number }
+interface D { readonly kind: K.D; readonly d: string }
+`
+	for _, p := range []struct{ name, source string }{
+		{"singleton", "function isD(n:A|D):n is D { return n.kind===K.D; }\nfunction show(n:A|D):void { console.log(String(isD(n))); if(isD(n)) console.log(n.d); }\n"},
+		{"set", "interface B { readonly kind:K.B; readonly d:string }\nfunction isD(n:A|D|B):n is D|B { return n.kind===K.D || n.kind===K.B; }\nfunction show(n:A|D|B):void { console.log(String(isD(n))); if(isD(n)) console.log(n.d); }\n"},
+	} {
+		t.Run(p.name, func(t *testing.T) {
+			t.Parallel()
+			source := common + p.source + "const a:A={kind:K.A,a:7}; show(a);\n"
+			observed := runAgreementNode(t, writeAgreementSource(t, "main.ts", source))
+			if observed.code != 0 || string(observed.stdout) != "true\nundefined\n" {
+				t.Fatalf("equal-value Node: %+v", observed)
+			}
+			program, err := lowerSourceAs(t, source, ".ts")
+			if err != nil {
+				t.Fatalf("equal-value checked read no longer lowers: %v", err)
+			}
+			wantError := "adamic: panic: field read failed: n.d is not initialized; expected string, found missing\n"
+			generated := writeAgreementSource(t, "generated.mjs", javascript.JavaScript(program))
+			js := runAgreementNode(t, generated)
+			if js.code != 70 || string(js.stdout) != "true\n" || string(js.stderr) != wantError {
+				t.Fatalf("equal-value JavaScript: exit=%d stdout=%q stderr=%q", js.code, js.stdout, js.stderr)
+			}
+			code, out, errs := brandedNative(t, program)
+			if code != 70 || out != "true\n" || errs != wantError {
+				t.Fatalf("equal-value native: exit=%d stdout=%q stderr=%q", code, out, errs)
+			}
+		})
+	}
+}
+
+// A union claim must fit every source: being a union never bypasses source fit.
+// Odd carries A's kind but B's layout and relates to neither member.
+func TestKindSetUnionClaimFitsEverySource(t *testing.T) {
+	t.Parallel()
+	const base = `enum K { Body=1, A=2, B=3 }
+interface Node { readonly kind: K; readonly pos: number }
+interface Body extends Node { readonly kind: K.Body; readonly b0: string }
+interface Ex extends Node { readonly _exBrand: undefined }
+interface A extends Ex { readonly kind: K.A; readonly a: string }
+interface B extends Ex { readonly kind: K.B; readonly b: string }
+function isAOrB(n:Node):n is A|B { return n.kind===K.A || n.kind===K.B; }
+function read(y:A|B):string { return y.kind===K.A ? y.a : y.b; }
+function show(x:Body|Ex):string { return isAOrB(x) ? read(x) : 'other'; }
+const body:Body={kind:K.Body,pos:0,b0:'z'};
+const a:A={kind:K.A,pos:1,_exBrand:undefined,a:'x'};
+console.log(show(body)); console.log(show(a));
+`
+	for _, p := range []struct{ name, source string }{
+		{"control", ""},
+		{"odd_declared", "interface Odd extends Ex { readonly kind:K.A; readonly b:string }\n"},
+		{"odd_built", "interface Odd extends Ex { readonly kind:K.A; readonly b:string }\nconst odd:Odd={kind:K.A,pos:2,_exBrand:undefined,b:'y'}; console.log(show(odd));\n"},
+		{"odd_anonymous", "const raw={kind:K.A as const,pos:3,_exBrand:undefined,b:'w'}; const anon:Ex=raw; console.log(show(anon));\n"},
+	} {
+		t.Run(p.name, func(t *testing.T) {
+			t.Parallel()
+			source := base + p.source
+			if p.name == "control" {
+				program := lowersAndAgreesWithNodeAs(t, source, ".ts")
+				if code, out, errs := brandedNative(t, program); code != 0 || out != "other\nx\n" {
+					t.Fatalf("union-claim control: exit=%d stdout=%q stderr=%q", code, out, errs)
+				}
+				return
+			}
+			_, err := lowerSourceAs(t, source, ".ts")
+			if err == nil {
+				t.Fatalf("kind-set union claim %s: a source fitting neither claimed member lowered", p.name)
+			}
+			var refused *Refused
+			if !errors.As(err, &refused) || refused.What != kindPredicateRefusal {
+				t.Fatalf("union claim %s reached another stop: %v", p.name, err)
+			}
+		})
 	}
 }

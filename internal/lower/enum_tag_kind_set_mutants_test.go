@@ -26,13 +26,14 @@ var kindSetMutations = []kindSetMutation{
 	{"EnumIdentity", "if identity == nil || r.enum != nil && r.enum != identity {", "if identity == nil {", "TestKindSetPredicateFallbacksKeepFamilyOne/two_enums", "kind-set body fallback two_enums"},
 	{"PrimitiveGuard", "if part.Flags()&checker.TypeFlagsPrimitive != 0 && part.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) == 0 {", "if false && part.Flags()&checker.TypeFlagsPrimitive != 0 && part.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) == 0 {", "TestKindSetPredicateFallbacksKeepFamilyOne/primitive_guard", "kind-set body fallback primitive_guard"},
 	{"TrueDefault", "if falls || c.Kind == ast.KindDefaultClause && outcome {", "if falls {", "TestKindSetPredicateFallbacksKeepFamilyOne/true_default", "kind-set body fallback true_default"},
-	{"DuplicateCase", "if checker.Checker_isTypeIdenticalTo(r.l.checker, earlier, value) {", "if false && checker.Checker_isTypeIdenticalTo(r.l.checker, earlier, value) {", "TestKindSetPredicateFallbacksKeepFamilyOne/duplicate_case", "kind-set body fallback duplicate_case"},
+	{"DuplicateCase", "if checker.Checker_isTypeIdenticalTo(r.l.checker, earlier, value) {", "if false && checker.Checker_isTypeIdenticalTo(r.l.checker, earlier, value) {", "TestKindSetPredicateFallbacksKeepFamilyOne/(duplicate_case|k04)", "kind-set body fallback duplicate_case"},
+	{"UnionClaimFit", "if !w.l.closedKindSourcesFit(member, call.field, kind, claimed) {", "if claimed.Flags()&checker.TypeFlagsUnion == 0 && !w.l.closedKindSourcesFit(member, call.field, kind, claimed) {", "TestKindSetUnionClaimFitsEverySource/odd_.*", "kind-set union claim"},
 }
 
 func kindSetMutantBinary(t *testing.T, m kindSetMutation) string {
 	t.Helper()
 	file := "internal/lower/enum_tag_kind_set.go"
-	if m.name == "FirstKindFit" {
+	if m.name == "FirstKindFit" || m.name == "UnionClaimFit" {
 		file = "internal/lower/enum_tag_flow.go"
 	}
 	return buildcache.GoTestMutated(t, "", "kind-set-"+m.name+".test", "./internal/lower", nil, []buildcache.Mutation{{File: file, Before: m.before, After: m.after}})
@@ -93,6 +94,10 @@ func TestProduct_KindSetDuplicateCaseMutant(t *testing.T) {
 	t.Parallel()
 	kindSetMutantBinary(t, kindSetMutations[13])
 }
+func TestProduct_KindSetUnionClaimFitMutant(t *testing.T) {
+	t.Parallel()
+	kindSetMutantBinary(t, kindSetMutations[14])
+}
 func TestKindSetBodyMutantsAreCaught(t *testing.T) {
 	t.Parallel()
 	for _, m := range kindSetMutations {
@@ -104,6 +109,16 @@ func TestKindSetBodyMutantsAreCaught(t *testing.T) {
 			var exit *exec.ExitError
 			if !errors.As(err, &exit) || exit.ExitCode() != 1 || !strings.Contains(string(stdout), m.witness) {
 				t.Fatalf("%s mutant missed %s: %v\n%s\n%s", m.name, m.pin, err, stdout, stderr)
+			}
+			if m.name == "DuplicateCase" && !strings.Contains(string(stdout), "kind-set body fallback k04") {
+				t.Fatalf("duplicate-case mutant missed the equal-value k04 row:\n%s", stdout)
+			}
+			if m.name == "UnionClaimFit" {
+				for _, row := range []string{"odd_declared", "odd_built", "odd_anonymous"} {
+					if !strings.Contains(string(stdout), "kind-set union claim "+row+":") {
+						t.Fatalf("union-claim mutant missed %s:\n%s", row, stdout)
+					}
+				}
 			}
 			t.Logf("%s mutant caught by %s:\n%s", m.name, m.pin, stdout)
 		})
