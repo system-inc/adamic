@@ -33,8 +33,11 @@
 // one. Every row says the basis it stands on and whether it's like for like, and the headline counts
 // only one thread against one thread: Adamic's programs here run one thread, so an entry that runs
 // several is reported and never headlined. The game's own elapsed time appears as a labeled sanity
-// column, from its i5-3330 at its n, never beside ours as a comparison. Losses are listed beside the
-// wins, then every gap. The rows are reported and never tuned against, as the holdout's rule says.
+// column, from its i5-3330 at its n, never beside ours as a comparison. A call is made on each
+// runner's range of wall times, never its best alone: Adamic is faster than an entry only when its
+// slowest run beats the entry's fastest, slower only when its fastest trails the entry's slowest, and
+// otherwise within the noise. Losses and calls within the noise are listed beside the wins, then every
+// gap. The rows are reported and never tuned against, as the holdout's rule says.
 package main
 
 import (
@@ -230,12 +233,21 @@ type gameResult struct {
 }
 
 // A gameCell is one runner's figures, each its own best of the runs and judged against its floor, or
-// the failure that makes it a gap, with its median instructions:u or why there are none.
+// the failure that makes it a gap, with its median instructions:u or why there are none. slowest is
+// its slowest finished run, the other end of the range gameCall reads.
 type gameCell struct {
 	name         string
 	best         measurement
+	slowest      measurement
 	instructions string
 }
+
+// The three calls gameCall makes of Adamic against an entry.
+const (
+	adamicFaster   = "faster"
+	adamicSlower   = "slower"
+	withinTheNoise = "within the noise"
+)
 
 func measureGame(request gameRequest) {
 	if request.samples < 1 {
@@ -426,8 +438,10 @@ func measureGame(request gameRequest) {
 			cell := gameCell{name: runner.name, instructions: instructionsText(runner)}
 			if runner.failure != "" {
 				cell.best = measurement{failure: runner.failure}
+				cell.slowest = cell.best
 			} else {
 				cell.best = judge(bestOfEach(runner.runs), floorSlowest[runner.language], resolution)
+				cell.slowest = slowestOf(runner.runs)
 			}
 			result.cells = append(result.cells, cell)
 		}
@@ -435,7 +449,7 @@ func measureGame(request gameRequest) {
 	}
 
 	fmt.Printf("wall clock resolution: %s; floor, a program that only prints, fastest to slowest of every run: %s\n", resolution, strings.Join(floorCells, ", "))
-	fmt.Printf("%d interleaved samples: each runs the four floors, then each program's runners, in an order rotated one place every two samples and reversed on odd samples, so no runner always follows the same one. Every native binary gets fresh pages before each sample, and every run an ADAMIC_BENCH_PAD of random length. Each figure is its own best of the runs: wall clock, user and system time across every thread, and peak resident set. Adamic over an entry is Adamic's best wall time over the entry's, below 1.00x where Adamic is faster. Every runner's output was checked against Node's byte for byte before any time counted, and on every run. An entry that runs several threads uses every CPU this box has, where the game's had four.\n", request.samples)
+	fmt.Printf("%d interleaved samples: each runs the four floors, then each program's runners, in an order rotated one place every two samples and reversed on odd samples, so no runner always follows the same one. Every native binary gets fresh pages before each sample, and every run an ADAMIC_BENCH_PAD of random length. Each figure is its own best of the runs: wall clock, user and system time across every thread, and peak resident set. Adamic over an entry is Adamic's best wall time over the entry's, below 1.00x where Adamic's best is faster. A call is made on each runner's fastest to slowest run, never its best alone: Adamic is faster only when its slowest run beats the entry's fastest, slower only when its fastest trails the entry's slowest, and otherwise within the noise. Every runner's output was checked against Node's byte for byte before any time counted, and on every run. An entry that runs several threads uses every CPU this box has, where the game's had four.\n", request.samples)
 	fmt.Printf("instructions: %s\n\n", instructionsNote)
 	printGameReport(os.Stdout, file, results)
 	fmt.Printf("\nload after: %s\n", loadAverage())
@@ -1110,8 +1124,8 @@ func instructionsText(runner *gameRunner) string {
 	return ""
 }
 
-// printGameReport writes one table per basis, each with its losses beside its wins, then the
-// headline, one thread against one thread only, then every gap.
+// printGameReport writes one table per basis, each with its losses and its calls within the noise
+// beside its wins, then the headline, one thread against one thread only, then every gap.
 func printGameReport(out io.Writer, file gameFile, results []gameResult) {
 	for _, basis := range gameBases {
 		rows := []gameResult{}
@@ -1143,11 +1157,13 @@ func printGameReport(out io.Writer, file gameFile, results []gameResult) {
 			}
 			fmt.Fprintln(out, "| "+strings.Join(cells, " | ")+" |")
 		}
-		losses, wins := lossesAndWins(rows, basis)
-		fmt.Fprintf(out, "\nlosses on the %s basis, where Adamic's best wall time is above the entry's:\n", basis)
+		losses, wins, ties := lossesWinsAndTies(rows, basis)
+		fmt.Fprintf(out, "\nlosses on the %s basis, where Adamic's fastest run trails the entry's slowest:\n", basis)
 		printList(out, losses)
-		fmt.Fprintf(out, "wins on the %s basis, where it's below:\n", basis)
+		fmt.Fprintf(out, "wins on the %s basis, where Adamic's slowest run beats the entry's fastest:\n", basis)
 		printList(out, wins)
+		fmt.Fprintf(out, "within the noise on the %s basis, where the two runners' fastest-to-slowest ranges overlap:\n", basis)
+		printList(out, ties)
 		fmt.Fprintln(out)
 	}
 	fmt.Fprintln(out, "headline, one thread against one thread only: Adamic's programs here run one thread, so an entry that runs several is never counted, whatever basis it stands on:")
@@ -1254,59 +1270,81 @@ func sanityText(benchmark gameProgram, goIndex, rustIndex int) string {
 	return text
 }
 
-// lossesAndWins lists, for a basis, every entry Adamic's best wall time is above and every one it's
-// below, so a win is never read without the losses beside it.
-func lossesAndWins(rows []gameResult, basis string) ([]string, []string) {
-	losses, wins := []string{}, []string{}
+// gameCall is Adamic against an entry on wall time: faster only when Adamic's slowest run beats the
+// entry's fastest, slower only when Adamic's fastest trails the entry's slowest, and otherwise within the
+// noise, since the two runners' fastest-to-slowest ranges overlap. It assumes nothing about how the runs
+// are spread, so it needs no model of the noise to be right. Best against best alone called J-1ee69rp's
+// spectralnorm a win over Go at 1.00x, 0.328 s against 0.328 s, and a raw best with no margin isn't a
+// call. Both cells have finished runs; a caller skips a failure first.
+func gameCall(adamic, other gameCell) string {
+	switch {
+	case adamic.slowest.elapsed < other.best.elapsed:
+		return adamicFaster
+	case adamic.best.elapsed > other.slowest.elapsed:
+		return adamicSlower
+	default:
+		return withinTheNoise
+	}
+}
+
+// lossesWinsAndTies lists, for a basis, every entry gameCall says Adamic is slower than, every one it's
+// faster than, and every one within the noise, so a win is never read without the losses and the ties
+// beside it.
+func lossesWinsAndTies(rows []gameResult, basis string) ([]string, []string, []string) {
+	losses, wins, ties := []string{}, []string{}, []string{}
 	for _, result := range rows {
-		adamic := result.cells[gameAdamic].best
 		for _, language := range entryLanguages {
 			index := entryOn(result.benchmark, language, basis)
 			if index < 0 {
 				continue
 			}
-			other := result.cells[gameFirstEntry+index].best
-			if adamic.failure != "" || other.failure != "" {
+			adamic, other := result.cells[gameAdamic], result.cells[gameFirstEntry+index]
+			if adamic.best.failure != "" || other.best.failure != "" {
 				continue
 			}
 			entry := result.benchmark.Entries[index]
-			line := fmt.Sprintf("- %s: Adamic %s against %s's %s (%s), %s", result.benchmark.Name, seconds(adamic.elapsed), entryName(entry), seconds(other.elapsed), threadsText(entry), ratio(adamic, other))
-			if adamic.elapsed >= other.elapsed {
+			line := fmt.Sprintf("- %s: Adamic %s against %s's %s (%s), %s", result.benchmark.Name, seconds(adamic.best.elapsed), entryName(entry), seconds(other.best.elapsed), threadsText(entry), ratio(adamic.best, other.best))
+			switch gameCall(adamic, other) {
+			case adamicSlower:
 				losses = append(losses, line)
-			} else {
+			case adamicFaster:
 				wins = append(wins, line)
+			default:
+				ties = append(ties, line)
 			}
 		}
 	}
-	return losses, wins
+	return losses, wins, ties
 }
 
-// gameHeadline counts, for each language, the entries that run one thread that Adamic is faster and
-// slower than. An entry that runs several threads is never counted, on any basis: Adamic's program
-// runs one, so beating or trailing it says nothing like for like.
+// gameHeadline counts, for each language, the entries that run one thread that gameCall says Adamic is
+// faster than, slower than, and within the noise of. An entry that runs several threads is never
+// counted, on any basis: Adamic's program runs one, so beating or trailing it says nothing like for like.
 func gameHeadline(results []gameResult) []string {
 	lines := []string{}
 	for _, language := range entryLanguages {
-		faster, slower := []string{}, []string{}
+		faster, slower, ties := []string{}, []string{}, []string{}
 		for _, result := range results {
-			adamic := result.cells[gameAdamic].best
 			for index, entry := range result.benchmark.Entries {
 				if entry.Language != language || entry.Threads != oneThread {
 					continue
 				}
-				other := result.cells[gameFirstEntry+index].best
-				if adamic.failure != "" || other.failure != "" {
+				adamic, other := result.cells[gameAdamic], result.cells[gameFirstEntry+index]
+				if adamic.best.failure != "" || other.best.failure != "" {
 					continue
 				}
-				named := fmt.Sprintf("%s %s %s", result.benchmark.Name, entryName(entry), ratio(adamic, other))
-				if adamic.elapsed < other.elapsed {
+				named := fmt.Sprintf("%s %s %s", result.benchmark.Name, entryName(entry), ratio(adamic.best, other.best))
+				switch gameCall(adamic, other) {
+				case adamicFaster:
 					faster = append(faster, named)
-				} else {
+				case adamicSlower:
 					slower = append(slower, named)
+				default:
+					ties = append(ties, named)
 				}
 			}
 		}
-		lines = append(lines, fmt.Sprintf("- against %s's one-thread entries: faster on %d of %d (%s), slower on %d (%s)", languageName(language), len(faster), len(faster)+len(slower), joinedOrNone(faster), len(slower), joinedOrNone(slower)))
+		lines = append(lines, fmt.Sprintf("- against %s's one-thread entries: faster on %d of %d (%s), slower on %d (%s), within the noise on %d (%s)", languageName(language), len(faster), len(faster)+len(slower)+len(ties), joinedOrNone(faster), len(slower), joinedOrNone(slower), len(ties), joinedOrNone(ties)))
 	}
 	return lines
 }
