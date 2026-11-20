@@ -112,3 +112,9 @@ Two independent `stage3/apply.sh --build-product` runs with fresh output directo
 ## Adapted-tree product
 
 `go test -v -timeout 30m ./stage3/lane/adaptedtree -run '^TestProduct_Stage3AdaptedTree$'` passed on the landing commit with the locked package installs, pinned upstream checkout, and Go 1.27.1. It independently built the upstream compiler and test harness from the adapted tree. The whole lane uses that product from the local cache.
+
+## Whole Stage 3 lane
+
+All **430** listed tests passed, including all **398** manifest shards and the byte-comparisons shard. The initial `go test -v -parallel 2 -timeout 60m ./stage3/lane` recorded 224 passing tests before the execution environment restarted. I enumerated the package with `go test ./stage3/lane -list '^Test'` and resumed its 206 remaining tests with an exact name filter and `-parallel 3` against the same commit and cached adapted-tree product. The resumed invocation exited 0. The two pass sets are disjoint and cover every listed test. The lane runtime hash and sanctioned public API both stayed current. See `lane-first.log.gz` and `lane-resumed.log.gz`.
+
+The landing branch contains the two requested edits and passes the stock compiler, byte, reproducibility, product and lane checks. The new cast refusal at the checker site blocks the refusal proof. The other five checker coordinates remain read-only findings for a ruling.
