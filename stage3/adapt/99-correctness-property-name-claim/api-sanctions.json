@@ -1,0 +1,11 @@
+[
+  {
+    "path": [
+      "isPropertyName"
+    ],
+    "kind": "FunctionDeclaration",
+    "before": "node is PropertyName",
+    "after": "node is Identifier | PrivateIdentifier | StringLiteral | NumericLiteral | ComputedPropertyName",
+    "why": "Adamic, task ad161ms: the predicate claims the five kinds its body accepts, never a NoSubstitutionTemplateLiteral or a BigIntLiteral."
+  }
+]
