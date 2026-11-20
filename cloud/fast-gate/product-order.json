@@ -2887,6 +2887,24 @@
     "internal/lower TestProduct_KindSetPrimitiveGuardMutant": [],
     "internal/lower TestProduct_KindSetTrueDefaultMutant": [],
     "internal/lower TestProduct_KindSetDuplicateCaseMutant": [],
-    "internal/lower TestProduct_KindSetUnionClaimFitMutant": []
+    "internal/lower TestProduct_KindSetUnionClaimFitMutant": [],
+    "internal/lower TestProduct_KindHelperDepthMutant": [],
+    "internal/lower TestProduct_KindHelperCycleMutant": [],
+    "internal/lower TestProduct_KindHelperNonHelperMutant": [],
+    "internal/lower TestProduct_KindHelperWrittenParameterMutant": [],
+    "internal/lower TestProduct_KindHelperWrongArgumentMutant": [],
+    "internal/lower TestProduct_KindHelperCallMutant": [],
+    "internal/lower TestProduct_KindHelperScalarMutant": [],
+    "internal/lower TestProduct_KindHelperDefaultMutant": [],
+    "internal/lower TestProduct_KindHelperTailMutant": [],
+    "internal/lower TestProduct_KindHelperReturnBodyMutant": [],
+    "internal/lower TestProduct_KindHelperArrowMutant": [],
+    "internal/lower TestProduct_KindHelperDefaultMaskMutant": [],
+    "internal/lower TestProduct_KindHelperDefaultParameterMutant": [],
+    "internal/lower TestProduct_KindHelperEnumMutant": [],
+    "internal/lower TestProduct_KindHelperOverloadMutant": [],
+    "internal/lower TestProduct_KindHelperLetMutant": [],
+    "internal/lower TestProduct_KindHelperAliasArgumentMutant": [],
+    "internal/lower TestProduct_KindHelperMixedDisjunctionMutant": []
   }
 }
