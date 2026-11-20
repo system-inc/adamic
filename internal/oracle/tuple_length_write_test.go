@@ -56,7 +56,10 @@ func TestTupleLengthWrite(t *testing.T) {
 			if !isKnown {
 				t.Fatalf("%s has no expected outcome", path)
 			}
-			absolute := filepath.Join(repository, path)
+			absolute, err := filepath.Abs(filepath.Join(repository, path))
+			if err != nil {
+				t.Fatal(err)
+			}
 			truth := onNode(t, absolute)
 			if truth.exitCode != 0 || len(truth.stderr) != 0 {
 				t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
