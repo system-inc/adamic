@@ -269,6 +269,7 @@ func run(args []string) error {
 	negativePath := flags.String("negative-witnesses", "cloud/admission-corpus/negative-witnesses.json", "ruled content-hash negative witnesses")
 	runtimeNotYetPath := flags.String("runtime-notyet-stops", "cloud/admission-corpus/runtime-notyet-stops.json", "ruled content-hash run-time NotYet stops")
 	backendDivergencesPath := flags.String("backend-divergences", "internal/oracle/testdata/backend_divergences.json", "ruled backend divergences, the rows internal/oracle pins")
+	heldStopsPath := flags.String("held-stops", "cloud/admission-corpus/held-stops.json", "both-stops a test holds, by exact path and stderr, which --agreement counts as checked stops")
 	manifestPath := flags.String("manifest", "", "pinned JSON corpus manifest")
 	generator := flags.String("manifest-generator", "", "generator path at head")
 	generatorRevision := flags.String("manifest-generator-revision", "", "generator source revision, defaults to head")
@@ -332,7 +333,14 @@ func run(args []string) error {
 		return err
 	}
 	if *agreement {
-		return runAgreement(agreementRun{root: root, head: *head, headBinary: *headBinary, headLowerBinary: *headLowerBinary, manifestPath: *manifestPath, shard: *shard, asJSON: *asJSON, limit: *limit, compileLimit: *compileLimit, workers: *workers, negatives: negatives, runtimeStops: runtimeStops, divergences: divergences})
+		// Only the agreement mode reads the held stops: the ruling that made the list is how it judges, and the delta
+		// judges a newly accepted program as it did before.
+		heldStops, err := readHeldStops(*heldStopsPath)
+		if err != nil {
+			return err
+		}
+		fmt.Fprintf(os.Stderr, "held stops: %d\n", len(heldStops.Stops))
+		return runAgreement(agreementRun{root: root, head: *head, headBinary: *headBinary, headLowerBinary: *headLowerBinary, manifestPath: *manifestPath, shard: *shard, asJSON: *asJSON, limit: *limit, compileLimit: *compileLimit, workers: *workers, negatives: negatives, runtimeStops: runtimeStops, divergences: divergences, heldStops: heldStops})
 	}
 	startedAll := time.Now()
 	result := report{Programs: []entry{}, RuledRuntimeStopPaths: []string{}, StaleRuntimeStops: []string{}, PendingRuntimeStops: []string{}, RuledBackendDivergencePaths: []string{}, Verdict: "pass", Phases: map[string]float64{}, Workers: *workers, Classification: "lowering-only"}

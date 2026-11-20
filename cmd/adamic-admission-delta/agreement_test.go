@@ -12,7 +12,7 @@ import (
 
 // agreementCompiler is a fake head compiler for the agreement mode. Its lowering refuses a program holding the line
 // refuse and accepts every other. It compiles a program to JavaScript as the program's own text, or, where the program
-// holds js-print lines, as those lines alone, made print lines. It builds a program natively as a shell script of the
+// holds js-print or js-stop lines, as those lines alone, made print and stop lines. It builds a program natively as a shell script of the
 // program's native lines, and only with --sanitize after -o <out>: an unsanitized build fails, so a mode that forgot
 // the sanitizers would disagree everywhere.
 const agreementCompiler = `#!/bin/sh
@@ -21,7 +21,7 @@ admission-lower)
 	if grep -qx refuse "$2"; then echo "adamic: $2: stage 0 can't lower this yet" >&2; exit 1; fi
 	exit 0;;
 js)
-	if grep -q '^js-print: ' "$2"; then sed -n 's/^js-print: /print: /p' "$2"; else cat "$2"; fi;;
+	if grep -q -e '^js-print: ' -e '^js-stop: ' "$2"; then sed -n -e 's/^js-print: /print: /p' -e 's/^js-stop: /stop: /p' "$2"; else cat "$2"; fi;;
 build)
 	if [ "$5" != --sanitize ]; then echo "adamic: this native build is not sanitized" >&2; exit 1; fi
 	{ echo '#!/bin/sh'; sed -n 's/^native: //p' "$2"; } > "$4.tmp" && chmod +x "$4.tmp" && mv "$4.tmp" "$4";;
@@ -29,8 +29,10 @@ esac
 `
 
 // agreementNode is the fixture's oracle/node.mjs: it prints a program's print lines, so Node and the JavaScript
-// backend print what a program's print lines say.
-const agreementNode = "import {readFileSync} from 'node:fs';\nfor (const line of readFileSync(process.argv[2], 'utf8').split('\\n')) if (line.startsWith('print: ')) console.log(line.slice('print: '.length));\n"
+// backend print what a program's print lines say, and at a stop line it writes the line's message to stderr and
+// stops with exit 70, as a backend's checked stop does. It sets the exit code rather than exiting, so what it printed
+// to a pipe is whole.
+const agreementNode = "import {readFileSync} from 'node:fs';\nfor (const line of readFileSync(process.argv[2], 'utf8').split('\\n')) {\n  if (line.startsWith('print: ')) console.log(line.slice('print: '.length));\n  else if (line.startsWith('stop: ')) { process.stderr.write(line.slice('stop: '.length) + '\\n'); process.exitCode = 70; break; }\n}\n"
 
 // The four kinds of program the agreement mode tells apart, as agreementCompiler and agreementNode run them.
 const (
@@ -49,6 +51,13 @@ type agreementSource struct {
 // Node prints node and both backends print backends.
 func agreementFixture(t *testing.T, programs []agreementSource) (string, string, string) {
 	t.Helper()
+	return agreementFixtureWith(t, programs, nil)
+}
+
+// agreementFixtureWith is agreementFixture with other files committed beside the programs, a sidecar or a list, that
+// the manifest doesn't name.
+func agreementFixtureWith(t *testing.T, programs []agreementSource, others map[string]string) (string, string, string) {
+	t.Helper()
 	dir, _, _, head := commandFixture(t)
 	writeExecutable(t, head, agreementCompiler)
 	divergences, err := json.Marshal(ruledBackendDivergenceList{Comment: "Adding a row is a ruling routed to @system_adamic", Divergences: []ruledBackendDivergence{{
@@ -63,6 +72,9 @@ func agreementFixture(t *testing.T, programs []agreementSource) (string, string,
 		t.Fatal(err)
 	}
 	files := map[string]string{"oracle/node.mjs": agreementNode, "internal/oracle/testdata/backend_divergences.json": string(divergences)}
+	for path, text := range others {
+		files[path] = text
+	}
 	for _, p := range programs {
 		files[p.path] = p.source
 	}
@@ -135,7 +147,7 @@ func TestAgreementCountsEachJudgment(t *testing.T) {
 	if o.Exit != 1 || r.Verdict != "fail" || r.Compared != 3 || r.Agreeing != 1 || r.Ruled != 1 || r.Disagreeing != 1 || r.MemoryUnsafe != 0 || r.Refused != 1 {
 		t.Fatalf("exit %d, %+v, want exit 1 with one each of agreeing, ruled, disagreeing and refused: %s", o.Exit, r, o.Stderr)
 	}
-	if !strings.HasSuffix(o.Stderr, "\nagreement: compared 3, agreeing 1, ruled 1, disagreeing 1, memory-unsafe 0, refused 1\n") {
+	if !strings.HasSuffix(o.Stderr, "\nagreement: compared 3, agreeing 1, ruled 1, checked stops 0, pending 0, disagreeing 1, memory-unsafe 0, refused 1\n") {
 		t.Fatalf("the summary isn't the last line of stderr: %s", o.Stderr)
 	}
 	if len(r.Disagreements) != 1 || r.Disagreements[0].Path != "corpus/disagree.a" || r.Disagreements[0].MemoryUnsafe || r.Disagreements[0].Native.Stdout != "41\n" || r.Disagreements[0].Node.Stdout != "42\n" {
@@ -152,9 +164,15 @@ func TestAgreementCountsEachJudgment(t *testing.T) {
 	if want := map[string]string{"corpus/agree.a": "agreeing", "corpus/ruled.a": "ruled", "corpus/disagree.a": "disagreeing", "corpus/refused.a": "refused"}; !reflect.DeepEqual(judgments, want) {
 		t.Fatalf("judgments %v, want %v", judgments, want)
 	}
+	// Every program judged by what it did carries its outcome hash; the refused one, never run, has none.
+	for _, judged := range r.Programs {
+		if hashed := len(judged.OutcomeHash) == 64; hashed != (judged.Judgment != "refused") {
+			t.Errorf("%s, %s, has outcome hash %q", judged.Path, judged.Judgment, judged.OutcomeHash)
+		}
+	}
 	dir, sha, head = agreementFixture(t, []agreementSource{{"corpus/agree.a", agreeingSource}, {"corpus/ruled.a", ruledSource}, {"corpus/refused.a", refusedSource}})
 	o, r = agreementCommand(t, dir, sha, head)
-	if o.Exit != 0 || r.Verdict != "pass" || r.Disagreeing != 0 || !strings.HasSuffix(o.Stderr, "\nagreement: compared 2, agreeing 1, ruled 1, disagreeing 0, memory-unsafe 0, refused 1\n") {
+	if o.Exit != 0 || r.Verdict != "pass" || r.Disagreeing != 0 || !strings.HasSuffix(o.Stderr, "\nagreement: compared 2, agreeing 1, ruled 1, checked stops 0, pending 0, disagreeing 0, memory-unsafe 0, refused 1\n") {
 		t.Fatalf("a corpus with no disagreement: exit %d, %+v, want exit 0: %s", o.Exit, r, o.Stderr)
 	}
 }
@@ -169,7 +187,7 @@ func TestAgreementMemoryUnsafe(t *testing.T) {
 		{"corpus/signal.a", "print: 42\nnative: echo 42\nnative: kill -KILL $$\n"},
 	})
 	o, r := agreementCommand(t, dir, sha, head)
-	if o.Exit != 1 || r.Disagreeing != 2 || r.MemoryUnsafe != 2 || !strings.HasSuffix(o.Stderr, "\nagreement: compared 2, agreeing 0, ruled 0, disagreeing 2, memory-unsafe 2, refused 0\n") {
+	if o.Exit != 1 || r.Disagreeing != 2 || r.MemoryUnsafe != 2 || !strings.HasSuffix(o.Stderr, "\nagreement: compared 2, agreeing 0, ruled 0, checked stops 0, pending 0, disagreeing 2, memory-unsafe 2, refused 0\n") {
 		t.Fatalf("exit %d, %+v, want two memory-unsafe disagreements: %s", o.Exit, r, o.Stderr)
 	}
 	for _, disagreement := range r.Disagreements {
@@ -254,7 +272,7 @@ func TestAgreementNativeRunsWithoutLeakDetection(t *testing.T) {
 	t.Parallel()
 	dir, sha, head := agreementFixture(t, []agreementSource{{"corpus/leaks.a", "print: 42\nnative: echo 42\nnative: case \"$ASAN_OPTIONS\" in *detect_leaks=0*) ;; *) echo '==1==ERROR: LeakSanitizer: detected memory leaks' >&2; exit 23;; esac\n"}})
 	o, r := agreementCommand(t, dir, sha, head)
-	if o.Exit != 0 || r.Agreeing != 1 || r.Disagreeing != 0 || !strings.HasSuffix(o.Stderr, "\nagreement: compared 1, agreeing 1, ruled 0, disagreeing 0, memory-unsafe 0, refused 0\n") {
+	if o.Exit != 0 || r.Agreeing != 1 || r.Disagreeing != 0 || !strings.HasSuffix(o.Stderr, "\nagreement: compared 1, agreeing 1, ruled 0, checked stops 0, pending 0, disagreeing 0, memory-unsafe 0, refused 0\n") {
 		t.Fatalf("exit %d, %+v, want the program agreeing with leak detection off: %s", o.Exit, r, o.Stderr)
 	}
 }
@@ -306,7 +324,148 @@ func TestAgreementWorkersKeepManifestOrder(t *testing.T) {
 	if want := []string{"corpus/z.a", "corpus/m.a", "corpus/b.a"}; !reflect.DeepEqual(four.disagreements, want) || len(four.lines) != 3 || !strings.HasPrefix(four.lines[0], "disagreeing corpus/z.a:") {
 		t.Fatalf("disagreements %v and lines %q, want %v in manifest order", four.disagreements, four.lines, want)
 	}
-	if four.summary != "agreement: compared 4, agreeing 1, ruled 0, disagreeing 3, memory-unsafe 0, refused 1" {
+	if four.summary != "agreement: compared 4, agreeing 1, ruled 0, checked stops 0, pending 0, disagreeing 3, memory-unsafe 0, refused 1" {
 		t.Fatalf("summary %q", four.summary)
+	}
+}
+
+// heldStopSource is a program both backends stop on alike, exit 70 with message on stderr after printing 1, where
+// Node prints 1 and 2 and exits 0: a both-stop.
+func heldStopSource(message string) string {
+	return "print: 1\nprint: 2\njs-print: 1\njs-stop: " + message + "\nnative: echo 1\nnative: echo '" + message + "' >&2\nnative: exit 70\n"
+}
+
+// heldStopsFile is a held-stop list whose rows hold each path given at the stop message given.
+func heldStopsFile(t *testing.T, stops map[string]string) string {
+	t.Helper()
+	list := heldStopList{Comment: "Adding a row is a ruling, and a row names the test that holds its stop", Stops: []heldStop{}}
+	for path, message := range stops {
+		list.Stops = append(list.Stops, heldStop{Path: path, Stderr: message + "\n", Test: "agreement_test.go: TestAgreementHeldStops"})
+	}
+	data, err := json.Marshal(list)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return string(data)
+}
+
+// A both-stop counts as a checked stop only at a path the held-stop list names, with the backends' stderr the row's
+// byte for byte: held.a is one; changed.a stops with a message one byte off its row's, and unlisted.a has no row, so
+// both disagree and fail the run. Without them the run passes, a checked stop never red. Mutant
+// (agreement.mutants.md): the stderr comparison dropped, so changed.a's listed path alone makes it a checked stop.
+func TestAgreementHeldStops(t *testing.T) {
+	t.Parallel()
+	const message = "adamic: panic: held for the test"
+	list := heldStopsFile(t, map[string]string{"corpus/held.a": message, "corpus/changed.a": message})
+	dir, sha, head := agreementFixtureWith(t, []agreementSource{
+		{"corpus/held.a", heldStopSource(message)},
+		{"corpus/changed.a", heldStopSource("adamic: panic: held for the tesd")},
+		{"corpus/unlisted.a", heldStopSource(message)},
+	}, map[string]string{"cloud/admission-corpus/held-stops.json": list})
+	o, r := agreementCommand(t, dir, sha, head)
+	if o.Exit != 1 || r.CheckedStops != 1 || r.Disagreeing != 2 || r.Compared != 3 || !strings.HasSuffix(o.Stderr, "\nagreement: compared 3, agreeing 0, ruled 0, checked stops 1, pending 0, disagreeing 2, memory-unsafe 0, refused 0\n") {
+		t.Fatalf("exit %d, %+v, want one checked stop and two disagreements: %s", o.Exit, r, o.Stderr)
+	}
+	judgments := map[string]string{}
+	for _, judged := range r.Programs {
+		judgments[judged.Path] = judged.Judgment
+	}
+	if want := map[string]string{"corpus/held.a": "checked-stop", "corpus/changed.a": "disagreeing", "corpus/unlisted.a": "disagreeing"}; !reflect.DeepEqual(judgments, want) {
+		t.Fatalf("judgments %v, want %v", judgments, want)
+	}
+	dir, sha, head = agreementFixtureWith(t, []agreementSource{{"corpus/held.a", heldStopSource(message)}}, map[string]string{"cloud/admission-corpus/held-stops.json": list})
+	o, r = agreementCommand(t, dir, sha, head)
+	if o.Exit != 0 || r.Verdict != "pass" || r.CheckedStops != 1 || !strings.HasSuffix(o.Stderr, "\nagreement: compared 1, agreeing 0, ruled 0, checked stops 1, pending 0, disagreeing 0, memory-unsafe 0, refused 0\n") {
+		t.Fatalf("a corpus whose only stop is held: exit %d, %+v, want exit 0: %s", o.Exit, r, o.Stderr)
+	}
+}
+
+// A program that disagrees and has a pending sidecar naming a task is pending, its task in its entry and on its own
+// line, counted apart and never red. A sidecar naming a branch names no task to check, so its program disagrees. An
+// agreeing program with a sidecar is agreeing. Mutant (agreement.mutants.md): the branch form excused, so branch.a is
+// pending too and the run exits 0.
+func TestAgreementPendingSidecars(t *testing.T) {
+	t.Parallel()
+	dir, sha, head := agreementFixtureWith(t, []agreementSource{
+		{"corpus/task.a", disagreeingSource},
+		{"corpus/branch.a", disagreeingSource},
+		{"corpus/agree.a", agreeingSource},
+	}, map[string]string{
+		"corpus/task.pending":   "awaits #abc1234: reason\n",
+		"corpus/branch.pending": "awaits some/branch: reason\n",
+		"corpus/agree.pending":  "awaits #abc1234: reason\n",
+	})
+	o, r := agreementCommand(t, dir, sha, head)
+	if o.Exit != 1 || r.Pending != 1 || r.Disagreeing != 1 || r.Agreeing != 1 || r.Compared != 3 || !strings.HasSuffix(o.Stderr, "\nagreement: compared 3, agreeing 1, ruled 0, checked stops 0, pending 1, disagreeing 1, memory-unsafe 0, refused 0\n") {
+		t.Fatalf("exit %d, %+v, want one each of pending, disagreeing and agreeing: %s", o.Exit, r, o.Stderr)
+	}
+	type judgment struct{ judgment, task string }
+	judgments := map[string]judgment{}
+	for _, judged := range r.Programs {
+		judgments[judged.Path] = judgment{judged.Judgment, judged.Task}
+	}
+	if want := map[string]judgment{"corpus/task.a": {"pending", "abc1234"}, "corpus/branch.a": {"disagreeing", ""}, "corpus/agree.a": {"agreeing", ""}}; !reflect.DeepEqual(judgments, want) {
+		t.Fatalf("judgments %v, want %v", judgments, want)
+	}
+	if len(r.Disagreements) != 1 || r.Disagreements[0].Path != "corpus/branch.a" {
+		t.Fatalf("disagreements: %+v, want branch.a alone", r.Disagreements)
+	}
+	if line := stderrLine(o.Stderr, "pending corpus/task.a:"); line != "pending corpus/task.a: awaits #abc1234" {
+		t.Fatalf("the pending line: %q in %s", line, o.Stderr)
+	}
+}
+
+// A sidecar never excuses a memory error: a program whose native run shows a sanitizer's report, filed by its sidecar
+// under an open task, disagrees and is counted memory-unsafe, since that is how #sq84qqh's five release segfaults hid
+// as library gaps.
+func TestAgreementPendingNeverExcusesAMemoryError(t *testing.T) {
+	t.Parallel()
+	dir, sha, head := agreementFixtureWith(t, []agreementSource{
+		{"corpus/unsafe.a", "print: 42\nnative: echo 42\nnative: echo '==1==ERROR: AddressSanitizer: heap-use-after-free on address 0x1' >&2\nnative: exit 1\n"},
+	}, map[string]string{"corpus/unsafe.pending": "awaits #abc1234: reason\n"})
+	o, r := agreementCommand(t, dir, sha, head)
+	if o.Exit != 1 || r.Pending != 0 || r.Disagreeing != 1 || r.MemoryUnsafe != 1 || !strings.HasSuffix(o.Stderr, "\nagreement: compared 1, agreeing 0, ruled 0, checked stops 0, pending 0, disagreeing 1, memory-unsafe 1, refused 0\n") {
+		t.Fatalf("exit %d, %+v, want one memory-unsafe disagreement, its sidecar not excusing it: %s", o.Exit, r, o.Stderr)
+	}
+}
+
+// The outcome hash covers each of the three runs' exit, stdout and stderr: a change in any one backend's stderr alone
+// changes it, a byte moved from one stream to the next changes it, and the same runs hash alike. In a run, an agreeing
+// program whose native stderr changes, which agreement never reads, still shows the change in its hash.
+func TestAgreementOutcomeHash(t *testing.T) {
+	t.Parallel()
+	node, javascript, native := observation{Stdout: "42\n"}, observation{Stdout: "42\n"}, observation{Stdout: "42\n"}
+	same := outcomeHash(node, javascript, native)
+	if len(same) != 64 || outcomeHash(node, javascript, native) != same {
+		t.Fatalf("hash %q isn't one hex SHA-256 the same runs make alike", same)
+	}
+	seen := map[string]string{same: "the runs as they were"}
+	changed := func(o observation) observation {
+		o.Stderr = "warning\n"
+		return o
+	}
+	for name, hash := range map[string]string{
+		"node's stderr":                     outcomeHash(changed(node), javascript, native),
+		"javascript's stderr":               outcomeHash(node, changed(javascript), native),
+		"native's stderr":                   outcomeHash(node, javascript, changed(native)),
+		"native's newline moved to stderr":  outcomeHash(node, javascript, observation{Stdout: "42", Stderr: "\n"}),
+		"native's exit":                     outcomeHash(node, javascript, observation{Exit: 1, Stdout: "42\n"}),
+		"javascript's stdout moved to node": outcomeHash(observation{Stdout: "42\n42\n"}, observation{}, native),
+	} {
+		if other, collides := seen[hash]; collides {
+			t.Errorf("%s hashes as %s does", name, other)
+		}
+		seen[hash] = name
+	}
+	read := func(warning string) agreementProgram {
+		dir, sha, head := agreementFixture(t, []agreementSource{{"corpus/warns.a", "print: 42\nnative: echo 42\nnative: echo " + warning + " >&2\n"}})
+		o, r := agreementCommand(t, dir, sha, head)
+		if o.Exit != 0 || len(r.Programs) != 1 || r.Programs[0].Judgment != "agreeing" {
+			t.Fatalf("exit %d, %+v, want warns.a agreeing: %s", o.Exit, r.Programs, o.Stderr)
+		}
+		return r.Programs[0]
+	}
+	if warning, warnings := read("warning"), read("warnings"); warning.OutcomeHash == warnings.OutcomeHash || len(warning.OutcomeHash) != 64 {
+		t.Fatalf("native's stderr changed and the hash didn't: %q, %q", warning.OutcomeHash, warnings.OutcomeHash)
 	}
 }

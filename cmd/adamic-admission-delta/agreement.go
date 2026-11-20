@@ -1,11 +1,14 @@
 package main
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strconv"
 	"strings"
 	"sync"
@@ -28,14 +31,22 @@ type agreementRun struct {
 	negatives                                                    negativeWitnessList
 	runtimeStops                                                 runtimeNotYetStopList
 	divergences                                                  ruledBackendDivergenceList
+	heldStops                                                    heldStopList
 }
 
-// agreementProgram is one program of the run and how it was judged: agreeing, ruled, disagreeing or void, or refused,
-// or its compile's class when head's compiler failed on it.
+// agreementProgram is one program of the run and how it was judged: agreeing, ruled, checked-stop, pending,
+// disagreeing or void, or refused, or its compile's class when head's compiler failed on it.
 type agreementProgram struct {
 	Path     string `json:"path"`
 	Corpus   string `json:"corpus"`
 	Judgment string `json:"judgment"`
+	// OutcomeHash is outcomeHash of the program's three runs, on every program judged by what it did, so a diff of two
+	// days' reports sees any change in output or stop message, even where the judgment stays. A refused or void
+	// program has none.
+	OutcomeHash string `json:"outcome_hash,omitempty"`
+	// Task is the open task a pending program's sidecar names, without its #. The run can't ask whether it is still
+	// open, so the reader of the report does.
+	Task string `json:"task,omitempty"`
 }
 
 // agreementDisagreement is a program that disagrees with Node, with what each of the three runs did and what each
@@ -64,11 +75,13 @@ type agreementReport struct {
 	ManifestBlob   string `json:"manifest_blob"`
 	Shard          string `json:"shard"`
 	CompleteCorpus bool   `json:"complete_corpus"`
-	// Compared is Agreeing, Ruled and Disagreeing together: every accepted program the run judged. A void program was
-	// run and proved nothing, so it is in none of them.
+	// Compared is Agreeing, Ruled, CheckedStops, Pending and Disagreeing together: every accepted program the run
+	// judged. A void program was run and proved nothing, so it is in none of them.
 	Compared     int `json:"compared"`
 	Agreeing     int `json:"agreeing"`
 	Ruled        int `json:"ruled"`
+	CheckedStops int `json:"checked_stops"`
+	Pending      int `json:"pending"`
 	Disagreeing  int `json:"disagreeing"`
 	MemoryUnsafe int `json:"memory_unsafe"`
 	Refused      int `json:"refused"`
@@ -112,7 +125,8 @@ func agreementUsage(given map[string]bool, manifestPath, shard string) error {
 
 // runAgreement builds head's compiler, classifies every program of the manifest's shard by head alone, and runs every
 // one head accepts through the delta's own runner, natively under the sanitizers, judging each as the delta judges a
-// newly accepted program. A disagreement, a compiler failure or a stale run-time stop exits 1, as the delta's red
+// newly accepted program, then counting apart a listed held stop and a program whose pending sidecar names a task.
+// A disagreement, a compiler failure or a stale run-time stop exits 1, as the delta's red
 // does; a run that proved nothing for a timeout or a missing clang exits 3, as the delta's void does.
 func runAgreement(agreement agreementRun) error {
 	result := agreementReport{Shard: agreement.shard, Verdict: "pass", Disagreements: []agreementDisagreement{}, CompilerFailures: []agreementCompilerFailure{}, StaleRuntimeStops: []string{}, Programs: []agreementProgram{}}
@@ -270,6 +284,15 @@ func runAgreement(agreement agreementRun) error {
 				result.StaleRuntimeStops = append(result.StaleRuntimeStops, record.Path)
 				lines = append(lines, fmt.Sprintf("stale run-time stop %s: it agrees with Node, so its entry leaves the list", record.Path))
 			}
+			judged.OutcomeHash = outcomeHash(*record.Node, *record.JavaScript, *record.Native)
+			// A sidecar is read only for a program that would otherwise disagree: an agreeing program stays agreeing
+			// whether or not one sits beside it.
+			if record.disagrees() {
+				judged.Task, err = pendingTask(headTree, record.Path)
+				if err != nil {
+					return err
+				}
+			}
 			switch {
 			case *record.Agree:
 				result.Agreeing++
@@ -277,9 +300,20 @@ func runAgreement(agreement agreementRun) error {
 			case record.ruled():
 				result.Ruled++
 				judged.Judgment = "ruled"
+			case agreement.heldStops.holds(record.Path, *record.Node, *record.JavaScript, *record.Native):
+				result.CheckedStops++
+				judged.Judgment = "checked-stop"
+			case judged.Task != "" && !memoryUnsafe(*record.Native):
+				// The sidecar excuses whatever the program does while its task is open, a timeout included, so a
+				// pending program that hangs never voids the run. A sanitizer's report or a signal is never excused:
+				// a sidecar filing a memory error as a library gap is how #sq84qqh's five release segfaults hid.
+				result.Pending++
+				judged.Judgment = "pending"
+				lines = append(lines, fmt.Sprintf("pending %s: awaits #%s", record.Path, judged.Task))
 			case record.VoidReason != "":
 				voids = append(voids, record.Path+": "+record.VoidReason)
 				judged.Judgment = "void"
+				judged.OutcomeHash = ""
 			default:
 				result.Disagreeing++
 				judged.Judgment = "disagreeing"
@@ -293,7 +327,7 @@ func runAgreement(agreement agreementRun) error {
 		}
 		result.Programs = append(result.Programs, judged)
 	}
-	result.Compared = result.Agreeing + result.Ruled + result.Disagreeing
+	result.Compared = result.Agreeing + result.Ruled + result.CheckedStops + result.Pending + result.Disagreeing
 	result.TimedOutRuns, result.RetriedRuns, result.StillTimedOutRuns = runner.timedOutRuns, runner.retriedRuns, runner.stillTimedOutRuns
 	red := result.Disagreeing > 0 || len(result.CompilerFailures) > 0 || len(result.StaleRuntimeStops) > 0
 	result.VoidReason = strings.Join(voids, "; ")
@@ -320,7 +354,7 @@ func runAgreement(agreement agreementRun) error {
 			fmt.Printf("%s %s\n", judged.Judgment, judged.Path)
 		}
 	}
-	summary := fmt.Sprintf("agreement: compared %d, agreeing %d, ruled %d, disagreeing %d, memory-unsafe %d, refused %d", result.Compared, result.Agreeing, result.Ruled, result.Disagreeing, result.MemoryUnsafe, result.Refused)
+	summary := fmt.Sprintf("agreement: compared %d, agreeing %d, ruled %d, checked stops %d, pending %d, disagreeing %d, memory-unsafe %d, refused %d", result.Compared, result.Agreeing, result.Ruled, result.CheckedStops, result.Pending, result.Disagreeing, result.MemoryUnsafe, result.Refused)
 	// exitCode prints a returned error last on stderr, so a red or a void run returns the summary as its error's last
 	// line, and the summary stays the last line whatever the exit.
 	if red {
@@ -331,6 +365,42 @@ func runAgreement(agreement agreementRun) error {
 	}
 	fmt.Fprintln(os.Stderr, summary)
 	return nil
+}
+
+// pendingSidecar is a pending sidecar's message, the form internal/oracle's review test holds it to (reviewPending in
+// internal/oracle/review_test.go): awaits #<task>: <reason>, or awaits <branch>: <reason>.
+var pendingSidecar = regexp.MustCompile(`^awaits (#[0-9a-z]{6,9}|[A-Za-z0-9_./-]+): [^\r\n]+$`)
+
+// pendingTask is the task a program's pending sidecar names, without its #, or "" when it has no sidecar, or one that
+// names a branch or isn't of the form. The sidecar is the program's name without its extension, plus .pending, beside
+// it in head. Only a task excuses: the run is sealed and can't ask whether it is open, so the report names it and its
+// reader checks. A branch names no task to check, so its program disagrees.
+func pendingTask(headTree, path string) (string, error) {
+	data, err := os.ReadFile(filepath.Join(headTree, strings.TrimSuffix(path, filepath.Ext(path))+".pending"))
+	if errors.Is(err, os.ErrNotExist) {
+		return "", nil
+	}
+	if err != nil {
+		return "", err
+	}
+	match := pendingSidecar.FindStringSubmatch(strings.TrimSuffix(string(data), "\n"))
+	if match == nil || !strings.HasPrefix(match[1], "#") {
+		return "", nil
+	}
+	return strings.TrimPrefix(match[1], "#"), nil
+}
+
+// outcomeHash is hex SHA-256 over Node's, then JavaScript's, then native's exit, stdout and stderr, in that order.
+// Each field is written as its length, a colon and its bytes, so no output can be read as the end of one field and the
+// start of the next, and a byte moved from one stream to another changes the hash.
+func outcomeHash(node, javascript, native observation) string {
+	digest := sha256.New()
+	for _, run := range []observation{node, javascript, native} {
+		for _, field := range []string{strconv.Itoa(run.Exit), run.Stdout, run.Stderr} {
+			fmt.Fprintf(digest, "%d:%s", len(field), field)
+		}
+	}
+	return hex.EncodeToString(digest.Sum(nil))
 }
 
 // sanitizerNames are the sanitizers whose report in a native run's stderr makes a disagreement memory-unsafe. Each

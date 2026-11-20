@@ -390,7 +390,25 @@ and a native build under the address and undefined-behavior sanitizers
 newly accepted programs, with the same one retry after a runtime timeout, and
 is judged by the same rules: it agrees, or it is a listed negative witness, a
 listed run-time stop or a ruled backend divergence, each exactly as ruled, or it
-disagrees. Accepted programs run `--workers` at once (default available CPUs),
+disagrees. Two more judgments then count apart what would otherwise disagree:
+
+- `checked-stop`: a both-stop, where the JavaScript backend and native have the
+  same exit, stdout and stderr, the exit is 70, and Node exits 0, at a path
+  `cloud/admission-corpus/held-stops.json` lists, with the backends' stderr the
+  row's byte for byte. Each row is a ruling: `{"path", "stderr", "test"}`, the
+  test named as `<file>_test.go: <TestName>`, the one that holds the stop. A
+  both-stop with no row, or with a stderr that differs from its row's, disagrees.
+  `--held-stops` names another list; a missing file is an empty one.
+- `pending`: a program beside a pending sidecar, its name without its extension
+  plus `.pending`, whose message is `awaits #<task>: <reason>`. The sidecar
+  excuses the program only while that task is open, and the run is sealed and
+  can't ask, so the entry carries the task in `task`, a `pending <path>: awaits
+  #<task>` line names it on stderr, and the reader of the run checks it. A
+  pending program that times out is pending, never void. A sidecar naming a
+  branch, `awaits <branch>: <reason>`, names no task, so its program disagrees.
+  An agreeing program with a sidecar is agreeing.
+
+Accepted programs run `--workers` at once (default available CPUs),
 and the lines and the report follow the manifest's order whatever order they
 finish in. The native program runs with `ASAN_OPTIONS=detect_leaks=0`, as the
 oracle's comparison run does: a program that stops with exit 70 still holds
@@ -410,14 +428,20 @@ differ, the first line at which they do, as each has it, and `; memory-unsafe`
 when it is. The last stderr line is the summary:
 
 ```text
-agreement: compared N, agreeing A, ruled R, disagreeing D, memory-unsafe U, refused F
+agreement: compared N, agreeing A, ruled R, checked stops C, pending P, disagreeing D, memory-unsafe U, refused F
 ```
 
-`compared` is agreeing, ruled and disagreeing together; a void program is in
-none of them. `--json` prints the report: those counts, `disagreements` (each
-with its path, Node's, JavaScript's and native's observations, both compiles
-and `memory_unsafe`), `compiler_failures`, `stale_runtime_stops`, every program
-with its judgment, and `verdict`. Exit codes are the delta's: a disagreement, a
+`compared` is agreeing, ruled, checked stops, pending and disagreeing together;
+a void program is in none of them. `--json` prints the report: those counts
+(`checked_stops` and `pending` among them), `disagreements` (each with its
+path, Node's, JavaScript's and native's observations, both compiles and
+`memory_unsafe`), `compiler_failures`, `stale_runtime_stops`, every program
+with its judgment, and `verdict`. A program judged by what it did carries
+`outcome_hash`: hex SHA-256 over Node's, then JavaScript's, then native's exit,
+stdout and stderr, each field written as its length, a colon and its bytes, so
+a diff of two days' reports sees any change in output or stop message even
+where the judgment holds. A refused or void program has none, and a pending one
+carries `task`. Exit codes are the delta's: a disagreement, a
 compiler failure or a listed run-time stop that now agrees exits 1, a run that
 proved nothing (a compile timeout, a runtime timeout that held after its retry,
 or no clang) exits 3 as `void`, and anything else exits 0. A usage error exits 1,
