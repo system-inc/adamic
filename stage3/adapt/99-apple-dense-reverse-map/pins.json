@@ -1,0 +1,8 @@
+{
+  "file": "src/compiler/scanner.ts",
+  "owner": "makeReverseMap",
+  "before": "function makeReverseMap<T>(source: Map<T, number>): T[] {\r\n    const result: T[] = [];\r\n    source.forEach((value, name) => {\r\n        result[value] = name;\r\n    });\r\n    return result;\r\n}",
+  "after": "function makeReverseMap<T>(source: Map<T, number>): (T | undefined)[] {\r\n    let length = 0;\r\n    source.forEach(value => {\r\n        if (value >= length) length = value + 1;\r\n    });\r\n    const result: (T | undefined)[] = [];\r\n    while (result.length < length) result.push(undefined);\r\n    source.forEach((value, name) => {\r\n        result[value] = name;\r\n    });\r\n    return result;\r\n}",
+  "beforeSha256": "bf7594109f01e2ca3ff71f3ef20a365317ad8a9fe6212fe2b59472218709513b",
+  "afterSha256": "70ce3ee9842b5bae637d61f064259e18aa358a219ace77b1260996c9cf1bcea4"
+}
