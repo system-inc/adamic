@@ -128,6 +128,27 @@ class LatentWitnessTests(unittest.TestCase):
             "type_arguments": ["string", "number"],
         })
 
+    def test_latent_witness_uses_nearest_enclosing_census_unit(self):
+        run = self.run_census("on", enabled=True, mutant=os.environ.get("WITNESS_TEST_MUTANT"))
+        census = read_rows(run / "latent.jsonl")
+        self.assertEqual(census[0]["latent_mode"], "first-error")
+        units = {unit["name"]: unit for file in census[1:] for unit in file["units"] if "name" in unit}
+        self.assertNotIn("nested", units)
+        witnesses = {row["name"]: row for row in read_rows(run / "witness.jsonl")}
+        for target, owner, site, argument in (
+            ("arrowTarget", "arrowOwner", "28:29", "number"),
+            ("nestedTarget", "nestedOwner", "35:16", "string"),
+        ):
+            with self.subTest(target=target):
+                self.assertFalse(units[target]["instantiated"])
+                witness = witnesses[target]
+                self.assertEqual(witness["status"], "forecast")
+                self.assertEqual(witness["caller"], units[owner]["where"])
+                self.assertEqual(witness["call_site"], f"{self.source}/a-caller.a:{site}")
+                self.assertEqual(witness["type_arguments"], [argument])
+                self.assertEqual((witness["call_count"], witness["skipped_non_concrete"]), (1, 0))
+                self.assertNotIn("stop", witness)
+
     def test_latent_witness_rejects_open_type_arguments(self):
         run = self.run_census("on", enabled=True, mutant=os.environ.get("WITNESS_TEST_MUTANT"))
         witness = next(row for row in read_rows(run / "witness.jsonl") if row["name"] == "open")

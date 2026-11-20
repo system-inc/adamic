@@ -14,3 +14,11 @@ export function open<T>(value: T): T {
 export function rejected(): number {
     return "checker-rejected program";
 }
+
+export function arrowTarget<T>(value: T): T {
+    return value;
+}
+
+export function nestedTarget<T>(value: T): T {
+    return value;
+}

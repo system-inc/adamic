@@ -11,3 +11,4 @@ mutation variables unset.
 | Append a witness stop to its caller's census findings | `WITNESS_TEST_MUTANT=LATENT_MUTANT_WITNESS_FINDING` | `test_latent_witness_preserves_census_and_meter` |
 | Append a witness unit to the timing stream | `WITNESS_TEST_MUTANT=LATENT_MUTANT_WITNESS_TIMING` | `test_latent_witness_preserves_census_and_meter` |
 | Lower the witness on the shared state, leaving a failed instantiation cached for a later unit | `LATENT_MUTANT_WITNESS_SHARED_STATE=1` | `TestLatentWitnessSnapshotPreservesLaterCallResult` |
+| Reset the caller at every function-like node | `WITNESS_TEST_MUTANT=LATENT_MUTANT_WITNESS_RESET_OWNER` | `test_latent_witness_uses_nearest_enclosing_census_unit` |

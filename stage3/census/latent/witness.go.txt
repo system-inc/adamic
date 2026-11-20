@@ -36,12 +36,15 @@ type latentWitnessStop struct {
 
 func latentWriteWitnesses(ctx context.Context, program *load.Program, records []LatentFile, output io.Writer) {
 	// A finished census supplies the unit inventory and the unmodified reach ledger.
-	units := map[string]bool{}
+	units := map[string]map[string]bool{}
 	targets := map[string]*latentWitnessRecord{}
 	var ordered []*latentWitnessRecord
 	for _, record := range records {
 		for _, unit := range record.Units {
-			units[unit.Where] = true
+			if units[unit.Kind] == nil {
+				units[unit.Kind] = map[string]bool{}
+			}
+			units[unit.Kind][unit.Where] = true
 			if unit.Status != "deferred_generic_instantiation" || unit.Instantiated || unit.BodyEnd <= unit.BodyStart {
 				continue
 			}
@@ -61,6 +64,7 @@ func latentWriteWitnesses(ctx context.Context, program *load.Program, records []
 			defer release()
 			base := &lowering{program: program, checker: checked, result: &ir.Program{}, this: -1, functionIndex: -1}
 			registered := false
+			resetOwner := os.Getenv("LATENT_MUTANT_WITNESS_RESET_OWNER") == "1"
 			observe := func(call *ast.Node, owner string) {
 				resolved := checked.GetResolvedSignature(call)
 				if resolved == nil || resolved.Declaration() == nil {
@@ -107,13 +111,13 @@ func latentWriteWitnesses(ctx context.Context, program *load.Program, records []
 			}
 			var visit func(*ast.Node, string)
 			visit = func(node *ast.Node, owner string) {
-				// Calls in a nested function belong to that function's census unit.
-				if ast.IsFunctionLike(node) {
+				// Preserve the nearest census unit across any intervening function.
+				if resetOwner && ast.IsFunctionLike(node) {
 					owner = ""
 				}
-				if node.Parent == file.AsNode() || node.Kind == ast.KindFunctionDeclaration {
+				if positions := units[node.Kind.String()]; positions != nil {
 					where := program.Where(node)
-					if units[where] {
+					if positions[where] {
 						owner = where
 					}
 				}
