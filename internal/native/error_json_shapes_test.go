@@ -21,6 +21,8 @@ type errorJSONRow struct {
 var errorJSONRows = []errorJSONRow{
 	{"exceptions.c", "", "error_shape", true, "", "", "throw new Error('x')"},
 	{"exceptions.c", "", "absent_message_shape", true, "", "", "throw new Error()"},
+	{"exceptions.c", "", "coded_error_shape", true, "code", "code", "require('node:buffer').Buffer.allocUnsafe(-1)"},
+	{"exceptions.c", "", "plain_coded_error_shape", true, "code", "code", "require('node:buffer').Buffer.allocUnsafe(2**53-1)"},
 	{"process.c", "valid_code", "shape", true, "code", "code", "process.exitCode=NaN"},
 	{"node_fs_directory.c", "", "coded_error_shape", true, "code", "code", "require('node:fs').symlinkSync('x\\0y','/__adamic_error_json_missing__/link')"},
 	{"node_fs_file.c", "realpath_system_error", "shape", true, "errno,code,syscall,path", "errno,code,syscall,path", "require('node:fs').realpathSync.native('/__adamic_error_json_missing__/entry')"},
