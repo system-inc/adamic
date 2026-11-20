@@ -15,7 +15,8 @@ import (
 // the union's boxed string | number, and native crashed in adamic_retain (a sanitizer SEGV) where Node prints
 // 3number. Two members sharing a literal tag (XA and YA, both Kind.A) let the switch leave that union
 // standing, but the hazard is the storage, so the twins stop too: without the closure, narrowed by an if,
-// and a plain XA | YA. The control, whose shared-tag members both store a as a string, lowers and agrees
+// a plain XA | YA, and the same union with its members intersected with a tag object, one or both, which
+// crashed the same way past the first cut (J-3pje39m). The control, whose shared-tag members both store a as a string, lowers and agrees
 // with Node on release and sanitized native and on JavaScript. element_key's row is whatever the
 // literal-key element read does, measured: it must stop or agree, never crash.
 // internal/lower/union_field_storage.mutants.md has the mutant.
@@ -24,12 +25,14 @@ func TestUnionFieldStorage(t *testing.T) {
 	directory := "internal/oracle/testdata/union_field_storage"
 	const differs = "a field read through a union whose members store .a in different representations"
 	stops := map[string]string{
-		"workers":       differs,
-		"no_capture":    differs,
-		"if_narrow":     differs,
-		"plain_union":   differs,
-		"element_key":   "measure",
-		"agree_control": "",
+		"workers":           differs,
+		"no_capture":        differs,
+		"if_narrow":         differs,
+		"plain_union":       differs,
+		"intersection":      differs,
+		"intersection_both": differs,
+		"element_key":       "measure",
+		"agree_control":     "",
 	}
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
