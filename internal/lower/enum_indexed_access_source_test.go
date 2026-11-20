@@ -241,10 +241,11 @@ function finishUpdate<T extends SyntaxNode>(updated: Mutable<T>, original: T): T
 `
 	_, err := lowerSourceAs(t, source, ".ts")
 	var refused *Refused
-	if !errors.As(err, &refused) {
-		t.Fatalf("got %v, want a refusal", err)
+	// Its first stop is the writable view, owed its own ruling on #38kdd4d (stage3/adapt/99-memory-factory-update-view),
+	// never the enum member slot: the mapped template's kind is read, and Mutable<T> seen as T is what stays.
+	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "main.ts:11:16: Adamic 0.1 refuses a value of type Mutable<T> seen as T, a type parameter whose constraint SyntaxNode can be written") {
+		t.Fatalf("got %v, want the refusal of Mutable<T> seen as T at main.ts:11:16", err)
 	}
-	t.Logf("finishUpdate stops with: %v", err)
 }
 
 // A constraint that is itself generic fails closed: T extends { kind: U } gives T["kind"] the constraint U, so
