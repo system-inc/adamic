@@ -179,15 +179,15 @@ func reportOf(t *testing.T) string {
 	}}
 	results := []gameResult{
 		{benchmark: fasta, cells: []gameCell{
-			{name: adamicLanguage, best: timed(2 * time.Second)},
-			{name: nodeLanguage, best: timed(5 * time.Second)},
-			{name: "go-2", best: timed(3 * time.Second)},
-			{name: "rust-7", best: timed(time.Second)},
+			{name: adamicLanguage, best: timed(2 * time.Second), slowest: timed(2100 * time.Millisecond)},
+			{name: nodeLanguage, best: timed(5 * time.Second), slowest: timed(5100 * time.Millisecond)},
+			{name: "go-2", best: timed(3 * time.Second), slowest: timed(3100 * time.Millisecond)},
+			{name: "rust-7", best: timed(time.Second), slowest: timed(1100 * time.Millisecond)},
 		}},
 		{benchmark: mandelbrot, cells: []gameCell{
-			{name: adamicLanguage, best: measurement{failure: "adamic build stopped: exit status 1 NotYet: process.stdout.write of a Uint8Array"}},
-			{name: nodeLanguage, best: timed(9 * time.Second)},
-			{name: "go-4", best: timed(time.Second)},
+			{name: adamicLanguage, best: measurement{failure: "adamic build stopped: exit status 1 NotYet: process.stdout.write of a Uint8Array"}, slowest: measurement{failure: "adamic build stopped: exit status 1 NotYet: process.stdout.write of a Uint8Array"}},
+			{name: nodeLanguage, best: timed(9 * time.Second), slowest: timed(9100 * time.Millisecond)},
+			{name: "go-4", best: timed(time.Second), slowest: timed(1100 * time.Millisecond)},
 		}},
 	}
 	file := gameFile{
@@ -245,10 +245,10 @@ func TestAOneThreadRowIsNeverHeadlinedAgainstSeveralThreads(t *testing.T) {
 		{File: "nbody/nbody.rust-9.rust", Language: rustLanguage, Bases: []string{fastestBasis}, Threads: severalThreads, GameElapsed: 2.192, GameCpu: 2.189},
 	}}
 	results := []gameResult{{benchmark: nbody, cells: []gameCell{
-		{name: adamicLanguage, best: timed(2 * time.Second)},
-		{name: nodeLanguage, best: timed(5 * time.Second)},
-		{name: "go-3", best: timed(time.Second)},
-		{name: "rust-9", best: timed(4 * time.Second)},
+		{name: adamicLanguage, best: timed(2 * time.Second), slowest: timed(2100 * time.Millisecond)},
+		{name: nodeLanguage, best: timed(5 * time.Second), slowest: timed(5100 * time.Millisecond)},
+		{name: "go-3", best: timed(time.Second), slowest: timed(1100 * time.Millisecond)},
+		{name: "rust-9", best: timed(4 * time.Second), slowest: timed(4100 * time.Millisecond)},
 	}}}
 	headline := strings.Join(gameHeadline(results), "\n")
 	if strings.Contains(headline, "rust-9") || !strings.Contains(headline, "against Rust's one-thread entries: faster on 0 of 0") {
@@ -271,6 +271,55 @@ func TestAOneThreadRowIsNeverHeadlinedAgainstSeveralThreads(t *testing.T) {
 	file.Programs[0].Entries[0].Threads = oneThread
 	if err := file.validate(); err != nil {
 		t.Errorf("the same entry running one thread was refused: %v", err)
+	}
+}
+
+// A call inside the noise is no win. J-1ee69rp counted spectralnorm a win over Go at 1.00x, 0.328 s
+// against 0.328 s; here Adamic's runs span 0.328 s to 0.335 s and go's 0.328 s to 0.340 s, so the
+// ranges overlap and the headline and the one thread basis's list both say within the noise, never
+// faster or a win. Against rust-6, whose fastest run is 0.400 s, the ranges don't overlap, and Adamic
+// still reads faster. The mutant is gameCall reduced to best against best: it calls the equal bests
+// faster or slower, and never within the noise.
+func TestAGameCallInsideTheNoiseIsNoWin(t *testing.T) {
+	t.Parallel()
+	spectralnorm := gameProgram{Name: "spectralnorm", Adamic: "spectralnorm", Size: 5500, GameSize: 5500, Entries: []gameEntry{
+		{File: "spectralnorm/spectralnorm.go", Language: goLanguage, Bases: []string{oneThreadBasis}, Threads: oneThread, GameElapsed: 5.358, GameCpu: 5.363},
+		{File: "spectralnorm/spectralnorm.rust-6.rust", Language: rustLanguage, Bases: []string{oneThreadBasis}, Threads: oneThread, GameElapsed: 5.288, GameCpu: 5.292},
+	}}
+	results := []gameResult{{benchmark: spectralnorm, cells: []gameCell{
+		{name: adamicLanguage, best: timed(328 * time.Millisecond), slowest: timed(335 * time.Millisecond)},
+		{name: nodeLanguage, best: timed(time.Second), slowest: timed(1100 * time.Millisecond)},
+		{name: "go", best: timed(328 * time.Millisecond), slowest: timed(340 * time.Millisecond)},
+		{name: "rust-6", best: timed(400 * time.Millisecond), slowest: timed(420 * time.Millisecond)},
+	}}}
+	if got := gameCall(results[0].cells[gameAdamic], results[0].cells[gameFirstEntry]); got != withinTheNoise {
+		t.Errorf("Adamic 0.328 s to 0.335 s against go 0.328 s to 0.340 s is called %q; want %q", got, withinTheNoise)
+	}
+	if got := gameCall(results[0].cells[gameAdamic], results[0].cells[gameFirstEntry+1]); got != adamicFaster {
+		t.Errorf("Adamic 0.328 s to 0.335 s against rust-6 0.400 s to 0.420 s is called %q; want %q", got, adamicFaster)
+	}
+	headline := strings.Join(gameHeadline(results), "\n")
+	for _, want := range []string{
+		"- against Go's one-thread entries: faster on 0 of 1 (none), slower on 0 (none), within the noise on 1 (spectralnorm go 1.00x)",
+		"- against Rust's one-thread entries: faster on 1 of 1 (spectralnorm rust-6 0.82x), slower on 0 (none), within the noise on 0 (none)",
+	} {
+		if !strings.Contains(headline, want) {
+			t.Errorf("the headline doesn't read %q:\n%s", want, headline)
+		}
+	}
+	var out bytes.Buffer
+	printGameReport(&out, gameFile{Source: gameSource{GameMachine: "the game's i5-3330"}}, results)
+	report := out.String()
+	wins := strings.Index(report, "wins on the one thread basis")
+	won := strings.Index(report, "- spectralnorm: Adamic 0.328 s against rust-6's 0.400 s (one thread), 0.82x")
+	ties := strings.Index(report, "within the noise on the one thread basis, where the two runners' fastest-to-slowest ranges overlap:")
+	tie := strings.Index(report, "- spectralnorm: Adamic 0.328 s against go's 0.328 s (one thread), 1.00x")
+	headlineAt := strings.Index(report, "headline, one thread against one thread only")
+	if wins < 0 || !(wins < won && won < ties && ties < tie && tie < headlineAt) {
+		t.Fatalf("go isn't listed within the noise after the wins, or rust-6 isn't a win (wins at %d, rust-6 %d, within the noise %d, go %d, headline %d):\n%s", wins, won, ties, tie, headlineAt, report)
+	}
+	if strings.Count(report, "against go's") != 1 {
+		t.Errorf("go is listed more than once, as a win or a loss as well as within the noise:\n%s", report)
 	}
 }
 
