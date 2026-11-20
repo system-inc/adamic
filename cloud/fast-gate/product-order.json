@@ -2907,6 +2907,10 @@
     "internal/lower TestProduct_KindHelperAliasArgumentMutant": [],
     "internal/lower TestProduct_KindHelperMixedDisjunctionMutant": [],
     "internal/lower TestProduct_KindHelperDuplicateCaseMutant": [],
-    "internal/lower TestProduct_KindHelperEmptyDefaultTailMutant": []
+    "internal/lower TestProduct_KindHelperEmptyDefaultTailMutant": [],
+    "internal/lower TestProduct_KindAliasInitializerMutant": [],
+    "internal/lower TestProduct_KindAliasRunsFirstMutant": [],
+    "internal/lower TestProduct_KindAliasRewrittenMutant": [],
+    "internal/lower TestProduct_KindAliasLetMutant": []
   }
 }
