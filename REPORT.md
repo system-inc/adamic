@@ -272,8 +272,12 @@ retained the boolean argument. The amended commit passes the predicate
 that checks whether the insertion anchor already owns a pending edit.
 The two affected test groups and sanctioned-API freshness passed on the
 amended commit. Regeneration produced the same sanctioned manifest, and
-the adapted-tree product reverified under the same key. A whole-lane
-rerun on the amended commit is in progress.
+the adapted-tree product reverified under the same key.
+
+`go test -v -parallel 4 -timeout 60m ./stage3/lane` exited 0 on
+`ad1db310553aa7a8986d5117991870939a7bd1fb`. All 430 tests passed in
+one invocation, including all 398 manifest shards, byte comparisons,
+sanctioned-API freshness, and both insertion test groups.
 
 ## Split refusal scans and mutants
 
