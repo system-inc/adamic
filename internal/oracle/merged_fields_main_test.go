@@ -9,8 +9,8 @@ import (
 // reads undefined from an absent merged field; Adamic stops before trusting T.
 // Like fixtures.checked, this list pins each backend stop independently of Node.
 var mergedFieldRuledDivergences = []struct{ file, sourceOutput, stop string }{
-	{"merge_missing.a", "undefined\n", "adamic: panic: field read failed: new Missing().promised is not initialized; expected number, found missing\n"},
-	{"merge_missing_computed.a", "undefined\n", "adamic: panic: field read failed: new Missing()['promised'] is not initialized; expected number, found missing\n"},
+	{"merge_missing.a", "undefined\n", "adamic: panic: field read failed: new Missing().promised (class Missing, interface merge) is not initialized; expected number, found missing\n"},
+	{"merge_missing_computed.a", "undefined\n", "adamic: panic: field read failed: new Missing()['promised'] (class Missing, interface merge) is not initialized; expected number, found missing\n"},
 }
 
 func init() {

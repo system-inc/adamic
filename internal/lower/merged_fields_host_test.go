@@ -12,6 +12,18 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 )
 
+// Node itself supplies the methods that fs.d.ts contributes to Stats through
+// its merged interface. Reading one uses the host method lowering.
+func TestMergedNodeStatsUsesHostMethod(t *testing.T) {
+	t.Parallel()
+	program := lowersAndAgreesWithNodeAs(t, `import { statSync, type Stats } from "node:fs";
+const entry: Stats = statSync("/");
+console.log(String(entry.isDirectory()));`, ".ts")
+	if program.CheckedFields["isDirectory"] {
+		t.Fatal("Stats.isDirectory was treated as a checked program merge")
+	}
+}
+
 // Mutant run and restored: removing the rule 800 check returns the callable-contract
 // Refused here. The module scan visits post before the ordinary rule walk reaches new.
 func TestMergedHostMemberUsesNodeNotYet(t *testing.T) {
