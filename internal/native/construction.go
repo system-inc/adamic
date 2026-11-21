@@ -15,17 +15,11 @@ func constructionFields(fields []ir.Field) bool {
 	return false
 }
 
+// constructionNeeded is whether any object literal has an absent field or any array literal metadata,
+// read from the emitter's one walk of the program (prepareObjectMetadata).
 func (e *emitter) constructionNeeded() bool {
-	found := false
-	walkExpressions(e.program, func(expression ir.Expression) {
-		switch value := expression.(type) {
-		case ir.ObjectLiteral:
-			found = found || constructionFields(value.Fields)
-		case ir.ArrayLiteral:
-			found = found || len(value.Metadata) != 0
-		}
-	})
-	return found
+	e.prepareObjectMetadata()
+	return e.objectMetadata.construction
 }
 
 func (e *emitter) nodeArrayLiteral(literal ir.ArrayLiteral) string {
