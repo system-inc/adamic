@@ -14,3 +14,19 @@ I searched `stage3/adapt` for `getJSDocTagsWorker`, `currentNode`, `filterOwnedJ
 | After | `89b3a88005f8a53e63fbb7f40b211db91e24a2715c849760bd5e07c5700ffd7a` |
 
 The owner gate stopped the task before implementation. Proofs 1–6 require a landed candidate tree and remain unrun. The ledger entry depends on those results.
+
+## Follow-up with the later adapter name
+
+The remote still named `041512efd4d4bd497ccfccf817c05df546cd58ca` as main when I restarted. The renamed directory is `99-correctness-tags-cache-table`. I audited the 22 adapters that sort after it, including their owner manifests and in-script pins. The matching parser entries in `99-method-value-views` pin four individual functions: `parseTag`, `parseJSDocLink`, `parseIntersectionTypeOrHigher`, and `parseUnionTypeOrHigher`. Their references to `currentNode` are calls inside those pins. The generated-name adapter locates particular `autoGenerate` accesses and import specifiers in `utilitiesPublic.ts`. The later pins inspected do not cover the edited declarations. The whole `Parser` pin now runs before the proposed edit.
+
+## Stop at proof 1
+
+I extracted the four affected files from the existing `refs/stage3/99-correctness-supported-extensions-after` snapshot. The adaptation scripts and apply recipe were byte-identical between that snapshot’s Adamic main and the fresh main named above. These commands exercised the draft on that input before any full-tree run.
+
+| Command | Exit | Result |
+| --- | ---: | --- |
+| `NODE_PATH=/workspace/scratch/jsdoc-scout/adamic/stage3/api/node_modules node stage3/adapt/99-correctness-tags-cache-table/adapt.cjs /workspace/scratch/tags-cache-proof/stage` | 0 | First application wrote four files. |
+| Same command, second invocation | 1 | `src/compiler/utilitiesPublic.ts: drift at getJSDocTagsWorker`. |
+| Read-only TypeScript 6.0.3 AST probe of the adapted source | 0 | The table declaration exists with numeric kind 244. The enum reverse lookup names that value `FirstStatement`, and the locator returned no match for the requested `VariableStatement` selector. |
+
+The second invocation failed the idempotence check. Comparing `node.kind` with the numeric enum value for the selector would address the observed locator error. The draft remains in the scratch worktree. The restore mutant and proofs 2–6 remain unrun. The ledger entry awaits passing proofs.
