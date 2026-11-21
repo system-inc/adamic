@@ -32,7 +32,7 @@ step gofmt bash -c 'difference=$(gofmt -d internal/ir/views.go internal/lower/vi
 step vet go vet ./internal/ir/ ./internal/lower/ ./internal/native/ ./internal/javascript/ ./internal/oracle/ ./stage3/census/latent/statecopy/
 
 # The pins at head.
-step "new oracle pins" go test -count=1 -run 'TestViewStaticClass|TestFX7P67' ./internal/oracle/ -v
+step "new oracle pins" go test -count=1 -run 'TestViewStaticClass|TestFX7StaticClassAgreesWithNode' ./internal/oracle/ -v
 show
 step "lower pin" go test -count=1 -run 'TestViewStaticsAdmittedAsksFunctionAndObject' ./internal/lower/ -v
 show
@@ -55,11 +55,11 @@ step "lower views" go test -count=1 -run 'View|view|Untagged' ./internal/lower/
 # no adamic_view_static_read either, so the object-field pins go red at the link too.
 cp scratch-s03p1/view_unions_untagged.c.main "$runtime"
 grep -q statics_admitted "$runtime" && { echo "FAIL native mutant 1 not applied"; ok=0; }
-want_red "native admission mutant 1 (view_unions_untagged.c at main)" go test -count=1 -run 'TestViewStaticClassAgreesWithNode|TestFX7P67' ./internal/oracle/ -v
+want_red "native admission mutant 1 (view_unions_untagged.c at main)" go test -count=1 -run 'TestViewStaticClassAgreesWithNode|TestFX7StaticClassAgreesWithNode' ./internal/oracle/ -v
 restore "$runtime"
 # Native admission mutant 2: only the object branch's admission refused again, everything else of head kept.
 mutate "$runtime" 'if (!contract->statics_admitted || plain_union_holds_callable(contracts, count, parent)) { goto complete; }' 'if (true || plain_union_holds_callable(contracts, count, parent)) { goto complete; }' || ok=0
-want_red "native admission mutant 2 (plain_matches refuses every class constructor)" go test -count=1 -run 'TestViewStaticClassAgreesWithNode|TestFX7P67' ./internal/oracle/ -v
+want_red "native admission mutant 2 (plain_matches refuses every class constructor)" go test -count=1 -run 'TestViewStaticClassAgreesWithNode|TestFX7StaticClassAgreesWithNode' ./internal/oracle/ -v
 restore "$runtime"
 
 # The object-field road (ir.Program's ObjectReadContract): a class constructor at a field typed Inner itself.
