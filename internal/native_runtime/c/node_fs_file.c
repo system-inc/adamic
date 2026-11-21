@@ -173,35 +173,9 @@ static char *bytes(const adamic_string *value) {
     return result;
 }
 
-// Node's ERR_INVALID_ARG_VALUE uses inspect followed by a 128-unit preview.
+// Node's ERR_INVALID_ARG_VALUE ends with util.inspect's 128-unit preview of the value (string.c).
 static void invalid_value(const char *prefix, const adamic_string *value) {
-    size_t capacity = value->length * 4 + 8;
-    char *shown = malloc(capacity);
-    if (shown == NULL) { adamic_panic("out of memory", 13); }
-    char quote = '\'';
-    if (memchr(value->bytes, '\'', value->length) != NULL) {
-        quote = memchr(value->bytes, '"', value->length) == NULL ? '"' :
-            memchr(value->bytes, '`', value->length) == NULL && memchr(value->bytes, '$', value->length) == NULL ? '`' : '\'';
-    }
-    size_t at = 0; shown[at++] = quote;
-    for (size_t i = 0; i < value->length; i++) {
-        unsigned char c = (unsigned char)value->bytes[i];
-        if (c == '\\' || c == (unsigned char)quote) { shown[at++] = '\\'; shown[at++] = (char)c; }
-        else if (c == '\n' || c == '\r' || c == '\t' || c == '\b' || c == '\f' || c == '\v') {
-            shown[at++] = '\\'; shown[at++] = c == '\n' ? 'n' : c == '\r' ? 'r' : c == '\t' ? 't' : c == '\b' ? 'b' : c == '\f' ? 'f' : 'v';
-        } else if (c < 32 || c == 127) { snprintf(shown + at, 5, "\\x%02x", c); at += 4; }
-        else { shown[at++] = (char)c; }
-    }
-    shown[at++] = quote; shown[at] = 0;
-    adamic_string *inspection = adamic_decode_utf8((const unsigned char *)shown, at);
-    free(shown);
-    adamic_string *preview = inspection;
-    if (adamic_string_length(inspection) > 128) {
-        adamic_string *slice = adamic_string_slice(inspection, 0, 128, true);
-        static adamic_string dots = ADAMIC_STRING("...");
-        preview = adamic_string_concat(2, (adamic_string *const[]){slice, &dots});
-        adamic_release(slice); adamic_release(inspection);
-    }
+    adamic_string *preview = adamic_string_inspect_received(value);
     size_t length = strlen(prefix) + preview->length + 1;
     char *message = malloc(length);
     if (message == NULL) { adamic_panic("out of memory", 13); }
