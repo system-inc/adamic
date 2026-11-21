@@ -348,6 +348,36 @@
       "ruling_task": "#0sps03r",
       "lifting_task": "#zhrjf2t",
       "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'fd')\n"
+    },
+    "6aaf7da68a35e63d14018ca84e544aaa5e76dbfb3da0df87758f495c5f3a6e66": {
+      "path": "internal/oracle/testdata/enum_views/stop_literal_getter.a",
+      "ruling_task": "#zhgxzjg",
+      "lifting_task": "#80kf7th",
+      "stderr": "adamic: panic: an object literal's getter isn't read by a run-time key yet (reading 'a')\n"
+    },
+    "6fa57d9165ea9938657b730800803b198b7acb0c3739ac7d6f76c98e86f8f33e": {
+      "path": "internal/oracle/testdata/json_errors_named/named.a",
+      "ruling_task": "#z4a9p9e",
+      "lifting_task": "#ejcaz75",
+      "stderr": "adamic: panic: JSON.stringify of an Error whose name, or a message it was made without, was written isn't built yet\n"
+    },
+    "9971402ead5718a67a672267a4661d4141f57ca0ac7b299c25db01fee7ba86a3": {
+      "path": "internal/oracle/testdata/regexp_structural/in.a",
+      "ruling_task": "#0sps03r",
+      "lifting_task": "#zhrjf2t",
+      "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'test')\n"
+    },
+    "7e57cc8c625333e244f1677b97a9d757237f86e5dce1bba3f197af636397afea": {
+      "path": "internal/oracle/testdata/review/refused/fxspptb_903f25b_iterator_own.a",
+      "ruling_task": "#0sps03r",
+      "lifting_task": "#zhrjf2t",
+      "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'next')\n"
+    },
+    "ad58ca58e0c53fe29c5bcbc23e8e548bcdf0bb0ebd9fd46df007f4fd9f809987": {
+      "path": "internal/oracle/testdata/enum_views/stop_proto.a",
+      "ruling_task": "#0sps03r",
+      "lifting_task": "#fzv1zwa",
+      "stderr": "adamic: panic: __proto__ isn't read by a run-time key yet (reading '__proto__')\n"
     }
   }
 }
