@@ -127,6 +127,11 @@ func (l *lowering) nodeBufferView(from, to *checker.Type) bool {
 	return true
 }
 
+// nodeBufferAscii is 'ascii', a decode only: toString reads each byte as its low seven bits, where
+// Buffer.from and Hash.update write each UTF-16 unit as its low eight, a latin1 write no runtime branch
+// makes yet. So libraryNodeBuffer admits it for toString alone, and the other two stop by name.
+const nodeBufferAscii = 4
+
 func (l *lowering) nodeBufferEncoding(node *ast.Node, fallback int) (int, error) {
 	if node == nil {
 		return fallback, nil
@@ -142,6 +147,8 @@ func (l *lowering) nodeBufferEncoding(node *ast.Node, fallback int) (int, error)
 			return 2, nil
 		case "hex":
 			return 3, nil
+		case "ascii":
+			return nodeBufferAscii, nil
 		}
 	}
 	return 0, l.notYet(node, "a Buffer encoding other than a census literal")
@@ -216,6 +223,13 @@ func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error
 	if encoding, err = l.nodeBufferEncoding(encodingNode, 0); err != nil {
 		return nil, true, err
 	}
+	if encoding == nodeBufferAscii && operation != "buffer_string" {
+		writer := "Buffer.from"
+		if operation == "hash_update" {
+			writer = "Hash.update"
+		}
+		return nil, true, l.notYet(encodingNode, writer+" with the ascii encoding, a latin1 write")
+	}
 	values := []ir.Expression{}
 	if receiver != nil {
 		value, err := l.expression(receiver)
@@ -226,14 +240,21 @@ func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error
 	}
 	if operation == "buffer_string" {
 		for index := 1; index <= 2; index++ {
-			value := ir.Expression(ir.NumberConstant{Value: 0})
+			fallback := ir.Expression(ir.NumberConstant{Value: 0})
 			if index == 2 {
-				value = ir.NumberConstant{Value: math.Inf(1)}
+				fallback = ir.NumberConstant{Value: math.Inf(1)}
 			}
+			value := fallback
 			if len(args) > index {
 				value, err = l.expression(args[index])
 				if err != nil {
 					return nil, true, err
+				}
+				// The undefined literal is the default, as an omitted offset is: Node reads
+				// toString(encoding, undefined, 3) as (encoding, 0, 3) and (encoding, 2, undefined) to
+				// the end. It has no effect to keep. A number | undefined still stops below.
+				if _, isUndefined := value.(ir.Undefined); isUndefined {
+					value = fallback
 				}
 				if value.Type() != ir.Number {
 					return nil, true, l.notYet(args[index], "a non-number Buffer byte offset")

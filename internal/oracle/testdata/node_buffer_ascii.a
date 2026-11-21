@@ -1,0 +1,84 @@
+import { Buffer } from 'node:buffer';
+// toString('ascii'): each byte decodes as its low seven bits, for all 256, so 0x80 is \u0000 and 0xff
+// \u007f, and the result's UTF-8 is the masked bytes one for one. The range is toString's own, where a
+// negative start is 0 and not counted from the end as slice's is. Every result prints through its char
+// codes or its UTF-8 bytes in hex, never as raw control characters.
+function hex(text: string): string {
+ return Buffer.from(text).toString('hex');
+}
+function shown(label: string, text: string): void {
+ console.log(`${label} ${text.length} ${hex(text)}`);
+}
+const every: number[] = [];
+for (let byte = 0; byte < 256; byte += 1) { every.push(byte); }
+const decoded = Buffer.from(every).toString('ascii');
+shown('all', decoded);
+let codes = '';
+for (let at = 0; at < decoded.length; at += 1) { codes += `${decoded.charCodeAt(at)} `; }
+console.log(codes);
+console.log(`${decoded.charCodeAt(0x41)} ${decoded.charCodeAt(0x7f)} ${decoded.charCodeAt(0x80)} ${decoded.charCodeAt(0xc1)} ${decoded.charCodeAt(0xff)}`);
+// One byte at a time, the high ones among them, each its own Buffer.
+let singles = '';
+for (const byte of [0x00, 0x0a, 0x41, 0x7f, 0x80, 0x81, 0xbf, 0xc0, 0xe9, 0xfe, 0xff]) {
+ singles += `${Buffer.from([byte]).toString('ascii').charCodeAt(0)} `;
+}
+console.log(singles);
+// Every range row on one record, toString's range and not slice's.
+const record = Buffer.from('>ONE\nACGT');
+shown('()', record.toString('ascii'));
+shown('(1, 3)', record.toString('ascii', 1, 3));
+shown('(-2)', record.toString('ascii', -2));
+shown('(2, -1)', record.toString('ascii', 2, -1));
+shown('(1.5, 3.9)', record.toString('ascii', 1.5, 3.9));
+shown('(NaN, 2)', record.toString('ascii', NaN, 2));
+shown('(10, 20)', record.toString('ascii', 10, 20));
+shown('(3, 1)', record.toString('ascii', 3, 1));
+shown('(0, Infinity)', record.toString('ascii', 0, Infinity));
+shown('(-Infinity)', record.toString('ascii', -Infinity));
+shown('(undefined, 3)', record.toString('ascii', undefined, 3));
+shown('(2, undefined)', record.toString('ascii', 2, undefined));
+shown('(2, NaN)', record.toString('ascii', 2, NaN));
+console.log(`hex (-2) ${record.toString('hex', -2)}`);
+// The same rows as values the program computes.
+const starts: number[] = [1, -2, 2, 1.5, NaN, 10, 3, 0, -Infinity, 0, 2];
+const ends: number[] = [3, 9, -1, 3.9, 2, 20, 1, Infinity, 4, -0.5, 9];
+for (let index = 0; index < starts.length; index += 1) {
+ const start = starts[index] ?? 0;
+ const end = ends[index] ?? 0;
+ shown(`computed ${start} ${end}`, record.toString('ascii', start, end));
+}
+// A view reads its own bytes, high ones masked, and an empty Buffer is "".
+const high = Buffer.from([0x3e, 0xc1, 0x80, 0xff, 0x0a, 0xbe, 0x41]);
+shown('view', record.slice(5).toString('ascii'));
+shown('view range', record.subarray(1, 8).toString('ascii', 1, 3));
+shown('high view', high.slice(1, 6).toString('ascii'));
+shown('high view (-2)', high.subarray(2).toString('ascii', -2));
+const empty = Buffer.from('');
+shown('empty', empty.toString('ascii'));
+shown('empty range', empty.toString('ascii', 0, 5));
+shown('empty view', record.slice(4, 4).toString('ascii'));
+// revcomp's shape: bytes written into an allocUnsafe Buffer, a line break every few, then the written
+// part read as target.slice(0, count).toString('ascii').
+function complement(base: number): number {
+ if (base === 0x41) { return 0x54; }
+ if (base === 0x43) { return 0x47; }
+ if (base === 0x47) { return 0x43; }
+ if (base === 0x54) { return 0x41; }
+ return base | 0x80;
+}
+function reversed(line: string, width: number): string {
+ const target = Buffer.allocUnsafe(line.length * 2 + 1);
+ let count = 0;
+ for (let at = line.length - 1; at >= 0; at -= 1) {
+  target[count] = complement(line.charCodeAt(at));
+  count += 1;
+  if ((line.length - at) % width === 0) {
+   target[count] = 10;
+   count += 1;
+  }
+ }
+ return target.slice(0, count).toString('ascii');
+}
+for (const line of ['ACGT', 'GATTACA', 'AACCGGTTN', 'TTAGGG?CCCTAA', '']) {
+ shown(`revcomp ${line.length}`, reversed(line, 3));
+}

@@ -39,6 +39,8 @@ mutants = [
     ('alloc_unsafe_failure_panics', buffer, 'adamic_throw_coded("RangeError", "ERR_MEMORY_ALLOCATION_FAILED",', 'adamic_panic(message, sizeof message - 1); adamic_throw_coded("RangeError", "ERR_MEMORY_ALLOCATION_FAILED",', 'alloc_unsafe'),
     ('slice_copy', buffer_lower, 'return ir.TypedArraySubarray{Array: array, Arguments: lowered}, true, nil', 'return ir.NodeBufferCall{Function: "buffer_copy", Arguments: []ir.Expression{ir.TypedArraySubarray{Array: array, Arguments: lowered}}, Returns: ir.Uint8Array}, true, nil', 'slice'),
     ('slice_view_offset', typed, 'view->data = (unsigned char *)array->data + from * width(array->kind);', 'view->data = array->data;', 'slice'),
+    ('ascii_unmasked', buffer, 'out[at] = (char)(bytes[start + at] & 0x7f);', 'out[at] = (char)bytes[start + at];', 'ascii'),
+    ('ascii_mask_ff', buffer, 'out[at] = (char)(bytes[start + at] & 0x7f);', 'out[at] = (char)(bytes[start + at] & 0xff);', 'ascii'),
 ]
 selection = sys.argv[1:]
 summary = []
