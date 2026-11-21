@@ -39,6 +39,7 @@ var graphOracleFixtures = []string{
 	"internal/oracle/testdata/graph_regions/flow_unknown_map.a",
 	"internal/oracle/testdata/graph_regions/flow_unknown_reduce.a",
 	"internal/oracle/testdata/graph_regions/flow_unknown_result.a",
+	"internal/oracle/testdata/graph_regions/flow_unknown_scalar_arguments.a",
 	"internal/oracle/testdata/graph_regions/logical_assignment_element.a",
 	"internal/oracle/testdata/graph_regions/logical_assignment_nullish.a",
 	"internal/oracle/testdata/graph_regions/logical_assignment_property.a",
@@ -269,6 +270,15 @@ func TestGraphOracleGraphRegionsFlowUnknownReduce(t *testing.T) {
 func TestGraphOracleGraphRegionsFlowUnknownResult(t *testing.T) {
 	t.Parallel()
 	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/flow_unknown_result.a")
+}
+
+// What a function value whose targets are Unknown is handed is demanded only when its type can reach a
+// graph type (#x490w4a): a fresh { depth, flags } and a fresh number array passed to an interface method
+// through a parameter are left counted, as Performance's tsc-shaped loop wants, and everything is freed.
+// internal/lower's TestGraphFlowScalarArgumentsUnplanned holds their plan.
+func TestGraphOracleGraphRegionsFlowUnknownScalarArguments(t *testing.T) {
+	t.Parallel()
+	graphOracleWitness(t, "internal/oracle/testdata/graph_regions/flow_unknown_scalar_arguments.a")
 }
 
 // A logical assignment into a graph member's field or element is held and dropped through the graph, as
