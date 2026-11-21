@@ -197,25 +197,28 @@ static char *path_bytes(const adamic_string *path, bool throwing) {
     return NULL;
 }
 
+// An ERR_OUT_OF_RANGE's Received groups an integer past 2^32 with underscores only in the coded error,
+// the one Node's lib/internal/errors.js throws; a descriptor's comes from Node's C++ and is written
+// plain (number.c's adamic_number_received).
 static bool integer(const adamic_shape *shape, double value, double maximum, const char *argument) {
     if (isfinite(value) && value == trunc(value) && value >= 0 && value <= maximum) { return true; }
-    adamic_string *shown = adamic_string_from_number(value);
+    char shown[ADAMIC_NUMBER_RECEIVED_MAX];
+    int length = (int)adamic_number_received(value, shape == &coded_error_shape, shown);
     char message[300];
     if (!isfinite(value) || value != trunc(value)) {
-        snprintf(message, sizeof message, "The value of \"%s\" is out of range. It must be an integer. Received %.*s", argument, (int)shown->length, shown->bytes);
+        snprintf(message, sizeof message, "The value of \"%s\" is out of range. It must be an integer. Received %.*s", argument, length, shown);
     } else {
-        snprintf(message, sizeof message, "The value of \"%s\" is out of range. It must be >= 0 && <= %.0f. Received %.*s", argument, maximum, (int)shown->length, shown->bytes);
+        snprintf(message, sizeof message, "The value of \"%s\" is out of range. It must be >= 0 && <= %.0f. Received %.*s", argument, maximum, length, shown);
     }
-    adamic_release(shown);
     raise_error(shape, "RangeError", "ERR_OUT_OF_RANGE", message);
     return false;
 }
 
 static void read_range(const adamic_shape *shape, const char *argument, const char *range, double value) {
-    adamic_string *shown = adamic_string_from_number(value);
+    char shown[ADAMIC_NUMBER_RECEIVED_MAX];
+    int length = (int)adamic_number_received(value, shape == &coded_error_shape, shown);
     char message[300];
-    snprintf(message, sizeof message, "The value of \"%s\" is out of range. It must be %s. Received %.*s", argument, range, (int)shown->length, shown->bytes);
-    adamic_release(shown);
+    snprintf(message, sizeof message, "The value of \"%s\" is out of range. It must be %s. Received %.*s", argument, range, length, shown);
     raise_error(shape, "RangeError", "ERR_OUT_OF_RANGE", message);
 }
 // A descriptor's RangeError is plain on Node, `RangeError: The value of "fd" ...` (closeSync, readSync,

@@ -10,24 +10,11 @@ adamic_maybe_number adamic_process_exit_code(void) {
     return (adamic_maybe_number){.present = present, .number = value};
 }
 
-// Node groups an integer's formatted characters from the right, including exponent notation.
+// Node groups an integer's formatted characters from the right, including exponent notation (number.c).
 static adamic_string *exit_code_text(double value, bool grouped) {
-    adamic_string *text = adamic_string_from_number(value);
-    if (!grouped) { return text; }
-    size_t sign = text->bytes[0] == '-' ? 1 : 0;
-    size_t characters = text->length - sign;
-    size_t separators = (characters - 1) / 3;
-    unsigned char *bytes = malloc(text->length + separators);
-    if (bytes == NULL) { adamic_panic("out of memory", sizeof "out of memory" - 1); }
-    size_t used = 0;
-    for (size_t index = 0; index < text->length; index++) {
-        if (index > sign && (text->length - index) % 3 == 0) { bytes[used++] = '_'; }
-        bytes[used++] = text->bytes[index];
-    }
-    adamic_string *result = adamic_decode_utf8(bytes, used);
-    free(bytes);
-    adamic_release(text);
-    return result;
+    char text[ADAMIC_NUMBER_RECEIVED_MAX];
+    size_t length = adamic_number_received(value, grouped, text);
+    return adamic_decode_utf8((const unsigned char *)text, length);
 }
 
 // Node validates before changing its status, and keeps ToInt32(code), not the original number.
