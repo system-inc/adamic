@@ -92,8 +92,8 @@ func TestPerformanceExecuteInterleavesAndMirrorsItsRounds(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if archivesBuilt != 0 {
-		t.Errorf("%d runtime archives built, and every build found hello's", archivesBuilt)
+	if len(archivesBuilt) != 0 || archivesLine(archivesBuilt) != "" {
+		t.Errorf("%v built runtime archives, and every build found hello's", archivesBuilt)
 	}
 	wantBuilds := []string{"warm devirtualize.a 1", "warm nbody.ts 1", "warm parallel_files.a 1", "warm primes_parallel.a 1", "warm sort.ts 1", "warm spectral_norm.ts 1", "warm word_count.ts 1"}
 	if !slices.Equal(build.children, wantBuilds) {
@@ -200,10 +200,10 @@ func TestPerformanceExecuteDisagreementIsAnError(t *testing.T) {
 	}
 }
 
-// A build for the execute half whose runtime archive misses is counted and measured on, since a program's features key
-// its archive and no execute run is a build; one whose log has no cArchive line never reached the archive, and is an
-// error naming the program. Mutants: a miss refused, as a warm build's is, and the measure fails; the count kept of
-// hits; the missing line taken as a miss.
+// A build for the execute half whose runtime archive misses is named and measured on, since a program's features key
+// its archive and no execute run is a build, and the line beside the file counts and names them in executeSources'
+// order; one whose log has no cArchive line never reached the archive, and is an error naming the program. Mutants: a
+// miss refused, as a warm build's is, and the measure fails; the hits named instead; the missing line taken as a miss.
 func TestPerformanceExecuteBuildsCountTheArchivesTheyBuild(t *testing.T) {
 	t.Parallel()
 	root, work := executeTree(t), t.TempDir()
@@ -213,8 +213,11 @@ func TestPerformanceExecuteBuildsCountTheArchivesTheyBuild(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if archivesBuilt != 3 || len(measured.Programs) != len(executeSources) {
-		t.Errorf("%d runtime archives built and %d programs measured, want 3 and %d", archivesBuilt, len(measured.Programs), len(executeSources))
+	if !slices.Equal(archivesBuilt, []string{"parallel_files", "primes_parallel", "sort"}) || len(measured.Programs) != len(executeSources) {
+		t.Errorf("%v built runtime archives and %d programs were measured, want parallel_files, primes_parallel and sort, and %d", archivesBuilt, len(measured.Programs), len(executeSources))
+	}
+	if got, want := archivesLine(archivesBuilt), "adamic-performance: execute builds: 3 runtime archives built (their feature sets differ from hello's): parallel_files, primes_parallel, sort\n"; got != want {
+		t.Errorf("line %q, want %q", got, want)
 	}
 
 	root, work = executeTree(t), t.TempDir()
