@@ -399,7 +399,7 @@ diagnostic or times out on is named on a `compiler failure` line and in
 `compiler_failures`. Every accepted program runs on Node, the JavaScript backend
 and a native build under the address and undefined-behavior sanitizers
 (`build <file> -o <out> --sanitize`), through the same runner as the delta's
-newly accepted programs, with the same one retry after a runtime timeout, and
+newly accepted programs, with one retry after a runtime timeout, run beside the other workers, never alone as the delta's, and
 the native build under `--compile-timeout`, since it's a compile. Before any of
 them, one program of a single line builds natively with up to 15 minutes, so a
 cold build cache makes the runtime's sanitized archives once; if it fails, the
