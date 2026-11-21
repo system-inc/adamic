@@ -10,6 +10,7 @@ import (
 // declaration guard so byte reads can be consumed by sys.ts's actual BOM decoder.
 func init() {
 	RegisterNodeLibraryMembers("node:buffer.Buffer", "node:buffer.BufferConstructor.from", "node:buffer.BufferConstructor.allocUnsafe", "node:buffer.Buffer.toString",
+		"node:buffer.Buffer.slice", "node:buffer.Buffer.subarray",
 		"node:crypto.createHash", "node:crypto.Hash.update", "node:crypto.Hash.digest")
 }
 
