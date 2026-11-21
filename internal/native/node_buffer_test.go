@@ -97,3 +97,59 @@ func TestNodeBufferRuntimeWithoutDeclarations(t *testing.T) {
 		}
 	}
 }
+
+// Node v24.19.0 aborts on a string needle holding a lone surrogate (node_buffer.cc's IndexOfString
+// asserts needle_length >= needle_value.length(), J-hkjhzy0), so neither backend can agree with it
+// there, and the oracle fixture holds none. Natively the needle is searched as the bytes Buffer.from
+// makes of it, a lone surrogate as U+FFFD's: this holds that answer against Node's indexOf of those
+// bytes as a Buffer, which it searches without aborting.
+func TestNodeBufferIndexOfLoneSurrogateIsBufferFromBytes(t *testing.T) {
+	t.Parallel()
+	program := &ir.Program{}
+	haystack := func() ir.Expression {
+		elements := []ir.Expression{}
+		for _, value := range []int{0x41, 0xef, 0xbf, 0xbd, 0x42, 0xed, 0xa0, 0x80, 0x43} {
+			elements = append(elements, ir.NumberConstant{Value: float64(value)})
+		}
+		return ir.NodeBufferCall{Function: "buffer_copy", Returns: ir.Uint8Array, Arguments: []ir.Expression{ir.ArrayLiteral{Elements: elements, Element: ir.Number}}}
+	}
+	var source strings.Builder
+	source.WriteString("import { Buffer } from 'node:buffer';\nconst haystack = Buffer.from([0x41, 0xef, 0xbf, 0xbd, 0x42, 0xed, 0xa0, 0x80, 0x43]);\n")
+	// Each needle as Adamic holds it, WTF-8, beside the JavaScript literal that writes it.
+	for _, needle := range []struct{ held, literal string }{
+		{"\xed\xa0\x80", `'\ud800'`},
+		{"\xed\xb0\x80", `'\udc00'`},
+		{"A\xed\xa0\x80", `'A\ud800'`},
+		{"\xed\xa0\x80B", `'\ud800B'`},
+		{"\xed\xb0\x80C", `'\udc00C'`},
+		{"\xef\xbf\xbdB", `'�B'`},
+	} {
+		index := len(program.Strings)
+		program.Strings = append(program.Strings, needle.held)
+		search := ir.NodeBufferCall{Function: "buffer_index_of", Returns: ir.Number, Arguments: []ir.Expression{haystack(), ir.StringConstant{Index: index}}}
+		program.Main = append(program.Main, ir.WriteLine{Stream: ir.Stdout, Value: ir.NumberToString{Value: search}})
+		fmt.Fprintf(&source, "console.log(String(haystack.indexOf(Buffer.from(%s))));\n", needle.literal)
+	}
+	directory := t.TempDir()
+	oracle := filepath.Join(directory, "oracle.mjs")
+	if err := os.WriteFile(oracle, []byte(source.String()), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	runner, err := filepath.Abs("../../oracle/node.mjs")
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := runWithInput(t, "", "node", runner, oracle)
+	if want != "1\n1\n0\n1\n-1\n1\n" {
+		t.Fatalf("Node's indexOf of each needle's Buffer.from bytes moved: %q", want)
+	}
+	for _, sanitize := range []bool{false, true} {
+		binary := filepath.Join(directory, "native")
+		if err := Build(C(program), binary, native_runtime.Options{Sanitize: sanitize}); err != nil {
+			t.Fatal(err)
+		}
+		if got := runWithInput(t, "", binary); got != want {
+			t.Fatalf("native stdout differs from Node (sanitize %v): got %q, want %q", sanitize, got, want)
+		}
+	}
+}

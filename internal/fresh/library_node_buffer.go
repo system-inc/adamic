@@ -7,7 +7,7 @@ import "github.com/system-inc/adamic/internal/ir"
 // receiver, so preserve that alias instead of treating it as a fresh hash.
 func (a *analysis) nodeBufferCall(call ir.NodeBufferCall) value {
 	switch call.Function {
-	case "buffer_from", "buffer_copy", "buffer_alloc_unsafe", "buffer_string", "buffer_set", "hash_new", "hash_update", "hash_digest":
+	case "buffer_from", "buffer_copy", "buffer_alloc_unsafe", "buffer_string", "buffer_index_of", "buffer_set", "hash_new", "hash_update", "hash_digest":
 		var receiver value
 		for index, argument := range call.Arguments {
 			held := a.value(argument)

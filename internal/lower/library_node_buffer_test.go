@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"slices"
 	"strings"
 	"testing"
 
@@ -31,6 +32,13 @@ func TestNodeBufferRefusals(t *testing.T) {
 		// ?. on a host method meets optional_host_call.go's stop first (#3625x53). nodeBufferSubarray's own
 		// optional-call stop sits behind it, the guard for the day that one lifts.
 		{"optional slice", "import { Buffer } from 'node:buffer'; const bytes = Buffer.from('abc'); const view = bytes?.slice(1); console.log(`${view.length}`);", "doesn't guard an optional receiver"},
+		{"indexOf encoding", "import { Buffer } from 'node:buffer'; console.log(`${Buffer.from('abc').indexOf('b', 0, 'utf8')}`);", "Buffer.indexOf outside indexOf(value, byteOffset)"},
+		{"indexOf encoding as offset", "import { Buffer } from 'node:buffer'; console.log(`${Buffer.from('abc').indexOf('b', 'utf8')}`);", "a Buffer.indexOf byteOffset that isn't number or undefined"},
+		{"indexOf spread", "import { Buffer } from 'node:buffer'; const found: [string] = ['b']; console.log(`${Buffer.from('abc').indexOf(...found)}`);", "Buffer.indexOf outside indexOf(value, byteOffset)"},
+		{"indexOf of a Buffer", "import { Buffer } from 'node:buffer'; console.log(`${Buffer.from('abc').indexOf(Buffer.from('b'))}`);", "a Buffer.indexOf value that isn't a string or a number"},
+		{"indexOf of a Uint8Array", "import { Buffer } from 'node:buffer'; console.log(`${Buffer.from('abc').indexOf(new Uint8Array([98]))}`);", "a Buffer.indexOf value that isn't a string or a number"},
+		{"indexOf of a string or a number", "import { Buffer } from 'node:buffer'; function find(value: string | number): number { return Buffer.from('abc').indexOf(value); } console.log(`${find('b')}`);", "a Buffer.indexOf value that isn't a string or a number"},
+		{"optional indexOf", "import { Buffer } from 'node:buffer'; const bytes = Buffer.from('abc'); const found = bytes?.indexOf('b'); console.log(`${found}`);", "doesn't guard an optional receiver"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -166,5 +174,59 @@ func TestNodeBufferSliceLeavesUint8ArraySliceRefused(t *testing.T) {
 	}
 	if _, err := lowerSource(t, prefix+"console.log(`${shared.length} ${bytes.subarray(1).length}`);"); err != nil {
 		t.Fatalf("want a Uint8Array's subarray beside a Buffer's slice lowered, got %v", err)
+	}
+}
+
+// Buffer.indexOf of a string or a number is buffer_index_of, a number that reads the Buffer and makes
+// nothing: its arguments are the Buffer, the value as it lowered, and the offset as number | undefined
+// when one is given, so an explicit undefined is the default as an omitted one is.
+func TestNodeBufferIndexOfLowers(t *testing.T) {
+	t.Parallel()
+	program, err := lowerSource(t, "import { Buffer } from 'node:buffer';\nfunction find(bytes: Buffer, from: number | undefined): number {\n\treturn bytes.indexOf('\\n') + bytes.indexOf(62, 1) + bytes.indexOf('AC', from) + bytes.indexOf('>', undefined);\n}\nconsole.log(`${find(Buffer.from('>A\\nAC'), -2)}`);")
+	if err != nil {
+		t.Fatal(err)
+	}
+	found := []string{}
+	for _, function := range program.Functions {
+		walk(function.Body, func(node any) bool {
+			if call, isCall := node.(ir.NodeBufferCall); isCall {
+				if call.Function != "buffer_index_of" || call.Returns != ir.Number || len(call.Arguments) < 2 || call.Arguments[0].Type() != ir.Uint8Array {
+					t.Errorf("Buffer.indexOf lowered to %+v", call)
+					return true
+				}
+				shape := "string"
+				if call.Arguments[1].Type() == ir.Number {
+					shape = "number"
+				} else if call.Arguments[1].Type() != ir.String {
+					t.Errorf("Buffer.indexOf value lowered as %+v", call.Arguments[1])
+				}
+				for _, offset := range call.Arguments[2:] {
+					shape += " offset"
+					if offset.Type() != ir.MaybeNumber {
+						t.Errorf("Buffer.indexOf offset %+v isn't number | undefined", offset)
+					}
+				}
+				found = append(found, shape)
+			}
+			return true
+		})
+	}
+	slices.Sort(found)
+	if strings.Join(found, ", ") != "number offset, string, string offset, string offset" {
+		t.Fatalf("want four buffer_index_of, a number with an offset, a string, and two strings with one, found %v", found)
+	}
+}
+
+// Must 10: a Uint8Array's indexOf finds one element value and never a string, so it never reaches
+// buffer_index_of. It stays refused as typedArrayExpression refuses it while a Buffer's indexOf beside it
+// is admitted.
+func TestNodeBufferIndexOfLeavesUint8ArrayIndexOfRefused(t *testing.T) {
+	t.Parallel()
+	const prefix = "import { Buffer } from 'node:buffer';\nconst found = Buffer.from('abc').indexOf('b');\nconst bytes = new Uint8Array([1, 2, 3]);\n"
+	if _, err := lowerSource(t, prefix+"console.log(`${found} ${bytes.indexOf(2)}`);"); err == nil || !strings.Contains(err.Error(), "typed array method indexOf") {
+		t.Fatalf("want a Uint8Array's indexOf refused as %q, got %v", "typed array method indexOf", err)
+	}
+	if _, err := lowerSource(t, prefix+"console.log(`${found} ${bytes.length}`);"); err != nil {
+		t.Fatalf("want a Buffer's indexOf beside a Uint8Array lowered, got %v", err)
 	}
 }
