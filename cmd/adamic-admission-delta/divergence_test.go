@@ -181,12 +181,12 @@ func TestBackendDivergenceExactRun(t *testing.T) {
 		t.Fatal(err)
 	}
 	ruled := requireMissing
-	if !acceptsRuledBackendDivergence(ruled.path, list, ruled.node, ruled.backend, ruled.backend) {
+	if !acceptsRuledBackendDivergence(ruled.path, "", list, ruled.node, ruled.backend, ruled.backend) {
 		t.Fatal("the ruled run refused")
 	}
 	timedOut := ruled.node
 	timedOut.Error = "timeout"
-	if acceptsRuledBackendDivergence(ruled.path, list, timedOut, ruled.backend, ruled.backend) {
+	if acceptsRuledBackendDivergence(ruled.path, "", list, timedOut, ruled.backend, ruled.backend) {
 		t.Error("a Node run that timed out accepted")
 	}
 	for _, row := range list.Divergences {
@@ -194,7 +194,7 @@ func TestBackendDivergenceExactRun(t *testing.T) {
 			continue
 		}
 		backend := observation{Exit: row.Native.ExitCode, Stdout: row.Native.Stdout, Stderr: row.Native.Stderr}
-		if acceptsRuledBackendDivergence(row.Fixture, list, observation{}, backend, backend) {
+		if acceptsRuledBackendDivergence(row.Fixture, "", list, observation{}, backend, backend) {
 			t.Errorf("%s: a row that rules no Node outcome accepted", row.Fixture)
 		}
 	}
@@ -206,7 +206,7 @@ func TestBackendDivergenceExactRun(t *testing.T) {
 		bundled++
 		node := observation{Exit: row.Node.ExitCode, Stdout: row.Node.Stdout, Stderr: row.Node.Stderr}
 		backend := observation{Exit: row.Native.ExitCode, Stdout: row.Native.Stdout, Stderr: row.Native.Stderr}
-		if acceptsRuledBackendDivergence(row.Fixture, list, node, backend, backend) {
+		if acceptsRuledBackendDivergence(row.Fixture, "", list, node, backend, backend) {
 			t.Errorf("%s: a row declaring format %s accepted", row.Fixture, row.Format)
 		}
 	}
@@ -267,5 +267,50 @@ func TestBackendDivergenceRulingMetadata(t *testing.T) {
 		if _, err := readRuledBackendDivergences(path); err == nil {
 			t.Errorf("%s accepted", name)
 		}
+	}
+}
+
+// A row may rule the backends apart, where a test holds them apart on purpose (#d358hc1): then each of the three runs
+// must be exactly the row's, so the run where native prints what its row says, JavaScript what its row says and Node
+// what its row says is ruled, and any one of them a byte off is not. A row's {root} is the checkout the runs judged, so
+// a stop naming its program's file there is ruled at that checkout and at no other. Mutants (agreement.mutants.md):
+// the JavaScript column unread for backends apart, so a JavaScript run a byte off is ruled; {root} unexpanded, so the
+// rooted stop isn't.
+func TestRuledBackendsApart(t *testing.T) {
+	t.Parallel()
+	const root = "/tmp/admission-agreement-1/head"
+	row := ruledBackendDivergence{
+		Fixture:    "corpus/weak.a",
+		Ruling:     "@system_adamic, task #k1avvp1",
+		Reason:     "native frees what Node's collector hasn't yet",
+		Node:       &backendOutcome{Stdout: "while held: b\nafter: b false\n"},
+		Native:     backendOutcome{Stdout: "while held: b\n", Stderr: "adamic: panic: at {root}/corpus/weak.a:4:1\n", ExitCode: 70},
+		JavaScript: backendOutcome{Stdout: "while held: b\nafter: b false\n"},
+	}
+	list := ruledBackendDivergenceList{Comment: "Adding a row is a ruling routed to @system_adamic", Divergences: []ruledBackendDivergence{row}}
+	node := observation{Stdout: "while held: b\nafter: b false\n"}
+	javascript := observation{Stdout: "while held: b\nafter: b false\n"}
+	native := observation{Stdout: "while held: b\n", Stderr: "adamic: panic: at " + root + "/corpus/weak.a:4:1\n", Exit: 70}
+	if !acceptsRuledBackendDivergence("corpus/weak.a", root, list, node, javascript, native) {
+		t.Fatal("the runs the row pins, backends apart, aren't ruled")
+	}
+	off := func(o observation) observation {
+		o.Stdout += "x"
+		return o
+	}
+	for name, runs := range map[string][3]observation{
+		"JavaScript a byte off": {node, off(javascript), native},
+		"native a byte off":     {node, javascript, off(native)},
+		"Node a byte off":       {off(node), javascript, native},
+	} {
+		if acceptsRuledBackendDivergence("corpus/weak.a", root, list, runs[0], runs[1], runs[2]) {
+			t.Errorf("%s: ruled, want it disagreeing", name)
+		}
+	}
+	if acceptsRuledBackendDivergence("corpus/weak.a", "/tmp/admission-agreement-2/head", list, node, javascript, native) {
+		t.Error("a stop naming another checkout is ruled, want it disagreeing")
+	}
+	if acceptsRuledBackendDivergence("corpus/other.a", root, list, node, javascript, native) {
+		t.Error("a path on no row is ruled")
 	}
 }

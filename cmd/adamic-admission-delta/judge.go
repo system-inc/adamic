@@ -163,7 +163,7 @@ func (runner *programRunner) judgeProgram(record *entry, index int, still []stri
 	}
 	// A program at a ruled divergence's fixture passes as that divergence only when its run is exactly the row's
 	// (#tqm95v6); anything else disagreeing still fails.
-	if !agree && !record.NegativeWitness && !record.RuledRuntimeStop && acceptsRuledBackendDivergence(record.Path, runner.divergences, *record.Node, *record.JavaScript, *record.Native) {
+	if !agree && !record.NegativeWitness && !record.RuledRuntimeStop && acceptsRuledBackendDivergence(record.Path, runner.headTree, runner.divergences, *record.Node, *record.JavaScript, *record.Native) {
 		record.RuledBackendDivergence = true
 	}
 	record.Agree = &agree
