@@ -168,8 +168,7 @@ static adamic_value collection_next(adamic_closure *self, adamic_value *argument
 }
 
 bool adamic_collection_iterator_is(const void *value) {
-	// A union's null, adamic_null, is a bare header of kind object with no shape after it (#hy1sanv).
-	if (value == NULL || value == &adamic_null || ((const adamic_heap *)value)->kind != adamic_kind_object) {
+	if (value == NULL || ((const adamic_heap *)value)->kind != adamic_kind_object) {
 		return false;
 	}
 	const adamic_object *object = value;

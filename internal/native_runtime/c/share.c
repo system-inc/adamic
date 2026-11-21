@@ -153,6 +153,9 @@ void adamic_share(void *value) {
 			adamic_panic("compiler bug: an Apple object reached parallel work", sizeof "compiler bug: an Apple object reached parallel work" - 1);
 		case adamic_kind_weak: case adamic_kind_map_iterator: case adamic_kind_typed_array: case adamic_kind_typed_array_iterator:
 			adamic_panic("compiler bug: non-shareable value reached a task", sizeof "compiler bug: non-shareable value reached a task" - 1);
+		// The union's null is immortal, passed over above with every other count-zero value.
+		case adamic_kind_null:
+			adamic_invariant("the union's null was marked shared");
 		}
 	}
 	free(pending.values);
