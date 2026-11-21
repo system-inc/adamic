@@ -18,7 +18,7 @@ import (
 //     recorded for the name f (recordSourceSlotWrite). Any other write keeps view's stop, and so does
 //     one to toString or valueOf, which ToPrimitive reads by name after the reads are judged. One to a
 //     field that may hold undefined or null is NotYet, since the checked write can't change its slot's
-//     representation.
+//     representation, wherever its statement is lowered (checkSourceSlotPending).
 //  2. What the slot can hold, W, is every type a view wrote to f and every type a declaration of f
 //     gives it, undefined included where one is optional (sourceSlotDeclared): an absent slot or one an
 //     initializer filled holds a value no view write records (Compiler's condition, binding).
@@ -63,6 +63,13 @@ type sourceSlot struct {
 	declared []*checker.Type
 }
 
+// sourceSlotPendingStop is a plain write to a checked field that may hold undefined or null, target its
+// left side, and stop Rule C's NotYet there, made where the view walk met it (recordSourceSlotWrite).
+type sourceSlotPendingStop struct {
+	target *ast.Node
+	stop   error
+}
+
 // sourceSlotNamedKinds are the IR kinds other than ir.Property that name a field, each judged without a
 // check: none reads a fixed object's slot at a type's claim. DynamicProperty reads by the allocation's
 // own runtime shape and gives a tagged union, as DynamicKeyedProperty and HasOwn do by a key; HasProperty,
@@ -91,8 +98,10 @@ var sourceSlotNamedKinds = map[reflect.Type]bool{
 // reads. A field whose type holds undefined or null, an optional one among them, is NotYet: its slot can
 // hold undefined, null or an object, and the checked write (object.c's adamic_object_view_write, and the
 // JavaScript backend's adamicViewWrite) stops a write that changes the representation the slot holds, so
-// a program Node runs would stop at it. A fresh object or array literal is made as the slot it's written
-// into (freshOrWidened), so it's recorded as the field's own type.
+// a program Node runs would stop at it. That NotYet is held, not given, since the view walk judges every
+// write in the program from types, lowered or not, and only a write lowering makes changes a slot
+// (checkSourceSlotPending, Adamic's ruling on #rgrtt32). A fresh object or array literal is made as the slot
+// it's written into (freshOrWidened), so it's recorded as the field's own type.
 func (l *lowering) recordSourceSlotWrite(target *ast.Node, field *ast.Symbol, stop error) error {
 	if l.sourceSlotsJudged {
 		return stop
@@ -111,7 +120,13 @@ func (l *lowering) recordSourceSlotWrite(target *ast.Node, field *ast.Symbol, st
 	}
 	declared := l.checker.GetTypeOfSymbol(field)
 	if field.Flags&ast.SymbolFlagsOptional != 0 || l.includesUndefined(declared) || l.includesNull(declared) {
-		return l.notYet(target, "writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds")
+		for _, pending := range l.sourceSlotPending {
+			if pending.target == target {
+				return nil
+			}
+		}
+		l.sourceSlotPending = append(l.sourceSlotPending, sourceSlotPendingStop{target: target, stop: l.notYet(target, "writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds")})
+		return nil
 	}
 	for _, write := range l.sourceSlotWrites {
 		if write.target == target {
@@ -125,6 +140,24 @@ func (l *lowering) recordSourceSlotWrite(target *ast.Node, field *ast.Symbol, st
 		written = declared
 	}
 	l.sourceSlotWrites = append(l.sourceSlotWrites, sourceSlotWrite{target: target, name: target.Name().Text(), written: written, stop: stop})
+	return nil
+}
+
+// checkSourceSlotPending gives back the first held write's NotYet, in the view walk's order, whose statement
+// lowering lowered, once every pass that lowers a body has run: only IR the program emits can change a slot,
+// so a write whose statement was never lowered guards nothing (Adamic's ruling on #rgrtt32, 163 tsc units at
+// setValueDeclaration). A statement is marked where statement begins to lower it, before any road it takes,
+// so every form a plain write lowers to keeps the stop, a road that records no write site (a Node member
+// require makes doomed, a namespace member's assignment, an Apple property's setter, super's setter)
+// included, and so does a lowering that stopped or was thrown away. A write whose statement can't be found
+// keeps its stop too.
+func (l *lowering) checkSourceSlotPending() error {
+	for _, pending := range l.sourceSlotPending {
+		assignment := hostMemberAssignment(pending.target)
+		if assignment == nil || assignment.Parent == nil || l.loweredStatements[assignment.Parent] {
+			return pending.stop
+		}
+	}
 	return nil
 }
 

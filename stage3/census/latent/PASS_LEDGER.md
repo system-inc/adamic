@@ -12,7 +12,9 @@ flag any relation in the program sets, so a body alone can't measure it, and it'
 the whole program's allocation graph every write admitted only where each allocation
 reaching it holds its field's slot, the writes `checkViewOptionalWrites` and
 `checkKindUnionWriteReach` judged among them (#w8nanzw), so a body lowered on its own
-records it as not run.
+records it as not run. `checkSourceSlotPending`, last, after `checkFlowLiveness`, gives
+back Rule C's held NotYet for a write the view walk met wherever its statement was
+lowered (#5qx6qv4); a body lowered on its own records it as not run.
 
 Each independently attempted unit gets `pass_ledger` beside its status and
 instantiation metadata in the census JSONL. First-error, full and speculative
