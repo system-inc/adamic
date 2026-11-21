@@ -491,10 +491,15 @@ class FailClosed(unittest.TestCase):
                 self.assertIn(stageName, status)
 
 
-class BuildStore(FailClosed):
+class BuildStore(unittest.TestCase):
     """A gate's store root, beside its tree (#tfp4gtm): a run removes its own when it finishes, and a listing makes none,
     since it runs no stage. Each plan's listing left one beside Eve's planner checkout, 2,299 of them (27 GB, Nov 21).
     Mutants, each red here: finish() leaving the root; a listing making one."""
+    gate = FailClosed.gate
+
+    def setUp(self):
+        FailClosed.setUp(self)
+        self.addCleanup(shutil.rmtree, self.directory)
 
     def roots(self):
         return sorted(glob.glob(os.path.join(os.path.dirname(os.path.abspath(self.tree)), "build-store-*")))
@@ -3223,8 +3228,11 @@ class CacheDrains(unittest.TestCase):
         self.publisher()
         # Two runs of the very same slot must still get fresh queues. Real child
         # processes consume the environment passed by spawn, just as the publisher does.
-        first, _, _ = self.gate()
-        second, _, _ = self.gate(full=True)
+        # Each is spawned into after its gate() has finished, which no run does, so their roots are kept until the end
+        # and removed then (#tfp4gtm).
+        with mock.patch.object(run.Gate, "removeBuildStore", lambda gate: None):
+            first, _, _ = self.gate()
+            second, _, _ = self.gate(full=True)
         shared = os.path.join(self.directory, "shared-default")
         os.makedirs(shared)
         key = "poisoned-gate-A-key"
@@ -3260,6 +3268,9 @@ elif sys.argv[2] == 'upload':
             for directory in gate.buildStoreEnvironment.values():
                 self.assertEqual(os.path.dirname(os.path.dirname(directory)), os.path.dirname(self.tree))
                 self.assertFalse(directory.startswith(gate.arguments.out + os.sep))
+            root = gate.buildStoreRoot
+            gate.removeBuildStore()
+            self.assertFalse(os.path.exists(root))
         self.assertNotEqual(first.buildStoreEnvironment, second.buildStoreEnvironment)
 
     # The kill walks /proc for the unit's session: without it the sleeper is never killed and the drain waits it out.
