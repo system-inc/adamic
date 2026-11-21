@@ -1,0 +1,24 @@
+# #67w3g0x: internal/ir's argument facts read each distinct target set once, linearly. vet, internal/ir whole, the four
+# mutants, then the emitted C byte-identical over the oracle's corpus, base against head (cbytes), then internal/native's
+# packed-count users. Never merged.
+set -u
+T=$(mktemp -d "${TMPDIR:-/tmp}/pcn.XXXXXX"); fail=0; F=internal/ir/argument_slots.go
+f=$(gofmt -l internal/ir); [ -z "$f" ] && echo "PASS gofmt" || { echo "FAIL gofmt $f"; fail=1; }
+go vet ./internal/ir/ > "$T/vet" 2>&1 && echo "PASS vet" || { echo "FAIL vet"; cat "$T/vet"; fail=1; }
+go test -count=1 ./internal/ir/ > "$T/ir" 2>&1 && echo "PASS internal/ir $(tail -1 "$T/ir")" || { echo "FAIL internal/ir"; grep -E -- '--- FAIL|_test.go:[0-9]+|panic' "$T/ir" | head -20; fail=1; }
+mutant() { # name, test, perl
+  cp $F "$T/keep"; perl -0pi -e "$3" $F
+  if cmp -s $F "$T/keep"; then echo "FAIL mutant $1: did not apply"; fail=1; cp "$T/keep" $F; return; fi
+  go test -count=1 -run "^$2\$" ./internal/ir/ > "$T/m-$1" 2>&1; code=$?; cp "$T/keep" $F
+  if grep -qE 'build failed|not used|\[setup failed\]' "$T/m-$1"; then echo "FAIL mutant $1: did not compile"; tail -5 "$T/m-$1"; fail=1
+  elif [ $code = 0 ]; then echo "FAIL mutant $1 survived $2"; fail=1
+  else echo "PASS mutant $1 red: $(grep -m1 -E '_test.go:[0-9]+' "$T/m-$1" | cut -c1-220)"; fi
+}
+mutant copies TestPackedPeersVisitEachSetOnceAndLinearly 's/\t\tif read\[key\] \{\n\t\t\tcontinue\n\t\t\}\n//'
+mutant classes TestPackedPeersAnswerAsThePairWalkDoes 's/\t\tif f\.Closure \{\n\t\t\tmasks = closures\n\t\t\}/\t\tif f.Closure || len(closures) > 0 {\n\t\t\tmasks = closures\n\t\t}/'
+mutant ownbit TestPackedPeersAnswerAsThePairWalkDoes 's/masks\[index\]&\^\(1<<absentRepresentation\(of\)\) != 0/masks[index] != 0/'
+mutant restslot TestPackedPeersAnswerAsThePairWalkDoes 's/\t\t\tif peer\.RestElement != 0 && index == len\(compared\)-1 \{\n\t\t\t\tcontinue\n\t\t\t\}\n//'
+step() { name=$1; shift; if "$@" > "$T/$name" 2>&1; then echo "PASS $name"; else echo "FAIL $name"; grep -E -- '--- FAIL|FAIL|panic|_test.go:[0-9]+' "$T/$name" | head -20; fail=1; fi; }
+native() { sandboxed_products ./internal/native && go test -count=1 -run 'Packed|Arguments|Closure|Callable|Accessor|BoundMethod' ./internal/native/; }
+step native-packed native
+[ $fail = 0 ] && echo "VERDICT OK" || echo "VERDICT FAIL"
