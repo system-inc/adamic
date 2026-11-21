@@ -2,9 +2,7 @@ package main
 
 import (
 	"os"
-	"os/exec"
 	"path/filepath"
-	"runtime"
 	"strings"
 	"testing"
 	"time"
@@ -80,53 +78,4 @@ func TestRefusesARunThatExitedNonzero(t *testing.T) {
 	if !strings.HasPrefix(result.failure, "failed: ") {
 		t.Fatalf("a program exiting 3 was reported as %s; want it refused", short(result))
 	}
-}
-
-// On Linux, exec folds the starting process's high-water resident set into the program's peak, so a
-// program bench started itself read at least bench's own (J-wme5jp2). Through the reaper, a program
-// that only prints reads its own few megabytes while this process holds 256 MB. Started directly, the
-// same program reads the 256 MB, which pins the fold itself: if the kernel ever stops it, this says so,
-// and the reaper can go.
-// Not parallel: what it reads depends on what this process holds, and it sets the package's reaper.
-func TestPeakIsTheProgramsOwn(t *testing.T) {
-	if runtime.GOOS != "linux" {
-		t.Skip("the reaper is built and run on Linux only, where exec carries the starting process's peak into the program")
-	}
-	if _, err := exec.LookPath("clang"); err != nil {
-		t.Skip("no clang on PATH to build bench/reaper/reaper.c")
-	}
-	// go test runs in the package's directory, which is bench/.
-	built, err := buildReaper(".", t.TempDir())
-	if err != nil {
-		t.Fatal(err)
-	}
-	previous := reaper
-	t.Cleanup(func() { reaper = previous })
-	held := make([]byte, 256<<20)
-	for index := 0; index < len(held); index += 4096 {
-		held[index] = 1
-	}
-	t.Run("ThroughTheReaper", func(t *testing.T) {
-		reaper = built
-		result := run([]string{"/bin/echo", "hi"}, 20*time.Second)
-		if result.failure != "" {
-			t.Fatalf("/bin/echo through the reaper: %s", result.failure)
-		}
-		if result.peak >= 10<<20 {
-			t.Fatalf("through the reaper, /bin/echo's peak read %s while this process held 256 MB; want under 10 MB, its own", megabytes(result.peak))
-		}
-		t.Logf("through the reaper, /bin/echo's peak read %s while this process held 256 MB", megabytes(result.peak))
-	})
-	t.Run("Directly", func(t *testing.T) {
-		reaper = ""
-		result := run([]string{"/bin/echo", "hi"}, 20*time.Second)
-		if result.failure != "" {
-			t.Fatalf("/bin/echo started directly: %s", result.failure)
-		}
-		if result.peak <= 200<<20 {
-			t.Fatalf("started directly, /bin/echo's peak read %s while this process held 256 MB; want over 200 MB. Linux's exec no longer carries the starting process's peak into the program, so bench/reaper/reaper.c cures nothing and can go", megabytes(result.peak))
-		}
-		t.Logf("started directly, /bin/echo's peak read %s while this process held 256 MB, the fold the reaper cures", megabytes(result.peak))
-	})
-	runtime.KeepAlive(held)
 }

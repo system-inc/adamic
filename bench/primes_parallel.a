@@ -1,0 +1,45 @@
+// A parallel demo for Kirk (#sp4m5ex): 1,000 tasks, each counting the primes in its own range of 10,000
+// numbers, fanned out across the cores by parallelMap, Adamic's scoped fork-join. Each task shares
+// nothing, so the compiler proves it safe to run on any core. serial.a is the same work in one loop.
+import { parallelMap } from 'adamic';
+
+function isPrime(n: number): boolean {
+	if (n < 2) {
+		return false;
+	}
+	if (n % 2 === 0) {
+		return n === 2;
+	}
+	for (let divisor = 3; divisor * divisor <= n; divisor += 2) {
+		if (n % divisor === 0) {
+			return false;
+		}
+	}
+	return true;
+}
+
+function primesInTask(task: number): number {
+	const start = task * 10000;
+	let count = 0;
+	for (let n = start; n < start + 10000; n += 1) {
+		if (isPrime(n)) {
+			count += 1;
+		}
+	}
+	return count;
+}
+
+const built: number[] = [];
+for (let task = 0; task < 1000; task += 1) {
+	built.push(task);
+}
+const tasks: readonly number[] = built;
+const counts = parallelMap(tasks, primesInTask);
+let total = 0;
+let task = 0;
+for (const count of counts) {
+	console.log(`task ${task}: ${count} primes in [${task * 10000}, ${(task + 1) * 10000})`);
+	total += count;
+	task += 1;
+}
+console.log(`total: ${total} primes below 10,000,000, from ${task} tasks`);

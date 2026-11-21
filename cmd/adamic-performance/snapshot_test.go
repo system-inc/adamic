@@ -11,8 +11,8 @@ import (
 	"testing"
 )
 
-// fullSnapshot is a snapshot with every field set, hello's cold build and an execute half among them, and its programs
-// in the file's order, which isn't sorted: a map would write Parser first.
+// fullSnapshot is a snapshot with every field set, hello's cold build and an execute half among them, and both halves'
+// programs in the file's order, which isn't sorted: a map would write Parser first, and primes_parallel before trees.
 func fullSnapshot() snapshot {
 	coldBuild := int64(3064)
 	value := noteSnapshot(earlierCommit,
@@ -25,7 +25,20 @@ func fullSnapshot() snapshot {
 	value.Machine.LoadAfter = [3]float64{1.1, 0.7, 0.9}
 	value.Machine.HeldQuiet = true
 	value.Note = "first snapshot"
-	value.Execute = json.RawMessage(`{"rounds":5,"programs":{"trees":{"native":{"median":0,"min":0,"max":0}}}}`)
+	value.Execute = execute{Rounds: 3, Programs: executions{
+		{Name: "trees", Execution: execution{
+			Judge:  "user",
+			Native: runtimeNumbers{Wall: spread{Median: 1608, Min: 1590, Max: 1650}, User: spread{Median: 1301, Min: 1290, Max: 1320}, PeakKiB: 201114},
+			Node:   runtimeNumbers{Wall: spread{Median: 1504, Min: 1490, Max: 1530}, User: spread{Median: 2032, Min: 2001, Max: 2050}, PeakKiB: 350310},
+			Ratio:  0.64,
+		}},
+		{Name: "primes_parallel", Execution: execution{
+			Judge:  "wall",
+			Native: runtimeNumbers{Wall: spread{Median: 98, Min: 95, Max: 104}, User: spread{Median: 690, Min: 671, Max: 702}, PeakKiB: 4210},
+			Node:   runtimeNumbers{Wall: spread{Median: 1210, Min: 1190, Max: 1240}, User: spread{Median: 1218, Min: 1200, Max: 1251}, PeakKiB: 91020},
+			Ratio:  0.08,
+		}},
+	}}
 	return value
 }
 
@@ -86,11 +99,17 @@ var fileKeyOrder = []struct {
 	{where: []string{"compile", "programs", "hello", "warmBuild"}, want: []string{"median", "min", "max"}},
 	{where: []string{"compile", "programs", "hello", "clang"}, want: []string{"compile", "link"}},
 	{where: []string{"compile", "programs", "hello", "phases"}, want: []string{"load", "lower", "emit"}},
+	{where: []string{"execute"}, want: []string{"rounds", "programs"}},
+	{where: []string{"execute", "programs"}, want: []string{"trees", "primes_parallel"}},
+	{where: []string{"execute", "programs", "trees"}, want: []string{"judge", "native", "node", "ratio"}},
+	{where: []string{"execute", "programs", "trees", "native"}, want: []string{"wall", "user", "peakKiB"}},
+	{where: []string{"execute", "programs", "trees", "node", "user"}, want: []string{"median", "min", "max"}},
 }
 
-// The file's keys come out in the schema's order at every level, the programs in theirs, and reading the file back
-// and writing it again gives the same bytes, header and all. Mutant: map-keyed output (a map[string]any for the
-// snapshot, or a map for programs), whose keys come out sorted, so commit precedes schema and Parser precedes hello.
+// The file's keys come out in the schema's order at every level, both halves' programs in theirs, and reading the file
+// back and writing it again gives the same bytes, header and all, the execute half's numbers and ratios among them.
+// Mutant: map-keyed output (a map[string]any for the snapshot, or a map for programs or executions), whose keys come
+// out sorted, so commit precedes schema, Parser precedes hello and primes_parallel precedes trees.
 func TestPerformanceFileKeepsItsKeyOrderAndRoundTrips(t *testing.T) {
 	t.Parallel()
 	written, err := encodeSnapshot(fullSnapshot())
@@ -164,6 +183,54 @@ func TestPerformanceJsoncReaderStripsCommentsButNotStrings(t *testing.T) {
 	unknown := strings.Replace(string(written), `"schema": 1,`, `"schema": 1, "extra": true,`, 1)
 	if _, err := decodeSnapshot([]byte(unknown)); err == nil {
 		t.Error("a field the snapshot doesn't have was read without an error")
+	}
+}
+
+// A snapshot from before the execute half was measured holds execute as {}: it reads as an execute half with no
+// rounds and no programs, and writes back as the same {}, so -unmeasured over it keeps it as it was. A program named
+// twice in the execute half, or a field no execution has, is refused as the compile half's are. Mutants: execute's
+// fields without omitempty, and {} writes back as {"rounds": 0, "programs": {}}; executions read without the duplicate
+// check, and the second trees replaces the first.
+func TestPerformanceAnEmptyExecuteStillDecodes(t *testing.T) {
+	t.Parallel()
+	value := fullSnapshot()
+	value.Execute = execute{}
+	written, err := encodeSnapshot(value)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.HasSuffix(string(written), "\t\"execute\": {}\n}\n") {
+		t.Fatalf("an empty execute half isn't written as {}:\n%s", written)
+	}
+	read, err := decodeSnapshot(written)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if read.Execute.Rounds != 0 || len(read.Execute.Programs) != 0 {
+		t.Errorf("{} read as %+v", read.Execute)
+	}
+	again, err := encodeSnapshot(read)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Equal(again, written) {
+		t.Fatalf("written again, the file differs:\n%s\nfirst:\n%s", again, written)
+	}
+
+	full, err := encodeSnapshot(fullSnapshot())
+	if err != nil {
+		t.Fatal(err)
+	}
+	for name, broken := range map[string]string{
+		"a program named twice": strings.Replace(string(full), `"primes_parallel": {`, `"trees": {`, 1),
+		"an unknown field":      strings.Replace(string(full), `"ratio": 0.64`, `"ratio": 0.64, "extra": true`, 1),
+	} {
+		if broken == string(full) {
+			t.Fatalf("%s: the replacement found nothing to replace", name)
+		}
+		if _, err := decodeSnapshot([]byte(broken)); err == nil {
+			t.Errorf("an execute half with %s was read without an error", name)
+		}
 	}
 }
 

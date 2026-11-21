@@ -41,8 +41,10 @@ type fakeAdamic struct {
 	children []string
 	// warmBuilds counts each program's warm builds so far, by base name.
 	warmBuilds map[string]int
-	// missingHit is the program and warm build whose log has no cArchive hit, or empty for none.
+	// missingHit is the program and warm build whose log has no cArchive line, or empty for none.
 	missingHit string
+	// archiveMisses are the programs and warm builds whose cArchive line is a miss.
+	archiveMisses []string
 }
 
 func (fake *fakeAdamic) run(child child) (childResult, error) {
@@ -90,6 +92,13 @@ func (fake *fakeAdamic) run(child child) (childResult, error) {
 	}
 	if fmt.Sprintf("%s %d", base, round) == fake.missingHit {
 		lines = slices.DeleteFunc(lines, func(line string) bool { return strings.HasPrefix(line, "cArchive") })
+	}
+	if slices.Contains(fake.archiveMisses, fmt.Sprintf("%s %d", base, round)) {
+		for index, line := range lines {
+			if strings.HasPrefix(line, "cArchive") {
+				lines[index] = "cArchive runtime.a 0123456789ab miss 1.500"
+			}
+		}
 	}
 	if err := os.WriteFile(logPath, []byte(strings.Join(lines, "\n")+"\n"), 0o644); err != nil {
 		return childResult{}, err
@@ -198,10 +207,10 @@ func TestPerformanceBuildLogReadsItsOwnLines(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if milliseconds(log.compile) != 130 || milliseconds(log.link) != 300 || log.compiles != 2 || log.links != 1 || !log.archiveHit || log.phases["load"] != 0.25 {
+	if milliseconds(log.compile) != 130 || milliseconds(log.link) != 300 || log.compiles != 2 || log.links != 1 || log.archives != 1 || !log.archiveHit || log.phases["load"] != 0.25 {
 		t.Errorf("read %+v", log)
 	}
-	if log, err := parseBuildLog("cArchive runtime.a 0123456789ab miss 1.500\n"); err != nil || log.archiveHit {
+	if log, err := parseBuildLog("cArchive runtime.a 0123456789ab miss 1.500\n"); err != nil || log.archiveHit || log.archives != 1 {
 		t.Errorf("an archive miss read as %+v, %v", log, err)
 	}
 	for _, malformed := range []string{"cLink hello - off\n", "cLink hello - off soon\n", "phase load - off -1\n", "cLink hello - off NaN\n", "cLink hello - off +Inf\n"} {

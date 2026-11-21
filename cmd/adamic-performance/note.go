@@ -13,7 +13,8 @@ func shortSha(commit string) string {
 
 // compareNote is what a measured snapshot says about the one before it. A number moved only when its new range of
 // rounds doesn't overlap the old one, since two medians of a noisy machine differ nearly always and mean nothing by
-// it; a different machine, tool or round count is never compared at all, only named.
+// it; a different machine, tool or round count is never compared at all, only named. The execute half's moves follow
+// the compile half's, and its new and gone programs the compile half's (compareExecute).
 func compareNote(previous *snapshot, current snapshot) string {
 	if previous == nil {
 		return "first snapshot"
@@ -35,13 +36,8 @@ func compareNote(previous *snapshot, current snapshot) string {
 			{name: "warmBuild", before: before.WarmBuild, after: entry.Program.WarmBuild},
 			{name: "frontEnd", before: before.FrontEnd, after: entry.Program.FrontEnd},
 		} {
-			direction := ""
-			switch {
-			case measure.after.Max < measure.before.Min:
-				direction = "faster"
-			case measure.after.Min > measure.before.Max:
-				direction = "slower"
-			default:
+			direction := movedDirection(measure.before, measure.after)
+			if direction == "" {
 				continue
 			}
 			moved = append(moved, fmt.Sprintf("%s %s %d to %d ms (%s)", entry.Name, measure.name, measure.before.Median, measure.after.Median, direction))
@@ -52,10 +48,54 @@ func compareNote(previous *snapshot, current snapshot) string {
 			named = append(named, entry.Name+" gone")
 		}
 	}
+	executeMoved, executeNamed := compareExecute(previous.Execute, current.Execute)
+	moved = append(moved, executeMoved...)
+	named = append(named, executeNamed...)
 	if len(moved) == 0 {
 		moved = []string{"level against " + shortSha(previous.MeasuredCommit)}
 	}
 	return strings.Join(append(moved, named...), "; ")
+}
+
+// movedDirection is how a spread moved, faster when its new range is wholly below the old one and slower when it is
+// wholly above, or empty when the two overlap, an end shared among them.
+func movedDirection(before, after spread) string {
+	switch {
+	case after.Max < before.Min:
+		return "faster"
+	case after.Min > before.Max:
+		return "slower"
+	}
+	return ""
+}
+
+// compareExecute is what moved in the execute half, by compareNote's rule, and which of its programs are new, gone or
+// judged on another measure. Only native's judged spread is named as moved, since it is the one the commit makes:
+// Node's numbers move with the machine and Node's own version, and the ratio with both sides, so they are context
+// beside native's and never named. A program judged on another measure than before is named and not compared, since
+// the two spreads are of different times.
+func compareExecute(previous, current execute) (moved, named []string) {
+	for _, entry := range current.Programs {
+		before, found := previous.Programs.lookup(entry.Name)
+		if !found {
+			named = append(named, entry.Name+" new")
+			continue
+		}
+		if before.Judge != entry.Execution.Judge {
+			named = append(named, fmt.Sprintf("%s judge %s to %s", entry.Name, before.Judge, entry.Execution.Judge))
+			continue
+		}
+		old, now := before.Native.judged(before.Judge), entry.Execution.Native.judged(entry.Execution.Judge)
+		if direction := movedDirection(old, now); direction != "" {
+			moved = append(moved, fmt.Sprintf("%s native %s %d to %d ms (%s)", entry.Name, entry.Execution.Judge, old.Median, now.Median, direction))
+		}
+	}
+	for _, entry := range previous.Programs {
+		if _, found := current.Programs.lookup(entry.Name); !found {
+			named = append(named, entry.Name+" gone")
+		}
+	}
+	return moved, named
 }
 
 // incomparable is every way two snapshots were measured apart, each as what differs, old to new: a number from another
@@ -74,6 +114,7 @@ func incomparable(previous, current snapshot) []string {
 		{name: "tools.clang", before: strconv.Quote(previous.Tools.Clang), after: strconv.Quote(current.Tools.Clang)},
 		{name: "tools.node", before: strconv.Quote(previous.Tools.Node), after: strconv.Quote(current.Tools.Node)},
 		{name: "compile.rounds", before: strconv.Itoa(previous.Compile.Rounds), after: strconv.Itoa(current.Compile.Rounds)},
+		{name: "execute.rounds", before: strconv.Itoa(previous.Execute.Rounds), after: strconv.Itoa(current.Execute.Rounds)},
 	} {
 		if field.before != field.after {
 			differences = append(differences, fmt.Sprintf("%s %s to %s", field.name, field.before, field.after))
