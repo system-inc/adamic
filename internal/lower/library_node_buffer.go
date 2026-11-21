@@ -240,21 +240,14 @@ func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error
 	}
 	if operation == "buffer_string" {
 		for index := 1; index <= 2; index++ {
-			fallback := ir.Expression(ir.NumberConstant{Value: 0})
+			value := ir.Expression(ir.NumberConstant{Value: 0})
 			if index == 2 {
-				fallback = ir.NumberConstant{Value: math.Inf(1)}
+				value = ir.NumberConstant{Value: math.Inf(1)}
 			}
-			value := fallback
 			if len(args) > index {
 				value, err = l.expression(args[index])
 				if err != nil {
 					return nil, true, err
-				}
-				// The undefined literal is the default, as an omitted offset is: Node reads
-				// toString(encoding, undefined, 3) as (encoding, 0, 3) and (encoding, 2, undefined) to
-				// the end. It has no effect to keep. A number | undefined still stops below.
-				if _, isUndefined := value.(ir.Undefined); isUndefined {
-					value = fallback
 				}
 				if value.Type() != ir.Number {
 					return nil, true, l.notYet(args[index], "a non-number Buffer byte offset")

@@ -35,8 +35,7 @@ shown('(10, 20)', record.toString('ascii', 10, 20));
 shown('(3, 1)', record.toString('ascii', 3, 1));
 shown('(0, Infinity)', record.toString('ascii', 0, Infinity));
 shown('(-Infinity)', record.toString('ascii', -Infinity));
-shown('(undefined, 3)', record.toString('ascii', undefined, 3));
-shown('(2, undefined)', record.toString('ascii', 2, undefined));
+shown('(2)', record.toString('ascii', 2));
 shown('(2, NaN)', record.toString('ascii', 2, NaN));
 console.log(`hex (-2) ${record.toString('hex', -2)}`);
 // The same rows as values the program computes.

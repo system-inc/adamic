@@ -36,8 +36,10 @@ func TestNodeBufferRefusals(t *testing.T) {
 		// 'ascii' is a decode only: Node writes each UTF-16 unit as its low eight bits, a latin1 write.
 		{"from ascii", "import { Buffer } from 'node:buffer'; console.log(Buffer.from('\\u00e9a', 'ascii').toString('hex'));", "Buffer.from with the ascii encoding, a latin1 write"},
 		{"hash update ascii", "import { createHash } from 'node:crypto'; console.log(createHash('sha256').update('\\u00e9a', 'ascii').digest('hex'));", "Hash.update with the ascii encoding, a latin1 write"},
-		// toString's undefined literal is its default; a number | undefined offset still stops.
-		{"toString maybe offset", "import { Buffer } from 'node:buffer'; function read(end: number | undefined): string { return Buffer.from('abc').toString('ascii', 0, end); } console.log(read(2));", "a non-number Buffer byte offset"},
+		// toString's offsets are numbers, for 'ascii' as for every encoding: an explicit undefined stops,
+		// though Node reads it as the default.
+		{"toString undefined start", "import { Buffer } from 'node:buffer'; console.log(Buffer.from('abc').toString('ascii', undefined, 2));", "a non-number Buffer byte offset"},
+		{"toString undefined end", "import { Buffer } from 'node:buffer'; console.log(Buffer.from('abc').toString('ascii', 1, undefined));", "a non-number Buffer byte offset"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -177,10 +179,10 @@ func TestNodeBufferSliceLeavesUint8ArraySliceRefused(t *testing.T) {
 }
 
 // toString('ascii') is buffer_string with nodeBufferAscii, its offsets numbers as every encoding's are,
-// and the undefined literal is the default an omitted offset is: 0 for the start, Infinity for the end.
+// an omitted one the default: 0 for the start, Infinity for the end.
 func TestNodeBufferAsciiLowers(t *testing.T) {
 	t.Parallel()
-	program, err := lowerSource(t, "import { Buffer } from 'node:buffer';\nfunction read(bytes: Buffer): string {\n\treturn bytes.toString('ascii') + bytes.toString('ascii', 1, 3) + bytes.toString('ascii', undefined, 3) + bytes.toString('ascii', 2, undefined);\n}\nconsole.log(read(Buffer.from('>ONE')));")
+	program, err := lowerSource(t, "import { Buffer } from 'node:buffer';\nfunction read(bytes: Buffer): string {\n\treturn bytes.toString('ascii') + bytes.toString('ascii', 1, 3) + bytes.toString('ascii', 2) + bytes.toString('ascii', -2, 9.5);\n}\nconsole.log(read(Buffer.from('>ONE')));")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -212,7 +214,7 @@ func TestNodeBufferAsciiLowers(t *testing.T) {
 	sort.Slice(ranges, func(left, right int) bool {
 		return ranges[left][0] < ranges[right][0] || (ranges[left][0] == ranges[right][0] && ranges[left][1] < ranges[right][1])
 	})
-	want := [][2]float64{{0, 3}, {0, math.Inf(1)}, {1, 3}, {2, math.Inf(1)}}
+	want := [][2]float64{{-2, 9.5}, {0, math.Inf(1)}, {1, 3}, {2, math.Inf(1)}}
 	if len(ranges) != len(want) {
 		t.Fatalf("want %d toString('ascii') calls, found %v", len(want), ranges)
 	}
