@@ -57,34 +57,11 @@ func cachedCompiler(root, scratch, sha, name string) (string, error) {
 }
 
 func buildCompiler(root, scratch, sha, name, product string) error {
-	tree := filepath.Join(scratch, name)
-	if _, err := git(root, "worktree", "add", "--detach", tree, sha); err != nil {
+	tree, cleanup, err := layRevision(root, scratch, sha, name)
+	if err != nil {
 		return err
 	}
-	defer git(root, "worktree", "remove", "--force", tree)
-	// The revision's pinned cohere and its TypeScript, each from the first repository that holds the pin: the
-	// invoking repository's own submodule checkout, which reuses its objects without cloning the checker's history,
-	// or else the box's mirrors, which is where a Loom door job's are, since its lay kit lays the submodules as plain
-	// files with no repository of their own (#t7b148j, J-b54e1fs).
-	cohereSHA, err := git(root, "rev-parse", sha+":cohere")
-	if err == nil {
-		cohereRoot := filepath.Join(root, "cohere")
-		cohereTree := filepath.Join(tree, "cohere")
-		cleanup, err := checkoutPinned("cohere", cohereSHA, cohereRoot, cohereTree)
-		if err != nil {
-			return err
-		}
-		defer cleanup()
-		typescriptSHA, err := git(cohereTree, "rev-parse", "HEAD:TypeScript")
-		if err != nil {
-			return err
-		}
-		cleanup, err = checkoutPinned("TypeScript", typescriptSHA, filepath.Join(cohereRoot, "TypeScript"), filepath.Join(cohereTree, "TypeScript"))
-		if err != nil {
-			return err
-		}
-		defer cleanup()
-	}
+	defer cleanup()
 	if err := os.WriteFile(filepath.Join(tree, "cmd", "adamic", "admission_adapter.go"), []byte(loweringAdapter), 0600); err != nil {
 		return err
 	}
@@ -93,6 +70,80 @@ func buildCompiler(root, scratch, sha, name, product string) error {
 		return fmt.Errorf("build %s: %s %s", sha, built.Error, built.Stderr)
 	}
 	return nil
+}
+
+// jsonTypesInputs keys sha's oracle/json_types.go built, as compilerInputs keys its compiler.
+func jsonTypesInputs(sha string) buildcache.Inputs {
+	return buildcache.Inputs{
+		Name:      "admission-json-types",
+		Flags:     []string{sha, "-trimpath", "-buildvcs=false", "GOFLAGS=" + compilerGoFlags(), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT")},
+		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
+	}
+}
+
+// cachedJSONTypes is sha's oracle/json_types.go built in a revision laid as the compiler's is, its pinned cohere
+// beside it, so go.work's modules are all there: the tool the oracle's own tests build ahead (internal/oracle's
+// jsonTypes) and hand node.mjs as ADAMIC_JSON_TYPES.
+func cachedJSONTypes(root, scratch, sha string) (string, error) {
+	directory, err := buildcache.Get(jsonTypesInputs(sha), func(product string) error {
+		tree, cleanup, err := layRevision(root, scratch, sha, "json-types-build")
+		if err != nil {
+			return err
+		}
+		defer cleanup()
+		built := execute(tree, 5*time.Minute, "go", "build", "-trimpath", "-buildvcs=false", "-o", filepath.Join(product, "json-types"), "./oracle/json_types.go")
+		if built.Exit != 0 || built.Error != "" {
+			return fmt.Errorf("build %s's JSON types tool: %s %s", sha, built.Error, built.Stderr)
+		}
+		return nil
+	})
+	if err != nil {
+		return "", err
+	}
+	return filepath.Join(directory, "json-types"), nil
+}
+
+// layRevision checks sha out as name in scratch, with its pinned cohere and that cohere's TypeScript, and hands back
+// the tree and what removes it.
+func layRevision(root, scratch, sha, name string) (string, func(), error) {
+	tree := filepath.Join(scratch, name)
+	if _, err := git(root, "worktree", "add", "--detach", tree, sha); err != nil {
+		return "", nil, err
+	}
+	var undo []func()
+	cleanup := func() {
+		for index := len(undo) - 1; index >= 0; index-- {
+			undo[index]()
+		}
+		git(root, "worktree", "remove", "--force", tree)
+	}
+	// The revision's pinned cohere and its TypeScript, each from the first repository that holds the pin: the
+	// invoking repository's own submodule checkout, which reuses its objects without cloning the checker's history,
+	// or else the box's mirrors, which is where a Loom door job's are, since its lay kit lays the submodules as plain
+	// files with no repository of their own (#t7b148j, J-b54e1fs).
+	cohereSHA, err := git(root, "rev-parse", sha+":cohere")
+	if err == nil {
+		cohereRoot := filepath.Join(root, "cohere")
+		cohereTree := filepath.Join(tree, "cohere")
+		undoCohere, err := checkoutPinned("cohere", cohereSHA, cohereRoot, cohereTree)
+		if err != nil {
+			cleanup()
+			return "", nil, err
+		}
+		undo = append(undo, undoCohere)
+		typescriptSHA, err := git(cohereTree, "rev-parse", "HEAD:TypeScript")
+		if err != nil {
+			cleanup()
+			return "", nil, err
+		}
+		undoTypeScript, err := checkoutPinned("TypeScript", typescriptSHA, filepath.Join(cohereRoot, "TypeScript"), filepath.Join(cohereTree, "TypeScript"))
+		if err != nil {
+			cleanup()
+			return "", nil, err
+		}
+		undo = append(undo, undoTypeScript)
+	}
+	return tree, cleanup, nil
 }
 
 // submoduleMirrors are the directories that hold the box's mirrors, each as <name>.git: ADAMIC_ADMISSION_MIRRORS's
