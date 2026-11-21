@@ -1,0 +1,10 @@
+# #k8ed1f2 views-3's gate: apply twice, byte-identical outside .git; stage3/lane without shards or products; the compiler
+# and parallel censuses. Run after environment.sh, sandboxed-job.sh, sandboxed_typescript_source and sandboxed_npm
+# stage3/api stage3/typescript. Never merged.
+set -u
+fail=0
+for n in 1 2; do bash stage3/apply.sh --build-product "$TMPDIR/apply$n" > "$TMPDIR/apply$n.log" 2>&1 && echo "PASS apply $n" || { echo "FAIL apply $n"; tail -5 "$TMPDIR/apply$n.log"; fail=1; }; done
+diff -r -q -x .git "$TMPDIR/apply1" "$TMPDIR/apply2" > "$TMPDIR/applydiff" 2>&1 && echo "PASS apply twice byte-identical outside .git ($(find "$TMPDIR/apply1" -path '*/.git' -prune -o -type f -print | wc -l) files)" || { echo "FAIL apply twice differs"; head -5 "$TMPDIR/applydiff"; fail=1; }
+go test -count=1 -skip 'TestShard_|TestProduct_' ./stage3/lane/... > "$TMPDIR/lane.log" 2>&1 && echo "PASS stage3/lane" || { echo "FAIL stage3/lane"; grep -E -- '--- FAIL|^FAIL|_test.go:[0-9]+' "$TMPDIR/lane.log" | head -20; fail=1; }
+go test -count=1 ./internal/compilercensus/ ./cmd/adamic-gate/parallelcensus/ > "$TMPDIR/census.log" 2>&1 && echo "PASS censuses" || { echo "FAIL censuses"; grep -E -- '--- FAIL|^FAIL|_test.go:[0-9]+' "$TMPDIR/census.log" | head -20; fail=1; }
+[ $fail = 0 ] && echo "VERDICT OK" || echo "VERDICT FAIL"
