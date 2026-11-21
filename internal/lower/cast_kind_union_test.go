@@ -213,7 +213,7 @@ const method: MethodDeclaration = { kind: SyntaxKind.MethodDeclaration, pos: 1, 
 console.log('marking');
 mark(method);
 console.log(String(method.count));
-`, "unsupported callable contract"},
+`, "stage 0 can't lower a callable field retag read through a checked view, which needs a check at the call (rulings.md:27) yet"},
 		{"a getter-backed tag", kindUnionModel + `function target(node: Node): Expression { return (node as PropertyAccessExpression | ElementAccessExpression).expression; }
 const id: Identifier = { kind: SyntaxKind.Identifier, pos: 1, end: 2, text: 'a' };
 const property: PropertyAccessExpression = { get kind(): SyntaxKind.PropertyAccessExpression { return SyntaxKind.PropertyAccessExpression; }, pos: 0, end: 3, expression: id, name: id };
