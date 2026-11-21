@@ -180,6 +180,8 @@ const char *adamic_region_unmovable(const adamic_heap *heap) {
 		return NULL;
 	// Foreign wrappers own hidden payload slots and release through the foreign runtime.
 	case adamic_kind_foreign: return "a foreign value";
+	// The union's null is one static value, which nothing moves.
+	case adamic_kind_null: return "the union's null";
 	case adamic_kind_string: return "a string";
 	case adamic_kind_number: return "a number box";
 	case adamic_kind_boolean: return "a boolean box";
