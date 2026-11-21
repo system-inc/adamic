@@ -6,7 +6,8 @@ import (
 )
 
 func (e *emitter) nodeBufferCall(call ir.NodeBufferCall) string {
-	encoding := []string{"utf8", "utf16le", "base64", "hex"}[call.Encoding]
+	// Index for index with lower's nodeBufferEncoding; "ascii" reaches only toString.
+	encoding := []string{"utf8", "utf16le", "base64", "hex", "ascii"}[call.Encoding]
 	args := make([]string, len(call.Arguments))
 	for i, arg := range call.Arguments {
 		args[i] = e.value(arg)
