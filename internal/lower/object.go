@@ -1829,14 +1829,16 @@ func (l *lowering) arrayReduce(node *ast.Node, array ir.Expression, element ir.T
 	if err != nil {
 		return nil, true, err
 	}
-	check, err := l.viewArrayElementCheck(node, node.AsCallExpression().Expression.AsPropertyAccessExpression().Expression)
+	// The receiver as the dispatch found it, past parentheses: (xs.reduce)(f, 0) is xs.reduce(f, 0).
+	receiver := ast.SkipParentheses(node.AsCallExpression().Expression).AsPropertyAccessExpression().Expression
+	check, err := l.viewArrayElementCheck(node, receiver)
 	if err == nil && check == nil {
 		l.recordViewArrayUse(node, array, "reduce")
 	}
 	// What the callback is handed, for graphFlows to judge when its targets are Unknown: Initial as the
 	// accumulator, the reduce's own type, and the array (#x490w4a).
 	initialTypeID := l.argumentTypeID(arguments[1], l.checker.GetTypeAtLocation(node))
-	arrayTypeID := l.argumentTypeID(node.AsCallExpression().Expression.AsPropertyAccessExpression().Expression)
+	arrayTypeID := l.argumentTypeID(receiver)
 	return ir.ArrayReduce{Array: array, Callback: callback, Initial: initial, Element: element, Result: result, CallbackType: callbackType, ElementCheck: check, InitialTypeID: initialTypeID, ArrayTypeID: arrayTypeID}, true, err
 }
 
