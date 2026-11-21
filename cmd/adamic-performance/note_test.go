@@ -218,3 +218,38 @@ func TestPerformanceNoteNamesAnExecuteHalfFirstMeasured(t *testing.T) {
 		t.Errorf("note %q, want %q", got, want)
 	}
 }
+
+// A number moved only when its ranges don't overlap and its median moved at least the floor, 2% of the old median and
+// never under 5 ms, in both halves. Clear ranges with sort's 3 ms (J-45rkvr9's noise) read level; a median that moved
+// exactly the floor reads moved, by 2% at 500 ms and by the 5 ms least at 30 ms; 4 ms at 30 ms reads level. Mutants:
+// the floor dropped (sort's 3 ms reads faster); the floor taken as more than it is (the 10 ms at 500 reads level); the
+// 5 ms least dropped (30 to 34 reads slower).
+func TestPerformanceNoteMovesOnlyPastTheFloor(t *testing.T) {
+	t.Parallel()
+	for _, each := range []struct {
+		before, after spread
+		want          string
+	}{
+		{before: spread{Median: 239, Min: 238, Max: 242}, after: spread{Median: 236, Min: 234, Max: 237}, want: ""},
+		{before: spread{Median: 500, Min: 495, Max: 505}, after: spread{Median: 510, Min: 507, Max: 512}, want: "slower"},
+		{before: spread{Median: 500, Min: 495, Max: 505}, after: spread{Median: 490, Min: 488, Max: 493}, want: "faster"},
+		{before: spread{Median: 30, Min: 29, Max: 31}, after: spread{Median: 35, Min: 33, Max: 36}, want: "slower"},
+		{before: spread{Median: 30, Min: 29, Max: 31}, after: spread{Median: 34, Min: 32, Max: 35}, want: ""},
+	} {
+		if got := movedDirection(each.before, each.after); got != each.want {
+			t.Errorf("%+v to %+v moved %q, want %q", each.before, each.after, got, each.want)
+		}
+	}
+	// Both halves call it: sort's 3 ms reads level in the compile half's warm build and in the execute half's native.
+	sortBefore, sortAfter := spread{Median: 239, Min: 238, Max: 242}, spread{Median: 236, Min: 234, Max: 237}
+	previous := noteSnapshot(earlierCommit, timed("sort", sortBefore, spread{Median: 45, Min: 44, Max: 47}))
+	current := noteSnapshot(laterCommit, timed("sort", sortAfter, spread{Median: 45, Min: 44, Max: 47}))
+	if got, want := compareNote(&previous, current), "level against 1ed745b"; got != want {
+		t.Errorf("compile half: note %q, want %q", got, want)
+	}
+	executedBefore := executeNoteSnapshot(earlierCommit, executed("sort", "user", sortBefore, spread{Median: 700, Min: 690, Max: 710}))
+	executedAfter := executeNoteSnapshot(laterCommit, executed("sort", "user", sortAfter, spread{Median: 700, Min: 690, Max: 710}))
+	if got, want := compareNote(&executedBefore, executedAfter), "level against 1ed745b"; got != want {
+		t.Errorf("execute half: note %q, want %q", got, want)
+	}
+}

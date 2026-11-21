@@ -57,9 +57,16 @@ func compareNote(previous *snapshot, current snapshot) string {
 	return strings.Join(append(moved, named...), "; ")
 }
 
-// movedDirection is how a spread moved, faster when its new range is wholly below the old one and slower when it is
-// wholly above, or empty when the two overlap, an end shared among them.
+// movedDirection is how a spread moved: faster when its new range is wholly below the old one and slower when it is
+// wholly above, and only when its median moved at least the floor (movedFloor) as well. Otherwise it is empty, and the
+// number reads level, an end shared between the ranges included. Ranges alone fire on noise at few rounds: for a
+// number that didn't change, the chance its new rounds land wholly on one side is 2 in C(2n, n), 2 in 20 at 3
+// rounds, so nine execute numbers named a false move on about 61% of commits that changed nothing (#hed1mkb, Adamic's
+// ruling, from J-45rkvr9's sort 239 to 236 ms).
 func movedDirection(before, after spread) string {
+	if delta := after.Median - before.Median; max(delta, -delta) < movedFloor(before.Median) {
+		return ""
+	}
 	switch {
 	case after.Max < before.Min:
 		return "faster"
@@ -67,6 +74,12 @@ func movedDirection(before, after spread) string {
 		return "slower"
 	}
 	return ""
+}
+
+// movedFloor is the least a median must move, in milliseconds, for its number to read moved: 2% of the old median,
+// rounded up, and never under 5 ms.
+func movedFloor(median int64) int64 {
+	return max((median*2+99)/100, 5)
 }
 
 // compareExecute is what moved in the execute half, by compareNote's rule, and which of its programs are new, gone or
