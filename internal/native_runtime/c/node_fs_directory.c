@@ -144,70 +144,7 @@ static bool valid(const adamic_string *path, bool target) {
 	static adamic_string before =
 		ADAMIC_STRING("The argument 'path' must be a string, Uint8Array, or "
 					  "URL without null bytes. Received ");
-	char quote = '\'';
-	if (memchr(path->bytes, '\'', path->length) != NULL) {
-		if (memchr(path->bytes, '"', path->length) == NULL) {
-			quote = '"';
-		} else if (memchr(path->bytes, '`', path->length) == NULL) {
-			quote = '`';
-			for (size_t i = 1; i < path->length; i++) {
-				if (path->bytes[i - 1] == '$' && path->bytes[i] == '{') {
-					quote = '\'';
-					break;
-				}
-			}
-		}
-	}
-	char *bytes = allocate(path->length * 6 + 3);
-	size_t used = 0;
-	bytes[used++] = quote;
-	for (size_t i = 0; i < path->length; i++) {
-		unsigned char ch = (unsigned char)path->bytes[i];
-		const char *escape = ch == '\n'	  ? "\\n"
-							 : ch == '\r' ? "\\r"
-							 : ch == '\t' ? "\\t"
-							 : ch == '\b' ? "\\b"
-							 : ch == '\f' ? "\\f"
-										  : NULL;
-		if (escape != NULL) {
-			memcpy(bytes + used, escape, 2);
-			used += 2;
-		} else if (ch < 32 || ch == 127) {
-			static const char hex[] = "0123456789ABCDEF";
-			bytes[used++] = '\\';
-			bytes[used++] = 'x';
-			bytes[used++] = hex[ch >> 4];
-			bytes[used++] = hex[ch & 15];
-		} else if (ch == 0xed && i + 2 < path->length &&
-				   (unsigned char)path->bytes[i + 1] >= 0xa0 &&
-				   (unsigned char)path->bytes[i + 1] <= 0xbf) {
-			unsigned point = ((ch & 15) << 12) |
-							 (((unsigned char)path->bytes[i + 1] & 63) << 6) |
-							 ((unsigned char)path->bytes[i + 2] & 63);
-			static const char hex[] = "0123456789abcdef";
-			bytes[used++] = '\\';
-			bytes[used++] = 'u';
-			for (int shift = 12; shift >= 0; shift -= 4) {
-				bytes[used++] = hex[(point >> (unsigned)shift) & 15];
-			}
-			i += 2;
-		} else {
-			if (ch == '\\' || ch == (unsigned char)quote) {
-				bytes[used++] = '\\';
-			}
-			bytes[used++] = (char)ch;
-		}
-	}
-	bytes[used++] = quote;
-	adamic_string *shown = adamic_decode_utf8((unsigned char *)bytes, used);
-	free(bytes);
-	if (adamic_string_length(shown) > 128) {
-		adamic_string *cut = adamic_string_slice(shown, 0, 128, true);
-		adamic_release(shown);
-		static adamic_string dots = ADAMIC_STRING("...");
-		shown = adamic_string_concat(2, (adamic_string *const[]){cut, &dots});
-		adamic_release(cut);
-	}
+	adamic_string *shown = adamic_string_inspect_received(path);
 	static const char *const coded_error_shape_json_keys[] = {"code"};
 	static adamic_error_json coded_error_shape_json = {&coded_error_shape, coded_error_shape_json_keys, 1, NULL, false};
 	adamic_register_error_json(&coded_error_shape_json);
