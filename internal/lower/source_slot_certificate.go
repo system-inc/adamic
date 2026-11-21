@@ -175,9 +175,9 @@ func (l *lowering) sourceSlotScalarWrite(target *ast.Node, field *ast.Symbol) er
 }
 
 // holdSourceSlotStop holds stop, a Rule C NotYet at target, for checkSourceSlotPending, keyed to statement, the
-// expression statement the write is the whole of, and gives back nil. A write that is no statement's whole
-// expression has no statement to wait for, so its stop is given back at once, as the view walk gave it before
-// #5qx6qv4. A target already held keeps its first stop.
+// statement whose lowering lowers the write, and gives back nil. A write with no such statement
+// (sourceSlotWriteStatement's nil) has none to wait for, so its stop is given back at once, as the view walk gave
+// it before #5qx6qv4. A target already held keeps its first stop.
 func (l *lowering) holdSourceSlotStop(target, statement *ast.Node, stop error) error {
 	if statement == nil {
 		return stop
@@ -191,28 +191,49 @@ func (l *lowering) holdSourceSlotStop(target, statement *ast.Node, stop error) e
 	return nil
 }
 
-// sourceSlotWriteStatement is the expression statement whose whole expression writes target: an assignment of
-// any operator or a ++ or --, target seen through sourceSlotTargetWrapper's wrappers, or nil where the write sits
-// inside another expression, a for statement's clauses or an arrow's body among them.
+// sourceSlotWriteStatement is the statement nearest target that statement lowers, the one whose lowering lowers
+// the write: walking out from target, through any expression and through an arrow or a function expression,
+// whose body is lowered only where the expression holding it is, to the first statement of a kind statement
+// handles (sourceSlotStatementKinds). It's nil, so the stop is given at once, where the walk meets a node whose
+// expressions lowering reaches by another road than its statement: a parameter's default, a class member, a
+// decorator, an enum member, a JSX attribute or a declaration that is lowered by itself (#5qx6qv4, on the 322
+// tsc units #rgrtt32's census stopped at utilities.ts:9006, `void (file.externalModuleIndicator = ...)` in an
+// arrow's expression body).
 func sourceSlotWriteStatement(target *ast.Node) *ast.Node {
-	held := target
-	for held.Parent != nil && sourceSlotTargetWrapper(held.Parent.Kind) {
-		held = held.Parent
+	for node := target.Parent; node != nil; node = node.Parent {
+		if sourceSlotStatementKinds[node.Kind] {
+			return node
+		}
+		switch node.Kind {
+		case ast.KindArrowFunction, ast.KindFunctionExpression:
+			continue
+		case ast.KindParameter, ast.KindPropertyDeclaration, ast.KindPropertySignature, ast.KindMethodDeclaration,
+			ast.KindConstructor, ast.KindGetAccessor, ast.KindSetAccessor, ast.KindClassStaticBlockDeclaration,
+			ast.KindDecorator, ast.KindEnumMember, ast.KindJsxAttribute, ast.KindFunctionDeclaration,
+			ast.KindClassDeclaration, ast.KindClassExpression, ast.KindSourceFile, ast.KindModuleBlock, ast.KindBlock:
+			return nil
+		}
 	}
-	write := held.Parent
-	if write == nil {
-		return nil
-	}
-	switch {
-	case write.Kind == ast.KindBinaryExpression && write.AsBinaryExpression().Left == held:
-	case write.Kind == ast.KindPrefixUnaryExpression || write.Kind == ast.KindPostfixUnaryExpression:
-	default:
-		return nil
-	}
-	if write.Parent == nil || write.Parent.Kind != ast.KindExpressionStatement {
-		return nil
-	}
-	return write.Parent
+	return nil
+}
+
+// sourceSlotStatementKinds are the statements statement lowers by itself, each marked in loweredStatements as it
+// begins (statements.go). A Block is left out: a write is always inside a statement the Block holds, and a
+// function's body Block is lowered by its statements, not by statement.
+var sourceSlotStatementKinds = map[ast.Kind]bool{
+	ast.KindExpressionStatement: true,
+	ast.KindVariableStatement:   true,
+	ast.KindReturnStatement:     true,
+	ast.KindIfStatement:         true,
+	ast.KindForStatement:        true,
+	ast.KindWhileStatement:      true,
+	ast.KindDoStatement:         true,
+	ast.KindForInStatement:      true,
+	ast.KindForOfStatement:      true,
+	ast.KindSwitchStatement:     true,
+	ast.KindLabeledStatement:    true,
+	ast.KindThrowStatement:      true,
+	ast.KindTryStatement:        true,
 }
 
 // checkSourceSlotPending gives back the first held write's NotYet, in the view walk's order, whose statement

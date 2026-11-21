@@ -36,6 +36,13 @@ func (l *lowering) statement(node *ast.Node) (result []ir.Statement, err error) 
 			}
 		}()
 	}
+	// Marked before it's lowered, whatever its lowering then makes or stops at: statement is the one place lowering
+	// lowers a statement of any kind, so a write Rule C held stops wherever the statement nearest it was lowered
+	// at all (checkSourceSlotPending, sourceSlotWriteStatement, #5qx6qv4).
+	if l.loweredStatements == nil {
+		l.loweredStatements = map[*ast.Node]bool{}
+	}
+	l.loweredStatements[node] = true
 	switch node.Kind {
 	case ast.KindModuleDeclaration:
 		return l.namespaceBody(node)
@@ -85,13 +92,6 @@ func (l *lowering) statement(node *ast.Node) (result []ir.Statement, err error) 
 	case ast.KindReturnStatement:
 		return l.returnStatement(node)
 	case ast.KindExpressionStatement:
-		// Marked before it's lowered, whatever its lowering then makes or stops at: the one place lowering lowers
-		// an expression statement, so a write Rule C held stops wherever its statement was lowered at all
-		// (checkSourceSlotPending, #5qx6qv4).
-		if l.loweredStatements == nil {
-			l.loweredStatements = map[*ast.Node]bool{}
-		}
-		l.loweredStatements[node] = true
 		return l.expressionStatement(node.AsExpressionStatement().Expression)
 	case ast.KindVariableStatement:
 		if l.hostBindingDeclared(node) {
