@@ -522,8 +522,8 @@ func (v *predicateVerifier) expression(n *ast.Node, parameter *ast.Symbol, path 
 
 // predicateTagDomainRefusal is rulings.md:142 as amended (Adamic, #s8gy89r, Nov 21; #tvw1zkp): in .a a
 // predicate whose body tests the tag proves its target's layout only over a parameter type closed by
-// construction. A member of declared whose field is a whole open numeric enum, a supertype such as Base
-// with kind: K, can carry any kind with its own layout, so a tag test over it proves the tag and never the
+// construction. A member of declared whose field can hold any number, a supertype such as Base with
+// kind: K, can carry any kind with its own layout, so a tag test over it proves the tag and never the
 // layout. It proves the layout only where the closed-kind rule closes that member (closedKinds) and every
 // source through which a kind the target carries entered K(member) relates to the target
 // (closedKindSourcesFit, cause A's rule): then every value of the member carrying that kind was built at a
@@ -548,8 +548,11 @@ func (l *lowering) predicateTagDomainRefusal(node *ast.Node, declared, target *c
 		if member.Flags()&checker.TypeFlagsPrimitive != 0 {
 			continue
 		}
+		// A tag that can hold any number is asked, not only the whole open enum: two one-member enums hold
+		// any number too (tagHoldsAnyNumber, #x2cjvy9's J-pmbsp94), and having no kind domain, are never
+		// closed (Lower's question on #tvw1zkp).
 		property := l.checker.GetPropertyOfType(member, field)
-		if property == nil || !l.openNumericEnumType(l.checker.GetTypeOfSymbol(property)) {
+		if property == nil || !l.tagHoldsAnyNumber(l.checker.GetTypeOfSymbol(property)) {
 			continue
 		}
 		kinds, closed, why := l.closedKinds(member, field)

@@ -87,3 +87,22 @@ func TestTagOnlyPredicateOverAConstructionClosedSupertype(t *testing.T) {
 		}
 	})
 }
+
+// A member whose kind is two one-member enums holds any number and has no kind domain, so it's never closed:
+// in .a a tag-only predicate over it is refused at the predicate as t00 is, and in .ts it stops at the
+// checked read (Lower's question on #tvw1zkp, J-gt8dx1e). Mutant: the member skipped unless its tag is the
+// whole open enum (openNumericEnumType) lowers the .a row to the read's stop.
+func TestTagOnlyPredicateOverAOneMemberEnumTagIsRefusedInA(t *testing.T) {
+	t.Parallel()
+	const source = "enum One { X = 2 }\nenum Two { Y = 3 }\ninterface Other { readonly kind: One | Two }\ninterface OtherB extends Other { readonly kind: One.X; readonly b: number }\nfunction isB(n: Other): n is OtherB { return n.kind === One.X; }\nconst o: Other = { kind: One.X };\nif (isB(o)) { console.log(String(o.b + 1)); } else { console.log('not'); }\n"
+	if _, err := lowerSourceAs(t, source, ".a"); err == nil || !strings.Contains(err.Error(), "rulings.md:142") || !strings.Contains(err.Error(), "over Other") {
+		t.Fatalf(".a: want the predicate refused under rulings.md:142 over Other, got %v", err)
+	}
+	program, err := lowerSourceAs(t, source, ".ts")
+	if err != nil {
+		t.Fatalf(".ts: want the checked predicate lowered, got %v", err)
+	}
+	if code, _, stderr := brandedNative(t, program); code != 70 || !strings.Contains(stderr, "is not initialized") {
+		t.Fatalf(".ts native: exit %d, stderr %q; want the checked read's stop, exit 70", code, stderr)
+	}
+}
