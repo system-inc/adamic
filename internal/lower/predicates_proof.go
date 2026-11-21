@@ -2,6 +2,7 @@ package lower
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -27,6 +28,11 @@ type predicateVerifier struct {
 	truthiness bool
 	cells      []string
 	summaries  map[*ast.Node][]predicateTruth
+	// target is the predicate verify is proving, and closedDomain whether its file is .a, where a tag test
+	// proves the target's layout only over a parameter type closed by construction (rulings.md:142 as
+	// amended, #tvw1zkp; predicateTagDomainRefusal).
+	target       *checker.Type
+	closedDomain bool
 }
 
 type predicatePath struct {
@@ -320,6 +326,7 @@ func (v *predicateVerifier) verify(declaration *ast.Node) ([]predicateTruth, err
 		return nil, predicateFailure(v.l, declaration, "an assertion without a target type is not proved")
 	}
 	target := v.l.checker.GetTypeAtLocation(predicate.Type)
+	v.target, v.closedDomain = target, strings.HasSuffix(v.l.program.FileName(ast.GetSourceFileOfNode(declaration)), ".a")
 	summary := make([]predicateTruth, len(v.cells))
 	for i, cell := range v.cells {
 		wanted, ok := v.wanted(target, cell)
@@ -447,11 +454,24 @@ func (v *predicateVerifier) expression(n *ast.Node, parameter *ast.Symbol, path 
 				if v.field != "" && test.Kind == ast.KindPropertyAccessExpression && test.Name().Text() == v.field && v.sameParameter(test.AsPropertyAccessExpression().Expression, parameter) {
 					// A cell holds every member with that tag value, so a tag that can lie in the
 					// parameter's union doesn't partition it by member.
-					if hazard := v.l.enumTagHazardOf(v.l.checker.GetTypeOfSymbol(parameter), v.field); hazard != enumTagNoHazard {
+					// In .a a member closed by construction carries only its kind domain K(S), so it's no open
+					// hazard there, and predicateTagDomainRefusal asks the closed question of every member whose
+					// tag is the open enum (rulings.md:142 as amended, #tvw1zkp). .ts keeps the hazard as it was.
+					declared := v.l.checker.GetTypeOfSymbol(parameter)
+					hazard := v.l.enumTagHazardOf(declared, v.field)
+					if v.closedDomain {
+						hazard = v.l.enumTagWalkHazardOf(declared, v.field)
+					}
+					if hazard != enumTagNoHazard {
 						reason := predicateTagHazardReason(v.field, hazard)
 						refused := predicateFailure(v.l, n, reason)
 						refused.lyingTag = reason
 						return 0, refused
+					}
+					if v.closedDomain {
+						if refused := v.l.predicateTagDomainRefusal(n, declared, v.target, v.field); refused != nil {
+							return 0, refused
+						}
 					}
 					key, ok := predicateLiteral(v.l.checker.GetTypeAtLocation(constant))
 					if ok && v.constant(constant) {
@@ -498,6 +518,65 @@ func (v *predicateVerifier) expression(n *ast.Node, parameter *ast.Symbol, path 
 		return 0, predicateFailure(v.l, n, "unconverged or opaque helper on this return path")
 	}
 	return 0, predicateFailure(v.l, n, "opaque test or possible mutation on this return path")
+}
+
+// predicateTagDomainRefusal is rulings.md:142 as amended (Adamic, #s8gy89r, Nov 21; #tvw1zkp): in .a a
+// predicate whose body tests the tag proves its target's layout only over a parameter type closed by
+// construction. A member of declared whose field is a whole open numeric enum, a supertype such as Base
+// with kind: K, can carry any kind with its own layout, so a tag test over it proves the tag and never the
+// layout. It proves the layout only where the closed-kind rule closes that member (closedKinds) and every
+// source through which a kind the target carries entered K(member) relates to the target
+// (closedKindSourcesFit, cause A's rule): then every value of the member carrying that kind was built at a
+// type the target names. A member whose field is a literal is the closed union's case, unchanged.
+// Otherwise it's refused at the predicate, naming the member and the two fixes. In .ts the same body stays
+// :144's checked predicate.
+func (l *lowering) predicateTagDomainRefusal(node *ast.Node, declared, target *checker.Type, field string) *Refused {
+	members := []*checker.Type{declared}
+	if declared.Flags()&checker.TypeFlagsUnion != 0 {
+		members = declared.Types()
+	}
+	targets := []*checker.Type{target}
+	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		targets = target.Types()
+	}
+	refuse := func(member *checker.Type, why string) *Refused {
+		name := l.checker.TypeToString(member)
+		reason := "the comparison of " + field + " proves nothing about the layout over " + name + ", whose " + field + " is an open numeric enum: " + why + " (rulings.md:142)"
+		return &Refused{Where: l.program.Where(node), What: "a type predicate whose return is not proven (" + reason + ")", Fix: "take a closed union of the members as the parameter in place of " + name + ", or test the layout in the body (adamic/no-type-predicate)", lyingTag: reason}
+	}
+	for _, member := range members {
+		if member.Flags()&checker.TypeFlagsPrimitive != 0 {
+			continue
+		}
+		property := l.checker.GetPropertyOfType(member, field)
+		if property == nil || !l.openNumericEnumType(l.checker.GetTypeOfSymbol(property)) {
+			continue
+		}
+		kinds, closed, why := l.closedKinds(member, field)
+		if !closed {
+			return refuse(member, why)
+		}
+		carried := []*checker.Type{kinds}
+		if kinds.Flags()&checker.TypeFlagsUnion != 0 {
+			carried = kinds.Types()
+		}
+		for _, kind := range carried {
+			if kind.Flags()&checker.TypeFlagsNever != 0 {
+				continue
+			}
+			named := false
+			for _, each := range targets {
+				if literal := l.fieldLiteral(each, field); literal != nil && checker.Checker_isTypeIdenticalTo(l.checker, literal, kind) {
+					named = true
+					break
+				}
+			}
+			if named && !l.closedKindSourcesFit(member, field, kind, target) {
+				return refuse(member, "a value of it can carry "+l.checker.TypeToString(kind)+" without "+l.checker.TypeToString(target)+"'s layout")
+			}
+		}
+	}
+	return nil
 }
 
 func (v *predicateVerifier) sameParameter(n *ast.Node, parameter *ast.Symbol) bool {

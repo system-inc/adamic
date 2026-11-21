@@ -3,6 +3,7 @@ package lower
 import (
 	"errors"
 	"fmt"
+	"strings"
 	_ "unsafe"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -424,9 +425,11 @@ func (l *lowering) predicateRefusal(node *ast.Node) error {
 		if l.checkedPredicateClosure(node.Parent) {
 			return nil // The closure checks its own claim at each return (#1w5bve2).
 		}
-		// A tag that can lie is the reason worth naming, whichever prover met it.
+		// A tag that can lie is the reason worth naming, whichever prover met it. In .a the body prover asks
+		// the closed question of the parameter's type (rulings.md:142 as amended, predicateTagDomainRefusal),
+		// so its reason is the finer one there, and it names the fix the ruling owes (#tvw1zkp).
 		var flow, body *Refused
-		if errors.As(err, &body) && body.lyingTag != "" && (!errors.As(original, &flow) || flow.lyingTag == "") {
+		if errors.As(err, &body) && body.lyingTag != "" && (!errors.As(original, &flow) || flow.lyingTag == "" || strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".a")) {
 			return body
 		}
 		return original
