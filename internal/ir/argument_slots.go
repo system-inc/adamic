@@ -1,5 +1,10 @@
 package ir
 
+import (
+	"fmt"
+	"slices"
+)
+
 // RestArguments names a collected tail separately from fixed parameter slots.
 // A fixed-arity function and a rest function can inhabit the same function type.
 type RestArguments struct {
@@ -120,24 +125,37 @@ func (p *Program) argumentFactsOf() *argumentFacts {
 	if facts := p.argumentFacts; facts != nil && facts.functions == len(p.Functions) && facts.sets == len(p.FunctionTypeTargets) {
 		return facts
 	}
-	// Each function's containing sets, found in one pass over every set.
-	containing := make([][][]int, len(p.Functions))
-	for _, targets := range p.FunctionTypeTargets {
-		seen := map[int]bool{}
-		for _, target := range targets {
-			if !seen[target] {
-				seen[target] = true
-				containing[target] = append(containing[target], targets)
-			}
-		}
-	}
-	facts := &argumentFacts{functions: len(p.Functions), sets: len(p.FunctionTypeTargets), packed: make([]bool, len(p.Functions))}
-	for function := range p.Functions {
-		facts.packed[function] = p.packedCountNeeded(function, containing[function])
-		facts.convention = facts.convention || facts.packed[function]
-	}
+	facts, _ := p.deriveArgumentFacts()
 	p.argumentFacts = facts
 	return facts
+}
+
+// deriveArgumentFacts is argumentFactsOf's derivation, and how many peer visits it made, which the visit
+// count's test reads. Each distinct target set is read once: a program holds one set under many function
+// types (every type whose call sites see the same declarations), and asking each member of each copy about
+// every other member made m copies of a set of k cost m·k² (#67w3g0x: 83 to 97% of C emission on a program
+// shaped like tsc's imports, growing about cubically). Once per set, every member reads its peers' absent
+// representations from one table of them (packedPeers), so a set costs its members' parameters.
+func (p *Program) deriveArgumentFacts() (*argumentFacts, int) {
+	facts := &argumentFacts{functions: len(p.Functions), sets: len(p.FunctionTypeTargets), packed: make([]bool, len(p.Functions))}
+	for index, function := range p.Functions {
+		facts.packed[index] = function.ReadsArguments || function.RestElement != 0 && (function.Closure || function.Receiver)
+	}
+	visits := 0
+	read := map[string]bool{}
+	for _, targets := range p.FunctionTypeTargets {
+		members := distinctTargets(targets)
+		key := fmt.Sprint(members)
+		if read[key] {
+			continue
+		}
+		read[key] = true
+		visits += p.packedPeers(members, facts.packed)
+	}
+	for _, packed := range facts.packed {
+		facts.convention = facts.convention || packed
+	}
+	return facts, visits
 }
 
 // PackedCountNeeded is a callee observation, not a property of all function values.
@@ -145,46 +163,91 @@ func (p *Program) PackedCountNeeded(function int) bool {
 	return p.argumentFactsOf().packed[function]
 }
 
-func (p *Program) packedCountNeeded(function int, containing [][]int) bool {
-	f := p.Functions[function]
-	if f.ReadsArguments || f.RestElement != 0 && (f.Closure || f.Receiver) {
-		return true
-	}
+// distinctTargets is a target set's functions, each once and in order, so two sets of the same functions
+// are read as one.
+func distinctTargets(targets []int) []int {
+	members := slices.Clone(targets)
+	slices.Sort(members)
+	return slices.Compact(members)
+}
 
-	// A zero-argument view can reach optional parameters held differently. One
-	// padding word cannot be absent in both representations, so those callees
-	// distinguish presence with the count instead of interpreting that word.
-	for _, targets := range containing {
+// absentMasks are, for each parameter index, the absent representations (absentRepresentation, one bit
+// each) the peers of one class hold at that index.
+type absentMasks []uint8
+
+// packedPeers marks in packed each member of one target set that a peer makes need the count, and returns
+// how many member visits it made. A zero-argument view can reach optional parameters held differently: one
+// padding word cannot be absent in both representations, so those callees distinguish presence with the
+// count instead of interpreting that word.
+//
+// A member is compared with the set's peers of its class: a closure with every closure of the set, any
+// other function with the set's methods (receivers that aren't closures) of its own name. At each of its
+// parameter indexes that is neither its own rest slot nor a peer's, a member whose parameter may be missing
+// (a Maybe pair or a reference) needs the count when a peer holds absence another way there. So the peers'
+// representations at each index are gathered once into a class's absentMasks, and each member reads them:
+// the answer a walk of every pair of members gives, in a pass over the members twice.
+func (p *Program) packedPeers(members []int, packed []bool) int {
+	visits := 0
+	var closures absentMasks
+	methods := map[string]absentMasks{}
+	for _, target := range members {
+		visits++
+		peer := p.Functions[target]
+		if !peer.Closure && !peer.Receiver {
+			continue
+		}
+		masks := methods[peer.MethodName]
+		if peer.Closure {
+			masks = closures
+		}
+		compared := peer.Parameters
+		if peer.Receiver {
+			compared = compared[1:]
+		}
+		for index, parameter := range compared {
+			if peer.RestElement != 0 && index == len(compared)-1 {
+				continue
+			}
+			for len(masks) <= index {
+				masks = append(masks, 0)
+			}
+			masks[index] |= 1 << absentRepresentation(p.Locals[parameter].Type)
+		}
+		if peer.Closure {
+			closures = masks
+		} else {
+			methods[peer.MethodName] = masks
+		}
+	}
+	for _, target := range members {
+		visits++
+		if packed[target] {
+			continue
+		}
+		f := p.Functions[target]
+		masks := methods[f.MethodName]
+		if f.Closure {
+			masks = closures
+		}
 		parameters := f.Parameters
 		if f.Receiver {
 			parameters = parameters[1:]
 		}
-		for _, target := range targets {
-			other := p.Functions[target]
-			if !other.Closure && !other.Receiver {
+		for index, parameter := range parameters {
+			if index >= len(masks) {
+				break
+			}
+			if f.RestElement != 0 && index == len(parameters)-1 {
 				continue
 			}
-			if !f.Closure || !other.Closure {
-				if f.MethodName != other.MethodName || f.Closure != other.Closure {
-					continue
-				}
-			}
-			compared := other.Parameters
-			if other.Receiver {
-				compared = compared[1:]
-			}
-			for index, parameter := range parameters {
-				if index >= len(compared) || f.RestElement != 0 && index == len(parameters)-1 || other.RestElement != 0 && index == len(compared)-1 {
-					continue
-				}
-				of, against := p.Locals[parameter].Type, p.Locals[compared[index]].Type
-				if (of.IsMaybe() || of.IsReference()) && absentRepresentation(of) != absentRepresentation(against) {
-					return true
-				}
+			of := p.Locals[parameter].Type
+			if (of.IsMaybe() || of.IsReference()) && masks[index]&^(1<<absentRepresentation(of)) != 0 {
+				packed[target] = true
+				break
 			}
 		}
 	}
-	return false
+	return visits
 }
 
 func absentRepresentation(of Type) int {
