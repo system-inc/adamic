@@ -31,6 +31,14 @@ edit("class.go", [
 
 ])
 
+edit("interface_cast.go", [
+    ("""func (l *lowering) judgeViewAccess(part *ast.Node, known bool) (bool, error) {""",
+     """func (l *lowering) judgeViewAccess(part *ast.Node, known bool) (checked bool, failure error) {
+    if l.traceRgrtt32Site(part) {
+        defer func() { l.traceRgrtt32Judgment(part, known, checked, failure) }()
+    }"""),
+])
+
 edit("diagnostics.go", [
     ("""return &NotYet{Where: l.program.Where(node), What: what}""",
      """failure := &NotYet{Where: l.program.Where(node), What: what}
@@ -50,7 +58,7 @@ edit("latent_hook.go", [
     traceRgrtt32Writes = nil
     \t\t\tunit :="""),
     ("""l.latentFinishUnit(&unit, node)""",
-     """l.traceRgrtt32Completed()
+     """l.traceRgrtt32Completed(node)
     l.latentFinishUnit(&unit, node)"""),
 ])
 
@@ -69,7 +77,9 @@ import (
 )
 
 var traceRgrtt32Enabled = os.Getenv("ADAMIC_RGRRT32_TRACE") == "1"
+var traceRgrtt32Where = os.Getenv("ADAMIC_RGRRT32_WHERE")
 var traceRgrtt32Writes []ir.SetProperty
+var traceRgrtt32Target *ast.Node
 
 func traceRgrtt32Select(node *ast.Node) bool {
     selected := os.Getenv("ADAMIC_RGRRT32_UNITS")
@@ -81,10 +91,17 @@ func traceRgrtt32Select(node *ast.Node) bool {
 }
 
 func (l *lowering) traceRgrtt32Site(node *ast.Node) bool {
-    return traceRgrtt32Enabled &&
+    return traceRgrtt32Enabled && node != nil &&
         node.Kind == ast.KindPropertyAccessExpression &&
         node.Name().Text() == "valueDeclaration" &&
-        strings.HasSuffix(l.program.Where(node), "/src/compiler/utilities.ts:4315:9")
+        strings.HasSuffix(l.program.Where(node), traceRgrtt32Location())
+}
+
+func traceRgrtt32Location() string {
+    if traceRgrtt32Where != "" {
+        return traceRgrtt32Where
+    }
+    return "/src/compiler/utilities.ts:4315:9"
 }
 
 func (l *lowering) traceRgrtt32Store(target *ast.Node, statements []ir.Statement, err error) {
@@ -101,6 +118,14 @@ func (l *lowering) traceRgrtt32Store(target *ast.Node, statements []ir.Statement
         latentFindingOwner, where, statements, err)
 }
 
+func (l *lowering) traceRgrtt32Judgment(target *ast.Node, known, checked bool, failure error) {
+    receiver := l.viewReceiver(l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression))
+    id := int(receiver.Id())
+    fmt.Fprintf(os.Stderr, "RGRRT32 judgment unit=%s site=%s receiverTypeID=%d known=%t judgedChecked=%t checked=%t viewOrigins=%d error=%v\n",
+        latentFindingOwner, l.program.Where(target), id, known, checked,
+        l.result.CheckedField(id, target.Name().Text()), len(l.result.ViewOrigins), failure)
+}
+
 func (l *lowering) traceRgrtt32Refusal(target *ast.Node, failure *NotYet) {
     receiver := l.viewReceiver(l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression))
     id := int(receiver.Id())
@@ -109,7 +134,49 @@ func (l *lowering) traceRgrtt32Refusal(target *ast.Node, failure *NotYet) {
         len(l.result.ViewOrigins), failure, debug.Stack())
 }
 
-func (l *lowering) traceRgrtt32Completed() {
+func (l *lowering) traceRgrtt32FindTarget() *ast.Node {
+    if traceRgrtt32Target != nil {
+        return traceRgrtt32Target
+    }
+    var visit func(*ast.Node) bool
+    visit = func(node *ast.Node) bool {
+        if l.traceRgrtt32Site(node) {
+            traceRgrtt32Target = node
+            return true
+        }
+        return node.ForEachChild(visit)
+    }
+    for _, source := range l.program.Files() {
+        if !strings.HasSuffix(l.program.FileName(source), "/src/compiler/utilities.ts") {
+            continue
+        }
+        for _, declaration := range source.Statements.Nodes {
+            if declaration.Kind == ast.KindFunctionDeclaration && declaration.Name() != nil &&
+                declaration.Name().Text() == "setValueDeclaration" && visit(declaration) {
+                return traceRgrtt32Target
+            }
+        }
+    }
+    return nil
+}
+
+func (l *lowering) traceRgrtt32Completed(owner *ast.Node) {
+    if !traceRgrtt32Enabled {
+        return
+    }
+    if os.Getenv("ADAMIC_RGRRT32_UNITS") != "" {
+        if target := l.traceRgrtt32FindTarget(); target != nil {
+            receiver := l.viewReceiver(l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression))
+            id := int(receiver.Id())
+            name := ""
+            if owner.Name() != nil {
+                name = owner.Name().Text()
+            }
+            fmt.Fprintf(os.Stderr, "RGRRT32 completed unit=%s name=%s site=%s stores=%d receiverTypeID=%d checked=%t viewOrigins=%d\n",
+                latentFindingOwner, name, l.program.Where(target), len(traceRgrtt32Writes), id,
+                l.result.CheckedField(id, target.Name().Text()), len(l.result.ViewOrigins))
+        }
+    }
     if len(traceRgrtt32Writes) == 0 {
         return
     }
