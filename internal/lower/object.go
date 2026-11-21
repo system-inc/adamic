@@ -1832,7 +1832,11 @@ func (l *lowering) arrayReduce(node *ast.Node, array ir.Expression, element ir.T
 	if err == nil && check == nil {
 		l.recordViewArrayUse(node, array, "reduce")
 	}
-	return ir.ArrayReduce{Array: array, Callback: callback, Initial: initial, Element: element, Result: result, CallbackType: callbackType, ElementCheck: check}, true, err
+	// What the callback is handed, for graphFlows to judge when its targets are Unknown: Initial as the
+	// accumulator, the reduce's own type, and the array (#x490w4a).
+	initialTypeID := l.argumentTypeID(arguments[1], l.checker.GetTypeAtLocation(node))
+	arrayTypeID := l.argumentTypeID(node.AsCallExpression().Expression.AsPropertyAccessExpression().Expression)
+	return ir.ArrayReduce{Array: array, Callback: callback, Initial: initial, Element: element, Result: result, CallbackType: callbackType, ElementCheck: check, InitialTypeID: initialTypeID, ArrayTypeID: arrayTypeID}, true, err
 }
 
 // mapTypes is a Map's key and value representations. 0.1's maps have string or number keys.
