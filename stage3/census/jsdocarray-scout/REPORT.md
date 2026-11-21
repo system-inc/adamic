@@ -2,6 +2,8 @@
 
 Adamic main `42edc2ed5dbe0c31adcf5c43db507283b5ae3199`. TypeScript v6.0.3 `050880ce59e30b356b686bd3144efe24f875ebc8`.
 
+I initialized the pinned recursive submodules, cloned the upstream tag with depth one, and prepared the tree with `stage3/apply.sh`. The census binaries came from `stage3/census/latent/make_overlay.py` and `stage3/meter/entry_overlay.py`, each built with `go build -overlay … ./stage3/census/latent/tool` on this main revision. The adapted Git tree after the final existing adaptation is `ccd4de0cc389430ec81f1fc19cc800f54009fcf5`. The entry checker measured 81 source files and reported zero diagnostics.
+
 ## 1. First-error census
 
 The entry root was `src/tsc/tsc.ts` and the directory root was `src/compiler` in the same adapted tree. Both runs used `CENSUS_MODULE_FORMAT=CommonJSBundle`, `LATENT_FULL=0`, `LATENT_TAIL=1`, and `LATENT_ASSERT_NO_OUTPUT=1`. A unit’s first stop is its first recorded prepass, registration, lowering, deferred or scoped-tail finding. Refusal and deferred scans and the relation trailer contribute to the all-phase findings. The search matches the full reason as a substring. Sites and unit locations below use the adapted source coordinates.
@@ -13,7 +15,7 @@ The entry root was `src/tsc/tsc.ts` and the directory root was `src/compiler` in
 
 Neither `JSDocArray` nor `jsDocCache` appears in the upstream committed `tests/baselines/reference/api/typescript.d.ts`. The public `getJSDocTags(node: Node): readonly JSDocTag[]` signature does appear there at line 8750.
 
-[references.tsv](references.tsv) lists the LanguageService results over the v6.0.3 `src/` tree, including the harness and test runner. The search starts at `JSDocContainer.jsDoc`, `JSDocArray.jsDocCache`, the array type, and the service `NodeObject.jsDoc` declaration. Across 709 source roots it found one cache declaration, two cache reads, and two cache writes. The node field has 71 direct write sites. The factory accounts for 66 initializations to `undefined`. The other five are three copies, the parser attachment, and the worker’s empty-array fallback. The search uses checker symbol references and inspects the syntax of reported writes. In particular, `const { jsDoc } = node as JSDocContainer` in `utilitiesPublic.ts:2555` reads the node property when binding a fresh local. All TypeScript locations in parts 2 and 3 are upstream coordinates.
+The reference list records the LanguageService results over the v6.0.3 `src/` tree, including the harness and test runner. The search starts at `JSDocContainer.jsDoc`, `JSDocArray.jsDocCache`, the array type, and the service `NodeObject.jsDoc` declaration. Across 709 source roots it found one cache declaration, two cache reads, and two cache writes. The node field has 71 direct write sites. The factory accounts for 66 initializations to `undefined`. The other five are three copies, the parser attachment, and the worker’s empty-array fallback. The search uses checker symbol references and inspects the syntax of reported writes. In particular, `const { jsDoc } = node as JSDocContainer` in `utilitiesPublic.ts:2555` reads the node property when binding a fresh local. All TypeScript locations in parts 2 and 3 are upstream coordinates. [references.tsv](references.tsv)
 
 The copies and property-name-independent paths are below. The generic copies use dynamic keys, so an individual `jsDoc` symbol search cannot resolve their writes.
 
@@ -27,7 +29,7 @@ The copies and property-name-independent paths are below. The generic copies use
 | `src/services/textChanges.ts:1196–1204`, `updateJSDocHost` | Assigns the arrow function’s array to the property declaration or enclosing host. |
 | `src/compiler/factory/nodeFactory.ts:7420–7428`, `setOriginalNode` | Links `original` and merges emit metadata. The JSDoc array copies are performed by the callers above. |
 
-The cache can change a clone’s result today. I ran this probe with the v6.0.3 JavaScript compiler package. A parsed function with `/** @deprecated hello */` produces one `JSDocDeprecatedTag`. Calling `getJSDocTags` fills the cache. The factory clone has no parent and shares the function’s JSDoc array. Calling `getJSDocTags` on the clone returns the same deprecated tag. Calling `getJSDocCommentsAndTags(clone, true)` and applying the worker’s flattening returns an empty list. This is a concrete difference a fresh node-local cache would expose, regardless of its frequency in the lane workload.
+The cache can change a clone’s result today. I ran this probe with the v6.0.3 JavaScript compiler package. I cloned a parsed function with `/** @deprecated hello */` before filling the cache. The factory clone has no parent and shares the function’s JSDoc array. Calling `getJSDocTags` on the original then fills the cache with one `JSDocDeprecatedTag`. Calling `getJSDocTags` on the clone returns the same deprecated tag. Calling `getJSDocCommentsAndTags(clone, true)` and applying the worker’s flattening returns an empty list. This is a concrete difference a fresh node-local cache would expose, regardless of its frequency in the lane workload.
 
 Whole-lane oracle counts are pending.
 
@@ -35,14 +37,15 @@ Whole-lane oracle counts are pending.
 
 ### Adaptation
 
-The array-keyed side table is the semantics-preserving choice for cached tag results. A node-local cache would give a fresh clone a separate miss, as the clone probe demonstrates. Copying a node cache on clone would still separate later writes and incremental invalidation for nodes that share the array. Keep the current `node.jsDoc ??= []` so a cache fill on an undocumented node still materializes a fresh empty array. Several callers observe the array’s presence independently of its length.
+The array-keyed side table is the semantics-preserving choice for cached tag results. A node-local cache would give a fresh clone a separate miss, as the clone probe demonstrates. Copying a node cache at clone time would still separate later writes and incremental invalidation. Replacing an existing node’s `jsDoc` would also require invalidating any cache kept on that node. Keep the current `node.jsDoc ??= []` so a cache fill on an undocumented node still materializes a fresh empty array. Several callers observe the array’s presence independently of its length.
 
 | Edit site | Proposed source change | JavaScript effect |
 | --- | --- | --- |
 | `src/compiler/types.ts:959,963–965` | Replace the internal `jsDoc` field type with `JSDoc[]` and remove the now-unused `JSDocArray` interface. | Type-only. |
 | `src/compiler/utilities.ts:386,4684` | Remove the type import and type `filterOwnedJSDocTags`’s comments as an ordinary array. | Type-only. |
-| `src/compiler/utilitiesPublic.ts:1257–1268` | Keep a private array-keyed cache. In `getJSDocTagsWorker`, get the cached tags if the field holds an array. On a cacheable miss, compute tags as today, initialize the array if needed, and set the table entry under that exact array. Add an internal invalidation helper for the parser. | Adds module-level storage and a helper. Read and write operations become table lookups and updates. The array no longer exposes the own `jsDocCache` key in JavaScript. |
-| `src/compiler/parser.ts:3171–3173` and its compiler utility import | Call the cache invalidation helper with the node’s array, if present. Delete the table entry. | Clearing through any alias clears the shared entry. JavaScript replaces the direct property write with a helper call. |
+| New private compiler module, for example `src/compiler/jsDocCache.ts` | Hold the array-keyed table and its read, write and clear operations. Import these directly from the two callers and leave the namespace barrel alone. | Adds private module-level storage and functions. |
+| `src/compiler/utilitiesPublic.ts:1257–1268` and a direct import | Look up the array’s cached tags. On a cacheable miss, compute tags, initialize the array if needed, and set the table entry under that exact array. | Read and write operations become table lookups and updates. The array no longer exposes the own `jsDocCache` key in JavaScript. |
+| `src/compiler/parser.ts:3171–3173` and a direct import | Call the cache invalidation helper with the node’s array, if present. Delete the table entry. | Clearing through any alias clears the shared entry. JavaScript replaces the direct property write with a helper call. |
 
 These proposed edits touch no line in the public declaration baseline. A weak-key table has the lifetime of the existing attached cache. A module-wide strong `Map` would retain arrays and tags unless their lifetimes were managed explicitly. Adamic’s `Map` lowering permits array keys by identity. I found no source-level `WeakMap` lowering, so the weak table is a design candidate whose lowering remains unverified. The side table changes JavaScript reflection on the array, even when all tag results agree.
 
@@ -54,7 +57,7 @@ Construction needs to allocate the reserved slot before either fresh array escap
 
 Reads at `utilitiesPublic.ts:1259` and `parser.ts:3171` need optional access to the reference slot. Writes at `utilitiesPublic.ts:1267` and `parser.ts:3173` need reference ownership and the existing presence semantics, including the parser’s explicit write of `undefined`. The lowerer and backends need to keep the array representation through ordinary array views, indexing, iteration, length, optional accesses and aliasing. Native metadata stores and reads must account for the tag array’s ownership and release. The allocation also needs to participate in cycle planning. Tags can lead back to AST hosts through parent links, and the current graph guard refuses NodeArray allocations that could lie on a cycle because the native constructor builds them outside graph regions. JavaScript must preserve the real array and the existing observable own-property behavior. The worker’s `??=` targets the node’s array field, while its next line targets array metadata.
 
-Direct reads and writes of the array-valued field are enumerated in [references.tsv](references.tsv). The table below groups array exposures that exercise representation or aliasing. The factory’s `undefined` initializers are also in the reference list. They initialize the node field and allocate no array.
+The table groups array exposures that exercise representation or aliasing. The reference list includes each direct read and write, including factory `undefined` initializers that allocate no array. [references.tsv](references.tsv)
 
 | Source | Array exposure |
 | --- | --- |
@@ -67,9 +70,11 @@ Direct reads and writes of the array-valued field are enumerated in [references.
 | `services/codefixes/convertTypedefToType.ts:249`, `services/jsDoc.ts:496–497`, `services/navigationBar.ts:568` | `flatMap`, selection of the last comment through a local variable, traversal. |
 | `services/services.ts:383,521,640,3508`, `services/smartSelection.ts:117–129`, `services/utilities.ts:2157` | Concrete service field type, traversal and a return through an ordinary array type, length and first-comment reads, presence check. |
 
+The ordinary array helper bodies that consume these views are `compiler/core.ts:33,399,418,1098,1116,1121,1131`. The parser currently builds the result through the ordinary allocation and append in `core.ts:494–504`. These paths use array elements and length. The cache property is accessed at the four sites named above.
+
 #### Layout probe
 
-I ran `go test -overlay … ./internal/lower -run '^TestScoutJSDocArrayLayout$' -v` on pinned Adamic main. The overlay supplied a scratch test with the upstream array declaration and small stand-ins for `JSDoc` and `JSDocTag`. It called `nodeArrayLayoutOf` and the representation check directly.
+I ran `go test -overlay … ./internal/lower -run '^TestScoutJSDocArrayLayout$' -v` on pinned Adamic main. The overlay supplied a scratch test with the upstream array declaration and small stand-ins for `JSDoc` and `JSDocTag`. It also loaded the adapted `src/tsc/tsc.ts` with the normal checker and repeated the calls on its real `src/compiler/types.ts` declaration. Both gave the same result.
 
 | Probe result | Observed |
 | --- | --- |
@@ -79,4 +84,4 @@ I ran `go test -overlay … ./internal/lower -run '^TestScoutJSDocArrayLayout$' 
 | Schema planner with inferred cache field | `stage 0 can't lower NodeArray metadata field jsDocCache of type readonly JSDocTag[] \| undefined yet`. |
 | Schema planner with scalar control replacing just the cache type | `NodeArray requires pos with its declared required representation`. |
 
-The test passed. A direct load of the full TypeScript entry while apply was still running encountered checker diagnostics. The table records the focused fixture’s result.
+The test passed on the focused fixture and on the checker-clean adapted entry.
