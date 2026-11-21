@@ -32,6 +32,8 @@ type agreementRun struct {
 	runtimeStops                                                 runtimeNotYetStopList
 	divergences                                                  ruledBackendDivergenceList
 	heldStops                                                    heldStopList
+	// jsonTypesBinary is --json-types: head's JSON types tool, built from head when it's empty.
+	jsonTypesBinary string
 }
 
 // agreementProgram is one program of the run and how it was judged: agreeing, ruled, checked-stop, pending,
@@ -221,7 +223,7 @@ func runAgreement(agreement agreementRun) error {
 			break
 		}
 	}
-	runner := &programRunner{headTree: headTree, scratch: scratch, compiler: compiler, limit: agreement.limit, nativeFlags: []string{"--sanitize"}, nativeEnv: []string{"ASAN_OPTIONS=detect_leaks=0"}, negatives: agreement.negatives, runtimeStops: agreement.runtimeStops, divergences: agreement.divergences}
+	runner := &programRunner{headTree: headTree, scratch: scratch, compiler: compiler, limit: agreement.limit, nativeFlags: []string{"--sanitize"}, nativeEnv: []string{"ASAN_OPTIONS=detect_leaks=0"}, negatives: agreement.negatives, runtimeStops: agreement.runtimeStops, divergences: agreement.divergences, jsonTypes: jsonTypesTool(agreement.root, scratch, result.Head, agreement.jsonTypesBinary)}
 	// Accepted programs run on agreement.workers at once, a corpus being thousands of sanitized builds. Each worker
 	// writes only its own program's record, stale and failed slot, and scratch files named by the program's index; the
 	// counting and the lines wait for the pool, in manifest order, so the output is the same whatever order the

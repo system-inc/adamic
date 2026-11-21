@@ -126,6 +126,17 @@ type report struct {
 	CrashFixedPaths []string `json:"crash_fixed_paths"`
 }
 
+// jsonTypesTool is how a run finds head's JSON types tool: the one --json-types names, else head's oracle/json_types.go
+// built and cached by head's sha.
+func jsonTypesTool(root, scratch, head, given string) func() (string, error) {
+	return func() (string, error) {
+		if given != "" {
+			return filepath.Abs(given)
+		}
+		return cachedJSONTypes(root, scratch, head)
+	}
+}
+
 func execute(dir string, limit time.Duration, name string, args ...string) observation {
 	return executeWith(dir, limit, nil, name, args...)
 }
@@ -266,6 +277,7 @@ func run(args []string) error {
 	baseLowerBinary := flags.String("base-lower-binary", "", "base compiler with admission-lower adapter")
 	headLowerBinary := flags.String("head-lower-binary", "", "head compiler with admission-lower adapter")
 	headBinary := flags.String("head-binary", "", "built head compiler")
+	jsonTypesBinary := flags.String("json-types", "", "built head oracle/json_types.go, which Node's run of a JSON program needs (built from head when absent)")
 	negativePath := flags.String("negative-witnesses", "cloud/admission-corpus/negative-witnesses.json", "ruled content-hash negative witnesses")
 	runtimeNotYetPath := flags.String("runtime-notyet-stops", "cloud/admission-corpus/runtime-notyet-stops.json", "ruled content-hash run-time NotYet stops")
 	backendDivergencesPath := flags.String("backend-divergences", "internal/oracle/testdata/backend_divergences.json", "ruled backend divergences, the rows internal/oracle pins")
@@ -340,7 +352,7 @@ func run(args []string) error {
 			return err
 		}
 		fmt.Fprintf(os.Stderr, "held stops: %d\n", len(heldStops.Stops))
-		return runAgreement(agreementRun{root: root, head: *head, headBinary: *headBinary, headLowerBinary: *headLowerBinary, manifestPath: *manifestPath, shard: *shard, asJSON: *asJSON, limit: *limit, compileLimit: *compileLimit, workers: *workers, negatives: negatives, runtimeStops: runtimeStops, divergences: divergences, heldStops: heldStops})
+		return runAgreement(agreementRun{root: root, head: *head, headBinary: *headBinary, headLowerBinary: *headLowerBinary, manifestPath: *manifestPath, shard: *shard, asJSON: *asJSON, limit: *limit, compileLimit: *compileLimit, workers: *workers, negatives: negatives, runtimeStops: runtimeStops, divergences: divergences, heldStops: heldStops, jsonTypesBinary: *jsonTypesBinary})
 	}
 	startedAll := time.Now()
 	result := report{Programs: []entry{}, RuledRuntimeStopPaths: []string{}, StaleRuntimeStops: []string{}, PendingRuntimeStops: []string{}, RuledBackendDivergencePaths: []string{}, Verdict: "pass", Phases: map[string]float64{}, Workers: *workers, Classification: "lowering-only"}
@@ -574,7 +586,7 @@ func run(args []string) error {
 		result.Verdict = "sampled"
 	}
 	started := time.Now()
-	runner := &programRunner{headTree: headTree, scratch: scratch, compiler: h, limit: *limit, negatives: negatives, runtimeStops: runtimeStops, divergences: divergences}
+	runner := &programRunner{headTree: headTree, scratch: scratch, compiler: h, limit: *limit, negatives: negatives, runtimeStops: runtimeStops, divergences: divergences, jsonTypes: jsonTypesTool(root, scratch, result.Head, *jsonTypesBinary)}
 	for _, index := range selected {
 		record := &result.Programs[index]
 		record.Sampled = true
