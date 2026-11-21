@@ -70,6 +70,12 @@ var loweringFieldPolicies = map[string]loweringFieldPolicy{
 	// The views a lowering took roll back with the IR that lowering built, so a rolled-back view leaves its
 	// entry untaken and checkRelationViewsTaken refuses it unless a surviving lowering views it again.
 	"relationViewsTaken": speculativeState,
+	// Rule C's held writes and the statements lowering lowered (#5qx6qv4) roll back with the IR a lowering
+	// built, so a rolled-back statement's mark goes with the IR it made, and a held write a rolled-back view met
+	// goes with that view. Carrying either into another program's lowering would stop it at a write its own IR
+	// never made.
+	"sourceSlotPending": speculativeState,
+	"loweredStatements": speculativeState,
 	// Scoped to one optionalIntrinsic invocation; snapshots preserve its immutable AST identity.
 	// It is not a carried program fact.
 	"optionalReceiverCall": scopedASTIdentity,
