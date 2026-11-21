@@ -3,6 +3,7 @@ package lower
 import (
 	"fmt"
 	"reflect"
+	"slices"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -120,7 +121,8 @@ func graphUnknownWriters(node any, unknown map[int]string) {
 // collect takes every local-writing field by graphLocalWrites, and a demanded local some node writes
 // with a value collect doesn't follow is NotYet at the local the same way (#hny64km). An argument
 // passed to a function value whose targets are Unknown is followed too, quietly: it plans what it
-// reaches and never stops (#41vb71c).
+// reaches and never stops (#41vb71c). One whose every type can't reach a graph type (mayReachGraph)
+// holds no graph value and isn't followed (#x490w4a).
 func (f *cycleFinder) graphFlows() error {
 	program := f.l.result
 	next := 0
@@ -129,23 +131,6 @@ func (f *cycleFinder) graphFlows() error {
 		program.Functions[i].Body = graphAllocationSites(reflect.ValueOf(program.Functions[i].Body), &next).Interface().([]ir.Statement)
 	}
 
-	var graphType func(*checker.Type) bool
-	graphType = func(proven *checker.Type) bool {
-		if proven == nil || f.weak(proven) {
-			return false
-		}
-		if program.GraphTypes[int(proven.Id())] {
-			return true
-		}
-		if proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
-			for _, member := range proven.Types() {
-				if graphType(member) {
-					return true
-				}
-			}
-		}
-		return false
-	}
 	// Positive nodes are locals, then function results, then generator functions' yields.
 	resultNode := func(function int) int { return len(program.Locals) + function + 1 }
 	yieldNode := func(function int) int { return len(program.Locals) + len(program.Functions) + function + 1 }
@@ -172,13 +157,13 @@ func (f *cycleFinder) graphFlows() error {
 		}
 	}
 	for local, proven := range f.l.localTypes {
-		if graphType(proven) {
+		if f.graphType(proven) {
 			demand(local + 1)
 		}
 	}
 	for local, types := range f.l.localAlso {
 		for _, proven := range types {
-			if graphType(proven) {
+			if f.graphType(proven) {
 				demand(local + 1)
 			}
 		}
@@ -192,8 +177,22 @@ func (f *cycleFinder) graphFlows() error {
 	}
 	pending := []graphPending{}
 	// quietly is every argument passed to a function value whose targets are Unknown: no parameter it
-	// reaches has it as a source, so it's demanded at the call, whatever its type (#41vb71c).
+	// reaches has it as a source, so it's demanded at the call (#41vb71c), unless it holds no graph
+	// value. mayHold says whether an argument whose type id is id can: lowering named no type for it,
+	// or one of the types argumentTypes keeps by it can reach a graph type (#x490w4a).
 	quietly := []ir.Expression{}
+	judged := map[*checker.Type]bool{}
+	mayHold := func(id int) bool {
+		if len(f.l.argumentTypes[id]) == 0 {
+			return true
+		}
+		for _, proven := range f.l.argumentTypes[id] {
+			if f.mayReachGraph(proven, judged) {
+				return true
+			}
+		}
+		return false
+	}
 	// Site retains the checker view of the actual slot being written. slotType is that slot's type,
 	// or nil, and slot says whether it's a graph type.
 	slotType := func(site int, name string, argument int) *checker.Type {
@@ -219,7 +218,7 @@ func (f *cycleFinder) graphFlows() error {
 		return nil
 	}
 	slot := func(site int, name string, argument int) bool {
-		return graphType(slotType(site, name, argument))
+		return f.graphType(slotType(site, name, argument))
 	}
 	// recordSlot is the value type of the record a write site writes into, or nil when its holder isn't
 	// a record (#1vb0x5s).
@@ -249,7 +248,7 @@ func (f *cycleFinder) graphFlows() error {
 		if expression == nil || proven == nil || f.weak(proven) {
 			return
 		}
-		if graphType(proven) {
+		if f.graphType(proven) {
 			pending = append(pending, graphPending{expression, at})
 		}
 		switch value := expression.(type) {
@@ -327,8 +326,12 @@ func (f *cycleFinder) graphFlows() error {
 			case ir.CallClosure:
 				targets := program.ClosureTargets(value)
 				if targets.Unknown {
-					// A spread argument is its array, the operand followed here like any other.
-					quietly = append(quietly, value.Arguments...)
+					// A spread argument is its array, the operand followed here like any other, and its id is 0.
+					for i, argument := range value.Arguments {
+						if i >= len(value.ArgumentTypeIDs) || mayHold(value.ArgumentTypeIDs[i]) {
+							quietly = append(quietly, argument)
+						}
+					}
 					break
 				}
 				for _, target := range targets.Functions {
@@ -342,7 +345,12 @@ func (f *cycleFinder) graphFlows() error {
 				// The callback is handed Initial as its first accumulator and the array itself; its
 				// elements were planned where they were stored.
 				if program.ClosureTargets(value).Unknown {
-					quietly = append(quietly, value.Initial, value.Array)
+					if mayHold(value.InitialTypeID) {
+						quietly = append(quietly, value.Initial)
+					}
+					if mayHold(value.ArrayTypeID) {
+						quietly = append(quietly, value.Array)
+					}
 				}
 			// A slot write is seeded through members, as a declaration's value is, so a literal written
 			// there seeds its own graph-typed parts too: new Map's entries among them (#dnb0yhj, s1).
@@ -501,4 +509,165 @@ func (f *cycleFinder) graphFlows() error {
 		return stopped
 	}
 	return nil
+}
+
+// graphType is whether graphTypes selected a type, or a member of its union or intersection. A
+// Weak<Target> holds nothing, so it's never one.
+func (f *cycleFinder) graphType(proven *checker.Type) bool {
+	if proven == nil || f.weak(proven) {
+		return false
+	}
+	if f.l.result.GraphTypes[int(proven.Id())] {
+		return true
+	}
+	if proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		for _, member := range proven.Types() {
+			if f.graphType(member) {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+// graphReachScalar is every flag of a type no value of which holds anything: a string, a number, a
+// bigint, a boolean, an enum's member, their literals, undefined, null, void and never.
+const graphReachScalar = checker.TypeFlagsStringLike | checker.TypeFlagsNumberLike | checker.TypeFlagsBigIntLike | checker.TypeFlagsBooleanLike | checker.TypeFlagsEnumLike | checker.TypeFlagsUndefined | checker.TypeFlagsNull | checker.TypeFlagsVoid | checker.TypeFlagsNever
+
+// mayReachGraph is whether a value of a type can reach a value of a graph type, by what the cycle
+// finder says a type holds (reachLinks): its fields and a value it may really be (shapeCandidates), an
+// array's, a tuple's, a Map's or a Set's type arguments, a record's values, and an index signature's
+// values besides. It's false only for a type every part of which is a scalar (graphReachScalar), or a
+// union or an intersection of such. Anything it can't see to the end of reaches one, failing closed:
+// a nil type, any, unknown, a type parameter or another instantiable type, object, a symbol, a type
+// over any or a type parameter (template), a function value, which holds what it captured, a Promise,
+// which holds its reactions, a method an interface or a literal declares, which may be a closure, and
+// a captured cell or an Apple class reached through one. A class's own methods are its prototype's,
+// holding nothing of the instance, so its fields alone are its parts (cycles.go's fields). judged keeps
+// each answer: a type asked about, and every type a type that reaches none reached, since a part of it
+// reaches none either (#x490w4a).
+func (f *cycleFinder) mayReachGraph(proven *checker.Type, judged map[*checker.Type]bool) bool {
+	if proven == nil {
+		return true
+	}
+	if reaches, known := judged[proven]; known {
+		return reaches
+	}
+	visited := map[cycleNode]bool{}
+	queue := []cycleNode{{proven: proven}}
+	reaches := false
+	for len(queue) != 0 && !reaches {
+		node := queue[len(queue)-1]
+		queue = queue[:len(queue)-1]
+		if visited[node] {
+			continue
+		}
+		visited[node] = true
+		if node.proven == nil {
+			// A captured cell or an Apple class holds what this doesn't judge.
+			reaches = true
+			break
+		}
+		if prior, known := judged[node.proven]; known {
+			reaches = prior
+			continue
+		}
+		flags := node.proven.Flags()
+		switch {
+		case f.weak(node.proven):
+			// A Weak holds nothing.
+		case f.graphType(node.proven):
+			reaches = true
+		case flags&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0:
+			for _, member := range node.proven.Types() {
+				queue = append(queue, cycleNode{proven: member})
+			}
+		case flags&graphReachScalar != 0:
+		case flags&checker.TypeFlagsObject == 0 || f.template(node.proven) || f.isFunction(node.proven) || f.l.isLibraryType(node.proven, "Promise"):
+			reaches = true
+		default:
+			queue = append(queue, f.reachLinks(node)...)
+			for _, info := range f.l.checker.GetIndexInfosOfType(node.proven) {
+				queue = append(queue, cycleNode{proven: info.ValueType()})
+			}
+			if f.l.isArrayType(node.proven) || checker.IsTupleType(node.proven) || f.l.isLibraryType(node.proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "MapIterator", "SetIterator") || f.l.recordElement(node.proven) != nil {
+				continue
+			}
+			for _, property := range f.l.checker.GetPropertiesOfType(node.proven) {
+				if graphReachMethod(property) {
+					reaches = true
+					break
+				}
+				// An accessor's value is what reachLinks' fields leave out; a class method holds nothing.
+				if property.Flags&ast.SymbolFlagsMethod == 0 {
+					queue = append(queue, cycleNode{proven: f.l.checker.GetTypeOfSymbol(property)})
+				}
+			}
+		}
+	}
+	judged[proven] = reaches
+	if !reaches {
+		for node := range visited {
+			if node.proven != nil {
+				judged[node.proven] = false
+			}
+		}
+	}
+	return reaches
+}
+
+// graphReachMethod is whether a property is a method a value can hold as a closure of its own: one an
+// interface, a type literal or an object literal declares. A class's is its prototype's.
+func graphReachMethod(property *ast.Symbol) bool {
+	if property.Flags&ast.SymbolFlagsMethod == 0 {
+		return false
+	}
+	for _, declaration := range property.Declarations {
+		if declaration.Kind != ast.KindMethodDeclaration || declaration.Parent == nil || !ast.IsClassLike(declaration.Parent) {
+			return true
+		}
+	}
+	return false
+}
+
+// argumentTypeIDs is argumentTypeID of each argument of a call, in order.
+func (l *lowering) argumentTypeIDs(arguments []*ast.Node) []int {
+	ids := make([]int, len(arguments))
+	for index, argument := range arguments {
+		ids[index] = l.argumentTypeID(argument)
+	}
+	return ids
+}
+
+// argumentTypeID is the checker's id of an argument's type, kept in argumentTypes with the slot it's
+// passed into and any view a caller names, or 0 for a spread, which graphFlows follows whatever it
+// holds. A slot can hold more than the value's own type says: [] is a never[] where it's made, and a
+// callee whose parameter is a Node[] can push into it (#x490w4a).
+func (l *lowering) argumentTypeID(argument *ast.Node, views ...*checker.Type) int {
+	if argument == nil || argument.Kind == ast.KindSpreadElement {
+		return 0
+	}
+	proven := l.concrete(l.checker.GetTypeAtLocation(argument))
+	if proven == nil {
+		return 0
+	}
+	id := int(proven.Id())
+	if l.argumentTypes == nil {
+		l.argumentTypes = map[int][]*checker.Type{}
+	}
+	keep := func(each *checker.Type) {
+		if each != nil && !slices.Contains(l.argumentTypes[id], each) {
+			l.argumentTypes[id] = append(l.argumentTypes[id], each)
+		}
+	}
+	keep(proven)
+	if slot := l.slotType(argument); slot != nil {
+		keep(l.concrete(slot))
+	}
+	for _, view := range views {
+		if view != nil {
+			keep(l.concrete(view))
+		}
+	}
+	return id
 }
