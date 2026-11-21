@@ -625,6 +625,9 @@ void adamic_slot_cache_store(adamic_slot_cache *cache, const adamic_shape *shape
 
 adamic_value *adamic_object_read(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression);
 adamic_value adamic_object_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression);
+// adamic_object_view's object read where its contract admits an array (ArraysAdmitted, #s03ndgw): an array
+// holding none of the count fields named is the object read, and anything else is adamic_object_view's.
+adamic_value adamic_object_view_arrays(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *type, const char *expression, const char *const *fields, size_t count);
 void adamic_view_literal_failure(const char *expression, const char *expected, unsigned char type, adamic_value value);
 void adamic_object_view_write(adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression);
 
@@ -802,6 +805,12 @@ static inline adamic_value *adamic_object_field(const adamic_object *object, con
 }
 // A record reaching a fixed-object read is a lowering bug: it stops, naming the field (object.c).
 void adamic_refuse_record_fixed_read(const adamic_object *object, const char *name);
+// An array a checked view admitted as an object stops at a reader of an object's own names or slots, which
+// what names (object.c). Any other value passes.
+void adamic_object_refuse_array(const adamic_heap *value, const char *what);
+// Whether array holds no field named name of its own beyond Array's: a RegExp result's or a layout's (object.c).
+struct adamic_array;
+bool adamic_array_lacks_property(const struct adamic_array *array, const char *name);
 // A uniform field slot (fields.go) is loaded with no shape check. In release builds that rests on
 // lowering: records.go's recordStorageView refuses a dictionary seen as a fixed object, so no record
 // reaches one. Address-sanitized and counted builds, which every oracle run uses, check it anyway,

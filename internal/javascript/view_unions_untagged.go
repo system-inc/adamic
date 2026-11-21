@@ -97,6 +97,9 @@ const adamicUntaggedPlainSelect = (value, contracts, id, expression, declared, e
   if(contract.Kind===7) return value===undefined;
   if(contract.Kind===4){for(const member of contract.Members || []){if(matches(value,member,depth+1,!callable(contract))) return true;}return false;}
   if(contract.Kind===2 && contract.Of===10) return value!==null && (typeof value==='object' || typeof value==='function' || value instanceof AdamicClosure);
+  // An array stands for an object whose contract admits one (ArraysAdmitted): each field is optional and
+  // no array's, so each is absent from it, as on Node, unless the array holds that name of its own.
+  if(contract.Kind===2 && contract.ArraysAdmitted===true && !contract.FixedTuple && adamicViewArray(value)) return (contract.Fields || []).every(field=>!(field.Name in value));
   // A class constructor stands for an object whose contract admits one, outside a union a callable could
   // stand in, when every required field is its own data static: never an accessor, never one only a base declares.
   const admitted=statics && contract.Kind===2 && contract.StaticsAdmitted===true && adamicViewConstructor(value) && (contract.Fields || []).every(field=>field.Optional || slot(value,field.Name,true)!==undefined);

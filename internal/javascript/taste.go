@@ -15,7 +15,7 @@ func (e *emitter) logicalAssignment(expression ir.LogicalAssignment) string {
 		if expression.Key == nil && e.program.CheckedField(write.ViewReceiverTypeID, write.Name) && !write.Define && !write.Uninitialized {
 			return e.viewedLogicalAssignment(expression, write)
 		}
-		if e.program.StaticsAdmittedReceiver(write.ViewReceiverTypeID) {
+		if e.program.StaticsAdmittedReceiver(write.ViewReceiverTypeID) || e.program.ArraysAdmittedWrite(write) {
 			return e.guardedLogicalAssignment(expression, write)
 		}
 		target, right = e.value(write.Object), e.value(write.Value)

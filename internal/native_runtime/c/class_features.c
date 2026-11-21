@@ -43,6 +43,7 @@ adamic_array *adamic_class_object_keys(const adamic_object *object) {
     // Object.keys of an object whose type lowering knows, a library class's among them: a Stats' or a
     // memoryUsage()'s names aren't Node's own keys, so a host object's keys stop (#ey7aysy).
     adamic_host_stop_keys(&object->heap);
+    adamic_object_refuse_array(&object->heap, "Object.keys");
     if (object->write_order != NULL) return adamic_object_written_keys(object);
     if (adamic_record_is(object)) { return adamic_record_keys(object); }
     const adamic_shape *shape = object->class == NULL ? object->shape : object->class->public_shape;

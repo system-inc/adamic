@@ -10,6 +10,9 @@ const adamicViewObject = (value) => value !== null && typeof value === "object" 
 const adamicViewConstructor = (value) => typeof value === "function" && typeof adamicClassIdentities !== "undefined" && typeof adamicClasses !== "undefined" && adamicClasses[adamicClassIdentities.get(value) - 1]?.static === true;
 // adamicViewStatics is whether value is a class constructor owning each of names as a data static: never an accessor, never one only a base declares.
 const adamicViewStatics = (value, names) => adamicViewConstructor(value) && names.every((name) => { const field = Object.getOwnPropertyDescriptor(value, name); return field !== undefined && Object.hasOwn(field, "value") && !adamicFieldReadiness.get(value)?.has(name); });
+// adamicViewArray is whether value is an array, never a tuple, holding none of names, an object contract's fields where it admits one (ArraysAdmitted, #s03ndgw): each then reads absent from it, as on Node.
+const adamicViewArray = (value, names = []) => Array.isArray(value) && !adamicTupleObjects.has(value) && names.every((name) => !(name in value));
+const adamicViewArrayKeys = (value) => adamicViewArray(value) ? panic("Object.keys through a checked view that holds an array is not yet lowered") : value;
 const adamicFieldReadiness = new WeakMap();
 const adamicFieldRepresentations = new WeakMap();
 const adamicRecordFieldTypes = (object, types) => { adamicFieldRepresentations.set(object, {...adamicFieldRepresentations.get(object), ...types}); return object; };
@@ -35,12 +38,13 @@ const adamicReceiverKind = (value) => typeof value !== "object" ? typeof value :
 // generator object and a typed array: each stops at the by-name read as found missing, so only the wording differs.
 const adamicViewReceiver = (object) => object === undefined || object === null || !(object instanceof AdamicClosure) && adamicViewObject(object) || typeof object === "function" && typeof adamicClassIdentities !== "undefined" && (adamicClassIdentities.has(object) || adamicClassIdentities.has(Object.getPrototypeOf(object)));
 // statics names the fields an object read's contract requires where it admits a class constructor (StaticsAdmitted, #s03ndgw): one owning each as a data static is the object read, as native's adamic_view_static_read admits it.
-const adamicViewField = (object, name, expression, type, expected = adamicViewTypeNames[type], allowed = [], statics = undefined) => {
+// arrays names every field of one that admits an array (ArraysAdmitted): an array holding none of them is the object read, as native's adamic_object_view_arrays admits it.
+const adamicViewField = (object, name, expression, type, expected = adamicViewTypeNames[type], allowed = [], statics = undefined, arrays = undefined) => {
     // The receiver's own kind comes first, as native's adamic_object_view reads it: a string has own length and index
     // keys, so a lookup by name would read on where native stops. A class is a function here and an object there.
     if (!adamicViewReceiver(object)) panic("field read failed: " + expression + " is not a " + expected + "; expected " + expected + ", found " + adamicReceiverKind(object));
     const value = adamicReadField(object, name, expression, false, false, expected);
-    const valid = type === 1 ? typeof value === "number" : type === 2 ? typeof value === "boolean" : type === 3 ? typeof value === "string" : type === 4 ? adamicViewObject(value) || statics !== undefined && adamicViewStatics(value, statics) : type === 5 ? Array.isArray(value) : type === 6 ? value instanceof Map : false;
+    const valid = type === 1 ? typeof value === "number" : type === 2 ? typeof value === "boolean" : type === 3 ? typeof value === "string" : type === 4 ? adamicViewObject(value) || statics !== undefined && adamicViewStatics(value, statics) || arrays !== undefined && adamicViewArray(value, arrays) : type === 5 ? Array.isArray(value) : type === 6 ? value instanceof Map : false;
     if (!valid) panic("field read failed: " + expression + " is not a " + expected + "; expected " + expected + ", found " + (value === undefined ? "nullish" : value === null ? "nullish" : Array.isArray(value) ? "array" : value instanceof Map ? "Map" : typeof value));
     if (allowed.length && !allowed.includes(value)) panic("field read failed: " + expression + " expected " + expected + ", found " + typeof value + " " + value);
     return value;

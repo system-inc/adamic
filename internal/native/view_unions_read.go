@@ -29,15 +29,32 @@ func readUnionViewAt(e *emitter, property ir.Property, object string) (string, b
 		object = e.value(property.Object)
 	}
 	snapshot := e.temporary()
+	read := func(receiver string) string {
+		return fmt.Sprintf("adamic_object_view_union_snapshot(%s, %s, &%s, %s, %s, %t)", receiver, cString(property.Name), e.cache(), cString(property.View), cString(contract.Name), property.Absent)
+	}
+	if property.Absent && e.program.ArraysAdmittedReceiver(property.ViewReceiverTypeID, property.Name) {
+		// A field of an object an array may stand for (ArraysAdmitted, #s03ndgw) is absent from an
+		// array, undefined, as Node reads it: no slot is looked up. The receiver is read once, then tested.
+		e.declarations = append(e.declarations, "#include \"view_unions_untagged.h\"")
+		if !property.Optional {
+			receiver := e.temporary()
+			e.line("%s %s = %s;", cType(property.Object.Type()), receiver, object)
+			object = receiver
+		}
+		snapshotted := read
+		read = func(receiver string) string {
+			return fmt.Sprintf("(adamic_view_array_absent((const adamic_heap *)%s, %s) ? (adamic_view_union_value){adamic_view_union_undefined, {.reference = NULL}} : %s)", receiver, cString(property.Name), snapshotted(receiver))
+		}
+	}
 	if property.Optional {
 		// ?. reads undefined from an absent receiver before any slot is looked at. A present one is
 		// checked as any other read is.
 		receiver := e.temporary()
 		e.line("%s %s = %s;", cType(property.Object.Type()), receiver, object)
-		e.line("adamic_view_union_value %s = %s == NULL ? (adamic_view_union_value){adamic_view_union_undefined, {.reference = NULL}} : adamic_object_view_union_snapshot(%s, %s, &%s, %s, %s, %t);", snapshot, receiver, receiver, cString(property.Name), e.cache(), cString(property.View), cString(contract.Name), property.Absent)
+		e.line("adamic_view_union_value %s = %s == NULL ? (adamic_view_union_value){adamic_view_union_undefined, {.reference = NULL}} : %s;", snapshot, receiver, read(receiver))
 		object = receiver
 	} else {
-		e.line("adamic_view_union_value %s = adamic_object_view_union_snapshot(%s, %s, &%s, %s, %s, %t);", snapshot, object, cString(property.Name), e.cache(), cString(property.View), cString(contract.Name), property.Absent)
+		e.line("adamic_view_union_value %s = %s;", snapshot, read(object))
 	}
 	// An unknown physical slot cannot be interpreted or counted as a reference.
 	e.line("if (%s.kind == adamic_view_union_unknown) {", snapshot)
@@ -82,6 +99,10 @@ func readUnionViewAt(e *emitter, property ir.Property, object string) (string, b
 	if property.Of == ir.Object || property.Of == ir.Array || property.Of == ir.Closure || property.Of == ir.String {
 		kind := map[ir.Type]string{ir.Object: "adamic_view_union_object", ir.Array: "adamic_view_union_array", ir.Closure: "adamic_view_union_function", ir.String: "adamic_view_union_string"}[property.Of]
 		allowNull := contract.Null && property.Of == contract.Of
+		// An array the selection admitted for a member an array may stand for (ArraysAdmitted) is the object read.
+		if property.Of == ir.Object && e.program.ViewAdmitsArray(property.ViewContract) {
+			kind += " && " + snapshot + ".kind != adamic_view_union_array"
+		}
 		e.line("if (%s.kind != %s && !(%s && %s.kind == adamic_view_union_undefined) && !(%t && %s.kind == adamic_view_union_null)) { (void)adamic_view_mixed_union_select(&%s, NULL, 0, NULL, NULL, %s, %s); }", snapshot, kind, allowUndefined(contract, property, object), snapshot, allowNull, snapshot, snapshot, cString(property.View), cString(contract.Name))
 		if allowNull {
 			return fmt.Sprintf("((%s)(%s == &adamic_null ? NULL : %s))", cType(property.Of), value, value), true

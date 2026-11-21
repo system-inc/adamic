@@ -54,6 +54,7 @@ adamic_value *adamic_object_field_owned(const adamic_object *object, const char 
 static adamic_value *adamic_object_read_mode(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression, const char *expected, const adamic_object **owner);
 
 adamic_object *adamic_object_copy_checked(const adamic_object *source, const char *expression) {
+	adamic_object_refuse_array(&source->heap, "an object spread");
 	if (adamic_record_is(source)) adamic_panic("NotYet: spread of record storage", sizeof "NotYet: spread of record storage" - 1);
 	const adamic_shape *shape = source->class == NULL ? source->shape : source->class->public_shape;
 	adamic_object *object = source->write_order == NULL ? adamic_object_new(shape) : adamic_object_construct(shape);
@@ -93,6 +94,7 @@ adamic_object *adamic_object_copy(const adamic_object *source) { return adamic_o
 bool adamic_object_has(const adamic_object *object, const adamic_string *name) {
 	// hasOwnProperty and ToPrimitive's own toString test: a host object's names aren't Node's own.
 	adamic_host_stop(&object->heap, name);
+	adamic_object_refuse_array(&object->heap, "hasOwnProperty");
 	if (adamic_record_is(object)) return adamic_record_has_own(object, name);
 	for (size_t index = 0; index < object->shape->count; index++) {
 		const char *field = object->shape->names[index];
@@ -128,6 +130,38 @@ void adamic_refuse_record_fixed_read(const adamic_object *object, const char *na
 	}
 	int length = snprintf(message, capacity, "compiler bug: a record reached a fixed-object read of %s", name);
 	adamic_panic(message, (size_t)length);
+}
+
+// An array is held where an object is only where a checked view admitted it as one (ir.ViewContract's
+// ArraysAdmitted, #s03ndgw), and it has no shape to read, so a reader that walks an object's own names
+// or slots stops at one, naming itself as what: Object.keys, Object.values or a spread, say. A value of
+// any other kind passes untouched.
+void adamic_object_refuse_array(const adamic_heap *value, const char *what) {
+	if (value == NULL || value->kind != adamic_kind_array) { return; }
+	static const char suffix[] = " through a checked view that holds an array is not yet lowered";
+	size_t capacity = strlen(what) + sizeof suffix;
+	char *message = malloc(capacity);
+	if (message == NULL) {
+		static const char oom[] = "out of memory";
+		adamic_panic(oom, sizeof oom - 1);
+	}
+	int length = snprintf(message, capacity, "%s%s", what, suffix);
+	adamic_panic(message, (size_t)length);
+}
+
+// shape_names is whether object, an array's RegExp result fields or its fixed layout, or NULL, has a field
+// named name. A record's keys aren't in its shape, so a record is said to have every name.
+static bool shape_names(const adamic_object *object, const char *name) {
+	if (object == NULL) { return false; }
+	if (adamic_record_is(object)) { return true; }
+	for (size_t index = 0; index < object->shape->count; index++) {
+		if (strcmp(object->shape->names[index], name) == 0) { return true; }
+	}
+	return false;
+}
+
+bool adamic_array_lacks_property(const adamic_array *array, const char *name) {
+	return !shape_names(array->properties, name) && !shape_names(array->metadata, name);
 }
 
 adamic_value *adamic_object_find(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
@@ -278,7 +312,12 @@ static adamic_value *adamic_object_read_mode(const adamic_object *object, const 
 	return slot;
 }
 
+_Noreturn static void view_failure(const char *type, const char *expression, const char *found);
+
 adamic_view_union_value adamic_object_view_union_snapshot(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression, const char *declared, bool absent) {
+    // An array is a receiver only where a view admitted it as an object (#s03ndgw), whose own fields the
+    // emitter reads absent before this (adamic_view_array_absent). Any other read of one finds no slots.
+    if (object != NULL && object->heap.kind == adamic_kind_array) { view_failure(declared, expression, "array"); }
     adamic_value *slot = object == NULL ? NULL : adamic_object_optional_field(object, name, cache);
     // Current callers pass false; a future optional reader can request undefined
     // for a missing own slot. Required reads use the readiness failure below.
@@ -408,6 +447,28 @@ adamic_value adamic_object_view(const adamic_object *object, const char *name, a
 		else if (value->class != NULL && value->class->is_static) { found = "function"; }
 	}
 	view_failure(type, expression, found);
+}
+
+// adamic_object_view_arrays is adamic_object_view's object read where its contract admits an array
+// (ir.ViewContract's ArraysAdmitted, #s03ndgw): an array that holds none of the count fields the contract
+// declares, a RegExp result's index or a layout's own field, is the object read. It's never converted:
+// typeof says object of it, as Node's does, and each field reads absent from it (view_unions_read.go).
+// Every other value is adamic_object_view's to check, with its words.
+adamic_value adamic_object_view_arrays(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *type, const char *expression, const char *const *fields, size_t count) {
+	if (object != NULL && object->heap.kind == adamic_kind_object && !adamic_record_is(object)) {
+		// The same read adamic_object_view makes, so a missing or unready field stops in its words.
+		const adamic_object *owner = NULL;
+		adamic_value *slot = adamic_object_read_mode(object, name, cache, expression, type, &owner);
+		unsigned char actual = adamic_object_field_type(owner, adamic_slot_index(owner, slot));
+		// The slot's representation says it holds a reference before the reference is followed.
+		bool reference = actual == adamic_rep_array || actual == adamic_rep_union;
+		if (reference && slot->reference != NULL && ((const adamic_heap *)slot->reference)->kind == adamic_kind_array) {
+			size_t lacking = 0;
+			while (lacking < count && adamic_array_lacks_property(slot->reference, fields[lacking])) { lacking++; }
+			if (lacking == count) { return *slot; }
+		}
+	}
+	return adamic_object_view(object, name, cache, adamic_rep_object, type, expression);
 }
 
 void adamic_view_literal_failure(const char *expression, const char *expected, unsigned char type, adamic_value value) {

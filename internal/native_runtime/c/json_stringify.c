@@ -278,6 +278,7 @@ static bool write_prepared_body(json_writer *w, adamic_value value, const adamic
         if (schema->count != 0 && schema->fields == NULL) { refuse("JSON object lacks complete field descriptors"); }
 		const adamic_object *object = s.value.reference;
         if (object == NULL) { refuse("JSON object descriptor has a null payload"); }
+        adamic_object_refuse_array(&object->heap, "JSON.stringify");
         // Main's record consumer supplies a borrowed ordered slot view without a
         // heap shape. Its explicit descriptor count is the view's slot capacity.
         // Allocated shaped objects still use the actual allocation's bounds.

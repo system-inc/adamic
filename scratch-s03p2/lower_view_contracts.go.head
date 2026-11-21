@@ -1,0 +1,249 @@
+package lower
+
+import (
+	"errors"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
+	"reflect"
+	"strconv"
+)
+
+// Family adapters build child descriptors through the shared lazy builder.
+type viewContractBuilder func(*checker.Type) (ir.ViewContractID, error)
+type viewContractHook func(*lowering, *ast.Node, *checker.Type, viewContractBuilder) (ir.ViewContractID, error)
+
+// Reserved for the array adapter carried by compiler/views-v4.
+// This base routes array descriptors through unionAggregateContract first.
+var viewArrayContractHook viewContractHook
+
+// Reserved attachment point for V4 standalone callable contracts.
+// Current callable obligations are recorded lazily before strict construction.
+var viewCallableContractHook viewContractHook
+
+func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
+	if l.result.ViewContractTypes == nil {
+		l.result.ViewContractTypes = map[int]ir.ViewContractID{}
+	}
+	if id := l.result.ViewContractTypes[int(target.Id())]; id != 0 {
+		return id, nil
+	}
+	if target.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(target) {
+		id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
+		l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: ir.ViewUndefined, Name: "undefined", Undefined: true, Of: ir.Object})
+		l.result.ViewContractTypes[int(target.Id())] = id
+		return id, nil
+	}
+	if target.Flags()&checker.TypeFlagsNull != 0 {
+		id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
+		l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: ir.ViewNull, Name: "null", Null: true, Of: ir.Object})
+		l.result.ViewContractTypes[int(target.Id())] = id
+		return id, nil
+	}
+	if target.Flags()&checker.TypeFlagsNonPrimitive != 0 {
+		id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
+		l.result.ViewContractTypes[int(target.Id())] = id
+		l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: ir.ViewObject, Name: "object", Of: ir.Union})
+		return id, nil
+	}
+	build := func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) }
+	// Retain the strict adapter boundary for the array lane on compiler/views-v4.
+	if target.Flags()&checker.TypeFlagsObject != 0 && (l.isArrayType(target) || checker.IsTupleType(target)) {
+		if viewArrayContractHook == nil {
+			return 0, l.notYet(node, "an array checked-view contract")
+		}
+		return viewArrayContractHook(l, node, target, build)
+	}
+	if l.callableViewContract(target) {
+		if viewCallableContractHook == nil {
+			return 0, &Refused{Where: l.program.Where(node), What: "a checked view with a callable contract", Fix: "prove the callable body rather than asserting its signature"}
+		}
+		return viewCallableContractHook(l, node, target, build)
+	}
+
+	represented := target
+	if base := l.phantomBase(target); base != nil {
+		represented = base
+	}
+	of, known := l.representation(represented)
+	// representation() knows an object intersection only when every field is a scalar
+	// (objectIntersection). A plain one is an object whatever its fields hold, so its contract takes
+	// that from its members, each held as an object, and its fields from its refined properties.
+	if !known && represented == target && l.plainObjectIntersection(target) {
+		of, known = ir.Object, true
+		for _, member := range target.Types() {
+			if held, isKnown := l.representation(member); !isKnown || held != ir.Object {
+				known = false
+			}
+		}
+	}
+	if !known {
+		return 0, l.notYet(node, "checked-view representation for "+l.checker.TypeToString(target))
+	}
+	contract := ir.ViewContract{Undefined: l.includesUndefined(target), Name: l.checker.TypeToString(target), Of: of}
+	if isClassInstance(target) {
+		if declaration := l.classNodeFor(target); declaration != nil {
+			contract.Nominal = l.program.Where(declaration) + ":" + contract.Name
+			contract.NominalBases = l.viewNominalBases(target, map[*checker.Type]bool{})
+		}
+	}
+	if target.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(target) {
+		contract.Kind = ir.ViewUndefined
+	} else if interfaceScalar(represented) && of != ir.Union {
+		contract.Kind = ir.ViewScalar
+		contract.Allowed = l.viewContractLiterals(represented)
+	} else {
+		contract.Kind = ir.ViewObject
+	}
+
+	id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
+	l.result.ViewContracts = append(l.result.ViewContracts, contract)
+	l.result.ViewContractTypes[int(target.Id())] = id
+
+	if contract.Kind == ir.ViewObject || (contract.Kind == ir.ViewUnion && of == ir.Object) {
+		for _, property := range l.checker.GetPropertiesOfType(target) {
+			child, err := build(l.checker.GetTypeOfSymbol(property))
+			if err != nil {
+				return 0, err
+			}
+
+			contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: property.Name, Contract: child, Optional: property.Flags&ast.SymbolFlagsOptional != 0, Readonly: l.checker.IsReadonlySymbol(property)})
+		}
+	}
+
+	l.result.ViewContracts[int(id)-1] = contract
+	return id, nil
+}
+
+// viewStaticsAdmitted is whether a class constructor may stand for contract's object (#s03ndgw): every
+// field it names is one only a static the class declares can hold, never a property Function or Object
+// gives every constructor (name, length, prototype, call, toString, constructor and the rest), asked of
+// the checker by name, so the library says which. GetPropertyOfType on Function's interface finds
+// Object's members too, and objectPrototypeName adds the __proto__ family the library doesn't declare.
+// A field whose finished contract is missing, unknown or unsupported, an unsupported contract, one with
+// no field, or a library without Function to ask leaves it false. Run time still asks that each
+// required field be the class's own data static (view_unions_untagged.c).
+func (l *lowering) viewStaticsAdmitted(contract ir.ViewContract) bool {
+	function := l.checker.GetGlobalSymbol("Function", ast.SymbolFlagsInterface, nil)
+	if function == nil || contract.Unsupported != "" || len(contract.Fields) == 0 {
+		return false
+	}
+	functionType := l.checker.GetDeclaredTypeOfSymbol(function)
+	for _, field := range contract.Fields {
+		if field.Contract <= 0 || int(field.Contract) > len(l.result.ViewContracts) {
+			return false
+		}
+		if held := l.result.ViewContracts[field.Contract-1]; held.Kind == ir.ViewUnknown || held.Unsupported != "" {
+			return false
+		}
+		if l.objectPrototypeName(field.Name) || l.checker.GetPropertyOfType(functionType, field.Name) != nil {
+			return false
+		}
+	}
+	return true
+}
+
+// viewArraysAdmitted is whether an array may stand for contract's object (#s03ndgw): every field it names
+// is optional, and none is a property an array has, own or inherited, so each reads absent from one, as
+// Node reads it. The checker says which names those are: GetPropertyOfType on the global Array
+// interface's declared type, which falls back to Object's members, and objectPrototypeName adds the
+// __proto__ family the library doesn't declare. length and any name a number spells, an index among them,
+// are an array's own whatever the library says. A required field, a field whose finished contract is
+// missing, unknown or unsupported, a nominal class's or an unsupported contract, one with no field, or a
+// library without Array to ask leaves it false. Run time still refuses an array that holds one of the
+// names of its own, a RegExp result's index say (object.c's adamic_array_lacks_property).
+func (l *lowering) viewArraysAdmitted(contract ir.ViewContract) bool {
+	array := l.checker.GetGlobalSymbol("Array", ast.SymbolFlagsInterface, nil)
+	if array == nil || contract.Unsupported != "" || contract.Nominal != "" || len(contract.Fields) == 0 {
+		return false
+	}
+	arrayType := l.checker.GetDeclaredTypeOfSymbol(array)
+	for _, field := range contract.Fields {
+		if !field.Optional || field.Contract <= 0 || int(field.Contract) > len(l.result.ViewContracts) {
+			return false
+		}
+		if held := l.result.ViewContracts[field.Contract-1]; held.Kind == ir.ViewUnknown || held.Unsupported != "" {
+			return false
+		}
+		if field.Name == "length" || numericName(field.Name) || l.objectPrototypeName(field.Name) || l.checker.GetPropertyOfType(arrayType, field.Name) != nil {
+			return false
+		}
+	}
+	return true
+}
+
+// numericName is whether name is one a number spells, so an array may hold it as an index: every
+// canonical numeric string ("0", "1.5", "-1", "NaN", "Infinity") parses as a float, and so do a few
+// that aren't canonical ("1e3", "0x1p-2"), which only keeps a stop.
+func numericName(name string) bool {
+	_, err := strconv.ParseFloat(name, 64)
+	return err == nil || errors.Is(err, strconv.ErrRange)
+}
+
+// finishViewStaticsAdmitted sets StaticsAdmitted and ArraysAdmitted on every contract once the table is
+// finished, after lowering's last pass, so viewStaticsAdmitted and viewArraysAdmitted read each field's
+// settled contract. Set inside a contract's own field loop, a field whose contract is a back edge to an
+// ancestor still being built would read that ancestor's placeholder, and stay true once the ancestor was
+// made Unknown or Unsupported. It's an object's (strictViewContract) or an object union's
+// (buildUnionReadContract, which StaticsAdmittedReceiver reads for a write), never a fixed tuple's, whose
+// positions no class constructor or array holds as an object's fields.
+func (l *lowering) finishViewStaticsAdmitted() {
+	for index, contract := range l.result.ViewContracts {
+		object := contract.Kind == ir.ViewObject && !contract.FixedTuple
+		union := contract.Kind == ir.ViewUnion && contract.Of == ir.Object
+		l.result.ViewContracts[index].StaticsAdmitted = (object || union) && l.viewStaticsAdmitted(contract)
+		l.result.ViewContracts[index].ArraysAdmitted = (object || union) && l.viewArraysAdmitted(contract)
+	}
+}
+
+func (l *lowering) viewContractLiterals(target *checker.Type) []ir.ViewLiteral {
+	// A whole numeric enum admits numbers outside its declared members, a one-member enum's included.
+	if l.tagHoldsAnyNumber(target) {
+		return nil
+	}
+	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		var allowed []ir.ViewLiteral
+		for _, member := range target.Types() {
+			if member.Flags()&checker.TypeFlagsUndefined != 0 {
+				continue
+			}
+			values := l.viewContractLiterals(member)
+			if len(values) == 0 {
+				return nil
+			}
+			allowed = append(allowed, values...)
+		}
+		return allowed
+	}
+	flags := target.Flags()
+	switch {
+	case flags&checker.TypeFlagsStringLiteral != 0:
+		value, ok := target.AsLiteralType().Value().(string)
+		if ok {
+			return []ir.ViewLiteral{{Of: ir.String, String: value}}
+		}
+	case flags&checker.TypeFlagsNumberLiteral != 0:
+		value := reflect.ValueOf(target.AsLiteralType().Value())
+		if value.Kind() == reflect.Float64 {
+			return []ir.ViewLiteral{{Of: ir.Number, Number: value.Float()}}
+		}
+	case flags&checker.TypeFlagsBooleanLiteral != 0:
+		return []ir.ViewLiteral{{Of: ir.Boolean, Boolean: l.checker.TypeToString(target) == "true"}}
+	}
+	return nil
+}
+
+func (l *lowering) viewNominalBases(target *checker.Type, seen map[*checker.Type]bool) []string {
+	if seen[target] {
+		return nil
+	}
+	seen[target] = true
+	var names []string
+	for _, base := range l.classBases(target) {
+		if declaration := l.classNodeFor(base); declaration != nil {
+			names = append(names, l.program.Where(declaration)+":"+l.checker.TypeToString(base))
+			names = append(names, l.viewNominalBases(base, seen)...)
+		}
+	}
+	return names
+}

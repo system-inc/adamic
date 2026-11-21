@@ -29,7 +29,9 @@ size_t adamic_view_untagged_union_select(const adamic_view_union_value *value, c
 /* Own-data adapters reuse the shared initialization and representation
  * bytes, including initialized class instance fields. Accessor storage is
  * not certified by this adapter. A class constructor's own data statics are,
- * only where its contract sets statics_admitted (view_unions_untagged.c). */
+ * only where its contract sets statics_admitted (view_unions_untagged.c). An
+ * array has none of an object's fields, and stands for one only where its
+ * contract sets arrays_admitted, which reads each of them absent. */
 typedef struct adamic_view_untagged_field {
     const char *name;
     size_t contract;
@@ -61,6 +63,8 @@ typedef struct adamic_view_untagged_contract {
     size_t tuple_count;
     // ir.ViewContract's StaticsAdmitted: a class constructor may stand for this object.
     bool statics_admitted;
+    // ir.ViewContract's ArraysAdmitted: an array may stand for this object, each field absent from it.
+    bool arrays_admitted;
 } adamic_view_untagged_contract;
 // The probe reads plain objects only; a class constructor's slots it refuses.
 bool adamic_view_untagged_plain_slot(void *context, const adamic_view_union_value *object, const char *field, adamic_view_union_value *slot);
@@ -75,6 +79,15 @@ void adamic_view_static_write(const adamic_object *object, const char *name);
 // value is a class constructor, unless its contract admits one (admitted, StaticsAdmitted) and it owns
 // each of the count required names as a data static, as plain_matches admits one in a union.
 void adamic_view_static_read(const adamic_object *value, bool admitted, const char *const *required, size_t count, const char *expression, const char *type);
+
+// A write through a view an array may stand for (ir.Program's ArraysAdmittedWrite) stops when object is
+// one: the view reads an array's absent fields, never writes them.
+void adamic_view_array_write(const adamic_heap *object, const char *name);
+
+// A read of name through a view an array may stand for (ir.Program's ArraysAdmittedReceiver) is absent,
+// undefined, when object is an array that holds no name of its own, as Node reads an array's missing
+// property: never a slot lookup.
+bool adamic_view_array_absent(const adamic_heap *object, const char *name);
 
 adamic_view_union_value adamic_view_element(const adamic_view_untagged_contract *contracts, size_t count, size_t id, const adamic_array *array, double index, bool relative, unsigned int wanted, const char *where, const char *view_type);
 

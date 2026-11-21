@@ -111,6 +111,69 @@ type ViewContract struct {
 	// decides it from the checker; the runtime still asks that every required field be the class's
 	// own data static, and refuses it in a union a callable could also stand in.
 	StaticsAdmitted bool
+	// ArraysAdmitted lets an array stand for this object (#s03ndgw): every field it names is optional, and
+	// none is a property an array has, Array's, Object's, length or an index, so each reads absent from
+	// one, as Node reads it. Lowering decides it from the checker; the runtime still refuses an array
+	// that holds one of the names of its own, and every write through such a view.
+	ArraysAdmitted bool
+}
+
+// AdmitsArrays is whether any contract lets an array stand for an object (ViewContract.ArraysAdmitted).
+func (p *Program) AdmitsArrays() bool {
+	for _, contract := range p.ViewContracts {
+		if contract.ArraysAdmitted {
+			return true
+		}
+	}
+	return false
+}
+
+// ArraysAdmittedReceiver is whether a read of name through receiverTypeID, its static receiver, reads a
+// field of an object an array may stand for (ViewContract.ArraysAdmitted): one no array has, so each
+// backend reads it absent, undefined, from an array, and looks up no slot.
+func (p *Program) ArraysAdmittedReceiver(receiverTypeID int, name string) bool {
+	id := p.ViewContractTypes[receiverTypeID]
+	if receiverTypeID == 0 || id <= 0 || int(id) > len(p.ViewContracts) || !p.ViewContracts[id-1].ArraysAdmitted {
+		return false
+	}
+	for _, field := range p.ViewContracts[id-1].Fields {
+		if field.Name == name && field.Optional {
+			return true
+		}
+	}
+	return false
+}
+
+// ArraysAdmittedWrite is whether a write may find an array where it writes an object's field. A view an
+// array may stand for reads its absent fields and never writes them, and the array it admitted can be
+// seen as any other type after it, which no static receiver's contract names, so in a program where any
+// contract admits one, every write to an object is guarded, and each backend stops it at an array.
+func (p *Program) ArraysAdmittedWrite(write SetProperty) bool {
+	return write.Object != nil && write.Object.Type() == Object && p.AdmitsArrays()
+}
+
+// ViewAdmitsArray is whether an array may be what contract id's selection admits: its own ArraysAdmitted,
+// or, through a union, a member's, at any depth.
+func (p *Program) ViewAdmitsArray(id ViewContractID) bool {
+	seen := map[ViewContractID]bool{}
+	var admits func(ViewContractID) bool
+	admits = func(id ViewContractID) bool {
+		if id <= 0 || int(id) > len(p.ViewContracts) || seen[id] {
+			return false
+		}
+		seen[id] = true
+		contract := p.ViewContracts[id-1]
+		if contract.ArraysAdmitted {
+			return true
+		}
+		for _, member := range contract.Members {
+			if admits(member) {
+				return true
+			}
+		}
+		return false
+	}
+	return admits(id)
 }
 
 // StaticsAdmittedReceiver is whether a write's static receiver, receiverTypeID, is an object a class

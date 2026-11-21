@@ -46,7 +46,16 @@ func (e *emitter) viewFieldObject(property ir.Property, object string) string {
 	if property.ViewType != "" {
 		name = property.ViewType
 	}
-	read := fmt.Sprintf("adamic_object_view(%s, %s, &%s, %d, %s, %s)", object, cString(property.Name), e.cache(), property.Of, cString(name), cString(property.View))
+	view := func(receiver string) string {
+		return fmt.Sprintf("adamic_object_view(%s, %s, &%s, %d, %s, %s)", receiver, cString(property.Name), e.cache(), property.Of, cString(name), cString(property.View))
+	}
+	if fields := e.arrayViewFields(property); fields != "" {
+		// An array the contract admits is the object read (ArraysAdmitted, #s03ndgw).
+		view = func(receiver string) string {
+			return fmt.Sprintf("adamic_object_view_arrays(%s, %s, &%s, %s, %s, %s)", receiver, cString(property.Name), e.cache(), cString(name), cString(property.View), fields)
+		}
+	}
+	read := view(object)
 	absent := ""
 	if property.Optional {
 		// ?. reads undefined from an absent receiver before any slot is looked at. A present one is
@@ -54,7 +63,7 @@ func (e *emitter) viewFieldObject(property ir.Property, object string) string {
 		receiver := e.temporary()
 		e.line("%s %s = %s;", cType(property.Object.Type()), receiver, object)
 		absent = receiver + " == NULL"
-		read = fmt.Sprintf("%s ? (adamic_value){0} : adamic_object_view(%s, %s, &%s, %d, %s, %s)", absent, receiver, cString(property.Name), e.cache(), property.Of, cString(name), cString(property.View))
+		read = fmt.Sprintf("%s ? (adamic_value){0} : %s", absent, view(receiver))
 	}
 	e.line("adamic_value %s = %s;", slot, read)
 	value := unslotted(property.Of, fmt.Sprintf("%s.%s", slot, member(property.Of)))
@@ -74,4 +83,21 @@ func (e *emitter) viewFieldObject(property ir.Property, object string) string {
 		return e.snapshot(property.Type(), fmt.Sprintf("(%s ? %s : %s)", absent, zero(property.Type()), maybe(property.Type(), value)))
 	}
 	return e.snapshot(property.Of, value)
+}
+
+// arrayViewFields is adamic_object_view_arrays's last two arguments where a checked read expects an object
+// outside a union whose contract admits an array (ir.Program's ObjectReadContract, ArraysAdmitted): the
+// fields it declares, each optional, none of which an array it admits may hold of its own. Anywhere else
+// it's empty, and adamic_object_view finds an array an array, as the JavaScript backend's adamicViewField
+// does without its arrays.
+func (e *emitter) arrayViewFields(property ir.Property) string {
+	contract, checked := e.program.ObjectReadContract(property)
+	if !checked || !contract.ArraysAdmitted {
+		return ""
+	}
+	names := make([]string, 0, len(contract.Fields))
+	for _, field := range contract.Fields {
+		names = append(names, cString(field.Name))
+	}
+	return fmt.Sprintf("(const char *const[]){%s}, %d", strings.Join(names, ", "), len(names))
 }

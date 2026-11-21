@@ -41,6 +41,10 @@ func readUnionViewAt(e *emitter, property ir.Property, object string) (string, b
 		if contract.FixedTuple {
 			test = "Array.isArray(v)"
 		}
+		// An array the selection admitted for a member an array may stand for (ArraysAdmitted) is the object read.
+		if property.Of == ir.Object && e.program.ViewAdmitsArray(property.ViewContract) {
+			test += " || adamicViewArray(v)"
+		}
 		if contract.Null && property.Of == contract.Of {
 			test = "v===null || (" + test + ")"
 		}

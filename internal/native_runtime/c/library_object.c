@@ -25,6 +25,7 @@ bool adamic_object_is_frozen(const adamic_heap *value) {
 }
 
 adamic_object *adamic_object_freeze(adamic_object *object) {
+ adamic_object_refuse_array(&object->heap, "Object.freeze");
  object->frozen = true;
  return adamic_retain(object);
 }
@@ -44,6 +45,7 @@ void adamic_object_check_write(const adamic_object *object, const char *name) {
 }
 
 bool adamic_object_has_own(const adamic_object *object, const adamic_string *key) {
+ adamic_object_refuse_array(&object->heap, "Object.hasOwn");
  if (adamic_record_is(object)) return adamic_record_has_own(object, key);
  for (size_t index = 0; index < object->shape->count; index++) {
   const char *name = object->shape->names[index];
@@ -107,6 +109,7 @@ adamic_array *adamic_object_keys(const adamic_object *object) {
  // A host object's names aren't Node's own keys (a Stats holds its four Dates as slots, where Node's
  // are Stats.prototype's accessors), so its keys stop (#ey7aysy).
  adamic_host_stop_keys(&object->heap);
+ adamic_object_refuse_array(&object->heap, "Object.keys");
  // Class descriptors hide private storage and track static own-property presence.
  if (adamic_record_is(object)) return adamic_record_keys(object);
  if (object->class != NULL) return adamic_class_object_keys(object);
@@ -130,6 +133,7 @@ adamic_array *adamic_object_written_keys(const adamic_object *object) {
 }
 
 adamic_array *adamic_object_values(const adamic_object *object, enum adamic_ir_type element, bool entries) {
+ adamic_object_refuse_array(&object->heap, entries ? "Object.entries" : "Object.values");
  size_t *indices = adamic_object_ordered(object);
  bool references = adamic_ir_type_reference(element);
  // Entries are [key, value] tuples, references whatever the values are.
@@ -163,6 +167,8 @@ adamic_array *adamic_object_values(const adamic_object *object, enum adamic_ir_t
 }
 
 void adamic_object_assign(adamic_object *target, const adamic_object *source) {
+ adamic_object_refuse_array(&target->heap, "Object.assign");
+ adamic_object_refuse_array(&source->heap, "Object.assign");
  size_t *indices = adamic_object_ordered(source);
  for (size_t at = 0; at < source->shape->count; at++) {
   size_t index = indices[at];
@@ -208,6 +214,7 @@ void adamic_object_assign(adamic_object *target, const adamic_object *source) {
 
 // Checked reflection reads and validates each actual property once, in ECMA key order.
 adamic_array *adamic_object_values_checked(adamic_object *object, int expected, const char *expected_name, bool entries, const adamic_value *allowed, size_t allowed_count) {
+ adamic_object_refuse_array(&object->heap, entries ? "Object.entries" : "Object.values");
  adamic_array *keys = adamic_object_keys(object);
  bool references = expected == 3;
  adamic_array *result = adamic_array_make(keys->length, entries ? adamic_ir_Union : (enum adamic_ir_type)expected);

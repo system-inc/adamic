@@ -22,13 +22,27 @@ func (e *emitter) viewUntaggedObjectUnion(property ir.Property, object string) {
 // staticViewWrite stops a write through a view a class constructor may stand for, when object is one
 // (ir.Program's StaticsAdmittedReceiver): such a view reads a class's statics and never writes them.
 // It runs after the receiver and the value are evaluated, before the write, as the JavaScript
-// backend's staticViewWrite does.
+// backend's staticViewWrite does, and arrayViewWrite's guard goes first, so every road a write takes
+// has both.
 func (e *emitter) staticViewWrite(statement ir.SetProperty, object string) {
+	e.arrayViewWrite(statement, object)
 	if !e.program.StaticsAdmittedReceiver(statement.ViewReceiverTypeID) {
 		return
 	}
 	e.declarations = append(e.declarations, "#include \"view_unions_untagged.h\"")
 	e.line("adamic_view_static_write((const adamic_object *)%s, %s);", object, cString(statement.Name))
+}
+
+// arrayViewWrite stops a write to object when it's an array, in a program where a view an array may
+// stand for admitted one (ir.Program's ArraysAdmittedWrite): such a view reads an array's absent fields
+// and never writes them, and an array has no object's slots to write. It runs where staticViewWrite
+// does, after the receiver and the value, as the JavaScript backend's arrayViewWrite does.
+func (e *emitter) arrayViewWrite(statement ir.SetProperty, object string) {
+	if !e.program.ArraysAdmittedWrite(statement) {
+		return
+	}
+	e.declarations = append(e.declarations, "#include \"view_unions_untagged.h\"")
+	e.line("adamic_view_array_write((const adamic_heap *)%s, %s);", object, cString(statement.Name))
 }
 
 // staticViewRead stops value, a checked read's object, when it's a class constructor its object contract
@@ -150,7 +164,7 @@ func (e *emitter) viewUntaggedContracts() (string, int) {
 				fmt.Fprintf(&declarations, "static const adamic_view_untagged_callable_producer %s[] = {%s};\n", contractProducers, strings.Join(allowedProducers, ","))
 			}
 		}
-		rows = append(rows, fmt.Sprintf("{%d,%d,%t,%s,%d,%s,%d,%s,%d,%d,%s,%s,%d,%t,%d,%t}", kind, contract.Of, contract.Undefined, allowed, len(contract.Allowed), fields, len(contract.Fields), members, len(contract.Members), contract.Element, callable, contractProducers, contractProducerCount, contract.FixedTuple, len(contract.Tuple), contract.StaticsAdmitted))
+		rows = append(rows, fmt.Sprintf("{%d,%d,%t,%s,%d,%s,%d,%s,%d,%d,%s,%s,%d,%t,%d,%t,%t}", kind, contract.Of, contract.Undefined, allowed, len(contract.Allowed), fields, len(contract.Fields), members, len(contract.Members), contract.Element, callable, contractProducers, contractProducerCount, contract.FixedTuple, len(contract.Tuple), contract.StaticsAdmitted, contract.ArraysAdmitted))
 	}
 	fmt.Fprintf(&declarations, "static const adamic_view_untagged_contract %s[] = {%s};\n", name, strings.Join(rows, ","))
 	if !exists {

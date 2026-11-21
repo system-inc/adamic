@@ -1,10 +1,12 @@
 package lower
 
 import (
+	"errors"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 	"reflect"
+	"strconv"
 )
 
 // Family adapters build child descriptors through the shared lazy builder.
@@ -141,18 +143,56 @@ func (l *lowering) viewStaticsAdmitted(contract ir.ViewContract) bool {
 	return true
 }
 
-// finishViewStaticsAdmitted sets StaticsAdmitted on every contract once the table is finished, after
-// lowering's last pass, so viewStaticsAdmitted reads each field's settled contract. Set inside a
-// contract's own field loop, a field whose contract is a back edge to an ancestor still being built
-// would read that ancestor's placeholder, and stay true once the ancestor was made Unknown or
-// Unsupported. It's an object's (strictViewContract) or an object union's (buildUnionReadContract,
-// which StaticsAdmittedReceiver reads for a write), never a fixed tuple's, whose positions no class
-// constructor holds.
+// viewArraysAdmitted is whether an array may stand for contract's object (#s03ndgw): every field it names
+// is optional, and none is a property an array has, own or inherited, so each reads absent from one, as
+// Node reads it. The checker says which names those are: GetPropertyOfType on the global Array
+// interface's declared type, which falls back to Object's members, and objectPrototypeName adds the
+// __proto__ family the library doesn't declare. length and any name a number spells, an index among them,
+// are an array's own whatever the library says. A required field, a field whose finished contract is
+// missing, unknown or unsupported, a nominal class's or an unsupported contract, one with no field, or a
+// library without Array to ask leaves it false. Run time still refuses an array that holds one of the
+// names of its own, a RegExp result's index say (object.c's adamic_array_lacks_property).
+func (l *lowering) viewArraysAdmitted(contract ir.ViewContract) bool {
+	array := l.checker.GetGlobalSymbol("Array", ast.SymbolFlagsInterface, nil)
+	if array == nil || contract.Unsupported != "" || contract.Nominal != "" || len(contract.Fields) == 0 {
+		return false
+	}
+	arrayType := l.checker.GetDeclaredTypeOfSymbol(array)
+	for _, field := range contract.Fields {
+		if !field.Optional || field.Contract <= 0 || int(field.Contract) > len(l.result.ViewContracts) {
+			return false
+		}
+		if held := l.result.ViewContracts[field.Contract-1]; held.Kind == ir.ViewUnknown || held.Unsupported != "" {
+			return false
+		}
+		if field.Name == "length" || numericName(field.Name) || l.objectPrototypeName(field.Name) || l.checker.GetPropertyOfType(arrayType, field.Name) != nil {
+			return false
+		}
+	}
+	return true
+}
+
+// numericName is whether name is one a number spells, so an array may hold it as an index: every
+// canonical numeric string ("0", "1.5", "-1", "NaN", "Infinity") parses as a float, and so do a few
+// that aren't canonical ("1e3", "0x1p-2"), which only keeps a stop.
+func numericName(name string) bool {
+	_, err := strconv.ParseFloat(name, 64)
+	return err == nil || errors.Is(err, strconv.ErrRange)
+}
+
+// finishViewStaticsAdmitted sets StaticsAdmitted and ArraysAdmitted on every contract once the table is
+// finished, after lowering's last pass, so viewStaticsAdmitted and viewArraysAdmitted read each field's
+// settled contract. Set inside a contract's own field loop, a field whose contract is a back edge to an
+// ancestor still being built would read that ancestor's placeholder, and stay true once the ancestor was
+// made Unknown or Unsupported. It's an object's (strictViewContract) or an object union's
+// (buildUnionReadContract, which StaticsAdmittedReceiver reads for a write), never a fixed tuple's, whose
+// positions no class constructor or array holds as an object's fields.
 func (l *lowering) finishViewStaticsAdmitted() {
 	for index, contract := range l.result.ViewContracts {
 		object := contract.Kind == ir.ViewObject && !contract.FixedTuple
 		union := contract.Kind == ir.ViewUnion && contract.Of == ir.Object
 		l.result.ViewContracts[index].StaticsAdmitted = (object || union) && l.viewStaticsAdmitted(contract)
+		l.result.ViewContracts[index].ArraysAdmitted = (object || union) && l.viewArraysAdmitted(contract)
 	}
 }
 

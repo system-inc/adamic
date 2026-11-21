@@ -68,6 +68,16 @@ static bool plain_union_holds_callable(const adamic_view_untagged_contract *cont
     return false;
 }
 
+// array_lacks_fields is whether array holds none of the count fields an object contract names as its
+// own: what an array holds beyond Array's is a RegExp result's fields or a layout's (object.c), and
+// lowering's ArraysAdmitted has already refused every name Array or Object has.
+static bool array_lacks_fields(const adamic_array *array, const adamic_view_untagged_field *fields, size_t count) {
+    for (size_t i = 0; i < count; i++) {
+        if (!adamic_array_lacks_property(array, fields[i].name)) { return false; }
+    }
+    return true;
+}
+
 // plain_slot_read is the plain slot probe, and with statics, a class constructor's own data static
 // too. Only a member its contract admitted (statics_admitted) reads one.
 static bool plain_slot_read(const adamic_view_union_value *value, const char *field, bool statics, adamic_view_union_value *result) {
@@ -208,6 +218,13 @@ bool adamic_view_untagged_plain_matches(const adamic_view_untagged_contract *con
             if (contract->kind == 6) { result = current->kind == adamic_view_union_null; goto complete; }
             if (contract->kind == 7) { result = current->kind == adamic_view_union_undefined; goto complete; }
             result = false;
+            // An array stands for an object whose contract admits one (arrays_admitted, #s03ndgw): each
+            // field is optional and no array's, so each is absent from it, as Node reads one, unless the
+            // array holds that name of its own (a RegExp result's index, a layout's field).
+            if (contract->kind == 2 && contract->arrays_admitted && !contract->fixed_tuple && current->kind == adamic_view_union_array && current->payload.reference != NULL) {
+                result = array_lacks_fields(current->payload.reference, contract->fields, contract->field_count);
+                goto complete;
+            }
             if (contract->kind != 2 || current->kind != adamic_view_union_object || current->payload.reference == NULL) { goto complete; }
             const adamic_object *object = current->payload.reference;
             if (object->class != NULL && object->class->is_static) {
@@ -316,6 +333,20 @@ void adamic_view_static_write(const adamic_object *object, const char *name) {
     if (message == NULL) { static const char oom[] = "out of memory"; adamic_panic(oom, sizeof oom - 1); }
     int length = snprintf(message, capacity, "%s%s%s", prefix, name, suffix);
     adamic_panic(message, (size_t)length);
+}
+
+void adamic_view_array_write(const adamic_heap *object, const char *name) {
+    if (object == NULL || object->kind != adamic_kind_array) { return; }
+    static const char prefix[] = "field write failed: a write to ", suffix[] = " through a checked view that holds an array is not yet lowered";
+    size_t capacity = sizeof prefix + strlen(name) + sizeof suffix;
+    char *message = malloc(capacity);
+    if (message == NULL) { static const char oom[] = "out of memory"; adamic_panic(oom, sizeof oom - 1); }
+    int length = snprintf(message, capacity, "%s%s%s", prefix, name, suffix);
+    adamic_panic(message, (size_t)length);
+}
+
+bool adamic_view_array_absent(const adamic_heap *object, const char *name) {
+    return object != NULL && object->kind == adamic_kind_array && adamic_array_lacks_property((const adamic_array *)object, name);
 }
 
 void adamic_view_static_read(const adamic_object *value, bool admitted, const char *const *required, size_t count, const char *expression, const char *type) {

@@ -1334,7 +1334,7 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 			return "Object.entries(" + e.values(expression.Arguments) + ").map(adamicTuple)"
 		}
 		if expression.Method == "keys" {
-			return "adamicHostKeys(" + e.values(expression.Arguments) + ")"
+			return "adamicHostKeys(" + e.viewArrayKeys(expression.Arguments[0]) + ")"
 		}
 		return "Object." + expression.Method + "(" + e.values(expression.Arguments) + ")"
 	case ir.NumberCall:
@@ -1508,7 +1508,7 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 	case ir.ArrayPop:
 		return e.value(expression.Array) + ".pop()"
 	case ir.ObjectKeys:
-		return "adamicHostKeys(" + e.value(expression.Object) + ")"
+		return "adamicHostKeys(" + e.viewArrayKeys(expression.Object) + ")"
 	case ir.ClosureSelf:
 		return "self"
 	case ir.LibraryGlobal:
