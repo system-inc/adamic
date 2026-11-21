@@ -31,9 +31,9 @@ esac
 
 // agreementNode is the fixture's oracle/node.mjs: it prints a program's print lines, so Node and the JavaScript
 // backend print what a program's print lines say, and at a stop line it writes the line's message to stderr and
-// stops with exit 70, as a backend's checked stop does. It sets the exit code rather than exiting, so what it printed
-// to a pipe is whole.
-const agreementNode = "import {readFileSync} from 'node:fs';\nfor (const line of readFileSync(process.argv[2], 'utf8').split('\\n')) {\n  if (line.startsWith('print: ')) console.log(line.slice('print: '.length));\n  else if (line.startsWith('stop: ')) { process.stderr.write(line.slice('stop: '.length) + '\\n'); process.exitCode = 70; break; }\n}\n"
+// stops with exit 70, as a backend's checked stop does. A print-env line prints the variable it names, or unset. It
+// sets the exit code rather than exiting, so what it printed to a pipe is whole.
+const agreementNode = "import {readFileSync} from 'node:fs';\nfor (const line of readFileSync(process.argv[2], 'utf8').split('\\n')) {\n  if (line.startsWith('print: ')) console.log(line.slice('print: '.length));\n  else if (line.startsWith('print-env: ')) console.log(process.env[line.slice('print-env: '.length)] ?? 'unset');\n  else if (line.startsWith('stop: ')) { process.stderr.write(line.slice('stop: '.length) + '\\n'); process.exitCode = 70; break; }\n}\n"
 
 // The four kinds of program the agreement mode tells apart, as agreementCompiler and agreementNode run them.
 const (
@@ -568,5 +568,31 @@ func TestAgreementOutcomeHash(t *testing.T) {
 	}
 	if warning, warnings := read("warning"), read("warnings"); warning.OutcomeHash == warnings.OutcomeHash || len(warning.OutcomeHash) != 64 {
 		t.Fatalf("native's stderr changed and the hash didn't: %q, %q", warning.OutcomeHash, warnings.OutcomeHash)
+	}
+}
+
+// Node's run of a program that decodes or encodes JSON sees the JSON types tool as ADAMIC_JSON_TYPES, as the oracle's
+// own runs do, and a program without JSON never does, so node.mjs never goes run the tool in a checkout without
+// cohere (#x0zh2gq). json.a prints the variable on Node and the tool's path on both backends, so it agrees only when
+// Node saw it; plain.a, the same lines with no JSON, disagrees with Node printing unset. Mutant (agreement.mutants.md):
+// the variable never set, so json.a disagrees too.
+func TestAgreementGivesNodeTheJSONTypesTool(t *testing.T) {
+	t.Parallel()
+	tool := filepath.Join(t.TempDir(), "json-types")
+	lines := "print-env: ADAMIC_JSON_TYPES\njs-print: " + tool + "\nnative: echo " + tool + "\n"
+	dir, sha, head := agreementFixture(t, []agreementSource{
+		{"corpus/json.a", "// decodeJson\n" + lines},
+		{"corpus/plain.a", lines},
+	})
+	o, r := agreementCommand(t, dir, sha, head, "--json-types", tool)
+	judgments := map[string]string{}
+	for _, judged := range r.Programs {
+		judgments[judged.Path] = judged.Judgment
+	}
+	if want := map[string]string{"corpus/json.a": "agreeing", "corpus/plain.a": "disagreeing"}; !reflect.DeepEqual(judgments, want) {
+		t.Fatalf("judgments %v, want %v: %s", judgments, want, o.Stderr)
+	}
+	if len(r.Disagreements) != 1 || r.Disagreements[0].Node.Stdout != "unset\n" {
+		t.Fatalf("plain.a's Node run: %+v, want it to print unset", r.Disagreements)
 	}
 }
