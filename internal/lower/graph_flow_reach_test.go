@@ -172,7 +172,7 @@ a.next = b;
 function each(g: (x: Holder) => void): void { g({ n: undefined }); }
 let seen = 0;
 each((x: Holder): void => { x.n = a; seen += x.n === a ? 1 : 0; });
-console.log(` + "`${seen} ${a.next === b}`" + `);
+console.log(String(seen) + ' ' + String(a.next === b));
 `)
 	if err != nil {
 		t.Fatal(err)
