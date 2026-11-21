@@ -194,3 +194,23 @@ function clear(t: Nd, v: string | undefined): void {
 		{"arrow body, lowered", arrow + "console.log(String(n.kind));\n", "main.ts:7:37: stage 0 can't lower writing undefined or null into a checked field, whose checked write can't change the representation its slot holds yet"},
 	})
 }
+
+// Every write judgment the view walk makes from types is held the same way, view's own stop for a write Rule C
+// records nothing for included: a `??=` or a destructuring write to an object field, and a keyed write. tsc's
+// factory/emitNode.ts:43 is the shape #rgrtt32's census then met (J-ksc7wkr). A generic function nothing
+// instantiates writes nothing and lowers; a lowered one stops at the write in view's words. Mutant: judgeViewAccess
+// giving its stop at once, and the generic `??=` row goes red.
+func TestSourceSlotPendingViewWriteStopsHeldTheSameWay(t *testing.T) {
+	t.Parallel()
+	const certificate = "stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+	coalesce := strings.Replace(sourceSlotPendingPrelude, "t.flowNode = v;", "t.flowNode ??= v;", 1)
+	coalesceGeneric := strings.Replace(coalesce, "function setIt(t: NodeA, v: FlowNode)", "function setIt<V extends FlowNode>(t: NodeA, v: V)", 1)
+	keyed := strings.Replace(sourceSlotPendingPrelude, "t.flowNode = v;", "t[\"flowNode\"] ??= v;", 1)
+	keyedGeneric := strings.Replace(keyed, "function setIt(t: NodeA, v: FlowNode)", "function setIt<V extends FlowNode>(t: NodeA, v: V)", 1)
+	judgeSourceSlotPending(t, []sourceSlotPendingRow{
+		{"??= generic never instantiated", coalesceGeneric + "console.log(String(view.kind));\n", ""},
+		{"??= lowered", coalesce + "setIt(view, { id: 2 });\nconsole.log(String(view.kind));\n", "main.ts:7:2: " + certificate},
+		{"keyed generic never instantiated", keyedGeneric + "console.log(String(view.kind));\n", ""},
+		{"keyed lowered", keyed + "setIt(view, { id: 2 });\nconsole.log(String(view.kind));\n", "main.ts:7:2: " + certificate},
+	})
+}
