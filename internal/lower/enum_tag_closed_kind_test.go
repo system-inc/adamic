@@ -136,7 +136,9 @@ func TestClosedKindDomains(t *testing.T) {
 // reaches Expr, so Expr stays open and isBlock's narrowing over Block | Expr stays refused, held in a
 // container and a field too (Language's k01 and k02 on #x2cjvy9, which lowered at 53c2277e and stopped where
 // Node ran on). decodeJson<Expr> builds an Expr whose kind its text holds, and keeps Expr open the same way.
-// Mutant m6 (the permissive instantiation skipped) lowers the generic rows.
+// Each build reaches Node too, so in .a isBlock itself is refused at the predicate, over Node, under
+// rulings.md:142 as amended (#tvw1zkp), before the walk is asked. Mutant m6 (the permissive instantiation
+// skipped) closes Node and Expr, and the generic rows lower.
 func TestClosedKindGenericAndDecodedBuildsStayOpen(t *testing.T) {
 	t.Parallel()
 	const types = "import { decodeJson } from 'adamic';\nenum Kind { Block = 1, Text = 2, Call = 3 }\ninterface Node { readonly kind: Kind }\ninterface Block extends Node { readonly kind: Kind.Block; readonly count: number }\ninterface Expr extends Node { readonly text: string }\nfunction isBlock(node: Node): node is Block { return node.kind === Kind.Block; }\nfunction show(body: Block | Expr): string { return isBlock(body) ? String(body.count) : body.text; }\nconst block: Block = { kind: Kind.Block, count: 2 };\nconsole.log(show(block));\n"
@@ -149,8 +151,8 @@ func TestClosedKindGenericAndDecodedBuildsStayOpen(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			if _, err := lowerSourceAs(t, types+probe.source, ".a"); err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
-				t.Fatalf("want %q, got %v", kindPredicateRefusal, err)
+			if _, err := lowerSourceAs(t, types+probe.source, ".a"); err == nil || !strings.Contains(err.Error(), "over Node") || !strings.Contains(err.Error(), "(rulings.md:142)") {
+				t.Fatalf("want isBlock refused over Node under rulings.md:142, got %v", err)
 			}
 		})
 	}
@@ -161,9 +163,11 @@ func TestClosedKindGenericAndDecodedBuildsStayOpen(t *testing.T) {
 // an inline Node & {...}, the literal type on a return and on a parameter, an unannotated literal whose kind
 // widens to the open enum, and that literal cast `as Expr`. Every one is a build K(Expr) counts by the type it
 // was built at, anonymous ones included, so Expr stays open and isBlock's narrowing over Block | Expr stays
-// refused, in .a and .ts alike, as Adamic asked on #x2cjvy9 (Nov 19). The control, a real Block and Ident,
+// refused, in .a and .ts alike, as Adamic asked on #x2cjvy9 (Nov 19). In .ts the walk refuses it; in .a
+// isBlock itself is refused at the predicate, since the lie is a source of Block's kind in K(Node) that
+// doesn't relate to Block (rulings.md:142 as amended, #tvw1zkp). The control, a real Block and Ident,
 // lowers and agrees in .a; in .ts it stops earlier, at R-T80's membership over an open tag domain.
-// Mutant m1 (build sites skipped) closes Expr on Ident alone, and every road lowers.
+// Mutant m1 (build sites skipped) closes Node and Expr on the declared types alone, and every road lowers.
 func TestClosedKindLiteralKindBuildsStayOpen(t *testing.T) {
 	t.Parallel()
 	const types = "enum Kind { Block, Ident }\ninterface Node { readonly kind: Kind }\ninterface Block extends Node { readonly kind: Kind.Block; count: number }\ninterface Expr extends Node { text: string }\ninterface Ident extends Expr { readonly kind: Kind.Ident }\n" +
@@ -183,8 +187,12 @@ func TestClosedKindLiteralKindBuildsStayOpen(t *testing.T) {
 		for _, extension := range []string{".a", ".ts"} {
 			t.Run(probe.name+extension, func(t *testing.T) {
 				t.Parallel()
-				if _, err := lowerSourceAs(t, types+probe.source, extension); err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
-					t.Fatalf("want %q, got %v", kindPredicateRefusal, err)
+				want := kindPredicateRefusal
+				if extension == ".a" {
+					want = "over Node, whose kind is an open numeric enum: a value of it can carry Kind.Block without Block's layout (rulings.md:142)"
+				}
+				if _, err := lowerSourceAs(t, types+probe.source, extension); err == nil || !strings.Contains(err.Error(), want) {
+					t.Fatalf("want %q, got %v", want, err)
 				}
 			})
 		}
@@ -338,21 +346,17 @@ console.log(show(bin));
 	}
 }
 
-// The ConciseBody rows in .a. The comparison is the walk's alone, and lowers and agrees as in .ts. The
-// predicate is refused before the walk is asked: .a proves isBody's body or refuses it, and R-T80's prover
-// keeps the hazard by ruling (predicates_proof.go), so the comparison in its body proves no layout there.
+// The ConciseBody rows in .a, each lowering and agreeing as in .ts. The comparison is the walk's alone. The
+// predicate is proven at its body: Body | Ex is closed by construction, since K(Ex) holds Ident alone and
+// Body's own kind is a literal, so the tag test proves Body's layout there (rulings.md:142 as amended,
+// #tvw1zkp). It was refused before :142 was amended, when the body prover kept R-T80's hazard in .a too.
+// TestClosedKindLiteralKindBuildsStayOpen holds the open side: a lie built with Body's kind keeps it refused.
 func TestClosedKindDotA(t *testing.T) {
 	t.Parallel()
 	for _, probe := range closedKindConciseBody {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			source := closedKindTypes + probe.source
-			if strings.Contains(probe.source, "isBody(") {
-				if _, err := lowerSourceAs(t, source, ".a"); err == nil || !strings.Contains(err.Error(), "the comparison of kind proves nothing about the layout") {
-					t.Fatalf("want R-T80's lying-tag refusal, got %v", err)
-				}
-				return
-			}
 			program := lowersAndAgreesWithNodeAs(t, source, ".a")
 			if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != probe.stdout {
 				t.Fatalf("native: exit %d, stdout %q, stderr %q; want 0 and %q", code, stdout, stderr, probe.stdout)
