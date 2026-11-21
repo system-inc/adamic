@@ -890,6 +890,11 @@ type (
 		CallbackType             int
 		Array, Callback, Initial Expression
 		Element, Result          Type
+
+		// InitialTypeID and ArrayTypeID are the checker's ids of Initial's type and Array's, or 0 where
+		// lowering named none: what the cycle finder judges a callback whose targets are Unknown is
+		// handed by (lower's graphFlows, #x490w4a).
+		InitialTypeID, ArrayTypeID int
 	}
 
 	// StringIndex is string[index]: the UTF-16 code unit there, as a string, or undefined when index
@@ -939,6 +944,12 @@ type (
 		Spread       []bool
 		FunctionType int
 		Returns      Type
+
+		// ArgumentTypeIDs is the checker's id of each argument's type, in order, or 0 where lowering
+		// named none, a spread's among them: what the cycle finder judges an argument to a function
+		// value whose targets are Unknown by (lower's graphFlows, #x490w4a). Shorter than Arguments
+		// where a call was made without it.
+		ArgumentTypeIDs []int
 
 		// Optional is ?. on the call itself. Through an interface, object.name?.(...) (Closure is an
 		// ir.Property whose Method is set), the object's function value or method is looked up once,
