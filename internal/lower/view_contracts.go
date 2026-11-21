@@ -100,9 +100,13 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 
 	if contract.Kind == ir.ViewObject || (contract.Kind == ir.ViewUnion && of == ir.Object) {
 		for _, property := range l.checker.GetPropertiesOfType(target) {
+			// A field whose contract can't be built is the field's own, unsupported, and its siblings keep
+			// their checks (#rgrtt32). Only the object's own representation, judged above, is the whole type's.
 			child, err := build(l.checker.GetTypeOfSymbol(property))
 			if err != nil {
-				return 0, err
+				if child, err = l.unbuiltFieldContract(l.checker.GetTypeOfSymbol(property), err); err != nil {
+					return 0, err
+				}
 			}
 
 			contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: property.Name, Contract: child, Optional: property.Flags&ast.SymbolFlagsOptional != 0, Readonly: l.checker.IsReadonlySymbol(property)})
