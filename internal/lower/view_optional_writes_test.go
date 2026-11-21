@@ -65,16 +65,14 @@ rename(held);`, "", "w\n"},
 		// A cast's view checks name as the predicate's does, so its write is held by the same rule.
 		{"v3 cast", fresh + `function rename(n: Node): void { const e = n as Element; e.name = "w"; console.log(String(e.name)); }
 rename(fresh);`, viewOptionalWriteReason, ""},
-		// A class instance has a slot for each field the class declares, but none for an optional member
-		// an interface merges into it. Tagged's required merged name makes name checked under its bare name
-		// (mergedFieldRead), so Box's write to its merged optional name is a checked write too. Nothing reads
-		// b.name after, since a checked read of an optional field stops first, under its own reason.
+		// Box reserves a slot for its merged optional name. Tagged's required merged
+		// name makes this a checked write, and the reserved slot accepts the store.
 		{"merged class member", `interface Tagged { name: string; }
 class Tagged { kind = 1; }
 function show(t: Tagged): void { console.log(String(t.name)); }
 interface Box { name?: string; }
 class Box { kind = 2; }
-const b = new Box(); b.name = "w"; console.log("written");`, "writing a possibly absent optional own field, where a value reaching it is an instance of Box, whose class holds no name", ""},
+const b = new Box(); b.name = "w"; console.log("written");`, "", "written\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()

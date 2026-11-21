@@ -805,11 +805,15 @@ func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expr
 func (l *lowering) viewedField(node *ast.Node, property ir.Property) ir.Property {
 	property.View = sourceExpression(node)
 	property.ViewWhere = l.program.Where(node)
+	var receiver *ast.Node
 	if node.Kind == ast.KindPropertyAccessExpression {
-		receiver := l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression)
-		property.ViewReceiverTypeID = l.viewFieldReceiverTypeID(node, receiver)
+		receiver = node.AsPropertyAccessExpression().Expression
+		property.ViewReceiverTypeID = l.viewFieldReceiverTypeID(node, l.checker.GetTypeAtLocation(receiver))
 	}
 	if symbol := l.checker.GetSymbolAtLocation(node.Name()); symbol != nil {
+		if class := l.mergedFieldAccess(receiver, symbol).merge; class != nil {
+			property.View = mergedFieldView(node, class)
+		}
 		declared := l.checker.GetTypeOfSymbol(symbol)
 		if narrowed := l.checker.GetTypeAtLocation(node); narrowed.Id() != declared.Id() {
 			// A field read the checker narrowed, as a predicate narrows its argument (view_widened.go).

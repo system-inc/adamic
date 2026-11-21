@@ -14,8 +14,7 @@ import (
 // object carries the shape it was built with, a literal that leaves f out has no slot for it, and no store
 // adds one: a write of a name the shape lacks panics in adamic_object_find (object.c), where Node runs on. So
 // the slot is the allocation's own, never the type a view or a cast sees it at. A class instance holds a slot
-// for every field its class or a base declares, an optional one too, and none for an optional member an
-// interface merges into the class. An object literal holds f only where it wrote f, `f: undefined` and a
+// for every field its class or a base declares or reserves for an interface merge. An object literal holds f only where it wrote f, `f: undefined` and a
 // reserved Absent field among them, or where it spreads a value every allocation reaching which holds f. An
 // array, a closure, a record and an object this can't find hold none.
 //
@@ -177,8 +176,11 @@ func (l *lowering) reachHoldsSlot(reach *slotReach, name string, reaches ir.Allo
 		}
 		holds := holdsSlot(literal.Fields, name)
 		if !holds && literal.Class != 0 && (literal.Class > len(l.result.Classes) || !l.result.Classes[literal.Class-1].Literal) {
-			// A class instance's fields are its class's and its bases' declared ones, an optional one reserved,
-			// and never a member an interface merges into the class.
+			for class := literal.Class; class > 0 && class <= len(l.result.Classes); class = l.result.Classes[class-1].Base {
+				if words := l.missingMergedSlots[class][name]; words != "" {
+					return ", " + words
+				}
+			}
 			class := "a class"
 			if literal.Class <= len(l.result.Classes) {
 				class = l.result.Classes[literal.Class-1].Name

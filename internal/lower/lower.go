@@ -737,12 +737,15 @@ type lowering struct {
 	// a view of it through any type naming the field reaches the same object (class.go's
 	// absentOptionalWrite).
 	omittedOptionals map[string]bool
-	classes          map[*ast.Symbol]*ast.Node
-	statics          map[*ast.Symbol]*instance
-	staticGlobals    map[*ast.Symbol]int
-	instances        map[string]*instance
-	derivedAncestors map[*ast.Symbol]bool
-	optionalClasses  *optionalClassHierarchy
+	// A concrete class layout can omit a merged field whose type has no storage, or whose slot could
+	// point onward (mergedLeaf): each class's omitted names, with the words a read or write of one stops in.
+	missingMergedSlots map[int]map[string]string
+	classes            map[*ast.Symbol]*ast.Node
+	statics            map[*ast.Symbol]*instance
+	staticGlobals      map[*ast.Symbol]int
+	instances          map[string]*instance
+	derivedAncestors   map[*ast.Symbol]bool
+	optionalClasses    *optionalClassHierarchy
 
 	// privateOwners numbers each class that declares a private name, in the order first met, to
 	// qualify its private members' names (privateName).
