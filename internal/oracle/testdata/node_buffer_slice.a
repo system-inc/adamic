@@ -1,0 +1,97 @@
+import { Buffer } from 'node:buffer';
+// Buffer.slice and Buffer.subarray: a view sharing its parent's bytes, written through either side, a
+// view of a view, every argument shape clamped as a typed array's subarray clamps, and a view outliving
+// its parent's name and its parent. Each is read through toString or its elements, so its offset shows
+// by what it prints.
+function shown(label: string, view: Buffer): void {
+ console.log(`${label} ${view.length} [${view.toString('utf8')}]`);
+}
+const parent = Buffer.from('ABCDEF');
+const sliced = parent.slice(1, 4);
+sliced[0] = 122;
+parent[2] = 121;
+console.log(`${parent.toString('utf8')} ${sliced.toString('utf8')} ${sliced.length}`);
+const sub = parent.subarray(1, 4);
+sub[2] = 0x64;
+parent[1] = 0x5a;
+console.log(`${parent.toString('utf8')} ${sub.toString('hex')} ${sliced.toString('utf8')}`);
+// A view of a view sits in the first parent: p.slice(1).slice(1, 3) is p's bytes 2 and 3.
+const first = parent.slice(1);
+const second = first.slice(1, 3);
+second[0] = 0x31;
+second[1] = 0x32;
+const third = first.subarray(-2).subarray(1);
+third[0] = 0x39;
+console.log(`${parent.toString('utf8')} ${first.toString('utf8')} ${second.toString('utf8')} ${third.toString('utf8')} ${third.length}`);
+// A write past a view's end is dropped and leaves its parent alone, and a read past it is undefined.
+const narrow = parent.subarray(1, 3);
+narrow[2] = 0x2a;
+narrow[1.5] = 0x2a;
+console.log(`${String(narrow[2])} ${narrow.length} ${parent.toString('utf8')}`);
+// Every argument shape on six bytes, slice beside subarray.
+const table = Buffer.from('abcdef');
+shown('slice()', table.slice());
+shown('slice(2)', table.slice(2));
+shown('slice(-2)', table.slice(-2));
+shown('slice(1, -1)', table.slice(1, -1));
+shown('slice(-9, 2)', table.slice(-9, 2));
+shown('slice(4, 1)', table.slice(4, 1));
+shown('slice(1.5, 3.9)', table.slice(1.5, 3.9));
+shown('slice(NaN, 2)', table.slice(NaN, 2));
+shown('slice(0, Infinity)', table.slice(0, Infinity));
+shown('slice(-Infinity)', table.slice(-Infinity));
+shown('slice(undefined, 3)', table.slice(undefined, 3));
+shown('slice(2, undefined)', table.slice(2, undefined));
+shown('slice(10, 20)', table.slice(10, 20));
+shown('slice(-0.5, 2)', table.slice(-0.5, 2));
+shown('subarray()', table.subarray());
+shown('subarray(2)', table.subarray(2));
+shown('subarray(-2)', table.subarray(-2));
+shown('subarray(1, -1)', table.subarray(1, -1));
+shown('subarray(-9, 2)', table.subarray(-9, 2));
+shown('subarray(4, 1)', table.subarray(4, 1));
+shown('subarray(1.5, 3.9)', table.subarray(1.5, 3.9));
+shown('subarray(NaN, 2)', table.subarray(NaN, 2));
+shown('subarray(0, Infinity)', table.subarray(0, Infinity));
+shown('subarray(-Infinity)', table.subarray(-Infinity));
+shown('subarray(undefined, 3)', table.subarray(undefined, 3));
+shown('subarray(2, undefined)', table.subarray(2, undefined));
+shown('subarray(10, 20)', table.subarray(10, 20));
+shown('subarray(-0.5, 2)', table.subarray(-0.5, 2));
+// The same shapes as values the program computes, an end that may be undefined among them.
+const starts: number[] = [0, 2, -2, 1, -9, 4, 1.5, NaN, 0, -Infinity, 10, -0.5];
+const ends: number[] = [6, 6, 6, -1, 2, 1, 3.9, 2, Infinity, 6, 20, 2];
+for (let index = 0; index < starts.length; index += 1) {
+ const start = starts[index] ?? 0;
+ let end: number | undefined;
+ if (index % 3 !== 0) { end = ends[index] ?? 0; }
+ shown(`computed ${start} ${String(end)}`, table.slice(start, end));
+ shown(`computed subarray ${start} ${String(end)}`, table.subarray(start, end));
+}
+// Each element of a view, read through for-of and toString's own range.
+let total = 0;
+for (const byte of table.subarray(1, 4)) { total += byte; }
+console.log(`${total} ${table.slice(1, 5).toString('hex', 1, 3)}`);
+// A view kept in an array and a field outlives its parent's name: the bytes stay the parent's.
+let owner = Buffer.from('012345');
+const held: Buffer[] = [owner.subarray(2, 5)];
+const holder: { bytes: Buffer } = { bytes: owner.slice(1, 3) };
+owner[2] = 0x78;
+owner = Buffer.from('zz');
+for (const item of held) { item[1] = 0x79; }
+holder.bytes[0] = 0x77;
+for (const item of held) { console.log(`${owner.toString('utf8')} ${item.toString('utf8')} ${holder.bytes.toString('utf8')}`); }
+// A parent dropped while its view lives: the view still reads and writes the parent's bytes.
+function tail(text: string): Buffer {
+ const whole = Buffer.from(text, 'utf8');
+ return whole.subarray(3).slice(1, -1);
+}
+const kept = tail('dropped parent');
+kept[0] = 0x50;
+console.log(`${kept.toString('utf8')} ${kept.length} ${kept.toString('hex')}`);
+function written(view: Buffer): Buffer {
+ for (let index = 0; index < view.length; index += 1) { view[index] = 0x61 + index; }
+ return view;
+}
+const whole = Buffer.from('------');
+console.log(`${written(whole.slice(2, 5)).toString('utf8')} ${whole.toString('utf8')}`);
