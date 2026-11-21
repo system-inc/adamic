@@ -1,7 +1,9 @@
 package lower
 
 import (
+	"math"
 	"slices"
+	"sort"
 	"strconv"
 	"strings"
 	"testing"
@@ -47,6 +49,13 @@ func TestNodeBufferRefusals(t *testing.T) {
 		{"indexOf of a string parameter", "import { Buffer } from 'node:buffer'; function find(value: string): number { return Buffer.from('abc').indexOf(value); } console.log(`${find('b')}`);", indexOfString},
 		{"indexOf of a const local", "import { Buffer } from 'node:buffer'; const newline = '\\n'; console.log(`${Buffer.from('a\\nb').indexOf(newline)}`);", indexOfString},
 		{"optional indexOf", "import { Buffer } from 'node:buffer'; const bytes = Buffer.from('abc'); const found = bytes?.indexOf('b'); console.log(`${found}`);", "doesn't guard an optional receiver"},
+		// 'ascii' is a decode only: Node writes each UTF-16 unit as its low eight bits, a latin1 write.
+		{"from ascii", "import { Buffer } from 'node:buffer'; console.log(Buffer.from('\\u00e9a', 'ascii').toString('hex'));", "Buffer.from with the ascii encoding, a latin1 write"},
+		{"hash update ascii", "import { createHash } from 'node:crypto'; console.log(createHash('sha256').update('\\u00e9a', 'ascii').digest('hex'));", "Hash.update with the ascii encoding, a latin1 write"},
+		// toString's offsets are numbers, for 'ascii' as for every encoding: an explicit undefined stops,
+		// though Node reads it as the default.
+		{"toString undefined start", "import { Buffer } from 'node:buffer'; console.log(Buffer.from('abc').toString('ascii', undefined, 2));", "a non-number Buffer byte offset"},
+		{"toString undefined end", "import { Buffer } from 'node:buffer'; console.log(Buffer.from('abc').toString('ascii', 1, undefined));", "a non-number Buffer byte offset"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -240,5 +249,52 @@ func TestNodeBufferIndexOfLeavesUint8ArrayIndexOfRefused(t *testing.T) {
 	}
 	if _, err := lowerSource(t, prefix+"console.log(`${found} ${bytes.length}`);"); err != nil {
 		t.Fatalf("want a Buffer's indexOf beside a Uint8Array lowered, got %v", err)
+	}
+}
+
+// toString('ascii') is buffer_string with nodeBufferAscii, its offsets numbers as every encoding's are,
+// an omitted one the default: 0 for the start, Infinity for the end.
+func TestNodeBufferAsciiLowers(t *testing.T) {
+	t.Parallel()
+	program, err := lowerSource(t, "import { Buffer } from 'node:buffer';\nfunction read(bytes: Buffer): string {\n\treturn bytes.toString('ascii') + bytes.toString('ascii', 1, 3) + bytes.toString('ascii', 2) + bytes.toString('ascii', 3, 9.5);\n}\nconsole.log(read(Buffer.from('>ONE')));")
+	if err != nil {
+		t.Fatal(err)
+	}
+	ranges := [][2]float64{}
+	for _, function := range program.Functions {
+		walk(function.Body, func(node any) bool {
+			call, isCall := node.(ir.NodeBufferCall)
+			if !isCall {
+				return true
+			}
+			if call.Function != "buffer_string" || call.Encoding != nodeBufferAscii || call.Returns != ir.String || len(call.Arguments) != 3 {
+				t.Errorf("toString('ascii') lowered to %+v", call)
+				return true
+			}
+			offsets := [2]float64{}
+			for index, argument := range call.Arguments[1:] {
+				constant, isConstant := argument.(ir.NumberConstant)
+				if !isConstant {
+					t.Errorf("toString('ascii') offset %+v isn't a number constant", argument)
+					continue
+				}
+				offsets[index] = constant.Value
+			}
+			ranges = append(ranges, offsets)
+			return true
+		})
+	}
+	// The walk's order isn't the source's to promise, so the ranges are compared sorted.
+	sort.Slice(ranges, func(left, right int) bool {
+		return ranges[left][0] < ranges[right][0] || (ranges[left][0] == ranges[right][0] && ranges[left][1] < ranges[right][1])
+	})
+	want := [][2]float64{{0, math.Inf(1)}, {1, 3}, {2, math.Inf(1)}, {3, 9.5}}
+	if len(ranges) != len(want) {
+		t.Fatalf("want %d toString('ascii') calls, found %v", len(want), ranges)
+	}
+	for index := range want {
+		if ranges[index] != want[index] {
+			t.Errorf("toString('ascii') call %d has range %v, want %v", index, ranges[index], want[index])
+		}
 	}
 }

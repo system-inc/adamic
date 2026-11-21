@@ -43,6 +43,7 @@ mutants = [
     ('index_of_number_unmasked', buffer, 'unsigned char byte = (unsigned char)((uint32_t)adamic_shift_right_unsigned(needle, 0) & 255);', 'if (needle != trunc(needle) || !(needle >= 0 && needle <= 255)) { return -1; } unsigned char byte = (unsigned char)needle;', 'index_of'),
     ('index_of_empty_past_end', buffer, '*start = length; return needle_length == 0;', '*start = length; return false;', 'index_of'),
     ('index_of_view_owner', buffer, 'const unsigned char *data = buffer->data; size_t last = buffer->length - length;', 'const unsigned char *data = buffer->owner != NULL ? buffer->owner->data : buffer->data; size_t last = buffer->length - length;', 'index_of'),
+    ('ascii_unmasked', buffer, 'out[at] = (char)(bytes[start + at] & 0x7f);', 'out[at] = (char)bytes[start + at];', 'ascii'),
 ]
 selection = sys.argv[1:]
 summary = []

@@ -431,6 +431,18 @@ adamic_string *adamic_node_buffer_string(const adamic_typed_array *buffer,
 		}
 		return text;
 	}
+	if (encoding == 4) {
+		// 'ascii' reads each byte as its low seven bits, as Node does, so 0x80
+		// is U+0000 and 0xff U+007F. The text is one-byte UTF-8 throughout, a
+		// unit a byte, so units is length + 1, adamic.h's flag for that.
+		adamic_string *text = adamic_string_allocate(length);
+		char *out = (char *)text->bytes;
+		for (size_t at = 0; at < length; at++) {
+			out[at] = (char)(bytes[start + at] & 0x7f);
+		}
+		text->units = length + 1;
+		return text;
+	}
 	if (encoding == 2) {
 		static const char alphabet[] =
 			"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
