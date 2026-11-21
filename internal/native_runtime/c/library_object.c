@@ -18,10 +18,10 @@ bool adamic_object_is(const adamic_heap *left, const adamic_heap *right) {
 }
 
 bool adamic_object_is_frozen(const adamic_heap *value) {
- // Object.isFrozen(null) is true, as for undefined; the union's null is a bare header with no frozen flag (#hy1sanv).
- if (value == NULL || value == &adamic_null) return true;
+ // Object.isFrozen(null) is true, as for undefined and every primitive.
+ if (value == NULL) return true;
  if (value->kind == adamic_kind_object) return ((const adamic_object *)value)->frozen;
- return value->kind == adamic_kind_string || value->kind == adamic_kind_number || value->kind == adamic_kind_boolean;
+ return value->kind == adamic_kind_string || value->kind == adamic_kind_number || value->kind == adamic_kind_boolean || value->kind == adamic_kind_null;
 }
 
 adamic_object *adamic_object_freeze(adamic_object *object) {

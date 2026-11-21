@@ -98,6 +98,9 @@ enum adamic_kind {
 	adamic_kind_environment,
 	adamic_kind_generator,
 #endif
+	// A union's null, the static adamic_null and nothing else: a bare header, so a reader that tests
+	// for an object's kind never reads past it (#ch0xvam). It comes last so no other kind's number moves.
+	adamic_kind_null,
 };
 
 typedef struct adamic_heap {

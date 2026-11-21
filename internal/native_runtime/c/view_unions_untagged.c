@@ -67,7 +67,7 @@ bool adamic_view_untagged_plain_slot(void *context, const adamic_view_union_valu
     if ((actual >= adamic_rep_string && actual <= adamic_rep_map) || actual == adamic_rep_closure || actual == adamic_rep_union) {
         const adamic_heap *heap = slot->reference;
         if (heap == NULL) { return true; } /* Ambiguous nullish storage is Unknown. */
-        if (heap == &adamic_null && actual == adamic_rep_union) { result->kind = adamic_view_union_null; return true; } /* The union's null, as view_unions_mixed.c reads it (#hy1sanv). */
+        if (heap->kind == adamic_kind_null && actual == adamic_rep_union) { result->kind = adamic_view_union_null; return true; } /* The union's null, as view_unions_mixed.c reads it. */
         if (heap->kind == adamic_kind_number && actual == adamic_rep_union) { result->kind = adamic_view_union_number; result->payload.number = ((const adamic_number_box *)heap)->number; }
         if (heap->kind == adamic_kind_boolean && actual == adamic_rep_union) { result->kind = adamic_view_union_boolean; result->payload.boolean = ((const adamic_boolean_box *)heap)->boolean; }
         if (heap->kind == adamic_kind_string && (actual == adamic_rep_string || actual == adamic_rep_union)) { result->kind = adamic_view_union_string; }

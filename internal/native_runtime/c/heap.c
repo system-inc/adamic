@@ -648,6 +648,9 @@ void adamic_heap_free_children(void *value, void (*let_go)(void *)) {
 	case adamic_kind_foreign:
 		adamic_foreign_dropped(value);
 		break;
+	// The union's null is immortal, count zero, so adamic_release never frees it.
+	case adamic_kind_null:
+		adamic_invariant("the union's null was freed");
 	case adamic_kind_map_iterator: {
 		// Only an unfinished iterator still holds a place in the entries.
 		adamic_map_iterator *iterator = value;
