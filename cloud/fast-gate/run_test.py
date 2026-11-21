@@ -353,11 +353,16 @@ class FailClosed(unittest.TestCase):
                                         "steps_seconds": {"tests": 1}, "stages_exit": {"tests": 0}})
 
     def test_fast_phases_plan_only_themselves(self):
-        for phase in ("coverage", "tools", "build", "vet", "census", "catalog"):
+        for phase in ("coverage", "tools", "build", "vet", "darwin-vet", "census", "catalog"):
             with self.subTest(phase=phase):
                 extra = {"phase": phase}
                 if phase == "census":
                     extra["census"] = self.poolLog()
+                if phase == "darwin-vet":
+                    # The darwin vet reads the compiler map for the compilers the leg builds, and has none here.
+                    os.makedirs(os.path.join(self.tree, os.path.dirname(run.compilerDependenciesPath)), exist_ok=True)
+                    with open(os.path.join(self.tree, run.compilerDependenciesPath), "w") as handle:
+                        handle.write(json.dumps({"version": 1, "packages": {}}))
                 gate, status, result = self.gate(extra=extra)
                 self.assertTrue(status.startswith("green:"), status)
                 self.assertEqual(result["planned_stages"], [phase])
@@ -3383,6 +3388,114 @@ class WASIUnits(unittest.TestCase):
                 self.assertEqual(executes["execute"]("TestWASIUnit03", [], "/tmp")["ok"], ok)
 
 
+class DarwinVet(unittest.TestCase):
+    """The darwin vet (#gmrwkze): go vet of the darwin build on this Linux box, over the leg's packages and every
+    darwin-only file's, so a darwin-only file that doesn't compile is red where it lands (add69cbc59 left
+    internal/apple/witness_test.go calling a moved function, and main landed green). These run go for real, in a module
+    of their own. Mutants, each red here: the darwin environment left off the vet; the darwin-only files read by name
+    alone, or by build line alone, or testdata kept; the extra packages left out of the patterns; the inputs keyed by
+    packages, never the darwin listing's directories; the darwin-only files left out of the inputs' names; a listing that
+    can't be computed planned as nothing."""
+
+    def setUp(self):
+        self.directory = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, self.directory)
+        self.tree = os.path.join(self.directory, "tree")
+        self.sources = {
+            "go.mod": "module " + run.module + "\n\ngo 1.24\n",
+            run.compilerDependenciesPath: json.dumps({"version": 1, "packages": {"internal/apple": ["cmd/adamic"]}}),
+            "cmd/adamic/main.go": "package main\n\nfunc main() {}\n",
+            "internal/apple/apple.go": "package apple\n\n// Resolve is what the darwin-only witness calls.\nfunc Resolve() int { return 1 }\n",
+            "internal/apple/witness_test.go": "//go:build darwin\n\npackage apple\n\nimport \"testing\"\n\nfunc TestWitness(t *testing.T) { _ = Resolve() }\n",
+            # A darwin-only test outside the leg's closure, and a file every platform but darwin builds, in one package.
+            "internal/other/other.go": "package other\n",
+            "internal/other/moves_darwin_test.go": "package other\n\nimport \"testing\"\n\nfunc TestMoves(t *testing.T) {}\n",
+            "internal/other/lock_other.go": "//go:build !darwin\n\npackage other\n",
+            "internal/plain/plain.go": "package plain\n",
+            # testdata is never a package, whatever its name says.
+            "internal/plain/testdata/x_darwin.go": "package x\n",
+        }
+        for name, source in self.sources.items():
+            self.write(name, source)
+        realRun(["git", "-C", self.tree, "init", "-q"], check=True)
+        self.commit("the darwin vet's module")
+
+    def write(self, name, source):
+        path = os.path.join(self.tree, name)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w") as handle:
+            handle.write(source)
+
+    def commit(self, message):
+        realRun(["git", "-C", self.tree, "add", "-A", "."], check=True)
+        realRun(["git", "-C", self.tree, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", message], check=True)
+
+    def vet(self):
+        """Gate.darwinVet run on a gate of just what it reads, its failure and step kept."""
+        out = os.path.join(self.directory, "out")
+        os.makedirs(out, exist_ok=True)
+        gate = types.SimpleNamespace(arguments=types.SimpleNamespace(tree=self.tree, tools=self.tree, out=out, full=False),
+                                     steps={}, exits={}, result={}, failure=None, complete=False, lock=threading.Lock(),
+                                     buildStoreEnvironment={}, processes=[])
+        gate.fail = lambda step, detail, evidenceMissing=False: setattr(gate, "failure", gate.failure or (step, detail))
+        gate.recordTestStart = lambda command: None
+        gate.spawn = lambda *arguments, **options: run.Gate.spawn(gate, *arguments, **options)
+        run.Gate.darwinVet(gate)
+        return gate
+
+    def test_darwin_only_files_are_found_by_name_and_by_build_line_never_in_testdata(self):
+        self.assertEqual(run.darwinOnlyFiles(self.tree),
+                         ["internal/apple/witness_test.go", "internal/other/lock_other.go", "internal/other/moves_darwin_test.go"])
+
+    def test_the_vet_takes_the_leg_its_compilers_and_each_darwin_only_package(self):
+        self.assertEqual(run.darwinVetPatterns(self.tree, self.tree), ["./internal/apple/...", "./cmd/adamic", "./internal/other"])
+
+    def test_a_darwin_only_file_that_doesn_t_compile_is_red_naming_it_where_a_linux_vet_is_green(self):
+        gate = self.vet()
+        self.assertIsNone(gate.failure)
+        self.assertEqual(gate.exits["darwin-vet"], 0)
+        # add69cbc59's shape: the darwin-only test calls a name its package no longer holds.
+        self.write("internal/apple/witness_test.go", self.sources["internal/apple/witness_test.go"].replace("Resolve()", "native.ResolveTarget()"))
+        self.commit("the witness calls a moved function")
+        linux = realRun(["go", "vet", "./internal/apple/..."], cwd=self.tree, capture_output=True, text=True, env=dict(os.environ, GOFLAGS="-mod=mod"))
+        self.assertEqual(linux.returncode, 0, linux.stderr)
+        gate = self.vet()
+        self.assertEqual(gate.exits["darwin-vet"], 1)
+        self.assertEqual(gate.failure[0], "darwin-vet")
+        self.assertIn("internal/apple/witness_test.go:7", gate.failure[1])
+        self.assertIn("undefined: native", gate.failure[1])
+
+    def test_a_darwin_only_test_outside_the_leg_that_doesn_t_compile_is_red(self):
+        self.write("internal/other/moves_darwin_test.go", self.sources["internal/other/moves_darwin_test.go"].replace("{}", "{ missing() }"))
+        self.commit("a darwin-only test outside the leg breaks")
+        gate = self.vet()
+        self.assertEqual(gate.exits["darwin-vet"], 1)
+        self.assertIn("internal/other/moves_darwin_test.go", gate.failure[1])
+
+    def test_the_inputs_cover_each_darwin_only_package_by_path_and_each_darwin_only_file_by_name(self):
+        inputs = run.darwinVetInputs(self.tree, "", False, None)
+        self.assertEqual(inputs["packages"], [])
+        # A change to the darwin-only test outside the leg's closure moves the key, since its directory is a path the
+        # planner hashes by git ls-files -s; internal/plain, outside both, never does.
+        for path in (":(literal)internal/apple", ":(literal)cmd/adamic", ":(literal)internal/other", ":(literal)go.mod"):
+            self.assertIn(path, inputs["paths"])
+        self.assertNotIn(":(literal)internal/plain", inputs["paths"])
+        self.assertNotIn(".", inputs["paths"])
+        self.assertEqual(inputs["names"], run.darwinOnlyFiles(self.tree))
+        # A darwin-only file added in a package the vet didn't take moves the key by its name, before its directory does.
+        self.write("internal/fresh/fresh_darwin.go", "package fresh\n")
+        self.commit("a darwin-only file in a new package")
+        self.assertIn("internal/fresh/fresh_darwin.go", run.darwinVetInputs(self.tree, "", False, None)["names"])
+
+    def test_a_listing_that_can_t_be_computed_keys_on_the_whole_tree_and_the_phase_is_red(self):
+        os.remove(os.path.join(self.tree, run.compilerDependenciesPath))
+        self.commit("no compiler map")
+        self.assertEqual(run.darwinVetInputs(self.tree, "", False, None)["paths"], ["."])
+        gate = self.vet()
+        self.assertEqual(gate.exits["darwin-vet"], 1)
+        self.assertIn("can't be listed", gate.failure[1])
+
+
 class PhaseInputs(unittest.TestCase):
     tree = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 
@@ -3407,6 +3520,9 @@ class PhaseInputs(unittest.TestCase):
             # this doesn't.
             expected = "".join(line for line in expected.splitlines(keepends=True)
                                if line not in ("determinism\n", "smoke\n", "stage3\n") and not line.startswith("stage3 "))
+            if not full:
+                # The darwin vet (#gmrwkze) is the one fast phase the base doesn't list, after vet.
+                expected = expected.replace("vet\n", "vet\ndarwin-vet\n", 1)
             self.assertEqual(self.listing(full), expected)
 
     def test_every_listed_unit_has_nonempty_inputs(self):
