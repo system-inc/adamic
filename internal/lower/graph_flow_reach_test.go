@@ -156,11 +156,47 @@ func TestGraphFlowScalarArgumentsUnplanned(t *testing.T) {
 	}
 }
 
+// A scalar-only literal passed as a parameter whose type reaches Node is planned: { n: undefined } holds nothing by
+// its own type, and the callee sees it as a Holder, through which it can write a graph pointer into it, as this
+// one does. Stored in the cycle too, a counted literal would close a cycle reference counting can't free. That
+// leak can't be built today, since lowering stops the write into an optional field it would take (#avybwv1), so
+// this holds the plan: argumentTypeID keeps the parameter's type beside the argument's own (#x490w4a). Mutant 12
+// in graph-flow-exhaustive.mutants.md, the parameter's type dropped, leaves the literal counted.
+func TestGraphFlowWiderParameterPlanned(t *testing.T) {
+	t.Parallel()
+	program, err := lowerSource(t, `interface Node { name: string; next: Node | undefined }
+interface Holder { n: Node | undefined }
+const a: Node = { name: 'a' + '', next: undefined };
+const b: Node = { name: 'b' + '', next: a };
+a.next = b;
+function each(g: (x: Holder) => void): void { g({ n: undefined }); }
+let seen = 0;
+each((x: Holder): void => { x.n = a; seen += x.n === a ? 1 : 0; });
+console.log(` + "`${seen} ${a.next === b}`" + `);
+`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	literals := 0
+	for _, call := range unknownClosureCalls(program) {
+		walk(call.Arguments, func(node any) bool {
+			if literal, isLiteral := node.(ir.ObjectLiteral); isLiteral {
+				literals++
+				if !graphPlanned(program, literal.GraphTypes) {
+					t.Error("the { n: undefined } passed as a Holder is left counted, though the callee can write a graph pointer into it")
+				}
+			}
+			return true
+		})
+	}
+	if literals != 1 {
+		t.Fatalf("found %d literals made as an argument to a call with Unknown targets, want one", literals)
+	}
+}
+
 // An argument the callee stores in the cycle stays planned: [] is a never[] where it's made, which the callee
 // sees as the Node[] it pushes into and stores, and f3's toSorted copy is a Node[] by its own type (#41vb71c).
-// argumentTypeID keeps the parameter's type beside the argument's own for the first, failing closed, though
-// mutant 12 in graph-flow-exhaustive.mutants.md survives here: never[] is a graph type in this program itself,
-// related to Node[].
+// Neither needs the parameter's type: never[] is a graph type in this program itself, related to Node[].
 func TestGraphFlowUnknownArgumentSlotPlanned(t *testing.T) {
 	t.Parallel()
 	f3, err := os.ReadFile("../oracle/testdata/graph_regions/flow_unknown_argument.a")
