@@ -54,6 +54,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/system-inc/adamic/internal/benchmark"
 )
 
 // A gameRequest is what -game was asked.
@@ -309,7 +311,7 @@ func measureGame(request gameRequest) {
 	defer os.RemoveAll(work)
 	// Every runner, Go and Rust's as much as Adamic's, is measured through the reaper, so each peak is its
 	// own and never bench's, which here holds the inputs (J-wme5jp2 read 1321.4 MB for every runner).
-	if reaper, err = buildReaper(directory, work); err != nil {
+	if reaper, err = benchmark.BuildReaper(work); err != nil {
 		fail(err)
 	}
 
@@ -537,7 +539,7 @@ func (request gameRequest) pcreRun() []string {
 func toolchainVersion(binary, versionFlag, want string) (string, error) {
 	command := exec.Command(binary, versionFlag)
 	command.Dir = os.TempDir()
-	command.Env = append(environment(), "GOTOOLCHAIN=local")
+	command.Env = append(benchmark.Environment(), "GOTOOLCHAIN=local")
 	output, err := command.CombinedOutput()
 	if err != nil {
 		return "", fmt.Errorf("%s %s: %v %s", binary, versionFlag, err, firstLine(string(output)))
@@ -740,7 +742,7 @@ func (builder gameBuilder) floors() ([]*gameRunner, error) {
 	}
 	return []*gameRunner{
 		{name: "floor", language: adamicLanguage, command: []string{adamicFloor}, binary: adamicFloor},
-		{name: "floor", language: nodeLanguage, command: nodeCommand(program{name: "floor", source: filepath.Join(floorDirectory, "floor.ts")}, builder.root)},
+		{name: "floor", language: nodeLanguage, command: benchmark.NodeCommand(filepath.Join(floorDirectory, "floor.ts"), false, builder.root)},
 		{name: "floor", language: goLanguage, command: []string{goFloor}, binary: goFloor},
 		{name: "floor", language: rustLanguage, command: []string{rustFloor}, binary: rustFloor},
 	}, nil
@@ -748,35 +750,35 @@ func (builder gameBuilder) floors() ([]*gameRunner, error) {
 
 // row builds one program's runners. A build that stops makes its runner a gap, with the compiler's
 // line; only the work directory failing stops the measurement.
-func (builder gameBuilder) row(benchmark gameProgram) (*gameRow, error) {
+func (builder gameBuilder) row(selected gameProgram) (*gameRow, error) {
 	binaries := filepath.Join(builder.work, "bin")
 	if err := os.MkdirAll(binaries, 0755); err != nil {
 		return nil, err
 	}
-	row := &gameRow{benchmark: benchmark}
+	row := &gameRow{benchmark: selected}
 	native := &gameRunner{name: adamicLanguage, language: adamicLanguage}
 	node := &gameRunner{name: nodeLanguage, language: nodeLanguage}
-	source, err := benchSource(builder.directory, benchmark.Adamic)
+	source, err := benchSource(builder.directory, selected.Adamic)
 	if err != nil {
 		native.failure, node.failure = err.Error(), err.Error()
 	} else {
-		native.binary = filepath.Join(binaries, benchmark.Name+".adamic")
+		native.binary = filepath.Join(binaries, selected.Name+".adamic")
 		native.command = []string{native.binary}
-		if output, err := step("building "+benchmark.Name+" with adamic", exec.Command(builder.adamic, "build", source, "-o", native.binary)); err != nil {
+		if output, err := step("building "+selected.Name+" with adamic", exec.Command(builder.adamic, "build", source, "-o", native.binary)); err != nil {
 			native.failure = fmt.Sprintf("adamic build stopped: %v %s", err, firstLine(string(output)))
 		}
 		contents, err := os.ReadFile(source)
 		if err != nil {
 			return nil, err
 		}
-		node.command = nodeCommand(program{name: benchmark.Name, source: source, adamic: importsAdamic(string(contents))}, builder.root)
+		node.command = benchmark.NodeCommand(source, benchmark.ImportsAdamic(string(contents)), builder.root)
 	}
 	row.runners = append(row.runners, native, node)
-	for _, entry := range benchmark.Entries {
+	for _, entry := range selected.Entries {
 		name := entryName(entry)
-		runner := &gameRunner{name: name, language: entry.Language, binary: filepath.Join(binaries, benchmark.Name+"."+name)}
-		runner.command = []string{runner.binary, strconv.Itoa(benchmark.Size)}
-		what := benchmark.Name + "'s " + name
+		runner := &gameRunner{name: name, language: entry.Language, binary: filepath.Join(binaries, selected.Name+"."+name)}
+		runner.command = []string{runner.binary, strconv.Itoa(selected.Size)}
+		what := selected.Name + "'s " + name
 		if entry.Pcre {
 			runner.environment = builder.request.pcreRun()
 		}
@@ -785,11 +787,11 @@ func (builder gameBuilder) row(benchmark gameProgram) (*gameRow, error) {
 		case goLanguage:
 			stopped = builder.buildGo(what, filepath.Join(builder.directory, "game"), filepath.FromSlash(entry.File), runner.binary, entry.Pcre)
 		case rustLanguage:
-			buildDirectory, err := builder.rustSource(benchmark.Name, name, entry.File)
+			buildDirectory, err := builder.rustSource(selected.Name, name, entry.File)
 			if err != nil {
 				return nil, err
 			}
-			stopped = builder.buildRust(what, buildDirectory, benchmark.Name+".rs", runner.binary, entry.Crates, entry.Pcre)
+			stopped = builder.buildRust(what, buildDirectory, selected.Name+".rs", runner.binary, entry.Crates, entry.Pcre)
 		}
 		if stopped != nil {
 			runner.failure = stopped.Error()
@@ -819,7 +821,7 @@ func (builder gameBuilder) rustSource(benchmarkName, name, file string) (string,
 func (builder gameBuilder) buildGo(what, directory, source, binary string, pcre bool) error {
 	command := exec.Command(builder.request.goBinary, "build", "-o", binary, source)
 	command.Dir = directory
-	command.Env = append(append(environment(), builder.file.Go.Environment...), "GOTOOLCHAIN=local", "GOWORK=off", "GOFLAGS=")
+	command.Env = append(append(benchmark.Environment(), builder.file.Go.Environment...), "GOTOOLCHAIN=local", "GOWORK=off", "GOFLAGS=")
 	command.Env = append(command.Env, builder.request.goModulesBuild()...)
 	if pcre {
 		command.Env = append(command.Env, builder.request.pcreBuild()...)
@@ -992,8 +994,8 @@ func gameOrder(sample, count int) []int {
 	return order
 }
 
-// outputDifference says where an output first parts from Node's, by line. An output past
-// outputKeptWhole is kept as its first line and a digest, so two large ones part at the digest's line.
+// outputDifference says where an output first parts from Node's, by line. A large output is kept as its
+// first line and a digest (benchmark.Run keeps it so), so two large ones part at the digest's line.
 func outputDifference(output, answer string) string {
 	outputLines, answerLines := strings.Split(output, "\n"), strings.Split(answer, "\n")
 	for index := 0; index < max(len(outputLines), len(answerLines)); index++ {
