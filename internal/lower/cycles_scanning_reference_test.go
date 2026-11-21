@@ -1889,5 +1889,8 @@ func scanLowerWithElementKey(key *viewElementKey, program *load.Program, typeChe
 	if err := lowering.checkSourceSlotPending(); err != nil {
 		return nil, err
 	}
+	// Once no pass builds or changes a view contract: each admission reads its fields' finished
+	// contracts, and only the emitters read it (finishViewStaticsAdmitted).
+	lowering.finishViewStaticsAdmitted()
 	return lowering, nil
 }
