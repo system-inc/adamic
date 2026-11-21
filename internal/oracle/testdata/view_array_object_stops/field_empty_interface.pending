@@ -1,0 +1,1 @@
+awaits #s03ndgw: an array held where the object type { readonly a?: number } is read is not yet lowered as a checked view of its declared fields, so both backends stop where Node prints object and undefined
