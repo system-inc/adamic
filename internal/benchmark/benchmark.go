@@ -69,10 +69,10 @@ func BuildReaper(work string) (string, error) {
 	return binary, nil
 }
 
-// Run runs a command to the end with environment as its whole environment, and measures it. With a reaper, BuildReaper's
-// binary, the command runs through it, and its user time and peak come from the line the reaper writes to descriptor
-// 3; with none, the program is started directly and they come from its own usage. The wall time is always this
-// process's own clock, and a timeout kills the reaper, which takes the program with it. A run that failed, didn't
+// Run runs a command to the end with environment as its whole environment, and measures it. With a reaper,
+// BuildReaper's binary, the command runs through it, and its user time and peak come from the line the reaper writes to
+// descriptor 3; with none, the program is started directly and they come from its own usage. The wall time is always
+// this process's own clock, and a timeout kills the reaper, which takes the program with it. A run that failed, didn't
 // finish or printed nothing is a Measurement whose Failure says so.
 func Run(reaper string, command []string, timeout time.Duration, environment []string) Measurement {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
