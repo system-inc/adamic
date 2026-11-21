@@ -18,6 +18,9 @@ writeFileSync(fd,data,flushOptions);
 writeSync(fd,'!');
 closeSync(fd);
 console.log(readFileSync(root + '/binary-fd').toString('hex'));
+// A Buffer's slice is a view of its bytes 1 to 3, and writes only those.
+writeFileSync(root + '/binary',data.slice(1,4));
+console.log(readFileSync(root + '/binary').toString('hex'));
 writeFileSync(root + '/binary',Buffer.from(''));
 console.log(readFileSync(root + '/binary').toString('hex'));
 try { writeFileSync(root + '/missing/child',data); }

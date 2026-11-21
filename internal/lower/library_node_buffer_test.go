@@ -25,6 +25,10 @@ func TestNodeBufferRefusals(t *testing.T) {
 		{"typed array view", "import { Buffer } from 'node:buffer'; const bytes: Uint8Array = Buffer.from('abc'); console.log(`${bytes.length}`);", "another object type"},
 		{"structural hash view", "import { createHash } from 'node:crypto'; const hash: { digest: (encoding: 'hex') => string } = createHash('sha256'); console.log(hash.digest('hex'));", "another object type"},
 		{"allocUnsafe spread", "import { Buffer } from 'node:buffer'; const sizes: [number] = [2]; console.log(`${Buffer.allocUnsafe(...sizes).length}`);", "Buffer.allocUnsafe outside allocUnsafe(size)"},
+		{"slice spread", "import { Buffer } from 'node:buffer'; const range: [number, number] = [1, 2]; console.log(`${Buffer.from('abc').slice(...range).length}`);", "Buffer.slice outside slice(start, end)"},
+		{"subarray spread", "import { Buffer } from 'node:buffer'; const range: [number, number] = [1, 2]; console.log(`${Buffer.from('abc').subarray(...range).length}`);", "Buffer.subarray outside subarray(start, end)"},
+		{"slice of never", "import { Buffer } from 'node:buffer'; function stop(): never { throw new Error('stop'); } console.log(`${Buffer.from('abc').slice(stop()).length}`);", "a Buffer.slice offset that isn't number or undefined"},
+		{"optional slice", "import { Buffer } from 'node:buffer'; const bytes = Buffer.from('abc'); console.log(`${bytes?.slice(1).length}`);", "an optional call"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -113,5 +117,52 @@ func TestNodeBufferAllocUnsafeLowers(t *testing.T) {
 	}
 	if found != 1 {
 		t.Fatalf("want one buffer_alloc_unsafe in a function, found %d", found)
+	}
+}
+
+// A Buffer's slice and subarray are one view sharing its bytes, as on Node: TypedArraySubarray over the
+// Buffer, whose type stays Uint8Array as every Buffer's, and never a copy (buffer_copy). Each argument is
+// held as number | undefined, so an explicit undefined is the default as an omitted one is.
+func TestNodeBufferSliceLowers(t *testing.T) {
+	t.Parallel()
+	program, err := lowerSource(t, "import { Buffer } from 'node:buffer';\nfunction views(bytes: Buffer, end: number | undefined): number {\n\treturn bytes.slice().length + bytes.slice(1).length + bytes.subarray(1, -1).length + bytes.slice(undefined, end).length;\n}\nconsole.log(`${views(Buffer.from('abcdef'), 3)}`);")
+	if err != nil {
+		t.Fatal(err)
+	}
+	counts := []int{}
+	for _, function := range program.Functions {
+		walk(function.Body, func(node any) bool {
+			switch node := node.(type) {
+			case ir.TypedArraySubarray:
+				counts = append(counts, len(node.Arguments))
+				if node.Type() != ir.Uint8Array || node.Array.Type() != ir.Uint8Array {
+					t.Errorf("Buffer view lowered as %+v, not a Uint8Array", node)
+				}
+				for _, argument := range node.Arguments {
+					if argument.Type() != ir.MaybeNumber {
+						t.Errorf("Buffer view argument %+v isn't number | undefined", argument)
+					}
+				}
+			case ir.NodeBufferCall:
+				t.Errorf("Buffer view lowered through %s", node.Function)
+			}
+			return true
+		})
+	}
+	if len(counts) != 4 || counts[0] != 0 || counts[1] != 1 || counts[2] != 2 || counts[3] != 2 {
+		t.Fatalf("want four Buffer views of 0, 1, 2 and 2 arguments, found %v", counts)
+	}
+}
+
+// Must 10: a Uint8Array's slice copies on Node, where a Buffer's shares, so it never lowers to a view.
+// It stays refused while a Buffer's slice beside it is admitted, and a Uint8Array's subarray still lowers.
+func TestNodeBufferSliceLeavesUint8ArraySliceRefused(t *testing.T) {
+	t.Parallel()
+	const prefix = "import { Buffer } from 'node:buffer';\nconst shared = Buffer.from('abc').slice(1);\nconst bytes = new Uint8Array([1, 2, 3]);\n"
+	if _, err := lowerSource(t, prefix+"console.log(`${shared.length} ${bytes.slice(1).length}`);"); err == nil || !strings.Contains(err.Error(), "typed array method slice") {
+		t.Fatalf("want a Uint8Array's slice refused as %q, got %v", "typed array method slice", err)
+	}
+	if _, err := lowerSource(t, prefix+"console.log(`${shared.length} ${bytes.subarray(1).length}`);"); err != nil {
+		t.Fatalf("want a Uint8Array's subarray beside a Buffer's slice lowered, got %v", err)
 	}
 }
