@@ -248,7 +248,8 @@ Old:
 New:
 
 ```go
-	if proven != nil || proven == nil {
+	return true
+	if proven == nil {
 		return true
 	}
 	if reaches, known := judged[proven]; known {
@@ -274,8 +275,8 @@ Old:
 New:
 
 ```go
-	if slot := l.slotType(argument); slot != nil && slot == nil {
-		keep(l.concrete(slot))
+	if slot := l.slotType(argument); slot != nil {
+		_ = slot
 	}
 ```
 

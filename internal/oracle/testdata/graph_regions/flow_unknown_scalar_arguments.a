@@ -1,11 +1,12 @@
 // A fresh { depth, flags } and a fresh number array handed to an interface method through a parameter, whose targets are Unknown: neither type can reach a graph type, so neither is planned (#x490w4a).
-interface Node { name: string; next: Node[] }
+// Node links by a field, not an array: a [] literal is a never[], seen as a Node[] and a number[] alike, which makes number[] a graph type, and then the number array is planned as one.
+interface Node { name: string; next: Node | undefined }
 interface Context { depth: number; flags: number }
 interface Visitor { visit(context: Context, pair: number[]): number }
-const a: Node = { name: 'a' + '', next: [] };
-const b: Node = { name: 'b' + '', next: [a] };
-a.next.push(b); // a cycle: the program is a graph program
+const a: Node = { name: 'a' + '', next: undefined };
+const b: Node = { name: 'b' + '', next: a };
+a.next = b; // a cycle: the program is a graph program
 const sum: Visitor = { visit(context: Context, pair: number[]): number { return context.depth + context.flags + (pair[0] ?? 0) + (pair[1] ?? 0); } };
 const weighted: Visitor = { visit(context: Context, pair: number[]): number { return context.depth * 3 + context.flags + (pair[0] ?? 0) * (pair[1] ?? 0); } };
 function run(visitor: Visitor, count: number): number { let total = 0; for (let i = 0; i < count; i++) { total += visitor.visit({ depth: i & 7, flags: i & 1 }, [i & 3, i & 5]); } return total; }
-console.log(`${run(sum, 100)} ${run(weighted, 100)} ${a.next.length} ${a.next[0]?.next[0] === a}`);
+console.log(`${run(sum, 100)} ${run(weighted, 100)} ${a.next === b} ${b.next === a}`);
