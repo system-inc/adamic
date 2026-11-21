@@ -30,7 +30,9 @@ func (e *emitter) viewFieldAt(property ir.Property, object string) string {
 	if object == "" {
 		object = e.value(property.Object)
 	}
-	return e.viewFieldObject(property, object)
+	value := e.viewFieldObject(property, object)
+	e.staticViewRead(property, value)
+	return value
 }
 
 // viewFieldObject reads property's checked field from object, the receiver already evaluated.

@@ -2,7 +2,7 @@
 // writing, on both backends: value prints first, as it would on Node.
 interface Root { readonly kind: 'Holder'; }
 interface Inner { readonly tag: 'I'; count: number; }
-interface View extends Root { readonly value: number | Inner; }
+interface Viewed extends Root { readonly value: Inner; }
 class Klass {
 	static readonly tag = 'I' as const;
 	static count = 3;
@@ -13,10 +13,7 @@ function noisy(): number {
 }
 const raw = { kind: 'Holder' as const, value: Klass };
 const base: Root = raw;
-const viewed = base as View;
+const viewed = base as Viewed;
 console.log('before');
-const read = viewed.value;
-if (typeof read !== 'number') {
-	read.count = noisy();
-	console.log(String(Klass.count));
-}
+viewed.value.count = noisy();
+console.log(String(Klass.count));

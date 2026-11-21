@@ -15,13 +15,12 @@ var viewStaticClassAgreeing = []string{"union_typeof.ts", "tagged_count.ts", "st
 
 const viewStaticClassKeys = "object_keys.ts"
 
-// viewStaticClassStop is a program that keeps a stop on every backend, though Node runs it.
+// viewStaticClassStop is a program that keeps a stop, though Node runs it: at lowering, in lowering's words,
+// or at run time, on every backend, with stdout and stderr.
 type viewStaticClassStop struct {
 	name, stdout, stderr string
-	// prefix and suffix hold the words where the declared type's spelling isn't pinned.
-	prefix, suffix string
-	// lowering admits a lowering refusal as the stop.
-	lowering bool
+	// lowering is the words lowering refuses the program with, where it stops before any backend runs.
+	lowering string
 }
 
 const viewStaticClassNoMember = "adamic: panic: field read failed: viewed.value matches no member of number | Inner; expected number | Inner, found function\n"
@@ -29,29 +28,40 @@ const viewStaticClassNoMember = "adamic: panic: field read failed: viewed.value 
 const viewStaticClassWrite = "adamic: panic: field write failed: a write to count through a checked view that holds a class constructor is not yet lowered\n"
 
 var viewStaticClassStops = []viewStaticClassStop{
-	{name: "static_getter.ts", stdout: "before\n", stderr: viewStaticClassNoMember},
+	// Lowering stops a static getter in a checked field contract before the run time is asked.
+	{name: "static_getter.ts", lowering: "stage 0 can't lower a getter in a checked field contract yet"},
 	{name: "inherited_count.ts", stdout: "before\n", stderr: viewStaticClassNoMember},
+	// At a field typed Inner itself, the read's own check stops it, natively where a class constructor is an object.
+	{name: "inherited_field.ts", stdout: "before\n", stderr: "adamic: panic: field read failed: viewed.value is not a Inner; expected Inner, found function\n"},
 	{name: "name_field.ts", stdout: "before\n", stderr: viewStaticClassNoMember},
 	// Klass owns call, so only StaticsAdmitted stops it: without the flag it would read Node's 5.
 	{name: "call_field.ts", stdout: "before\n", stderr: viewStaticClassNoMember},
-	{name: "callable_union.ts", stdout: "before\n", prefix: "adamic: panic: field read failed: viewed.value matches no member of ", suffix: ", found function\n", lowering: true},
+	// Lowering refuses the read of a union a callable could also stand in: its contract is unsupported.
+	{name: "callable_union.ts", lowering: "unsupported representation conversion contract"},
+	// The check lowering puts on a narrowed local (localRead, internal/lower/locals.go) asks typeof === 'object'
+	// of what the read put back, and a class answers 'function'. It awaits a follow-up there.
+	{name: "narrowed_read.ts", stderr: "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n"},
 	{name: "write.ts", stdout: "before\n", stderr: viewStaticClassWrite},
 	// The value is evaluated before the guard on both backends, as native's writeProperty orders it.
 	{name: "write_value_order.ts", stdout: "before\nvalue\n", stderr: viewStaticClassWrite},
 	{name: "logical.ts", stdout: "before\nvalue\n", stderr: viewStaticClassWrite},
-	// Each lowers to a SetProperty (class.go's compound assignment, assignments.go's increment), unless lowering
-	// refuses it first; the log says which.
-	{name: "compound.ts", stdout: "before\n", stderr: viewStaticClassWrite, lowering: true},
-	{name: "increment.ts", stdout: "before\n", stderr: viewStaticClassWrite, lowering: true},
+	// Each lowers to a SetProperty (class.go's compound assignment, assignments.go's increment).
+	{name: "compound.ts", stdout: "before\n", stderr: viewStaticClassWrite},
+	{name: "increment.ts", stdout: "before\n", stderr: viewStaticClassWrite},
 }
 
 // A class constructor held where a checked view expects an object reads as Node reads it (#s03ndgw), when the
 // object's contract admits one (ir.ViewContract's StaticsAdmitted: no field Function or Object names) and every
 // field it requires is a data static the class owns. It is never converted: it stays the class, so typeof says
 // function, and a field read through the view reads the static. Each program agrees with Node natively,
-// sanitized and on the JavaScript backend, and leaks nothing (generatorAgrees). Before, each stopped at
-// viewed.value, found function. Mutant: the is_static refusal put back in plain_matches's object branch
-// (internal/native_runtime/c/view_unions_untagged.c), and these go red natively (scratch-s03p1/proof.sh).
+// sanitized and on the JavaScript backend, and leaks nothing (generatorAgrees). union_typeof holds it as a
+// member of number | Inner, which the union's selection admits; the others hold it at a field typed as the
+// object itself, which the read's own check admits (ir.Program's ObjectReadContract), so nothing narrows
+// between the read and its use. Before, each stopped at viewed.value, found function. Mutants
+// (scratch-s03p1/proof.sh): the is_static refusal put back in plain_matches's object branch
+// (internal/native_runtime/c/view_unions_untagged.c), and union_typeof goes red natively; adamic_view_static_read
+// refusing every class constructor, and the others go red natively; adamicViewField's statics dropped
+// (internal/javascript/view_fields.go), and the others go red on the JavaScript backend.
 func TestViewStaticClassAgreesWithNode(t *testing.T) {
 	t.Parallel()
 	for _, name := range viewStaticClassAgreeing {
@@ -63,13 +73,14 @@ func TestViewStaticClassAgreesWithNode(t *testing.T) {
 }
 
 // Where the class isn't what the view says, or the view would do more than read its own statics, the program
-// keeps a stop on every backend, though Node runs it: a static getter, a count only a base declares, a union a
-// callable could also stand in, a field every constructor has (name, and call, which the class here owns too),
-// and a write through the view by each road a write takes: =, a logical assignment, a compound assignment and
-// an increment. A stop at the read says today's words. The callable union's declared type is printed by the
-// checker, whose member order isn't pinned here, so its words are held by their start and end. Where lowering
-// may refuse first, that is a stop too, and the log says so. Mutants: each backend's write guard dropped
-// (scratch-s03p1/proof.sh), and the write pins go red.
+// keeps a stop, though Node runs it: a static getter, a count only a base declares (in a union, and at a field
+// typed as the object itself), a union a callable could also stand in, a field every constructor has (name,
+// and call, which the class here owns too), a read lowering can't yet follow past a typeof narrowing, and a
+// write through the view by each road a write takes: =, a logical assignment, a compound assignment and an
+// increment. Each is held to where it stops: lowering, in
+// lowering's words, or a run-time panic on every backend, in today's words. Mutants (scratch-s03p1/proof.sh):
+// each backend's write guard dropped, and the write pins go red; each backend's read check admitting every
+// class constructor, and inherited_field goes red.
 func TestViewStaticClassStops(t *testing.T) {
 	t.Parallel()
 	for _, stop := range viewStaticClassStops {
@@ -83,25 +94,20 @@ func TestViewStaticClassStops(t *testing.T) {
 				t.Fatalf("Node: %#v", node)
 			}
 			program, err := lowered(t, path)
-			if err != nil {
-				if !stop.lowering {
-					t.Fatal(err)
+			if stop.lowering != "" {
+				if err == nil || !strings.Contains(err.Error(), stop.lowering) {
+					t.Fatalf("lowering: %v, want a stop saying %q", err, stop.lowering)
 				}
-				t.Logf("stops at lowering: %v", err)
 				return
 			}
+			if err != nil {
+				t.Fatal(err)
+			}
+			want := run{exitCode: 70, stdout: []byte(stop.stdout), stderr: []byte(stop.stderr)}
 			sanitized, _ := nativelyUncached(t, program)
 			for backend, got := range map[string]run{"native": releasedUncached(t, program), "sanitized": sanitized, "javascript": onJavaScriptBackend(t, program)} {
-				if stop.stderr != "" {
-					want := run{exitCode: 70, stdout: []byte(stop.stdout), stderr: []byte(stop.stderr)}
-					if diff := disagreement(want, got); diff != "" {
-						t.Errorf("%s: %s, stdout %q, stderr %q", backend, diff, got.stdout, got.stderr)
-					}
-					continue
-				}
-				stderr := string(got.stderr)
-				if got.exitCode != 70 || string(got.stdout) != stop.stdout || !strings.HasPrefix(stderr, stop.prefix) || !strings.HasSuffix(stderr, stop.suffix) {
-					t.Errorf("%s: exit %d, stdout %q, stderr %q; want exit 70, %q, and %q...%q", backend, got.exitCode, got.stdout, stderr, stop.stdout, stop.prefix, stop.suffix)
+				if diff := disagreement(want, got); diff != "" {
+					t.Errorf("%s: %s, stdout %q, stderr %q", backend, diff, got.stdout, got.stderr)
 				}
 			}
 		})
@@ -164,7 +170,7 @@ func TestViewStaticClassProgramsAreAllRun(t *testing.T) {
 			t.Errorf("%s is named %d times by the tests, want once", entry.Name(), named[entry.Name()])
 		}
 	}
-	if programs != 15 || len(named) != 15 {
-		t.Fatalf("%d programs in %s and %d named, want 15: a program added or removed needs this count changed with it", programs, viewStaticClassDirectory, len(named))
+	if programs != 17 || len(named) != 17 {
+		t.Fatalf("%d programs in %s and %d named, want 17: a program added or removed needs this count changed with it", programs, viewStaticClassDirectory, len(named))
 	}
 }

@@ -318,6 +318,24 @@ void adamic_view_static_write(const adamic_object *object, const char *name) {
     adamic_panic(message, (size_t)length);
 }
 
+void adamic_view_static_read(const adamic_object *value, bool admitted, const char *const *required, size_t count, const char *expression, const char *type) {
+    if (value == NULL || value->heap.kind != adamic_kind_object || value->class == NULL || !value->class->is_static) { return; }
+    // Each required field the class's own data static, initialized, as plain_slot_read reads one.
+    size_t owned = 0;
+    while (admitted && owned < count) {
+        adamic_value *slot = static_own_slot(value, required[owned]);
+        if (slot == NULL || !adamic_object_initialized(value)[adamic_slot_index(value, slot)]) { break; }
+        owned++;
+    }
+    if (admitted && owned == count) { return; }
+    // object.c's view_failure words, as a class constructor read where no object contract admits one used to stop.
+    size_t capacity = strlen(expression) + 2 * strlen(type) + 64;
+    char *message = malloc(capacity);
+    if (message == NULL) { static const char oom[] = "out of memory"; adamic_panic(oom, sizeof oom - 1); }
+    int length = snprintf(message, capacity, "field read failed: %s is not a %s; expected %s, found function", expression, type, type);
+    adamic_panic(message, (size_t)length);
+}
+
 // Checked per read, never cached: an alias can push a lie between reads.
 // Bounds precede storage validation; no bits are interpreted or retained before
 // their storage flag has been checked. The returned slot owns its reference.

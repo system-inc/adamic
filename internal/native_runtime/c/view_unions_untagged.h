@@ -71,6 +71,11 @@ size_t adamic_view_untagged_plain_select(const adamic_object *object, const adam
 // stops when object is one: the view reads a class's statics, never writes them.
 void adamic_view_static_write(const adamic_object *object, const char *name);
 
+// A checked read that expects an object outside a union (ir.Program's ObjectReadContract) stops when
+// value is a class constructor, unless its contract admits one (admitted, StaticsAdmitted) and it owns
+// each of the count required names as a data static, as plain_matches admits one in a union.
+void adamic_view_static_read(const adamic_object *value, bool admitted, const char *const *required, size_t count, const char *expression, const char *type);
+
 adamic_view_union_value adamic_view_element(const adamic_view_untagged_contract *contracts, size_t count, size_t id, const adamic_array *array, double index, bool relative, unsigned int wanted, const char *where, const char *view_type);
 
 #endif

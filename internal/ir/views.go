@@ -121,6 +121,20 @@ func (p *Program) StaticsAdmittedReceiver(receiverTypeID int) bool {
 	return receiverTypeID != 0 && id > 0 && int(id) <= len(p.ViewContracts) && p.ViewContracts[id-1].StaticsAdmitted
 }
 
+// ObjectReadContract is the object contract a checked read expects outside a union, an interface's field
+// read straight from it, which no member selection reads: each backend stops a class constructor read
+// there unless the contract admits one (StaticsAdmitted) and the class owns every required field as a data
+// static (#s03ndgw), as a union's selection does. A read of another kind, or through a union, a nominal
+// class's or an unsupported contract, is false.
+func (p *Program) ObjectReadContract(read Property) (ViewContract, bool) {
+	id := read.ViewContract
+	if read.Of != Object || id <= 0 || int(id) > len(p.ViewContracts) {
+		return ViewContract{}, false
+	}
+	contract := p.ViewContracts[id-1]
+	return contract, contract.Kind == ViewObject && contract.Nominal == "" && contract.Unsupported == ""
+}
+
 type ViewFieldContract struct {
 	Name     string
 	Contract ViewContractID

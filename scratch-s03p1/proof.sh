@@ -27,7 +27,8 @@ runtime=internal/native_runtime/c/view_unions_untagged.c
 contracts=internal/lower/view_contracts.go
 writes='TestViewStaticClassStops/(write|write_value_order|logical|compound|increment)\.ts'
 
-step gofmt bash -c 'test -z "$(gofmt -l internal/ir/views.go internal/lower/view_contracts.go internal/lower/view_unions_dispatch.go internal/lower/view_statics_admitted_test.go internal/native/view_unions_untagged.go internal/native/emit_statements.go internal/native/logical_assignment.go internal/javascript/javascript.go internal/javascript/taste.go internal/javascript/readiness.go internal/javascript/view_fields.go internal/javascript/view_unions_read.go internal/javascript/view_unions_untagged.go internal/oracle/view_static_class_test.go internal/oracle/fx7_depth_texts_test.go stage3/census/latent/statecopy/ir_fields.go)"'
+# gofmt -d prints any difference, so a FAIL shows what gofmt wants.
+step gofmt bash -c 'difference=$(gofmt -d internal/ir/views.go internal/lower/view_contracts.go internal/lower/view_unions_dispatch.go internal/lower/view_statics_admitted_test.go internal/native/view_unions_untagged.go internal/native/emit_statements.go internal/native/logical_assignment.go internal/native/view_fields.go internal/javascript/javascript.go internal/javascript/taste.go internal/javascript/readiness.go internal/javascript/view_fields.go internal/javascript/view_unions_read.go internal/javascript/view_unions_untagged.go internal/oracle/view_static_class_test.go internal/oracle/fx7_depth_texts_test.go stage3/census/latent/statecopy/ir_fields.go); printf "%s\n" "$difference"; test -z "$difference"'
 step vet go vet ./internal/ir/ ./internal/lower/ ./internal/native/ ./internal/javascript/ ./internal/oracle/ ./stage3/census/latent/statecopy/
 
 # The pins at head.
@@ -46,7 +47,8 @@ step "native views" go test -count=1 -run 'View|view|FX7' ./internal/native/
 step "javascript views" go test -count=1 -run 'View|view|FX7|Untagged|Logical|logical' ./internal/javascript/
 step "lower views" go test -count=1 -run 'View|view|Untagged' ./internal/lower/
 
-# Native admission mutant 1: the C file as main had it, is_static refused in plain_matches and plain_slot.
+# Native admission mutant 1: the C file as main had it, is_static refused in plain_matches and plain_slot. It has
+# no adamic_view_static_read either, so the object-field pins go red at the link too.
 cp scratch-s03p1/view_unions_untagged.c.main "$runtime"
 grep -q statics_admitted "$runtime" && { echo "FAIL native mutant 1 not applied"; ok=0; }
 want_red "native admission mutant 1 (view_unions_untagged.c at main)" go test -count=1 -run 'TestViewStaticClassAgreesWithNode|TestFX7P67' ./internal/oracle/ -v
@@ -55,6 +57,27 @@ restore "$runtime"
 mutate "$runtime" 'if (!contract->statics_admitted || plain_union_holds_callable(contracts, count, parent)) { goto complete; }' 'if (true || plain_union_holds_callable(contracts, count, parent)) { goto complete; }' || ok=0
 want_red "native admission mutant 2 (plain_matches refuses every class constructor)" go test -count=1 -run 'TestViewStaticClassAgreesWithNode|TestFX7P67' ./internal/oracle/ -v
 restore "$runtime"
+
+# The object-field road (ir.Program's ObjectReadContract): a class constructor at a field typed Inner itself.
+agreeing='TestViewStaticClassAgreesWithNode/(tagged_count|string_static|optional_absent)\.ts'
+# Native read mutant 1: adamic_view_static_read refuses every class constructor, admitted or not.
+mutate "$runtime" '    if (admitted && owned == count) { return; }' '    if (false) { return; }' || ok=0
+want_red "native read mutant 1 (adamic_view_static_read refuses every class constructor)" go test -count=1 -run "$agreeing" ./internal/oracle/ -v
+restore "$runtime"
+# Native read mutant 2: adamic_view_static_read admits every class constructor, owned statics or not.
+mutate "$runtime" '    if (admitted && owned == count) { return; }' '    if (true) { return; }' || ok=0
+want_red "native read mutant 2 (adamic_view_static_read admits every class constructor)" go test -count=1 -run 'TestViewStaticClassStops/inherited_field\.ts' ./internal/oracle/ -v
+restore "$runtime"
+# JavaScript read mutant 1: adamicViewField gets no statics, so it finds every class constructor a function.
+file=internal/javascript/view_fields.go
+mutate "$file" '	return ", [" + strings.Join(required, ", ") + "]"' '	return ""' || ok=0
+want_red "javascript read mutant 1 (no statics for adamicViewField)" go test -count=1 -run "$agreeing" ./internal/oracle/ -v
+restore "$file"
+# JavaScript read mutant 2: adamicViewField admits every class constructor, owned statics or not.
+file=internal/javascript/readiness.go
+mutate "$file" 'adamicViewObject(value) || statics !== undefined && adamicViewStatics(value, statics)' 'adamicViewObject(value) || adamicViewConstructor(value)' || ok=0
+want_red "javascript read mutant 2 (adamicViewField admits every class constructor)" go test -count=1 -run 'TestViewStaticClassStops/inherited_field\.ts' ./internal/oracle/ -v
+restore "$file"
 
 # Lower mutant: viewStaticsAdmitted reads an empty field list, so Named and Called turn true.
 mutate "$contracts" 'for _, field := range contract.Fields {' 'for _, field := range []ir.ViewFieldContract{} {' || ok=0

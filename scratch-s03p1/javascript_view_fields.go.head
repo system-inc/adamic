@@ -3,6 +3,7 @@ package javascript
 import (
 	"fmt"
 	"github.com/system-inc/adamic/internal/ir"
+	"strings"
 )
 
 type checkedViewReadHook func(*emitter, ir.Property, string) (string, bool)
@@ -33,7 +34,25 @@ func (e *emitter) checkedViewFieldAt(property ir.Property, object string) string
 	if expected == "" {
 		expected = map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map"}[property.Of]
 	}
-	return fmt.Sprintf("adamicViewField(%s, %s, %s, %d, %s, [%s])", object, quote(property.Name), quote(property.View), property.Of, quote(expected), e.values(property.ViewAllowed))
+	return fmt.Sprintf("adamicViewField(%s, %s, %s, %d, %s, [%s]%s)", object, quote(property.Name), quote(property.View), property.Of, quote(expected), e.values(property.ViewAllowed), e.viewStatics(property))
+}
+
+// viewStatics is adamicViewField's last argument where a checked read expects an object outside a union
+// whose contract admits a class constructor (ir.Program's ObjectReadContract, StaticsAdmitted): the fields
+// it requires, which one has to own as data statics to be the object read, as native's staticViewRead
+// admits it. Anywhere else it's empty, and adamicViewField finds a class constructor a function.
+func (e *emitter) viewStatics(property ir.Property) string {
+	contract, checked := e.program.ObjectReadContract(property)
+	if !checked || !contract.StaticsAdmitted {
+		return ""
+	}
+	required := []string{}
+	for _, field := range contract.Fields {
+		if !field.Optional {
+			required = append(required, quote(field.Name))
+		}
+	}
+	return ", [" + strings.Join(required, ", ") + "]"
 }
 
 // throughOptionalReceiver is a ?. read through a checked view: undefined from an absent receiver

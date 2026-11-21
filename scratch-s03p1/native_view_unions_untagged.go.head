@@ -31,6 +31,35 @@ func (e *emitter) staticViewWrite(statement ir.SetProperty, object string) {
 	e.line("adamic_view_static_write((const adamic_object *)%s, %s);", object, cString(statement.Name))
 }
 
+// staticViewRead stops value, a checked read's object, when it's a class constructor its object contract
+// doesn't admit (ir.Program's ObjectReadContract): a class constructor is an object here, so the read's
+// own kind test passes one, where the JavaScript backend's adamicViewField finds a function. Admitted, it
+// is the object read when it owns every required field as a data static, as plain_matches admits one.
+func (e *emitter) staticViewRead(property ir.Property, value string) {
+	contract, checked := e.program.ObjectReadContract(property)
+	if !checked {
+		return
+	}
+	required := []string{}
+	for _, field := range contract.Fields {
+		if !field.Optional {
+			required = append(required, cString(field.Name))
+		}
+	}
+	names := "NULL"
+	if contract.StaticsAdmitted && len(required) != 0 {
+		names = "(const char *const[]){" + strings.Join(required, ", ") + "}"
+	} else {
+		required = nil
+	}
+	expected := property.ViewType
+	if expected == "" {
+		expected = "object"
+	}
+	e.declarations = append(e.declarations, "#include \"view_unions_untagged.h\"")
+	e.line("adamic_view_static_read((const adamic_object *)%s, %t, %s, %d, %s, %s);", value, contract.StaticsAdmitted, names, len(required), cString(property.View), cString(expected))
+}
+
 func (e *emitter) viewUntaggedContracts() (string, int) {
 	if len(e.program.ViewContracts) == 0 {
 		return "NULL", 0
