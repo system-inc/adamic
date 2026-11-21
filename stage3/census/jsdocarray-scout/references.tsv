@@ -92,11 +92,12 @@ jsDoc	read	src/compiler/utilities.ts	12210	101	const child = isJavaScriptFile &&
 jsDoc	read	src/compiler/utilitiesPublic.ts	1259	21	let tags = node.jsDoc?.jsDocCache;
 jsDoc	write	src/compiler/utilitiesPublic.ts	1266	18	node.jsDoc ??= [];
 jsDoc	read	src/compiler/utilitiesPublic.ts	1267	18	node.jsDoc.jsDocCache = tags;
-jsDoc	write	src/compiler/utilitiesPublic.ts	2555	13	const { jsDoc } = node as JSDocContainer;
+jsDoc	read	src/compiler/utilitiesPublic.ts	2555	13	const { jsDoc } = node as JSDocContainer;
 jsDoc	read	src/services/codefixes/convertTypedefToType.ts	249	29	return flatMap(node.jsDoc, doc => doc.tags?.filter(tag => isJSDocTypedefTag(tag)));
 jsDoc	read	src/services/jsDoc.ts	496	75	const commentOwnerJsDoc = hasJSDocNodes(commentOwner) && commentOwner.jsDoc ? commentOwner.jsDoc : undefined;
 jsDoc	read	src/services/jsDoc.ts	496	96	const commentOwnerJsDoc = hasJSDocNodes(commentOwner) && commentOwner.jsDoc ? commentOwner.jsDoc : undefined;
 jsDoc	read	src/services/navigationBar.ts	568	30	forEach(node.jsDoc, jsDoc => {
+jsDoc	declaration	src/services/services.ts	383	12	public jsDoc?: JSDoc[];
 jsDoc	read	src/services/services.ts	521	38	forEach((node as JSDocContainer).jsDoc, processNode);
 jsDoc	read	src/services/services.ts	640	91	return this.kind === SyntaxKind.EndOfFileToken ? (this as Node as EndOfFileToken).jsDoc || emptyArray : emptyArray;
 jsDoc	read	src/services/services.ts	3508	38	for (const jsDoc of node.jsDoc!) {
@@ -113,6 +114,10 @@ jsDoc	read	src/services/textChanges.ts	744	85	this.replaceJSDocComment(sourceFil
 jsDoc	write	src/services/textChanges.ts	1203	15	jsDocNode.jsDoc = parent.jsDoc;
 jsDoc	read	src/services/textChanges.ts	1203	30	jsDocNode.jsDoc = parent.jsDoc;
 jsDoc	read	src/services/utilities.ts	2157	75	return n.kind === SyntaxKind.EndOfFileToken ? !!(n as EndOfFileToken).jsDoc : n.getWidth(sourceFile) !== 0;
+JSDocArray	type	src/compiler/types.ts	959	30	/** @internal */ jsDoc?: JSDocArray; // JSDoc that directly precedes this node
+JSDocArray	declaration	src/compiler/types.ts	963	18	export interface JSDocArray extends Array<JSDoc> {
+JSDocArray	type	src/compiler/utilities.ts	386	5	JSDocArray,
+JSDocArray	type	src/compiler/utilities.ts	4684	57	function filterOwnedJSDocTags(hostNode: Node, comments: JSDocArray) {
 jsDocCache	read	src/compiler/parser.ts	3171	47	if (canHaveJSDoc(node) && node.jsDoc?.jsDocCache) {
 jsDocCache	write	src/compiler/parser.ts	3173	24	node.jsDoc.jsDocCache = undefined;
 jsDocCache	declaration	src/compiler/types.ts	964	5	jsDocCache?: readonly JSDocTag[]; // Cache for getJSDocTags
