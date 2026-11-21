@@ -194,9 +194,10 @@ func (l *lowering) judgeCheckedViewReads(only func(ir.Property) bool) error {
 			return true
 		}
 		contract := program.ViewContractTypes[typeID]
-		family := ""
+		family, ownFamily := "", ""
 		if contract != 0 {
 			family = program.ViewContracts[contract-1].Unsupported
+			ownFamily = family
 		}
 		if receiverContract := program.ViewContractTypes[receiverTypeID]; family == "" && receiverContract != 0 {
 			family = program.ViewContracts[receiverContract-1].Unsupported
@@ -223,6 +224,12 @@ func (l *lowering) judgeCheckedViewReads(only func(ir.Property) bool) error {
 			}
 			if family == intersectionPastDepthBound {
 				refused = &NotYet{Where: where, What: "a checked view read of field " + field + " through an " + family}
+				return false
+			}
+			// Only the field's own contract says the field is callable: a family found through its receiver or
+			// by its name says nothing of this field, and keeps the refusal below.
+			if ownFamily == "callable" {
+				refused = &NotYet{Where: where, What: "a callable field " + field + " read through a checked view, which needs a check at the call (rulings.md:27)"}
 				return false
 			}
 			refused = &Refused{Where: where, What: "checked view read of field " + field + " with unsupported " + family + " contract", Fix: "prove or implement the " + family + " contract before reading this field"}
