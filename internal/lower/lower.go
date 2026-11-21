@@ -165,6 +165,8 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 	if err := lowering.collectViewedElements(modules); err != nil {
 		return nil, err
 	}
+	// Scratch for #jjxtwzs: before refuse and any body, so every representation asked after it reads the set.
+	lowering.collectArraysAdmitted(modules)
 	lowering.noteInheritance(modules)
 	if err := lowering.enumInitialization(modules); err != nil {
 		return nil, err
@@ -618,6 +620,14 @@ type lowering struct {
 	// elementKey is which element reads a checked view's element check is built for (view_arrays.go).
 	// Nil, in a lowering a test builds by hand, checks every read.
 	elementKey *viewElementKey
+	// Scratch for #jjxtwzs (arrays_admitted.go): the types an array may stand for at a checked view, held as
+	// ir.Union, with their symbols. Ready is set once the pre-pass ran; before it every type of the shape is in
+	// the set. Every is a walk that met a type instantiating itself deeper, which admits every such type.
+	arraysAdmittedTypes   map[*checker.Type]bool
+	arraysAdmittedSymbols map[*ast.Symbol]bool
+	arraysAdmittedReady   bool
+	arraysAdmittedEvery   bool
+	arraysAdmittedShapes  map[*checker.Type]bool
 	// objectIntersections are the intersections objectIntersection is proving, so a field that
 	// holds one of them again ends there.
 	objectIntersections map[*checker.Type]bool
