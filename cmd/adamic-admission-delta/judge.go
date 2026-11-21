@@ -19,6 +19,11 @@ type programRunner struct {
 	// nativeFlags follow -o <out> on every native build: --sanitize for the agreement mode, none for the delta, whose
 	// native build is the release one.
 	nativeFlags []string
+	// compileLimit bounds a native build, a compile, where limit bounds a run; a zero one is limit, as the delta has
+	// always run its release builds. The agreement mode's sanitized builds under limit's 10 s were each killed while
+	// the build cache was still making the runtime's archives, so on a box whose cache started cold none ever
+	// finished and every native observation timed out (#x0zh2gq: 954 of 954 on Lunatic, Golem and Home alike).
+	compileLimit time.Duration
 	// nativeEnv is added to the native program's environment, and only its: the agreement mode's
 	// ASAN_OPTIONS=detect_leaks=0, none for the delta.
 	nativeEnv    []string
@@ -71,12 +76,35 @@ func (runner *programRunner) observe(name, path string) (node, jsCompile, javasc
 	}
 	jsCompile.Stdout = ""
 	nativePath := filepath.Join(runner.scratch, name)
-	nativeCompile = execute(runner.headTree, runner.limit, runner.compiler, append([]string{"build", path, "-o", nativePath}, runner.nativeFlags...)...)
+	nativeCompile = execute(runner.headTree, runner.nativeCompileLimit(), runner.compiler, append([]string{"build", path, "-o", nativePath}, runner.nativeFlags...)...)
 	native = observation{Exit: -1, Error: "native compilation failed"}
 	if nativeCompile.Exit == 0 && nativeCompile.Error == "" {
 		native = executeWith(runner.headTree, runner.limit, runner.nativeEnv, nativePath)
 	}
 	return
+}
+
+// nativeCompileLimit is how long one native build may take.
+func (runner *programRunner) nativeCompileLimit() time.Duration {
+	if runner.compileLimit > 0 {
+		return runner.compileLimit
+	}
+	return runner.limit
+}
+
+// warmNative builds one program of a single line natively, under limit, before any program of the run builds, so
+// the build cache makes the runtime's archives once rather than under every program's own compile limit, where
+// a cold cache's first build can't finish and caches nothing. An error names what the build said.
+func (runner *programRunner) warmNative(limit time.Duration) error {
+	source := filepath.Join(runner.scratch, "warm.a")
+	if err := os.WriteFile(source, []byte("console.log('warm');\n"), 0600); err != nil {
+		return err
+	}
+	built := execute(runner.headTree, limit, runner.compiler, append([]string{"build", source, "-o", filepath.Join(runner.scratch, "warm")}, runner.nativeFlags...)...)
+	if built.Exit != 0 || built.Error != "" {
+		return fmt.Errorf("the native runtime didn't build in %s: exit %d %s %s", limit, built.Exit, built.Error, strings.TrimSpace(built.Stderr))
+	}
+	return nil
 }
 
 // jsonTypesTool is the JSON types tool, made once for every worker that asks: node.mjs looks for decodeJson or

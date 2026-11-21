@@ -400,6 +400,10 @@ diagnostic or times out on is named on a `compiler failure` line and in
 and a native build under the address and undefined-behavior sanitizers
 (`build <file> -o <out> --sanitize`), through the same runner as the delta's
 newly accepted programs, with the same one retry after a runtime timeout, and
+the native build under `--compile-timeout`, since it's a compile. Before any of
+them, one program of a single line builds natively with up to 15 minutes, so a
+cold build cache makes the runtime's sanitized archives once; if it fails, the
+run is void, naming what the build said. Then each accepted program runs and
 is judged by the same rules: it agrees, or it is a listed negative witness, a
 listed run-time stop or a ruled backend divergence, each exactly as ruled, or it
 disagrees. Two more judgments then count apart what would otherwise disagree:
