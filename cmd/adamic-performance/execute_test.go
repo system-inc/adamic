@@ -13,9 +13,9 @@ import (
 	"github.com/system-inc/adamic/internal/benchmark"
 )
 
-// fakeOffsets are each run's milliseconds over its runtime's base, by how many runs of that program the runtime has had:
-// out of order, so a spread that kept the first or the last round reads wrong, and with a median (12) that isn't their
-// mean (14), so a mean reads wrong too.
+// fakeOffsets are each run's milliseconds over its runtime's base, by how many runs of that program the runtime has
+// had: out of order, so a spread that kept the first or the last round reads wrong, and with a median (12) that isn't
+// their mean (14), so a mean reads wrong too.
 var fakeOffsets = []int64{30, 0, 12, 40}
 
 // A fakeClock stands in for the reaper and both runtimes: it records every command it's handed, and measures each a
