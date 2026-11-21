@@ -11,7 +11,9 @@ import (
 // header opens every Performance.jsonc. It is fixed, so a landing's diff shows only the numbers that moved.
 const header = "// Performance.jsonc: Adamic's performance at this commit, rewritten by the line in every landing commit (#hed1mkb).\n" +
 	"// Git history is the series. Never edit it by hand. Times are integer milliseconds: the median of the rounds, with\n" +
-	"// their min and max. cmd/adamic-performance writes it; nothing that builds or tests reads it.\n"
+	"// their min and max. cmd/adamic-performance writes it; nothing that builds or tests reads it.\n" +
+	"// An execute program's ratio is native over Node on the judged measure, below 1 meaning native is faster; the\n" +
+	"// judged measure is user time unless its judge says wall.\n"
 
 // schemaVersion is the file's schema, which a reader refuses when it is another.
 const schemaVersion = 1
@@ -29,8 +31,7 @@ type snapshot struct {
 	Tools      tools   `json:"tools"`
 	Note       string  `json:"note"`
 	Compile    compile `json:"compile"`
-	// Execute is the execute half's, carried through as it was read: this command doesn't measure it yet.
-	Execute json.RawMessage `json:"execute"`
+	Execute    execute `json:"execute"`
 }
 
 // A machine is what the numbers were measured on, since numbers without it aren't worth reading.
@@ -93,6 +94,40 @@ type phaseTimes struct {
 	Emit  int64 `json:"emit"`
 }
 
+// execute is the execute half: how long each program takes to run natively and on Node, and how much memory, over
+// rounds rounds. Both fields are empty only in a snapshot from before the execute half was measured, which reads as {}
+// and is written back as the same {}.
+type execute struct {
+	Rounds   int        `json:"rounds,omitempty"`
+	Programs executions `json:"programs,omitempty"`
+}
+
+// An execution is one program's execute numbers: the measure it is judged on, user or wall, as bench/suites.json
+// judges it; native's numbers and Node's; and ratio, native's judged median over Node's to two decimals (ratioOf).
+type execution struct {
+	Judge  string         `json:"judge"`
+	Native runtimeNumbers `json:"native"`
+	Node   runtimeNumbers `json:"node"`
+	Ratio  float64        `json:"ratio"`
+}
+
+// runtimeNumbers are one runtime's numbers for a program over the rounds: its wall time and its user time, the CPU
+// time it spent in user mode across every thread, in milliseconds, and the median of its peak resident sets in KiB.
+type runtimeNumbers struct {
+	Wall    spread `json:"wall"`
+	User    spread `json:"user"`
+	PeakKiB int64  `json:"peakKiB"`
+}
+
+// judged is the spread a program with judge is judged on: its wall time when judge is wall, and its user time
+// otherwise, since a parallel program spends more user time with more threads by design.
+func (numbers runtimeNumbers) judged(judge string) spread {
+	if judge == "wall" {
+		return numbers.Wall
+	}
+	return numbers.User
+}
+
 // A namedProgram is one entry of programs.
 type namedProgram struct {
 	Name    string
@@ -115,37 +150,105 @@ func (list programs) lookup(name string) (program, bool) {
 
 // MarshalJSON writes the programs as one object, keyed by name in their order.
 func (list programs) MarshalJSON() ([]byte, error) {
+	return orderedObject(len(list), func(index int) (string, any) { return list[index].Name, list[index].Program })
+}
+
+// UnmarshalJSON reads the object of programs in the order it holds them (readOrderedObject).
+func (list *programs) UnmarshalJSON(data []byte) error {
+	read := programs{}
+	err := readOrderedObject(data, func(name string, decoder *json.Decoder) error {
+		var value program
+		if err := decoder.Decode(&value); err != nil {
+			return err
+		}
+		read = append(read, namedProgram{Name: name, Program: value})
+		return nil
+	})
+	if err != nil {
+		return err
+	}
+	*list = read
+	return nil
+}
+
+// A namedExecution is one entry of executions.
+type namedExecution struct {
+	Name      string
+	Execution execution
+}
+
+// executions is the execute half's object of programs, kept in its order as programs is.
+type executions []namedExecution
+
+// lookup is the named program's execution, and whether there is one.
+func (list executions) lookup(name string) (execution, bool) {
+	for _, entry := range list {
+		if entry.Name == name {
+			return entry.Execution, true
+		}
+	}
+	return execution{}, false
+}
+
+// MarshalJSON writes the executions as one object, keyed by name in their order.
+func (list executions) MarshalJSON() ([]byte, error) {
+	return orderedObject(len(list), func(index int) (string, any) { return list[index].Name, list[index].Execution })
+}
+
+// UnmarshalJSON reads the object of executions in the order it holds them (readOrderedObject).
+func (list *executions) UnmarshalJSON(data []byte) error {
+	read := executions{}
+	err := readOrderedObject(data, func(name string, decoder *json.Decoder) error {
+		var value execution
+		if err := decoder.Decode(&value); err != nil {
+			return err
+		}
+		read = append(read, namedExecution{Name: name, Execution: value})
+		return nil
+	})
+	if err != nil {
+		return err
+	}
+	*list = read
+	return nil
+}
+
+// orderedObject writes count entries as one object, each keyed by its name in their order, entry giving the index'th
+// one's name and value.
+func orderedObject(count int, entry func(index int) (string, any)) ([]byte, error) {
 	var buffer bytes.Buffer
 	buffer.WriteByte('{')
-	for index, entry := range list {
+	for index := range count {
 		if index > 0 {
 			buffer.WriteByte(',')
 		}
-		name, err := encodeCompact(entry.Name)
+		key, value := entry(index)
+		name, err := encodeCompact(key)
 		if err != nil {
 			return nil, err
 		}
-		value, err := encodeCompact(entry.Program)
+		encoded, err := encodeCompact(value)
 		if err != nil {
 			return nil, err
 		}
 		buffer.Write(name)
 		buffer.WriteByte(':')
-		buffer.Write(value)
+		buffer.Write(encoded)
 	}
 	buffer.WriteByte('}')
 	return buffer.Bytes(), nil
 }
 
-// UnmarshalJSON reads the object of programs in the order it holds them. A name twice is an error, as is a field no
-// program has, so a file this command can't write back as it was is refused rather than read short.
-func (list *programs) UnmarshalJSON(data []byte) error {
+// readOrderedObject reads data, an object of programs, in the order it holds them, handing read each name with the
+// decoder at its value. A name twice is an error, as is a field no program has, so a file this command can't write
+// back as it was is refused rather than read short.
+func readOrderedObject(data []byte, read func(name string, decoder *json.Decoder) error) error {
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
 	if token, err := decoder.Token(); err != nil || token != json.Delim('{') {
 		return fmt.Errorf("programs isn't an object")
 	}
-	read := programs{}
+	seen := map[string]bool{}
 	for decoder.More() {
 		token, err := decoder.Token()
 		if err != nil {
@@ -155,20 +258,16 @@ func (list *programs) UnmarshalJSON(data []byte) error {
 		if !isName {
 			return fmt.Errorf("a program's name isn't a string: %v", token)
 		}
-		if _, seen := read.lookup(name); seen {
+		if seen[name] {
 			return fmt.Errorf("the program %q is named twice", name)
 		}
-		var value program
-		if err := decoder.Decode(&value); err != nil {
+		seen[name] = true
+		if err := read(name, decoder); err != nil {
 			return fmt.Errorf("program %q: %w", name, err)
 		}
-		read = append(read, namedProgram{Name: name, Program: value})
 	}
-	if _, err := decoder.Token(); err != nil {
-		return err
-	}
-	*list = read
-	return nil
+	_, err := decoder.Token()
+	return err
 }
 
 // encodeCompact is value as JSON with < > and & as they are: encoding/json's default escapes them, and generatedPath
@@ -183,12 +282,8 @@ func encodeCompact(value any) ([]byte, error) {
 	return bytes.TrimSuffix(buffer.Bytes(), []byte("\n")), nil
 }
 
-// encodeSnapshot is the file's bytes: the header, then the snapshot indented with tabs, then a newline. An empty
-// execute half is written as {}, never null, so the next run reads it back as the same object.
+// encodeSnapshot is the file's bytes: the header, then the snapshot indented with tabs, then a newline.
 func encodeSnapshot(value snapshot) ([]byte, error) {
-	if len(value.Execute) == 0 {
-		value.Execute = json.RawMessage("{}")
-	}
 	var buffer bytes.Buffer
 	buffer.WriteString(header)
 	encoder := json.NewEncoder(&buffer)

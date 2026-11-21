@@ -17,9 +17,9 @@
 // reported, the run least disturbed by everything else on the machine. Beside its wall time, each
 // run reports its user time, the CPU time it spent in user mode across every thread, so a parallel
 // program shows what its speed cost. Peak memory is the process's maximum resident set, from the
-// operating system, read on Linux through bench/reaper/reaper.c (buildReaper says why). The machine
-// and its load, before and after, are printed with the numbers, because numbers without them aren't
-// worth reading.
+// operating system, read on Linux through internal/benchmark's reaper (BuildReaper says why). The
+// machine and its load, before and after, are printed with the numbers, because numbers without them
+// aren't worth reading.
 //
 // A run that measured nothing is refused, and its cell says why instead of giving a number: one
 // that exited nonzero or printed nothing, one at or below the wall clock's resolution, and one no
@@ -31,11 +31,9 @@ package main
 import (
 	"bytes"
 	"context"
-	"crypto/sha256"
 	"errors"
 	"flag"
 	"fmt"
-	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -44,10 +42,9 @@ import (
 	"slices"
 	"strconv"
 	"strings"
-	"syscall"
 	"time"
 
-	"github.com/system-inc/adamic/internal/native_runtime"
+	"github.com/system-inc/adamic/internal/benchmark"
 )
 
 // A runtime is one way to run a program.
@@ -67,7 +64,7 @@ type program struct {
 }
 
 // A measurement is one run's wall time, user and system time and peak resident memory, or why there
-// isn't one.
+// isn't one, as benchmark.Run measures it.
 type measurement struct {
 	elapsed time.Duration
 	user    time.Duration // CPU time in user mode, summed over every thread
@@ -77,8 +74,8 @@ type measurement struct {
 	failure string
 }
 
-// reaper is bench/reaper/reaper.c built, which run starts every program through, or empty when there
-// is none and run starts the program itself.
+// reaper is benchmark.BuildReaper's binary, which run starts every program through, or empty when
+// there is none and run starts the program itself.
 var reaper string
 
 var countsLine = regexp.MustCompile(`adamic: counts: allocations (\d+) frees (\d+) retains (\d+) releases (\d+) peak (\d+) regions (\d+)`)
@@ -145,7 +142,7 @@ func main() {
 		fail(err)
 	}
 	defer os.RemoveAll(work)
-	if reaper, err = buildReaper(directory, work); err != nil {
+	if reaper, err = benchmark.BuildReaper(work); err != nil {
 		fail(err)
 	}
 
@@ -331,17 +328,13 @@ func findPrograms(directory string, only string) ([]program, error) {
 			if err != nil {
 				return nil, err
 			}
-			programs = append(programs, program{name: name, source: source, adamic: importsAdamic(string(contents))})
+			programs = append(programs, program{name: name, source: source, adamic: benchmark.ImportsAdamic(string(contents))})
 		}
 	}
 	if len(programs) == 0 {
 		return nil, errors.New("no benchmarks to run")
 	}
 	return programs, nil
-}
-
-func importsAdamic(contents string) bool {
-	return strings.Contains(contents, "from 'adamic'") || strings.Contains(contents, `from "adamic"`)
 }
 
 // availableRuntimes is native and Node always, and Bun when it's installed.
@@ -361,7 +354,7 @@ func availableRuntimes(threads, modules string) []runtimeKind {
 		}
 	}
 	runtimes = append(runtimes, runtimeKind{name: "node", command: func(program program) []string {
-		return nodeCommand(program, filepath.Dir(filepath.Dir(program.source)))
+		return benchmark.NodeCommand(program.source, program.adamic, filepath.Dir(filepath.Dir(program.source)))
 	}})
 	if _, err := exec.LookPath("bun"); err == nil {
 		runtimes = append(runtimes, runtimeKind{name: "bun", environment: []string{"NODE_PATH=" + modules}, command: func(program program) []string {
@@ -371,176 +364,18 @@ func availableRuntimes(threads, modules string) []runtimeKind {
 	return runtimes
 }
 
-// nodeCommand runs a program with Node: a .a source, or one importing 'adamic', through the
-// repository's oracle runner, which resolves 'adamic' to the independent sequential shim.
-func nodeCommand(program program, root string) []string {
-	if program.adamic || filepath.Ext(program.source) == ".a" {
-		return []string{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root, "oracle", "node.mjs"), program.source}
-	}
-	return []string{"node", program.source}
-}
-
-// buildReaper builds bench/reaper/reaper.c into work, on Linux, for run to start every program through.
-// Go starts a child with clone(CLONE_VFORK|CLONE_VM), and Linux's exec folds the old memory's high-water
-// resident set into the new program's maximum (fs/exec.c, exec_mmap), so bench's own resident set was a
-// floor under every program's peak: a bench holding 250 MB of inputs read 1321.4 MB for every program,
-// one in C that only prints among them (J-wme5jp2). Through the reaper, the old memory is the reaper's,
-// a few hundred kilobytes. The fold is Linux's exec, so elsewhere it builds nothing and run starts the
-// program itself, its peak read by peakResident as always. directory is bench/, which every caller
-// already holds: finding it through git again would fail where the tree is no checkout, as Loom's units
-// are (block 3183).
-func buildReaper(directory, work string) (string, error) {
-	if runtime.GOOS != "linux" {
-		return "", nil
-	}
-	// The host's own triple, named as every compile at a runner names its target (#5xsd2ha).
-	platform, err := native_runtime.ResolveTarget(native_runtime.Options{})
-	if err != nil {
-		return "", err
-	}
-	binary := filepath.Join(work, "reaper")
-	if output, err := exec.Command("clang", "--target="+platform.Target, "-O2", "-o", binary, filepath.Join(directory, "reaper", "reaper.c")).CombinedOutput(); err != nil {
-		return "", fmt.Errorf("building bench/reaper/reaper.c: %v\n%s", err, output)
-	}
-	return binary, nil
-}
-
 // run runs a command to the end, and measures it.
 func run(command []string, timeout time.Duration, settings ...string) measurement {
 	return runFrom(command, "", timeout, settings...)
 }
 
 // runFrom is run with a file on standard input, as the Benchmarks Game hands a program its input
-// (`< input.txt`), or with none when input is empty. With a reaper, the command runs through it, and its
-// user and system time and peak come from the line the reaper writes to descriptor 3; the wall time is
-// always bench's own clock, and a timeout kills the reaper, which takes the program with it.
+// (`< input.txt`), or with none when input is empty. It measures through benchmark.Run, with the reaper
+// when there is one, and this process's environment as benchmark.Environment keeps it, with settings
+// over it.
 func runFrom(command []string, input string, timeout time.Duration, settings ...string) measurement {
-	ctx, cancel := context.WithTimeout(context.Background(), timeout)
-	defer cancel()
-	var stdin *os.File
-	if input != "" {
-		file, err := os.Open(input)
-		if err != nil {
-			return measurement{failure: fmt.Sprintf("its input can't be opened: %v", err)}
-		}
-		defer file.Close()
-		stdin = file
-	}
-	var usageRead, usageWrite *os.File
-	if reaper != "" {
-		var err error
-		usageRead, usageWrite, err = os.Pipe()
-		if err != nil {
-			return measurement{failure: fmt.Sprintf("failed: a pipe for the reaper: %v", err)}
-		}
-		defer usageRead.Close()
-		command = append([]string{reaper, "3"}, command...)
-	}
-	process := exec.CommandContext(ctx, command[0], command[1:]...)
-	process.Env = append(environment(), settings...)
-	if stdin != nil {
-		process.Stdin = stdin
-	}
-	var stdout, stderr bytes.Buffer
-	process.Stdout = &stdout
-	process.Stderr = &stderr
-	if usageWrite != nil {
-		process.ExtraFiles = []*os.File{usageWrite}
-	}
-	start := time.Now()
-	err := process.Start()
-	if usageWrite != nil {
-		// The reaper has its own copy now; with this one closed, the pipe ends when the reaper does.
-		usageWrite.Close()
-	}
-	if err == nil {
-		err = process.Wait()
-	}
-	elapsed := time.Since(start)
-	if ctx.Err() != nil {
-		return measurement{failure: "did not finish in " + timeout.String()}
-	}
-	if err != nil {
-		return measurement{failure: fmt.Sprintf("failed: %v %s", err, firstLine(stderr.String()))}
-	}
-	if strings.TrimSpace(stdout.String()) == "" {
-		return measurement{failure: "printed nothing"}
-	}
-	if usageRead == nil {
-		return measurement{elapsed: elapsed, user: process.ProcessState.UserTime(), system: process.ProcessState.SystemTime(), peak: peakResident(process.ProcessState), stdout: keptOutput(stdout.Bytes())}
-	}
-	line, err := io.ReadAll(usageRead)
-	if err != nil {
-		return measurement{failure: fmt.Sprintf("failed: reading the reaper's usage line: %v", err)}
-	}
-	user, system, peak, err := reaped(string(line))
-	if err != nil {
-		return measurement{failure: "failed: " + err.Error()}
-	}
-	return measurement{elapsed: elapsed, user: user, system: system, peak: peak, stdout: keptOutput(stdout.Bytes())}
-}
-
-// reaped reads the reaper's line, "<user microseconds> <system microseconds> <maxrss kilobytes>\n", as
-// the program's user and system time and its peak resident set in bytes. A line missing or cut short is
-// an error, never a zero.
-func reaped(line string) (time.Duration, time.Duration, int64, error) {
-	if line == "" {
-		return 0, 0, 0, errors.New("the reaper wrote no usage line")
-	}
-	fields := strings.Fields(line)
-	if len(fields) != 3 || !strings.HasSuffix(line, "\n") {
-		return 0, 0, 0, fmt.Errorf("the reaper's usage line %q isn't three numbers and a newline", line)
-	}
-	numbers := [3]int64{}
-	for index, field := range fields {
-		number, err := strconv.ParseInt(field, 10, 64)
-		if err != nil || number < 0 {
-			return 0, 0, 0, fmt.Errorf("the reaper's usage line %q has %q, which isn't a count", line, field)
-		}
-		numbers[index] = number
-	}
-	return time.Duration(numbers[0]) * time.Microsecond, time.Duration(numbers[1]) * time.Microsecond, numbers[2] * 1024, nil
-}
-
-// outputKeptWhole is the most of a run's standard output kept as it was printed.
-const outputKeptWhole = 64 << 10
-
-// keptOutput is what a measurement keeps of a run's standard output, which is only ever compared for
-// equality and quoted by its first line: the output itself when it's small, and past outputKeptWhole
-// its first line, its length and its sha256, which compare equal exactly when the outputs do. A run
-// keeps every sample's measurements, and holdout/fasta prints 254 MB a run, so keeping it whole held
-// tens of gigabytes over one comparison.
-func keptOutput(output []byte) string {
-	if len(output) <= outputKeptWhole {
-		return string(output)
-	}
-	return fmt.Sprintf("%s\n(%d bytes in all, sha256 %x)\n", firstLine(string(output)), len(output), sha256.Sum256(output))
-}
-
-// environment is this process's, without what would change how a runtime runs: BUN_OPTIONS
-// (a shell that sets --smol makes Bun trade speed for a smaller heap) and NODE_OPTIONS.
-func environment() []string {
-	kept := []string{}
-	for _, variable := range os.Environ() {
-		if strings.HasPrefix(variable, "BUN_OPTIONS=") || strings.HasPrefix(variable, "NODE_OPTIONS=") {
-			continue
-		}
-		kept = append(kept, variable)
-	}
-	return kept
-}
-
-// peakResident is the process's maximum resident set in bytes: Linux reports it in kilobytes, and
-// macOS in bytes.
-func peakResident(state *os.ProcessState) int64 {
-	usage, isUsage := state.SysUsage().(*syscall.Rusage)
-	if !isUsage {
-		return 0
-	}
-	if runtime.GOOS == "darwin" {
-		return usage.Maxrss
-	}
-	return usage.Maxrss * 1024
+	result := benchmark.Run(reaper, command, input, timeout, append(benchmark.Environment(), settings...))
+	return measurement{elapsed: result.Elapsed, user: result.User, system: result.System, peak: result.Peak, stdout: result.Stdout, failure: result.Failure}
 }
 
 // bestOf is the fastest finished run, or the failure when none finished.
@@ -612,7 +447,7 @@ func counts(program program, timeout time.Duration) string {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 	process := exec.CommandContext(ctx, program.counted)
-	process.Env = environment()
+	process.Env = benchmark.Environment()
 	if program.adamic {
 		process.Env = append(process.Env, "ADAMIC_THREADS=1")
 	}
