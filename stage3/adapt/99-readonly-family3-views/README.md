@@ -29,7 +29,7 @@ as `unknown` from `noopOnDelete`, so each map is seen as a `Map<..., unknown>`
 that could take any value. Each call gets its map's own key and value type as
 explicit type arguments.
 
-Together the two roads clear 69 of the 108 road 1 and 2 sites in family 3.
+Together the two roads clear 65 of the 108 road 1 and 2 sites in family 3.
 The causes, their sites and the reasoning behind each are in #k8ed1f2's cause
 list (`k8ed1f2-causes.md`) and edit list (`edits-roads12.md`).
 
@@ -83,13 +83,13 @@ on its first slot; the slots under it clear them together.
 | 8 | the same, `state.buildInfoCache` | none | `<ResolvedConfigFilePath, BuildInfoCacheEntry>` | tsbuildPublic.ts:682:32 |
 | 8 | the same, `state.outputTimeStamps` | none | `<ResolvedConfigFilePath, Map<Path, Date>>` | tsbuildPublic.ts:683:32 |
 | 8 | the same, `state.lastCachedPackageJsonLookups` | none | `<ResolvedConfigFilePath, Set<string> \| undefined>` | tsbuildPublic.ts:684:32 |
-| 14 | types.ts `TypeChecker.getDiagnostics`, return (`@internal` member) | `Diagnostic[]` | `readonly Diagnostic[]` | 4: checker.ts:49753:24, 49759:63, 49765:62, 49768:20 |
+| 14 | types.ts `TypeChecker.getDiagnostics`, return (`@internal` member) | `Diagnostic[]` | `readonly Diagnostic[]` | 2: checker.ts:49753:24, 49768:20. Still stopped: 49759:63, 49765:62. |
 | 14 | checker.ts `getDiagnostics`, return | `Diagnostic[]` | `readonly Diagnostic[]` | with the rows above |
 | 14 | checker.ts `getDiagnosticsWorker`, return | `Diagnostic[]` | `readonly Diagnostic[]` | with the rows above |
 | 15 | builder.ts `IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo`'s `signature` | `string \| false \| undefined` | the same, `readonly` | 3: builder.ts:1337:16, 1344:13, 1346:17 |
 | 16 | watchUtilities.ts `createCachedDirectoryStructureHost`, `host` | `DirectoryStructureHost` | `Readonly<DirectoryStructureHost>` | watchPublic.ts:463:120 |
 | 16 | program.ts `parseConfigHostFromCompilerHostLike`, `host` | `(CompilerHost \| ProgramHost<T>) & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter; }` | `Readonly<...>` of the same | watchPublic.ts:465:69 |
-| 17 | checker.ts `discriminateTypeByDiscriminableItems`, `discriminators` | `(readonly [() => Type, __String])[]` | `readonly (readonly [() => Type, __String])[]` | 3: checker.ts:32666:21, 32690:21, 53778:101 |
+| 17 | checker.ts `discriminateTypeByDiscriminableItems`, `discriminators` | `(readonly [() => Type, __String])[]` | `readonly (readonly [() => Type, __String])[]` | 1: checker.ts:53778:101. Still stopped: 32666:21, 32690:21. |
 | 21 | utilities.ts `createDiagnosticCollection`'s `getDiagnostics`, the implementation (third of three), return | `Diagnostic[]` | `readonly Diagnostic[]` | 2: utilities.ts:6125:20, two reasons at one position |
 | 23 | core.ts `not`, `T`'s constraint | `unknown[]` | `readonly unknown[]` | 2: checker.ts:45156:68, 49042:113 |
 | 26 | watchUtilities.ts `closeFileWatcherOf`, `T`'s constraint | `{ watcher: FileWatcher; }` | `{ readonly watcher: FileWatcher; }` | 2: watchUtilities.ts:527:32, 534:47 |
@@ -102,6 +102,13 @@ on its first slot; the slots under it clear them together.
 | 45 | program.ts `getReferencedFileLocation`, `ref` | `ReferencedFile` | `Readonly<ReferencedFile>` | 1: programDiagnostics.ts:191:71 |
 | 46 | resolutionCache.ts `invalidateResolutions`, `resolutions` | `Set<ResolutionWithFailedLookupLocations> \| Map<string, ResolutionWithFailedLookupLocations> \| undefined` | `ReadonlySet<...> \| ReadonlyMap<string, ...> \| undefined` | 1: resolutionCache.ts:1576:39 |
 | 47 | checker.ts `getObjectTypeInstantiation`'s `const allDeclarations` | none, inferred | `readonly Node[]` | 1: checker.ts:20774:140 |
+
+Round-four documentation amendment for #k8ed1f2. Performance’s J-ntvcw70
+census at f881d0d5 found four sites still stopping. The rows above remove
+them from the cleared column. The follow-up
+[99-readonly-family3-views-3](../99-readonly-family3-views-3/README.md) refuses
+them: their `concatenate` overload can hand back an array completions write into,
+so no readonly view of it is true. They are listed under Left out.
 
 Each row is one slot, and `adapt.cjs` lists the same 34. Where a cell says `...`, the elided text is the upstream cell's, unchanged.
 
@@ -128,7 +135,7 @@ name, and the third edits sys.ts.
 
 ## Left out
 
-39 of family 3's 108 road 1 and 2 sites, by cause:
+43 of family 3's 108 road 1 and 2 sites, by cause:
 
 - Cause 6, 4 sites (builder.ts:674:25, 892:21, 899:21 and 2075:21), the
   `state` parameters of `addToAffectedFilesPendingEmit` and
@@ -136,7 +143,9 @@ name, and the third edits sys.ts.
   (`state.affectedFilesPendingEmit = ...`, `??=`,
   `state.programEmitPending = ...`), so `Readonly<>` would not type-check.
   `Omit<BuilderProgramState, "program">` would be true there; it was left for a
-  multi-line edit of its own.
+  multi-line edit of its own, and
+  [99-readonly-family3-views-3](../99-readonly-family3-views-3/README.md) builds
+  it.
 - Cause 12, 5 sites (executeCommandLine.ts:824:9, 859:66, 860:44, 890:62,
   891:39), the `options` parameters of `updateReportDiagnostic`,
   `shouldBePretty`, `createReportErrorSummary` and `createWatchStatusReporter`.
@@ -155,6 +164,15 @@ name, and the third edits sys.ts.
   overloads, getSupportedExtensionsWithJsonIfResolveJsonModule's parameters and
   returns, commandLineParser.ts's two `extensions` parameters and
   services/stringCompletions.ts's return all stay upstream's. The same census.
+- Causes 14 and 17, 4 sites. Cause 14 is at checker.ts:49759:63 and
+  49765:62. Cause 17 is at checker.ts:32666:21 and 32690:21. All four
+  use the same internal `concatenate` overload (core.ts:656). Its
+  implementation returns the second input by identity when the first
+  array is empty and the second is nonempty (core.ts:674). The completion
+  code assigns that result to `symbols` (services/completions.ts:4030) and pushes
+  into it (services/completions.ts:4055), so this overload can expose its second
+  input to a write through the returned array. All positions are from
+  the adapted tree. Census: J-ntvcw70 at main f881d0d5.
 - Cause 16, 2 sites (watchPublic.ts:464:60 and 464:92), the
   `cachedDirectoryStructureHost || host` and the `host` on the initializer line
   of `createWatchProgram`'s local
@@ -187,7 +205,8 @@ name, and the third edits sys.ts.
 - Cause 21, 1 site (utilities.ts:6075:27), `lookup`'s local `diagnostics`.
   By line it reads the same as `add`'s, which `insertSorted` writes. By name
   `lookup`'s is reachable on its own; it was not in the 54 J-9z42vnh
-  certified.
+  certified. [99-readonly-family3-views-3](../99-readonly-family3-views-3/README.md)
+  builds it, as a sorted readonly view.
 - Cause 32, 1 site (resolutionCache.ts:652:9),
   `ResolutionCache.directoryWatchesOfFailedLookups`. `ReadonlyMap` there breaks
   the adapted tree's test build (J-vw1mey7, hereby build-tests):
@@ -203,6 +222,8 @@ name, and the third edits sys.ts.
   `resolutionStack: string[]`, two declarations on the same line text, so
   neither was unique by line. By name both are reachable; they were not in
   the 54 J-9z42vnh certified.
+  [99-readonly-family3-views-3](../99-readonly-family3-views-3/README.md)
+  builds it, as an amendment to 52-json-values.
 
 ## Writes elsewhere
 
@@ -288,7 +309,7 @@ The 30 that stop for a different reason are cause 4's nine in builder.ts
 readonly `tracker` it would make writable), and three host sites of cause 16's
 parameters (program.ts:1584 and 5117, tsbuildPublic.ts:501). Each stopped
 before. The scan stops at its usual `lowering.declareModule` boundary, so 56 is
-a floor for the 69 listed sites; the daily meter's census is the full count.
+a floor for the 65 listed sites; the daily meter's census is the full count.
 
 ## Mutants
 

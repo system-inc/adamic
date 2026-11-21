@@ -125,3 +125,12 @@ ADAMIC_TYPESCRIPT_SOURCE=UPSTREAM go test ./stage3/lane -run '^TestJSONValues52(
 ```
 
 Use an absolute NODE_PATH when the working directory differs. The control and final oracle runs are serial, all runners, no filter, four workers, and no concurrent setup, build or measurement workload. Logs, diagnostic streams, hashes and oracle reports belong on branch `typescript/json-values-evidence`, under this directory's evidence subdirectory. They are deliberately excluded from the adaptation branch.
+
+## Family 3 resolution stack amendment
+
+For #k8ed1f2 cause 43, the existing `parseConfig` rule emits
+`resolutionStack: readonly string[]`. The same batch checks and changes
+`getExtendedConfig`'s parameter because it forwards the stack back to
+`parseConfig`. The original `parseConfig` input pin still expects
+`string[]` at this stage. See [Premises](../99-readonly-family3-views-3/README.md#premises)
+for the readonly view and its forwarding calls.
