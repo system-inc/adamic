@@ -596,3 +596,26 @@ func TestAgreementGivesNodeTheJSONTypesTool(t *testing.T) {
 		t.Fatalf("plain.a's Node run: %+v, want it to print unset", r.Disagreements)
 	}
 }
+
+// A native build is a compile, so it runs under --compile-timeout, not the runtime's --timeout: slow.a's build sleeps
+// past the runtime limit and well inside the compile limit, and agrees. Before any program builds, one program of a
+// single line builds natively, so a cold build cache makes the runtime's archives once; when that build fails, the run
+// is void, naming it, and no program is judged as if its own build had failed (#x0zh2gq: every native build of a cold
+// box timed out under the runtime limit). Mutants (agreement.mutants.md): the native build under the runtime limit,
+// so slow.a is void; the warm-up's failure ignored, so the run reads every program as failing to build natively.
+func TestAgreementNativeBuildsUnderTheCompileLimit(t *testing.T) {
+	t.Parallel()
+	dir, sha, head := agreementFixture(t, []agreementSource{{"corpus/slow.a", "print: 42\nnative: echo 42\n"}})
+	slow := filepath.Join(t.TempDir(), "slow-adamic")
+	writeExecutable(t, slow, "#!/bin/sh\nif [ \"$1\" = build ]; then sleep 2; fi\nexec "+head+" \"$@\"\n")
+	o, r := agreementCommand(t, dir, sha, slow, "--timeout", "1s", "--compile-timeout", "20s")
+	if o.Exit != 0 || r.Agreeing != 1 || r.Void {
+		t.Fatalf("exit %d, %+v, want slow.a agreeing under the compile limit: %s", o.Exit, r, o.Stderr)
+	}
+	cold := filepath.Join(t.TempDir(), "cold-adamic")
+	writeExecutable(t, cold, "#!/bin/sh\ncase \"$2\" in */warm.a) echo 'adamic: the runtime archives failed to build' >&2; exit 1;; esac\nexec "+head+" \"$@\"\n")
+	o, r = agreementCommand(t, dir, sha, cold)
+	if o.Exit != 3 || !r.Void || !strings.Contains(r.VoidReason, "the native runtime didn't build") || r.Disagreeing != 0 {
+		t.Fatalf("exit %d, %+v, want the run void on its warm-up's failure: %s", o.Exit, r, o.Stderr)
+	}
+}
