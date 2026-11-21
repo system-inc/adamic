@@ -129,3 +129,34 @@ const raw = { kind: 80, text: "x" };
 const n: Node = raw;
 if (isIdent(n)) console.log(n.text);
 `
+
+// A function constructor's body is the one road a `this.name = value` statement takes outside a class or a
+// function's own statements (Compiler's gate on #5qx6qv4): its instance is born as a checked view of Nd, so
+// its write of flowNode, a field that may hold undefined, is Rule C's, and the synthesized constructor lowers
+// its body through lowerFunction and statement (function_constructor.go), which marks each statement before
+// lowering it. So the held stop fires at the constructor's write, as the view walk gave it before. Mutant: the
+// mark in statements.go taken out, and the row no longer stops there.
+func TestSourceSlotPendingFunctionConstructorWriteStops(t *testing.T) {
+	t.Parallel()
+	judgeSourceSlotPending(t, []sourceSlotPendingRow{
+		{"function constructor", sourceSlotPendingConstructor, "main.ts:6:5: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet"},
+	})
+}
+
+const sourceSlotPendingConstructor = `interface FlowNode { readonly id: number }
+interface Nd { kind: number; flowNode?: FlowNode | undefined }
+interface Allocator { getNodeConstructor(): new (kind: number) => Nd }
+function NodeObject(this: Nd, kind: number): void {
+    this.kind = kind;
+    this.flowNode = undefined;
+}
+const objectAllocator: Allocator = {
+    getNodeConstructor: () => NodeObject as any,
+};
+let NodeConstructor: (new (kind: number) => Nd) | undefined;
+function createBaseNode(kind: number): Nd {
+    return new (NodeConstructor || (NodeConstructor = objectAllocator.getNodeConstructor()))(kind);
+}
+const first = createBaseNode(7);
+console.log(String(first.kind));
+`
