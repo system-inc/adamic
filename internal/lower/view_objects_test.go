@@ -76,8 +76,10 @@ func TestViewObjectWritesNeedSourceCertificate(t *testing.T) {
 		t.Fatalf("raw.child.other's reads not found: %v", reads)
 	}
 	_, err = lowerSourceAs(t, source(`({child:view.child}={child:{ready:true}});`), ".ts")
-	if err == nil || !strings.Contains(err.Error(), "source-slot type certificate") {
-		t.Fatalf("a destructuring write through the view: want the certificate's stop, got %v", err)
+	// Since #5qx6qv4 the certificate's stop is held for the write's statement, and the invariance rule answers
+	// the destructuring literal first (4:54); the write still never lowers.
+	if err == nil || !strings.Contains(err.Error(), "adamic/invariant-mutable") {
+		t.Fatalf("a destructuring write through the view: want it stopped, got %v", err)
 	}
 }
 
