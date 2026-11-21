@@ -10,6 +10,22 @@ step() { name=$1; shift; "$@" > "$TMPDIR/step.log" 2>&1; code=$?; if [ $code -eq
 want_red() { name=$1; shift; "$@" > "$TMPDIR/step.log" 2>&1; code=$?; if [ $code -ne 0 ]; then echo "PASS $name: red, as wanted"; grep -E "^\s+--- FAIL|error:|disagree|exit|StaticsAdmitted" "$TMPDIR/step.log" | head -16; else echo "FAIL $name: green, a survivor"; ok=0; fi; }
 # A road no pin may take (which one a write takes is lowering's CheckedField): red is reported, green is a GAP.
 road() { name=$1; shift; "$@" > "$TMPDIR/step.log" 2>&1; code=$?; if [ $code -ne 0 ]; then echo "PASS $name: red"; grep -E "^\s+--- FAIL" "$TMPDIR/step.log" | head -8; else echo "GAP $name: green, no pin takes this road"; fi; }
+show() { grep -v "gate cache\|^=== " "$TMPDIR/step.log" | head -80; }
+# mutate file anchor replacement: one fixed-string line edit, refused unless the anchor is there exactly once.
+mutate() { python3 -I - "$1" "$2" "$3" << 'PYTHON'
+import sys
+path, anchor, replacement = sys.argv[1:]
+text = open(path).read()
+if text.count(anchor) != 1:
+    sys.exit('mutant anchor appears %d times in %s' % (text.count(anchor), path))
+open(path, 'w').write(text.replace(anchor, replacement))
+PYTHON
+}
+# restore file: put head back from its saved copy and prove it.
+restore() { cp "scratch-s03p1/$(basename "$(dirname "$1")")_$(basename "$1").head" "$1"; if cmp -s "scratch-s03p1/$(basename "$(dirname "$1")")_$(basename "$1").head" "$1"; then echo "PASS restored $1"; else echo "FAIL restore $1"; ok=0; fi; }
+runtime=internal/native_runtime/c/view_unions_untagged.c
+contracts=internal/lower/view_contracts.go
+writes='TestViewStaticClassStops/(write|write_value_order|logical|compound|increment)\.ts'
 
 # Native admission mutant 1: the C file as main had it, is_static refused in plain_matches and plain_slot. It has
 # no adamic_view_static_read either, so the object-field pins go red at the link too.
