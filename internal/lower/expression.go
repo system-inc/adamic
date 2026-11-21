@@ -2573,7 +2573,7 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, "a function value returning "+typeName(returns))
 	}
 	// A call through a checked function-type claim checks it (predicates_function_type.go).
-	value, err := l.checkedFunctionTypeCall(node, closure, ir.CallClosure{Closure: closure, Arguments: arguments, Spread: spread, FunctionType: int(l.concrete(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression)).Id()), Returns: returns})
+	value, err := l.checkedFunctionTypeCall(node, closure, ir.CallClosure{Closure: closure, Arguments: arguments, Spread: spread, FunctionType: int(l.concrete(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression)).Id()), Returns: returns, ArgumentTypeIDs: l.argumentTypeIDs(node.AsCallExpression().Arguments.Nodes)})
 	if err != nil {
 		return nil, err
 	}
