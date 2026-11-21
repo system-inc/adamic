@@ -18,7 +18,8 @@ import (
 //     recorded for the name f (recordSourceSlotWrite). Any other write keeps view's stop, and so does
 //     one to toString or valueOf, which ToPrimitive reads by name after the reads are judged. One to a
 //     field that may hold undefined or null is NotYet, since the checked write can't change its slot's
-//     representation.
+//     representation. A field held other than as an object keeps the plain checked write, and a write that
+//     can store undefined or null into one whose type holds either is NotYet too (sourceSlotScalarWrite).
 //  2. What the slot can hold, W, is every type a view wrote to f and every type a declaration of f
 //     gives it, undefined included where one is optional (sourceSlotDeclared): an absent slot or one an
 //     initializer filled holds a value no view write records (Compiler's condition, binding).
@@ -126,6 +127,74 @@ func (l *lowering) recordSourceSlotWrite(target *ast.Node, field *ast.Symbol, st
 	}
 	l.sourceSlotWrites = append(l.sourceSlotWrites, sourceSlotWrite{target: target, name: target.Name().Text(), written: written, stop: stop})
 	return nil
+}
+
+// sourceSlotNullishWrite is the words of Rule C's scalar arm (sourceSlotScalarWrite).
+const sourceSlotNullishWrite = "writing undefined or null into a checked field, whose checked write can't change the representation its slot holds"
+
+// sourceSlotScalarWrite is Rule C's arm for a field held other than as an object, a write to which takes the
+// plain checked write rather than recordSourceSlotWrite (#f95gkw2). A write that can store undefined or null
+// into a field whose type holds either is NotYet, for two reasons that are one hazard. The checked write
+// (object.c's adamic_object_view_write, the JavaScript backend's adamicViewWrite) stops a write that changes
+// the representation the slot holds, so `n.note = undefined` into a slot a literal filled with a string, or
+// `n.count = undefined` into a plain number's, stops a program Node runs. And a value that may be undefined
+// but isn't the literal passes that check as the slot's own representation, so another alias that declares
+// the field without undefined then reads a null string where it expects one, which native code follows into
+// the null (a segfault where Node throws). What the slot holds is fixed by every write before this one, so no
+// compile-time proof of it is asked; any written value whose type may hold undefined or null stops, failing
+// closed on any, unknown and an open type parameter (mayHoldNull). A value that can't be either writes as
+// before, and so does a write to a field whose type holds neither. Of a compound write only `??=`, `||=` and
+// `&&=` can store their right side, and arithmetic or `++`/`--` stores a number or a string; a write whose
+// value this can't name (a destructuring or a for-in or for-of target) stops where the field may hold either.
+func (l *lowering) sourceSlotScalarWrite(target *ast.Node, field *ast.Symbol) error {
+	// The indexed walk asks every keyed access (viewSiteAccesses), a read among them, and a read writes nothing.
+	if !ast.IsAssignmentTarget(target) {
+		return nil
+	}
+	declared := l.checker.GetTypeOfSymbol(field)
+	if field.Flags&ast.SymbolFlagsOptional == 0 && !l.includesUndefined(declared) && !l.includesNull(declared) {
+		return nil
+	}
+	written, named := l.sourceSlotWrittenType(target)
+	if !named || l.includesUndefined(written) || l.mayHoldNull(written) {
+		return l.notYet(target, sourceSlotNullishWrite)
+	}
+	return nil
+}
+
+// sourceSlotTargetWrapper says whether an expression of kind holds an assignment target as the same slot.
+func sourceSlotTargetWrapper(kind ast.Kind) bool {
+	switch kind {
+	case ast.KindParenthesizedExpression, ast.KindNonNullExpression, ast.KindAsExpression, ast.KindSatisfiesExpression, ast.KindTypeAssertionExpression:
+		return true
+	}
+	return false
+}
+
+// sourceSlotWrittenType is the type of the value an assignment to target stores, and whether it could be named.
+// An assignment target may sit inside parentheses, a non-null `!` (`n.count!++`), an `as`, a `satisfies` or
+// an angle assertion, each of which leaves the target the same slot.
+func (l *lowering) sourceSlotWrittenType(target *ast.Node) (*checker.Type, bool) {
+	held := target
+	for held.Parent != nil && sourceSlotTargetWrapper(held.Parent.Kind) {
+		held = held.Parent
+	}
+	switch parent := held.Parent; {
+	case parent == nil:
+		return nil, false
+	case parent.Kind == ast.KindBinaryExpression && parent.AsBinaryExpression().Left == held:
+		binary := parent.AsBinaryExpression()
+		switch binary.OperatorToken.Kind {
+		case ast.KindEqualsToken, ast.KindQuestionQuestionEqualsToken, ast.KindBarBarEqualsToken, ast.KindAmpersandAmpersandEqualsToken:
+			return l.checker.GetTypeAtLocation(binary.Right), true
+		}
+		if ast.IsCompoundAssignment(binary.OperatorToken.Kind) {
+			return l.checker.GetTypeAtLocation(parent), true
+		}
+	case parent.Kind == ast.KindPrefixUnaryExpression || parent.Kind == ast.KindPostfixUnaryExpression:
+		return l.checker.GetNumberType(), true
+	}
+	return nil, false
 }
 
 // certifySourceSlots holds every read of a name recordSourceSlotWrite recorded to what its slot can hold,
