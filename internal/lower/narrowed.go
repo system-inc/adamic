@@ -1,7 +1,10 @@
 package lower
 
 import (
+	"strings"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
@@ -52,7 +55,8 @@ func (l *lowering) defined(node *ast.Node, value ir.Expression) ir.Expression {
 	if node.Kind == ast.KindPropertyAccessExpression {
 		at = node.Name()
 	}
-	if symbol := l.checker.GetSymbolAtLocation(at); symbol != nil {
+	symbol := l.checker.GetSymbolAtLocation(at)
+	if symbol != nil {
 		null = l.includesNull(l.checker.GetTypeOfSymbol(symbol))
 	}
 	absent := "undefined"
@@ -78,7 +82,40 @@ func (l *lowering) defined(node *ast.Node, value ir.Expression) ir.Expression {
 			message = "TypeError: Cannot read properties of " + absent + " (reading '" + key.Text() + "')"
 		}
 	}
-	return ir.Defined{Value: value, Message: message, Null: null}
+	checked := ir.Defined{Value: value, Message: message, Null: null}
+	if symbol != nil && l.onlyAbsent(l.checker.GetTypeOfSymbol(symbol)) {
+		// In a generic instance whose T holds only undefined or null, the checker still narrowed T by its
+		// constraint (T extends string | undefined is a string past === undefined), so the read is never
+		// here: the check always stops, and what follows it is a loud trap held as the narrowed type, never
+		// the missing object the declaration is (#rnbvya6), which C would refuse to return from a string
+		// function. A trap, not a zero value, so a present value some hatch let into such a T stops loudly
+		// (rulings.md:74), as never_read.go's trusted never read does.
+		if narrowed, known := l.representation(l.checker.GetTypeAtLocation(node)); known && narrowed != value.Type() && narrowed != ir.Union {
+			message := "unreachable read of " + strings.Join(strings.Fields(sourceExpression(node)), " ") + " at " + l.program.Where(node) + ", never past its check: this instance's type holds only " + absent
+			function := len(l.result.Functions)
+			l.result.Functions = append(l.result.Functions, ir.Function{
+				Name: "never_read", Returns: narrowed,
+				Body: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}},
+			})
+			return ir.Comma{Left: checked, Right: ir.Call{Function: function, Returns: narrowed}}
+		}
+	}
+	return checked
+}
+
+// onlyAbsent reports whether declared, as this instance makes it, holds no value but undefined or null.
+func (l *lowering) onlyAbsent(declared *checker.Type) bool {
+	declared = l.concrete(declared)
+	members := []*checker.Type{declared}
+	if declared.Flags()&checker.TypeFlagsUnion != 0 {
+		members = declared.Types()
+	}
+	for _, member := range members {
+		if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull|checker.TypeFlagsVoid) == 0 {
+			return false
+		}
+	}
+	return true
 }
 
 // comparedWithUndefined reports whether node is one side of === or !== with undefined on the other:
