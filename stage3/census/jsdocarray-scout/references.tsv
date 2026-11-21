@@ -1,0 +1,120 @@
+symbol	access	file	line	column	source
+jsDoc	read	src/compiler/binder.ts	2809	38	for (const j of node.jsDoc!) {
+jsDoc	read	src/compiler/binder.ts	2814	38	for (const j of node.jsDoc!) {
+jsDoc	read	src/compiler/checker.ts	16381	42	if (isInJSFile(decl) && decl.jsDoc) {
+jsDoc	read	src/compiler/checker.ts	43288	79	if (isInJSFile(current) && isFunctionLike(current) && current.jsDoc) {
+jsDoc	read	src/compiler/checker.ts	49070	26	forEach(node.jsDoc, ({ comment, tags }) => {
+jsDoc	write	src/compiler/factory/nodeFactory.ts	1307	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	1630	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	1675	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	1736	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	1789	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	1830	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	1904	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	1954	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	2004	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	2063	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	2125	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	2171	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	2204	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	2237	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	2333	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	2382	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	2501	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	2875	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	2897	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	2962	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	3165	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	3214	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	3275	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	3455	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	3672	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	3862	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	3886	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	3902	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	3912	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	3934	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	3956	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	3977	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	4002	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	4029	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	4059	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	4083	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	4102	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	4123	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	4143	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	4164	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	4186	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	4205	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	4227	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	4245	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	4261	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	4342	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	4413	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	4451	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	4487	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	4525	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	4566	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	4592	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	4629	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	4670	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	4706	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	4930	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	4965	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	5023	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	5040	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	5124	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	5176	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	5842	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	5933	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	5969	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	6000	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	6024	14	node.jsDoc = undefined; // initialized by parser (JsDocContainer)
+jsDoc	write	src/compiler/factory/nodeFactory.ts	6338	15	clone.jsDoc = node.jsDoc;
+jsDoc	read	src/compiler/factory/nodeFactory.ts	6338	28	clone.jsDoc = node.jsDoc;
+jsDoc	read	src/compiler/parser.ts	1852	28	Debug.assert(!node.jsDoc); // Should only be called once per node
+jsDoc	write	src/compiler/parser.ts	1854	32	if (jsDoc.length) node.jsDoc = jsDoc;
+jsDoc	read	src/compiler/parser.ts	3171	40	if (canHaveJSDoc(node) && node.jsDoc?.jsDocCache) {
+jsDoc	read	src/compiler/parser.ts	3173	18	node.jsDoc.jsDocCache = undefined;
+jsDoc	read	src/compiler/parser.ts	10114	49	for (const jsDocComment of node.jsDoc!) {
+jsDoc	read	src/compiler/parser.ts	10224	49	for (const jsDocComment of node.jsDoc!) {
+jsDoc	read	src/compiler/parser.ts	10267	54	for (const jsDocComment of child.jsDoc!) {
+jsDoc	write	src/compiler/transformers/declarations.ts	830	21	updated.jsDoc = original.jsDoc;
+jsDoc	read	src/compiler/transformers/declarations.ts	830	38	updated.jsDoc = original.jsDoc;
+jsDoc	declaration	src/compiler/types.ts	959	22	/** @internal */ jsDoc?: JSDocArray; // JSDoc that directly precedes this node
+jsDoc	read	src/compiler/utilities.ts	1251	39	return getTokenPosOfNode(node.jsDoc![0], sourceFile);
+jsDoc	read	src/compiler/utilities.ts	4662	87	result = addRange(result, filterOwnedJSDocTags(hostNode, hostNode.initializer.jsDoc!));
+jsDoc	read	src/compiler/utilities.ts	4668	75	result = addRange(result, filterOwnedJSDocTags(hostNode, node.jsDoc!));
+jsDoc	read	src/compiler/utilities.ts	4819	22	if (host && host.jsDoc && jsDoc === lastOrUndefined(host.jsDoc)) {
+jsDoc	read	src/compiler/utilities.ts	4819	62	if (host && host.jsDoc && jsDoc === lastOrUndefined(host.jsDoc)) {
+jsDoc	read	src/compiler/utilities.ts	10736	37	for (const doc of child.jsDoc!) {
+jsDoc	read	src/compiler/utilities.ts	12210	101	const child = isJavaScriptFile && includeJSDoc && hasJSDocNodes(current) && forEach(current.jsDoc, getContainingChild) || forEachChild(current, getContainingChild);
+jsDoc	read	src/compiler/utilitiesPublic.ts	1259	21	let tags = node.jsDoc?.jsDocCache;
+jsDoc	write	src/compiler/utilitiesPublic.ts	1266	18	node.jsDoc ??= [];
+jsDoc	read	src/compiler/utilitiesPublic.ts	1267	18	node.jsDoc.jsDocCache = tags;
+jsDoc	write	src/compiler/utilitiesPublic.ts	2555	13	const { jsDoc } = node as JSDocContainer;
+jsDoc	read	src/services/codefixes/convertTypedefToType.ts	249	29	return flatMap(node.jsDoc, doc => doc.tags?.filter(tag => isJSDocTypedefTag(tag)));
+jsDoc	read	src/services/jsDoc.ts	496	75	const commentOwnerJsDoc = hasJSDocNodes(commentOwner) && commentOwner.jsDoc ? commentOwner.jsDoc : undefined;
+jsDoc	read	src/services/jsDoc.ts	496	96	const commentOwnerJsDoc = hasJSDocNodes(commentOwner) && commentOwner.jsDoc ? commentOwner.jsDoc : undefined;
+jsDoc	read	src/services/navigationBar.ts	568	30	forEach(node.jsDoc, jsDoc => {
+jsDoc	read	src/services/services.ts	521	38	forEach((node as JSDocContainer).jsDoc, processNode);
+jsDoc	read	src/services/services.ts	640	91	return this.kind === SyntaxKind.EndOfFileToken ? (this as Node as EndOfFileToken).jsDoc || emptyArray : emptyArray;
+jsDoc	read	src/services/services.ts	3508	38	for (const jsDoc of node.jsDoc!) {
+jsDoc	read	src/services/smartSelection.ts	117	49	if (hasJSDocNodes(node) && node.jsDoc?.length) {
+jsDoc	read	src/services/smartSelection.ts	118	51	pushSelectionRange(first(node.jsDoc).getStart(), end);
+jsDoc	read	src/services/smartSelection.ts	128	79	if (firstChild && hasJSDocNodes(firstChild) && firstChild.jsDoc?.length && firstChild.getStart() !== node.pos) {
+jsDoc	read	src/services/smartSelection.ts	129	66	start = Math.min(start, first(firstChild.jsDoc).getStart());
+jsDoc	read	src/services/textChanges.ts	707	18	if (node.jsDoc) {
+jsDoc	read	src/services/textChanges.ts	708	38	for (const jsdoc of node.jsDoc) {
+jsDoc	read	src/services/textChanges.ts	721	39	const comments = flatMap(node.jsDoc, jsDoc => isString(jsDoc.comment) ? factory.createJSDocText(jsDoc.comment) : jsDoc.comment) as JSDocComment[];
+jsDoc	read	src/services/textChanges.ts	722	46	const jsDoc = singleOrUndefined(node.jsDoc);
+jsDoc	read	src/services/textChanges.ts	732	49	const oldTags = flatMapToMutable(parent.jsDoc, j => j.tags);
+jsDoc	read	src/services/textChanges.ts	744	85	this.replaceJSDocComment(sourceFile, parent, filter(flatMapToMutable(parent.jsDoc, j => j.tags), predicate));
+jsDoc	write	src/services/textChanges.ts	1203	15	jsDocNode.jsDoc = parent.jsDoc;
+jsDoc	read	src/services/textChanges.ts	1203	30	jsDocNode.jsDoc = parent.jsDoc;
+jsDoc	read	src/services/utilities.ts	2157	75	return n.kind === SyntaxKind.EndOfFileToken ? !!(n as EndOfFileToken).jsDoc : n.getWidth(sourceFile) !== 0;
+jsDocCache	read	src/compiler/parser.ts	3171	47	if (canHaveJSDoc(node) && node.jsDoc?.jsDocCache) {
+jsDocCache	write	src/compiler/parser.ts	3173	24	node.jsDoc.jsDocCache = undefined;
+jsDocCache	declaration	src/compiler/types.ts	964	5	jsDocCache?: readonly JSDocTag[]; // Cache for getJSDocTags
+jsDocCache	read	src/compiler/utilitiesPublic.ts	1259	28	let tags = node.jsDoc?.jsDocCache;
+jsDocCache	write	src/compiler/utilitiesPublic.ts	1267	24	node.jsDoc.jsDocCache = tags;
