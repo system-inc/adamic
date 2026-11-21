@@ -49,6 +49,8 @@
     "cmd/adamic": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "cmd/adamic-gate": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "cmd/adamic-meter": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
+    "cmd/adamic-performance": ["internal/load", "internal/lower", "internal/native", "internal/native_runtime", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
+    "cmd/adamic-performance/noreader": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "cmd/adamic-stage1-progress": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "cmd/adamic-test262": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "internal/apple": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
