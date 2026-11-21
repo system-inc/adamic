@@ -490,15 +490,30 @@ type objectMetadataNeeds struct {
 
 	// keyed is whether the program reads by a run-time key (keyedClassDeclarations).
 	keyed bool
+
+	// records is whether any object literal is a record (hasRecordStorage), construction whether any
+	// object literal has an absent field or any array literal metadata (constructionNeeded), and
+	// readiness the names some property read carries a readiness or a view for (fieldReadinessNeeded).
+	// writeProperty asks all three for every property write, and each was its own walk of the whole
+	// program, so emission cost writes × program (#67w3g0x's scout-link round 5: the CPU grew 3.49× with
+	// writes held at 324 as the program grew 3.47×). Read here, each is the one walk's.
+	records      bool
+	construction bool
+	readiness    map[string]bool
 }
 
 func (e *emitter) prepareObjectMetadata() {
 	if e.objectMetadata != nil {
 		return
 	}
-	needs := &objectMetadataNeeds{fieldTypes: len(e.program.CheckedFields) != 0 || e.constructionNeeded()}
+	needs := &objectMetadataNeeds{fieldTypes: len(e.program.CheckedFields) != 0, readiness: map[string]bool{}}
 	walkExpressions(e.program, func(expression ir.Expression) {
 		switch expression := expression.(type) {
+		case ir.ObjectLiteral:
+			needs.records = needs.records || expression.Record
+			needs.construction = needs.construction || constructionFields(expression.Fields)
+		case ir.ArrayLiteral:
+			needs.construction = needs.construction || len(expression.Metadata) != 0
 		case ir.ObjectCall:
 			needs.dynamic = needs.dynamic || expression.Checked
 		case ir.CheckedCast:
@@ -509,12 +524,15 @@ func (e *emitter) prepareObjectMetadata() {
 			needs.dynamic, needs.keyed = true, true
 		case ir.Property:
 			needs.fieldTypes = needs.fieldTypes || expression.View != ""
+			if expression.Readiness != "" || expression.View != "" {
+				needs.readiness[expression.Name] = true
+			}
 		case ir.JSONStringify:
 			// json_objects.c reads every slot of what it prints by the byte its last write left.
 			needs.fieldTypes = needs.fieldTypes || jsonStringifiesReferences(expression)
 		}
 	})
-	needs.fieldTypes = needs.fieldTypes || needs.dynamic
+	needs.fieldTypes = needs.fieldTypes || needs.dynamic || needs.construction
 	e.objectMetadata = needs
 }
 
@@ -546,13 +564,8 @@ func (e *emitter) fieldReadinessNeeded(name string) bool {
 	if e.program.UninitializedFields[name] {
 		return true
 	}
-	needed := false
-	walkExpressions(e.program, func(expression ir.Expression) {
-		if property, ok := expression.(ir.Property); ok && property.Name == name && (property.Readiness != "" || property.View != "") {
-			needed = true
-		}
-	})
-	return needed
+	e.prepareObjectMetadata()
+	return e.objectMetadata.readiness[name]
 }
 
 // Preserve null/undefined semantic tags before a checked read normalizes the

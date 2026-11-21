@@ -42,12 +42,9 @@ func (e *emitter) recordWrite(statement ir.SetProperty) {
 	e.recordSet(object, key, fmt.Sprintf("(adamic_value){.reference = %s}", e.kept(value)), key, e.program.RecordWriteMayThrow(statement))
 }
 
+// hasRecordStorage is whether any object literal is a record, read from the emitter's one walk of the
+// program (prepareObjectMetadata).
 func (e *emitter) hasRecordStorage() bool {
-	found := false
-	walkExpressions(e.program, func(expression ir.Expression) {
-		if literal, ok := expression.(ir.ObjectLiteral); ok && literal.Record {
-			found = true
-		}
-	})
-	return found
+	e.prepareObjectMetadata()
+	return e.objectMetadata.records
 }
