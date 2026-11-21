@@ -80,10 +80,17 @@ func TestOneMemberEnumSlotRefusesANumber(t *testing.T) {
 			if probe.name == "cast" && extension == ".a" {
 				continue
 			}
+			// In .a isSecond is refused first, at the predicate: Base's kind holds any number, so Base is
+			// never closed and its tag test proves no layout (rulings.md:142 as amended, #tvw1zkp). The write
+			// alone holds the slot's refusal in .a.
+			want := oneMemberSlotRefusal
+			if extension == ".a" && probe.name != "write alone" {
+				want = "over Base, whose kind can hold any number"
+			}
 			t.Run(probe.name+extension, func(t *testing.T) {
 				t.Parallel()
-				if _, err := lowerSourceAs(t, probe.source, extension); err == nil || !strings.Contains(err.Error(), oneMemberSlotRefusal) {
-					t.Fatalf("want %q, got %v", oneMemberSlotRefusal, err)
+				if _, err := lowerSourceAs(t, probe.source, extension); err == nil || !strings.Contains(err.Error(), want) {
+					t.Fatalf("want %q, got %v", want, err)
 				}
 			})
 		}
