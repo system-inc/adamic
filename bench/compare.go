@@ -57,6 +57,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/system-inc/adamic/internal/benchmark"
 )
 
 // A compareRequest is what -compare was asked.
@@ -238,7 +240,7 @@ func compareCommits(request compareRequest) {
 		fail(err)
 	}
 	defer os.RemoveAll(work)
-	if reaper, err = buildReaper(directory, work); err != nil {
+	if reaper, err = benchmark.BuildReaper(work); err != nil {
 		fail(err)
 	}
 
@@ -359,7 +361,7 @@ func compareCommits(request compareRequest) {
 	samples := make([][][3]measurement, len(entries))
 	// floors[runner] holds every run of the floor program, each on its own, so its slowest is one run's.
 	floors := [3][]measurement{}
-	floorCommands := [3][]string{{floorBinaries[0]}, {floorBinaries[1]}, nodeCommand(floor, root)}
+	floorCommands := [3][]string{{floorBinaries[0]}, {floorBinaries[1]}, benchmark.NodeCommand(floor.source, floor.adamic, root)}
 	stopped := make([]bool, len(entries))
 	// natives is every native binary a sample runs, each once: a program with several thread counts
 	// shares its two.
@@ -390,7 +392,7 @@ func compareCommits(request compareRequest) {
 			if entry.failure != "" || stopped[index] {
 				continue
 			}
-			commands := [3][]string{append([]string{entry.baseline}, entry.arguments...), append([]string{entry.candidate}, entry.arguments...), append(nodeCommand(entry.program, root), entry.arguments...)}
+			commands := [3][]string{append([]string{entry.baseline}, entry.arguments...), append([]string{entry.candidate}, entry.arguments...), append(benchmark.NodeCommand(entry.program.source, entry.program.adamic, root), entry.arguments...)}
 			settings := [3][]string{entry.environment, entry.environment, nil}
 			turns := [3][]measurement{}
 			for _, runner := range runs {
@@ -595,7 +597,7 @@ func compareEntries(directory string, members []suiteMember) ([]compareEntry, er
 		if judgeOn == "" {
 			judgeOn = "user"
 		}
-		rows := []compareEntry{{program: program{name: member.Name, source: sources[0], adamic: importsAdamic(string(contents))}, judge: judgeOn, input: member.Input}}
+		rows := []compareEntry{{program: program{name: member.Name, source: sources[0], adamic: benchmark.ImportsAdamic(string(contents))}, judge: judgeOn, input: member.Input}}
 		if len(member.Threads) > 0 {
 			rows = []compareEntry{}
 			for _, threads := range member.Threads {
@@ -603,7 +605,7 @@ func compareEntries(directory string, members []suiteMember) ([]compareEntry, er
 					return nil, fmt.Errorf("suite member %s: threads must be from 1 to 4096, not %d", member.Name, threads)
 				}
 				setting := strconv.Itoa(threads)
-				rows = append(rows, compareEntry{program: program{name: member.Name + "/" + setting, source: sources[0], adamic: importsAdamic(string(contents))}, judge: judgeOn, environment: []string{"ADAMIC_THREADS=" + setting}})
+				rows = append(rows, compareEntry{program: program{name: member.Name + "/" + setting, source: sources[0], adamic: benchmark.ImportsAdamic(string(contents))}, judge: judgeOn, environment: []string{"ADAMIC_THREADS=" + setting}})
 			}
 		}
 		for _, row := range rows {

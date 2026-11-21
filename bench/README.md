@@ -1,6 +1,6 @@
 # Benchmarks
 
-Eight programs, the same source run three ways: Adamic's native binary (`adamic build`, clang `-O2`, no sanitizers), Node, and Bun when it's installed. Each program constructs deterministic input and prints a checksum, so there is no input-file I/O in the timing and every runtime has to give the same answer.
+Nine programs, the same source run three ways: Adamic's native binary (`adamic build`, clang `-O2`, no sanitizers), Node, and Bun when it's installed. Each program constructs deterministic input and prints a checksum, so there is no input-file I/O in the timing and every runtime has to give the same answer.
 
 ```
 go run ./bench                      # every program, 5 interleaved rounds, best of 5
@@ -12,7 +12,7 @@ go run ./bench -only parallel_files -threads 1,2,4,8,16 -rounds 5
 
 The runs are interleaved round by round to spread changes in machine load across runtimes, and the best round is reported. Time is wall clock; memory is the process's peak resident set. The counted table comes from `adamic build --count`, run once, untimed: it reports allocations and reference-count calls alongside the timings. The machine, the versions and the load before and after print with the numbers, and numbers without them aren't worth quoting.
 
-On Linux every program runs through `reaper/reaper.c`, a small C process bench builds with clang, which forks the program, waits for it, and hands bench its user time and peak resident set. Started directly, a program's peak was never its own: Go starts a child with `clone(CLONE_VFORK|CLONE_VM)`, and Linux's exec folds the starting memory's high-water resident set into the program's, so every program read at least bench's own (a bench holding 250 MB of inputs read 1321.4 MB for a C program that only prints, J-wme5jp2). Through the reaper, all that can carry over is the reaper's few hundred kilobytes. `TestPeakIsTheProgramsOwn` proves both halves. The reaper costs every timed run one more fork, a fraction of a millisecond: a paired comparison carries it on both sides alike, but an absolute wall time on a very short program carries it too. Every peak in the record below was read through it.
+On Linux every program runs through [internal/benchmark/reaper/reaper.c](../internal/benchmark/reaper/reaper.c), a small C process bench builds with clang through internal/benchmark, which forks the program, waits for it, and hands bench its user time and peak resident set. Started directly, a program's peak was never its own: Go starts a child with `clone(CLONE_VFORK|CLONE_VM)`, and Linux's exec folds the starting memory's high-water resident set into the program's, so every program read at least bench's own (a bench holding 250 MB of inputs read 1321.4 MB for a C program that only prints, J-wme5jp2). Through the reaper, all that can carry over is the reaper's few hundred kilobytes. internal/benchmark's `TestPeakIsTheProgramsOwn` proves both halves. The reaper costs every timed run one more fork, a fraction of a millisecond: a paired comparison carries it on both sides alike, but an absolute wall time on a very short program carries it too. Every peak in the record below was read through it.
 
 | Program | What it exercises |
 |---|---|
@@ -24,12 +24,13 @@ On Linux every program runs through `reaper/reaper.c`, a small C process bench b
 | `parallel_files.a` | 4,096 deterministic in-memory files, pure tokenization and summaries in parallel, merged in order |
 | `trees.ts` | binary trees: 68 million small objects allocated, walked and freed |
 | `devirtualize.a` | repeated rule visits over syntax-shaped records, with method calls in the hot loop |
+| `primes_parallel.a` | 1,000 prime-counting tasks, each over its own range of 10,000 numbers, through `parallelMap` across the pool's threads (#sp4m5ex) |
 
 ## Suites and comparing two commits
 
 [suites.json](suites.json) names four sets, each with the rule that decides what belongs in it:
 
-- `everyday`: the eight programs above, whole-program workloads any mind can run in about a minute.
+- `everyday`: the eight programs above but `primes_parallel.a`, whole-program workloads any mind can run in about a minute.
 - `regression`: everyday plus every program a measured speed finding named, each with its finding's task id: `graph.ts` and `copy.ts` (#ahnc64w, #kha2ea0; their trailing timer is the point), `timer_burst.a` (#ezae5s0), `timer_dispatch.a` (#a6yb7d1), parallel_files at 1, 4 and 16 threads, and the record cost harness, which runs outside run.go. A program leaves only by Runtime's ruling on #re2xhwa, logged in `retired` with why.
 - `holdout`: the Benchmarks Game programs everyday doesn't cover, ported in `holdout/`, run only at a release or before a claim, never tuned on.
 - `claim`: the 1.0.0 claim's workload, native tsc's full check of src/compiler, once tsc builds natively.
