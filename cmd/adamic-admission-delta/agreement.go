@@ -354,7 +354,9 @@ func runAgreement(agreement agreementRun) error {
 		// A shard alone never stands in for the whole corpus, as the delta's partial run doesn't.
 		result.Verdict = "partial"
 	}
-	fmt.Fprintf(os.Stderr, "runtime timeouts: %d runs timed out, %d retried alone, %d timed out again\n", result.TimedOutRuns, result.RetriedRuns, result.StillTimedOutRuns)
+	// The delta retries a timed-out run alone; here the retry runs beside the other workers' runs, so the line says so
+	// and never reads as the delta's.
+	fmt.Fprintf(os.Stderr, "runtime timeouts: %d runs timed out, %d retried once beside the other workers, %d timed out again\n", result.TimedOutRuns, result.RetriedRuns, result.StillTimedOutRuns)
 	for _, line := range lines {
 		fmt.Fprintln(os.Stderr, line)
 	}
