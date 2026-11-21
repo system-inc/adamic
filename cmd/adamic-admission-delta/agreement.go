@@ -284,7 +284,7 @@ func runAgreement(agreement agreementRun) error {
 				result.StaleRuntimeStops = append(result.StaleRuntimeStops, record.Path)
 				lines = append(lines, fmt.Sprintf("stale run-time stop %s: it agrees with Node, so its entry leaves the list", record.Path))
 			}
-			judged.OutcomeHash = outcomeHash(*record.Node, *record.JavaScript, *record.Native)
+			judged.OutcomeHash = outcomeHash(headTree, *record.Node, *record.JavaScript, *record.Native)
 			// A sidecar is read only for a program that would otherwise disagree: an agreeing program stays agreeing
 			// whether or not one sits beside it.
 			if record.disagrees() {
@@ -300,7 +300,7 @@ func runAgreement(agreement agreementRun) error {
 			case record.ruled():
 				result.Ruled++
 				judged.Judgment = "ruled"
-			case agreement.heldStops.holds(record.Path, *record.Node, *record.JavaScript, *record.Native):
+			case agreement.heldStops.holds(record.Path, headTree, *record.Node, *record.JavaScript, *record.Native):
 				result.CheckedStops++
 				judged.Judgment = "checked-stop"
 			case judged.Task != "" && !memoryUnsafe(*record.Native):
@@ -392,11 +392,21 @@ func pendingTask(headTree, path string) (string, error) {
 
 // outcomeHash is hex SHA-256 over Node's, then JavaScript's, then native's exit, stdout and stderr, in that order.
 // Each field is written as its length, a colon and its bytes, so no output can be read as the end of one field and the
-// start of the next, and a byte moved from one stream to another changes the hash.
-func outcomeHash(node, javascript, native observation) string {
+// start of the next, and a byte moved from one stream to another changes the hash. The checkout the run judged, root,
+// is written {root} in stdout and stderr first, as a held stop's row writes it: a program whose stop names its own
+// file names it inside the run's random scratch directory, so without it that program's hash would change every day
+// and bury the changes the hash is there to show.
+func outcomeHash(root string, node, javascript, native observation) string {
+	// An empty root would write {root} between every byte, so only a named checkout is written.
+	rooted := func(output string) string {
+		if root == "" {
+			return output
+		}
+		return strings.ReplaceAll(output, root, "{root}")
+	}
 	digest := sha256.New()
 	for _, run := range []observation{node, javascript, native} {
-		for _, field := range []string{strconv.Itoa(run.Exit), run.Stdout, run.Stderr} {
+		for _, field := range []string{strconv.Itoa(run.Exit), rooted(run.Stdout), rooted(run.Stderr)} {
 			fmt.Fprintf(digest, "%d:%s", len(field), field)
 		}
 	}

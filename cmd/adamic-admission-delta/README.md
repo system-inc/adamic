@@ -400,10 +400,20 @@ disagrees. Two more judgments then count apart what would otherwise disagree:
 - `checked-stop`: a both-stop, where the JavaScript backend and native have the
   same exit, stdout and stderr, the exit is 70, and Node exits 0, at a path
   `cloud/admission-corpus/held-stops.json` lists, with the backends' stderr the
-  row's byte for byte. Each row is a ruling: `{"path", "stderr", "test"}`, the
-  test named as `<file>_test.go: <TestName>`, the one that holds the stop. A
-  both-stop with no row, or with a stderr that differs from its row's, disagrees.
-  `--held-stops` names another list; a missing file is an empty one.
+  row's byte for byte. Each row is a ruling and the pin of the stop's words:
+  `{"path", "stderr", "hatch", "test"}`. `stderr` writes the checkout the run
+  judges as `{root}`, since a stop naming its program's file names it there.
+  `hatch` is the hatch the program uses, `<kind>[ (<detail>)], line <n>:
+  <text>`, the kind one of cast, non-null, predicate, definite-assignment,
+  relation-lie, index-write, index-read, computed-key, library-claim and
+  language, the text that line of the program, trimmed. A `language` hatch is the
+  checker's own unsoundness a ruling makes a checked stop, so its detail cites
+  `docs/rulings.md:<line>, "<the row's opening words>"`. `test` is the test that
+  holds the stop, `<repository path>_test.go: <TestName>`. A row without its
+  hatch or its test is refused, and `TestHeldStopListHoldsItsRows` holds every
+  row's hatch line, ruling and test to the tree. A both-stop with no row, or with
+  a stderr that differs from its row's, disagrees. `--held-stops` names another
+  list; a missing file is an empty one.
 - `pending`: a program beside a pending sidecar, its name without its extension
   plus `.pending`, whose message is `awaits #<task>: <reason>`. The sidecar
   excuses the program only while that task is open, and the run is sealed and
@@ -443,9 +453,10 @@ path, Node's, JavaScript's and native's observations, both compiles and
 `memory_unsafe`), `compiler_failures`, `stale_runtime_stops`, every program
 with its judgment, and `verdict`. A program judged by what it did carries
 `outcome_hash`: hex SHA-256 over Node's, then JavaScript's, then native's exit,
-stdout and stderr, each field written as its length, a colon and its bytes, so
-a diff of two days' reports sees any change in output or stop message even
-where the judgment holds. A refused or void program has none, and a pending one
+stdout and stderr, each field written as its length, a colon and its bytes,
+with the run's checkout written `{root}` in stdout and stderr, so a diff of two
+days' reports sees any change in output or stop message even where the judgment
+holds, and never the run's own scratch directory. A refused or void program has none, and a pending one
 carries `task`. Exit codes are the delta's: a disagreement, a
 compiler failure or a listed run-time stop that now agrees exits 1, a run that
 proved nothing (a compile timeout, a runtime timeout that held after its retry,
