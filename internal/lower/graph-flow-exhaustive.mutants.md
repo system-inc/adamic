@@ -280,8 +280,9 @@ New:
 	}
 ```
 
-Expected, and measured: it survives (J-zegh1xz). TestGraphFlowUnknownArgumentSlotPlanned's `[]`, a `never[]` where
-it's made that the callee pushes into as a `Node[]` and stores in the cycle, stays planned without its slot, since
-graphTypes relates `never[]` to `Node[]` and selects it a graph type. An argument's type is assignable to its
-parameter's, so the two are related wherever the cycle finder meets both, and no witness has been found where the
-slot alone decides. The slot is kept failing closed, for a parameter type that relation doesn't reach.
+Expected: TestGraphFlowWiderParameterPlanned reds, its `{ n: undefined }` passed as a `Holder` whose `n` is a
+`Node | undefined` left counted: its own type holds nothing, and the parameter's, through which the callee can write a
+graph pointer into it, is no longer asked. Measured unplanned under this mutant by J-y8sw1eq's probe. The leak that
+plan would let through, the literal written a graph pointer through a wider optional field and stored in the cycle,
+can't be built today: lowering stops the write into the optional field (#avybwv1). TestGraphFlowUnknownArgumentSlotPlanned
+stays green: its `[]` is a `never[]` that graphTypes relates to `Node[]` and selects a graph type itself.
