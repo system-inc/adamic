@@ -76,6 +76,10 @@ var latentPostLoweringSteps = []latent.PassStep{
 	// lowered on its own has no graph to hold and the latent census records it as not run, as it does
 	// every judging pass.
 	{Name: "checkFlowLiveness"},
+	// finishViewStaticsAdmitted sets each object contract's StaticsAdmitted once the view contract table
+	// is finished (#s03ndgw): it rewrites only that flag, which no pass reads, only the emitters, so a body
+	// lowered on its own is recorded as not run, as checkFlowLiveness is.
+	{Name: "finishViewStaticsAdmitted"},
 }
 
 // Finalized with the unit status and instantiation metadata, once all modes have

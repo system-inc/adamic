@@ -317,6 +317,7 @@ func (e *emitter) writeProperty(statement ir.SetProperty, object, value string, 
 	e.line("\tstatic const char message[] = %s;", cArray("TypeError: Cannot set properties of undefined (setting '"+statement.Name+"')"))
 	e.line("\tadamic_panic(message, sizeof message - 1);")
 	e.line("}")
+	e.staticViewWrite(statement, object)
 	e.line("adamic_object_check_data_write(%s, %s);", object, cString(statement.Name))
 	// A frozen object leaves Node's TypeError pending, tested before the value is kept, so the value
 	// is still the statement's to let go (ir.Program's FrozenWriteMayThrow).
