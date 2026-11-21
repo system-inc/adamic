@@ -22,6 +22,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // served is what the test's server serves, by path, for the programs that fetch: a stack, the
@@ -44,7 +45,7 @@ var served = map[string]string{
 // proves nothing, so the counts hold the line instead.
 func TestProgramsAgreeWithTheirWitnesses(t *testing.T) {
 	t.Parallel()
-	platform, err := native.ResolveTarget(native.Options{})
+	platform, err := native_runtime.ResolveTarget(native_runtime.Options{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -91,13 +92,13 @@ func TestProgramsAgreeWithTheirWitnesses(t *testing.T) {
 			expected := run(t, witness, address)
 
 			sanitized := filepath.Join(directory, "sanitized")
-			build(t, program, sanitized, native.Options{Sanitize: true})
+			build(t, program, sanitized, native_runtime.Options{Sanitize: true})
 			if observed := run(t, sanitized, address); !bytes.Equal(observed, expected) {
 				t.Fatalf("%s disagrees with its witness\nwitness:\n%s\nadamic:\n%s", program, expected, observed)
 			}
 
 			counted := filepath.Join(directory, "counted")
-			build(t, program, counted, native.Options{Count: true})
+			build(t, program, counted, native_runtime.Options{Count: true})
 			allocations, frees, owed := counts(t, counted, address)
 			if allocations != frees {
 				t.Errorf("%s allocated %d values and freed %d", program, allocations, frees)
@@ -109,7 +110,7 @@ func TestProgramsAgreeWithTheirWitnesses(t *testing.T) {
 	}
 }
 
-func build(t *testing.T, path string, output string, options native.Options) {
+func build(t *testing.T, path string, output string, options native_runtime.Options) {
 	t.Helper()
 	program, err := load.Load([]string{path})
 	if err != nil {
