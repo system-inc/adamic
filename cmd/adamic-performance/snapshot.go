@@ -13,7 +13,8 @@ const header = "// Performance.jsonc: Adamic's performance at this commit, rewri
 	"// Git history is the series. Never edit it by hand. Times are integer milliseconds: the median of the rounds, with\n" +
 	"// their min and max. cmd/adamic-performance writes it; nothing that builds or tests reads it.\n" +
 	"// An execute program's ratio is native over Node on the judged measure, below 1 meaning native is faster; the\n" +
-	"// judged measure is user time unless its judge says wall.\n"
+	"// judged measure is user time unless its judge says wall. The note calls a number moved only when its new range\n" +
+	"// doesn't overlap the old one and its median moved at least 2% of the old median and at least 5 ms.\n"
 
 // schemaVersion is the file's schema, which a reader refuses when it is another.
 const schemaVersion = 1
