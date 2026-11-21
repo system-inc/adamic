@@ -539,9 +539,13 @@ func (l *lowering) predicateTagDomainRefusal(node *ast.Node, declared, target *c
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		targets = target.Types()
 	}
-	refuse := func(member *checker.Type, why string) *Refused {
+	refuse := func(member, tag *checker.Type, why string) *Refused {
 		name := l.checker.TypeToString(member)
-		reason := "the comparison of " + field + " proves nothing about the layout over " + name + ", whose " + field + " is an open numeric enum: " + why + " (rulings.md:142)"
+		holds := "is an open numeric enum"
+		if !l.openNumericEnumType(tag) {
+			holds = "can hold any number"
+		}
+		reason := "the comparison of " + field + " proves nothing about the layout over " + name + ", whose " + field + " " + holds + ": " + why + " (rulings.md:142)"
 		return &Refused{Where: l.program.Where(node), What: "a type predicate whose return is not proven (" + reason + ")", Fix: "take a closed union of the members as the parameter in place of " + name + ", or test the layout in the body (adamic/no-type-predicate)", lyingTag: reason}
 	}
 	for _, member := range members {
@@ -552,12 +556,16 @@ func (l *lowering) predicateTagDomainRefusal(node *ast.Node, declared, target *c
 		// any number too (tagHoldsAnyNumber, #x2cjvy9's J-pmbsp94), and having no kind domain, are never
 		// closed (Lower's question on #tvw1zkp).
 		property := l.checker.GetPropertyOfType(member, field)
-		if property == nil || !l.tagHoldsAnyNumber(l.checker.GetTypeOfSymbol(property)) {
+		if property == nil {
+			continue
+		}
+		tag := l.checker.GetTypeOfSymbol(property)
+		if !l.tagHoldsAnyNumber(tag) {
 			continue
 		}
 		kinds, closed, why := l.closedKinds(member, field)
 		if !closed {
-			return refuse(member, why)
+			return refuse(member, tag, why)
 		}
 		carried := []*checker.Type{kinds}
 		if kinds.Flags()&checker.TypeFlagsUnion != 0 {
@@ -575,7 +583,7 @@ func (l *lowering) predicateTagDomainRefusal(node *ast.Node, declared, target *c
 				}
 			}
 			if named && !l.closedKindSourcesFit(member, field, kind, target) {
-				return refuse(member, "a value of it can carry "+l.checker.TypeToString(kind)+" without "+l.checker.TypeToString(target)+"'s layout")
+				return refuse(member, tag, "a value of it can carry "+l.checker.TypeToString(kind)+" without "+l.checker.TypeToString(target)+"'s layout")
 			}
 		}
 	}

@@ -95,7 +95,7 @@ func TestTagOnlyPredicateOverAConstructionClosedSupertype(t *testing.T) {
 func TestTagOnlyPredicateOverAOneMemberEnumTagIsRefusedInA(t *testing.T) {
 	t.Parallel()
 	const source = "enum One { X = 2 }\nenum Two { Y = 3 }\ninterface Other { readonly kind: One | Two }\ninterface OtherB extends Other { readonly kind: One.X; readonly b: number }\nfunction isB(n: Other): n is OtherB { return n.kind === One.X; }\nconst o: Other = { kind: One.X };\nif (isB(o)) { console.log(String(o.b + 1)); } else { console.log('not'); }\n"
-	if _, err := lowerSourceAs(t, source, ".a"); err == nil || !strings.Contains(err.Error(), "rulings.md:142") || !strings.Contains(err.Error(), "over Other") {
+	if _, err := lowerSourceAs(t, source, ".a"); err == nil || !strings.Contains(err.Error(), "rulings.md:142") || !strings.Contains(err.Error(), "over Other, whose kind can hold any number") {
 		t.Fatalf(".a: want the predicate refused under rulings.md:142 over Other, got %v", err)
 	}
 	program, err := lowerSourceAs(t, source, ".ts")

@@ -427,9 +427,23 @@ func (l *lowering) predicateRefusal(node *ast.Node) error {
 		}
 		// A tag that can lie is the reason worth naming, whichever prover met it. In .a the body prover asks
 		// the closed question of the parameter's type (rulings.md:142 as amended, predicateTagDomainRefusal),
-		// so its reason is the finer one there, and it names the fix the ruling owes (#tvw1zkp).
+		// so its reason is the finer one there, and it names the fix the ruling owes (#tvw1zkp). A target
+		// with an optional field is refused in .a over any parameter, closed or not, so that reason comes
+		// first: :142's fix, a closed union, would meet it next.
 		var flow, body *Refused
 		if errors.As(err, &body) && body.lyingTag != "" && (!errors.As(original, &flow) || flow.lyingTag == "" || strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".a")) {
+			if claimed := node.AsTypePredicateNode().Type; claimed != nil && strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".a") {
+				target := l.checker.GetTypeAtLocation(claimed)
+				members := []*checker.Type{target}
+				if target.Flags()&checker.TypeFlagsUnion != 0 {
+					members = target.Types()
+				}
+				for _, member := range members {
+					if optional := l.predicateOptionalFieldRefusal(node, member); optional != nil {
+						return optional
+					}
+				}
+			}
 			return body
 		}
 		return original
@@ -448,15 +462,8 @@ func (l *lowering) predicateRefusal(node *ast.Node) error {
 			members = target.Types()
 		}
 		for _, member := range members {
-			for _, property := range l.checker.GetPropertiesOfType(member) {
-				// In .ts the view checks an optional field where it's read (#1yr7rdh), and a write to
-				// one through the view is NotYet, never an unchecked store (#mr87ptk): absent reads
-				// undefined, and present is checked like any field. .a needs proof, and keeps the
-				// refusal, which names the field rather than the return (#1w5bve2, Adamic's condition 5).
-				if property.Flags&ast.SymbolFlagsOptional != 0 && !l.checkedAssertionSource(node) {
-					what := "a tag-proven predicate whose target has an optional field (" + property.Name + " on " + l.checker.TypeToString(member) + ") that the view can't check"
-					return &Refused{Where: l.program.Where(node), What: what, Fix: "make the field required, or return a boolean and narrow at the caller (adamic/no-type-predicate)"}
-				}
+			if optional := l.predicateOptionalFieldRefusal(node, member); optional != nil {
+				return optional
 			}
 			// A body proven by its tag alone leaves the layout to the view: this registration serves
 			// a tag-proven predicate wherever no checked call wraps it. A checked call registers the
@@ -466,6 +473,21 @@ func (l *lowering) predicateRefusal(node *ast.Node) error {
 			}
 			// The value enters the view wherever a caller's read is narrowed to it (view_widened.go).
 			l.viewSources[len(l.viewSources)-1].narrows = true
+		}
+	}
+	return nil
+}
+
+// predicateOptionalFieldRefusal refuses a tag-proven predicate whose target member has an optional field. In
+// .ts the view checks an optional field where it's read (#1yr7rdh), and a write to one through the view is
+// NotYet, never an unchecked store (#mr87ptk): absent reads undefined, and present is checked like any
+// field. .a needs proof, and keeps the refusal, which names the field rather than the return (#1w5bve2,
+// Adamic's condition 5).
+func (l *lowering) predicateOptionalFieldRefusal(node *ast.Node, member *checker.Type) *Refused {
+	for _, property := range l.checker.GetPropertiesOfType(member) {
+		if property.Flags&ast.SymbolFlagsOptional != 0 && !l.checkedAssertionSource(node) {
+			what := "a tag-proven predicate whose target has an optional field (" + property.Name + " on " + l.checker.TypeToString(member) + ") that the view can't check"
+			return &Refused{Where: l.program.Where(node), What: what, Fix: "make the field required, or return a boolean and narrow at the caller (adamic/no-type-predicate)"}
 		}
 	}
 	return nil
