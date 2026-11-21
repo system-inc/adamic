@@ -171,6 +171,87 @@ adamic_typed_array *adamic_node_buffer_alloc_unsafe(double size)
 	}
 	return buffer;
 }
+// Where Buffer.indexOf starts, as Node v24.19.0's bidirectionalIndexOf and
+// then IndexOfOffset place it for a forward search: the offset is clamped to
+// an int32's range, an absent or NaN one is 0, and the rest truncates toward
+// zero. A negative one counts from the end, floored at 0. Past where the
+// needle can fit, an empty needle starts at the length and any other finds
+// nothing, which is false.
+static bool index_of_start(double offset, bool has_offset, size_t length,
+						   size_t needle_length, size_t *start)
+{
+	if (!has_offset || isnan(offset)) {
+		offset = 0;
+	} else if (offset > 2147483647.0) {
+		offset = 2147483647.0;
+	} else if (offset < -2147483648.0) {
+		offset = -2147483648.0;
+	}
+	double whole = trunc(offset), size = (double)length;
+	if (whole < 0) {
+		*start = whole + size >= 0 ? (size_t)(whole + size) : 0;
+		return needle_length == 0 || *start + needle_length <= length;
+	}
+	if (whole + (double)needle_length <= size) {
+		*start = (size_t)whole;
+		return true;
+	}
+	*start = length;
+	return needle_length == 0;
+}
+// The first match of bytes at or past start, or -1: memchr for the first byte,
+// then a compare of the rest. It reads the view's data and length only, so a
+// slice searches its own bytes, measured from its own start.
+static double index_of_bytes(const adamic_typed_array *buffer, size_t start,
+							 const unsigned char *bytes, size_t length)
+{
+	const unsigned char *data = buffer->data;
+	size_t last = buffer->length - length;
+	for (size_t at = start; at <= last;) {
+		const unsigned char *found = memchr(data + at, bytes[0], last - at + 1);
+		if (found == NULL) {
+			return -1;
+		}
+		at = (size_t)(found - data);
+		if (memcmp(found + 1, bytes + 1, length - 1) == 0) {
+			return (double)at;
+		}
+		at++;
+	}
+	return -1;
+}
+// Buffer.indexOf of a string, searched as its UTF-8 bytes, which are Adamic's
+// own: lowering admits only a literal free of lone surrogates (Node v24.19.0
+// aborts on one), so its WTF-8 is plain UTF-8, the bytes Node searches.
+double adamic_node_buffer_index_of_string(const adamic_typed_array *buffer,
+										  const adamic_string *needle,
+										  double offset, bool has_offset)
+{
+	size_t start;
+	if (!index_of_start(offset, has_offset, buffer->length, needle->length,
+						&start)) {
+		return -1;
+	}
+	if (needle->length == 0) {
+		return (double)start;
+	}
+	return index_of_bytes(buffer, start, (const unsigned char *)needle->bytes,
+						  needle->length);
+}
+// Buffer.indexOf of a number: one byte, Node's val >>> 0 narrowed by memchr to
+// its low 8 bits, so 266 is 10, -1 is 255, and NaN and the infinities are 0.
+double adamic_node_buffer_index_of_number(const adamic_typed_array *buffer,
+										  double needle, double offset,
+										  bool has_offset)
+{
+	size_t start;
+	if (!index_of_start(offset, has_offset, buffer->length, 1, &start)) {
+		return -1;
+	}
+	unsigned char byte =
+		(unsigned char)((uint32_t)adamic_shift_right_unsigned(needle, 0) & 255);
+	return index_of_bytes(buffer, start, &byte, 1);
+}
 static int unbase64(unsigned c)
 {
 	if (c >= 'A' && c <= 'Z') {
