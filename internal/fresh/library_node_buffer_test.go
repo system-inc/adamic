@@ -40,3 +40,24 @@ func TestNodeBufferAllocUnsafeIsFresh(t *testing.T) {
 		t.Fatalf("Buffer.allocUnsafe's result isn't a fresh Buffer: %+v", writes)
 	}
 }
+
+// Buffer.indexOf reads its Buffer's bytes and makes nothing, as toString does: a known operation, so it
+// adds no unknown write, and a fresh object's field holding the Buffer it searched is still proven to
+// close no cycle.
+func TestNodeBufferIndexOfIsARead(t *testing.T) {
+	t.Parallel()
+	program := &ir.Program{
+		Strings: []string{"\n"},
+		Locals:  []ir.Local{{Type: ir.Object, Function: -1}, {Type: ir.Uint8Array, Function: -1}},
+		Main: []ir.Statement{
+			ir.Declare{Local: 0, Value: ir.ObjectLiteral{}},
+			ir.Declare{Local: 1, Value: ir.NodeBufferCall{Function: "buffer_alloc_unsafe", Returns: ir.Uint8Array, Arguments: []ir.Expression{ir.NumberConstant{Value: 4}}}},
+			ir.Evaluate{Value: ir.NodeBufferCall{Function: "buffer_index_of", Returns: ir.Number, Arguments: []ir.Expression{ir.Read{Local: 1, Of: ir.Uint8Array}, ir.StringConstant{Index: 0}}}},
+			ir.SetProperty{Object: ir.Read{Local: 0, Of: ir.Object}, Name: "bytes", Value: ir.Read{Local: 1, Of: ir.Uint8Array}, Site: 1},
+		},
+	}
+	writes := fresh.ProveWrites(program)
+	if len(writes) != 1 || !writes[0].Proven || writes[0].Kind != fresh.WriteField {
+		t.Fatalf("Buffer.indexOf made its Buffer unknown: %+v", writes)
+	}
+}

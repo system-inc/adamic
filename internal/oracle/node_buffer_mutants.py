@@ -39,6 +39,10 @@ mutants = [
     ('alloc_unsafe_failure_panics', buffer, 'adamic_throw_coded("RangeError", "ERR_MEMORY_ALLOCATION_FAILED",', 'adamic_panic(message, sizeof message - 1); adamic_throw_coded("RangeError", "ERR_MEMORY_ALLOCATION_FAILED",', 'alloc_unsafe'),
     ('slice_copy', buffer_lower, 'return ir.TypedArraySubarray{Array: array, Arguments: lowered}, true, nil', 'return ir.NodeBufferCall{Function: "buffer_copy", Arguments: []ir.Expression{ir.TypedArraySubarray{Array: array, Arguments: lowered}}, Returns: ir.Uint8Array}, true, nil', 'slice'),
     ('slice_view_offset', typed, 'view->data = (unsigned char *)array->data + from * width(array->kind);', 'view->data = array->data;', 'slice'),
+    ('index_of_negative_offset', buffer, '*start = whole + size >= 0 ? (size_t)(whole + size) : 0;', '*start = 0;', 'index_of'),
+    ('index_of_number_unmasked', buffer, 'unsigned char byte = (unsigned char)((uint32_t)adamic_shift_right_unsigned(needle, 0) & 255);', 'if (needle != trunc(needle) || !(needle >= 0 && needle <= 255)) { return -1; } unsigned char byte = (unsigned char)needle;', 'index_of'),
+    ('index_of_empty_past_end', buffer, '*start = length; return needle_length == 0;', '*start = length; return false;', 'index_of'),
+    ('index_of_view_owner', buffer, 'const unsigned char *data = buffer->data; size_t last = buffer->length - length;', 'const unsigned char *data = buffer->owner != NULL ? buffer->owner->data : buffer->data; size_t last = buffer->length - length;', 'index_of'),
 ]
 selection = sys.argv[1:]
 summary = []

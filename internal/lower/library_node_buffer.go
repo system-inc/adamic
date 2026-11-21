@@ -177,6 +177,8 @@ func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error
 		operation = "buffer_from"
 	case l.nodeBufferType(l.checker.GetTypeAtLocation(access.Expression), "Buffer") && (name == "slice" || name == "subarray"):
 		return l.nodeBufferSubarray(node, access.Expression, name)
+	case l.nodeBufferType(l.checker.GetTypeAtLocation(access.Expression), "Buffer") && name == "indexOf":
+		return l.nodeBufferIndexOf(node, access.Expression)
 	case l.nodeBufferType(l.checker.GetTypeAtLocation(access.Expression), "Buffer"):
 		if name != "toString" || len(args) > 3 {
 			return nil, true, l.notYet(node, "Buffer."+name+" outside the host census")
@@ -332,4 +334,72 @@ func (l *lowering) nodeBufferSubarray(node, receiver *ast.Node, name string) (ir
 		lowered = append(lowered, value)
 	}
 	return ir.TypedArraySubarray{Array: array, Arguments: lowered}, true, nil
+}
+
+// nodeBufferIndexOf lowers buffer.indexOf(value, byteOffset) to buffer_index_of, the first index at or
+// past byteOffset where value's bytes are, or -1, as Node's bidirectionalIndexOf finds it. A string
+// value is a literal free of lone surrogates, searched as its UTF-8 bytes, and a number is one byte,
+// masked to 8 bits; a Buffer or a Uint8Array value isn't here yet. The offset is held as number |
+// undefined, as nodeBufferSubarray holds its own, since an absent or explicit undefined one is Node's
+// default; its clamp is the runtime's (node_buffer.c). A Uint8Array's indexOf finds one element value,
+// never a string, and never reaches here: typedArrayExpression refuses it.
+func (l *lowering) nodeBufferIndexOf(node, receiver *ast.Node) (ir.Expression, bool, error) {
+	args := node.AsCallExpression().Arguments.Nodes
+	if len(args) < 1 || len(args) > 2 {
+		return nil, true, l.notYet(node, "Buffer.indexOf outside indexOf(value, byteOffset)")
+	}
+	for _, argument := range args {
+		if argument.Kind == ast.KindSpreadElement {
+			return nil, true, l.notYet(node, "Buffer.indexOf outside indexOf(value, byteOffset)")
+		}
+	}
+	// A ?. call meets optional_host_call.go's stop for a host method first (#3625x53); this one is the
+	// guard behind it.
+	if err := l.optionalCall(node); err != nil {
+		return nil, true, err
+	}
+	buffer, err := l.expression(receiver)
+	if err != nil {
+		return nil, true, err
+	}
+	value, err := l.expression(args[0])
+	if err != nil {
+		return nil, true, err
+	}
+	if value.Type() != ir.String && value.Type() != ir.Number {
+		return nil, true, l.notYet(args[0], "a Buffer.indexOf value that isn't a string or a number")
+	}
+	// Node v24.19.0 aborts on a string needle holding a lone surrogate (node_buffer.cc's IndexOfString
+	// asserts, J-0rck7xp), which no backend can do as Node does. So a string lowers only when it's a
+	// constant whose bytes are proven free of one: any other string, computed or read from a local, stops.
+	if value.Type() == ir.String {
+		constant, isConstant := value.(ir.StringConstant)
+		if !isConstant || holdsLoneSurrogate(l.result.Strings[constant.Index]) {
+			return nil, true, l.notYet(args[0], "a Buffer.indexOf string other than a literal free of lone surrogates, on which Node aborts,")
+		}
+	}
+	lowered := []ir.Expression{buffer, value}
+	if len(args) == 2 {
+		offset, err := l.expression(args[1])
+		if err != nil {
+			return nil, true, err
+		}
+		offset = fit(offset, ir.MaybeNumber)
+		if offset.Type() != ir.MaybeNumber {
+			return nil, true, l.notYet(args[1], "a Buffer.indexOf byteOffset that isn't number or undefined")
+		}
+		lowered = append(lowered, offset)
+	}
+	return ir.NodeBufferCall{Function: "buffer_index_of", Arguments: lowered, Returns: ir.Number}, true, nil
+}
+
+// holdsLoneSurrogate reports whether text, as Adamic holds it in WTF-8, holds a lone surrogate: 0xED, a
+// lead byte that never continues a sequence, followed by a byte from 0xA0 to 0xBF.
+func holdsLoneSurrogate(text string) bool {
+	for index := 0; index+1 < len(text); index++ {
+		if text[index] == 0xed && text[index+1] >= 0xa0 && text[index+1] <= 0xbf {
+			return true
+		}
+	}
+	return false
 }
