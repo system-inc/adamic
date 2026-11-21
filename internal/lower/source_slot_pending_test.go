@@ -163,8 +163,8 @@ console.log(String(first.kind));
 
 // Rule C's scalar arm (sourceSlotScalarWrite, #f95gkw2) holds its NotYet the same way: a write that can store
 // undefined or null into a nullable field held other than as an object stops where its statement is lowered,
-// and a generic function nothing instantiates writes nothing. A write that is no statement's whole expression has
-// no statement to wait for, so holdSourceSlotStop gives its stop at once. Mutant: holdSourceSlotStop gives
+// and a generic function nothing instantiates writes nothing. A write inside an expression waits on the statement
+// nearest it, through an arrow's expression body. Mutant: holdSourceSlotStop gives
 // its stop back at once, and "generic never instantiated" goes red.
 func TestSourceSlotPendingScalarArmHeldTheSameWay(t *testing.T) {
 	t.Parallel()
@@ -179,12 +179,18 @@ function clear(t: Nd, v: string | undefined): void {
 `
 	const stop = "main.ts:7:2: stage 0 can't lower writing undefined or null into a checked field, whose checked write can't change the representation its slot holds yet"
 	generic := strings.Replace(scalar, "function clear(t: Nd, v: string | undefined)", "function clear<V extends string | undefined>(t: Nd, v: V)", 1)
+	arrow := strings.Replace(scalar, "function clear(t: Nd, v: string | undefined): void {\n\tt.note = v;", "function clear(t: Nd, v: string | undefined): void {\n\tconst set = (u: Nd): void => void (u.note = v);\n\tset(t);", 1)
+	arrowGeneric := strings.Replace(arrow, "function clear(t: Nd, v: string | undefined)", "function clear<V extends string | undefined>(t: Nd, v: V)", 1)
 	returned := strings.Replace(scalar, "function clear(t: Nd, v: string | undefined): void {\n\tt.note = v;", "function clear(t: Nd, v: string | undefined): string | undefined {\n\treturn t.note = v;", 1)
 	judgeSourceSlotPending(t, []sourceSlotPendingRow{
 		{"generic never instantiated", generic + "console.log(String(n.kind));\n", ""},
 		{"called", scalar + "clear(n, undefined);\nconsole.log(String(n.kind));\n", stop},
-		// An older rule answers a returned assignment first (J-r1xhqka), so this row holds the write at 7:9 to a stop of
-		// its own, whichever rule gives it: a write that is no statement's whole expression never waits.
+		// A returned assignment waits on its return statement, and an older rule answers it first (J-r1xhqka).
 		{"returned assignment", returned + "console.log(String(n.kind));\n", "main.ts:7:9: stage 0 can't lower returning a property or element assignment yet"},
+		// tsc's utilities.ts:9006, the 322 units #rgrtt32's census stopped: the write sits in an arrow's expression
+		// body, so it waits on the variable statement that holds the arrow, which a generic function nothing
+		// instantiates never lowers. Mutant: sourceSlotWriteStatement stopping at the arrow, and this row goes red.
+		{"arrow body, generic never instantiated", arrowGeneric + "console.log(String(n.kind));\n", ""},
+		{"arrow body, lowered", arrow + "console.log(String(n.kind));\n", "main.ts:7:37: stage 0 can't lower writing undefined or null into a checked field, whose checked write can't change the representation its slot holds yet"},
 	})
 }
