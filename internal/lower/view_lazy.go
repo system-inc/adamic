@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"errors"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
@@ -46,7 +47,13 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 		}
 		family = "representation conversion"
 	}
-	// A failing family adapter may have reserved its recursive id already.
+	return l.unsupportedViewContract(target, family), nil
+}
+
+// unsupportedViewContract writes target's descriptor for family and gives its id. A failing family
+// adapter may have reserved target's recursive id already, with a contract it never finished, so the
+// descriptor takes that id and no later lookup of target finds the half-built one.
+func (l *lowering) unsupportedViewContract(target *checker.Type, family string) ir.ViewContractID {
 	id := l.result.ViewContractTypes[int(target.Id())]
 	descriptor := ir.ViewContract{Kind: ir.ViewUnknown, Name: l.checker.TypeToString(target), Unsupported: family}
 	if id == 0 {
@@ -56,7 +63,25 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 	} else {
 		l.result.ViewContracts[id-1] = descriptor
 	}
-	return id, nil
+	return id
+}
+
+// unbuiltFieldFamily begins the family of a field whose own contract couldn't be built, the rest
+// being why (unbuiltFieldContract). It's the field's alone: its object keeps a contract, and its
+// siblings their checks.
+const unbuiltFieldFamily = "field contract not built: "
+
+// unbuiltFieldContract is the field contract of a property whose type's contract build stopped with
+// err, inside an object's or a union's field loop: an unsupported descriptor naming err's reason,
+// never its place, so a demanded read of the field is NotYet in words of its own and the object
+// keeps its contract. Only a NotYet is the field's to hold; any other error is the object's, given
+// back.
+func (l *lowering) unbuiltFieldContract(field *checker.Type, err error) (ir.ViewContractID, error) {
+	var notYet *NotYet
+	if !errors.As(err, &notYet) {
+		return 0, err
+	}
+	return l.unsupportedViewContract(field, unbuiltFieldFamily+notYet.What), nil
 }
 
 func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
@@ -169,10 +194,31 @@ func (l *lowering) judgeCheckedViewReads(only func(ir.Property) bool) error {
 			}
 		}
 	}
+	// demanded is whether receiver may hold a viewed allocation, an unknown reach among them.
+	demanded := func(receiver ir.Expression) bool {
+		reaches := graph.ReachingAllocations(receiver)
+		held := unknown || reaches.Unknown
+		for _, site := range reaches.Sites {
+			held = held || viewed[site]
+		}
+		return held
+	}
 	var refused error
 	inspect := func(node any) bool {
 		if refused != nil {
 			return false
+		}
+		// A write through the view to a field whose own contract isn't built is NotYet where it's written,
+		// wherever its receiver may hold a viewed allocation, as the field's read is: no contract says what
+		// its slot may take (#rgrtt32). A widened judgment (only) judges reads alone.
+		if write, isWrite := node.(ir.SetProperty); isWrite {
+			if only == nil && write.ViewReceiverTypeID != 0 && program.CheckedField(write.ViewReceiverTypeID, write.Name) {
+				if why, unbuilt := strings.CutPrefix(viewFieldFamily(program, write.ViewReceiverTypeID, write.Name, unsupportedFields), unbuiltFieldFamily); unbuilt && demanded(write.Object) {
+					refused = &NotYet{Where: l.writeSiteWhere(write.Site), What: "a write through a checked view to field " + write.Name + " whose contract isn't built: " + why}
+					return false
+				}
+			}
+			return true
 		}
 		var receiver ir.Expression
 		var typeID, receiverTypeID int
@@ -208,12 +254,7 @@ func (l *lowering) judgeCheckedViewReads(only func(ir.Property) bool) error {
 		if family == "" {
 			return true
 		}
-		reaches := graph.ReachingAllocations(receiver)
-		demanded := unknown || reaches.Unknown
-		for _, site := range reaches.Sites {
-			demanded = demanded || viewed[site]
-		}
-		if demanded {
+		if demanded(receiver) {
 			if mutableViewArrayContract(program, contract, map[ir.ViewContractID]bool{}) || contract == 0 && mutableArrayFields[field] {
 				refused = &NotYet{Where: where, What: "a checked view of mutable array field " + field}
 				return false
@@ -232,6 +273,10 @@ func (l *lowering) judgeCheckedViewReads(only func(ir.Property) bool) error {
 				refused = &NotYet{Where: where, What: "a callable field " + field + " read through a checked view, which needs a check at the call (rulings.md:27)"}
 				return false
 			}
+			if why, unbuilt := strings.CutPrefix(family, unbuiltFieldFamily); unbuilt {
+				refused = &NotYet{Where: where, What: "a checked view read of field " + field + " whose contract isn't built: " + why}
+				return false
+			}
 			refused = &Refused{Where: where, What: "checked view read of field " + field + " with unsupported " + family + " contract", Fix: "prove or implement the " + family + " contract before reading this field"}
 		}
 		return true
@@ -244,6 +289,20 @@ func (l *lowering) judgeCheckedViewReads(only func(ir.Property) bool) error {
 		return refused
 	}
 	return unemittableCheckedViewRead(program, only)
+}
+
+// viewFieldFamily is the unsupported family of field name in the contract of a receiver of type
+// receiverTypeID, or, where that names none, of any contract's field of that name, as a read's
+// field-name fallback has it (judgeCheckedViewReads' unsupportedFields).
+func viewFieldFamily(program *ir.Program, receiverTypeID int, name string, unsupportedFields map[string]string) string {
+	if receiver := program.ViewContractTypes[receiverTypeID]; receiver != 0 {
+		for _, field := range program.ViewContracts[receiver-1].Fields {
+			if family := program.ViewContracts[field.Contract-1].Unsupported; field.Name == name && family != "" {
+				return family
+			}
+		}
+	}
+	return unsupportedFields[name]
 }
 
 // viewedAllocations is every allocation a view origin can reach, through the
