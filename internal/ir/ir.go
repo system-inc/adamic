@@ -891,8 +891,8 @@ type (
 		Array, Callback, Initial Expression
 		Element, Result          Type
 
-		// InitialTypeID and ArrayTypeID are the checker's ids of Initial's type and Array's, or 0 where
-		// lowering named none: what the cycle finder judges a callback whose targets are Unknown is
+		// InitialTypeID and ArrayTypeID are lowering's numbers for Initial's checker types and Array's, or
+		// 0 where it named none: what the cycle finder judges a callback whose targets are Unknown is
 		// handed by (lower's graphFlows, #x490w4a).
 		InitialTypeID, ArrayTypeID int
 	}
@@ -945,8 +945,8 @@ type (
 		FunctionType int
 		Returns      Type
 
-		// ArgumentTypeIDs is the checker's id of each argument's type, in order, or 0 where lowering
-		// named none, a spread's among them: what the cycle finder judges an argument to a function
+		// ArgumentTypeIDs is lowering's number for each argument's checker types, in order, or 0 where
+		// it named none, a spread's among them: what the cycle finder judges an argument to a function
 		// value whose targets are Unknown by (lower's graphFlows, #x490w4a). Shorter than Arguments
 		// where a call was made without it.
 		ArgumentTypeIDs []int

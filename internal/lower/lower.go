@@ -469,10 +469,10 @@ type lowering struct {
 	// (view_widened.go).
 	viewSources []viewSource
 	viewTypes   map[int]*checker.Type
-	// argumentTypes is, by the id an ArgumentTypeIDs, InitialTypeID or ArrayTypeID names, the argument's
-	// checker type and every slot an argument of that type was passed into, so graphFlows can judge an
-	// argument handed to a function value whose targets are Unknown (argumentTypeID, #x490w4a).
-	argumentTypes map[int][]*checker.Type
+	// argumentTypes is, at the number an ArgumentTypeIDs, InitialTypeID or ArrayTypeID names less one, an
+	// argument's checker type and the slot it's passed into, so graphFlows can judge an argument handed to
+	// a function value whose targets are Unknown (argumentTypeID, #x490w4a).
+	argumentTypes [][]*checker.Type
 	// viewSites is every property access, keyed write and named getter of the program's modules, in
 	// view's preorder, built once and shared by every lowering a latent run makes (view_sites.go,
 	// #q1hyhzc).

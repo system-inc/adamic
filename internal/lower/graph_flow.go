@@ -178,15 +178,15 @@ func (f *cycleFinder) graphFlows() error {
 	pending := []graphPending{}
 	// quietly is every argument passed to a function value whose targets are Unknown: no parameter it
 	// reaches has it as a source, so it's demanded at the call (#41vb71c), unless it holds no graph
-	// value. mayHold says whether an argument whose type id is id can: lowering named no type for it,
-	// or one of the types argumentTypes keeps by it can reach a graph type (#x490w4a).
+	// value. mayHold says whether an argument lowering numbered id can: it named no types for it, or one
+	// of the types argumentTypes keeps for it can reach a graph type (#x490w4a).
 	quietly := []ir.Expression{}
 	judged := map[*checker.Type]bool{}
 	mayHold := func(id int) bool {
-		if len(f.l.argumentTypes[id]) == 0 {
+		if id <= 0 || id > len(f.l.argumentTypes) || len(f.l.argumentTypes[id-1]) == 0 {
 			return true
 		}
-		for _, proven := range f.l.argumentTypes[id] {
+		for _, proven := range f.l.argumentTypes[id-1] {
 			if f.mayReachGraph(proven, judged) {
 				return true
 			}
@@ -639,10 +639,11 @@ func (l *lowering) argumentTypeIDs(arguments []*ast.Node) []int {
 	return ids
 }
 
-// argumentTypeID is the checker's id of an argument's type, kept in argumentTypes with the slot it's
-// passed into and any view a caller names, or 0 for a spread, which graphFlows follows whatever it
-// holds. A slot can hold more than the value's own type says: [] is a never[] where it's made, and a
-// callee whose parameter is a Node[] can push into it (#x490w4a).
+// argumentTypeID numbers an argument's types in argumentTypes, from 1: its own, the slot it's passed into
+// and any view a caller names. It's 0 for a spread, which graphFlows follows whatever it holds. The slot
+// can hold more than the value's own type says: a { n: undefined } passed as a { n: Node | undefined } can
+// be written a graph pointer. The number is lowering's own, never the checker's id, which the checker hands
+// out lazily, so the same program numbers the same however its cycle finder asked (#x490w4a).
 func (l *lowering) argumentTypeID(argument *ast.Node, views ...*checker.Type) int {
 	if argument == nil || argument.Kind == ast.KindSpreadElement {
 		return 0
@@ -651,16 +652,12 @@ func (l *lowering) argumentTypeID(argument *ast.Node, views ...*checker.Type) in
 	if proven == nil {
 		return 0
 	}
-	id := int(proven.Id())
-	if l.argumentTypes == nil {
-		l.argumentTypes = map[int][]*checker.Type{}
-	}
+	kept := []*checker.Type{proven}
 	keep := func(each *checker.Type) {
-		if each != nil && !slices.Contains(l.argumentTypes[id], each) {
-			l.argumentTypes[id] = append(l.argumentTypes[id], each)
+		if each != nil && !slices.Contains(kept, each) {
+			kept = append(kept, each)
 		}
 	}
-	keep(proven)
 	if slot := l.slotType(argument); slot != nil {
 		keep(l.concrete(slot))
 	}
@@ -669,5 +666,6 @@ func (l *lowering) argumentTypeID(argument *ast.Node, views ...*checker.Type) in
 			keep(l.concrete(view))
 		}
 	}
-	return id
+	l.argumentTypes = append(l.argumentTypes, kept)
+	return len(l.argumentTypes)
 }
