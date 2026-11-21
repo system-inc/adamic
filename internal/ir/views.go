@@ -106,6 +106,33 @@ type ViewContract struct {
 	Result            ViewContractID
 	// DiscardResult certifies an erased zero-argument marker; it cannot supply a valued result.
 	DiscardResult bool
+	// StaticsAdmitted lets a class constructor stand for this object (#s03ndgw): no field it names is
+	// a property of Function's or Object's, so each can only be a static the class declares. Lowering
+	// decides it from the checker; the runtime still asks that every required field be the class's
+	// own data static, and refuses it in a union a callable could also stand in.
+	StaticsAdmitted bool
+}
+
+// StaticsAdmittedReceiver is whether a write's static receiver, receiverTypeID, is an object a class
+// constructor may stand for (ViewContract.StaticsAdmitted). Such a view reads a class's statics and
+// never writes them, so each backend stops the write when the receiver is a class.
+func (p *Program) StaticsAdmittedReceiver(receiverTypeID int) bool {
+	id := p.ViewContractTypes[receiverTypeID]
+	return receiverTypeID != 0 && id > 0 && int(id) <= len(p.ViewContracts) && p.ViewContracts[id-1].StaticsAdmitted
+}
+
+// ObjectReadContract is the object contract a checked read expects outside a union, an interface's field
+// read straight from it, which no member selection reads: each backend stops a class constructor read
+// there unless the contract admits one (StaticsAdmitted) and the class owns every required field as a data
+// static (#s03ndgw), as a union's selection does. A read of another kind, or through a union, a nominal
+// class's or an unsupported contract, is false.
+func (p *Program) ObjectReadContract(read Property) (ViewContract, bool) {
+	id := read.ViewContract
+	if read.Of != Object || id <= 0 || int(id) > len(p.ViewContracts) {
+		return ViewContract{}, false
+	}
+	contract := p.ViewContracts[id-1]
+	return contract, contract.Kind == ViewObject && contract.Nominal == "" && contract.Unsupported == ""
 }
 
 type ViewFieldContract struct {
