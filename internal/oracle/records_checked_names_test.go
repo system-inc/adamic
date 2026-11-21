@@ -116,12 +116,10 @@ func TestCheckedNamesWidenedViewLie(t *testing.T) {
 		"field read failed: seen.total is not a number; expected number, found string")
 }
 
-// A field an interface merged with a class promises and the class doesn't initialize stays checked
-// through the merged class, and stops on the missing field where Node reads undefined. Mutant (f) reads
-// it as a slot: native stops on "a field the checker proved is there is missing", and the JavaScript
-// backend prints undefined.
+// A required field added by an interface merge stays checked through the merged
+// class. Reading its reserved but unwritten slot stops where Node reads undefined.
 func TestCheckedNamesMergedField(t *testing.T) {
 	t.Parallel()
-	const stop = "field read failed: box.label is not initialized; expected string, found missing"
+	const stop = "field read failed: box.label (class Box, interface merge) is not initialized; expected string, found missing"
 	checkedNamesStops(t, "merged_field.ts", "1\nundefined\n", "1\n", stop, stop)
 }
