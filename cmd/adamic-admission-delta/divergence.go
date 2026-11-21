@@ -85,27 +85,37 @@ func readRuledBackendDivergences(path string) (ruledBackendDivergenceList, error
 	return list, nil
 }
 
-// ran says a run is exactly this outcome: no execution error, and the same exit code, stdout and stderr.
-func (outcome backendOutcome) ran(o observation) bool {
-	return o.Error == "" && o.Exit == outcome.ExitCode && o.Stdout == outcome.Stdout && o.Stderr == outcome.Stderr
+// ran says a run is exactly this outcome: no execution error, and the same exit code, stdout and stderr, once the
+// outcome's {root} is the checkout the run judged, root, as a held stop's row writes it: a native stop that names its
+// program's file names it in the run's own scratch directory.
+func (outcome backendOutcome) ran(o observation, root string) bool {
+	rooted := func(output string) string { return strings.ReplaceAll(output, "{root}", root) }
+	return o.Error == "" && o.Exit == outcome.ExitCode && o.Stdout == rooted(outcome.Stdout) && o.Stderr == rooted(outcome.Stderr)
 }
 
-// acceptsRuledBackendDivergence says a run that disagrees with Node is a ruled divergence, when all three hold:
-// native and JavaScript agree with each other, as outputsAgree reads agreement (no execution error, the same exit
-// code and stdout); the program's path is a row's fixture, on a row that rules Node's side; and Node's run is
-// exactly that row's Node outcome, and native's its native outcome. The row's JavaScript outcome is carried but not
-// compared here: JavaScript is held to native's exit and stdout, as outputsAgree holds it, so the javascript column is
-// the oracle test's to check, never this one's. A program on no row is never one, whatever it prints, and nor is a
-// program at a row declaring a format: the delta lowers and runs every program as an ES module, and that row's runs
-// are its bundled image's, in the installed layout, with each lib directory written <lib>.
-func acceptsRuledBackendDivergence(path string, list ruledBackendDivergenceList, node, javascript, native observation) bool {
-	if javascript.Error != "" || native.Error != "" || javascript.Exit != native.Exit || javascript.Stdout != native.Stdout {
-		return false
-	}
+// acceptsRuledBackendDivergence says a run that disagrees with Node is a ruled divergence. The program's path is a
+// row's fixture, on a row that rules Node's side, and Node's run is exactly that row's Node outcome, and then one of
+// two holds. Native and JavaScript agree with each other, as outputsAgree reads agreement (no execution error, the
+// same exit code and stdout), and native's run is exactly the row's native outcome: the row's JavaScript outcome is
+// carried but not compared, since JavaScript is held to native's exit and stdout, as outputsAgree holds it, so the
+// javascript column is the oracle test's to check. Or the backends are apart, which a row rules where a test holds
+// them apart on purpose (a weak reference native frees where Node's collector hasn't run, #d358hc1), and then each
+// backend's run is exactly the row's, both columns compared, so neither moves unseen. A program on no row is never
+// one, whatever it prints, and nor is a program at a row declaring a format: the delta lowers and runs every program
+// as an ES module, and that row's runs are its bundled image's, in the installed layout, with each lib directory
+// written <lib>. root is the checkout the runs judged, for a row's {root}.
+func acceptsRuledBackendDivergence(path, root string, list ruledBackendDivergenceList, node, javascript, native observation) bool {
 	for _, row := range list.Divergences {
-		if row.Fixture == path && row.Node != nil && row.Format == "" {
-			return row.Node.ran(node) && row.Native.ran(native)
+		if row.Fixture != path || row.Node == nil || row.Format != "" {
+			continue
 		}
+		if !row.Node.ran(node, root) || !row.Native.ran(native, root) {
+			return false
+		}
+		if javascript.Error == "" && native.Error == "" && javascript.Exit == native.Exit && javascript.Stdout == native.Stdout {
+			return true
+		}
+		return row.JavaScript.ran(javascript, root)
 	}
 	return false
 }
