@@ -232,6 +232,14 @@ func (l *lowering) judgeCheckedViewReads(only func(ir.Property) bool) error {
 				refused = &NotYet{Where: where, What: "a callable field " + field + " read through a checked view, which needs a check at the call (rulings.md:27)"}
 				return false
 			}
+			// A field whose own contract is a class instance asks the read to check the value's class, which
+			// stage 0 doesn't build yet: a program that holds a real instance there runs on Node, so it's owed,
+			// never refused (#bfvq5hd, Language's u05; the Oct 19 principle).
+			if ownFamily == "nominal class" {
+				refused = &NotYet{Where: where, What: "a class instance field " + field + " of class " + program.ViewContracts[contract-1].Name +
+					" read through a checked view, which needs a check of the value's class at the read"}
+				return false
+			}
 			refused = &Refused{Where: where, What: "checked view read of field " + field + " with unsupported " + family + " contract", Fix: "prove or implement the " + family + " contract before reading this field"}
 		}
 		return true
