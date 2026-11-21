@@ -628,7 +628,7 @@
     {
       "path": "internal/oracle/testdata/records_checked_names/merged_field.ts",
       "stderr": "adamic: panic: field read failed: box.label is not initialized; expected string, found missing\n",
-      "hatch": "definite-assignment (interface merged with class promises a field the class never initializes), line 4: interface Box { readonly label: string }",
+      "hatch": "language (docs/rulings.md:126, \"Declaration merging that adds members to a class\"), line 4: interface Box { readonly label: string }",
       "test": "internal/oracle/records_checked_names_test.go: TestCheckedNamesMergedField"
     },
     {
