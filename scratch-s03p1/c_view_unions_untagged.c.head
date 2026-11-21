@@ -309,7 +309,7 @@ size_t adamic_view_untagged_plain_select(const adamic_object *object, const adam
 }
 
 void adamic_view_static_write(const adamic_object *object, const char *name) {
-    if (object == NULL || object->class == NULL || !object->class->is_static) { return; }
+    if (object == NULL || object->heap.kind != adamic_kind_object || object->class == NULL || !object->class->is_static) { return; }
     static const char prefix[] = "field write failed: a write to ", suffix[] = " through a checked view that holds a class constructor is not yet lowered";
     size_t capacity = sizeof prefix + strlen(name) + sizeof suffix;
     char *message = malloc(capacity);

@@ -28,7 +28,7 @@ contracts=internal/lower/view_contracts.go
 writes='TestViewStaticClassStops/(write|write_value_order|logical|compound|increment)\.ts'
 
 # gofmt -d prints any difference, so a FAIL shows what gofmt wants.
-step gofmt bash -c 'difference=$(gofmt -d internal/ir/views.go internal/lower/view_contracts.go internal/lower/view_unions_dispatch.go internal/lower/view_statics_admitted_test.go internal/native/view_unions_untagged.go internal/native/emit_statements.go internal/native/logical_assignment.go internal/native/view_fields.go internal/javascript/javascript.go internal/javascript/taste.go internal/javascript/readiness.go internal/javascript/view_fields.go internal/javascript/view_unions_read.go internal/javascript/view_unions_untagged.go internal/oracle/view_static_class_test.go internal/oracle/fx7_depth_texts_test.go stage3/census/latent/statecopy/ir_fields.go); printf "%s\n" "$difference"; test -z "$difference"'
+step gofmt bash -c 'difference=$(gofmt -d internal/ir/views.go internal/lower/view_contracts.go internal/lower/view_unions_dispatch.go internal/lower/view_statics_admitted_test.go internal/lower/lower.go internal/lower/cycles_scanning_reference_test.go internal/native/view_unions_untagged.go internal/native/emit_statements.go internal/native/logical_assignment.go internal/native/view_fields.go internal/javascript/javascript.go internal/javascript/taste.go internal/javascript/readiness.go internal/javascript/view_fields.go internal/javascript/view_unions_read.go internal/javascript/view_unions_untagged.go internal/oracle/view_static_class_test.go internal/oracle/fx7_depth_texts_test.go stage3/census/latent/statecopy/ir_fields.go); printf "%s\n" "$difference"; test -z "$difference"'
 step vet go vet ./internal/ir/ ./internal/lower/ ./internal/native/ ./internal/javascript/ ./internal/oracle/ ./stage3/census/latent/statecopy/
 
 # The pins at head.
@@ -40,6 +40,10 @@ step "review twin agrees" go test -count=1 -run 'TestReviewProgramsAgreeWithNode
 grep -E "^\s*--- (PASS|FAIL|SKIP)" "$TMPDIR/step.log" | head
 grep -qE "^\s*--- PASS: TestReviewProgramsAgreeWithNode_[0-9]+/fxspptb_oct9_native_p67_static_class_union_member" "$TMPDIR/step.log" && echo "PASS review twin ran" || { echo "FAIL review twin did not run and pass"; ok=0; }
 step "statecopy whole" go test -count=1 ./stage3/census/latent/statecopy/
+# finishViewStaticsAdmitted is a pass of its own: the scanning reference calls it in the same order, the
+# latent ledger lists it, and the cycle finder's equality compares both pipelines' IR, its flag included.
+step "pass tables" go test -count=1 -run 'TestScanningReferenceCallsEveryPass|TestCycleFinderEquality' ./internal/lower/
+step "latent ledger" go test -count=1 -run 'TestLatentPassLedger' ./stage3/census/latent/
 
 # The views already pinned.
 step "oracle views" go test -count=1 -run 'View|view|Interface|Fx7|fx7|FX7' ./internal/oracle/

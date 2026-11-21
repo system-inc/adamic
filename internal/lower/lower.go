@@ -358,6 +358,9 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 	if err := checkFlowLiveness(lowering.result, lowering.flowDead); err != nil {
 		return nil, err
 	}
+	// Once no pass builds or changes a view contract: each admission reads its fields' finished
+	// contracts, and only the emitters read it (finishViewStaticsAdmitted).
+	lowering.finishViewStaticsAdmitted()
 	return lowering, nil
 }
 

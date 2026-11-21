@@ -12,7 +12,9 @@ flag any relation in the program sets, so a body alone can't measure it, and it'
 the whole program's allocation graph every write admitted only where each allocation
 reaching it holds its field's slot, the writes `checkViewOptionalWrites` and
 `checkKindUnionWriteReach` judged among them (#w8nanzw), so a body lowered on its own
-records it as not run.
+records it as not run. `finishViewStaticsAdmitted`, after `checkFlowLiveness`, sets
+each view contract's `StaticsAdmitted` from the finished table (#s03ndgw), a flag only
+the emitters read, so a body lowered on its own records it as not run too.
 
 Each independently attempted unit gets `pass_ledger` beside its status and
 instantiation metadata in the census JSONL. First-error, full and speculative

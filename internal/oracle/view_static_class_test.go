@@ -38,6 +38,9 @@ var viewStaticClassStops = []viewStaticClassStop{
 	{name: "call_field.ts", stdout: "before\n", stderr: viewStaticClassNoMember},
 	// Lowering refuses the read of a union a callable could also stand in: its contract is unsupported.
 	{name: "callable_union.ts", lowering: "unsupported representation conversion contract"},
+	// A static declared wider than Inner's count, holding a string, stops at lowering today (class_static.go).
+	// Pinned for its own sake: when wide statics get native slots, the view's check must still stop it.
+	{name: "wide_static.ts", lowering: "a static field without a native slot"},
 	// The check lowering puts on a narrowed local (localRead, internal/lower/locals.go) asks typeof === 'object'
 	// of what the read put back, and a class answers 'function'. It awaits a follow-up there.
 	{name: "narrowed_read.ts", stderr: "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n"},
@@ -170,7 +173,7 @@ func TestViewStaticClassProgramsAreAllRun(t *testing.T) {
 			t.Errorf("%s is named %d times by the tests, want once", entry.Name(), named[entry.Name()])
 		}
 	}
-	if programs != 17 || len(named) != 17 {
-		t.Fatalf("%d programs in %s and %d named, want 17: a program added or removed needs this count changed with it", programs, viewStaticClassDirectory, len(named))
+	if programs != 18 || len(named) != 18 {
+		t.Fatalf("%d programs in %s and %d named, want 18: a program added or removed needs this count changed with it", programs, viewStaticClassDirectory, len(named))
 	}
 }

@@ -107,7 +107,6 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 
 			contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: property.Name, Contract: child, Optional: property.Flags&ast.SymbolFlagsOptional != 0, Readonly: l.checker.IsReadonlySymbol(property)})
 		}
-		contract.StaticsAdmitted = contract.Kind == ir.ViewObject && l.viewStaticsAdmitted(contract)
 	}
 
 	l.result.ViewContracts[int(id)-1] = contract
@@ -119,9 +118,9 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 // gives every constructor (name, length, prototype, call, toString, constructor and the rest), asked of
 // the checker by name, so the library says which. GetPropertyOfType on Function's interface finds
 // Object's members too, and objectPrototypeName adds the __proto__ family the library doesn't declare.
-// A field the loop left unbuilt or unsupported, an unsupported contract, one with no field, or a
-// library without Function to ask leaves it false. Run time still asks that each required field be the
-// class's own data static (view_unions_untagged.c).
+// A field whose finished contract is missing, unknown or unsupported, an unsupported contract, one with
+// no field, or a library without Function to ask leaves it false. Run time still asks that each
+// required field be the class's own data static (view_unions_untagged.c).
 func (l *lowering) viewStaticsAdmitted(contract ir.ViewContract) bool {
 	function := l.checker.GetGlobalSymbol("Function", ast.SymbolFlagsInterface, nil)
 	if function == nil || contract.Unsupported != "" || len(contract.Fields) == 0 {
@@ -140,6 +139,21 @@ func (l *lowering) viewStaticsAdmitted(contract ir.ViewContract) bool {
 		}
 	}
 	return true
+}
+
+// finishViewStaticsAdmitted sets StaticsAdmitted on every contract once the table is finished, after
+// lowering's last pass, so viewStaticsAdmitted reads each field's settled contract. Set inside a
+// contract's own field loop, a field whose contract is a back edge to an ancestor still being built
+// would read that ancestor's placeholder, and stay true once the ancestor was made Unknown or
+// Unsupported. It's an object's (strictViewContract) or an object union's (buildUnionReadContract,
+// which StaticsAdmittedReceiver reads for a write), never a fixed tuple's, whose positions no class
+// constructor holds.
+func (l *lowering) finishViewStaticsAdmitted() {
+	for index, contract := range l.result.ViewContracts {
+		object := contract.Kind == ir.ViewObject && !contract.FixedTuple
+		union := contract.Kind == ir.ViewUnion && contract.Of == ir.Object
+		l.result.ViewContracts[index].StaticsAdmitted = (object || union) && l.viewStaticsAdmitted(contract)
+	}
 }
 
 func (l *lowering) viewContractLiterals(target *checker.Type) []ir.ViewLiteral {

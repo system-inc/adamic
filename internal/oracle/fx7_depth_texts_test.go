@@ -44,7 +44,7 @@ func TestFX7Depth2000(t *testing.T) { t.Parallel(); fx7Depth(t, "depth-2000") }
 
 // p67's class constructor is the view's Inner, every field Inner names a data static Klass owns, so it reads as
 // Node reads it (#s03ndgw), where it used to stop at viewed.value, found function.
-func TestFX7P67(t *testing.T) { t.Parallel(); fx7Depth(t, "p67") }
+func TestFX7StaticClassAgreesWithNode(t *testing.T) { t.Parallel(); fx7Depth(t, "p67") }
 
 func init() {
 	for _, name := range []string{"depth-65", "depth-200", "depth-2000", "p09", "p32", "p33", "p67", "p72", "scalar-tuple", "scalar-static"} {

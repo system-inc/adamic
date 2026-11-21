@@ -41,7 +41,6 @@ func buildUnionReadContract(l *lowering, node *ast.Node, target *checker.Type, b
 		if contract.Unsupported == "" && !l.supportsUntaggedRead(contract) {
 			contract.Unsupported = "untagged object union"
 		}
-		contract.StaticsAdmitted = l.viewStaticsAdmitted(contract)
 	}
 	l.result.ViewContracts[id-1] = contract
 	return id, nil
