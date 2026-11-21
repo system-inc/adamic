@@ -218,9 +218,8 @@ func measureSnapshot(request writeRequest, previous *snapshot) (snapshot, error)
 	if err != nil {
 		return snapshot{}, err
 	}
-	if archivesBuilt > 0 && request.log != nil {
-		// Never a field in the file: an untimed build's cost, for whoever sizes the measure against its budget.
-		fmt.Fprintf(request.log, "adamic-performance: execute builds: %d runtime archives built (feature sets differ from hello's)\n", archivesBuilt)
+	if line := archivesLine(archivesBuilt); line != "" && request.log != nil {
+		fmt.Fprint(request.log, line)
 	}
 	loadAfter, err := loadAverage()
 	if err != nil {
