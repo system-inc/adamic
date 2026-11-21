@@ -19,6 +19,47 @@ func (e *emitter) viewUntaggedObjectUnion(property ir.Property, object string) {
 	e.line("(void)adamic_view_untagged_plain_select((const adamic_object *)%s, %s, %d, %d, %s, %s);", object, name, count, property.ViewContract, cString(property.View), cString(property.ViewType))
 }
 
+// staticViewWrite stops a write through a view a class constructor may stand for, when object is one
+// (ir.Program's StaticsAdmittedReceiver): such a view reads a class's statics and never writes them.
+// It runs after the receiver and the value are evaluated, before the write, as the JavaScript
+// backend's staticViewWrite does.
+func (e *emitter) staticViewWrite(statement ir.SetProperty, object string) {
+	if !e.program.StaticsAdmittedReceiver(statement.ViewReceiverTypeID) {
+		return
+	}
+	e.declarations = append(e.declarations, "#include \"view_unions_untagged.h\"")
+	e.line("adamic_view_static_write((const adamic_object *)%s, %s);", object, cString(statement.Name))
+}
+
+// staticViewRead stops value, a checked read's object, when it's a class constructor its object contract
+// doesn't admit (ir.Program's ObjectReadContract): a class constructor is an object here, so the read's
+// own kind test passes one, where the JavaScript backend's adamicViewField finds a function. Admitted, it
+// is the object read when it owns every required field as a data static, as plain_matches admits one.
+func (e *emitter) staticViewRead(property ir.Property, value string) {
+	contract, checked := e.program.ObjectReadContract(property)
+	if !checked {
+		return
+	}
+	required := []string{}
+	for _, field := range contract.Fields {
+		if !field.Optional {
+			required = append(required, cString(field.Name))
+		}
+	}
+	names := "NULL"
+	if contract.StaticsAdmitted && len(required) != 0 {
+		names = "(const char *const[]){" + strings.Join(required, ", ") + "}"
+	} else {
+		required = nil
+	}
+	expected := property.ViewType
+	if expected == "" {
+		expected = "object"
+	}
+	e.declarations = append(e.declarations, "#include \"view_unions_untagged.h\"")
+	e.line("adamic_view_static_read((const adamic_object *)%s, %t, %s, %d, %s, %s);", value, contract.StaticsAdmitted, names, len(required), cString(property.View), cString(expected))
+}
+
 func (e *emitter) viewUntaggedContracts() (string, int) {
 	if len(e.program.ViewContracts) == 0 {
 		return "NULL", 0
@@ -109,7 +150,7 @@ func (e *emitter) viewUntaggedContracts() (string, int) {
 				fmt.Fprintf(&declarations, "static const adamic_view_untagged_callable_producer %s[] = {%s};\n", contractProducers, strings.Join(allowedProducers, ","))
 			}
 		}
-		rows = append(rows, fmt.Sprintf("{%d,%d,%t,%s,%d,%s,%d,%s,%d,%d,%s,%s,%d,%t,%d}", kind, contract.Of, contract.Undefined, allowed, len(contract.Allowed), fields, len(contract.Fields), members, len(contract.Members), contract.Element, callable, contractProducers, contractProducerCount, contract.FixedTuple, len(contract.Tuple)))
+		rows = append(rows, fmt.Sprintf("{%d,%d,%t,%s,%d,%s,%d,%s,%d,%d,%s,%s,%d,%t,%d,%t}", kind, contract.Of, contract.Undefined, allowed, len(contract.Allowed), fields, len(contract.Fields), members, len(contract.Members), contract.Element, callable, contractProducers, contractProducerCount, contract.FixedTuple, len(contract.Tuple), contract.StaticsAdmitted))
 	}
 	fmt.Fprintf(&declarations, "static const adamic_view_untagged_contract %s[] = {%s};\n", name, strings.Join(rows, ","))
 	if !exists {

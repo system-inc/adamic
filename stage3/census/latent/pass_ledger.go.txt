@@ -80,6 +80,10 @@ var latentPostLoweringSteps = []latent.PassStep{
 	// undefined or null wherever its statement was lowered (#5qx6qv4). The writes are held by the view walk over
 	// the whole program, so a body lowered on its own is recorded as not run, as certifySourceSlots is.
 	{Name: "checkSourceSlotPending"},
+	// finishViewStaticsAdmitted sets each object contract's StaticsAdmitted once the view contract table
+	// is finished (#s03ndgw): it rewrites only that flag, which no pass reads, only the emitters, so a body
+	// lowered on its own is recorded as not run, as checkFlowLiveness is.
+	{Name: "finishViewStaticsAdmitted"},
 }
 
 // Finalized with the unit status and instantiation metadata, once all modes have
