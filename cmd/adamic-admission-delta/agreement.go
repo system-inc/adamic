@@ -100,6 +100,10 @@ type agreementReport struct {
 	VoidReason        string                     `json:"void_reason,omitempty"`
 }
 
+// nativeWarmLimit bounds the one native build that makes the runtime's archives before the run's own builds: the
+// archives of a sanitized build from a cold cache, which take a box minutes, never a program's 45 s.
+const nativeWarmLimit = 15 * time.Minute
+
 // agreementIgnores is every flag of the delta's that the agreement mode never reads, in the order it names them. Each
 // is refused rather than passed over, so a run can't look as if a base, a filter or a budget shaped it.
 var agreementIgnores = []string{"base", "base-binary", "base-lower-binary", "corpus", "corpus-filter", "budget", "seed", "manifest-generator", "manifest-generator-revision"}
@@ -223,7 +227,15 @@ func runAgreement(agreement agreementRun) error {
 			break
 		}
 	}
-	runner := &programRunner{headTree: headTree, scratch: scratch, compiler: compiler, limit: agreement.limit, nativeFlags: []string{"--sanitize"}, nativeEnv: []string{"ASAN_OPTIONS=detect_leaks=0"}, negatives: agreement.negatives, runtimeStops: agreement.runtimeStops, divergences: agreement.divergences, jsonTypes: jsonTypesTool(agreement.root, scratch, result.Head, agreement.jsonTypesBinary)}
+	runner := &programRunner{headTree: headTree, scratch: scratch, compiler: compiler, limit: agreement.limit, nativeFlags: []string{"--sanitize"}, nativeEnv: []string{"ASAN_OPTIONS=detect_leaks=0"}, negatives: agreement.negatives, runtimeStops: agreement.runtimeStops, divergences: agreement.divergences, jsonTypes: jsonTypesTool(agreement.root, scratch, result.Head, agreement.jsonTypesBinary), compileLimit: agreement.compileLimit}
+	// One native build first, with room to make the runtime's archives, so no program's own build has to.
+	if clang && accepted > 0 {
+		progress("building the native runtime")
+		if err := runner.warmNative(nativeWarmLimit); err != nil {
+			voids = append(voids, err.Error())
+			clang = false
+		}
+	}
 	// Accepted programs run on agreement.workers at once, a corpus being thousands of sanitized builds. Each worker
 	// writes only its own program's record, stale and failed slot, and scratch files named by the program's index; the
 	// counting and the lines wait for the pool, in manifest order, so the output is the same whatever order the
