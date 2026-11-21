@@ -378,6 +378,18 @@
       "ruling_task": "#0sps03r",
       "lifting_task": "#fzv1zwa",
       "stderr": "adamic: panic: __proto__ isn't read by a run-time key yet (reading '__proto__')\n"
+    },
+    "52e12f2ed5c200043e7e1b97848dc7c877158eb12358f21cdfdad647d75e0b30": {
+      "path": "internal/oracle/testdata/reflect_get/stop_host_watcher.a",
+      "ruling_task": "#0sps03r",
+      "lifting_task": "#zhrjf2t",
+      "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'close')\n"
+    },
+    "43cd2eaccbb759c5ea9617329aee146961ca619ed573bd5ef022c1f86ebb8894": {
+      "path": "internal/oracle/testdata/rest_fixed_view/r21_host_rest_widened.a",
+      "ruling_task": "#995spev",
+      "lifting_task": "#8q1pjsp",
+      "stderr": "adamic: panic: a host function called with more arguments than it forwards isn't built yet\n"
     }
   }
 }
