@@ -199,3 +199,22 @@ func TestPerformanceNoteNamesNewGoneAndRejudgedExecutePrograms(t *testing.T) {
 		t.Errorf("note %q, want %q", got, want)
 	}
 }
+
+// Against a snapshot from before the execute half was measured, its {} with no rounds, the compile half compares as
+// ever and the execute half is named once, as first measured: its round count isn't another one, and its programs
+// aren't each new. Mutants: execute.rounds compared against the 0, and the note reads not compared; every program
+// named new.
+func TestPerformanceNoteNamesAnExecuteHalfFirstMeasured(t *testing.T) {
+	t.Parallel()
+	trees := spread{Median: 1301, Min: 1290, Max: 1320}
+	onNode := spread{Median: 2032, Min: 2000, Max: 2050}
+	previous := noteSnapshot(earlierCommit, timed("hello", spread{Median: 349, Min: 340, Max: 362}, spread{Median: 45, Min: 44, Max: 47}))
+	current := executeNoteSnapshot(laterCommit, executed("trees", "user", trees, onNode), executed("sort", "user", trees, onNode))
+	if got, want := compareNote(&previous, current), "level against 1ed745b; execute first measured"; got != want {
+		t.Errorf("note %q, want %q", got, want)
+	}
+	current.Compile.Programs[0].Program.WarmBuild = spread{Median: 500, Min: 480, Max: 520}
+	if got, want := compareNote(&previous, current), "hello warmBuild 349 to 500 ms (slower); execute first measured"; got != want {
+		t.Errorf("note %q, want %q", got, want)
+	}
+}
