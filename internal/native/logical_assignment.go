@@ -97,6 +97,8 @@ func (e *emitter) logicalAssignment(expression ir.LogicalAssignment) string {
 			e.writeProperty(write, receiver, value, owned...)
 			break
 		}
+		// After the right side, as writeProperty's guard is, so both backends print what it prints first.
+		e.staticViewWrite(write, receiver)
 		e.line("adamic_object_check_write(%s, %s);", receiver, key)
 		// A frozen object's TypeError lets go of the right side's temporaries on the way out.
 		if e.program.FrozenWriteMayThrow(write) {

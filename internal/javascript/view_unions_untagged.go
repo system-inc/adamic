@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/system-inc/adamic/internal/ir"
+	"strconv"
 	"strings"
 )
 
@@ -46,17 +47,22 @@ func (e *emitter) viewUntaggedObjectUnion(property ir.Property, value string) st
 	return fmt.Sprintf("((adamicUntaggedValue) => { %s; adamicUntaggedPlainSelect(adamicUntaggedValue, %s, %d, %s, %s); return adamicUntaggedValue; })(%s)", unionCallableShapeRuntime+viewUntaggedPlainRuntime+"; const adamicUntaggedCallableRecorded=(value)=>"+e.unionCallableRecorded("value"), string(encoded), property.ViewContract, quote(property.View), quote(property.ViewType), value)
 }
 
-const viewUntaggedPlainRuntime = `
+// The closure representation is ir.Closure's number, spelled from Go so the runtime can't drift from it.
+var viewUntaggedPlainRuntime = `
 const adamicUntaggedPlainSelect = (value, contracts, id, expression, declared, element = false) => {
  if(value===undefined && contracts[id-1]?.Undefined) return element ? true : 0;
- const slot = (object,name) => {
-  if(object===null || typeof object!=='object' || object instanceof Map) return undefined;
+ // A class constructor keeps its stop in a union a callable could stand in: a callable or closure member,
+ // or one native's table names unknown (a nominal or unsupported one), as plain_union_holds_callable reads it.
+ const callable=(union)=>(union?.Members || []).some(member=>{const held=contracts[member-1];return held===undefined || held.Kind===0 || held.Kind===5 || held.Of===` + strconv.Itoa(int(ir.Closure)) + ` || !!held.Nominal || (!!held.Unsupported && held.Unsupported!=='untagged object union');});
+ // statics reads a class constructor its contract admitted (StaticsAdmitted). Own data only, as for an object.
+ const slot = (object,name,statics=false) => {
+  if(object===null || (typeof object!=='object' && !(statics && adamicViewConstructor(object))) || object instanceof Map) return undefined;
   const field=Object.getOwnPropertyDescriptor(object,name);
   if(field===undefined || !Object.hasOwn(field,'value') || adamicFieldReadiness.get(object)?.has(name)) return undefined;
   return field;
  };
  const active=new Map();
- const matches=(value,id,depth=0)=>{
+ const matches=(value,id,depth=0,statics=true)=>{
   // A defined value can only use the non-undefined arm of this optional union.
   // Resolve it in this frame, leaving branching unions to ordinary backtracking.
   const optional=contracts[id-1];
@@ -65,7 +71,7 @@ const adamicUntaggedPlainSelect = (value, contracts, id, expression, declared, e
    if(contracts[left-1]?.Kind===7){id=right;depth++;}
    else if(contracts[right-1]?.Kind===7){id=left;depth++;}
   }
-  const reference=value!==null && typeof value==='object';
+  const reference=value!==null && (typeof value==='object' || typeof value==='function' && adamicViewConstructor(value));
   let seen=reference ? active.get(value) : undefined;
   if(seen?.has(id)) return true;
   if(reference){if(seen===undefined){seen=new Set();active.set(value,seen);}seen.add(id);}
@@ -89,22 +95,25 @@ const adamicUntaggedPlainSelect = (value, contracts, id, expression, declared, e
   if(contract.Kind===3) return Array.isArray(value) && !adamicTupleObjects.has(value);
   if(contract.Kind===6) return value===null;
   if(contract.Kind===7) return value===undefined;
-  if(contract.Kind===4){for(const member of contract.Members || []){if(matches(value,member,depth+1)) return true;}return false;}
+  if(contract.Kind===4){for(const member of contract.Members || []){if(matches(value,member,depth+1,!callable(contract))) return true;}return false;}
   if(contract.Kind===2 && contract.Of===10) return value!==null && (typeof value==='object' || typeof value==='function' || value instanceof AdamicClosure);
-  if(contract.Kind!==2 || value===null || typeof value!=='object' || (Array.isArray(value) && !adamicTupleObjects.has(value)) || value instanceof Map) return false;
+  // A class constructor stands for an object whose contract admits one, outside a union a callable could
+  // stand in, when every required field is its own data static: never an accessor, never one only a base declares.
+  const admitted=statics && contract.Kind===2 && contract.StaticsAdmitted===true && adamicViewConstructor(value) && (contract.Fields || []).every(field=>field.Optional || slot(value,field.Name,true)!==undefined);
+  if(!admitted && (contract.Kind!==2 || value===null || typeof value!=='object' || (Array.isArray(value) && !adamicTupleObjects.has(value)) || value instanceof Map)) return false;
   if(contract.FixedTuple && (!Array.isArray(value) || !adamicTupleObjects.has(value) || value.length !== contract.Tuple.length)) return false;
   const fields=contract.Fields || [];
   const ownKind=fields.find(field=>field.Name==='kind' && !field.Optional && contracts[field.Contract-1]?.Kind===1 && [1,2,3].includes(contracts[field.Contract-1]?.Of));
-  if(ownKind){const actual=slot(value,'kind');return actual!==undefined && matches(actual.value,ownKind.Contract,depth+1);}
+  if(ownKind){const actual=slot(value,'kind',admitted);return actual!==undefined && matches(actual.value,ownKind.Contract,depth+1);}
   const tags=fields.filter(field=>!field.Optional && contracts[field.Contract-1]?.Kind===1 && contracts[field.Contract-1]?.Allowed?.length);
-  if(tags.length) return tags.every(field=>{const actual=slot(value,field.Name);return actual!==undefined && matches(actual.value,field.Contract,depth+1);});
-  for(const field of fields){const actual=slot(value,field.Name);if(!(actual===undefined ? field.Optional && !Object.hasOwn(value,field.Name) : matches(actual.value,field.Contract,depth+1))) return false;}
+  if(tags.length) return tags.every(field=>{const actual=slot(value,field.Name,admitted);return actual!==undefined && matches(actual.value,field.Contract,depth+1);});
+  for(const field of fields){const actual=slot(value,field.Name,admitted);if(!(actual===undefined ? field.Optional && !Object.hasOwn(value,field.Name) : matches(actual.value,field.Contract,depth+1))) return false;}
   return true;
   } finally {if(reference){seen.delete(id);if(seen.size===0) active.delete(value);}}
  };
  if(element) return matches(value,id);
  if(contracts[id-1].FixedTuple && matches(value,id)) return id;
- for(const member of contracts[id-1].Members || []){if(matches(value,member)) return member;}
+ for(const member of contracts[id-1].Members || []){if(matches(value,member,0,!callable(contracts[id-1]))) return member;}
  panic('field read failed: '+expression+' matches no member of '+declared+'; expected '+declared+', found '+(value===null?'null':value===undefined?'undefined':Array.isArray(value)?'array':value instanceof Map?'Map':adamicTypeOf(value)));
 };
 `

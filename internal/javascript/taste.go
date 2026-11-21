@@ -15,6 +15,9 @@ func (e *emitter) logicalAssignment(expression ir.LogicalAssignment) string {
 		if expression.Key == nil && e.program.CheckedField(write.ViewReceiverTypeID, write.Name) && !write.Define && !write.Uninitialized {
 			return e.viewedLogicalAssignment(expression, write)
 		}
+		if e.program.StaticsAdmittedReceiver(write.ViewReceiverTypeID) {
+			return e.guardedLogicalAssignment(expression, write)
+		}
 		target, right = e.value(write.Object), e.value(write.Value)
 		if expression.Key != nil {
 			target += "[" + e.value(expression.Key) + "]"
@@ -44,6 +47,20 @@ func (e *emitter) viewedLogicalAssignment(expression ir.LogicalAssignment, write
 	receiver, current, value := e.temporary(), e.temporary(), e.temporary()
 	kept := map[string]string{"&&=": "!" + current, "||=": current, "??=": current + " !== null && " + current + " !== undefined"}[expression.Operator]
 	return fmt.Sprintf("((%s) => { const %s = %s; if (%s) return %s; const %s = %s; %s; return %s; })(%s)", receiver, current, e.checkedViewFieldAt(read, receiver), kept, current, value, e.value(write.Value), e.checkedViewWrite(write, receiver, value), value, e.value(write.Object))
+}
+
+// guardedLogicalAssignment is a plain logical assignment through a view a class constructor may stand for,
+// in native's order: the receiver and key once, the read, and only when the operator takes the write, the
+// right side, the guard (staticViewWrite), then the write.
+func (e *emitter) guardedLogicalAssignment(expression ir.LogicalAssignment, write ir.SetProperty) string {
+	receiver, key, current, value := e.temporary(), e.temporary(), e.temporary(), e.temporary()
+	name := quote(write.Name)
+	if expression.Key != nil {
+		name = e.value(expression.Key)
+	}
+	kept := map[string]string{"&&=": "!" + current, "||=": current, "??=": current + " !== null && " + current + " !== undefined"}[expression.Operator]
+	assign := func(object, value string) string { return object + "[" + key + "] = " + value }
+	return fmt.Sprintf("((%s, %s) => { const %s = %s[%s]; if (%s) return %s; const %s = %s; %s; return %s; })(%s, %s)", receiver, key, current, receiver, key, kept, current, value, e.value(write.Value), e.staticViewWrite(write, receiver, value, assign), value, e.value(write.Object), name)
 }
 
 func (e *emitter) effects(expression ir.Effects) string {

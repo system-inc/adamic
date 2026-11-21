@@ -46,5 +46,21 @@ func throughOptionalReceiver(e *emitter, property ir.Property, object string, re
 
 // checkedViewWrite is object.name = value through a checked view, both already evaluated.
 func (e *emitter) checkedViewWrite(statement ir.SetProperty, object, value string) string {
-	return fmt.Sprintf("adamicViewWrite(%s, %s, %s, %d, %s)", object, quote(statement.Name), value, viewFieldRepresentation(statement.Value), quote(statement.DeclaredType))
+	write := func(object, value string) string {
+		return fmt.Sprintf("adamicViewWrite(%s, %s, %s, %d, %s)", object, quote(statement.Name), value, viewFieldRepresentation(statement.Value), quote(statement.DeclaredType))
+	}
+	return e.staticViewWrite(statement, object, value, write)
+}
+
+// staticViewWrite is write(object, value), stopped first when a view a class constructor may stand for
+// holds one (ir.Program's StaticsAdmittedReceiver), as native's adamic_view_static_write stops it: such a
+// view reads a class's statics and never writes them. Native evaluates the receiver, then the value, then
+// guards, so here the two are each evaluated once, in that order, before the guard.
+func (e *emitter) staticViewWrite(statement ir.SetProperty, object, value string, write func(object, value string) string) string {
+	if !e.program.StaticsAdmittedReceiver(statement.ViewReceiverTypeID) {
+		return write(object, value)
+	}
+	held, assigned := e.temporary(), e.temporary()
+	stop := quote("field write failed: a write to " + statement.Name + " through a checked view that holds a class constructor is not yet lowered")
+	return fmt.Sprintf("((%s, %s) => { if (adamicViewConstructor(%s)) panic(%s); return %s; })(%s, %s)", held, assigned, held, stop, write(held, assigned), object, value)
 }

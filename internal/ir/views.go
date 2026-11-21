@@ -106,6 +106,19 @@ type ViewContract struct {
 	Result            ViewContractID
 	// DiscardResult certifies an erased zero-argument marker; it cannot supply a valued result.
 	DiscardResult bool
+	// StaticsAdmitted lets a class constructor stand for this object (#s03ndgw): no field it names is
+	// a property of Function's or Object's, so each can only be a static the class declares. Lowering
+	// decides it from the checker; the runtime still asks that every required field be the class's
+	// own data static, and refuses it in a union a callable could also stand in.
+	StaticsAdmitted bool
+}
+
+// StaticsAdmittedReceiver is whether a write's static receiver, receiverTypeID, is an object a class
+// constructor may stand for (ViewContract.StaticsAdmitted). Such a view reads a class's statics and
+// never writes them, so each backend stops the write when the receiver is a class.
+func (p *Program) StaticsAdmittedReceiver(receiverTypeID int) bool {
+	id := p.ViewContractTypes[receiverTypeID]
+	return receiverTypeID != 0 && id > 0 && int(id) <= len(p.ViewContracts) && p.ViewContracts[id-1].StaticsAdmitted
 }
 
 type ViewFieldContract struct {

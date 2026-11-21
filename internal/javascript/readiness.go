@@ -6,6 +6,8 @@ import "fmt"
 const fieldReadinessRuntime = `const adamicTupleObjects = new WeakSet();
 const adamicTuple = (values) => { adamicTupleObjects.add(values); return values; };
 const adamicViewObject = (value) => value !== null && typeof value === "object" && (!Array.isArray(value) || adamicTupleObjects.has(value)) && !(value instanceof Map);
+// A class constructor: a function here, an object natively. A view admits one only where its object's contract says StaticsAdmitted.
+const adamicViewConstructor = (value) => typeof value === "function" && typeof adamicClassIdentities !== "undefined" && typeof adamicClasses !== "undefined" && adamicClasses[adamicClassIdentities.get(value) - 1]?.static === true;
 const adamicFieldReadiness = new WeakMap();
 const adamicFieldRepresentations = new WeakMap();
 const adamicRecordFieldTypes = (object, types) => { adamicFieldRepresentations.set(object, {...adamicFieldRepresentations.get(object), ...types}); return object; };
