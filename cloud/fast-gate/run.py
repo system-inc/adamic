@@ -459,6 +459,91 @@ def darwinCompilers(tools, tree):
     return sorted(compilers)
 
 
+# darwinVetEnvironment is the darwin vet's build (#gmrwkze, Adamic Loom's ruling): the pool Mac's GOOS and GOARCH, cgo
+# off, since the standard library's cgo on darwin needs a darwin C toolchain no Linux box has, and no Go file of the
+# tree carries a cgo constraint or imports C under internal/apple, so the files it compiles are the leg's (J-75vvc8r on
+# Nov 21: the same answer for add69cbc59 as a Mac's, witness_test.go's undefined native.Options). It reaches the phase's
+# key through the gate tools commit, as every constant of run.py does: the planner's key carries only ADAMIC_ switches
+# in its env (adamic-loom planner/keyfor.go:22-42) and the gate tools commit beside them (planner/phases.go:210-211).
+darwinVetEnvironment = {"GOOS": "darwin", "GOARCH": "arm64", "CGO_ENABLED": "0"}
+# darwinOnlyName is a Go file's name go builds for darwin alone, or for every platform but darwin: _darwin.go,
+# _darwin_arm64.go, and their _test.go.
+darwinOnlyName = re.compile(r"_darwin(_arm64)?(_test)?\.go$")
+# darwinConstraint is a //go:build line that names darwin, either way: a file the darwin build reads and a Linux one
+# doesn't, or the other way round.
+darwinConstraint = r"^//go:build (.*[^A-Za-z0-9_])?darwin([^A-Za-z0-9_].*)?$"
+
+
+def darwinOnlyFiles(tree):
+    """Every tracked Go file of tree, outside cohere and the upstream corpus (toolsSourcePathspec) and outside testdata,
+    whose name or //go:build line makes the darwin build read it differently from a Linux one, sorted: what no unit of
+    the line compiles for darwin."""
+    named = [path for path in git(tree, "-c", "core.quotePath=false", "ls-files", "--", *toolsSourcePathspec).split("\n") if darwinOnlyName.search(path)]
+    found = subprocess.run(["git", "-C", tree, "-c", "core.quotePath=false", "grep", "-l", "-E", darwinConstraint, "--"] + toolsSourcePathspec,
+                           capture_output=True, text=True)
+    if found.returncode not in (0, 1):
+        raise DarwinPathsRefusal("git grep for darwin build lines failed in %s: %s" % (tree, firstLinesOf(found.stderr)))
+    files = set(named) | {path for path in found.stdout.split("\n") if path}
+    return sorted(path for path in files if "/testdata/" not in "/" + path)
+
+
+def darwinVetPatterns(tree, tools):
+    """The packages the darwin vet compiles, as go patterns: the leg's (./internal/apple/... and the compilers its tests
+    build, darwinClosureCommand's), then the directory of every darwin-only file outside them (darwinOnlyFiles), sorted:
+    bench/apple, internal/buildcache, internal/native, internal/native_runtime, internal/oracle and stage1/cohere/css on
+    Nov 21, each a darwin-only file no unit of the line compiles (Adamic Loom's ruling). Raises DarwinPathsRefusal when
+    the compiler map or the search can't be read."""
+    leg = darwinClosureCommand(darwinCompilers(tools, tree))[6:]
+    extra = sorted({"./" + os.path.dirname(path) for path in darwinOnlyFiles(tree)} - set(leg))
+    return leg + [pattern for pattern in extra if pattern != "./internal/apple" and not pattern.startswith("./internal/apple/")]
+
+
+def darwinVetListing(tree, patterns):
+    """go list -deps -test of patterns in darwinVetEnvironment, the directories the darwin vet compiles: in-module ones
+    tree-relative and sorted, each at or inside a submodule named by the submodule's path, since a pathspec reaches no
+    file below a gitlink. Raises DarwinPathsRefusal when go list fails or names nothing inside tree."""
+    command = ["go", "list", "-deps", "-test", "-f", "{{.Dir}}"] + patterns
+    try:
+        # Never listedGoList, which keys a listing on its command alone: darwinPaths lists the same form with cgo on.
+        listing = subprocess.run(command, cwd=tree, capture_output=True, text=True, timeout=300,
+                                 env=dict(os.environ, **gateEnvironment, **darwinVetEnvironment))
+    except (OSError, subprocess.SubprocessError) as error:
+        raise DarwinPathsRefusal("%s didn't run in %s: %s" % (" ".join(command), tree, error))
+    if listing.returncode != 0:
+        raise DarwinPathsRefusal("%s failed in %s, exit %d: %s" % (" ".join(command), tree, listing.returncode, firstLinesOf(listing.stderr or "")))
+    root = os.path.realpath(tree)
+    gitlinks = [line.split("\t", 1)[1] for line in git(tree, "-c", "core.quotePath=false", "ls-files", "-s").split("\n") if line.startswith("160000 ")]
+    directories = set()
+    for line in listing.stdout.splitlines():
+        real = os.path.realpath(line) if line.strip() else ""
+        if not real or not (real == root or real.startswith(root + os.sep)):
+            continue
+        directory = os.path.relpath(real, root).replace(os.sep, "/")
+        link = next((path for path in sorted(gitlinks) if directory == path or directory.startswith(path + "/")), None)
+        directories.add(link or directory)
+    if not directories:
+        raise DarwinPathsRefusal("%s named no directory inside %s" % (" ".join(command), tree))
+    return sorted(directories)
+
+
+def darwinVetInputs(tree, unit, full, change):
+    """The darwin vet's inputs (#gmrwkze, Adamic Loom's keying): every directory its darwin listing names (darwinVetListing),
+    by path, since the planner lists a declared package's closure under its own Linux build (adamic-loom
+    planner/phases.go:505-536), which would never see a darwin-only file, with darwinModuleFiles beside them; and the
+    darwin-only files by name (darwinOnlyFiles), so one added in a package outside the closure moves the key before its
+    package is vetted. A listing that can't be computed keys on the whole tree, so the phase runs and is red on the same
+    refusal, never planned as nothing."""
+    tools = change["tools"] if change else tree
+    try:
+        directories = darwinVetListing(tree, darwinVetPatterns(tree, tools))
+        files = darwinOnlyFiles(tree)
+    except DarwinPathsRefusal as refusal:
+        return treeInputs("the darwin vet's listing can't be computed, so it keys on the whole tree and the phase is red: %s" % refusal)
+    paths = [":(literal)" + directory for directory in directories] + [":(literal)" + path for path in darwinModuleFiles if os.path.exists(os.path.join(tree, path))]
+    return {"packages": [], "paths": paths, "names": files,
+            "note": "the darwin vet reads the darwin build's in-module closure of the leg and of each darwin-only file's package"}
+
+
 def firstLinesOf(text, count=5):
     """text's first count lines that aren't blank, each stripped, joined with "; " for a one-line refusal; "no stderr" for
     none."""
@@ -1576,6 +1661,8 @@ class Gate:
             self.build()
         elif phase == "vet":
             self.vet()
+        elif phase == "darwin-vet":
+            self.darwinVet()
         elif phase == "wasi":
             environment = None
             if os.environ.get("WASI_SYSROOT"):
@@ -2544,6 +2631,31 @@ class Gate:
     @declaresInputs("vet", lambda tree, unit, full, change: goCommandInputs(tree, goPhaseCommand("vet")))
     def vet(self):
         self.result["vet_ok"] = self.step("vet", goPhaseCommand("vet"))
+
+    @declaresInputs("darwin-vet", darwinVetInputs)
+    def darwinVet(self):
+        """go vet of the darwin build (darwinVetEnvironment) over the leg's packages and every darwin-only file's
+        (darwinVetPatterns), so a darwin-only file that doesn't compile is the change's red where it lands (#gmrwkze:
+        add69cbc59 moved native's API, internal/apple/witness_test.go kept calling it, and main landed green, since no
+        Linux unit compiles a //go:build darwin file and the darwin phase plans only for the darwin globs). vet's analyzers
+        are red here as they are on Linux. Patterns that can't be listed are red, never a vet of nothing."""
+        self.steps["darwin-vet"] = 0.0
+        try:
+            patterns = darwinVetPatterns(self.arguments.tree, self.arguments.tools)
+        except DarwinPathsRefusal as refusal:
+            self.exits["darwin-vet"] = 1
+            self.fail("darwin-vet", "the darwin vet's packages can't be listed: %s" % refusal)
+            return
+        started = time.monotonic()
+        with open(os.path.join(self.arguments.out, "darwin-vet.log"), "w") as output:
+            code = self.spawn(["go", "vet"] + patterns, output, directory=self.arguments.tree, environment=darwinVetEnvironment).wait()
+        self.steps["darwin-vet"] = round(time.monotonic() - started, 1)
+        self.exits["darwin-vet"] = code
+        self.result["darwin_vet_packages"] = patterns
+        if code != 0 and self.failure is None:
+            with open(os.path.join(self.arguments.out, "darwin-vet.log")) as handle:
+                self.fail("darwin-vet", "go vet of the darwin build (%s) failed:\n%s" % (
+                    " ".join("%s=%s" % pair for pair in darwinVetEnvironment.items()), handle.read()[-4000:]))
 
     def testSplit(self, packages, log, productsOnly=False):
         """Compile and list selected packages, build their products, then run ordinary test units.
@@ -3565,7 +3677,7 @@ def longTests(units):
 # The whole gate's phases a pool unit can run alone (run.py --full --phase); the Go test set is the pool's own.
 wholePhases = ["coverage", "tools", "build", "vet", "wasi", "catalog"]
 # The unconditional non-test units; conditional executors are listed with --base.
-fastBasePhases = ["coverage", "tools", "build", "vet", "census"]
+fastBasePhases = ["coverage", "tools", "build", "vet", "darwin-vet", "census"]
 fastPhases = fastBasePhases + ["workers", "a-check", "catalog-apply", "catalog", "darwin"]
 
 
