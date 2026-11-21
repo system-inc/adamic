@@ -1310,13 +1310,18 @@ class Gate:
         self.arguments = arguments
         # Queue ownership follows this run, not the user's shared cache. Keep these
         # beside the slot tree so publishing gate artifacts never publishes products.
-        queueRoot = tempfile.mkdtemp(prefix="build-store-", dir=os.path.dirname(os.path.abspath(arguments.tree)))
-        self.buildStoreEnvironment = {
-            "ADAMIC_BUILD_STORE_SPOOL": os.path.join(queueRoot, "spool"),
-            "ADAMIC_BUILD_STORE_AUDITS": os.path.join(queueRoot, "audits"),
-        }
-        for directory in self.buildStoreEnvironment.values():
-            os.mkdir(directory)
+        # A listing (fastUnits) runs no stage, so it makes none (#tfp4gtm): each plan's left one beside the planner's
+        # checkout, 2,299 of them on Eve (27 GB, Nov 21), and a sealed job, whose tree's parent is read-only, couldn't
+        # list at all. A run's is removed by finish() (removeBuildStore).
+        self.buildStoreRoot, self.buildStoreEnvironment = None, {}
+        if not vars(arguments).get("listing"):
+            self.buildStoreRoot = tempfile.mkdtemp(prefix="build-store-", dir=os.path.dirname(os.path.abspath(arguments.tree)))
+            self.buildStoreEnvironment = {
+                "ADAMIC_BUILD_STORE_SPOOL": os.path.join(self.buildStoreRoot, "spool"),
+                "ADAMIC_BUILD_STORE_AUDITS": os.path.join(self.buildStoreRoot, "audits"),
+            }
+            for directory in self.buildStoreEnvironment.values():
+                os.mkdir(directory)
         self.started = time.monotonic()
         self.failure = None
         self.stopped = None
@@ -3196,11 +3201,26 @@ class Gate:
             return DarwinLegMissingExit
         return 1
 
+    def removeBuildStore(self):
+        """Removes the store root this Gate made, once its processes are gone (#tfp4gtm). No record the gate publishes
+        names a file under it: the root and its spool and audits reach only the environment of the commands the gate
+        spawns (spawn's buildStoreEnvironment), the out directory is the gate's record and never holds it, and nothing
+        in adamic main reads ADAMIC_BUILD_STORE_SPOOL or ADAMIC_BUILD_STORE_AUDITS since buildcache-publish, the drains'
+        reader, left internal/buildcache. A root that won't come out is said in the record, never the gate's red."""
+        root, self.buildStoreRoot = getattr(self, "buildStoreRoot", None), None
+        if root is None:
+            return
+        try:
+            shutil.rmtree(root)
+        except OSError as error:
+            self.result["build_store_unremoved"] = "%s: %s" % (root, error)
+
     def finish(self):
         if getattr(self, "stopThread", None):
             self.stopThread.join()
         with self.lock:
             self.killSessions()
+        self.removeBuildStore()
         wall = round(time.monotonic() - self.started, 1)
         self.result.setdefault("box_load", {})["end"] = boxLoad()
         units = testUnits(os.path.join(self.arguments.out, "test.jsonl"))
@@ -3581,7 +3601,7 @@ def fastUnits(tree, base=None, sha=None, tools=None):
     with tempfile.TemporaryDirectory() as out:
         gate = Gate(argparse.Namespace(tree=tree, base=base, sha=sha or git(tree, "rev-parse", "HEAD"),
                                        tools=tools or tree, out=out, full=False, branch="", branch_source="",
-                                       session="", session_source=""))
+                                       session="", session_source="", listing=True))
         changed, executors = gate.fastPhaseInputs()
         if executors & {"workers", "bench-workers"}:
             units.append("workers")

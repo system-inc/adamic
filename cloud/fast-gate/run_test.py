@@ -7,6 +7,7 @@ files) or quietly do nothing, and require a red status, a nonzero exit and the s
 all-pass case proves the harness can go green at all. Run: python3 -m unittest cloud/fast-gate/run_test.py
 """
 
+import glob
 import io
 import re
 import shutil
@@ -488,6 +489,37 @@ class FailClosed(unittest.TestCase):
                 gate, status, result = self.gate(silent=silent)
                 self.assertTrue(status.startswith("red:"), status)
                 self.assertIn(stageName, status)
+
+
+class BuildStore(FailClosed):
+    """A gate's store root, beside its tree (#tfp4gtm): a run removes its own when it finishes, and a listing makes none,
+    since it runs no stage. Each plan's listing left one beside Eve's planner checkout, 2,299 of them (27 GB, Nov 21).
+    Mutants, each red here: finish() leaving the root; a listing making one."""
+
+    def roots(self):
+        return sorted(glob.glob(os.path.join(os.path.dirname(os.path.abspath(self.tree)), "build-store-*")))
+
+    def test_a_gate_makes_its_store_root_and_removes_it_when_it_finishes(self):
+        with mock.patch.object(sys, "argv", ["run.py"]):
+            gate = run.Gate(mock.Mock(tree=self.tree, sha=self.sha, base=self.sha, tools=self.tree, out=tempfile.mkdtemp(dir=self.directory),
+                                      parallel=4, full=False, branch="", branch_source="", session="", session_source="", weights=None))
+        self.assertEqual(self.roots(), [gate.buildStoreRoot])
+        self.assertTrue(os.path.isdir(gate.buildStoreEnvironment["ADAMIC_BUILD_STORE_SPOOL"]))
+        gate.removeBuildStore()
+        self.assertEqual(self.roots(), [])
+        self.assertNotIn("build_store_unremoved", gate.result)
+
+    def test_a_finished_run_leaves_no_store_root_beside_its_tree(self):
+        gate, status, result = self.gate()
+        self.assertTrue(status.startswith("green:"), status)
+        self.assertEqual(self.roots(), [])
+
+    def test_a_listing_makes_no_store_root(self):
+        with mock.patch.object(run.Gate, "fastPhaseInputs", lambda gate, recordCoverage=False: (set(), set())), \
+                mock.patch.object(run.Gate, "catalogEntriesTouched", lambda gate, changed: []):
+            units = run.fastUnits(self.tree, base=self.sha, sha=self.sha, tools=self.tree)
+        self.assertEqual(units, run.fastBasePhases)
+        self.assertEqual(self.roots(), [])
 
 
 class Products(unittest.TestCase):
