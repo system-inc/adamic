@@ -1,0 +1,18 @@
+# #hed1mkb, the note's floor: cmd/adamic-performance's tests and the floor's three mutants. Never merged.
+set -u
+T=$(mktemp -d "${TMPDIR:-/tmp}/floor.XXXXXX"); P=cmd/adamic-performance; fail=0
+f=$(gofmt -l $P); [ -z "$f" ] && echo "PASS gofmt" || { echo "FAIL gofmt $f"; fail=1; }
+go vet ./$P/ > "$T/vet" 2>&1 && echo "PASS vet" || { echo "FAIL vet"; cat "$T/vet"; fail=1; }
+go test -count=1 ./$P/... > "$T/tests" 2>&1 && echo "PASS tests" || { echo "FAIL tests"; grep -E -- '--- FAIL|_test.go:[0-9]+' "$T/tests" | head -20; fail=1; }
+mutant() {
+  cp $P/note.go "$T/keep"; perl -0pi -e "$2" $P/note.go
+  if cmp -s $P/note.go "$T/keep"; then echo "FAIL mutant $1: did not apply"; fail=1; cp "$T/keep" $P/note.go; return; fi
+  go test -count=1 -run '^TestPerformanceNoteMovesOnlyPastTheFloor$' ./$P/ > "$T/m-$1" 2>&1; code=$?; cp "$T/keep" $P/note.go
+  if grep -qE 'build failed|not used|\[setup failed\]' "$T/m-$1"; then echo "FAIL mutant $1: did not compile"; tail -5 "$T/m-$1"; fail=1
+  elif [ $code = 0 ]; then echo "FAIL mutant $1 survived"; fail=1
+  else echo "PASS mutant $1 red: $(grep -m1 -E '_test.go:[0-9]+' "$T/m-$1" | cut -c1-200)"; fi
+}
+mutant dropped 's/if delta := after\.Median - before\.Median; max\(delta, -delta\) < movedFloor\(before\.Median\) \{/if false {/'
+mutant raised 's/max\(delta, -delta\) < movedFloor/max(delta, -delta) <= movedFloor/'
+mutant least 's/return max\(\(median\*2\+99\)\/100, 5\)/return (median*2+99) \/ 100/'
+[ $fail = 0 ] && echo "VERDICT OK" || echo "VERDICT FAIL"
