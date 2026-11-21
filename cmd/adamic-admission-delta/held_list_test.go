@@ -12,8 +12,8 @@ import (
 )
 
 // checkHeldStopRow holds one row of a held-stop list to the tree at root: its program is there, the row's hatch is
-// that program's line as the row quotes it, a language hatch's ruling is a line of docs/rulings.md holding the row's
-// opening words, and the test the row names is in its file and the file names the program, by its file name, by its
+// that program's line as the row quotes it, a language hatch's ruling is said once in docs/rulings.md by the row's
+// opening words, wherever its row now sits, and the test the row names is in its file and the file names the program, by its file name, by its
 // directory's path from the test's own, or by that directory's last segment as a path piece or a string, as a test
 // that walks the directory does. readHeldStops reads a row's form; this reads what the form points at, so a row can't
 // name a hatch, a ruling or a test the tree doesn't hold.
@@ -38,7 +38,7 @@ func checkHeldStopRow(root string, stop heldStop) error {
 		if err != nil {
 			return fmt.Errorf("%s: its ruling: %w", stop.Path, err)
 		}
-		if err = holdsWords(rulings, ruling[1], ruling[2]); err != nil {
+		if err = saysOnce(rulings, ruling[2]); err != nil {
 			return fmt.Errorf("%s: its ruling, docs/rulings.md: %w", stop.Path, err)
 		}
 	}
@@ -121,15 +121,12 @@ func quotesLine(source []byte, number, text string) error {
 	return nil
 }
 
-// holdsWords says the 1-based line number of text holds words.
-func holdsWords(text []byte, number, words string) error {
-	at, err := strconv.Atoi(number)
-	if err != nil {
-		return err
-	}
-	lines := strings.Split(string(text), "\n")
-	if at > len(lines) || !strings.Contains(lines[at-1], words) {
-		return fmt.Errorf("line %d doesn't hold %q", at, words)
+// saysOnce says text says words exactly once. A language hatch cites its ruling by line and by words, and only the
+// words are held: rulings.md grows above every row as rulings land, so a guard on the line would red each change that
+// adds a ruling, and the words still name exactly one row wherever it now sits (Language on #d358hc1).
+func saysOnce(text []byte, words string) error {
+	if count := strings.Count(string(text), words); count != 1 {
+		return fmt.Errorf("%q is said %d times, not once", words, count)
 	}
 	return nil
 }
@@ -151,7 +148,7 @@ func TestHeldStopListHoldsItsRows(t *testing.T) {
 	}
 }
 
-// The guard refuses a row whose hatch line isn't the program's, whose ruling line lacks its words, whose test file
+// The guard refuses a row whose hatch line isn't the program's, whose ruling words aren't said once, whose test file
 // lacks its func and holds no family of that name whose runner it defines, or names neither the program nor its
 // directory, and one whose program is gone. It reads a row whose test names the program, one whose test walks its
 // directory, and one whose family's runner, in the named file, walks it. Mutant (agreement.mutants.md): quotesLine's
@@ -161,7 +158,7 @@ func TestHeldStopRowCheckRefuses(t *testing.T) {
 	root := t.TempDir()
 	for name, text := range map[string]string{
 		"corpus/walked/viewed.a":                     "interface View { x: string }\nconst base = {};\nconst viewed = base as View;\n",
-		"docs/rulings.md":                            "# Rulings\n\n- Array writes only at an existing index.\n",
+		"docs/rulings.md":                            "# Rulings\n\n- Array writes only at an existing index.\n- Twice said.\n- Twice said.\n",
 		"internal/oracle/a_test.go":                  "package oracle\n\nfunc TestNames(t *testing.T) { run(\"viewed.a\") }\n",
 		"internal/oracle/b_test.go":                  "package oracle\n\nfunc TestWalks(t *testing.T) { walk(filepath.Join(\"corpus\", \"walked\")) }\n",
 		"internal/oracle/families_test.go":           "package oracle\n\nvar families = []family{\n\t{name: \"TestAgrees\", shards: 2, runner: \"runAgreesShard\", keys: paths},\n}\n",
@@ -184,6 +181,7 @@ func TestHeldStopRowCheckRefuses(t *testing.T) {
 		"a test naming the program":                 row(cast, "internal/oracle/a_test.go: TestNames"),
 		"a family whose runner walks its directory": row(cast, "internal/oracle/e_test.go: TestAgrees"),
 		"a test walking its directory":              row(cast, "internal/oracle/b_test.go: TestWalks"),
+		"a language hatch whose ruling has moved":   row(`language (docs/rulings.md:1, "Array writes only at"), line 3: const viewed = base as View;`, "internal/oracle/a_test.go: TestNames"),
 		"a language hatch":                          row(`language (docs/rulings.md:3, "Array writes only at"), line 3: const viewed = base as View;`, "internal/oracle/a_test.go: TestNames"),
 	} {
 		if err := checkHeldStopRow(root, stop); err != nil {
@@ -193,15 +191,16 @@ func TestHeldStopRowCheckRefuses(t *testing.T) {
 	gone := row(cast, "internal/oracle/a_test.go: TestNames")
 	gone.Path = "corpus/walked/gone.a"
 	for name, stop := range map[string]heldStop{
-		"a hatch line moved":                 row("cast, line 2: const viewed = base as View;", "internal/oracle/a_test.go: TestNames"),
-		"a hatch line past the end":          row("cast, line 9: const viewed = base as View;", "internal/oracle/a_test.go: TestNames"),
-		"a ruling line without its words":    row(`language (docs/rulings.md:1, "Array writes only at"), line 3: const viewed = base as View;`, "internal/oracle/a_test.go: TestNames"),
-		"a test func the file lacks":         row(cast, "internal/oracle/a_test.go: TestWalks"),
-		"a family whose runner is elsewhere": row(cast, "internal/oracle/a_test.go: TestAgrees"),
-		"a family its table lacks":           row(cast, "internal/oracle/e_test.go: TestOthers"),
-		"a test naming another program":      row(cast, "internal/oracle/c_test.go: TestOther"),
-		"a test file that isn't there":       row(cast, "internal/oracle/d_test.go: TestNames"),
-		"a program that's gone":              gone,
+		"a hatch line moved":                  row("cast, line 2: const viewed = base as View;", "internal/oracle/a_test.go: TestNames"),
+		"a hatch line past the end":           row("cast, line 9: const viewed = base as View;", "internal/oracle/a_test.go: TestNames"),
+		"a ruling whose words aren't said":    row(`language (docs/rulings.md:3, "Array writes past the end"), line 3: const viewed = base as View;`, "internal/oracle/a_test.go: TestNames"),
+		"a ruling whose words are said twice": row(`language (docs/rulings.md:4, "Twice said"), line 3: const viewed = base as View;`, "internal/oracle/a_test.go: TestNames"),
+		"a test func the file lacks":          row(cast, "internal/oracle/a_test.go: TestWalks"),
+		"a family whose runner is elsewhere":  row(cast, "internal/oracle/a_test.go: TestAgrees"),
+		"a family its table lacks":            row(cast, "internal/oracle/e_test.go: TestOthers"),
+		"a test naming another program":       row(cast, "internal/oracle/c_test.go: TestOther"),
+		"a test file that isn't there":        row(cast, "internal/oracle/d_test.go: TestNames"),
+		"a program that's gone":               gone,
 	} {
 		if err := checkHeldStopRow(root, stop); err == nil {
 			t.Errorf("%s: read, want it refused", name)
