@@ -53,15 +53,15 @@ func TestStringUnitsRightReadThroughTheView(t *testing.T) {
 		t.Fatal(err)
 	}
 	// € is U+20AC, and the last unit is the low half of U+1F600's pair.
-	result := inlineArrayRun(t, binary, "right")
-	if result.exit != 0 || string(result.stdout) != "8364 56832\n" || len(result.stderr) != 0 {
-		t.Fatalf("units right: exit %d stdout %q stderr %s", result.exit, result.stdout, result.stderr)
+	right := inlineArrayRun(t, binary, "right")
+	if right.exit != 0 || string(right.stdout) != "8364 56832\n" || len(right.stderr) != 0 {
+		t.Fatalf("units right: exit %d stdout %q stderr %s", right.exit, right.stdout, right.stderr)
 	}
-	result = inlineArrayRun(t, binary, "short")
-	if result.exit != 70 || len(result.stdout) != 0 || string(result.stderr) != stringUnitsStop {
-		t.Fatalf("units one short: exit %d stdout %q stderr %s", result.exit, result.stdout, result.stderr)
+	short := inlineArrayRun(t, binary, "short")
+	if short.exit != 70 || len(short.stdout) != 0 || string(short.stderr) != stringUnitsStop {
+		t.Fatalf("units one short: exit %d stdout %q stderr %s", short.exit, short.stdout, short.stderr)
 	}
-	t.Logf("right: %q; one short: exit %d, %q", result.stdout, result.exit, result.stderr)
+	t.Logf("right: %q; one short: exit %d, %q", right.stdout, short.exit, short.stderr)
 }
 
 func TestStringUnitsOneShortMutantOverflowsTheView(t *testing.T) {
