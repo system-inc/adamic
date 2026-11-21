@@ -1,0 +1,48 @@
+# #hed1mkb block 1: cmd/adamic-performance's tests, its mutants, the censuses, then the command run for real three
+# times at this one commit on this one box: twice, which must read level, and once with a planted 200 ms sleep at the
+# start of adamic, which must read moved and slower. Run after environment.sh and sandboxed-job.sh. Never merged.
+set -u
+T=$(mktemp -d "${TMPDIR:-/tmp}/perf.XXXXXX"); P=cmd/adamic-performance; fail=0
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg)"
+step() { name=$1; shift; if "$@" > "$T/$name.log" 2>&1; then echo "PASS $name"; else echo "FAIL $name"; grep -E -- '--- FAIL|FAIL|panic|\.go:[0-9]+' "$T/$name.log" | head -30; fail=1; fi; }
+gofmtclean() { f=$(gofmt -l $P); [ -z "$f" ] || { echo "$f"; return 1; }; }
+step gofmt gofmtclean
+step vet go vet ./$P/...
+step tests go test -count=1 ./$P/...
+step censuses go test -count=1 ./internal/compilercensus/ ./cmd/adamic-gate/parallelcensus/
+mutant() { # name, file, test, perl program
+  cp "$2" "$T/keep"; perl -0pi -e "$4" "$2"
+  if cmp -s "$2" "$T/keep"; then echo "FAIL mutant $1: did not apply"; fail=1; cp "$T/keep" "$2"; return; fi
+  go test -count=1 -run "^$3\$" "./$(dirname "$2")/" > "$T/m-$1.log" 2>&1; code=$?
+  cp "$T/keep" "$2"
+  if grep -qE 'build failed|not used|\[setup failed\]' "$T/m-$1.log"; then echo "FAIL mutant $1: did not compile"; tail -5 "$T/m-$1.log"; fail=1
+  elif [ $code = 0 ]; then echo "FAIL mutant $1 survived $3"; fail=1
+  else echo "PASS mutant $1 red: $(grep -m1 -E '_test.go:[0-9]+' "$T/m-$1.log" | cut -c1-200)"; fi
+}
+mutant medians-faster $P/note.go TestPerformanceNoteIsLevelWhenRangesOverlap 's/case measure\.after\.Max < measure\.before\.Min:/case measure.after.Median < measure.before.Median:/'
+mutant medians-slower $P/note.go TestPerformanceNoteIsLevelWhenRangesOverlap 's/case measure\.after\.Min > measure\.before\.Max:/case measure.after.Median > measure.before.Median:/'
+mutant cpu $P/note.go TestPerformanceNoteRefusesToCompareAcrossMachinesToolsOrRounds 's/\t\t\{name: "machine\.cpu"[^\n]*\n//'
+mutant nan $P/measure.go TestPerformanceBuildLogReadsItsOwnLines 's/math\.IsNaN\(seconds\) \|\| //'
+mutant leftover $P/main.go TestPerformanceFileIsReplacedWholeOrNotAtAll 's/\tdefer os\.Remove\(temporary\.Name\(\)\)\n//'
+mutant swapped $P/note.go TestPerformanceNoteNamesWhatMovedFasterOrSlower 's/direction = "faster"/direction = "slower"/'
+mutant machines $P/note.go TestPerformanceNoteRefusesToCompareAcrossMachinesToolsOrRounds 's/if differences := incomparable\(\*previous, current\); len\(differences\) > 0 \{/if differences := incomparable(*previous, current); false \&\& len(differences) > 0 {/'
+mutant dropped $P/note.go TestUnmeasuredSnapshotKeepsThePreviousNumbers 's/kept := previous\n/kept := snapshot{Schema: previous.Schema, MeasuredCommit: previous.MeasuredCommit}\n/'
+mutant nohit $P/measure.go TestPerformanceWarmBuildWithoutAnArchiveHitIsAnError 's/if !log\.archiveHit \{/if false \&\& !log.archiveHit {/'
+mkdir -p internal/performanceplant && printf 'package performanceplant\n\nimport (\n\t"os"\n\t"testing"\n)\n\nfunc TestPlant(t *testing.T) {\n\tt.Parallel()\n\t_, _ = os.ReadFile("../../Performance.jsonc")\n}\n' > internal/performanceplant/plant_test.go
+if go test -count=1 -run '^TestNothingOutsideItsCommandReadsPerformanceJsonc$' ./$P/noreader/ > "$T/m-reader.log" 2>&1; then echo "FAIL mutant reader survived"; fail=1; else echo "PASS mutant reader red: $(grep -m1 'performanceplant' "$T/m-reader.log" | cut -c1-200)"; fi
+rm internal/performanceplant/plant_test.go; rmdir internal/performanceplant
+go build -o "$T/adamic" ./cmd/adamic || { echo "FAIL build adamic"; exit 1; }
+go build -o "$T/performance" ./$P || { echo "FAIL build adamic-performance"; exit 1; }
+C=$(git rev-parse HEAD 2>/dev/null || echo 0000000000000000000000000000000000000000)
+s=$(date +%s%N); "$T/performance" -adamic "$T/adamic" -out "$T/first.jsonc" -commit "$C" > "$T/first.out" 2>&1 || { echo "FAIL first run"; cat "$T/first.out"; fail=1; }; echo "first run: $(( ($(date +%s%N) - s) / 1000000 )) ms"
+s=$(date +%s%N); "$T/performance" -adamic "$T/adamic" -out "$T/second.jsonc" -previous "$T/first.jsonc" -commit "$C" > "$T/second.out" 2>&1 || { echo "FAIL second run"; cat "$T/second.out"; fail=1; }; echo "second run: $(( ($(date +%s%N) - s) / 1000000 )) ms"
+grep '"note"' "$T/second.jsonc"; grep -q '"note": "level against' "$T/second.jsonc" && echo "PASS same commit reads level" || { echo "FAIL same commit did not read level"; fail=1; }
+cp cmd/adamic/main.go "$T/main.keep"; perl -0pi -e 's/func main\(\) \{\n/func main() {\n\ttime.Sleep(200 * time.Millisecond)\n/' cmd/adamic/main.go
+grep -q '^	"time"$' cmd/adamic/main.go || perl -0pi -e 's/import \(\n/import (\n\t"time"\n/' cmd/adamic/main.go
+go build -o "$T/slow" ./cmd/adamic || { echo "FAIL build slowed adamic"; fail=1; }; cp "$T/main.keep" cmd/adamic/main.go
+"$T/performance" -adamic "$T/slow" -out "$T/slow.jsonc" -previous "$T/second.jsonc" -commit "$C" > "$T/slow.out" 2>&1 || { echo "FAIL slowed run"; cat "$T/slow.out"; fail=1; }
+grep '"note"' "$T/slow.jsonc"; grep -q 'warmBuild .* (slower)' "$T/slow.jsonc" && echo "PASS planted 200 ms reads slower" || { echo "FAIL planted 200 ms did not read slower"; fail=1; }
+"$T/performance" -out "$T/un.jsonc" -previous "$T/second.jsonc" -commit 1111111111111111111111111111111111111111 -unmeasured "no quiet box" && grep '"note"' "$T/un.jsonc"
+echo "== the second snapshot, whole"; cat "$T/second.jsonc"
+echo "load at end $(cut -d' ' -f1-3 /proc/loadavg)"
+[ $fail = 0 ] && echo "VERDICT OK" || echo "VERDICT FAIL"
