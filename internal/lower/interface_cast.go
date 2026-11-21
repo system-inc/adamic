@@ -196,6 +196,8 @@ func (l *lowering) judgeViewAccess(part *ast.Node, known bool) (bool, error) {
 				if err := l.recordSourceSlotWrite(part, symbol, stop); err != nil {
 					refused = err
 				}
+			} else if err := l.sourceSlotScalarWrite(part, symbol); err != nil {
+				refused = err
 			}
 		}
 	}
@@ -226,6 +228,8 @@ func (l *lowering) judgeViewKeyedWrite(part *ast.Node) error {
 		if field := l.checker.GetPropertyOfType(l.checker.GetNonNullableType(receiver), name); field != nil {
 			if of, _ := l.representation(l.checker.GetTypeOfSymbol(field)); of == ir.Object {
 				return l.notYet(part, "writing a checked object field without its source-slot type certificate")
+			} else if err := l.sourceSlotScalarWrite(part, field); err != nil {
+				return err
 			}
 		}
 	}
