@@ -208,8 +208,12 @@ Old:
 
 ```go
 				if targets.Unknown {
-					// A spread argument is its array, the operand followed here like any other.
-					quietly = append(quietly, value.Arguments...)
+					// A spread argument is its array, the operand followed here like any other, and its id is 0.
+					for i, argument := range value.Arguments {
+						if i >= len(value.ArgumentTypeIDs) || mayHold(value.ArgumentTypeIDs[i]) {
+							quietly = append(quietly, argument)
+						}
+					}
 					break
 				}
 ```
@@ -227,3 +231,55 @@ Expected: TestGraphOracleGraphRegionsFlowUnknownArgument (flow_unknown_argument.
 parameter has no Declare, and the callee's `a.kids.push(x)` holds the counted copy inside the cycle. The three
 controls (flow_unknown_result.a, flow_unknown_reduce.a, flow_unknown_map.a) stay green: their copies are results,
 planned at their Returns.
+
+## 11. Every argument to a function value whose targets are Unknown taken to reach a graph type (#x490w4a)
+
+File: internal/lower/graph_flow.go, mayReachGraph.
+
+Old:
+
+```go
+	if proven == nil {
+		return true
+	}
+	if reaches, known := judged[proven]; known {
+```
+
+New:
+
+```go
+	if proven != nil || proven == nil {
+		return true
+	}
+	if reaches, known := judged[proven]; known {
+```
+
+Expected: TestGraphFlowScalarArgumentsUnplanned reds on both of flow_unknown_scalar_arguments.a's allocations, the
+fresh `{ depth, flags }` and `[i & 3, i & 5]` planned into a graph region as at main, which Performance measured 22%
+slower on its tsc-shaped loop; TestMayReachGraph reds on every row that reaches none. The witness itself stays green:
+planning more is retention, never a leak.
+
+## 12. An argument judged by its own type alone (#x490w4a)
+
+File: internal/lower/graph_flow.go, argumentTypeID.
+
+Old:
+
+```go
+	if slot := l.slotType(argument); slot != nil {
+		keep(l.concrete(slot))
+	}
+```
+
+New:
+
+```go
+	if slot := l.slotType(argument); slot != nil && slot == nil {
+		keep(l.concrete(slot))
+	}
+```
+
+Expected: TestGraphFlowUnknownArgumentSlotPlanned reds on "an empty literal passed as a Node[]": `[]` is a `never[]`
+where it's made, which reaches no graph type, though the callee's parameter is a `Node[]` it pushes into and stores in
+the cycle, so the literal is left counted, a leak. Its f3 row stays green: the toSorted copy is a `Node[]` by its own
+type.
