@@ -1,0 +1,58 @@
+# #k8ed1f2: the scan-all census for adaptation 99-readonly-family3-views-3, one side (with or without it) over the
+# closures of the files named after the side. Prints each file's boundary and every stop as "STOP <site>: <rule>
+# <words>". Run after environment.sh, sandboxed-job.sh, sandboxed_typescript_source and sandboxed_npm stage3/api.
+# Never merged.
+set -u
+side=$1; shift
+D=stage3/adapt/99-readonly-family3-views-3
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg), side $side, files $*"
+[ "$side" = without ] && mv "$D" "$TMPDIR/aside"
+# minus<N|property>: the adaptation with cause N's slots, or one property's slot, taken out, the restoring mutant: N's sites must come back, and no other.
+case $side in minus*) cp "$D/adapt.cjs" "$TMPDIR/adapt.orig"; python3 - "$D/adapt.cjs" "${side#minus}" <<'PYTHON' || { echo "VERDICT FAIL mutant"; exit 3; }
+import sys
+path, which = sys.argv[1], sys.argv[2]; s = open(path).read()
+keep = f"!JSON.stringify(slot).includes('{which}')"
+anchor = '\n];\nconst nodes = '
+assert s.count(anchor) == 1
+s = s.replace(anchor, f'\n];\nslots.splice(0, slots.length, ...slots.filter(slot => {keep}));\nconst nodes = ', 1)
+open(path, 'w').write(s)
+print(f"mutant: slots for {which} taken out")
+PYTHON
+;; esac
+export SCAN_ALL_SCRATCH="$TMPDIR/scan"; mkdir -p "$SCAN_ALL_SCRATCH"
+A="$SCAN_ALL_SCRATCH/adapted"
+bash stage3/apply.sh --build-product "$A" > "$TMPDIR/apply.log" 2>&1 || { echo "VERDICT FAIL apply"; tail -5 "$TMPDIR/apply.log"; exit 3; }
+[ "$side" = without ] && mv "$TMPDIR/aside" "$D"
+case $side in minus*) cp "$TMPDIR/adapt.orig" "$D/adapt.cjs";; esac
+go test -v -count=1 -timeout=20m -run '^TestProduct_ScanAllInstrumentedProbe$' ./stage3/census/scan-all > "$TMPDIR/product.log" 2>&1 || { echo "VERDICT FAIL product"; grep -E 'FAIL|\.go:[0-9]+' "$TMPDIR/product.log" | head -5; exit 1; }
+BIN=$(grep -oE 'probe: /[^ ]+' "$TMPDIR/product.log" | tail -1 | cut -d' ' -f2)
+start=$(date +%s)
+bad=0
+for file in "$@"; do
+	"$BIN" "$A/src/compiler/$file" > "$TMPDIR/$(echo $file | tr / _).json" 2>/dev/null
+	code=$?
+	echo "SCAN $side $file exit $code, $(( $(date +%s) - start )) s"
+	[ $code = 0 ] || bad=1
+done
+python3 - "$TMPDIR" <<'PYTHON'
+import json, re, sys, glob
+stops = set()
+for p in glob.glob(sys.argv[1] + '/*.ts.json'):
+    report = json.load(open(p))
+    print(f"BOUNDARY {p.rsplit('/', 1)[-1]}: {str(report.get('Boundary') or '')[:300]}")
+    for s in report.get('Stops') or []:
+        stops.add((re.sub(r'^.*/adapted/', '', s['Site']), s['Rule'], s['Words']))
+print(f"stops: {len(stops)}")
+lines = [f"STOP {site}: {rule} {words[:160]}" for site, rule, words in sorted(stops)]
+import base64, gzip, hashlib
+# A kept log can lose its tail past a couple of hundred kilobytes (#77ncr00), so the whole list goes out gzipped in
+# base64 lines, decoded on the reader's side, and only family 3's stops print as text.
+for line in lines:
+    if 'which can write' in line: print(line)
+packed = base64.b64encode(gzip.compress(chr(10).join(lines).encode(), mtime=0)).decode()
+for start in range(0, len(packed), 120): print("STOPGZ " + packed[start:start + 120])
+# The list's own digest and count, last, so a kept log that lost its tail is seen at once (#77ncr00, Lower's read).
+print(f"STOPS printed {len(lines)} sha256 {hashlib.sha256(chr(10).join(lines).encode()).hexdigest()}")
+PYTHON
+echo "VERDICT $([ $bad = 0 ] && echo OK || echo FAIL)"
+exit $bad
