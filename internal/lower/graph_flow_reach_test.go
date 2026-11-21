@@ -2,6 +2,7 @@ package lower
 
 import (
 	"os"
+	"strings"
 	"testing"
 
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -191,6 +192,49 @@ console.log(String(seen) + ' ' + String(a.next === b));
 	}
 	if literals != 1 {
 		t.Fatalf("found %d literals made as an argument to a call with Unknown targets, want one", literals)
+	}
+}
+
+// A reduce whose callee is parenthesized, (a.next.reduce)(f, [b]), is a.next.reduce(f, [b]): it lowers, both of what
+// its callback is handed are numbered, and Initial's [b], a Node[], is planned as it is without the parentheses
+// (#x490w4a). Reading the receiver off the unskipped callee panicked on the ParenthesizedExpression.
+func TestArrayReduceParenthesizedCallee(t *testing.T) {
+	t.Parallel()
+	planned := map[string]bool{}
+	for _, call := range []string{"a.next.reduce(f, [b])", "(a.next.reduce)(f, [b])"} {
+		program, err := lowerSource(t, strings.ReplaceAll(`interface Node { name: string; next: Node[] }
+const a: Node = { name: 'a' + '', next: [] };
+const b: Node = { name: 'b' + '', next: [a] };
+a.next.push(b);
+function fold(f: (acc: Node[], n: Node) => Node[]): Node[] { return REDUCE; }
+console.log(String(fold((acc: Node[], n: Node): Node[] => (n === b ? acc : n.next)).length));
+`, "REDUCE", call))
+		if err != nil {
+			t.Fatalf("%s: %v", call, err)
+		}
+		reduces := 0
+		for _, function := range program.Functions {
+			walk(function.Body, func(node any) bool {
+				if reduce, isReduce := node.(ir.ArrayReduce); isReduce {
+					reduces++
+					if reduce.InitialTypeID == 0 || reduce.ArrayTypeID == 0 {
+						t.Errorf("%s: Initial is numbered %d and Array %d, want both named", call, reduce.InitialTypeID, reduce.ArrayTypeID)
+					}
+					if literal, isLiteral := reduce.Initial.(ir.ArrayLiteral); isLiteral {
+						planned[call] = graphPlanned(program, literal.GraphTypes)
+					} else {
+						t.Errorf("%s: Initial is a %T, want the [b] literal", call, reduce.Initial)
+					}
+				}
+				return true
+			})
+		}
+		if reduces != 1 {
+			t.Fatalf("%s: found %d reduces, want one", call, reduces)
+		}
+	}
+	if !planned["a.next.reduce(f, [b])"] || planned["(a.next.reduce)(f, [b])"] != planned["a.next.reduce(f, [b])"] {
+		t.Errorf("Initial's [b] planned: %v, want planned alike with and without the parentheses", planned)
 	}
 }
 
