@@ -1883,5 +1883,11 @@ func scanLowerWithElementKey(key *viewElementKey, program *load.Program, typeChe
 	if err := lowering.checkInspectorDoomedContracts(); err != nil {
 		return nil, err
 	}
+	// As lowerWithElementKey does: Rule C's nullable-field stop is held at the view walk and given back here
+	// where its statement was lowered, so both modes stop on the same write (#5qx6qv4). Before, the view walk
+	// gave it in both; without this the reference lowers what the real pipeline stops (TestCycleFinderEquality).
+	if err := lowering.checkSourceSlotPending(); err != nil {
+		return nil, err
+	}
 	return lowering, nil
 }

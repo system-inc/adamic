@@ -731,3 +731,30 @@ func TestRelationViewsStaySnapshotOwned(t *testing.T) {
 		}
 	}
 }
+
+// Rule C's held writes and the statements lowering lowered (#5qx6qv4) are snapshot-owned: a rollback that
+// discards a statement's IR discards its mark with it, and a held write goes with the view that met it.
+// Carrying either into another program's lowering would stop it at a write its own IR never made.
+func TestSourceSlotPendingStaysSnapshotOwned(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs("../../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, name := range []string{"sourceSlotPending", "loweredStatements"} {
+		if loweringFieldPolicies[name] != speculativeState {
+			t.Fatalf("%s's policy must stay snapshot-only", name)
+		}
+	}
+	text := string(generate(root, filepath.Join(root, "internal/lower/lower.go")))
+	for _, want := range []string{"result.sourceSlotPending = func(value []sourceSlotPendingStop)", "result.loweredStatements = func(value map[*ast.Node]bool)"} {
+		if !strings.Contains(text, want) {
+			t.Fatalf("a held write field lost its owned snapshot: %s", want)
+		}
+	}
+	for _, carried := range []string{"sourceSlotPending: value.sourceSlotPending", "loweredStatements: value.loweredStatements"} {
+		if strings.Contains(text, carried) {
+			t.Fatalf("a held write field must not be carried as a program fact: %s", carried)
+		}
+	}
+}

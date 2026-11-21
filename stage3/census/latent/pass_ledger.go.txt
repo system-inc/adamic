@@ -76,6 +76,10 @@ var latentPostLoweringSteps = []latent.PassStep{
 	// lowered on its own has no graph to hold and the latent census records it as not run, as it does
 	// every judging pass.
 	{Name: "checkFlowLiveness"},
+	// checkSourceSlotPending gives back Rule C's held NotYet for a plain write to a checked field that may hold
+	// undefined or null wherever its statement was lowered (#5qx6qv4). The writes are held by the view walk over
+	// the whole program, so a body lowered on its own is recorded as not run, as certifySourceSlots is.
+	{Name: "checkSourceSlotPending"},
 }
 
 // Finalized with the unit status and instantiation metadata, once all modes have
