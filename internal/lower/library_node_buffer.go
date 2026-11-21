@@ -175,6 +175,8 @@ func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error
 			return nil, true, l.notYet(node, "Buffer."+name+" outside from(input, encoding)")
 		}
 		operation = "buffer_from"
+	case l.nodeBufferType(l.checker.GetTypeAtLocation(access.Expression), "Buffer") && (name == "slice" || name == "subarray"):
+		return l.nodeBufferSubarray(node, access.Expression, name)
 	case l.nodeBufferType(l.checker.GetTypeAtLocation(access.Expression), "Buffer"):
 		if name != "toString" || len(args) > 3 {
 			return nil, true, l.notYet(node, "Buffer."+name+" outside the host census")
@@ -289,4 +291,45 @@ func (l *lowering) nodeBufferAllocUnsafe(node *ast.Node) (ir.Expression, bool, e
 		return nil, true, l.notYet(node, "Buffer.allocUnsafe of a size that isn't a number")
 	}
 	return ir.NodeBufferCall{Function: "buffer_alloc_unsafe", Arguments: []ir.Expression{size}, Returns: ir.Uint8Array}, true, nil
+}
+
+// nodeBufferSubarray lowers buffer.slice(start, end) and buffer.subarray(start, end) to a view sharing
+// the Buffer's bytes, as Node's do: a Buffer's slice is its subarray, where a Uint8Array's slice copies
+// (typedArrayExpression refuses that one, and a Uint8Array never reaches here). Each argument clamps as
+// a typed array's subarray's does, NaN as 0, a fraction truncated, a negative from the end, and
+// undefined as the default, so each is held as number | undefined, as typedArrayExpression holds
+// subarray's: the native emitter passes its present flag (typedArrayOffset). The view is a Buffer, an
+// ir.Uint8Array as every Buffer is, whose data points into its owner's (typed_array.c).
+func (l *lowering) nodeBufferSubarray(node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+	args := node.AsCallExpression().Arguments.Nodes
+	if len(args) > 2 {
+		return nil, true, l.notYet(node, "Buffer."+name+" outside "+name+"(start, end)")
+	}
+	for _, argument := range args {
+		if argument.Kind == ast.KindSpreadElement {
+			return nil, true, l.notYet(node, "Buffer."+name+" outside "+name+"(start, end)")
+		}
+	}
+	// A ?. call meets optional_host_call.go's stop for a host method first (#3625x53); this one is the
+	// guard behind it.
+	if err := l.optionalCall(node); err != nil {
+		return nil, true, err
+	}
+	array, err := l.expression(receiver)
+	if err != nil {
+		return nil, true, err
+	}
+	lowered := []ir.Expression{}
+	for _, argument := range args {
+		value, err := l.expression(argument)
+		if err != nil {
+			return nil, true, err
+		}
+		value = fit(value, ir.MaybeNumber)
+		if value.Type() != ir.MaybeNumber {
+			return nil, true, l.notYet(argument, "a Buffer."+name+" offset that isn't number or undefined")
+		}
+		lowered = append(lowered, value)
+	}
+	return ir.TypedArraySubarray{Array: array, Arguments: lowered}, true, nil
 }
