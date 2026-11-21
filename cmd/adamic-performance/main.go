@@ -1,14 +1,15 @@
 // Command adamic-performance writes Performance.jsonc, Adamic's performance at one commit as a single snapshot:
 //
-//	adamic-performance -adamic <adamic> -out <path> [-previous <path>] -commit <40-hex sha> [-rounds 5] [-held-quiet]
+//	adamic-performance -adamic <adamic> -out <path> [-previous <path>] -commit <40-hex sha> [-rounds 5] [-execute-rounds 3] [-held-quiet]
 //	adamic-performance -out <path> -previous <path> -commit <40-hex sha> -unmeasured "<why>"
 //
 // The line runs it from the repository's root in every landing commit and commits what it writes, so git's history of
-// the file is the series and each landing's diff shows what moved (#hed1mkb). It measures the compile half: a cold
-// build of hello, then warm builds and adamic c of four programs, interleaved over the rounds, each written as the
-// median of the rounds with their min and max. The execute half, native programs against Node, is carried from
-// -previous as it was. Every child gets a temporary directory's caches, so the cold build is cold and nothing touches
-// this machine's.
+// the file is the series and each landing's diff shows what moved (#hed1mkb). It measures two halves, each number the
+// median of its rounds with their min and max. The compile half: a cold build of hello, then warm builds and adamic c
+// of four programs, interleaved over -rounds. The execute half, after it on the same caches: bench's everyday programs
+// and primes_parallel, each run natively and on Node as bench runs them, through internal/benchmark's reaper,
+// interleaved over -execute-rounds, every run's answer held to Node's (measureExecute). Every child gets a temporary
+// directory's caches, so the cold build is cold and nothing touches this machine's, and Node must be on PATH.
 //
 // The note compares against -previous: a number moved only when its new range doesn't overlap the old one, and a
 // different machine, tool or round count is named, never compared (compareNote). The second form measures nothing: it
@@ -29,10 +30,12 @@ import (
 	"path/filepath"
 	"regexp"
 	"runtime"
+	"slices"
 	"strconv"
 	"strings"
 	"time"
 
+	"github.com/system-inc/adamic/internal/benchmark"
 	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
@@ -51,9 +54,10 @@ func run(arguments []string, stderr io.Writer) int {
 	flags.SetOutput(stderr)
 	adamic := flags.String("adamic", "", "the built adamic binary to measure")
 	out := flags.String("out", "", "where to write the snapshot")
-	previousPath := flags.String("previous", "", "the snapshot before this one, to compare against and to carry the execute half from")
+	previousPath := flags.String("previous", "", "the snapshot before this one, to compare against, or whose numbers -unmeasured keeps")
 	commit := flags.String("commit", "", "the 40-hex commit the snapshot is of")
 	rounds := flags.Int("rounds", 5, "how many interleaved rounds of warm builds and of adamic c")
+	executeRounds := flags.Int("execute-rounds", 3, "how many interleaved rounds of every execute program, natively and on Node")
 	heldQuiet := flags.Bool("held-quiet", false, "the machine was held quiet for the measure")
 	unmeasured := flags.String("unmeasured", "", "measure nothing, keep -previous's numbers, and say why")
 	if err := flags.Parse(arguments); err != nil {
@@ -65,20 +69,22 @@ func run(arguments []string, stderr io.Writer) int {
 			unmeasuredGiven = true
 		}
 	})
-	if err := write(writeRequest{adamic: *adamic, out: *out, previous: *previousPath, commit: *commit, rounds: *rounds, heldQuiet: *heldQuiet, unmeasured: *unmeasured, unmeasuredGiven: unmeasuredGiven}); err != nil {
+	if err := write(writeRequest{log: stderr, adamic: *adamic, out: *out, previous: *previousPath, commit: *commit, rounds: *rounds, executeRounds: *executeRounds, heldQuiet: *heldQuiet, unmeasured: *unmeasured, unmeasuredGiven: unmeasuredGiven}); err != nil {
 		fmt.Fprintln(stderr, "adamic-performance:", err)
 		return 1
 	}
 	return 0
 }
 
-// A writeRequest is the command's flags.
+// A writeRequest is the command's flags, and log, where it says what it did beside the file.
 type writeRequest struct {
+	log             io.Writer
 	adamic          string
 	out             string
 	previous        string
 	commit          string
 	rounds          int
+	executeRounds   int
 	heldQuiet       bool
 	unmeasured      string
 	unmeasuredGiven bool
@@ -159,6 +165,9 @@ func measureSnapshot(request writeRequest, previous *snapshot) (snapshot, error)
 	if request.rounds < 1 {
 		return snapshot{}, fmt.Errorf("-rounds is at least 1, and it's %d", request.rounds)
 	}
+	if request.executeRounds < 1 {
+		return snapshot{}, fmt.Errorf("-execute-rounds is at least 1, and it's %d", request.executeRounds)
+	}
 	// Every child runs in its program's own directory, so a relative binary would name another file there.
 	adamic, err := filepath.Abs(request.adamic)
 	if err != nil {
@@ -176,6 +185,9 @@ func measureSnapshot(request writeRequest, previous *snapshot) (snapshot, error)
 	if err != nil {
 		return snapshot{}, err
 	}
+	if versions.Node == "" {
+		return snapshot{}, errors.New("the execute half runs every program on Node too, and there is no node on PATH")
+	}
 	name, err := os.Hostname()
 	if err != nil {
 		return snapshot{}, err
@@ -185,15 +197,30 @@ func measureSnapshot(request writeRequest, previous *snapshot) (snapshot, error)
 		return snapshot{}, err
 	}
 	defer os.RemoveAll(work)
+	// The reaper is built before anything is timed, into work, so it goes when work does.
+	reaper, err := benchmark.BuildReaper(work)
+	if err != nil {
+		return snapshot{}, err
+	}
 
 	started := time.Now()
 	loadBefore, err := loadAverage()
 	if err != nil {
 		return snapshot{}, err
 	}
-	measured, err := measureCompile(compileRequest{root: root, work: work, rounds: request.rounds}, adamicRunner(adamic))
+	compiling := compileRequest{root: root, work: work, rounds: request.rounds}
+	measured, err := measureCompile(compiling, adamicRunner(adamic))
 	if err != nil {
 		return snapshot{}, err
+	}
+	// The execute half runs here, before work is removed, since tokenizer's and trees' binaries are its warm builds'.
+	executed, archivesBuilt, err := measureExecute(executeRequest{compile: compiling, rounds: request.executeRounds}, adamicRunner(adamic), reaperTimer(reaper, executeEnvironment()))
+	if err != nil {
+		return snapshot{}, err
+	}
+	if archivesBuilt > 0 && request.log != nil {
+		// Never a field in the file: an untimed build's cost, for whoever sizes the measure against its budget.
+		fmt.Fprintf(request.log, "adamic-performance: execute builds: %d runtime archives built (feature sets differ from hello's)\n", archivesBuilt)
 	}
 	loadAfter, err := loadAverage()
 	if err != nil {
@@ -208,9 +235,7 @@ func measureSnapshot(request writeRequest, previous *snapshot) (snapshot, error)
 		Machine:        machine{Name: name, CPU: cpuModel(), Cores: runtime.NumCPU(), LoadBefore: loadBefore, LoadAfter: loadAfter, HeldQuiet: request.heldQuiet},
 		Tools:          versions,
 		Compile:        measured,
-	}
-	if previous != nil {
-		current.Execute = previous.Execute
+		Execute:        executed,
 	}
 	current.Note = compareNote(previous, current)
 	return current, nil
@@ -270,12 +295,15 @@ func adamicRunner(adamic string) runner {
 	}
 }
 
-// environment is this process's, without the variables the measure sets for its children.
+// measureSettings are the variables the measure sets for its children itself, a build's log and its two caches.
+var measureSettings = []string{"ADAMIC_BUILD_LOG", "ADAMIC_BUILD_CACHE_DIR", "XDG_CACHE_HOME"}
+
+// environment is this process's, without measureSettings.
 func environment() []string {
 	kept := []string{}
 	for _, variable := range os.Environ() {
 		name, _, _ := strings.Cut(variable, "=")
-		if name == "ADAMIC_BUILD_LOG" || name == "ADAMIC_BUILD_CACHE_DIR" || name == "XDG_CACHE_HOME" {
+		if slices.Contains(measureSettings, name) {
 			continue
 		}
 		kept = append(kept, variable)

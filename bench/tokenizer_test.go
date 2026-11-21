@@ -9,6 +9,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/benchmark"
 	"github.com/system-inc/adamic/internal/boundedrun"
 )
 
@@ -25,7 +26,7 @@ func runTokenizer(t *testing.T, source string) string {
 	t.Helper()
 	command, cancel := boundedrun.Command(20*time.Second, "node", "--input-type=module-typescript")
 	defer cancel()
-	command.Env = environment()
+	command.Env = benchmark.Environment()
 	command.Stdin = strings.NewReader(source)
 	output, err := command.CombinedOutput()
 	if err != nil {

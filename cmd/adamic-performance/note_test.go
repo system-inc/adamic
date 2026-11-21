@@ -129,3 +129,73 @@ func TestPerformanceNoteNamesNewAndGonePrograms(t *testing.T) {
 		t.Errorf("note %q, want %q", got, want)
 	}
 }
+
+// executed is a program's execution judged on judge, with native's and Node's judged spreads as given and every other
+// number fixed, so a test moves only what it names.
+func executed(name, judge string, native, node spread) namedExecution {
+	numbers := func(judged spread) runtimeNumbers {
+		other := spread{Median: 500, Min: 490, Max: 510}
+		if judge == "wall" {
+			return runtimeNumbers{Wall: judged, User: other, PeakKiB: 2048}
+		}
+		return runtimeNumbers{Wall: other, User: judged, PeakKiB: 2048}
+	}
+	return namedExecution{Name: name, Execution: execution{Judge: judge, Native: numbers(native), Node: numbers(node), Ratio: ratioOf(native.Median, node.Median)}}
+}
+
+// executeNoteSnapshot is noteSnapshot with hello level in the compile half and the given execute programs over 3 rounds.
+func executeNoteSnapshot(commit string, entries ...namedExecution) snapshot {
+	value := noteSnapshot(commit, timed("hello", spread{Median: 349, Min: 340, Max: 362}, spread{Median: 45, Min: 44, Max: 47}))
+	value.Execute = execute{Rounds: 3, Programs: executions(entries)}
+	return value
+}
+
+// In the execute half only native's judged spread can move, by the compile half's rule: trees' native user time clear
+// of its old range reads slower, after a compile move. Node's numbers moving, native's measure that isn't judged
+// moving, and the ratio with them, are context and read level, as does parallel_files' native wall within its old
+// range however its user time moved. Mutants: Node's judged spread compared too, and trees' Node faster is named;
+// native's user time compared for a wall-judged program, and parallel_files reads slower.
+func TestPerformanceNoteNamesOnlyNativesJudgedMove(t *testing.T) {
+	t.Parallel()
+	previous := executeNoteSnapshot(earlierCommit,
+		executed("trees", "user", spread{Median: 1301, Min: 1290, Max: 1320}, spread{Median: 2032, Min: 2000, Max: 2050}),
+		executed("parallel_files", "wall", spread{Median: 311, Min: 300, Max: 320}, spread{Median: 701, Min: 690, Max: 710}),
+	)
+	current := executeNoteSnapshot(laterCommit,
+		executed("trees", "user", spread{Median: 1402, Min: 1380, Max: 1420}, spread{Median: 2032, Min: 2000, Max: 2050}),
+		executed("parallel_files", "wall", spread{Median: 318, Min: 309, Max: 330}, spread{Median: 701, Min: 690, Max: 710}),
+	)
+	current.Execute.Programs[1].Execution.Native.User = spread{Median: 3200, Min: 3100, Max: 3300}
+	current.Compile.Programs[0].Program.WarmBuild = spread{Median: 500, Min: 480, Max: 520}
+	if got, want := compareNote(&previous, current), "hello warmBuild 349 to 500 ms (slower); trees native user 1301 to 1402 ms (slower)"; got != want {
+		t.Errorf("note %q, want %q", got, want)
+	}
+
+	level := executeNoteSnapshot(laterCommit,
+		executed("trees", "user", spread{Median: 1310, Min: 1300, Max: 1330}, spread{Median: 1500, Min: 1450, Max: 1550}),
+		executed("parallel_files", "wall", spread{Median: 311, Min: 300, Max: 320}, spread{Median: 401, Min: 390, Max: 410}),
+	)
+	level.Execute.Programs[0].Execution.Native.Wall = spread{Median: 9000, Min: 8900, Max: 9100}
+	level.Execute.Programs[1].Execution.Native.User = spread{Median: 3200, Min: 3100, Max: 3300}
+	if got, want := compareNote(&previous, level), "level against 1ed745b"; got != want {
+		t.Errorf("note %q, want %q", got, want)
+	}
+}
+
+// An execute program in only one of the two is named new or gone beside the compile half's, and one judged on another
+// measure is named and not compared; another count of execute rounds is never compared at all. Mutants: a new program
+// compared against zeros, and it reads slower; execute.rounds left out of incomparable, and the note reads level.
+func TestPerformanceNoteNamesNewGoneAndRejudgedExecutePrograms(t *testing.T) {
+	t.Parallel()
+	trees := spread{Median: 1301, Min: 1290, Max: 1320}
+	onNode := spread{Median: 2032, Min: 2000, Max: 2050}
+	previous := executeNoteSnapshot(earlierCommit, executed("trees", "user", trees, onNode), executed("graph", "user", trees, onNode), executed("sort", "user", trees, onNode))
+	current := executeNoteSnapshot(laterCommit, executed("trees", "user", trees, onNode), executed("primes_parallel", "wall", trees, onNode), executed("sort", "wall", spread{Median: 9000, Min: 8900, Max: 9100}, onNode))
+	if got, want := compareNote(&previous, current), "level against 1ed745b; primes_parallel new; sort judge user to wall; graph gone"; got != want {
+		t.Errorf("note %q, want %q", got, want)
+	}
+	current.Execute.Rounds = 5
+	if got, want := compareNote(&previous, current), "not compared: execute.rounds 3 to 5"; got != want {
+		t.Errorf("note %q, want %q", got, want)
+	}
+}

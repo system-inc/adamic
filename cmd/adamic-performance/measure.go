@@ -219,12 +219,13 @@ func measureCompile(request compileRequest, run runner) (compile, error) {
 }
 
 // A buildLog is what one build's $ADAMIC_BUILD_LOG says: the seconds clang ran for its compiles and its links, summed,
-// how many lines of each, whether the runtime archive was a cache hit, and the seconds of each phase.
+// how many lines of each, how many cArchive lines and whether one was a cache hit, and the seconds of each phase.
 type buildLog struct {
 	compile    float64
 	link       float64
 	compiles   int
 	links      int
+	archives   int
 	archiveHit bool
 	phases     map[string]float64
 }
@@ -259,6 +260,7 @@ func parseBuildLog(text string) (buildLog, error) {
 			log.link += seconds
 			log.links++
 		case "cArchive":
+			log.archives++
 			if fields[3] == "hit" {
 				log.archiveHit = true
 			}
