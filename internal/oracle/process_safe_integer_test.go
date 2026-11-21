@@ -58,18 +58,19 @@ func processExitSafeInteger(t *testing.T, shard int) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		before, after := "bool range = integer && fabs(code.number) > 9007199254740991.0;", "bool range = false;"
-		if shard == 4 {
-			before, after = "exit_code_text(code.number, range)", "exit_code_text(code.number, false)"
-		}
+		implementation := string(data)
 		if shard == 5 {
-			before = "if (!grouped) { return text; }"
-			after = before + "\nfor (size_t index = 0; index < text->length; index++) { if (text->bytes[index] == 'e') { return text; } }"
+			implementation = processExitSafeIntegerGroupingMutant(t, implementation)
+		} else {
+			before, after := "bool range = integer && fabs(code.number) > 9007199254740991.0;", "bool range = false;"
+			if shard == 4 {
+				before, after = "exit_code_text(code.number, range)", "exit_code_text(code.number, false)"
+			}
+			if strings.Count(implementation, before) != 1 {
+				t.Fatal("safe-integer mutation anchor changed")
+			}
+			implementation = strings.Replace(implementation, before, after, 1)
 		}
-		if strings.Count(string(data), before) != 1 {
-			t.Fatal("safe-integer mutation anchor changed")
-		}
-		implementation := strings.Replace(string(data), before, after, 1)
 		code := native.C(program)
 		for _, name := range []string{"adamic_process_exit_code", "adamic_process_set_exit_code", "adamic_process_exit", "adamic_process_is_tty", "adamic_process_environment"} {
 			implementation = strings.ReplaceAll(implementation, name+"(", "safe_mutant_"+name+"(")
@@ -85,6 +86,36 @@ func processExitSafeInteger(t *testing.T, shard int) {
 		}
 		t.Log("mutant compiled and ran cleanly; only Node stdout caught it")
 	}
+}
+
+// processExitSafeIntegerGroupingMutant is process.c with number.c's adamic_number_received, the grouping it shares
+// with node_buffer.c and node_fs_file.c, copied in ahead of exit_code_text as a static of its own name that leaves
+// exponent notation ungrouped, so the mutant reaches process.c's text alone.
+func processExitSafeIntegerGroupingMutant(t *testing.T, process string) string {
+	t.Helper()
+	data, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/number.c"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	number := string(data)
+	const definition, caller = "\nsize_t adamic_number_received(", "static adamic_string *exit_code_text("
+	before := "fabs(value) > 4294967296.0;"
+	after := before + "\n\tfor (size_t index = 0; index < length; index++) { if (number[index] == 'e') { grouped = false; } }"
+	start := strings.Index(number, definition)
+	end := -1
+	if start >= 0 {
+		if at := strings.Index(number[start:], "\n}\n"); at >= 0 {
+			end = start + at + len("\n}\n")
+		}
+	}
+	if strings.Count(number, definition) != 1 || end < 0 || strings.Count(number[start:end], before) != 1 ||
+		strings.Count(process, "adamic_number_received(") != 1 || strings.Count(process, caller) != 1 {
+		t.Fatal("safe-integer mutation anchor changed")
+	}
+	helper := strings.Replace(number[start+1:end], before, after, 1)
+	helper = strings.Replace(helper, "size_t adamic_number_received(", "static size_t safe_mutant_adamic_number_received(", 1)
+	process = strings.Replace(process, "adamic_number_received(", "safe_mutant_adamic_number_received(", 1)
+	return strings.Replace(process, caller, helper+"\n"+caller, 1)
 }
 
 func processExitSafeIntegerAgreement(t *testing.T, program *ir.Program, truth run, shard int, value float64) {

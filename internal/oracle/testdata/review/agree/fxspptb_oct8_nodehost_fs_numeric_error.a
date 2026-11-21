@@ -1,5 +1,5 @@
 import { Buffer } from 'node:buffer';
-import { readSync } from 'node:fs';
+import { closeSync, readSync } from 'node:fs';
 const buffer = Buffer.from('xx');
 try { readSync(-1, buffer, 9007199254740992, 0, null); }
 catch(error) { if(error instanceof Error) console.log(`${error.name}|${error.message}`); }
@@ -7,3 +7,27 @@ try { readSync(-1, buffer, 0, 0, 9007199254740992); }
 catch(error) { if(error instanceof Error) console.log(`${error.name}|${error.message}`); }
 try { readSync(-1, buffer, 0, 2147483647, null); }
 catch(error) { if(error instanceof Error) console.log(`${error.name}|${error.message}`); }
+function report(label: string, error: Error): void { console.log(`${label}|${error.name}|${error.message}`); }
+// The first three are the program as found. The rest hold how Node v24.19.0 writes an ERR_OUT_OF_RANGE's Received
+// (#n6hgpm0, #a7pz8ra): the one lib/internal/errors.js throws groups an integer past 2^32 in magnitude with
+// underscores from the right past a sign, exponent and fraction digits included, and writes every other number as
+// String does; exactly 2^32 is plain. readSync's offset and position are node_fs_file.c's, allocUnsafe's size is
+// node_buffer.c's. A descriptor's range error comes from Node's C++ and is never grouped.
+for (const value of [4294967297, -4294967296, -4294967297, 9007199254740992, -9007199254740992, 9007199254740994, -9007199254740994,
+    1e20, 1e21, -1e21, 1.2e21, 1e300, -1e300, Number.MAX_VALUE, 10000000000.5, -10000000000.5, NaN, Infinity, -Infinity]) {
+    try { console.log(`offset ${value} read ${readSync(-1, buffer, value, 0, null)}`); }
+    catch(error) { if(error instanceof Error) report(`offset ${value}`, error); }
+    try { console.log(`position ${value} read ${readSync(-1, buffer, 0, 0, value)}`); }
+    catch(error) { if(error instanceof Error) report(`position ${value}`, error); }
+}
+// Only sizes out of range, so nothing past a small Buffer is ever allocated.
+for (const size of [-4294967296, -4294967297, 9007199254740992, -9007199254740994, 1e21, 1.2e21, -1e300, Number.MAX_VALUE, -10000000000.5, NaN]) {
+    try { console.log(`size ${size} made ${Buffer.allocUnsafe(size).length}`); }
+    catch(error) { if(error instanceof Error) report(`size ${size}`, error); }
+}
+for (const descriptor of [4294967297, 9007199254740992, -9007199254740992, 1e21, -1e21, 10000000000.5]) {
+    try { closeSync(descriptor); console.log(`close ${descriptor} closed`); }
+    catch(error) { if(error instanceof Error) report(`close ${descriptor}`, error); }
+    try { console.log(`read fd ${descriptor} read ${readSync(descriptor, buffer, 0, 1, null)}`); }
+    catch(error) { if(error instanceof Error) report(`read fd ${descriptor}`, error); }
+}

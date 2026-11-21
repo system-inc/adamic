@@ -98,6 +98,28 @@ size_t adamic_number_format(double value, char buffer[ADAMIC_NUMBER_FORMAT_MAX])
 	return length;
 }
 
+// adamic_number_received writes a number as Node v24.19.0's ERR_OUT_OF_RANGE writes the one it was
+// given (J-0fcykds). The error lib/internal/errors.js throws writes an integer past 2^32 in magnitude
+// as String writes it with addNumericalSeparator's underscores, one before every three characters
+// from the right past a sign, exponent notation included: 9_007_199_254_740_992, -4_294_967_297,
+// 1e+_300, 1e_+21, 1_.2e_+21. Exactly 2^32 is 4294967296. Any other number it writes with
+// util.inspect, which differs from String only for -0, never out of range. A descriptor's range
+// error comes from Node's C++ and never groups, so its caller passes separated false. node_buffer.c,
+// node_fs_file.c and process.c's exit code text all write theirs here.
+size_t adamic_number_received(double value, bool separated, char out[ADAMIC_NUMBER_RECEIVED_MAX]) {
+	char number[ADAMIC_NUMBER_FORMAT_MAX];
+	size_t length = adamic_number_format(value, number);
+	bool grouped = separated && isfinite(value) && value == trunc(value) && fabs(value) > 4294967296.0;
+	size_t sign = number[0] == '-' ? 1 : 0, used = 0;
+	for (size_t index = 0; index < length; index++) {
+		if (grouped && index > sign && (length - index) % 3 == 0) {
+			out[used++] = '_';
+		}
+		out[used++] = number[index];
+	}
+	return used;
+}
+
 double adamic_power(double base, double exponent) {
 	// This is V8's math::pow (src/numbers/ieee754.cc), case for case, so ** gives Node's bits and not
 	// just a close answer. Where JavaScript and C disagree (ECMA-262, Number::exponentiate), a NaN

@@ -114,29 +114,6 @@ double adamic_node_buffer_set(adamic_typed_array *buffer, double index,
 	}
 	return value;
 }
-// received writes a number as Node's ERR_OUT_OF_RANGE writes the one it was
-// given, and returns its length: an integer past 2^32 in magnitude as String
-// writes it with addNumericalSeparator's underscores, one before every three
-// characters from the right past a sign, exponent notation included (1e+300
-// is 1e+_300); any other as String writes it. Node writes the others with
-// util.inspect, which differs from String only for -0, never out of range
-// here. process.c's exit code text groups the same way; its mutants pin its
-// text where it is, so this stays its own.
-static size_t received(double value, char out[ADAMIC_NUMBER_FORMAT_MAX * 2])
-{
-	char number[ADAMIC_NUMBER_FORMAT_MAX];
-	size_t length = adamic_number_format(value, number);
-	bool grouped = isfinite(value) && value == trunc(value) &&
-				   fabs(value) > 4294967296.0;
-	size_t sign = number[0] == '-' ? 1 : 0, used = 0;
-	for (size_t index = 0; index < length; index++) {
-		if (grouped && index > sign && (length - index) % 3 == 0) {
-			out[used++] = '_';
-		}
-		out[used++] = number[index];
-	}
-	return used;
-}
 // Buffer.allocUnsafe(size), as Node v24.19.0's: the size is checked before
 // it's truncated, so -0.5 is out of range where a Uint8Array's ToIndex would
 // make it 0, and only then allocated. Out of range, NaN and the infinities
@@ -151,10 +128,11 @@ adamic_typed_array *adamic_node_buffer_alloc_unsafe(double size)
 		static const char prefix[] =
 			"The value of \"size\" is out of range. It must be >= 0 && <= "
 			"9007199254740991. Received ";
-		char message[sizeof prefix + ADAMIC_NUMBER_FORMAT_MAX * 2];
+		char message[sizeof prefix + ADAMIC_NUMBER_RECEIVED_MAX];
 		memcpy(message, prefix, sizeof prefix - 1);
 		size_t written =
-			sizeof prefix - 1 + received(size, message + sizeof prefix - 1);
+			sizeof prefix - 1 +
+			adamic_number_received(size, true, message + sizeof prefix - 1);
 		adamic_throw_coded("RangeError", "ERR_OUT_OF_RANGE", message, written, true);
 		return NULL;
 	}
