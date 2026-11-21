@@ -39,13 +39,48 @@ size_t adamic_view_untagged_union_select(const adamic_view_union_value *value, c
     return adamic_view_mixed_union_select(value, NULL, 0, NULL, NULL, expression, declared);
 }
 
-bool adamic_view_untagged_plain_slot(void *context, const adamic_view_union_value *value, const char *field, adamic_view_union_value *result) {
-    (void)context;
+// static_own_slot is a class constructor's own data static named field, or NULL: a public slot whose
+// presence a write has set, the own keys Object.keys reads (class_features.c). A static the class only
+// inherits has a slot here too, copied from its base's layout, but no presence, and reads through the
+// parent (class_static.c), so it isn't the class's own. An accessor has no slot at all.
+static adamic_value *static_own_slot(const adamic_object *object, const char *field) {
+    adamic_slot_cache cache = {0};
+    adamic_value *slot = adamic_object_optional_find(object, field, &cache);
+    if (slot == NULL || object->class->static_flags == NULL) { return NULL; }
+    size_t flag = object->class->static_flags[adamic_slot_index(object, slot)];
+    if (flag == 0 || object->slots[flag - 1].number == 0) { return NULL; }
+    return slot;
+}
+
+// plain_union_holds_callable is whether a callable could stand in union id: a callable or closure
+// member, or one the table can't name (an unknown kind, an id out of range). A class constructor is a
+// function there, so it keeps the stop such a union gives it. Id zero is no union.
+static bool plain_union_holds_callable(const adamic_view_untagged_contract *contracts, size_t count, size_t id) {
+    if (id == 0) { return false; }
+    if (id > count) { return true; }
+    const adamic_view_untagged_contract *union_contract = &contracts[id - 1];
+    for (size_t i = 0; i < union_contract->member_count; i++) {
+        size_t member = union_contract->members[i];
+        if (member == 0 || member > count) { return true; }
+        const adamic_view_untagged_contract *held = &contracts[member - 1];
+        if (held->kind == 0 || held->kind == 5 || held->of == adamic_rep_closure) { return true; }
+    }
+    return false;
+}
+
+// plain_slot_read is the plain slot probe, and with statics, a class constructor's own data static
+// too. Only a member its contract admitted (statics_admitted) reads one.
+static bool plain_slot_read(const adamic_view_union_value *value, const char *field, bool statics, adamic_view_union_value *result) {
     if (value->kind != adamic_view_union_object || value->payload.reference == NULL) { return false; }
     const adamic_object *object = value->payload.reference;
-    if (object->class != NULL && object->class->is_static) { return false; }
-    adamic_slot_cache cache = {0};
-    adamic_value *slot = adamic_object_optional_field(object, field, &cache);
+    adamic_value *slot = NULL;
+    if (object->class != NULL && object->class->is_static) {
+        if (!statics) { return false; }
+        slot = static_own_slot(object, field);
+    } else {
+        adamic_slot_cache cache = {0};
+        slot = adamic_object_optional_field(object, field, &cache);
+    }
     if (slot == NULL || !adamic_object_initialized(object)[adamic_slot_index(object, slot)]) { return false; }
     unsigned char actual = adamic_object_field_type(object, adamic_slot_index(object, slot));
     *result = (adamic_view_union_value){adamic_view_union_unknown, *slot};
@@ -79,14 +114,22 @@ bool adamic_view_untagged_plain_slot(void *context, const adamic_view_union_valu
     return true;
 }
 
+bool adamic_view_untagged_plain_slot(void *context, const adamic_view_union_value *value, const char *field, adamic_view_union_value *result) {
+    (void)context;
+    return plain_slot_read(value, field, false, result);
+}
+
 // Each frame owns a snapshot and an index into the active path. Growing the
 // work stack never leaves pointers into its old allocation in another frame.
+// statics marks a class constructor its object contract admitted, whose own
+// data statics the frame's slot reads take.
 typedef struct plain_match_frame {
     size_t contract;
     adamic_view_union_value value;
     size_t next;
     unsigned int state;
     bool tagged;
+    bool statics;
 } plain_match_frame;
 
 enum plain_match_state { plain_enter, plain_union, plain_tags, plain_fields, plain_return };
@@ -167,7 +210,17 @@ bool adamic_view_untagged_plain_matches(const adamic_view_untagged_contract *con
             result = false;
             if (contract->kind != 2 || current->kind != adamic_view_union_object || current->payload.reference == NULL) { goto complete; }
             const adamic_object *object = current->payload.reference;
-            if (object->class != NULL && object->class->is_static) { goto complete; }
+            if (object->class != NULL && object->class->is_static) {
+                // A class constructor stands for an object whose contract admits one (statics_admitted),
+                // outside a union a callable could stand in, when every required field is its own data
+                // static, as Node reads Klass.count: never an accessor, never one only a base declares.
+                size_t parent = length >= 2 && frames[length - 2].state == plain_union ? frames[length - 2].contract : 0;
+                if (!contract->statics_admitted || plain_union_holds_callable(contracts, count, parent)) { goto complete; }
+                for (size_t i = 0; i < contract->field_count; i++) {
+                    if (!contract->fields[i].optional && static_own_slot(object, contract->fields[i].name) == NULL) { goto complete; }
+                }
+                frame->statics = true;
+            }
             if (contract->fixed_tuple && (!object->tuple || object->shape->count != contract->tuple_count)) { goto complete; }
             // Preserve the open kind selector without certifying unread payloads.
             for (size_t i = 0; i < contract->field_count; i++) {
@@ -176,7 +229,7 @@ bool adamic_view_untagged_plain_matches(const adamic_view_untagged_contract *con
                 const adamic_view_untagged_contract *child = &contracts[field->contract - 1];
                 if (child->kind != 1 || (child->of != adamic_rep_number && child->of != adamic_rep_boolean && child->of != adamic_rep_string)) { continue; }
                 adamic_view_union_value slot;
-                if (!adamic_view_untagged_plain_slot(NULL, current, field->name, &slot)) { goto complete; }
+                if (!plain_slot_read(current, field->name, frame->statics, &slot)) { goto complete; }
                 frame->state = plain_return;
                 plain_match_push(&frames, &length, &capacity, field->contract, slot);
                 goto next_frame;
@@ -199,7 +252,7 @@ bool adamic_view_untagged_plain_matches(const adamic_view_untagged_contract *con
                 if (child->kind != 1 || child->allowed_count == 0) { continue; }
                 frame->tagged = true;
                 adamic_view_union_value slot;
-                if (!adamic_view_untagged_plain_slot(NULL, current, field->name, &slot)) { result = false; goto complete; }
+                if (!plain_slot_read(current, field->name, frame->statics, &slot)) { result = false; goto complete; }
                 plain_match_push(&frames, &length, &capacity, field->contract, slot);
                 goto next_frame;
             }
@@ -212,9 +265,11 @@ bool adamic_view_untagged_plain_matches(const adamic_view_untagged_contract *con
             while (frame->next < contract->field_count) {
                 const adamic_view_untagged_field *field = &contract->fields[frame->next++];
                 adamic_slot_cache cache = {0};
-                if (adamic_object_optional_field(object, field->name, &cache) == NULL && field->optional) { continue; }
+                // A class's optional static it doesn't own is absent here, as Object.hasOwn says on Node.
+                bool absent = frame->statics ? static_own_slot(object, field->name) == NULL : adamic_object_optional_field(object, field->name, &cache) == NULL;
+                if (absent && field->optional) { continue; }
                 adamic_view_union_value slot;
-                if (!adamic_view_untagged_plain_slot(NULL, current, field->name, &slot)) { result = false; goto complete; }
+                if (!plain_slot_read(current, field->name, frame->statics, &slot)) { result = false; goto complete; }
                 plain_match_push(&frames, &length, &capacity, field->contract, slot);
                 goto next_frame;
             }
@@ -235,8 +290,13 @@ size_t adamic_view_untagged_plain_select(const adamic_object *object, const adam
     if (id != 0 && id <= count) {
         const adamic_view_untagged_contract *root = &contracts[id - 1];
         if (root->fixed_tuple && adamic_view_untagged_plain_matches(contracts, count, id, &value)) { return id; }
-        for (size_t i = 0; i < root->member_count; i++) {
-            if (adamic_view_untagged_plain_matches(contracts, count, root->members[i], &value)) { return root->members[i]; }
+        // The root union is this loop, not a frame plain_matches sees, so a class constructor's stop
+        // in a union a callable could stand in is kept here.
+        bool constructor = value.kind == adamic_view_union_object && object != NULL && object->class != NULL && object->class->is_static;
+        if (!constructor || !plain_union_holds_callable(contracts, count, id)) {
+            for (size_t i = 0; i < root->member_count; i++) {
+                if (adamic_view_untagged_plain_matches(contracts, count, root->members[i], &value)) { return root->members[i]; }
+            }
         }
     }
     // Only this own-data adapter has proved the heap layout. Generic mixed
@@ -246,6 +306,34 @@ size_t adamic_view_untagged_plain_select(const adamic_object *object, const adam
         else if (object->class != NULL && object->class->is_static) { value.kind = adamic_view_union_function; }
     }
     return adamic_view_mixed_union_select(&value, NULL, 0, NULL, NULL, expression, declared);
+}
+
+void adamic_view_static_write(const adamic_object *object, const char *name) {
+    if (object == NULL || object->class == NULL || !object->class->is_static) { return; }
+    static const char prefix[] = "field write failed: a write to ", suffix[] = " through a checked view that holds a class constructor is not yet lowered";
+    size_t capacity = sizeof prefix + strlen(name) + sizeof suffix;
+    char *message = malloc(capacity);
+    if (message == NULL) { static const char oom[] = "out of memory"; adamic_panic(oom, sizeof oom - 1); }
+    int length = snprintf(message, capacity, "%s%s%s", prefix, name, suffix);
+    adamic_panic(message, (size_t)length);
+}
+
+void adamic_view_static_read(const adamic_object *value, bool admitted, const char *const *required, size_t count, const char *expression, const char *type) {
+    if (value == NULL || value->heap.kind != adamic_kind_object || value->class == NULL || !value->class->is_static) { return; }
+    // Each required field the class's own data static, initialized, as plain_slot_read reads one.
+    size_t owned = 0;
+    while (admitted && owned < count) {
+        adamic_value *slot = static_own_slot(value, required[owned]);
+        if (slot == NULL || !adamic_object_initialized(value)[adamic_slot_index(value, slot)]) { break; }
+        owned++;
+    }
+    if (admitted && owned == count) { return; }
+    // object.c's view_failure words, as a class constructor read where no object contract admits one used to stop.
+    size_t capacity = strlen(expression) + 2 * strlen(type) + 64;
+    char *message = malloc(capacity);
+    if (message == NULL) { static const char oom[] = "out of memory"; adamic_panic(oom, sizeof oom - 1); }
+    int length = snprintf(message, capacity, "field read failed: %s is not a %s; expected %s, found function", expression, type, type);
+    adamic_panic(message, (size_t)length);
 }
 
 // Checked per read, never cached: an alias can push a lie between reads.

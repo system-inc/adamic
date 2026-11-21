@@ -682,7 +682,10 @@ func (e *emitter) statement(at *ir.Statement) {
 			}
 			e.line("adamicDefineField(%s, %s, %s, %t, %t, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), !strings.HasPrefix(statement.Name, "#"), !statement.Uninitialized || statement.Unset, representation)
 		} else {
-			e.line("adamicWriteField(%s, %s, %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
+			write := func(object, value string) string {
+				return fmt.Sprintf("adamicWriteField(%s, %s, %s)", object, quote(statement.Name), value)
+			}
+			e.line("%s;", e.staticViewWrite(statement, e.value(statement.Object), e.value(statement.Value), write))
 		}
 	case ir.SetIndex:
 		e.line("adamicSetIndex(%s, %s, %s);", e.value(statement.Array), e.value(statement.Index), e.value(statement.Value))

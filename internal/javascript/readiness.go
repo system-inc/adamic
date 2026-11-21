@@ -6,6 +6,10 @@ import "fmt"
 const fieldReadinessRuntime = `const adamicTupleObjects = new WeakSet();
 const adamicTuple = (values) => { adamicTupleObjects.add(values); return values; };
 const adamicViewObject = (value) => value !== null && typeof value === "object" && (!Array.isArray(value) || adamicTupleObjects.has(value)) && !(value instanceof Map);
+// A class constructor: a function here, an object natively. A view admits one only where its object's contract says StaticsAdmitted.
+const adamicViewConstructor = (value) => typeof value === "function" && typeof adamicClassIdentities !== "undefined" && typeof adamicClasses !== "undefined" && adamicClasses[adamicClassIdentities.get(value) - 1]?.static === true;
+// adamicViewStatics is whether value is a class constructor owning each of names as a data static: never an accessor, never one only a base declares.
+const adamicViewStatics = (value, names) => adamicViewConstructor(value) && names.every((name) => { const field = Object.getOwnPropertyDescriptor(value, name); return field !== undefined && Object.hasOwn(field, "value") && !adamicFieldReadiness.get(value)?.has(name); });
 const adamicFieldReadiness = new WeakMap();
 const adamicFieldRepresentations = new WeakMap();
 const adamicRecordFieldTypes = (object, types) => { adamicFieldRepresentations.set(object, {...adamicFieldRepresentations.get(object), ...types}); return object; };
@@ -30,12 +34,13 @@ const adamicReceiverKind = (value) => typeof value !== "object" ? typeof value :
 // length, so it's stopped as the function native says it is. Two kinds pass here that native names instead, a
 // generator object and a typed array: each stops at the by-name read as found missing, so only the wording differs.
 const adamicViewReceiver = (object) => object === undefined || object === null || !(object instanceof AdamicClosure) && adamicViewObject(object) || typeof object === "function" && typeof adamicClassIdentities !== "undefined" && (adamicClassIdentities.has(object) || adamicClassIdentities.has(Object.getPrototypeOf(object)));
-const adamicViewField = (object, name, expression, type, expected = adamicViewTypeNames[type], allowed = []) => {
+// statics names the fields an object read's contract requires where it admits a class constructor (StaticsAdmitted, #s03ndgw): one owning each as a data static is the object read, as native's adamic_view_static_read admits it.
+const adamicViewField = (object, name, expression, type, expected = adamicViewTypeNames[type], allowed = [], statics = undefined) => {
     // The receiver's own kind comes first, as native's adamic_object_view reads it: a string has own length and index
     // keys, so a lookup by name would read on where native stops. A class is a function here and an object there.
     if (!adamicViewReceiver(object)) panic("field read failed: " + expression + " is not a " + expected + "; expected " + expected + ", found " + adamicReceiverKind(object));
     const value = adamicReadField(object, name, expression, false, false, expected);
-    const valid = type === 1 ? typeof value === "number" : type === 2 ? typeof value === "boolean" : type === 3 ? typeof value === "string" : type === 4 ? adamicViewObject(value) : type === 5 ? Array.isArray(value) : type === 6 ? value instanceof Map : false;
+    const valid = type === 1 ? typeof value === "number" : type === 2 ? typeof value === "boolean" : type === 3 ? typeof value === "string" : type === 4 ? adamicViewObject(value) || statics !== undefined && adamicViewStatics(value, statics) : type === 5 ? Array.isArray(value) : type === 6 ? value instanceof Map : false;
     if (!valid) panic("field read failed: " + expression + " is not a " + expected + "; expected " + expected + ", found " + (value === undefined ? "nullish" : value === null ? "nullish" : Array.isArray(value) ? "array" : value instanceof Map ? "Map" : typeof value));
     if (allowed.length && !allowed.includes(value)) panic("field read failed: " + expression + " expected " + expected + ", found " + typeof value + " " + value);
     return value;

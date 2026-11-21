@@ -107,10 +107,39 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 
 			contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: property.Name, Contract: child, Optional: property.Flags&ast.SymbolFlagsOptional != 0, Readonly: l.checker.IsReadonlySymbol(property)})
 		}
+		contract.StaticsAdmitted = contract.Kind == ir.ViewObject && l.viewStaticsAdmitted(contract)
 	}
 
 	l.result.ViewContracts[int(id)-1] = contract
 	return id, nil
+}
+
+// viewStaticsAdmitted is whether a class constructor may stand for contract's object (#s03ndgw): every
+// field it names is one only a static the class declares can hold, never a property Function or Object
+// gives every constructor (name, length, prototype, call, toString, constructor and the rest), asked of
+// the checker by name, so the library says which. GetPropertyOfType on Function's interface finds
+// Object's members too, and objectPrototypeName adds the __proto__ family the library doesn't declare.
+// A field the loop left unbuilt or unsupported, an unsupported contract, one with no field, or a
+// library without Function to ask leaves it false. Run time still asks that each required field be the
+// class's own data static (view_unions_untagged.c).
+func (l *lowering) viewStaticsAdmitted(contract ir.ViewContract) bool {
+	function := l.checker.GetGlobalSymbol("Function", ast.SymbolFlagsInterface, nil)
+	if function == nil || contract.Unsupported != "" || len(contract.Fields) == 0 {
+		return false
+	}
+	functionType := l.checker.GetDeclaredTypeOfSymbol(function)
+	for _, field := range contract.Fields {
+		if field.Contract <= 0 || int(field.Contract) > len(l.result.ViewContracts) {
+			return false
+		}
+		if held := l.result.ViewContracts[field.Contract-1]; held.Kind == ir.ViewUnknown || held.Unsupported != "" {
+			return false
+		}
+		if l.objectPrototypeName(field.Name) || l.checker.GetPropertyOfType(functionType, field.Name) != nil {
+			return false
+		}
+	}
+	return true
 }
 
 func (l *lowering) viewContractLiterals(target *checker.Type) []ir.ViewLiteral {
