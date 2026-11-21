@@ -9,8 +9,9 @@ I initialized the pinned recursive submodules, cloned the upstream tag with dept
 The entry root was `src/tsc/tsc.ts` and the directory root was `src/compiler` in the same adapted tree. Both runs used `CENSUS_MODULE_FORMAT=CommonJSBundle`, `LATENT_FULL=0`, `LATENT_TAIL=1`, and `LATENT_ASSERT_NO_OUTPUT=1`. A unit’s first stop is its first recorded prepass, registration, lowering, deferred or scoped-tail finding. Refusal and deferred scans and the relation trailer contribute to the all-phase findings. The search matches the full reason as a substring. Sites and unit locations below use the adapted source coordinates.
 
 - **Entry** — exit 0, 81 file records, 0 checker diagnostics, relation trailer present. [entry.jsonl.gz](entry.jsonl.gz)
-- **Directory** — pending.
+- **Directory** — exit 0, 79 file records, 0 checker diagnostics, relation trailer present. [directory.jsonl.gz](directory.jsonl.gz)
 - **Entry matches** — 18 first-stop units at 17 distinct sites. 18 findings across all phases at 17 distinct sites.
+- **Directory matches** — 18 first-stop units at 17 distinct sites. 18 findings across all phases at 17 distinct sites.
 
 Distinct matching sites across the available streams — 17.
 
@@ -19,10 +20,12 @@ Distinct matching sites across the available streams — 17.
 First-stop units
 
 - Entry — `createTypeChecker` at `src/compiler/checker.ts:1490:1` (lowering)
+- Directory — `createTypeChecker` at `src/compiler/checker.ts:1490:1` (lowering)
 
 All matching findings
 
 - Entry — lowering, NotYet, unit `src/compiler/checker.ts:1490:1`. a value of type ParameterPropertyDeclaration, an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
+- Directory — lowering, NotYet, unit `src/compiler/checker.ts:1490:1`. a value of type ParameterPropertyDeclaration, an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
 
 ### `src/compiler/factory/utilities.ts:363:107`
 
@@ -30,161 +33,195 @@ First-stop units
 
 - Entry — `createExpressionForAccessorDeclaration` at `src/compiler/factory/utilities.ts:363:1` (lowering)
 - Entry — `createExpressionForObjectLiteralElementLike` at `src/compiler/factory/utilities.ts:466:1` (lowering)
+- Directory — `createExpressionForAccessorDeclaration` at `src/compiler/factory/utilities.ts:363:1` (lowering)
+- Directory — `createExpressionForObjectLiteralElementLike` at `src/compiler/factory/utilities.ts:466:1` (lowering)
 
 All matching findings
 
 - Entry — lowering, NotYet, unit `src/compiler/factory/utilities.ts:363:1`. a value of type AccessorDeclaration & { readonly name: BigIntLiteral | ComputedPropertyName | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | StringLiteral; }, a union whose member GetAccessorDeclaration & { readonly name: BigIntLiteral | ComputedPropertyName | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | StringLiteral; } has no representation: an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
 - Entry — lowering, NotYet, unit `src/compiler/factory/utilities.ts:466:1`. a value of type AccessorDeclaration & { readonly name: BigIntLiteral | ComputedPropertyName | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | StringLiteral; }, a union whose member GetAccessorDeclaration & { readonly name: BigIntLiteral | ComputedPropertyName | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | StringLiteral; } has no representation: an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
+- Directory — lowering, NotYet, unit `src/compiler/factory/utilities.ts:363:1`. a value of type AccessorDeclaration & { readonly name: BigIntLiteral | ComputedPropertyName | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | StringLiteral; }, a union whose member GetAccessorDeclaration & { readonly name: BigIntLiteral | ComputedPropertyName | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | StringLiteral; } has no representation: an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
+- Directory — lowering, NotYet, unit `src/compiler/factory/utilities.ts:466:1`. a value of type AccessorDeclaration & { readonly name: BigIntLiteral | ComputedPropertyName | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | StringLiteral; }, a union whose member GetAccessorDeclaration & { readonly name: BigIntLiteral | ComputedPropertyName | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | StringLiteral; } has no representation: an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
 
 ### `src/compiler/moduleSpecifiers.ts:880:11`
 
 First-stop units
 
 - Entry — `tryGetModuleNameFromAmbientModule` at `src/compiler/moduleSpecifiers.ts:879:1` (lowering)
+- Directory — `tryGetModuleNameFromAmbientModule` at `src/compiler/moduleSpecifiers.ts:879:1` (lowering)
 
 All matching findings
 
 - Entry — lowering, NotYet, unit `src/compiler/moduleSpecifiers.ts:879:1`. a value of type (ModuleDeclaration & { name: StringLiteral; }) | undefined, a union whose member ModuleDeclaration & { name: StringLiteral; } has no representation: an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
+- Directory — lowering, NotYet, unit `src/compiler/moduleSpecifiers.ts:879:1`. a value of type (ModuleDeclaration & { name: StringLiteral; }) | undefined, a union whose member ModuleDeclaration & { name: StringLiteral; } has no representation: an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
 
 ### `src/compiler/transformers/classFields.ts:671:55`
 
 First-stop units
 
 - Entry — `transformClassFields` at `src/compiler/transformers/classFields.ts:356:1` (lowering)
+- Directory — `transformClassFields` at `src/compiler/transformers/classFields.ts:356:1` (lowering)
 
 All matching findings
 
 - Entry — lowering, NotYet, unit `src/compiler/transformers/classFields.ts:356:1`. a value of type PrivateIdentifierInExpression, an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
+- Directory — lowering, NotYet, unit `src/compiler/transformers/classFields.ts:356:1`. a value of type PrivateIdentifierInExpression, an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
 
 ### `src/compiler/transformers/generators.ts:1386:43`
 
 First-stop units
 
 - Entry — `transformGenerators` at `src/compiler/transformers/generators.ts:337:1` (lowering)
+- Directory — `transformGenerators` at `src/compiler/transformers/generators.ts:337:1` (lowering)
 
 All matching findings
 
 - Entry — lowering, NotYet, unit `src/compiler/transformers/generators.ts:337:1`. a value of type InitializedVariableDeclaration, an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
+- Directory — lowering, NotYet, unit `src/compiler/transformers/generators.ts:337:1`. a value of type InitializedVariableDeclaration, an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
 
 ### `src/compiler/transformers/jsx.ts:109:13`
 
 First-stop units
 
 - Entry — `transformJsx` at `src/compiler/transformers/jsx.ts:93:1` (lowering)
+- Directory — `transformJsx` at `src/compiler/transformers/jsx.ts:93:1` (lowering)
 
 All matching findings
 
 - Entry — lowering, NotYet, unit `src/compiler/transformers/jsx.ts:93:1`. a value of type (VariableDeclaration & { name: Identifier; }) | undefined, a union whose member VariableDeclaration & { name: Identifier; } has no representation: an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
+- Directory — lowering, NotYet, unit `src/compiler/transformers/jsx.ts:93:1`. a value of type (VariableDeclaration & { name: Identifier; }) | undefined, a union whose member VariableDeclaration & { name: Identifier; } has no representation: an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
 
 ### `src/compiler/transformers/module/module.ts:1926:43`
 
 First-stop units
 
 - Entry — `transformModule` at `src/compiler/transformers/module/module.ts:176:1` (lowering)
+- Directory — `transformModule` at `src/compiler/transformers/module/module.ts:176:1` (lowering)
 
 All matching findings
 
 - Entry — lowering, NotYet, unit `src/compiler/transformers/module/module.ts:176:1`. a value of type InitializedVariableDeclaration, an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
+- Directory — lowering, NotYet, unit `src/compiler/transformers/module/module.ts:176:1`. a value of type InitializedVariableDeclaration, an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
 
 ### `src/compiler/transformers/namedEvaluation.ts:412:89`
 
 First-stop units
 
 - Entry — `transformNamedEvaluationOfAssignmentExpression` at `src/compiler/transformers/namedEvaluation.ts:412:1` (lowering)
+- Directory — `transformNamedEvaluationOfAssignmentExpression` at `src/compiler/transformers/namedEvaluation.ts:412:1` (lowering)
 
 All matching findings
 
 - Entry — lowering, NotYet, unit `src/compiler/transformers/namedEvaluation.ts:412:1`. a value of type (AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; } & BinaryExpression) | (... & ... 1 more ... & BinaryExpression), a union whose member AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; } & BinaryExpression has no representation: an intersection whose field left has no representation: an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
+- Directory — lowering, NotYet, unit `src/compiler/transformers/namedEvaluation.ts:412:1`. a value of type (AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; } & BinaryExpression) | (... & ... 1 more ... & BinaryExpression), a union whose member AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; } & BinaryExpression has no representation: an intersection whose field left has no representation: an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
 
 ### `src/compiler/transformers/ts.ts:1429:55`
 
 First-stop units
 
 - Entry — `transformTypeScript` at `src/compiler/transformers/ts.ts:236:1` (lowering)
+- Directory — `transformTypeScript` at `src/compiler/transformers/ts.ts:236:1` (lowering)
 
 All matching findings
 
 - Entry — lowering, NotYet, unit `src/compiler/transformers/ts.ts:236:1`. a value of type ParameterPropertyDeclaration, an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
+- Directory — lowering, NotYet, unit `src/compiler/transformers/ts.ts:236:1`. a value of type ParameterPropertyDeclaration, an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
 
 ### `src/compiler/utilities.ts:3570:11`
 
 First-stop units
 
 - Entry — `classOrConstructorParameterIsDecorated` at `src/compiler/utilities.ts:3568:1` (lowering)
+- Directory — `classOrConstructorParameterIsDecorated` at `src/compiler/utilities.ts:3568:1` (lowering)
 
 All matching findings
 
 - Entry — lowering, NotYet, unit `src/compiler/utilities.ts:3568:1`. a value of type (ConstructorDeclaration & { body: Block; }) | undefined, a union whose member ConstructorDeclaration & { body: Block; } has no representation: an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
+- Directory — lowering, NotYet, unit `src/compiler/utilities.ts:3568:1`. a value of type (ConstructorDeclaration & { body: Block; }) | undefined, a union whose member ConstructorDeclaration & { body: Block; } has no representation: an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
 
 ### `src/compiler/utilities.ts:3886:16`
 
 First-stop units
 
 - Entry — `getModuleSpecifierOfBareOrAccessedRequire` at `src/compiler/utilities.ts:3884:1` (lowering)
+- Directory — `getModuleSpecifierOfBareOrAccessedRequire` at `src/compiler/utilities.ts:3884:1` (lowering)
 
 All matching findings
 
 - Entry — lowering, NotYet, unit `src/compiler/utilities.ts:3884:1`. a value of type RequireOrImportCall, an intersection whose field expression has no representation: an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
+- Directory — lowering, NotYet, unit `src/compiler/utilities.ts:3884:1`. a value of type RequireOrImportCall, an intersection whose field expression has no representation: an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
 
 ### `src/compiler/utilities.ts:4348:54`
 
 First-stop units
 
 - Entry — `tryGetModuleSpecifierFromDeclaration` at `src/compiler/utilities.ts:4348:1` (lowering)
+- Directory — `tryGetModuleSpecifierFromDeclaration` at `src/compiler/utilities.ts:4348:1` (lowering)
 
 All matching findings
 
 - Entry — lowering, NotYet, unit `src/compiler/utilities.ts:4348:1`. a value of type JSDocImportTag | CanHaveModuleSpecifier, a union whose member BindingElementOfBareOrAccessedRequire has no representation: an intersection whose field parent has no representation: a union whose member ArrayBindingPattern & { parent: VariableDeclarationInitializedTo<AccessExpression | RequireOrImportCall>; } has no representation: an intersection whose field parent has no representation: a union whose member VariableDeclaration & VariableDeclarationInitializedTo<AccessExpression | RequireOrImportCall> has no representation: an intersection whose field initializer has no representation: a union whose member Expression & ElementAccessExpression has no representation: an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
+- Directory — lowering, NotYet, unit `src/compiler/utilities.ts:4348:1`. a value of type JSDocImportTag | CanHaveModuleSpecifier, a union whose member BindingElementOfBareOrAccessedRequire has no representation: an intersection whose field parent has no representation: a union whose member ArrayBindingPattern & { parent: VariableDeclarationInitializedTo<AccessExpression | RequireOrImportCall>; } has no representation: an intersection whose field parent has no representation: a union whose member VariableDeclaration & VariableDeclarationInitializedTo<AccessExpression | RequireOrImportCall> has no representation: an intersection whose field initializer has no representation: a union whose member Expression & ElementAccessExpression has no representation: an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
 
 ### `src/compiler/utilities.ts:4683:47`
 
 First-stop units
 
 - Entry — `filterOwnedJSDocTags` at `src/compiler/utilities.ts:4683:1` (lowering)
+- Directory — `filterOwnedJSDocTags` at `src/compiler/utilities.ts:4683:1` (lowering)
 
 All matching findings
 
 - Entry — lowering, NotYet, unit `src/compiler/utilities.ts:4683:1`. a value of type JSDocArray, an array type with its own member jsDocCache, held as neither an array nor an object
+- Directory — lowering, NotYet, unit `src/compiler/utilities.ts:4683:1`. a value of type JSDocArray, an array type with its own member jsDocCache, held as neither an array nor an object
 
 ### `src/compiler/utilities.ts:4704:39`
 
 First-stop units
 
 - Entry — `ownsJSDocTag` at `src/compiler/utilities.ts:4700:1` (lowering)
+- Directory — `ownsJSDocTag` at `src/compiler/utilities.ts:4700:1` (lowering)
 
 All matching findings
 
 - Entry — lowering, NotYet, unit `src/compiler/utilities.ts:4700:1`. a value of type HasJSDoc, a union whose member EndOfFileToken has no representation: an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
+- Directory — lowering, NotYet, unit `src/compiler/utilities.ts:4700:1`. a value of type HasJSDoc, a union whose member EndOfFileToken has no representation: an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
 
 ### `src/compiler/utilities.ts:4795:11`
 
 First-stop units
 
 - Entry — `getEffectiveJSDocHost` at `src/compiler/utilities.ts:4794:1` (lowering)
+- Directory — `getEffectiveJSDocHost` at `src/compiler/utilities.ts:4794:1` (lowering)
 
 All matching findings
 
 - Entry — lowering, NotYet, unit `src/compiler/utilities.ts:4794:1`. a value of type HasJSDoc | undefined, a union whose member EndOfFileToken has no representation: an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
+- Directory — lowering, NotYet, unit `src/compiler/utilities.ts:4794:1`. a value of type HasJSDoc | undefined, a union whose member EndOfFileToken has no representation: an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
 
 ### `src/compiler/utilities.ts:4829:43`
 
 First-stop units
 
 - Entry — `getTypeParameterFromJsDoc` at `src/compiler/utilities.ts:4829:1` (lowering)
+- Directory — `getTypeParameterFromJsDoc` at `src/compiler/utilities.ts:4829:1` (lowering)
 
 All matching findings
 
 - Entry — lowering, NotYet, unit `src/compiler/utilities.ts:4829:1`. a value of type TypeParameterDeclaration & { parent: JSDocTemplateTag; }, an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
+- Directory — lowering, NotYet, unit `src/compiler/utilities.ts:4829:1`. a value of type TypeParameterDeclaration & { parent: JSDocTemplateTag; }, an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
 
 ### `src/compiler/utilities.ts:5200:20`
 
 First-stop units
 
 - Entry — `getEffectiveBaseTypeNode` at `src/compiler/utilities.ts:5194:1` (lowering)
+- Directory — `getEffectiveBaseTypeNode` at `src/compiler/utilities.ts:5194:1` (lowering)
 
 All matching findings
 
 - Entry — lowering, NotYet, unit `src/compiler/utilities.ts:5194:1`. a value of type ExpressionWithTypeArguments & { readonly expression: Identifier | PropertyAccessEntityNameExpression; }, an intersection whose field expression has no representation: a union whose member LeftHandSideExpression & Identifier has no representation: an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
+- Directory — lowering, NotYet, unit `src/compiler/utilities.ts:5194:1`. a value of type ExpressionWithTypeArguments & { readonly expression: Identifier | PropertyAccessEntityNameExpression; }, an intersection whose field expression has no representation: a union whose member LeftHandSideExpression & Identifier has no representation: an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object
 
 ## 2. TypeScript references and ownership
 
