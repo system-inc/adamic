@@ -55,7 +55,9 @@ var backendDivergencesJSON []byte
 // Only these exact fixtures have ruled differences. Each side remains pinned:
 // membership never excuses an arbitrary exit, diagnostic or output change. A row whose node is set
 // pins the source on Node too, for fixtures where native and the JavaScript backend agree with each
-// other and differ from the source; name is the ruled row's, which may hold more than one fixture. A
+// other and differ from the source, or where a test holds them apart on purpose (a Weak read native
+// frees, #d358hc1), each of the three then pinned whole; a row's {root} is the admission delta's
+// checkout, written so for a stop that names its program's file, and no fixture of the oracle's has one; name is the ruled row's, which may hold more than one fixture. A
 // row whose format is lower.ModuleFormatCommonJSBundle is built only as one bundled image, so its
 // fixture is never among the oracle's, which lower every program as an ES module: the installed-layout
 // harness runs it (TestInstalledLayoutPathDivergences), with each leg's lib directory made <lib>.

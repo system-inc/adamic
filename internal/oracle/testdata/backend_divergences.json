@@ -1,5 +1,5 @@
 {
-  "_comment": "Adding a row is a ruling routed to @system_adamic, and only Adamic adds one. Each row is one fixture whose backends are ruled to differ, from each other, or, where node is set, both from the source on Node while they agree with each other; name is the ruled divergence, which may hold more than one fixture. Schema: divergences lists fixture (the program's repository path, once), name (absent for a lone row), ruling (who ruled, naming the task; a row whose ruling is empty or names no task is refused), reason, format (absent for a program built as an ES module; CommonJSBundle for one built only as one bundled image, which the installed-layout harness runs with each leg's lib directory written <lib>), node (absent where Node's side isn't ruled), native and javascript, each outcome its exact stdout, stderr and exit_code. internal/oracle's backend divergence test holds each fixture's runs to its row byte for byte, and the admission delta reads a newly admitted program at a row's fixture as that divergence only when native and JavaScript agree and Node's and native's runs are exactly the row's. Membership never excuses any other output.",
+  "_comment": "Adding a row is a ruling routed to @system_adamic, and only Adamic adds one. Each row is one fixture whose backends are ruled to differ, from each other, or, where node is set, both from the source on Node while they agree with each other; name is the ruled divergence, which may hold more than one fixture. Schema: divergences lists fixture (the program's repository path, once), name (absent for a lone row), ruling (who ruled, naming the task; a row whose ruling is empty or names no task is refused), reason, format (absent for a program built as an ES module; CommonJSBundle for one built only as one bundled image, which the installed-layout harness runs with each leg's lib directory written <lib>), node (absent where Node's side isn't ruled), native and javascript, each outcome its exact stdout, stderr and exit_code. internal/oracle's backend divergence test holds each fixture's runs to its row byte for byte, and the admission delta reads a program at a row's fixture as that divergence only when Node's and native's runs are exactly the row's and native and JavaScript agree, or, for a row a test holds apart on purpose, JavaScript's run is exactly the row's too. An outcome's {root} is the admission delta's checkout, for a stop that names its program's file; no fixture of the oracle's has one. Membership never excuses any other output.",
   "divergences": [
     {
       "fixture": "internal/oracle/testdata/d96d304_try_stack.a",
@@ -274,6 +274,166 @@
         "stdout": "ERR_INSPECTOR_NOT_AVAILABLE\n",
         "stderr": "",
         "exit_code": 0
+      }
+    },
+    {
+      "fixture": "internal/oracle/testdata/weak/freed.a",
+      "ruling": "@system_adamic, task #k1avvp1, ruling (d) of Nov 20 (a held departure goes on this list naming its test); held by internal/oracle/weak_test.go: TestWeakReadsUndefinedOnceFreed",
+      "reason": "A Weak read after its target was freed is where native and Node differ by design (docs/memory.md): natively the target is gone, so the read is undefined, or a panic where the checker had proven it present; on Node, and through the JavaScript backend, the collector keeps it while the Weak points at it.",
+      "node": {
+        "stdout": "while held: bbb\nafter: bbb false\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "native": {
+        "stdout": "while held: bbb\nafter: gone true\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "javascript": {
+        "stdout": "while held: bbb\nafter: bbb false\n",
+        "stderr": "",
+        "exit_code": 0
+      }
+    },
+    {
+      "fixture": "internal/oracle/testdata/weak/narrowed.a",
+      "ruling": "@system_adamic, task #k1avvp1, ruling (d) of Nov 20 (a held departure goes on this list naming its test); held by internal/oracle/weak_test.go: TestWeakReadsUndefinedOnceFreed",
+      "reason": "A Weak read after its target was freed is where native and Node differ by design (docs/memory.md): natively the target is gone, so the read is undefined, or a panic where the checker had proven it present; on Node, and through the JavaScript backend, the collector keeps it while the Weak points at it.",
+      "node": {
+        "stdout": "before: cc\nafter: cc\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "native": {
+        "stdout": "before: cc\n",
+        "stderr": "adamic: panic: a weak reference was read after what it pointed to was freed\n",
+        "exit_code": 70
+      },
+      "javascript": {
+        "stdout": "before: cc\nafter: cc\n",
+        "stderr": "",
+        "exit_code": 0
+      }
+    },
+    {
+      "fixture": "internal/oracle/testdata/weak/probe_chain.a",
+      "ruling": "@system_adamic, task #k1avvp1, ruling (d) of Nov 20 (a held departure goes on this list naming its test); held by internal/oracle/weak_test.go: TestWeakReadsUndefinedOnceFreed",
+      "reason": "A Weak read after its target was freed is where native and Node differ by design (docs/memory.md): natively the target is gone, so the read is undefined, or a panic where the checker had proven it present; on Node, and through the JavaScript backend, the collector keeps it while the Weak points at it.",
+      "node": {
+        "stdout": "100\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "native": {
+        "stdout": "0\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "javascript": {
+        "stdout": "100\n",
+        "stderr": "",
+        "exit_code": 0
+      }
+    },
+    {
+      "fixture": "internal/oracle/testdata/weak/reuse.a",
+      "ruling": "@system_adamic, task #k1avvp1, ruling (d) of Nov 20 (a held departure goes on this list naming its test); held by internal/oracle/weak_test.go: TestWeakReadsUndefinedOnceFreed",
+      "reason": "A Weak read after its target was freed is where native and Node differ by design (docs/memory.md): natively the target is gone, so the read is undefined, or a panic where the checker had proven it present; on Node, and through the JavaScript backend, the collector keeps it while the Weak points at it.",
+      "node": {
+        "stdout": "t1 0\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "native": {
+        "stdout": "gone 0\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "javascript": {
+        "stdout": "t1 0\n",
+        "stderr": "",
+        "exit_code": 0
+      }
+    },
+    {
+      "fixture": "internal/oracle/testdata/weak_miscompiles/4ddd17f_weak_single_narrowed.a",
+      "ruling": "@system_adamic, task #k1avvp1, ruling (d) of Nov 20 (a held departure goes on this list naming its test); held by internal/oracle/weak_differential_test.go: TestWeakDifferentialSingleNarrowed",
+      "reason": "A Weak read after its target was freed is where native and Node differ by design (docs/memory.md): natively the target is gone, so the read is undefined, or a panic where the checker had proven it present; on Node, and through the JavaScript backend, the collector keeps it while the Weak points at it.",
+      "node": {
+        "stdout": "before\nafter: nn\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "native": {
+        "stdout": "before\n",
+        "stderr": "adamic: panic: a weak reference was read after what it pointed to was freed\n",
+        "exit_code": 70
+      },
+      "javascript": {
+        "stdout": "before\nafter: nn\n",
+        "stderr": "",
+        "exit_code": 0
+      }
+    },
+    {
+      "fixture": "internal/oracle/testdata/weak_miscompiles/4ddd17f_weak_union_narrowed.a",
+      "ruling": "@system_adamic, task #k1avvp1, ruling (d) of Nov 20 (a held departure goes on this list naming its test); held by internal/oracle/weak_differential_test.go: TestWeakDifferentialUnionNarrowed",
+      "reason": "A Weak read after its target was freed is where native and Node differ by design (docs/memory.md): natively the target is gone, so the read is undefined, or a panic where the checker had proven it present; on Node, and through the JavaScript backend, the collector keeps it while the Weak points at it.",
+      "node": {
+        "stdout": "before\nafter: nn\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "native": {
+        "stdout": "before\n",
+        "stderr": "adamic: panic: a weak reference was read after what it pointed to was freed\n",
+        "exit_code": 70
+      },
+      "javascript": {
+        "stdout": "before\nafter: nn\n",
+        "stderr": "",
+        "exit_code": 0
+      }
+    },
+    {
+      "fixture": "internal/oracle/testdata/non_null_weak_freed.ts",
+      "ruling": "@system_adamic, task #k1avvp1, ruling (d) of Nov 20 (a held departure goes on this list naming its test); held by internal/oracle/readiness_test.go: TestNonNullWeakFreedNamesExpression",
+      "reason": "Native Weak lifetime is ruled to differ from Node's tracing collector (docs/memory.md): natively the target is freed, so the non-null assertion on it fails and names its expression; on Node, and through the JavaScript backend, the target lives.",
+      "node": {
+        "stdout": "before\nlivelive\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "native": {
+        "stdout": "before\n",
+        "stderr": "adamic: panic: non-null assertion failed at {root}/internal/oracle/testdata/non_null_weak_freed.ts:9:17: holder.value! is null or undefined\n",
+        "exit_code": 70
+      },
+      "javascript": {
+        "stdout": "before\nlivelive\n",
+        "stderr": "",
+        "exit_code": 0
+      }
+    },
+    {
+      "fixture": "internal/oracle/testdata/records_checked_names/widened_view_lie.ts",
+      "ruling": "@system_adamic, task #k1avvp1, ruling (d) of Nov 20 (a held departure goes on this list naming its test); held by internal/oracle/records_checked_names_test.go: TestCheckedNamesWidenedViewLie",
+      "reason": "A record read through a widened view of its own type stays checked and stops on the string a computed key put under total, where Node prints it. Both backends stop alike in exit and stdout, each in its own words, as its checked view read does.",
+      "node": {
+        "stdout": "total\nseven1\n",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "native": {
+        "stdout": "total\n",
+        "stderr": "adamic: panic: field read failed: seen.total expected number, found string\n",
+        "exit_code": 70
+      },
+      "javascript": {
+        "stdout": "total\n",
+        "stderr": "adamic: panic: field read failed: seen.total is not a number; expected number, found string\n",
+        "exit_code": 70
       }
     }
   ]

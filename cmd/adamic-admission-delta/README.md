@@ -354,10 +354,15 @@ lacks any of the first three, its ruling names no task, or a fixture is listed
 twice.
 
 A newly admitted program that disagrees with Node passes as a ruled divergence
-only when all three hold: native and JavaScript agree with each other, as
-`outputsAgree` reads agreement; the program's path is a row's fixture, on a row
-that sets `node`; and Node's run is exactly that row's `node` outcome, and
-native's exactly its `native` outcome, stdout, stderr and exit code. A program
+only when the program's path is a row's fixture, on a row that sets `node`;
+Node's run is exactly that row's `node` outcome, and native's exactly its
+`native` outcome, stdout, stderr and exit code; and either native and
+JavaScript agree with each other, as `outputsAgree` reads agreement, or
+JavaScript's run is exactly the row's `javascript` outcome too. The second form
+is for a row a test holds apart on purpose, a Weak read native frees where
+Node's collector keeps the target (#d358hc1), so all three of its runs are
+pinned whole. An outcome's `{root}` is the checkout the run judged, for a stop
+that names its program's file. A program
 on no row fails as any disagreement does, even when it prints a row's outputs,
 and so does a row's program whose run differs from the row on any side. The
 path, not the content hash, is the key, since the row pins every output an edit
