@@ -26,9 +26,9 @@ type executeSource struct {
 
 // executeSources are the execute half's programs, in the file's order: bench/suites.json's everyday programs with its
 // judges, and primes_parallel, Kirk's parallel demo (#sp4m5ex), judged on wall as parallel_files is, since more threads
-// spend more user time by design. TestPerformanceExecuteProgramsAreTheEverydaySuite holds the list to suites.json, so the
-// two never drift. tokenizer and trees are the compile half's too, so the binaries its warm builds make are the ones
-// this half runs.
+// spend more user time by design. TestPerformanceExecuteProgramsAreTheEverydaySuite holds the list to suites.json, so
+// the two never drift. tokenizer and trees are the compile half's too, so the binaries its warm builds make are the
+// ones this half runs.
 var executeSources = []executeSource{
 	{name: "devirtualize", path: "bench/devirtualize.a", judge: "user"},
 	{name: "nbody", path: "bench/nbody.ts", judge: "user"},
@@ -84,13 +84,13 @@ type executeTarget struct {
 	importsAdamic bool
 }
 
-// measureExecute measures the execute half on the work directory the compile half measured in, after it, and names
-// the programs whose builds made a runtime archive of their own. A program the compile half builds runs the binary its warm builds left; every
-// other one is built once, untimed, on the same caches (buildForExecute). Then rounds rounds, each running every program
-// natively and then on Node, every run through measure, and on odd rounds, counting from 0, both orders mirrored
-// (executeOrder). Each program runs as bench runs it: from the repository's root, with no arguments, and Node through
-// benchmark.NodeCommand. Every run's output must be Node's first run's, or the measure is an error: a native time for
-// another answer is no time at all.
+// measureExecute measures the execute half on the work directory the compile half measured in, after it, and names the
+// programs whose builds made a runtime archive of their own. A program the compile half builds runs the binary its warm
+// builds left; every other one is built once, untimed, on the same caches (buildForExecute). Then rounds rounds, each
+// running every program natively and then on Node, every run through measure, and on odd rounds, counting from 0, both
+// orders mirrored (executeOrder). Each program runs as bench runs it: from the repository's root, with no arguments,
+// and Node through benchmark.NodeCommand. Every run's output must be Node's first run's, or the measure is an error: a
+// native time for another answer is no time at all.
 func measureExecute(request executeRequest, build runner, measure timer) (execute, []string, error) {
 	if err := os.MkdirAll(filepath.Join(request.compile.work, "logs"), 0o755); err != nil {
 		return execute{}, nil, err
