@@ -132,13 +132,16 @@ func TestViewSiteAskedAgainWhenItsNameGainsAKey(t *testing.T) {
 // keeping the last.
 func TestViewRefusesItsFirstSiteInPreorder(t *testing.T) {
 	t.Parallel()
+	// Since #5qx6qv4 the view walk holds a write's stop for the statement nearest it, so in .a the cast's own
+	// refusal answers first, at 4:32. The held stops' order, the first in the walk's preorder, is pinned by
+	// TestSourceSlotPendingViewWriteStopsHeldTheSameWay's "two writes, the first fires".
 	_, err := lowerSource(t, viewSitesTwoWrites)
-	var notYet *NotYet
-	if !errors.As(err, &notYet) || notYet.What != "writing a checked object field without its source-slot type certificate" {
-		t.Fatalf("got %v, want the checked object field write refused", err)
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.Contains(refused.What, "a downcast from Base to Box in .a whose checks no proof erases") {
+		t.Fatalf("got %v, want the .a cast refused", err)
 	}
-	if !strings.Contains(notYet.Where, "main.a:5:") {
-		t.Fatalf("refused at %s, not the first write's line 5", notYet.Where)
+	if !strings.Contains(refused.Where, "main.a:4:") {
+		t.Fatalf("refused at %s, not the cast's line 4", refused.Where)
 	}
 }
 
