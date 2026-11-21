@@ -1,8 +1,35 @@
-import { openSync, closeSync, mkdtempSync } from 'node:fs';
+import { openSync, closeSync, mkdtempSync, mkdirSync, readdirSync, symlinkSync } from 'node:fs';
 function code(error: unknown): string { return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : ''; }
-for (const value of ['x\ud800\0', 'x\udfff\0', 'x\u0085\0', 'x\u2028\0', '\0\n\t\b\v\f\r', "'\"`$\0", 'a'.repeat(130) + '\0']) {
+function report(error: Error): void { console.log(`${error.name}|${code(error)}|${error.message}`); }
+// The first seven are the program as found. The rest hold util.inspect's table as Node v24.19.0 writes it (#n6hgpm0):
+// C0 controls and DEL in uppercase hex, the C1 controls at both ends and the raw units past them, both surrogate
+// halves alone, a pair and a reversed pair, a backslash, each quote rule, the 128-unit cut inside an escape and
+// between a pair's halves, a string past 124 units split after its line feeds, each piece quoted on its own, and the
+// most bytes the preview can write: 3-byte characters up to the cut, one before a lone surrogate's escape, and line
+// feeds forcing a join at every piece.
+for (const value of ['x\ud800\0', 'x\udfff\0', 'x\u0085\0', 'x\u2028\0', '\0\n\t\b\v\f\r', "'\"`$\0", 'a'.repeat(130) + '\0',
+    'x\x01\x0e\x1a\x1f\x7f\0', 'x\x80\x8a\x9f\xa0\xad\xff\0', 'x\udbff\0', 'x\udc00\0', 'x\ud83d\ude00\0', 'x\udc00\ud800\0', 'x\ud800a\0', 'a\\b\0',
+    "a'b\0", 'a"b\0', 'a\'"b\0', "a'`b\0", '\'"$\0', '\'"${\0', 'a${b\0',
+    'a'.repeat(125) + '\ud800\0', 'a'.repeat(124) + '\x85\0', 'a'.repeat(126) + '\ud83d\ude00\0', 'a'.repeat(125) + '\ud83d\ude00\0',
+    'a'.repeat(61) + '\n' + 'b'.repeat(61) + '\0', 'a'.repeat(61) + '\n' + 'b'.repeat(62) + '\0', 'a'.repeat(70) + "'\n" + 'b'.repeat(60) + '\0', 'a\n' + 'b'.repeat(140) + '\0',
+    '\u4e00'.repeat(200) + '\0', '\u4e00'.repeat(127) + '\ud800\0', '\u4e00\n'.repeat(100) + '\0', '\n'.repeat(200) + '\0']) {
     try { closeSync(openSync(value, 'r')); }
-    catch(error) { if(error instanceof Error) console.log(`${error.name}|${code(error)}|${error.message}`); }
+    catch(error) { if(error instanceof Error) report(error); }
     try { mkdtempSync(value); }
-    catch(error) { if(error instanceof Error) console.log(`${error.name}|${code(error)}|${error.message}`); }
+    catch(error) { if(error instanceof Error) report(error); }
+    try { mkdirSync(value); }
+    catch(error) { if(error instanceof Error) report(error); }
+    try { closeSync(openSync('unused', value)); }
+    catch(error) { if(error instanceof Error) report(error); }
+    try { readdirSync(value); }
+    catch(error) { if(error instanceof Error) report(error); }
+    try { symlinkSync(value, 'unused'); }
+    catch(error) { if(error instanceof Error) report(error); }
+}
+// A pair the cut splits leaves its high half in the message, as a string a program can read, through each caller.
+for (const value of ['a'.repeat(126) + '\ud83d\ude00\0']) {
+    try { closeSync(openSync(value, 'r')); }
+    catch(error) { if(error instanceof Error) console.log(`${error.message.length}|${error.message.charCodeAt(error.message.length - 4)}`); }
+    try { readdirSync(value); }
+    catch(error) { if(error instanceof Error) console.log(`${error.message.length}|${error.message.charCodeAt(error.message.length - 4)}`); }
 }

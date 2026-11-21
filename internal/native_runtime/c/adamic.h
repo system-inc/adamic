@@ -1523,6 +1523,11 @@ adamic_string *adamic_string_trim_sides(adamic_string *string, bool at_start, bo
 double adamic_string_last_index_of(const adamic_string *string, const adamic_string *search);
 adamic_string *adamic_string_replace(const adamic_string *string, const adamic_string *search, const adamic_string *replacement, bool all);
 
+// adamic_string_inspect_received is the preview a Node ERR_INVALID_ARG_VALUE message ends with after
+// `Received `: util.inspect's quoting of value, cut to 128 units and `...` (string.c), a string the
+// caller owns. node_fs_file.c and node_fs_directory.c both write theirs with it.
+adamic_string *adamic_string_inspect_received(const adamic_string *value);
+
 // ADAMIC_STRING_MAX_UNITS is V8's longest string, in UTF-16 units (String::kMaxLength on 64-bit).
 #define ADAMIC_STRING_MAX_UNITS 536870888
 
