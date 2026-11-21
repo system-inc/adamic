@@ -143,7 +143,8 @@ func executed(name, judge string, native, node spread) namedExecution {
 	return namedExecution{Name: name, Execution: execution{Judge: judge, Native: numbers(native), Node: numbers(node), Ratio: ratioOf(native.Median, node.Median)}}
 }
 
-// executeNoteSnapshot is noteSnapshot with hello level in the compile half and the given execute programs over 3 rounds.
+// executeNoteSnapshot is noteSnapshot with hello level in the compile half and the given execute programs over 3
+// rounds.
 func executeNoteSnapshot(commit string, entries ...namedExecution) snapshot {
 	value := noteSnapshot(commit, timed("hello", spread{Median: 349, Min: 340, Max: 362}, spread{Median: 45, Min: 44, Max: 47}))
 	value.Execute = execute{Rounds: 3, Programs: executions(entries)}
