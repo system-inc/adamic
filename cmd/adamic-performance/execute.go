@@ -84,24 +84,24 @@ type executeTarget struct {
 	importsAdamic bool
 }
 
-// measureExecute measures the execute half on the work directory the compile half measured in, after it, and says how
-// many runtime archives its builds made. A program the compile half builds runs the binary its warm builds left; every
+// measureExecute measures the execute half on the work directory the compile half measured in, after it, and names
+// the programs whose builds made a runtime archive of their own. A program the compile half builds runs the binary its warm builds left; every
 // other one is built once, untimed, on the same caches (buildForExecute). Then rounds rounds, each running every program
 // natively and then on Node, every run through measure, and on odd rounds, counting from 0, both orders mirrored
 // (executeOrder). Each program runs as bench runs it: from the repository's root, with no arguments, and Node through
 // benchmark.NodeCommand. Every run's output must be Node's first run's, or the measure is an error: a native time for
 // another answer is no time at all.
-func measureExecute(request executeRequest, build runner, measure timer) (execute, int, error) {
+func measureExecute(request executeRequest, build runner, measure timer) (execute, []string, error) {
 	if err := os.MkdirAll(filepath.Join(request.compile.work, "logs"), 0o755); err != nil {
-		return execute{}, 0, err
+		return execute{}, nil, err
 	}
 	targets := []executeTarget{}
-	archivesBuilt := 0
+	archivesBuilt := []string{}
 	for _, source := range executeSources {
 		path := filepath.Join(request.compile.root, filepath.FromSlash(source.path))
 		contents, err := os.ReadFile(path)
 		if err != nil {
-			return execute{}, 0, err
+			return execute{}, nil, err
 		}
 		target := executeTarget{source: source, path: path, binary: request.compile.output(source.name), importsAdamic: benchmark.ImportsAdamic(string(contents))}
 		compiled := slices.IndexFunc(sources, func(built programSource) bool { return built.path == source.path })
@@ -110,10 +110,10 @@ func measureExecute(request executeRequest, build runner, measure timer) (execut
 		} else {
 			built, err := buildForExecute(request.compile, target, build)
 			if err != nil {
-				return execute{}, 0, err
+				return execute{}, nil, err
 			}
 			if built {
-				archivesBuilt++
+				archivesBuilt = append(archivesBuilt, source.name)
 			}
 		}
 		targets = append(targets, target)
@@ -129,14 +129,14 @@ func measureExecute(request executeRequest, build runner, measure timer) (execut
 			for _, side := range sideOrder {
 				result := measure(commands[side])
 				if result.Failure != "" {
-					return execute{}, 0, fmt.Errorf("%s: %s's run in round %d %s", target.source.name, sideNames[side], round+1, result.Failure)
+					return execute{}, nil, fmt.Errorf("%s: %s's run in round %d %s", target.source.name, sideNames[side], round+1, result.Failure)
 				}
 				runs[index][side] = append(runs[index][side], result)
 			}
 			answer := runs[index][nodeSide][0].Stdout
 			for _, side := range sideOrder {
 				if printed := runs[index][side][round].Stdout; printed != answer {
-					return execute{}, 0, fmt.Errorf("%s: %s's run in round %d printed another answer than Node's in round 1, at %s", target.source.name, sideNames[side], round+1, firstDifference(printed, answer))
+					return execute{}, nil, fmt.Errorf("%s: %s's run in round %d printed another answer than Node's in round 1, at %s", target.source.name, sideNames[side], round+1, firstDifference(printed, answer))
 				}
 			}
 		}
@@ -147,7 +147,7 @@ func measureExecute(request executeRequest, build runner, measure timer) (execut
 		entry := execution{Judge: target.source.judge, Native: runtimeNumbersOf(runs[index][nativeSide]), Node: runtimeNumbersOf(runs[index][nodeSide])}
 		node := entry.Node.judged(entry.Judge).Median
 		if node <= 0 {
-			return execute{}, 0, fmt.Errorf("%s: Node's %s time read %d ms, so there is no ratio to it", target.source.name, entry.Judge, node)
+			return execute{}, nil, fmt.Errorf("%s: Node's %s time read %d ms, so there is no ratio to it", target.source.name, entry.Judge, node)
 		}
 		entry.Ratio = ratioOf(entry.Native.judged(entry.Judge).Median, node)
 		measured.Programs = append(measured.Programs, namedExecution{Name: target.source.name, Execution: entry})
@@ -157,7 +157,7 @@ func measureExecute(request executeRequest, build runner, measure timer) (execut
 
 // buildForExecute builds target's binary once, untimed, on the compile half's caches, and says whether its runtime
 // archive was built rather than found. A program's runtime features key its archive (native_runtime.FeatureFlags), so
-// one whose features differ from hello's misses the archive hello's cold build made and builds its own. A miss costs
+// one whose features differ from hello's finds no archive on these caches and builds its own. A miss costs
 // no timed number, since no execute run is a build, so it is counted and never refused; a build whose log has no
 // cArchive line at all never reached the archive, and is an error.
 func buildForExecute(request compileRequest, target executeTarget, build runner) (bool, error) {
@@ -181,6 +181,16 @@ func buildForExecute(request compileRequest, target executeTarget, build runner)
 		return false, fmt.Errorf("%s: its build logged no cArchive line, so it never reached the runtime archive", target.source.name)
 	}
 	return !log.archiveHit, nil
+}
+
+// archivesLine is the line measureSnapshot writes beside the file when execute builds made archives of their own,
+// naming the programs, or empty when none did. It is never a field in the file: it is an untimed build's cost, for
+// whoever sizes the measure against its budget.
+func archivesLine(programs []string) string {
+	if len(programs) == 0 {
+		return ""
+	}
+	return fmt.Sprintf("adamic-performance: execute builds: %d runtime archives built (their feature sets differ from hello's): %s\n", len(programs), strings.Join(programs, ", "))
 }
 
 // executeOrder is a round's order: the programs by their index in executeSources, and the two sides, native before

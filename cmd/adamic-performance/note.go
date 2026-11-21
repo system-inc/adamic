@@ -70,11 +70,18 @@ func movedDirection(before, after spread) string {
 }
 
 // compareExecute is what moved in the execute half, by compareNote's rule, and which of its programs are new, gone or
-// judged on another measure. Only native's judged spread is named as moved, since it is the one the commit makes:
+// judged on another measure. A previous snapshot with no execute half, from before it was measured, is named once as
+// execute first measured, never as every program new. Only native's judged spread is named as moved, since it is the one the commit makes:
 // Node's numbers move with the machine and Node's own version, and the ratio with both sides, so they are context
 // beside native's and never named. A program judged on another measure than before is named and not compared, since
 // the two spreads are of different times.
 func compareExecute(previous, current execute) (moved, named []string) {
+	if previous.Rounds == 0 {
+		if current.Rounds == 0 {
+			return nil, nil
+		}
+		return nil, []string{"execute first measured"}
+	}
 	for _, entry := range current.Programs {
 		before, found := previous.Programs.lookup(entry.Name)
 		if !found {
@@ -116,6 +123,10 @@ func incomparable(previous, current snapshot) []string {
 		{name: "compile.rounds", before: strconv.Itoa(previous.Compile.Rounds), after: strconv.Itoa(current.Compile.Rounds)},
 		{name: "execute.rounds", before: strconv.Itoa(previous.Execute.Rounds), after: strconv.Itoa(current.Execute.Rounds)},
 	} {
+		// A previous snapshot with no execute half has no round count to differ from: compareExecute names it.
+		if field.name == "execute.rounds" && previous.Execute.Rounds == 0 {
+			continue
+		}
 		if field.before != field.after {
 			differences = append(differences, fmt.Sprintf("%s %s to %s", field.name, field.before, field.after))
 		}
