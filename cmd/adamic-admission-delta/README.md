@@ -35,6 +35,13 @@ companions that implement `admission-lower <path>`. Otherwise each compiler
 builds in its own detached checkout with its pinned submodules.
 Compiler products use `internal/buildcache`, keyed by SHA, lowering adapter,
 build settings and toolchain. `ADAMIC_BUILD_LOG` records hits and misses.
+A program whose text holds `decodeJson` or `encodeJson` runs on Node with
+`ADAMIC_JSON_TYPES` naming head's `oracle/json_types.go` built, as the oracle's
+own tests run it: `oracle/node.mjs` otherwise runs `go run` on the tool in
+head's checkout, which has no cohere, so the run failed before the program did.
+The tool is built once, in a checkout laid as the compiler's is, cached by
+head's SHA, and only when a program asks for it; `--json-types` names a built
+one instead.
 Classification calls only the revision's own loader and lowerer, never the C
 emitter, in parallel (`--workers`, default available CPUs). Each classification
 process uses one Go CPU; identical binaries reuse the same observation.

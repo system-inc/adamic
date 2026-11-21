@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -24,6 +25,14 @@ type programRunner struct {
 	negatives    negativeWitnessList
 	runtimeStops runtimeNotYetStopList
 	divergences  ruledBackendDivergenceList
+	// jsonTypes is head's oracle/json_types.go built, the tool oracle/node.mjs runs to give a program that decodes or
+	// encodes JSON its type descriptors, asked for on the first such program and kept. Without it node.mjs would go
+	// run the tool in head's checkout, which the delta lays without cohere, so Node's run failed on the workspace
+	// before the program ran and every JSON program disagreed (#x0zh2gq, 24 on the first whole-corpus run).
+	jsonTypes     func() (string, error)
+	jsonTypesOnce sync.Once
+	jsonTypesPath string
+	jsonTypesErr  error
 	// counting guards the three counts below, since the agreement mode runs programs on several workers at once.
 	counting sync.Mutex
 	// timedOutRuns is how many runs, a program's or a repair's, hit a runtime timeout; retriedRuns how many of them
@@ -38,7 +47,19 @@ func (runner *programRunner) observe(name, path string) (node, jsCompile, javasc
 	if !filepath.IsAbs(source) {
 		source = filepath.Join(runner.headTree, path)
 	}
-	node = execute(runner.headTree, runner.limit, "node", "--disable-warning=ExperimentalWarning", filepath.Join(runner.headTree, "oracle/node.mjs"), source)
+	text, err := os.ReadFile(source)
+	if err != nil {
+		return
+	}
+	var nodeEnv []string
+	if bytes.Contains(text, []byte("decodeJson")) || bytes.Contains(text, []byte("encodeJson")) {
+		var tool string
+		if tool, err = runner.jsonTypesTool(); err != nil {
+			return
+		}
+		nodeEnv = []string{"ADAMIC_JSON_TYPES=" + tool}
+	}
+	node = executeWith(runner.headTree, runner.limit, nodeEnv, "node", "--disable-warning=ExperimentalWarning", filepath.Join(runner.headTree, "oracle/node.mjs"), source)
 	jsCompile = execute(runner.headTree, runner.limit, runner.compiler, "js", path)
 	jsPath := filepath.Join(runner.scratch, name+".mjs")
 	javascript = observation{Exit: -1, Error: "JavaScript compilation failed"}
@@ -56,6 +77,19 @@ func (runner *programRunner) observe(name, path string) (node, jsCompile, javasc
 		native = executeWith(runner.headTree, runner.limit, runner.nativeEnv, nativePath)
 	}
 	return
+}
+
+// jsonTypesTool is the JSON types tool, made once for every worker that asks: node.mjs looks for decodeJson or
+// encodeJson in a program's text, and so does observe, so a program without JSON never waits on the build.
+func (runner *programRunner) jsonTypesTool() (string, error) {
+	runner.jsonTypesOnce.Do(func() {
+		if runner.jsonTypes == nil {
+			runner.jsonTypesErr = fmt.Errorf("admission delta: a program decodes or encodes JSON and no JSON types tool was made")
+			return
+		}
+		runner.jsonTypesPath, runner.jsonTypesErr = runner.jsonTypes()
+	})
+	return runner.jsonTypesPath, runner.jsonTypesErr
 }
 
 // observeAlone is observe with one retry: a run that hit a runtime timeout under the gate's load runs once more,
