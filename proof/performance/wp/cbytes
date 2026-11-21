@@ -1,0 +1,23 @@
+# writeProperty's emitted C byte-identical check, sealed, with no history read: bash proof/performance/wp/cbytes <shard> <shards>.
+# The head is this tree; the base is the head with the three files as main had them, carried here as base.<file>, and the
+# new test file left out, which no build reads. Run after environment.sh and sandboxed-job.sh. Never merged.
+set -u
+shard=$1; shards=$2; K=proof/performance/wp; N=internal/native
+mkdir -p "$TMPDIR"; T=$(mktemp -d "$TMPDIR/cbytes.XXXXXX")
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg), shard $shard of $shards"
+go build -o $T/head/adamic ./cmd/adamic > $T/build-head.log 2>&1 || { echo "VERDICT FAIL build head"; tail -5 $T/build-head.log; exit 1; }
+for f in emit_objects.go construction.go entries_records.go; do cp $N/$f $T/keep.$f; cp $K/base.$f $N/$f; done
+go build -o $T/base/adamic ./cmd/adamic > $T/build-base.log 2>&1 || { echo "VERDICT FAIL build base"; tail -5 $T/build-base.log; exit 1; }
+for f in emit_objects.go construction.go entries_records.go; do cp $T/keep.$f $N/$f; done
+cmp -s $T/head/adamic $T/base/adamic && { echo "VERDICT FAIL head and base built the same binary"; exit 1; }
+{ find internal/oracle/testdata -type f \( -name '*.a' -o -name '*.ts' \) ! -name '*.d.ts'; find stage3/fixtures -type f -name '*.a'; } | sort | awk -v s=$shard -v n=$shards 'NR % n == s' > $T/files
+echo "files $(wc -l < $T/files)"
+one() { local f=$1 key=${1//\//__}; for v in head base; do (cd "$(dirname "$f")" && timeout 120 $T/$v/adamic c "$(basename "$f")" > $T/$v.$key.out 2> $T/$v.$key.err; echo $? > $T/$v.$key.exit); done
+  if cmp -s $T/head.$key.out $T/base.$key.out && cmp -s $T/head.$key.err $T/base.$key.err && cmp -s $T/head.$key.exit $T/base.$key.exit; then echo "same $(cat $T/head.$key.exit) $f"; else echo "DIFF $f"; fi; rm -f $T/*.$key.*; }
+export -f one; export T
+start=$(date +%s)
+xargs -P "$(nproc)" -I{} bash -c 'one "$@"' _ {} < $T/files > $T/results
+echo "compared in $(( $(date +%s) - start )) s"
+echo "same $(grep -c '^same' $T/results), of which exit 0: $(grep -c '^same 0 ' $T/results), timed out: $(grep -c '^same 124 ' $T/results); differ $(grep -c '^DIFF' $T/results)"
+grep '^DIFF' $T/results | head -10
+[ "$(grep -c '^DIFF' $T/results)" = 0 ] && [ "$(wc -l < $T/results)" = "$(wc -l < $T/files)" ] && echo "VERDICT OK" || { echo "VERDICT FAIL"; exit 1; }

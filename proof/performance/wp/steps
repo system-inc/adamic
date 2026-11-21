@@ -1,0 +1,24 @@
+# writeProperty's three walks read once per emitter: gofmt, vet, the two pins, three mutants, internal/native whole with
+# its products, and the censuses. Run after environment.sh and sandboxed-job.sh. Never merged.
+set -u
+T=$(mktemp -d "${TMPDIR:-/tmp}/wp.XXXXXX"); fail=0; N=internal/native
+step() { name=$1; shift; if "$@" > "$T/$name" 2>&1; then echo "PASS $name"; else echo "FAIL $name"; grep -E -- '--- FAIL|^FAIL|panic|_test.go:[0-9]+|\.go:[0-9]+:[0-9]+' "$T/$name" | head -20; tail -15 "$T/$name"; fail=1; fi; }
+gofmtclean() { f=$(gofmt -l $N); [ -z "$f" ] || { echo "$f"; return 1; }; }
+step gofmt gofmtclean
+step vet go vet ./$N/
+step pins go test -count=1 -run '^(TestPropertyWriteFactsAnswerFromTheProgram|TestPropertyWriteFactsAreReadOncePerEmitter)$' ./$N/
+mutant() { # name, file, perl
+  cp "$N/$2" "$T/keep"; perl -0pi -e "$3" "$N/$2"
+  if cmp -s "$N/$2" "$T/keep"; then echo "FAIL mutant $1: did not apply"; fail=1; cp "$T/keep" "$N/$2"; return; fi
+  go test -count=1 -run '^TestPropertyWriteFactsAreReadOncePerEmitter$' ./$N/ > "$T/m-$1" 2>&1; code=$?; cp "$T/keep" "$N/$2"
+  if grep -qE 'build failed|not used|\[setup failed\]' "$T/m-$1"; then echo "FAIL mutant $1: did not compile"; tail -5 "$T/m-$1"; fail=1
+  elif [ $code = 0 ]; then echo "FAIL mutant $1 survived"; fail=1
+  else echo "PASS mutant $1 red: $(grep -m1 -E '_test.go:[0-9]+' "$T/m-$1" | cut -c1-200)"; fi
+}
+mutant records entries_records.go 's/\te\.prepareObjectMetadata\(\)\n\treturn e\.objectMetadata\.records/\tfound := false\n\twalkExpressions(e.program, func(expression ir.Expression) {\n\t\tif literal, ok := expression.(ir.ObjectLiteral); ok \&\& literal.Record {\n\t\t\tfound = true\n\t\t}\n\t})\n\treturn found/'
+mutant construction construction.go 's/\te\.prepareObjectMetadata\(\)\n\treturn e\.objectMetadata\.construction/\tfound := false\n\twalkExpressions(e.program, func(expression ir.Expression) {\n\t\tif value, ok := expression.(ir.ArrayLiteral); ok {\n\t\t\tfound = found || len(value.Metadata) != 0\n\t\t}\n\t})\n\treturn found/'
+mutant readiness emit_objects.go 's/\te\.prepareObjectMetadata\(\)\n\treturn e\.objectMetadata\.readiness\[name\]/\tneeded := false\n\twalkExpressions(e.program, func(expression ir.Expression) {\n\t\tif property, ok := expression.(ir.Property); ok \&\& property.Name == name \&\& property.Readiness != "" {\n\t\t\tneeded = true\n\t\t}\n\t})\n\treturn needed/'
+products() { sandboxed_products ./$N && go test -count=1 ./$N/; }
+step native-whole products
+step censuses go test -count=1 ./internal/compilercensus/ ./cmd/adamic-gate/parallelcensus/
+[ $fail = 0 ] && echo "VERDICT OK" || echo "VERDICT FAIL"
