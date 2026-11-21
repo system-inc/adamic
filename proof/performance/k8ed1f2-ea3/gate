@@ -1,0 +1,9 @@
+# #k8ed1f2: the adapted tree's gate for 99-readonly-family3-implements-types: apply twice byte-identical, stock tsc over
+# the adapted tree, and stage3/lane's tests without its shards or products. Run after environment.sh, sandboxed-job.sh,
+# sandboxed_typescript_source and sandboxed_npm stage3/api stage3/typescript. Never merged.
+set -u
+fail=0
+for n in 1 2; do bash stage3/apply.sh --build-product "$TMPDIR/apply$n" > "$TMPDIR/apply$n.log" 2>&1 && echo "PASS apply $n" || { echo "FAIL apply $n"; tail -5 "$TMPDIR/apply$n.log"; fail=1; }; done
+diff -r -q "$TMPDIR/apply1" "$TMPDIR/apply2" > "$TMPDIR/applydiff" 2>&1 && echo "PASS apply twice byte-identical" || { echo "FAIL apply twice differs"; head -5 "$TMPDIR/applydiff"; fail=1; }
+go test -count=1 -skip 'TestShard_|TestProduct_' ./stage3/lane/... > "$TMPDIR/lane.log" 2>&1 && echo "PASS stage3/lane" || { echo "FAIL stage3/lane"; grep -E -- '--- FAIL|^FAIL|_test.go:[0-9]+' "$TMPDIR/lane.log" | head -20; fail=1; }
+[ $fail = 0 ] && echo "VERDICT OK" || echo "VERDICT FAIL"
