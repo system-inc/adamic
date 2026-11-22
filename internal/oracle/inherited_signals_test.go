@@ -191,6 +191,62 @@ func TestSignalALRMInheritedBackend(t *testing.T) {
 	signalLeg(t, syscall.SIGALRM, true, "Backend")
 }
 
+// The program ignores SIGUSR1 and SIGXFSZ itself, as Node does: Node's SIGUSR1 opens its inspector and the
+// program goes on, and a file-size limit is a failed write, never a killed process. The runtime installs its stop
+// handler on every one of stop_signals and every real-time signal without asking what each held (adamic.c,
+// stop_with, #7z36qn6), which is right only while none of them is one of these. So a native program gets each
+// signal, must still be working after it, and is then stopped by SIGTERM with its line. Native only: Node writes
+// its inspector's banner to stderr on SIGUSR1, so its leg would differ by design.
+func TestSignalUSR1IgnoredByTheProgramNative(t *testing.T) {
+	t.Parallel()
+	ignoredLeg(t, syscall.SIGUSR1)
+}
+
+func TestSignalXFSZIgnoredByTheProgramNative(t *testing.T) {
+	t.Parallel()
+	ignoredLeg(t, syscall.SIGXFSZ)
+}
+
+func ignoredLeg(t *testing.T, ignored syscall.Signal) {
+	t.Helper()
+	_, binary, _ := sanitized(t, "internal/oracle/testdata/killed_after_output.a")
+	ctx, cancel := context.WithTimeout(context.Background(), 12*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, binary)
+	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
+	var stdout, stderr lockedBuffer
+	command.Stdout, command.Stderr = &stdout, &stderr
+	if err := command.Start(); err != nil {
+		t.Fatal(err)
+	}
+	defer command.Process.Kill()
+	// working waits until the program has spent its CPU time up to at least seconds. A program that has died, or sits
+	// stopped, never gets there, and the context ends the wait.
+	working := func(seconds float64, when string) {
+		for cpuSeconds(t, command.Process.Pid) < seconds {
+			if ctx.Err() != nil {
+				command.Process.Kill()
+				command.Wait()
+				t.Fatalf("%s %s: the program stopped working: %v, stdout %q stderr %q", ignored, when, command.ProcessState, stdout.String(), stderr.String())
+			}
+			time.Sleep(10 * time.Millisecond)
+		}
+	}
+	working(0.5, "before")
+	if err := command.Process.Signal(ignored); err != nil {
+		t.Fatal(err)
+	}
+	working(cpuSeconds(t, command.Process.Pid)+0.3, "after it was sent")
+	if err := command.Process.Signal(syscall.SIGTERM); err != nil {
+		t.Fatal(err)
+	}
+	command.Wait()
+	status := command.ProcessState.Sys().(syscall.WaitStatus)
+	if !status.Signaled() || status.Signal() != syscall.SIGTERM || stderr.String() != "" || stdout.String() != "started, about to work for a long time\n" {
+		t.Fatalf("%s then SIGTERM: want killed by SIGTERM with its complete line; got %v stdout %q stderr %q", ignored, status, stdout.String(), stderr.String())
+	}
+}
+
 func signalLeg(t *testing.T, stop syscall.Signal, ignored bool, leg string) {
 	t.Helper()
 	const fixture = "internal/oracle/testdata/killed_after_output.a"
