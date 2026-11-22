@@ -93,6 +93,14 @@ func (l *lowering) valueTypeArgumentBindings(node *ast.Node, visit func(typeArgu
 		if contextual == nil {
 			continue
 		}
+		// A value whose type is its slot's own, a NodeVisitor parameter forwarded into a NodeVisitor
+		// parameter, is no instantiation: nothing is related at the value, so it binds nothing here, and
+		// each call through the slot makes and judges its own bindings, as one generic slot does below
+		// (#3zvr9mq, Adamic's identity ruling, tsc's 22 visitor forwards). It's the checker's same type,
+		// undefined set aside on both sides, never a type that merely relates.
+		if l.withoutUndefined(l.concrete(own)) == l.withoutUndefined(contextual) {
+			continue
+		}
 		slots := l.checker.GetSignaturesOfType(l.withoutUndefined(contextual), kind)
 		if len(slots) == 0 || len(slots) == 1 && len(slots[0].TypeParameters()) > 0 {
 			continue
