@@ -1,0 +1,23 @@
+import { Buffer } from 'node:buffer';
+// toString(encoding) on a string | Buffer union: a string answers itself, as String.prototype.toString
+// ignores its argument, and a Buffer decodes, under each census encoding. '' first, then a string, then a
+// Buffer holding a high byte (0xd4, which 'ascii' masks to T and 'utf8' reads as U+FFFD), then '' again.
+// utf16le is printed through its length, since its units aren't text. revcomp's headerPartial is this
+// receiver (bench/holdout/revcomp.a).
+let held: string | Buffer = '';
+function show(label: string): void {
+	console.log(`${label} [${held.toString('ascii')}] [${held.toString('utf8')}] [${held.toString('hex')}] [${held.toString('base64')}] ${held.toString('utf16le').length}`);
+}
+show('empty');
+held = 'plain';
+show('string');
+held = Buffer.from([0x3e, 0xd4, 0x57, 0x4f, 0x20, 0x73]);
+show('buffer');
+// revcomp's line 236: the partial header decoded, then the rest of it read out of the next chunk.
+function header(chunk: Buffer): void {
+	console.log(held.toString('ascii') + chunk.slice(0, chunk.indexOf('\n')).toString('ascii'));
+	held = '';
+}
+header(Buffer.from('econd\nGGCC'));
+header(Buffer.from('>THREE\nACGT'));
+show('empty again');
