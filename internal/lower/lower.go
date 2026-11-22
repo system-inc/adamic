@@ -413,6 +413,10 @@ type lowering struct {
 	// getterDeclarations is each class getter's declaration, by its function (registerAccessor), which
 	// checkDynamicKeyedGetters reads.
 	getterDeclarations map[int]*ast.Node
+	// staticMethodNames names every public static method (never an accessor) any class lowering
+	// lowered declares, by its plain name (staticInstance), which viewStaticsAdmitted reads: the run
+	// time keeps a static method by index with no name, so its walk can't see one (#24kvb6k).
+	staticMethodNames map[string]bool
 	// functionNodes is the declaration each function's body was lowered from (lowerBody), by the
 	// function's index, so a judgment about what lies inside a declaration reads the source's own
 	// nesting (nestedGeneratorWrites). A helper lowering makes with no declaration isn't here.

@@ -1,4 +1,5 @@
-// #s03ndgw, a stop: name is a property every constructor has (Function's), so the contract admits no class.
+// #s03ndgw, a stop: name is a property every constructor has as its own (Function's). Klass declares no
+// static named name, so Node reads its builtin name, which no static holds, and the selection refuses it.
 interface Root { readonly kind: 'Holder'; }
 interface Inner { readonly tag: 'I'; readonly name: string; }
 interface View extends Root { readonly value: number | Inner; }
