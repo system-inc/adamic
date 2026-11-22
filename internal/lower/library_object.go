@@ -309,9 +309,11 @@ func (l *lowering) objectCanFreeze() bool {
 // be a plain shape, as a checked view's intersection members are: not an array, not callable or
 // constructable, and of no family of its own (a class instance, an index signature's dictionary, a
 // collection, a tuple). Every resulting field must have a storage a record would give it: an
-// object, array or boxed union field is held as it is in any object, and a Weak or a two-word
-// optional boolean is not (recordStorageType). A field held as a closure waits on its own ruling. A
-// field that holds the intersection itself is the object being proven.
+// object, array or boxed union field is held as it is in any object, and a Weak is not
+// (recordStorageType). An optional boolean, a tagged byte the dictionary's rule refuses, is held as
+// any plain object holds it where every member that has the field holds it that way too
+// (intersectionMembersHoldMaybeBoolean), and stops otherwise. A field held as a closure waits on its
+// own ruling. A field that holds the intersection itself is the object being proven.
 func (l *lowering) objectIntersection(proven *checker.Type) (ir.Type, bool, string) {
 	for _, part := range proven.Types() {
 		kind := ""
@@ -356,6 +358,9 @@ func (l *lowering) objectIntersection(proven *checker.Type) (ir.Type, bool, stri
 	for _, field := range l.checker.GetPropertiesOfType(proven) {
 		fieldType := l.checker.GetTypeOfSymbol(field)
 		if held, known := l.recordStorageType(fieldType); !known || held == ir.Closure {
+			if plain, plainKnown := l.representation(fieldType); held == ir.MaybeBoolean && plainKnown && plain == ir.MaybeBoolean && l.intersectionMembersHoldMaybeBoolean(proven, field.Name) {
+				continue
+			}
 			kind := "of a type with no representation"
 			switch held {
 			case ir.MaybeBoolean:
@@ -373,6 +378,40 @@ func (l *lowering) objectIntersection(proven *checker.Type) (ir.Type, bool, stri
 		}
 	}
 	return ir.Object, true, ""
+}
+
+// intersectionMembersHoldMaybeBoolean reports whether every member of the intersection proven that has
+// the field name holds it as an optional boolean by the plain object rule, the one a lone
+// `{ valid?: boolean }` is held by (typeOfSymbol), and at least one does (#tq6yzqy). The member's
+// property is the checker's, so a field a member inherits through its base chain counts, as tsc's
+// NumericLiteral has isUnterminated from LiteralLikeNode. A member held otherwise (a plain boolean, a
+// union, a reference, unknown) answers no, and the intersection keeps its stop. An intersection's
+// property always comes from a member, so finding none fails closed.
+//
+// It is sound because a read of the field reads the slot as a tagged byte, false 0, true 1, absent 2
+// (slots.go's slotted), and adamic_object_maybe_boolean (object.c) unpacks a plain boolean's byte as
+// the same present false or true (maybe.c's adamic_maybe_boolean_unpack), so an object reaching the
+// intersection whatever plain type built it reads as Node reads it. The one road that could put an
+// absent byte where a plain boolean is read, an object built with a plain boolean written undefined
+// through a type that makes the field optional, is refused before any intersection by the widening
+// rule (refuseWidening, adamic/invariant-mutable), on a plain alias, a class and an intersection
+// alike. A dictionary seen as the intersection is refused by the optional-widening rule wherever it
+// lacks one of the intersection's optional fields (refuseOptionalWidening), and a finite
+// Partial<Record<K, V>> declaring each field stops at the relation, since a record and an intersection
+// held as a fixed object have different storage (recordStorageView, fixedObjectIntersection).
+func (l *lowering) intersectionMembersHoldMaybeBoolean(proven *checker.Type, name string) bool {
+	held := false
+	for _, part := range proven.Types() {
+		property := l.checker.GetPropertyOfType(part, name)
+		if property == nil {
+			continue
+		}
+		if stored, known := l.representation(l.checker.GetTypeOfSymbol(property)); !known || stored != ir.MaybeBoolean {
+			return false
+		}
+		held = true
+	}
+	return held
 }
 
 // objectAssignCallableSourceRefusal refuses an Object.assign whose source is callable or constructable

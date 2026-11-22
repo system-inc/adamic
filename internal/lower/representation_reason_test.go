@@ -31,7 +31,7 @@ func TestRepresentationReasonStops(t *testing.T) {
 		{"intersection_collection", "type Target = Map<string, number> & { tag: number };", "", "Target", "Target", "an intersection whose member Map<string, number> isn't a plain object shape (a collection)", false},
 		{"intersection_primitive", "type Target = symbol & { tag: number };", "", "Target", "Target", "an intersection whose member symbol isn't a plain object shape (a primitive)", false},
 		{"intersection_parameter", "", "<T>", "NonNullable<T>", "NonNullable<T>", "an intersection whose member T isn't a plain object shape (a type parameter)", false},
-		{"optional_boolean", "type Target = { flag?: boolean } & { tag: number };", "", "Target", "Target", "an intersection whose field flag is an optional boolean, which its record storage doesn't hold", false},
+		{"optional_boolean", "type Target = { flag?: boolean } & { flag?: boolean | string } & { tag: number };", "", "Target", "Target", "an intersection whose field flag is an optional boolean, which its record storage doesn't hold", false},
 		{"function_field", "type Target = { call: () => number } & { tag: number };", "", "Target", "Target", "an intersection whose field call is a function, which its record storage doesn't hold", false},
 		{"weak_field", representationReasonWeak + "; type Target = { item: Weak<Item> } & { tag: number };", "", "Target", "Target", "an intersection whose field item is a weak reference, which its record storage doesn't hold", false},
 		{"unknown_field", representationReasonArray + "; type Target = { jsDoc?: JSDocArray } & { tag: number };", "", "Target", "Target", "an intersection whose field jsDoc has no representation: a union whose member JSDocArray has no representation: an array type with its own member jsDocCache, held as neither an array nor an object", false},
@@ -82,6 +82,42 @@ func checkRepresentationStop(t *testing.T, err error, want string) {
 	var stop *NotYet
 	if !errors.As(err, &stop) || strings.TrimPrefix(stop.Error(), stop.Where+": ") != want {
 		t.Fatalf("got %v, want NotYet %q", err, want)
+	}
+}
+
+// objectIntersection's verdict on an optional boolean field (#tq6yzqy): admitted as an object where every
+// member that has the field holds it as an optional boolean by the plain rule, the inherited member asked
+// through the checker's property, and stopped in today's words where a member holds it otherwise.
+func TestObjectIntersectionOptionalBoolean(t *testing.T) {
+	t.Parallel()
+	const stop = "an intersection whose field flag is an optional boolean, which its record storage doesn't hold"
+	for _, probe := range []struct{ name, prelude, reason string }{
+		{"declared_by_one", "type Target = { flag?: boolean } & { tag: number };", ""},
+		{"agreeing", "interface Left { flag?: boolean; left: number } interface Right { flag?: boolean; right: string } type Target = Left & Right;", ""},
+		{"inherited", "interface Base { flag?: boolean } interface Derived extends Base { text: string } type Target = Derived & { kind: 1 };", ""},
+		{"optional_true", "type Target = { flag?: boolean } & { flag?: true } & { tag: number };", ""},
+		{"union_member", "type Target = { flag?: boolean } & { flag?: boolean | string } & { tag: number };", stop},
+		{"unknown_member", "type Target = { flag?: boolean } & { flag?: unknown } & { tag: number };", stop},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			l, node := representationReasonParameter(t, probe.prelude+"\nfunction probe(value: Target): void {}")
+			proven := l.checker.GetTypeAtLocation(node)
+			field := l.checker.GetPropertyOfType(proven, "flag")
+			if field == nil {
+				t.Fatal("Target has no property flag")
+			}
+			if held, known := l.representation(l.checker.GetTypeOfSymbol(field)); !known || held != ir.MaybeBoolean {
+				t.Fatalf("flag is held as (%v, %t), want an optional boolean, so the pin asks the rule it means to", held, known)
+			}
+			of, known, reason := l.objectIntersection(proven)
+			if probe.reason == "" && (!known || of != ir.Object || reason != "") {
+				t.Errorf("objectIntersection = (%v, %t, %q), want an admitted object", of, known, reason)
+			}
+			if probe.reason != "" && (known || reason != probe.reason) {
+				t.Errorf("objectIntersection = (%v, %t, %q), want the stop %q", of, known, reason, probe.reason)
+			}
+		})
 	}
 }
 
