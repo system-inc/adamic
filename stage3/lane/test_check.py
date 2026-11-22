@@ -193,7 +193,23 @@ class LandingLaneTests(unittest.TestCase):
         self.assertEqual(manifest['counts']['33'], 0)
         self.assertEqual(manifest['counts']['79'], 1)
         self.assertIn('member:["ts","System","exit"]#0', changes)
-        self.assertEqual(len(changes), 284)
+        family20 = 'adapt/99-z-family20/api-sanctions.json'
+        approved_paths = [('JSDocReturnTag', 'typeExpression'), ('JSDocThrowsTag', 'typeExpression')]
+        approved_lines = [5834, 5861]
+        sanctions = json.loads((LANE.parent / family20).read_text())
+        self.assertEqual([tuple(row['path']) for row in sanctions], approved_paths)
+        for index, (path, line) in enumerate(zip(approved_paths, approved_lines), start=1):
+            key = 'member:' + json.dumps(['ts', *path], separators=(',', ':')) + '#0'
+            self.assertIn(key, changes)
+            sanction = sanctions[index - 1]
+            self.assertEqual((sanction['kind'], sanction['before'], sanction['after']),
+                             ('PropertySignature', 'JSDocTypeExpression', 'JSDocTypeExpression | undefined'))
+            expected_owner = f'{family20} row {index} ' + json.dumps(
+                sanction, ensure_ascii=False, separators=(',', ':'))
+            self.assertEqual([row for row in manifest['owners'] if tuple(row['path']) == path],
+                             [dict(adaptation=expected_owner, path=list(path), line=line)])
+        self.assertEqual(len(manifest['normalized_changes']), 286)
+        self.assertEqual(len(changes), 286)
 
     def test_unknown_platform(self):
         self.execution['platform']['node'] = 'v24.19.1'
