@@ -330,7 +330,12 @@ wasiSysroot=${WASI_SYSROOT:-}
 	for required in "$environmentScript" "$goRoot/bin/go" "$gomodcache" "$npmcache" "$typescriptSource"; do
 		printf '[ -e %q ] || { echo %q >&2; return 1 2> /dev/null || exit 1; }\n' "$required" "block-env: $required is missing from the image"
 	done
+	# env.sh sets TMPDIR to the gate's directory whatever the job was handed, so jobs sharing a /tmp met each other's
+	# leftovers and three failed that way (Jobs on #system_loom_jobs, Nov 22). A TMPDIR the job brought is kept; a job
+	# with none gets env.sh's, as before. The fix is here and never in write-env.sh, which is the house's.
+	printf '%s\n' 'blockEnvironmentTemporary=${TMPDIR:-}'
 	printf 'source %q\n' "$environmentScript"
+	printf '%s\n' 'if [ -n "$blockEnvironmentTemporary" ]; then export TMPDIR="$blockEnvironmentTemporary"; fi; unset blockEnvironmentTemporary'
 	printf 'export PATH=%q:"$PATH"\n' "$goRoot/bin${npmBin:+:$npmBin}"
 	printf 'export GOMODCACHE=%q\n' "$gomodcache"
 	printf '%s\n' 'case " ${GOFLAGS:-} " in *" -mod=readonly "*) ;; *) export GOFLAGS="${GOFLAGS:+$GOFLAGS }-mod=readonly" ;; esac'
