@@ -180,6 +180,12 @@ func (l *lowering) staticInstance(declaration *ast.Node) (*instance, error) {
 		meta.Methods[slot] = function
 		if accessorMember(member) {
 			l.registerAccessor(lowered.class, member, function)
+		} else if member.Name().Kind != ast.KindPrivateIdentifier {
+			// methodKey is the identifier's plain text here, the name a view field carries (viewStaticsAdmitted).
+			if l.staticMethodNames == nil {
+				l.staticMethodNames = map[string]bool{}
+			}
+			l.staticMethodNames[key] = true
 		}
 		l.result.Functions = append(l.result.Functions, ir.Function{Name: metadata.Name + "_" + key})
 	}

@@ -1,5 +1,6 @@
-// #24kvb6k, a Now: a static method named like an optional field. Node reads the method; read as absent, native
-// printed undefined (J-d31s28f). A contract with an optional field admits no class, so both backends stop.
+// #24kvb6k: a static method named like an optional field. Node reads the method; read as absent, native printed
+// undefined (J-d31s28f). An optional field named like any static method the program declares admits no class,
+// so both backends stop.
 interface Root { readonly kind: 'Holder'; }
 interface Inner { readonly tag: 'I'; readonly extra?: number; }
 interface Viewed extends Root { readonly value: Inner; }

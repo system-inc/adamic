@@ -1,5 +1,7 @@
-// #s03ndgw, a stop: Klass owns a data static named call, which Node reads, but call is a property every
-// constructor has (Function's), so the contract admits no class and the view's read stops.
+// #s03ndgw, a stop past the selection: call is a property every constructor has (Function's), but Inner
+// requires it, so its contract admits a class and Klass's own data static named call selects Inner, as
+// Node reads Klass.call. The read of call is through a local typeof narrowed, which stops as
+// narrowed_read does, until #775qbxz. call_inherited reads one at a field typed Inner itself.
 interface Root { readonly kind: 'Holder'; }
 interface Inner { readonly tag: 'I'; readonly call: number; }
 interface View extends Root { readonly value: number | Inner; }

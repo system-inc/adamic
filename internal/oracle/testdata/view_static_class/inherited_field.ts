@@ -1,5 +1,5 @@
-// #s03ndgw, a stop: Sub owns its tag but only inherits count from Base, held at a field typed Inner itself,
-// so the read's own check stops it, as a union's selection does inherited_count's.
+// #s03ndgw: Sub owns its tag and inherits count from Base, held at a field typed Inner itself, so the read
+// walks Sub's statics to Base's, as Node walks Sub's prototype, and reads 3.
 interface Root { readonly kind: 'Holder'; }
 interface Inner { readonly tag: 'I'; readonly count: number; }
 interface Viewed extends Root { readonly value: Inner; }
