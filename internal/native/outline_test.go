@@ -101,7 +101,7 @@ func TestInitializerCrossModuleRoot(t *testing.T) {
 
 func TestInitializerEveryValueType(t *testing.T) {
 	t.Parallel()
-	for _, of := range []ir.Type{ir.Number, ir.Boolean, ir.String, ir.Record, ir.Array, ir.Object, ir.Uint8Array, ir.Uint16Array, ir.Int32Array, ir.Float64Array, ir.Promise, ir.Map, ir.Closure, ir.MaybeNumber, ir.MaybeBoolean, ir.Union, ir.Weak} {
+	for _, of := range []ir.Type{ir.Number, ir.Boolean, ir.String, ir.Record, ir.Array, ir.Object, ir.Uint8Array, ir.Uint16Array, ir.Int32Array, ir.Float64Array, ir.Promise, ir.Map, ir.Closure, ir.MaybeNumber, ir.MaybeBoolean, ir.Union, ir.Weak, ir.WeakCollection} {
 		source := cType(of) + " adamic_temporary_value = 0;"
 		locals := initializerLocals(source)
 		if len(locals) != 1 || locals[0].name != "adamic_temporary_value" {

@@ -706,6 +706,30 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return result
 	case ir.MapSize:
 		return e.snapshot(ir.Number, fmt.Sprintf("(double)%s->count", e.value(expression.Map)))
+	case ir.WeakCollectionNew:
+		// Never adopted into a graph or a Program region: its keys' handles name it by address
+		// (weak_collection.c), which a move would leave naming freed memory.
+		return e.own(ir.WeakCollection, fmt.Sprintf("adamic_weak_map_new(%t, %t)", expression.Set, expression.Value.IsReference()))
+	case ir.WeakSetAdd:
+		// adamic_weak_key makes the key's handle if it has none and hands it over retained, and the store
+		// takes that count for the entry (or lets it go, the key already in): the key itself is borrowed
+		// and keeps no count from the set. A set keeps no value, so it's stored as nothing.
+		set := e.value(expression.Set)
+		key := e.value(expression.Key)
+		e.line("adamic_weak_map_store(%s, adamic_weak_key(%s), (adamic_value){0});", set, key)
+		return set
+	case ir.WeakCollectionHas:
+		// A key with no handle was never in any collection: adamic_weak_key_find gives NULL, which the
+		// lookup answers false.
+		collection := e.value(expression.Collection)
+		key := e.value(expression.Key)
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_weak_map_lookup(%s, adamic_weak_key_find(%s), NULL)", collection, key))
+	case ir.WeakCollectionDelete:
+		collection := e.value(expression.Collection)
+		key := e.value(expression.Key)
+		result := e.temporary()
+		e.line("bool %s = adamic_weak_map_remove(%s, adamic_weak_key_find(%s));", result, collection, key)
+		return result
 	case ir.HasOwn:
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_has(%s, %s)", e.value(expression.Object), e.value(expression.Key)))
 	case ir.ParallelMap:
