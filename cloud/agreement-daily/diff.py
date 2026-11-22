@@ -63,15 +63,25 @@ def compact(report):
 
 def blob(log):
     """The one compact report between the markers in a job log's text, decoded. A Loom log may put a stamp before each
-    line, so a marker is a line's last word and the report is the last word of the line between them."""
+    line, so a marker is a line's last word, and it keeps a line to 49,152 bytes, so the report job.sh printed on one
+    line comes back on as many as it takes (J-z6bxcxr's on two): the report is every line's last word between the
+    markers, joined."""
     lines = log.splitlines()
     found = []
     for index, line in enumerate(lines):
         words = line.split()
         if words and words[-1] == BEGIN:
-            if index + 2 >= len(lines) or (lines[index + 2].split() or [''])[-1] != END:
-                raise Refusal(f'its {BEGIN} has no report line and {END} after it')
-            found.append((lines[index + 1].split() or [''])[-1])
+            pieces = []
+            for following in lines[index + 1:]:
+                last = (following.split() or [''])[-1]
+                if last == END:
+                    break
+                pieces.append(last)
+            else:
+                raise Refusal(f'its {BEGIN} has no {END} after it')
+            if not pieces:
+                raise Refusal(f'its {BEGIN} has no report line before {END}')
+            found.append(''.join(pieces))
     if not found:
         raise Refusal(f'it holds no report between {BEGIN} and {END}')
     if len(found) > 1:
