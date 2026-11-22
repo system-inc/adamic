@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"strconv"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -347,14 +348,65 @@ func (l *lowering) objectIntersection(proven *checker.Type) (ir.Type, bool, stri
 			return 0, false, "an intersection whose member " + l.checker.TypeToString(part) + " isn't a plain object shape (" + kind + ")"
 		}
 	}
-	if l.objectIntersections[proven] {
+	// A field that holds an intersection already being proven ends there, assumed held. The assumption is
+	// noted at its depth, so no answer that leaned on it is kept past the walk that made it.
+	if depth, proving := l.objectIntersections[proven]; proving {
+		l.objectIntersectionLow = min(l.objectIntersectionLow, depth)
 		return ir.Object, true, ""
 	}
-	if l.objectIntersections == nil {
-		l.objectIntersections = map[*checker.Type]bool{}
+	key := objectIntersectionKey{proven: proven, mapper: l.typeMapper}
+	if verdict, settled := l.objectIntersectionVerdicts[key]; settled {
+		return verdict.held, verdict.known, verdict.reason
 	}
-	l.objectIntersections[proven] = true
-	defer delete(l.objectIntersections, proven)
+	depth := len(l.objectIntersections)
+	// A chain that makes a new intersection at each level (a generic instantiated deeper through its fields)
+	// meets no intersection twice, so it's bounded by depth instead, failing closed (#vp9f4yd).
+	if depth >= objectIntersectionDepthBound {
+		return 0, false, "an intersection nested past the depth bound of " + strconv.Itoa(objectIntersectionDepthBound)
+	}
+	if l.objectIntersections == nil {
+		l.objectIntersections = map[*checker.Type]int{}
+	}
+	l.objectIntersections[proven] = depth
+	outerLow := l.objectIntersectionLow
+	l.objectIntersectionLow = depth + 1
+	held, known, reason := func() (ir.Type, bool, string) {
+		defer delete(l.objectIntersections, proven)
+		return l.objectIntersectionFields(proven)
+	}()
+	// Only a walk that leaned on nothing above it is settled when it succeeds: one that met only itself again
+	// is its own proof. A failure stands whatever it assumed, since an assumption only ever lets a field pass.
+	if !known || l.objectIntersectionLow >= depth {
+		if l.objectIntersectionVerdicts == nil {
+			l.objectIntersectionVerdicts = map[objectIntersectionKey]objectIntersectionVerdict{}
+		}
+		l.objectIntersectionVerdicts[key] = objectIntersectionVerdict{held: held, known: known, reason: reason}
+	}
+	l.objectIntersectionLow = min(outerLow, l.objectIntersectionLow)
+	return held, known, reason
+}
+
+// objectIntersectionDepthBound is how many intersections deep objectIntersection proves fields, each inside
+// a field of the one before.
+const objectIntersectionDepthBound = 64
+
+// objectIntersectionKey is what objectIntersection's answer is a function of: the intersection, and the
+// type mapper its fields' type parameters are read through.
+type objectIntersectionKey struct {
+	proven *checker.Type
+	mapper *typeMapper
+}
+
+// objectIntersectionVerdict is one settled answer of objectIntersection.
+type objectIntersectionVerdict struct {
+	held   ir.Type
+	known  bool
+	reason string
+}
+
+// objectIntersectionFields is objectIntersection's walk of proven's fields, each held as a record would hold
+// it.
+func (l *lowering) objectIntersectionFields(proven *checker.Type) (ir.Type, bool, string) {
 	for _, field := range l.checker.GetPropertiesOfType(proven) {
 		fieldType := l.checker.GetTypeOfSymbol(field)
 		if held, known := l.recordStorageType(fieldType); !known || held == ir.Closure {
