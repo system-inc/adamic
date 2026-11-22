@@ -14,54 +14,54 @@ func (r *kindSetBody) kindHelperCall(node *ast.Node) bool {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
 	if callee.Kind != ast.KindIdentifier || call.QuestionDotToken != nil || node.Flags&ast.NodeFlagsOptionalChain != 0 || len(call.Arguments.Nodes) != 1 || (call.TypeArguments != nil && len(call.TypeArguments.Nodes) != 0) {
-		return false
+		return r.probeReject("kindHelperCall:callee-or-arity", node)
 	}
 	// The ruling names p.f, or the helper parameter itself, not a saved alias.
 	if r.alias != nil {
-		return false
+		return r.probeReject("kindHelperCall:saved-alias", node)
 	}
 	if !r.read(call.Arguments.Nodes[0]) {
-		return false
+		return r.probeReject("kindHelperCall:argument-not-field", node)
 	}
 	symbol := r.l.symbol(callee)
 	if symbol == nil || len(symbol.Declarations) != 1 {
-		return false
+		return r.probeReject("kindHelperCall:single-declaration", node)
 	}
 	function := symbol.Declarations[0]
 	if function.Kind == ast.KindVariableDeclaration {
 		v := function.AsVariableDeclaration()
 		if function.Parent == nil || function.Parent.Flags&ast.NodeFlagsConst == 0 || v.Type != nil || v.Initializer == nil {
-			return false
+			return r.probeReject("kindHelperCall:const-arrow-binding", node)
 		}
 		function = ast.SkipParentheses(v.Initializer)
 		if function.Kind != ast.KindArrowFunction {
-			return false
+			return r.probeReject("kindHelperCall:not-arrow", node)
 		}
 	} else if function.Kind != ast.KindFunctionDeclaration {
-		return false
+		return r.probeReject("kindHelperCall:not-function", node)
 	}
 	if function.Body() == nil || generatorDeclaration(function) || ast.HasSyntacticModifier(function, ast.ModifierFlagsAsync) || len(function.TypeParameters()) != 0 || r.kindHelperReassigned(symbol) {
-		return false
+		return r.probeReject("kindHelperCall:impure-generic-generator-or-reassigned", node)
 	}
 	parameters := function.Parameters()
 	if len(parameters) > 0 && ast.IsIdentifier(parameters[0].Name()) && parameters[0].Name().Text() == "this" {
 		parameters = parameters[1:]
 	}
 	if len(parameters) != 1 || !ast.IsIdentifier(parameters[0].Name()) {
-		return false
+		return r.probeReject("kindHelperCall:one-plain-parameter", node)
 	}
 	p := parameters[0].AsParameterDeclaration()
 	if p.Initializer != nil || p.QuestionToken != nil || p.DotDotDotToken != nil {
-		return false
+		return r.probeReject("kindHelperCall:default-optional-rest", node)
 	}
 	if r.depth >= kindHelperMaxDepth {
-		return false
+		return r.probeReject("kindHelperCall:depth-limit", node)
 	}
 	if r.active == nil {
 		r.active = map[*ast.Node]bool{}
 	}
 	if r.active[function] {
-		return false
+		return r.probeReject("kindHelperCall:cycle", node)
 	}
 	r.active[function] = true
 	defer delete(r.active, function)
@@ -69,7 +69,9 @@ func (r *kindSetBody) kindHelperCall(node *ast.Node) bool {
 	// Only plain parameter reads exist in this grammar. A write, including one
 	// hidden among statements before a return, makes the complete body fail.
 	if !child.kindHelperBody(function.Body()) {
-		return false
+		r.probeWhy = child.probeWhy
+		r.probeAt = child.probeAt
+		return r.probeResult("kindHelperCall:child-body:"+r.probeWhy, node, false)
 	}
 	r.enum = child.enum
 	for _, kind := range child.members {
@@ -114,22 +116,24 @@ func (r *kindSetBody) kindHelperBody(body *ast.Node) bool {
 			value := statements[1]
 			if !kindSetFalse(value) {
 				if value.Kind != ast.KindReturnStatement || value.AsReturnStatement().Expression == nil {
-					return false
+					return r.probeReject("kindHelperBody:tail-not-return", body)
 				}
 				expression := ast.SkipParentheses(value.AsReturnStatement().Expression)
 				if expression.Kind != ast.KindCallExpression {
-					return false
+					return r.probeReject("kindHelperBody:tail-not-call", body)
 				}
 				fork := *r
 				fork.members = nil
 				if !fork.kindHelperCall(expression) {
-					return false
+					r.probeWhy = fork.probeWhy
+					r.probeAt = fork.probeAt
+					return r.probeReject("kindHelperBody:tail-helper:"+r.probeWhy, body)
 				}
 				r.enum = fork.enum
 				tail = fork.members
 			}
 		} else if len(statements) != 1 {
-			return false
+			return r.probeReject("kindHelperBody:statement-count", body)
 		}
 		return r.kindHelperSwitch(statements[0], len(statements) == 2, tail)
 	}
@@ -141,7 +145,7 @@ func (r *kindSetBody) kindHelperBody(body *ast.Node) bool {
 func (r *kindSetBody) kindHelperSwitch(node *ast.Node, tail bool, tailSet []*checker.Type) bool {
 	s := node.AsSwitchStatement()
 	if !r.read(s.Expression) {
-		return false
+		return r.probeReject("kindHelperSwitch:not-field", node)
 	}
 	clauses := s.CaseBlock.AsCaseBlock().Clauses.Nodes
 	var seen []*checker.Type
@@ -156,26 +160,26 @@ func (r *kindSetBody) kindHelperSwitch(node *ast.Node, tail bool, tailSet []*che
 		if c.Kind == ast.KindCaseClause {
 			kind = r.member(c.AsCaseOrDefaultClause().Expression)
 			if kind == nil {
-				return false
+				return r.probeReject("kindHelperSwitch:case-not-member", node)
 			}
 			for _, held := range seen {
 				if checker.Checker_isTypeIdenticalTo(r.l.checker, held, kind) {
-					return false
+					return r.probeReject("kindHelperSwitch:duplicate-case", node)
 				}
 			}
 			seen = append(seen, kind)
 		} else if c.Kind == ast.KindDefaultClause {
 			if hasDefault {
-				return false
+				return r.probeReject("kindHelperSwitch:duplicate-default", node)
 			}
 			hasDefault = true
 		} else {
-			return false
+			return r.probeReject("kindHelperSwitch:unknown-clause", node)
 		}
 		statements := c.AsCaseOrDefaultClause().Statements.Nodes
 		if len(statements) > 0 {
 			if len(statements) != 1 || statements[0].Kind != ast.KindReturnStatement || statements[0].AsReturnStatement().Expression == nil {
-				return false
+				return r.probeReject("kindHelperSwitch:clause-not-return", node)
 			}
 			expression := ast.SkipParentheses(statements[0].AsReturnStatement().Expression)
 			dynamic = nil
@@ -183,7 +187,7 @@ func (r *kindSetBody) kindHelperSwitch(node *ast.Node, tail bool, tailSet []*che
 				outcome = expression.Kind == ast.KindTrueKeyword
 				if c.Kind == ast.KindDefaultClause {
 					if outcome {
-						return false
+						return r.probeReject("kindHelperSwitch:true-default", node)
 					}
 					fallback = nil
 				}
@@ -191,14 +195,16 @@ func (r *kindSetBody) kindHelperSwitch(node *ast.Node, tail bool, tailSet []*che
 				fork := *r
 				fork.members = nil
 				if !fork.kindHelperCall(expression) {
-					return false
+					r.probeWhy = fork.probeWhy
+					r.probeAt = fork.probeAt
+					return r.probeReject("kindHelperSwitch:default-helper:"+r.probeWhy, node)
 				}
 				r.enum = fork.enum
 				dynamic = fork.members
 				fallback = dynamic
 				outcome = false
 			} else {
-				return false
+				return r.probeReject("kindHelperSwitch:unrecognized-return", node)
 			}
 			falls = false
 		}
@@ -206,14 +212,14 @@ func (r *kindSetBody) kindHelperSwitch(node *ast.Node, tail bool, tailSet []*che
 			fallback = dynamic // An empty default inherits its successor, not the tail.
 		}
 		if falls || c.Kind == ast.KindDefaultClause && outcome {
-			return false
+			return r.probeReject("kindHelperSwitch:fallthrough-or-true-default", node)
 		}
 		if kind != nil && (outcome || r.l.kindSetInside(kind, dynamic)) {
 			r.add(kind)
 		}
 	}
 	if !hasDefault && !tail {
-		return false
+		return r.probeReject("kindHelperSwitch:no-false-default-or-tail", node)
 	}
 	for _, kind := range fallback {
 		excluded := false

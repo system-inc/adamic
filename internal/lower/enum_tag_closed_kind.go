@@ -655,6 +655,7 @@ func (l *lowering) closedKindSourcesFitOf(of *checker.Type, field string, kind, 
 			}
 			sources++
 			if !l.castAssignable(member, target) {
+				l.probeFitFail(of, kind, target, member, declared.node, "declared")
 				return false
 			}
 		}
@@ -666,6 +667,7 @@ func (l *lowering) closedKindSourcesFitOf(of *checker.Type, field string, kind, 
 		}
 		if given == nil {
 			// A build K(of) can't name a kind for keeps of open, so of isn't closed; fail closed all the same.
+			l.probeFitFail(of, kind, target, build.of, build.node, "build with no kind")
 			return false
 		}
 		if !holds(given) {
@@ -673,8 +675,12 @@ func (l *lowering) closedKindSourcesFitOf(of *checker.Type, field string, kind, 
 		}
 		sources++
 		if !l.castAssignable(build.of, target) {
+			l.probeFitFail(of, kind, target, build.of, build.node, "build")
 			return false
 		}
+	}
+	if sources == 0 {
+		l.probeFitFail(of, kind, target, nil, nil, "no source")
 	}
 	return sources > 0
 }

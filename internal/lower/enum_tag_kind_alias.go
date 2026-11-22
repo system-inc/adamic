@@ -39,26 +39,30 @@ func (w *enumTagWalk) switchField(statement *ast.Node) string {
 func (w *enumTagWalk) kindAliasField(statement *ast.Node) string {
 	name := ast.SkipParentheses(statement.AsSwitchStatement().Expression)
 	if name.Kind != ast.KindIdentifier || w.reference.Kind != ast.KindIdentifier {
-		return ""
+		return w.probeField("kindAliasField:not-name-reference", statement)
 	}
 	symbol := w.l.symbol(name)
 	if symbol == nil || len(symbol.Declarations) != 1 {
-		return ""
+		return w.probeField("kindAliasField:single-declaration", statement)
 	}
 	declaration := symbol.Declarations[0]
 	list := declaration.Parent
 	if declaration.Kind != ast.KindVariableDeclaration || list == nil || list.Flags&ast.NodeFlagsBlockScoped != ast.NodeFlagsConst {
-		return ""
+		return w.probeField("kindAliasField:not-single-const", statement)
 	}
 	variable := declaration.AsVariableDeclaration()
 	if variable.Name().Kind != ast.KindIdentifier || variable.Type != nil || variable.Initializer == nil || ast.SkipParentheses(variable.Initializer).Kind != ast.KindPropertyAccessExpression {
-		return ""
+		return w.probeField("kindAliasField:not-unannotated-field", statement)
 	}
 	if list.Parent == nil || list.Parent.Kind != ast.KindVariableStatement || !kindAliasRunsFirst(list.Parent, statement) {
-		return ""
+		why := "kindAliasField:not-run-first"
+		if reason, ok := enumTagAliasMiss.LoadAndDelete(list.Parent); ok {
+			why += ":" + reason.(string)
+		}
+		return w.probeField(why, statement)
 	}
 	if w.kindAliasRewritten(list.Parent.Parent, declaration.End(), statement.Pos()) {
-		return ""
+		return w.probeField("kindAliasField:binding-rewritten:"+w.probeWhy, statement)
 	}
 	return w.fieldRead(variable.Initializer)
 }
@@ -69,7 +73,7 @@ func (w *enumTagWalk) kindAliasField(statement *ast.Node) string {
 // the switch at another time, and a loop could run it again after a write later in its body.
 func kindAliasRunsFirst(alias, statement *ast.Node) bool {
 	if alias.End() > statement.Pos() {
-		return false
+		return probeAliasNo("kindAliasRunsFirst:alias-after-switch", alias)
 	}
 	for node := statement.Parent; node != nil; node = node.Parent {
 		if node == alias.Parent {
@@ -78,10 +82,10 @@ func kindAliasRunsFirst(alias, statement *ast.Node) bool {
 		switch node.Kind {
 		case ast.KindBlock, ast.KindIfStatement, ast.KindSwitchStatement, ast.KindCaseBlock, ast.KindCaseClause, ast.KindDefaultClause, ast.KindLabeledStatement, ast.KindTryStatement, ast.KindCatchClause:
 		default:
-			return false
+			return probeAliasNo("kindAliasRunsFirst:intervening-container", alias)
 		}
 	}
-	return false
+	return probeAliasNo("kindAliasRunsFirst:no-common-container", alias)
 }
 
 // kindAliasRewritten is whether the reference's binding may be written in container from from to to.
@@ -91,6 +95,7 @@ func kindAliasRunsFirst(alias, statement *ast.Node) bool {
 func (w *enumTagWalk) kindAliasRewritten(container *ast.Node, from, to int) bool {
 	binding := w.l.valueSymbol(w.reference)
 	if container == nil || binding == nil {
+		w.probeMiss("kindAliasRewritten:no-container-or-binding", container)
 		return true
 	}
 	written := false
@@ -102,11 +107,13 @@ func (w *enumTagWalk) kindAliasRewritten(container *ast.Node, from, to int) bool
 		if node.Kind == ast.KindIdentifier {
 			if node.Text() == "arguments" || node.Text() == "eval" {
 				written = true
+				w.probeMiss("kindAliasRewritten:arguments-or-eval", node)
 				return true
 			}
 			shorthand := node.Parent != nil && node.Parent.Kind == ast.KindShorthandPropertyAssignment
 			if w.l.valueSymbol(node) == binding && (ast.IsAssignmentTarget(node) || (ast.IsDeclarationName(node) && !shorthand)) {
 				written = true
+				w.probeMiss("kindAliasRewritten:binding-write", node)
 				return true
 			}
 		}
