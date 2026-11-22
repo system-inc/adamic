@@ -1,0 +1,70 @@
+# #a4frknq head proof, round 7 (draft 6: the harness's own TMPDIR, four mutants each shown to compile). Run with bash after the sealed opening (sandboxed_repositories, sandboxed_npm
+# stage3/api, sandboxed_typescript_source). Never merged. Each step prints PASS or FAIL, then a VERDICT line.
+set -u
+L="$TMPDIR/a4-proof"
+mkdir -p "$L"
+failed=0
+step() { echo "$1 $2"; [ "$1" = PASS ] || failed=1; }
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg)"
+dirs="internal/oracle internal/oracle/countproducts internal/buildcache"
+bad=$(gofmt -l $dirs); if [ -z "$bad" ]; then step PASS gofmt; else step FAIL gofmt; echo "$bad"; fi
+if go vet ./internal/oracle/ ./internal/oracle/countproducts/ ./internal/buildcache/ > "$L/vet.log" 2>&1; then step PASS vet; else step FAIL vet; head -40 "$L/vet.log"; fi
+
+run() {
+	name=$1; shift
+	begun=$SECONDS
+	if go test -count=1 "$@" > "$L/$name.log" 2>&1; then step PASS "$name ($((SECONDS - begun)) s)"; else step FAIL "$name ($((SECONDS - begun)) s)"; grep -E -- '--- FAIL|^FAIL|panic|\.go:[0-9]+:' "$L/$name.log" | head -40; fi
+	grep -E '^(ok|FAIL)\s' "$L/$name.log" | head -3
+}
+run countproducts -timeout 30m ./internal/oracle/countproducts/
+run buildcache-lean -timeout 20m -run 'TestEveryLeanCallersCensusIsATestOfItsPackage|TestOnlyReviewedPackagesBuildLean' ./internal/buildcache/
+run compilercensus -timeout 20m ./internal/compilercensus/
+export ADAMIC_BUILD_LOG="$L/build.log"
+run oracle-products -timeout 50m -v -run '^TestProduct_CountMeasurements[0-9]+$' ./internal/oracle/
+grep -E -- '^--- (PASS|FAIL): TestProduct_CountMeasurements' "$L/oracle-products.log" | sed 's/^/  /'
+echo "== product lines by name and outcome"
+awk '$1 == "build" { print $2, $4 }' "$L/build.log" | sort | uniq -c | sed 's/^/  /'
+run oracle-counts -timeout 50m -run '^(TestCountsAreRecorded.*|TestFamiliesCatchAPlantedCase_TestCountsAreRecorded|TestACountRowsFileIsTheSameBytesTwice|TestACountRowsChangeMovesExactlyItsShard)$' ./internal/oracle/
+echo "== mutant: execute's environment inherited"
+cp internal/oracle/countproducts/run.go "$L/run.go"
+python3 - internal/oracle/countproducts/run.go <<'PY2'
+import sys
+p = sys.argv[1]; t = open(p).read()
+old = "\tdefer cancel()\n\tcommand.Env = environment\n\treturn captured(ctx, name, command)\n}"
+assert t.count(old) == 1
+open(p, "w").write(t.replace(old, "\tdefer cancel()\n\treturn captured(ctx, name, command)\n}"))
+PY2
+go test -count=1 -run '^TestACountedRunSeesOnlyRunEnvironment$' ./internal/oracle/countproducts/ > "$L/mutant-env.log" 2>&1
+code=$?
+if grep -q -E '\[build failed\]|\[setup failed\]|declared and not used' "$L/mutant-env.log"; then step FAIL mutant-env-compiles; code=0; else step PASS mutant-env-compiles; fi
+grep -E -- '--- FAIL|environment_test.go' "$L/mutant-env.log" | head -5
+if [ $code -ne 0 ] && grep -q -- '--- FAIL: TestACountedRunSeesOnlyRunEnvironment' "$L/mutant-env.log"; then step PASS mutant-env-red; else step FAIL mutant-env-red; tail -15 "$L/mutant-env.log"; fi
+cp "$L/run.go" internal/oracle/countproducts/run.go
+
+plant() {
+	name=$1 file=$2 old=$3 new=$4 test=$5 pkg=$6
+	cp "$file" "$L/planted.orig"
+	python3 - "$file" "$old" "$new" <<'PY2'
+import sys
+path, old, new = sys.argv[1:]
+text = open(path).read()
+assert text.count(old) == 1, 'mutant target not found once: ' + old
+open(path, 'w').write(text.replace(old, new))
+PY2
+	if [ $? -ne 0 ]; then step FAIL "mutant-$name-applied"; cp "$L/planted.orig" "$file"; return; fi
+	go test -count=1 -run "^${test}\$" "$pkg" > "$L/mutant-$name.log" 2>&1
+	code=$?
+	if grep -q -E '\[build failed\]|\[setup failed\]|declared and not used|cannot use|undefined:' "$L/mutant-$name.log"; then step FAIL "mutant-$name-compiles"; grep -E '\.go:[0-9]+' "$L/mutant-$name.log" | head -5; cp "$L/planted.orig" "$file"; return; fi
+	step PASS "mutant-$name-compiles"
+	grep -E -- '--- FAIL|_test.go:[0-9]+' "$L/mutant-$name.log" | head -5
+	if [ $code -ne 0 ] && grep -q -- "--- FAIL: $test" "$L/mutant-$name.log"; then step PASS "mutant-$name-red"; else step FAIL "mutant-$name-red"; tail -15 "$L/mutant-$name.log"; fi
+	cp "$L/planted.orig" "$file"
+}
+echo "== mutant: every row in every shard"
+plant every-shard internal/oracle/counts_test.go 'return familyShard(key, countProductShards) == shard' 'return true' TestACountRowsChangeMovesExactlyItsShard ./internal/oracle/
+echo "== mutant: a checked predicate lowered under its copy's own path"
+plant temp-path internal/oracle/predicates_checked_test.go '			return logical' '			_ = logical
+			return path' TestACountRowsFileIsTheSameBytesTwice ./internal/oracle/
+echo "== mutant: runEnvironment takes TMPDIR from the process again"
+plant process-tmpdir internal/oracle/countproducts/run.go '"TMPDIR=" + temporary}' '"TMPDIR=" + os.Getenv("TMPDIR")}' TestACountedRunSeesOnlyRunEnvironment ./internal/oracle/countproducts/
+if [ $failed -eq 0 ]; then echo "VERDICT PASS"; else echo "VERDICT FAIL"; false; fi
