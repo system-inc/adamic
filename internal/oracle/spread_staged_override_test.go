@@ -13,7 +13,9 @@ import (
 // with exit 0, where Node prints the value; g04, over an interface merged into a class, stopped with "read before
 // assignment: field 'label' in m.label". The write now publishes the slot and makes it ready, in objectLiteral's
 // spread arm (emit_objects.go) and on the reused path (reuse.go), which g06 takes. g05, its field written before
-// the spread, is the control. Each agrees with Node on release and sanitized native and on JavaScript.
+// the spread, is the control. g07 writes the field by Object.assign onto the spread's copy, whose runtime write
+// publishes for itself, and g08 through a nested spread, the spread arm again. Each agrees with Node on release
+// and sanitized native and on JavaScript.
 func TestSpreadStagedOverride(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/spread_staged_override"
@@ -21,8 +23,8 @@ func TestSpreadStagedOverride(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(entries) != 6 {
-		t.Fatalf("found %d programs, want 6", len(entries))
+	if len(entries) != 8 {
+		t.Fatalf("found %d programs, want 8", len(entries))
 	}
 	for _, entry := range entries {
 		t.Run(entry.Name(), func(t *testing.T) {
