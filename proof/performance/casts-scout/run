@@ -1,0 +1,174 @@
+#!/usr/bin/env bash
+# Cast causes scout (#b5w3ycg), a proof kit that never lands. Builds the latent census at this tree, runs its files
+# pass over the adapted tsc tree (one side, no pairing), and lists every site of five cast causes castStop words as
+# NotYet in internal/lower/cast_stop.go, so a person can read each site before choosing what lowering to build.
+# Run from the tree's root, after the sandboxed preamble (environment.sh, cloud/sandboxed-job.sh,
+# sandboxed_repositories, sandboxed_npm stage3/api stage3/typescript, sandboxed_typescript_source), which exports
+# ADAMIC_TYPESCRIPT_SOURCE for stage3/apply.py.
+# Prints PASS or FAIL per step, CAUSE summary lines, the rows as gzip in base64 (ROWSGZ lines), and a VERDICT.
+set -uo pipefail
+root=$PWD
+: "${TMPDIR:?TMPDIR is unset}"
+mkdir -p "$TMPDIR" || { echo "FAIL mkdir TMPDIR"; echo "VERDICT FAIL couldn't make TMPDIR"; exit 1; }
+work=$TMPDIR/casts-scout
+mkdir -p "$work" || { echo "FAIL mkdir work"; echo "VERDICT FAIL couldn't make $work"; exit 1; }
+adapted=$work/adapted
+out=$work/out
+mkdir -p "$out"
+
+# step <name> <log> <command...>: the command's output goes to its log; a failure prints the log's tail and stops
+step() {
+	local name=$1 log=$2 begun=$SECONDS status
+	shift 2
+	"$@" > "$log" 2>&1
+	status=$?
+	if [ "$status" -eq 0 ]; then
+		echo "PASS $name ($((SECONDS - begun)) s)"
+		return 0
+	fi
+	echo "FAIL $name (exit $status after $((SECONDS - begun)) s)"
+	tail -40 "$log"
+	echo "VERDICT FAIL $name"
+	exit 1
+}
+
+echo "casts-scout: tree $root, scratch $work, ADAMIC_TYPESCRIPT_SOURCE=${ADAMIC_TYPESCRIPT_SOURCE:-unset}"
+
+step apply "$work/apply.log" bash stage3/apply.sh "$adapted"
+
+build() {
+	python3 stage3/census/latent/make_overlay.py "$root" "$out/latent-overlay" &&
+		gofmt -w "$out/latent-overlay/"*.go &&
+		go build -buildvcs=false -overlay="$out/latent-overlay/overlay.json" -o "$out/latent-census" ./stage3/census/latent/tool &&
+		sha256sum internal/lower/cast_stop.go internal/lower/cast_proof.go "$out/latent-census"
+}
+step build "$work/build.log" build
+grep -E '^[0-9a-f]{64} ' "$work/build.log" || true
+
+census() {
+	LATENT_ASSERT_NO_OUTPUT=1 LATENT_TAIL=1 "$out/latent-census" "$adapted/src/compiler" "$out/files.jsonl"
+}
+step census "$work/census.log" census
+echo "casts-scout: files.jsonl $(wc -l < "$out/files.jsonl") rows, $(wc -c < "$out/files.jsonl") bytes"
+
+# The classifier: each cause by the NotYet words castStop gives it at b8e244e9, the census's rows read by pair.py's
+# own load and relative, and a unit's first stop by pair.py's view: rows in order, each row's units taken before its
+# findings, and a unit's first finding in phase lowering, deferred or prepass whose unit is a unit seen so far.
+cat > "$work/scout.py" << 'PYTHON'
+import base64, collections, gzip, hashlib, re, sys
+from pathlib import Path
+
+root, stream, tree, tsv = sys.argv[1], sys.argv[2], Path(sys.argv[3]).resolve(), Path(sys.argv[4])
+sys.path.insert(0, str(Path(root) / 'stage3/census/pair'))
+import pair
+
+nullish = '(undefined and null|null|undefined)'
+causes = [
+    # castUnionTarget, the union target's members told apart by no literal tag
+    ('castUnionTarget:untagged', 21, re.compile(r"^a checked view of the union .+ over .+, whose members no literal tag tells apart$", re.S)),
+    # castUnionTarget, a tag distinctTagField finds that the kind-union road can't test from the source
+    ('castUnionTarget:tagged', 12, re.compile(r"^a checked view of the union .+ over .+, whose tag the kind-union road can't test from .+$", re.S)),
+    ('castIntersectionMember', 8, re.compile(r"^a checked view of the union .+ over .+, whose member .+ is an intersection$", re.S)),
+    ('castKeepsNullish', 21, re.compile(r"^a checked cast from .+ to .+, which keeps " + nullish + "$", re.S)),
+    ('castDropsNullish', 4, re.compile(r"^a checked cast from .+ to .+, which removes " + nullish + "$", re.S)),
+]
+
+def cause_of(finding):
+    if finding.get('kind') != 'NotYet':
+        return None
+    named = [name for name, _, pattern in causes if pattern.match(finding.get('reason') or '')]
+    if len(named) > 1:
+        raise ValueError(f'words match {named}: {finding["reason"]}')
+    return named[0] if named else None
+
+def site(where):
+    file, line, column = where.rsplit(':', 2)
+    try:
+        file = pair.relative(file, tree)
+    except ValueError:
+        pass  # a file outside the adapted tree keeps its own path, and its source line reads as it is
+    return file, int(line), int(column)
+
+rows = pair.load(stream)
+units, first = {}, {}
+rowsByKey = collections.OrderedDict()
+for row in rows[1:]:
+    for unit in row.get('units') or []:
+        units[unit['where']] = unit
+    for finding in row.get('findings') or []:
+        if finding.get('phase') in ('lowering', 'deferred', 'prepass') and finding.get('unit') in units:
+            first.setdefault(finding['unit'], finding)
+        cause = cause_of(finding)
+        if cause is None:
+            continue
+        key = (site(finding['where']), cause)
+        entry = rowsByKey.setdefault(key, dict(units=set(), words=[], phases=set(), findings=0, first=set()))
+        entry['findings'] += 1
+        entry['phases'].add(finding.get('phase') or '')
+        if finding.get('unit') and finding['unit'] != 'program':
+            entry['units'].add(finding['unit'])
+        if finding['reason'] not in entry['words']:
+            entry['words'].append(finding['reason'])
+
+# A unit first-stops at a site when its first stop, by pair.py's rule, is a finding of one of the causes there
+for unit, finding in first.items():
+    cause = cause_of(finding)
+    if cause is not None:
+        rowsByKey[(site(finding['where']), cause)]['first'].add(unit)
+
+lines = {}
+def source_line(path, line):
+    if path not in lines:
+        try:
+            lines[path] = (tree / path).read_text(encoding='utf-8', errors='replace').split('\n')
+        except OSError as error:
+            lines[path] = error
+    text = lines[path]
+    if isinstance(text, OSError) or not 0 < line <= len(text):
+        return f'<unread: {text if isinstance(text, OSError) else "no line " + str(line)}>'
+    return text[line - 1].strip()[:200]
+
+def cell(value):
+    return str(value).replace('\t', ' ').replace('\r', ' ').replace('\n', ' ')
+
+def unit_site(where):
+    path, line, column = site(where)
+    return f'{path}:{line}:{column}'
+
+order = {name: index for index, (name, _, _) in enumerate(causes)}
+header = ['cause', 'path', 'line', 'column', 'first_stop', 'first_units', 'units', 'findings', 'phases', 'unit_sites', 'words', 'source']
+table = ['\t'.join(header)]
+for (where, cause), entry in sorted(rowsByKey.items(), key=lambda item: (order[item[0][1]], item[0][0])):
+    unitSites = sorted(unit_site(unit) for unit in entry['units'])
+    shown = ', '.join(unitSites[:5]) + (f', and {len(unitSites) - 5} more' if len(unitSites) > 5 else '')
+    table.append('\t'.join(cell(value) for value in [
+        cause, where[0], where[1], where[2], 'yes' if entry['first'] else 'no', len(entry['first']),
+        len(entry['units']), entry['findings'], ','.join(sorted(entry['phases'])), shown,
+        ' || '.join(entry['words']), source_line(where[0], where[1])]))
+text = '\n'.join(table) + '\n'
+tsv.write_text(text)
+
+print(f'SCOUT rows {len(rows)} units {len(units)} units_with_first_stop {len(first)}')
+total = 0
+for name, expected, _ in causes:
+    sites = [key for key in rowsByKey if key[1] == name]
+    firsts = [key for key in sites if rowsByKey[key]['first']]
+    total += len(sites)
+    print(f'CAUSE {name} sites {len(sites)} first {len(firsts)}')
+    print(f'EXPECTED {name} sites {expected} {"match" if expected == len(sites) else "differs"}')
+encoded = base64.b64encode(gzip.compress(text.encode('utf-8'), mtime=0)).decode('ascii')
+for index in range(0, len(encoded), 120):
+    print('ROWSGZ ' + encoded[index:index + 120])
+print(f'ROWS printed {len(table) - 1} sha256 {hashlib.sha256(text.encode("utf-8")).hexdigest()}')
+if total == 0:
+    print('SCOUT FAIL the census holds no finding in any of the five causes')
+    sys.exit(2)
+PYTHON
+
+scout() {
+	python3 -I "$work/scout.py" "$root" "$out/files.jsonl" "$adapted" "$work/casts.tsv"
+}
+step scout "$work/scout.log" scout
+grep -E '^(SCOUT|CAUSE|EXPECTED) ' "$work/scout.log"
+grep -E '^(ROWSGZ|ROWS) ' "$work/scout.log"
+echo "VERDICT OK"
