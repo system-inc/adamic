@@ -79,17 +79,17 @@ func TestMemberAssignmentValueKeepsTheStatementFormsStop(t *testing.T) {
 	}
 }
 
-// A record write stores into counted own-key storage, which this doesn't hold the value of yet, so it stays
-// NotYet in its own words. Mutant: the record check dropped, and the row lowers.
-func TestMemberAssignmentValueRecordStaysNotYet(t *testing.T) {
+// A plain Record<K, V> write is an ordinary field store, so as a value it lowers and agrees with Node,
+// natively too. Only an entries record's write defines its key, and that one stays NotYet.
+func TestMemberAssignmentValueRecordAgrees(t *testing.T) {
 	t.Parallel()
-	const source = "const rec: Record<string, number> = {};\nconst r = (rec.k = 4);\nconsole.log(String(r));\n"
+	const source = "const rec: Record<string, number> = {};\nconst r = (rec.k = 4);\nconsole.log(String(r) + ' ' + String(rec.k));\n"
 	for _, extension := range []string{".a", ".ts"} {
 		t.Run(extension, func(t *testing.T) {
 			t.Parallel()
-			_, err := lowerSourceAs(t, source, extension)
-			if err == nil || !strings.Contains(err.Error(), "an assignment value to a member that isn't a plain field store") {
-				t.Fatalf("want the record write NotYet, got %v", err)
+			program := lowersAndAgreesWithNodeAs(t, source, extension)
+			if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != "4 4\n" {
+				t.Fatalf("native: exit %d, stdout %q, stderr %q; want 0 and %q", code, stdout, stderr, "4 4\n")
 			}
 		})
 	}
