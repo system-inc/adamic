@@ -1,15 +1,12 @@
 package oracle
 
 import (
-	"fmt"
 	"os/exec"
-	"path/filepath"
 	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/internal/native_runtime"
+	"github.com/system-inc/adamic/internal/oracle/countproducts"
 )
 
 // TestProduct_Adamic declares the stage 0 compiler interfaceCastCountCases runs, so this package's units are handed it;
@@ -48,7 +45,7 @@ func interfaceCastCountCases() []countCase {
 }
 
 // interfaceCastCounted is a cast fixture compiled by the stage 0 compiler's default, the C its row runs, and measure,
-// which builds that C counted, runs it and returns the row.
+// which builds that C counted, runs it and returns the row, as its shard's product does (countRows).
 func interfaceCastCounted(t *testing.T, path string) (string, func() string) {
 	t.Helper()
 	// The stage 0 compiler is a product built ahead, run here as go run ran it (#5qykzj5): its owner builds it
@@ -60,28 +57,12 @@ func interfaceCastCounted(t *testing.T, path string) (string, func() string) {
 	if err != nil {
 		t.Fatalf("default compiler for %s: %v", path, err)
 	}
-	return countPortable(t, string(source), ""), func() string { return interfaceCastRun(t, path, string(source)) }
-}
-
-// interfaceCastRun builds a cast fixture's C counted, runs it and returns its row.
-func interfaceCastRun(t *testing.T, path string, source string) string {
-	t.Helper()
-	binary := filepath.Join(t.TempDir(), "counted")
-	if err := native.Build(source, binary, native_runtime.Options{Count: true}); err != nil {
-		t.Fatal(err)
-	}
-	name, arguments := pinnedStack(binary)
-	result := execute(t, name, arguments...)
-	wantedExit := 0
+	// wrong-kind.ts's cast fails, as it's meant to, with its counts written as it stops.
+	exit := 0
 	if strings.HasSuffix(path, "wrong-kind.ts") {
-		wantedExit = 70
+		exit = 70
 	}
-	if result.exitCode != wantedExit {
-		t.Fatalf("%s counted exit %d stderr %q", path, result.exitCode, result.stderr)
-	}
-	match := countsLine.FindSubmatch(result.stderr)
-	if match == nil {
-		t.Fatalf("%s has no runtime counts: %q", path, result.stderr)
-	}
-	return fmt.Sprintf("| %s | %s | %s | %s | %s | %s | %s |", path, match[1], match[2], match[3], match[4], match[5], match[6])
+	row := countproducts.Row{Key: path, C: string(source), Run: countproducts.Plain, Checked: true, Exit: exit}
+	countRows.Store(path, row)
+	return countPortable(t, string(source), ""), func() string { return countMeasuredHere(t, row) }
 }

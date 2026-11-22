@@ -1,16 +1,18 @@
 package oracle
 
 import (
+	"bytes"
 	"context"
 	"crypto/sha256"
 	"flag"
 	"fmt"
+	"maps"
 	"os"
 	"path/filepath"
+	"slices"
 	"strconv"
 	"strings"
 	"sync"
-	"syscall"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
@@ -19,6 +21,7 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/native_runtime"
+	"github.com/system-inc/adamic/internal/oracle/countproducts"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -33,7 +36,8 @@ var additionalFixtureCounts []countCase
 
 // A countCase is one runtime count record: its key, the first column, and prepare, which readies the row: it returns what
 // the row runs (the emitted C, and how an input fixture is run), which the row's digest is made of (countDigest), and
-// measure, which builds that C counted, runs it and returns the row's counts.
+// measure, which builds that C counted, runs it and returns the row's counts. A row countproducts measures is readied for
+// its shard's product as well (countRows).
 type countCase struct {
 	key     string
 	prepare func(*testing.T) (runs string, measure func() string)
@@ -49,18 +53,14 @@ func countSampled(key string) bool {
 	return cacheKey(countsSampleSeed, key)[:2] < "1a"
 }
 
-// countsHarness is how a row is built and run beyond what it runs (counted, interfaceCastCounted, pinnedStack): bump it
-// when that changes, and every row's digest moves with it.
-const countsHarness = "counts-harness-v1"
-
-// countsShared is what every row's digest reads besides the row's own: the harness, the runtime's sources and the
-// counted build's flags, none of them spelled by the machine.
+// countsShared is what every row's digest reads besides the row's own: the harness (countproducts.Harness), the
+// runtime's sources and the counted build's flags, none of them spelled by the machine.
 var countsShared = sync.OnceValues(func() (string, error) {
 	runtime, err := native_runtime.RuntimeSourceDigest()
 	if err != nil {
 		return "", err
 	}
-	return cacheKey(countsHarness, runtime, strings.Join(native_runtime.Flags(native_runtime.Options{Count: true}), " ")), nil
+	return cacheKey(countproducts.Harness, runtime, strings.Join(native_runtime.Flags(native_runtime.Options{Count: true}), " ")), nil
 })
 
 // countPortable is emitted C as every checkout spells it, for a row's digest: the TypeScript frontend names its source
@@ -189,74 +189,83 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 		}
 		runs = "inputs " + inputs + "\n" + runs
 	}
-	return runs, func() string { return countedRun(t, path, absolute, source, input, arguments, unreadable, writes) }
+	return runs, countedMeasure(t, path, source, input, arguments, unreadable, writes)
 }
 
-// countedRun builds counted's source counted, runs it, and returns its row.
-func countedRun(t *testing.T, path string, absolute string, source string, input bool, arguments []string, unreadable bool, writes bool) string {
+// countRows are the rows countproducts measures, by key, each as its prepare readied it (countedMeasure,
+// interfaceCastCounted, and the environment and realpath counters): a shard's product reads a row here once its prepare
+// has run (countMeasurements). A row whose prepare readies none is measured here, in its shard's kept product.
+var countRows sync.Map
+
+// countedRow is the row countproducts measures for source, counted's C of the fixture at path, run as counted runs it.
+// An input fixture runs from its own directory in the checkout, so a rows file holds that directory from the
+// repository's root, and the digest of the trees it reads (countInputs), which key its shard.
+func countedRow(t *testing.T, path string, source string, input bool, arguments []string, unreadable bool, writes bool) countproducts.Row {
 	t.Helper()
+	if !input {
+		return countproducts.Row{Key: path, C: source, Run: countproducts.Plain, ParallelMap: emitsParallelMap(source)}
+	}
+	inputs, err := countInputs()
+	if err != nil {
+		t.Fatal(err)
+	}
+	return countproducts.Row{
+		Key: path, C: source, Run: countproducts.Input, Directory: filepath.ToSlash(filepath.Dir(path)), Arguments: arguments,
+		Unreadable: unreadable, Writes: writes, FSFile: strings.HasPrefix(path, "internal/oracle/testdata/node_fs_file_"), Inputs: inputs,
+		// It must finish, as TestInputAgreesWithNode wants it to on Node.
+		Checked: true,
+	}
+}
+
+// countedMeasure readies counted's row for its shard's product (countRows), and returns measure, which measures it in
+// this process (countedRun).
+func countedMeasure(t *testing.T, path string, source string, input bool, arguments []string, unreadable bool, writes bool) func() string {
+	t.Helper()
+	countRows.Store(path, countedRow(t, path, source, input, arguments, unreadable, writes))
+	return func() string { return countedRun(t, path, source, input, arguments, unreadable, writes) }
+}
+
+// countedRun measures counted's row in this process as its shard's product does (countMeasuredHere), the row kept in
+// the gate cache by everything it runs, but under -update-counts, which measures afresh.
+func countedRun(t *testing.T, path string, source string, input bool, arguments []string, unreadable bool, writes bool) string {
+	t.Helper()
+	row := countedRow(t, path, source, input, arguments, unreadable, writes)
+	if *updateCounts {
+		return countMeasuredHere(t, row)
+	}
 	given := identity(t)
-	context := cacheKey(given.context, path, fmt.Sprint(input, unreadable, writes), cacheKey(arguments...))
+	// countproducts: what the cache holds is the row's line as countproducts.Measure gives it, where it was the run's
+	// output, so its keys are apart from those.
+	context := cacheKey(given.context, "countproducts", path, fmt.Sprint(input, unreadable, writes), cacheKey(arguments...))
 	if input {
 		context = cacheKey(context, inputIdentity(t))
 	}
 	key := nativeResultKey(source, given.libraries[2], given.nodeVersion, context)
-	executeCounted := func() recordedRun {
-		var result run
-		if input {
-			shared := sharedDirectory(t)
-			how := inputRun{directory: filepath.Dir(absolute), arguments: arguments}
-			if os.Geteuid() == 0 {
-				how.credential = &syscall.Credential{Uid: 65534, Gid: 65534}
-			}
-			if unreadable {
-				path := filepath.Join(shared, "unreadable.txt")
-				if err := os.WriteFile(path, []byte("secret\n"), 0o000); err != nil {
-					t.Fatal(err)
-				}
-				how.arguments = append(append([]string{}, how.arguments...), path)
-			}
-			if writes {
-				how.arguments = append([]string{writable(t, shared, "counted")}, how.arguments...)
-			}
-			if strings.HasPrefix(path, "internal/oracle/testdata/node_fs_file_") {
-				how = fsFilePrepare(t, shared, "counted")
-			}
-			binary := filepath.Join(shared, "program")
-			if err := native.Build(source, binary, native_runtime.Options{Count: true}); err != nil {
-				t.Fatal(err)
-			}
-			name, pinned := pinnedStack(binary, how.arguments...)
-			result = executeInput(t, how, nil, name, pinned...)
-			if result.exitCode != 0 {
-				t.Fatalf("want an input fixture's counted run to finish, as TestInputAgreesWithNode wants it to on Node: exit %d, stderr %q", result.exitCode, result.stderr)
-			}
-		} else {
-			binary := filepath.Join(t.TempDir(), "program")
-			if err := native.Build(source, binary, native_runtime.Options{Count: true}); err != nil {
-				t.Fatal(err)
-			}
-			name, pinned := pinnedStack(binary)
-			if emitsParallelMap(source) {
-				// One worker keeps peak liveness reproducible across machines.
-				result = executeParallel(t, "1", false, name, pinned...)
-			} else {
-				result = execute(t, name, pinned...)
-			}
-		}
-		return record(result)
+	return cachedResult(t, given.cache, nativeResults, key, func() string { return countMeasuredHere(t, row) })
+}
+
+// countMeasuredHere measures row in this test's process, as its shard's product measures it (countproducts.Measure):
+// with the clang and the counted runtime archive a counted native.Build here would take, the archive from
+// runtimeproducts' supplier (native_runtime.RuntimeLibraryForSource).
+func countMeasuredHere(t *testing.T, row countproducts.Row) string {
+	t.Helper()
+	compiler, err := toolchain.Path(native_runtime.CompilerName(native_runtime.Options{Count: true}))
+	if err != nil {
+		t.Fatal(err)
 	}
-	var result run
-	if *updateCounts {
-		result = executeCounted().run()
-	} else {
-		result = cachedResult(t, given.cache, nativeResults, key, executeCounted).run()
+	library, err := native_runtime.RuntimeLibraryForSource("", row.C, native_runtime.Options{Count: true})
+	if err != nil {
+		t.Fatal(err)
 	}
-	match := countsLine.FindSubmatch(result.stderr)
-	if match == nil {
-		t.Fatalf("no counts at the end of stderr (exit %d): %q", result.exitCode, result.stderr)
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
 	}
-	return fmt.Sprintf("| %s | %s | %s | %s | %s | %s | %s |", path, match[1], match[2], match[3], match[4], match[5], match[6])
+	measured, err := countproducts.Measure(row, compiler, root, filepath.Dir(library))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return measured
 }
 
 // countCases is every committed runtime count key, in its existing shard order: the lowered fixtures, the input fixtures, the
@@ -309,46 +318,188 @@ var measuredPredicateCounts sync.Map
 // fetches each one, so not one per row, and a change rebuilds only the shards whose rows' digests it moved.
 const countProductShards = 16
 
-// countMeasurementInputs keys the product holding shard's measurements: every row it holds by its key and digest
-// (countDigest), and the clang that builds it by its report. A traced build's read set holds only what its build reads,
-// and the C is emitted before it, so the digest carries what the row runs into the key.
-func countMeasurementInputs(t *testing.T, shard int) (buildcache.Inputs, []countCase, []func() string) {
+// countMeasurements is shard's rows, each measured from exactly what it runs, by key. A runner reads them and never
+// builds them; TestProduct_CountMeasurements builds them ahead. Each row's prepare lowers it here, as it did; the rows
+// it readies for countproducts (countRows) are written as a rows file (countRowsFile) and measured by countproducts'
+// product, keyed by that file and its own code and never by this package's (#a4frknq). A row that readies none is
+// measured here, in the shard's kept product, keyed as every row once was (countKeptMeasurements): today the program
+// region rows, built with a program region's archives and held to a balanced count, their parse rows' C a product of
+// its own, and the function and merged-field ruling rows, whose C is lowered from a copy in a test's temporary
+// directory by its path there (rulingProgramAt), so a rows file holding it would be other bytes on every run.
+func countMeasurements(t *testing.T, shard int) map[string]string {
+	t.Helper()
+	var rows []countproducts.Row
+	var kept []keptCount
+	for _, each := range countCases() {
+		if !countInShard(each.key, shard) {
+			continue
+		}
+		runs, measure := each.prepare(t)
+		if row, readied := countRows.Load(each.key); readied {
+			rows = append(rows, row.(countproducts.Row))
+		} else {
+			kept = append(kept, keptCount{each.key, runs, measure})
+		}
+	}
+	measured := map[string]string{}
+	if len(rows) > 0 {
+		root, err := filepath.Abs(repository)
+		if err != nil {
+			t.Fatal(err)
+		}
+		encoded, sets, err := countproducts.Rows(rows, root)
+		if err != nil {
+			t.Fatal(err)
+		}
+		file := countRowsFile(t, shard, encoded)
+		archives := make([]string, len(sets))
+		for index, set := range sets {
+			archives[index] = countArchive(t, set)
+		}
+		maps.Copy(measured, countMeasurementsIn(t, countproducts.Product(t, file, root, archives)))
+	}
+	if len(kept) > 0 {
+		maps.Copy(measured, countKeptMeasurements(t, shard, kept))
+	}
+	return measured
+}
+
+// countInShard is whether the row keyed key is one of shard's, the one place a row's shard is chosen: every key is in
+// exactly one of countProductShards (TestACountRowsChangeMovesExactlyItsShard).
+func countInShard(key string, shard int) bool {
+	return familyShard(key, countProductShards) == shard
+}
+
+// Changing one row's C moves exactly one shard's rows file, the one countInShard puts it in, and no other: so a
+// compiler change that moves one row's C rebuilds one shard, and a shard's rows are its own (Correctness, condition 2
+// on #a4frknq). The rows are stand-ins, one per key the table holds, selected into their shards as countMeasurements
+// selects them. Mutant: countInShard taking every row into every shard, and all 16 shards' files move.
+func TestACountRowsChangeMovesExactlyItsShard(t *testing.T) {
+	t.Parallel()
+	keys := countKeys()
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	files := func(changed string) [countProductShards][]byte {
+		t.Helper()
+		var encoded [countProductShards][]byte
+		for shard := range countProductShards {
+			var rows []countproducts.Row
+			for _, key := range keys {
+				if !countInShard(key, shard) {
+					continue
+				}
+				code := "int main(void) { return 0; } /* " + key + " */\n"
+				if key == changed {
+					code += "/* one byte more */\n"
+				}
+				rows = append(rows, countproducts.Row{Key: key, C: code, Run: countproducts.Plain})
+			}
+			if len(rows) == 0 {
+				continue
+			}
+			file, _, err := countproducts.Rows(rows, root)
+			if err != nil {
+				t.Fatal(err)
+			}
+			encoded[shard] = file
+		}
+		return encoded
+	}
+	before := files("")
+	changed := keys[len(keys)/2]
+	after := files(changed)
+	var moved []int
+	for shard := range countProductShards {
+		if !bytes.Equal(before[shard], after[shard]) {
+			moved = append(moved, shard)
+		}
+	}
+	if want := familyShard(changed, countProductShards); !slices.Equal(moved, []int{want}) {
+		t.Errorf("changing %s's C moved shards %v, want exactly its own, %d", changed, moved, want)
+	}
+	for _, key := range keys {
+		in := 0
+		for shard := range countProductShards {
+			if countInShard(key, shard) {
+				in++
+			}
+		}
+		if in != 1 {
+			t.Errorf("%s is in %d shards, want exactly one", key, in)
+		}
+	}
+}
+
+// countRowsFile is shard's rows file, encoded, as a product of its own, which countproducts' product reads by its bytes:
+// a file a test wrote outside every product is a read of temp its window didn't make (agreementproducts' C, #egjbcre).
+// It's keyed by the bytes it holds, so building it only writes them.
+func countRowsFile(t *testing.T, shard int, encoded []byte) string {
+	t.Helper()
+	inputs := buildcache.Inputs{
+		Name:  "count-measurement rows",
+		Flags: []string{fmt.Sprintf("shard %d of %d", shard, countProductShards), fmt.Sprintf("rows %x", sha256.Sum256(encoded))},
+	}
+	directory := buildcache.Product(t, inputs, func(directory string) error {
+		return os.WriteFile(filepath.Join(directory, "rows.json"), encoded, 0o644)
+	})
+	return filepath.Join(directory, "rows.json")
+}
+
+// countArchive is the directory of the counted runtime archive a program turning on the features of set links, the one
+// a counted native.Build of it here would link, from runtimeproducts' supplier (native_runtime.RuntimeLibraryForSource).
+func countArchive(t *testing.T, set []string) string {
+	t.Helper()
+	var source strings.Builder
+	for _, feature := range set {
+		fmt.Fprintf(&source, "#define %s 1\n", feature)
+	}
+	library, err := native_runtime.RuntimeLibraryForSource("", source.String(), native_runtime.Options{Count: true})
+	if err != nil {
+		t.Fatal(err)
+	}
+	return filepath.Dir(library)
+}
+
+// A keptCount is a row its shard measures here, in its kept product (countKeptMeasurements): its key, what it runs, and
+// its measure, as its prepare readied them.
+type keptCount struct {
+	key     string
+	runs    string
+	measure func() string
+}
+
+// countKeptMeasurements is the rows kept, of shard's, measured here, each by its own measure, in a product keyed as
+// count-measurements was: by each row's key and digest (countDigest), and the clang that builds it by its report. A
+// traced build's read set holds only what its build reads, and the C is emitted before it, so the digest carries what
+// the row runs into the key.
+func countKeptMeasurements(t *testing.T, shard int, kept []keptCount) map[string]string {
 	t.Helper()
 	compiler, err := toolchain.Path("clang")
 	if err != nil {
 		t.Fatal(err)
 	}
 	inputs := buildcache.Inputs{
-		Name:      "count-measurements",
+		Name:      "count-measurements kept",
 		Flags:     []string{fmt.Sprintf("shard %d of %d", shard, countProductShards)},
 		Toolchain: []string{buildcache.CompilerReport(compiler)},
 	}
-	var cases []countCase
-	var measures []func() string
-	for _, each := range countCases() {
-		if familyShard(each.key, countProductShards) != shard {
-			continue
-		}
-		runs, measure := each.prepare(t)
-		inputs.Flags = append(inputs.Flags, each.key+" "+countDigest(t, each.key, runs))
-		cases = append(cases, each)
-		measures = append(measures, measure)
+	for _, each := range kept {
+		inputs.Flags = append(inputs.Flags, each.key+" "+countDigest(t, each.key, each.runs))
 	}
-	return inputs, cases, measures
-}
-
-// countMeasurements is shard's product: each of its rows measured from exactly what it runs, by key. A runner reads it
-// and never builds it; TestProduct_CountMeasurements builds it ahead.
-func countMeasurements(t *testing.T, shard int) map[string]string {
-	t.Helper()
-	inputs, cases, measures := countMeasurementInputs(t, shard)
-	directory := buildcache.Product(t, inputs, func(directory string) error {
+	return countMeasurementsIn(t, buildcache.Product(t, inputs, func(directory string) error {
 		var rows strings.Builder
-		for index, each := range cases {
-			fmt.Fprintf(&rows, "%s\t%s\n", each.key, measures[index]())
+		for _, each := range kept {
+			fmt.Fprintf(&rows, "%s\t%s\n", each.key, each.measure())
 		}
 		return os.WriteFile(filepath.Join(directory, "rows.tsv"), []byte(rows.String()), 0o644)
-	})
+	}))
+}
+
+// countMeasurementsIn is the rows a product's rows.tsv holds, by key: a line each, its key, a tab and its row.
+func countMeasurementsIn(t *testing.T, directory string) map[string]string {
+	t.Helper()
 	contents, err := os.ReadFile(filepath.Join(directory, "rows.tsv"))
 	if err != nil {
 		t.Fatal(err)
@@ -386,6 +537,15 @@ func countShard(t *testing.T, index int) map[string]string {
 }
 
 // countMeasurementProducts builds shard's product ahead, in the tree build, and in a run finds it for the shard's rows.
+//
+// Its tests are sequential, never t.Parallel(): each settles its shard's countproducts product, a lean build keyed by
+// its own window, and go runs no parallel top-level test's body until every sequential one has finished, so no other
+// test reads inside the window to put its reads in a shard's key (internal/lower's files, as it lowers, among them). No
+// oracle test leaves a goroutine reading past its end either, a watcher or a server: every one a test starts is done
+// before it returns (moves_test.go's two emitters, each received; output_test.go's prompt reader, received;
+// cache_test.go's workers, waited for). Inside its window a shard's rows run four at a time, every one finished before
+// its build returns (countproducts.BuildCountMeasurements). Keying a shard still lowers each of its rows first, so a
+// run of them all lowers one shard at a time.
 func countMeasurementProducts(t *testing.T, shard int) {
 	t.Helper()
 	if os.Getenv("ADAMIC_STAGE3_FIXTURE") != "" {
@@ -396,22 +556,112 @@ func countMeasurementProducts(t *testing.T, shard int) {
 	}
 }
 
-func TestProduct_CountMeasurements00(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 0) }
-func TestProduct_CountMeasurements01(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 1) }
-func TestProduct_CountMeasurements02(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 2) }
-func TestProduct_CountMeasurements03(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 3) }
-func TestProduct_CountMeasurements04(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 4) }
-func TestProduct_CountMeasurements05(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 5) }
-func TestProduct_CountMeasurements06(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 6) }
-func TestProduct_CountMeasurements07(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 7) }
-func TestProduct_CountMeasurements08(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 8) }
-func TestProduct_CountMeasurements09(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 9) }
-func TestProduct_CountMeasurements10(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 10) }
-func TestProduct_CountMeasurements11(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 11) }
-func TestProduct_CountMeasurements12(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 12) }
-func TestProduct_CountMeasurements13(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 13) }
-func TestProduct_CountMeasurements14(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 14) }
-func TestProduct_CountMeasurements15(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 15) }
+// Not parallel: its shard's lean window keys every read the process makes while it's open (countMeasurementProducts).
+func TestProduct_CountMeasurements00(t *testing.T) { countMeasurementProducts(t, 0) }
+
+// Not parallel: its shard's lean window keys every read the process makes while it's open (countMeasurementProducts).
+func TestProduct_CountMeasurements01(t *testing.T) { countMeasurementProducts(t, 1) }
+
+// Not parallel: its shard's lean window keys every read the process makes while it's open (countMeasurementProducts).
+func TestProduct_CountMeasurements02(t *testing.T) { countMeasurementProducts(t, 2) }
+
+// Not parallel: its shard's lean window keys every read the process makes while it's open (countMeasurementProducts).
+func TestProduct_CountMeasurements03(t *testing.T) { countMeasurementProducts(t, 3) }
+
+// Not parallel: its shard's lean window keys every read the process makes while it's open (countMeasurementProducts).
+func TestProduct_CountMeasurements04(t *testing.T) { countMeasurementProducts(t, 4) }
+
+// Not parallel: its shard's lean window keys every read the process makes while it's open (countMeasurementProducts).
+func TestProduct_CountMeasurements05(t *testing.T) { countMeasurementProducts(t, 5) }
+
+// Not parallel: its shard's lean window keys every read the process makes while it's open (countMeasurementProducts).
+func TestProduct_CountMeasurements06(t *testing.T) { countMeasurementProducts(t, 6) }
+
+// Not parallel: its shard's lean window keys every read the process makes while it's open (countMeasurementProducts).
+func TestProduct_CountMeasurements07(t *testing.T) { countMeasurementProducts(t, 7) }
+
+// Not parallel: its shard's lean window keys every read the process makes while it's open (countMeasurementProducts).
+func TestProduct_CountMeasurements08(t *testing.T) { countMeasurementProducts(t, 8) }
+
+// Not parallel: its shard's lean window keys every read the process makes while it's open (countMeasurementProducts).
+func TestProduct_CountMeasurements09(t *testing.T) { countMeasurementProducts(t, 9) }
+
+// Not parallel: its shard's lean window keys every read the process makes while it's open (countMeasurementProducts).
+func TestProduct_CountMeasurements10(t *testing.T) { countMeasurementProducts(t, 10) }
+
+// Not parallel: its shard's lean window keys every read the process makes while it's open (countMeasurementProducts).
+func TestProduct_CountMeasurements11(t *testing.T) { countMeasurementProducts(t, 11) }
+
+// Not parallel: its shard's lean window keys every read the process makes while it's open (countMeasurementProducts).
+func TestProduct_CountMeasurements12(t *testing.T) { countMeasurementProducts(t, 12) }
+
+// Not parallel: its shard's lean window keys every read the process makes while it's open (countMeasurementProducts).
+func TestProduct_CountMeasurements13(t *testing.T) { countMeasurementProducts(t, 13) }
+
+// Not parallel: its shard's lean window keys every read the process makes while it's open (countMeasurementProducts).
+func TestProduct_CountMeasurements14(t *testing.T) { countMeasurementProducts(t, 14) }
+
+// Not parallel: its shard's lean window keys every read the process makes while it's open (countMeasurementProducts).
+func TestProduct_CountMeasurements15(t *testing.T) { countMeasurementProducts(t, 15) }
+
+// A shard's rows file is the same bytes however many times its rows are readied, and in whatever order: one row of each
+// way countproducts runs one, readied twice in opposite orders, encodes to one file, so a shard's key moves only with
+// what its rows run. The checked predicate and statements_small TypeScript rows are lowered from a fresh copy in a
+// temporary directory each time they're readied, under a logical name, so a C that named its copy's directory would
+// encode apart. Mutants: countproducts.Rows writing rows in the order it's handed them, or ranging over a map of them,
+// rather than sorted by key; checkedPredicateCounted lowering the copy under its own path rather than its logical name,
+// so its C names its temporary directory.
+func TestACountRowsFileIsTheSameBytesTwice(t *testing.T) {
+	t.Parallel()
+	// A plain row, input rows with arguments that aren't valid UTF-8 and with a directory to write in, a node:fs file
+	// fixture, an environment row and a realpath row, and a checked predicate row and a statements_small TypeScript row,
+	// whose C is lowered from a copy in a test's temporary directory under its logical name, so each is readied from
+	// another copy each time.
+	keys := []string{
+		"dedication/dedication.a", "internal/oracle/testdata/arguments.a", "internal/oracle/testdata/walk.a",
+		"internal/oracle/testdata/node_fs_file_close.a", "internal/oracle/testdata/process_env/reads.a", "internal/oracle/testdata/host_realpath/paths.a",
+		"internal/lower/testdata/predicates_checked/true.a (.ts checked mode)", "internal/oracle/testdata/statements_small_typescript/nonnull.a",
+	}
+	cases := map[string]countCase{}
+	for _, each := range countCases() {
+		cases[each.key] = each
+	}
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	readied := func(order []string) []byte {
+		t.Helper()
+		var rows []countproducts.Row
+		for _, key := range order {
+			each, found := cases[key]
+			if !found {
+				t.Fatalf("%s is no count row", key)
+			}
+			each.prepare(t)
+			row, held := countRows.Load(key)
+			if !held {
+				t.Fatalf("%s readied no countproducts row", key)
+			}
+			rows = append(rows, row.(countproducts.Row))
+		}
+		encoded, _, err := countproducts.Rows(rows, root)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return encoded
+	}
+	reversed := slices.Clone(keys)
+	slices.Reverse(reversed)
+	first, second := readied(keys), readied(reversed)
+	if !bytes.Equal(first, second) {
+		at := 0
+		for at < min(len(first), len(second)) && first[at] == second[at] {
+			at++
+		}
+		t.Errorf("one shard's rows, readied twice, encoded to %d and %d bytes, apart from byte %d", len(first), len(second), at)
+	}
+}
 
 // TestCountsAreRecorded is a family (families_test.go): TestCountsAreRecorded_000 and on each hold the rows their
 // shard owns to their committed files, so a change fails until that fixture's record is updated. A row's
