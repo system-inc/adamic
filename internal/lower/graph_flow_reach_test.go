@@ -1,7 +1,9 @@
 package lower
 
 import (
+	"errors"
 	"os"
+	"slices"
 	"strings"
 	"testing"
 
@@ -290,5 +292,107 @@ console.log(` + "`${a.kids.length} ${k === undefined ? -1 : k.length}`" + `);
 				t.Fatalf("found %d arrays made as an argument to a call with Unknown targets, want one", arrays)
 			}
 		})
+	}
+}
+
+// A literal carrying a Node, held through a narrower name and handed on under it, is planned: context's static type
+// { n: number } holds nothing by its declared properties, and neither does visit's parameter, but a { n: number } may
+// really be any shape the program makes that can be seen as one, and lit's { n, node } is such a shape, so the
+// argument can reach Node and is demanded at the call (#x490w4a). The alias is the point: assigning lit to a
+// declared { n: number } makes no excess-property check, so nothing in the call's own types names the Node it
+// carries. mayReachGraph gets there through reachLinks, whose shapeCandidates step (cycles.go:835) links a type to
+// the shapes assignable to it. Mutant: mayReachGraph's queue of reachLinks dropped (graph_flow.go:589), so the
+// argument is judged by its declared properties alone, and the literal is left counted.
+func TestGraphFlowAliasedLiteralCarryingNodePlanned(t *testing.T) {
+	t.Parallel()
+	program, err := lowerSource(t, `interface Node { name: string; next: Node | undefined }
+interface Visitor { visit(context: { n: number }): number }
+const a: Node = { name: 'a' + '', next: undefined };
+const b: Node = { name: 'b' + '', next: undefined };
+a.next = b;
+b.next = a;
+const first: Visitor = { visit(context: { n: number }): number { return context.n; } };
+const second: Visitor = { visit(context: { n: number }): number { return context.n * 2; } };
+function run(visitor: Visitor): number {
+  const lit = { n: 1, node: a };
+  const context: { n: number } = lit;
+  return visitor.visit(context) + (lit.node === a ? 1 : 0);
+}
+console.log(String(run(first)) + ' ' + String(run(second)) + ' ' + String(a.next === b));
+`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(program.GraphTypes) == 0 {
+		t.Fatal("no graph types selected: the cycle didn't make it a graph program")
+	}
+	// visitor.visit is the one call with Unknown targets, so the literal reaches the plan only through it.
+	if calls := unknownClosureCalls(program); len(calls) != 1 {
+		t.Fatalf("found %d calls with Unknown targets, want visitor.visit alone", len(calls))
+	}
+	literals := 0
+	for _, function := range program.Functions {
+		walk(function.Body, func(node any) bool {
+			literal, isLiteral := node.(ir.ObjectLiteral)
+			if !isLiteral || !slices.ContainsFunc(literal.Fields, func(field ir.Field) bool { return field.Name == "node" }) {
+				return true
+			}
+			literals++
+			// Its own type, the variable's and any contextual view come before its site. None is a graph type, so
+			// nothing but the argument's demand can plan it, and the mutant has something to turn red.
+			if len(literal.GraphTypes) != 0 {
+				for _, id := range literal.GraphTypes[:len(literal.GraphTypes)-1] {
+					if program.GraphTypes[id] {
+						t.Errorf("the { n, node } literal's type %d is a graph type itself, so its plan doesn't show the argument's reach", id)
+					}
+				}
+			}
+			if !graphPlanned(program, literal.GraphTypes) {
+				t.Error("the { n, node } literal handed to visitor.visit as a { n: number } is left counted: the argument's reach must come from the shapes its value can have (shapeCandidates), not only its declared properties")
+			}
+			return true
+		})
+	}
+	if literals != 1 {
+		t.Fatalf("found %d { n, node } literals, want one", literals)
+	}
+}
+
+// What lowering does with a function value whose own parameter is wider than the slot its call names: narrow is
+// a (h: { n: undefined }) => void holding a (h: Holder) => void that writes a Node into h.n, and each hands it a
+// fresh { n: undefined } through a call with Unknown targets, a literal whose type and slot reach no graph type
+// though the callee writes a graph pointer into it. Lowering must stop before that plan is asked. Two stops can:
+// invariance's walk of the mutable field n through the flipped parameter, refusing the view of wide as narrow, or
+// #avybwv1's stop on writing a possibly absent optional own field. By reading, the first holds it, since #avybwv1's
+// judges only an optional field (class.go's absentOptionalFieldWrite) and Holder's n isn't one; the pin takes
+// either and logs which, so a run says which holds it.
+func TestGraphFlowWiderTargetParameterStops(t *testing.T) {
+	t.Parallel()
+	// invarianceWords end wideningRefusal's words for the field: Holder's n can be written a Node where the
+	// { n: undefined } the call hands over reads undefined.
+	const invarianceWords = "which can write Node | undefined where undefined is read"
+	const optionalWords = "writing a possibly absent optional own field"
+	_, err := lowerSource(t, `interface Node { name: string; next: Node | undefined }
+interface Holder { n: Node | undefined }
+const a: Node = { name: 'a' + '', next: undefined };
+const b: Node = { name: 'b' + '', next: a };
+a.next = b;
+function each(g: (h: { n: undefined }) => void): void { g({ n: undefined }); }
+const wide = (h: Holder): void => { h.n = a; };
+const narrow: (h: { n: undefined }) => void = wide;
+each(narrow);
+console.log(String(a.next === b));
+`)
+	var refused *Refused
+	var later *NotYet
+	switch {
+	case err == nil:
+		t.Fatal("lowered a (h: Holder) => void seen as a (h: { n: undefined }) => void, whose fresh { n: undefined } argument the callee writes a Node into: want one of the two stops")
+	case errors.As(err, &refused) && strings.Contains(refused.What, invarianceWords):
+		t.Logf("held by invariance: %v", err)
+	case errors.As(err, &later) && strings.Contains(later.What, optionalWords):
+		t.Logf("held by #avybwv1's optional field stop: %v", err)
+	default:
+		t.Fatalf("got %v, want a Refused naming %q or a NotYet naming %q", err, invarianceWords, optionalWords)
 	}
 }
