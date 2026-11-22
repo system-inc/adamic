@@ -1,10 +1,12 @@
 //go:build historyprobe
 
 // The history probe is a measurement, not a pin, so it builds only under its tag: go test -tags
-// historyprobe -run '^TestHistoryProbe$' -v ./internal/lower/. It asks whether lowering one program
-// twice gives the checker a different history (#77ncr00): a Go map's iteration order can change which
-// type relations lowering asks the checker, and refuseAnyRelation's member-typed-any stop answers by
-// what earlier walks asked it. Never landed.
+// historyprobe -run '^TestHistoryProbe$' -v ./internal/lower/. TestHistoryProbeTsc runs the same way by
+// its own name, with a timeout long enough for tsc, and needs the adapted tree product
+// (TestProduct_Stage3AdaptedTree) settled and ADAMIC_TYPESCRIPT_SOURCE set. Each asks whether lowering
+// one program twice gives the checker a different history (#77ncr00): a Go map's iteration order can
+// change which type relations lowering asks the checker, and refuseAnyRelation's member-typed-any stop
+// answers by what earlier walks asked it. Never landed.
 
 package lower
 
@@ -19,10 +21,15 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/stage3/lane/adaptedtree"
 )
 
 // historyProbeRuns is how many times each program is lowered, each from a fresh load.
 const historyProbeRuns = 5
+
+// historyProbeTscRuns is how many times each of the adapted tree's programs is lowered, each from a
+// fresh load.
+const historyProbeTscRuns = 3
 
 // historyProbeRelations are the checker's relation caches the probe counts, by the name each row
 // prints and the Checker field that holds it (relation_overflow.go's relationTables).
@@ -89,8 +96,9 @@ func historyProbeCount(typeChecker *checker.Checker, field string) string {
 }
 
 // historyProbeRow lowers the program at path from a fresh load, a new Program and checker, and is its
-// row's stop and counts: the stop from the file's own name on, or LOWERS.
-func historyProbeRow(path string) (string, string) {
+// row's stop and counts, or LOWERS for the stop. A stop reads from the file's own name on, or, given a
+// root, with every path under it named from the root, since a tree's first stop may be in any module.
+func historyProbeRow(path, root string) (string, string) {
 	counts := make([]string, 0, len(historyProbeRelations))
 	program, err := load.Load([]string{path})
 	if err != nil {
@@ -104,7 +112,9 @@ func historyProbeRow(path string) (string, string) {
 	stop := "LOWERS"
 	if lowered != nil {
 		stop = lowered.Error()
-		if index := strings.Index(stop, filepath.Base(path)+":"); index >= 0 {
+		if root != "" {
+			stop = strings.ReplaceAll(stop, root+"/", "")
+		} else if index := strings.Index(stop, filepath.Base(path)+":"); index >= 0 {
 			stop = stop[index:]
 		}
 		stop = strings.ReplaceAll(stop, "\n", " | ")
@@ -152,7 +162,28 @@ func TestHistoryProbe(t *testing.T) {
 	for _, entry := range probes {
 		distinct := map[string]bool{}
 		for run := 1; run <= historyProbeRuns; run++ {
-			stop, counts := historyProbeRow(entry.path)
+			stop, counts := historyProbeRow(entry.path, "")
+			distinct[stop+"\x00"+counts] = true
+			fmt.Printf("ROW %s run=%d stop=%s %s\n", entry.name, run, stop, counts)
+		}
+		fmt.Printf("DISTINCT %s %d\n", entry.name, len(distinct))
+	}
+}
+
+// Not parallel: one program lowered at a time, read as one log.
+// TestHistoryProbeTsc is TestHistoryProbe at tsc's scale: the adapted tree's tsc.ts and core.ts, each
+// lowered three times from a fresh checker, printing the same ROW and DISTINCT lines.
+func TestHistoryProbeTsc(t *testing.T) {
+	// As stage3/lane's shards take it (shards_test.go's runManifestShard). Product resolves its paths
+	// from stage3/lane, two directories below the checkout, as internal/lower is, so no Chdir.
+	tree := filepath.Join(adaptedtree.Product(t), "tree")
+	for _, entry := range []struct{ name, path string }{
+		{"tsc.ts", filepath.Join(tree, "src/tsc/tsc.ts")},
+		{"core.ts", filepath.Join(tree, "src/compiler/core.ts")},
+	} {
+		distinct := map[string]bool{}
+		for run := 1; run <= historyProbeTscRuns; run++ {
+			stop, counts := historyProbeRow(entry.path, tree)
 			distinct[stop+"\x00"+counts] = true
 			fmt.Printf("ROW %s run=%d stop=%s %s\n", entry.name, run, stop, counts)
 		}
