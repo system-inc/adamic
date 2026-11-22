@@ -23,6 +23,8 @@ const (
 	castClassTarget                     // a cast to a class from a value that isn't a class instance
 	castRefinement                      // a cast from a union to something narrower than a member, not a member
 	castUnionWrite                      // a union whose writable field a member can't hold every value of
+	castAmbiguousTag                    // a union whose every member holds a literal in a field, but no two apart
+	castCallable                        // a cast whose target or source has a call signature
 	// Refused until Adamic rules them (Q1 to Q3 on #b5w3ycg, Nov 22).
 	castIndexSignature // a target with an index signature
 	castTypeParameter  // a source that is a type parameter
@@ -34,6 +36,7 @@ const (
 	castKeepsNullish  // a target that keeps undefined or null
 	castSideways      // an object target the source isn't a supertype of
 	castMixedSource   // a union source holding primitives, cast to an object target
+	castFromObject    // a source typed object, which names no fields to read
 	// No branch above fits: the sentence main spoke before the split, so nothing is lost.
 	castUnnamed
 )
@@ -74,6 +77,10 @@ func (l *lowering) castStop(node *ast.Node, cause castCause, source, target *che
 		return refused("a cast from "+from+" to "+to+", which is narrower than a member of "+from+" without being one, and a tag test can't prove what makes it narrower", "cast to the member itself and test the rest, or declare "+to+" as a member with a tag of its own"+rule)
 	case castUnionWrite:
 		return refused("a cast over "+from+", whose writable field "+field+" some member can't hold every value of, so a write through the cast could break that member", "declare "+field+" readonly in "+from+"'s members, or cast from one member at a time"+rule)
+	case castAmbiguousTag:
+		return refused("a cast from "+from+" to "+to+", whose tag field "+field+" holds a literal in every member but doesn't tell each apart (a value two members share, two enums' members equal at run time, or a member that holds any number)", "give each member of "+from+" a "+field+" of its own, one literal per member"+rule)
+	case castCallable:
+		return refused("a cast from "+from+" to "+to+", which asserts a call signature", "prove the callable body rather than asserting its signature"+rule)
 	case castIndexSignature:
 		return refused("a cast from "+from+" to "+to+", whose index signature a checked view doesn't hold", l.castRepair(node))
 	case castTypeParameter:
@@ -88,6 +95,8 @@ func (l *lowering) castStop(node *ast.Node, cause castCause, source, target *che
 		return l.notYet(node, "a checked cast from "+from+" to "+to+", which keeps "+l.castKeptNullish(target))
 	case castSideways:
 		return l.notYet(node, "a checked view of "+to+" over "+from+", which "+to+" doesn't extend")
+	case castFromObject:
+		return l.notYet(node, "a checked view of "+to+" over a value typed "+from+", which names no fields")
 	case castMixedSource:
 		return l.notYet(node, "a checked cast from "+from+", which holds primitives, to "+to+", which needs a typeof test before its view")
 	}
@@ -127,12 +136,16 @@ func (l *lowering) objectCastCause(source, target *checker.Type) castCause {
 		return castPrimitive
 	case source.Flags()&checker.TypeFlagsTypeParameter != 0:
 		return castTypeParameter
+	case source.Flags()&checker.TypeFlagsNonPrimitive != 0 && present.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(present) && len(l.checker.GetIndexInfosOfType(present)) == 0 && len(l.checker.GetSignaturesOfType(present, checker.SignatureKindCall)) == 0 && !l.includesUndefined(target) && !l.includesNull(target):
+		return castFromObject
 	case present.Flags()&checker.TypeFlagsIntersection != 0:
 		return castIntersection
 	case len(l.checker.GetIndexInfosOfType(present)) != 0:
 		return castIndexSignature
 	case isClassInstance(present):
 		return castClassTarget
+	case len(l.checker.GetSignaturesOfType(present, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(source, checker.SignatureKindCall)) != 0:
+		return castCallable
 	case l.includesUndefined(target) || l.includesNull(target):
 		return castKeepsNullish
 	case present.Flags()&checker.TypeFlagsUnion != 0:
@@ -141,6 +154,34 @@ func (l *lowering) objectCastCause(source, target *checker.Type) castCause {
 		return castSideways
 	}
 	return castUnnamed
+}
+
+// distinctTagField is whether some field holds a literal in every member, each apart from the others, as
+// unionMemberProof's tag must.
+func (l *lowering) distinctTagField(members []*checker.Type) bool {
+	for _, property := range l.checker.GetPropertiesOfType(members[0]) {
+		literals := []*checker.Type{}
+		for _, member := range members {
+			literal := l.fieldLiteral(member, property.Name)
+			if literal == nil || l.tagHoldsAnyNumber(literal) {
+				literals = nil
+				break
+			}
+			for _, previous := range literals {
+				if !tagLiteralsDistinct(previous, literal) {
+					literals = nil
+				}
+			}
+			if literals == nil {
+				break
+			}
+			literals = append(literals, literal)
+		}
+		if literals != nil {
+			return true
+		}
+	}
+	return false
 }
 
 // unionCastCause is why unionMemberProof found no road for a union source's members cast to target, once a

@@ -409,14 +409,22 @@ func (l *lowering) unionMemberProof(source, target *checker.Type, stop func(cast
 			}
 		}
 		if !found {
-			for _, member := range members {
-				if l.castAssignable(wanted, member) {
-					return castProof{}, stop(castRefinement, "")
+			// A refinement is the ledger's payload refinement: narrower than a member of a union its tag tells
+			// apart. Narrower than a member of an untagged union is an untagged downcast (unionCastCause).
+			if l.distinctTagField(members) {
+				for _, member := range members {
+					if l.castAssignable(wanted, member) {
+						return castProof{}, stop(castRefinement, "")
+					}
 				}
 			}
 			return castProof{}, stop(l.unionCastCause(members, target), "")
 		}
 	}
+	// ambiguous is the first field every member holds a literal in that still tells no member apart, which
+	// the ledger refuses (a duplicate, an enum alias, mixed representations), where a union with no such
+	// field at all wants the checked view nobody has built (castUntaggedUnion).
+	ambiguous := ""
 	for _, property := range l.checker.GetPropertiesOfType(members[0]) {
 		proof := castProof{field: property.Name}
 		literals := []*checker.Type{}
@@ -426,6 +434,9 @@ func (l *lowering) unionMemberProof(source, target *checker.Type, stop func(cast
 			// A one-member enum's member holds any number, so it tells no member apart (tagHoldsAnyNumber).
 			if literal == nil || l.tagHoldsAnyNumber(literal) {
 				valid = false
+				if literal == nil {
+					literals = nil
+				}
 				break
 			}
 			// Enum aliases compare by runtime value, including aliases from different enums.
@@ -442,6 +453,12 @@ func (l *lowering) unionMemberProof(source, target *checker.Type, stop func(cast
 		if valid && len(proof.allowed) > 0 {
 			return proof, nil
 		}
+		if ambiguous == "" && !valid && literals != nil {
+			ambiguous = proof.field
+		}
+	}
+	if ambiguous != "" {
+		return castProof{}, stop(castAmbiguousTag, ambiguous)
 	}
 	return castProof{}, stop(l.unionCastCause(members, target), "")
 }
