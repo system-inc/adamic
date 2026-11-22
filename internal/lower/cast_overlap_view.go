@@ -1,6 +1,8 @@
 package lower
 
 import (
+	"strings"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
@@ -71,11 +73,17 @@ func (l *lowering) viewCastRefusal(node *ast.Node) error {
 // through a writable field or a mutable container's element would let a write through the view store a value
 // the read never checks, and a number, another enum's value or a non-member slot is refused as it always was;
 // any one of those keeps the slot out wherever else it's met, since widenedPast names a slot by its holder type
-// alone. The target's contract is built here, as view builds it, and a slot whose holder no contract reached
-// from the target's checks as a literal field stays out, so a slot the view can't check fails closed.
+// alone. The target's contract is built here, as view builds it, and a slot is then in on one of two arms. Its
+// holder's contract, reached from the target's, checks it as a literal field. Or every visit to it crossed a
+// field whose own contract isn't built (unbuiltFieldFamily): a demanded read of such a field is NotYet at
+// compile time and its whole-value readers stay stopped (#rgrtt32), so no read or write through the view
+// reaches the slot, and none can falsify it. That second arm is decided on the walk's own path, field by field
+// from the target's contract, never by a holder's absence from a lookup: a contract registered under another
+// type identity would read as absent, so a visit whose contract can't be followed fails closed (Lower, on
+// #snypn8c). A slot on neither arm stays out, so a slot the view can't check fails closed.
 func (l *lowering) viewCastEnumSlots(node *ast.Node, source, target *checker.Type) map[viewCastSlot]bool {
-	walk := viewCastSlotWalk{in: map[viewCastSlot]bool{}, out: map[viewCastSlot]bool{}, visited: map[viewCastVisit]bool{}}
-	l.walkViewCastSlots(&walk, source, target, true)
+	walk := newViewCastSlotWalk()
+	l.walkViewCastSlots(walk, source, target, viewCastPath{readonly: true})
 	if len(walk.in) == 0 {
 		return nil
 	}
@@ -83,6 +91,10 @@ func (l *lowering) viewCastEnumSlots(node *ast.Node, source, target *checker.Typ
 	if err != nil {
 		return nil
 	}
+	// The same walk again, now following the target's contract along each path, so each visit to a slot says
+	// whether it crossed an unbuilt field. Its in and out are the first walk's, since neither reads a contract.
+	walk = newViewCastSlotWalk()
+	l.walkViewCastSlots(walk, source, target, viewCastPath{readonly: true, contract: root})
 	reached := map[ir.ViewContractID]bool{}
 	var reach func(ir.ViewContractID)
 	reach = func(id ir.ViewContractID) {
@@ -102,7 +114,11 @@ func (l *lowering) viewCastEnumSlots(node *ast.Node, source, target *checker.Typ
 	reach(root)
 	var slots map[viewCastSlot]bool
 	for slot := range walk.in {
-		if walk.out[slot] || !l.viewCastSlotChecked(slot, reached) {
+		if walk.out[slot] {
+			continue
+		}
+		unreadable := walk.behind[slot] && !walk.exposed[slot]
+		if !unreadable && !l.viewCastSlotChecked(slot, reached) {
 			continue
 		}
 		if slots == nil {
@@ -114,41 +130,65 @@ func (l *lowering) viewCastEnumSlots(node *ast.Node, source, target *checker.Typ
 }
 
 // viewCastSlotWalk is what walkViewCastSlots has found: the slots each visit so far admits (in) and those some
-// visit refuses (out), and the pairs it has walked.
+// visit refuses (out), the slots some visit reached behind an unbuilt field (behind) and those some visit reached
+// without crossing one (exposed), and the visits it has walked.
 type viewCastSlotWalk struct {
-	in, out map[viewCastSlot]bool
-	visited map[viewCastVisit]bool
+	in, out         map[viewCastSlot]bool
+	behind, exposed map[viewCastSlot]bool
+	visited         map[viewCastVisit]bool
 }
 
-// viewCastVisit is one pair walkViewCastSlots walks, with whether it's reached through readonly parts only.
+func newViewCastSlotWalk() *viewCastSlotWalk {
+	return &viewCastSlotWalk{
+		in:      map[viewCastSlot]bool{},
+		out:     map[viewCastSlot]bool{},
+		behind:  map[viewCastSlot]bool{},
+		exposed: map[viewCastSlot]bool{},
+		visited: map[viewCastVisit]bool{},
+	}
+}
+
+// viewCastPath is what a visit carries from the root: whether every field and container on the way is one a
+// write through the view can't reach (readonly), the target's contract for the visit's own target type where the
+// walk could follow it field by field (contract, 0 where it couldn't), and whether the way crossed a field whose
+// contract isn't built (behind), which nothing below it undoes.
+type viewCastPath struct {
+	readonly bool
+	contract ir.ViewContractID
+	behind   bool
+}
+
+// viewCastVisit is one pair walkViewCastSlots walks, with the path it's reached by.
 type viewCastVisit struct {
 	from, to *checker.Type
-	readonly bool
+	path     viewCastPath
 }
 
 // walkViewCastSlots pairs from's parts with to's as widenedPast does where it threads its past: a union's
 // members on either side, a type parameter's constraint, a container's elements and each field's value. It may
 // walk more than widenedPast visits, never less, so every visit widenedPast walks past is one this classified.
-// readonly is whether every field and container on the way is one a write through the view can't reach.
-func (l *lowering) walkViewCastSlots(walk *viewCastSlotWalk, from, to *checker.Type, readonly bool) {
+// The contract is followed through fields alone; a union's member, a constraint or a container's element is
+// walked with none, so behind is only ever set where a field's own contract says so.
+func (l *lowering) walkViewCastSlots(walk *viewCastSlotWalk, from, to *checker.Type, path viewCastPath) {
 	if l.sameUnionView(from, to) {
 		return
 	}
 	from, to = l.withoutUndefined(from), l.withoutUndefined(to)
-	visit := viewCastVisit{from: from, to: to, readonly: readonly}
+	visit := viewCastVisit{from: from, to: to, path: path}
 	if from == to || walk.visited[visit] || from.Flags()&checker.TypeFlagsNever != 0 {
 		return
 	}
 	walk.visited[visit] = true
+	unfollowed := viewCastPath{readonly: path.readonly, behind: path.behind}
 	if from.Flags()&checker.TypeFlagsTypeParameter != 0 {
 		if constraint := l.checker.GetBaseConstraintOfType(from); constraint != nil && constraint != from {
-			l.walkViewCastSlots(walk, constraint, to, readonly)
+			l.walkViewCastSlots(walk, constraint, to, path)
 		}
 		return
 	}
 	if members := l.definedMembers(from); len(members) > 1 {
 		for _, member := range members {
-			l.walkViewCastSlots(walk, member, to, readonly)
+			l.walkViewCastSlots(walk, member, to, path)
 		}
 		return
 	}
@@ -160,9 +200,9 @@ func (l *lowering) walkViewCastSlots(walk *viewCastSlotWalk, from, to *checker.T
 				continue
 			}
 			if l.checker.IsTypeAssignableTo(from, member) {
-				l.walkViewCastSlots(walk, from, member, readonly)
+				l.walkViewCastSlots(walk, from, member, unfollowed)
 			} else if l.structured(from) {
-				l.walkViewCastFields(walk, from, member, readonly, false)
+				l.walkViewCastFields(walk, from, member, unfollowed, false)
 			}
 		}
 		return
@@ -184,7 +224,7 @@ func (l *lowering) walkViewCastSlots(walk *viewCastSlotWalk, from, to *checker.T
 			if !l.sameContainer(inside, viewed) {
 				continue
 			}
-			through := readonly && !l.mutableContainer(viewed)
+			through := viewCastPath{readonly: path.readonly && !l.mutableContainer(viewed), behind: path.behind}
 			fromArguments, toArguments := l.checker.GetTypeArguments(inside), l.checker.GetTypeArguments(viewed)
 			for index, element := range fromArguments {
 				// A tuple seen as an array: every element of it is seen as the array's element (widenedArguments).
@@ -200,20 +240,21 @@ func (l *lowering) walkViewCastSlots(walk *viewCastSlotWalk, from, to *checker.T
 	if to.Flags()&checker.TypeFlagsObject != 0 && len(l.containers(to)) > 0 {
 		return
 	}
-	l.walkViewCastFields(walk, from, to, readonly, true)
+	l.walkViewCastFields(walk, from, to, path, true)
 }
 
 // walkViewCastFields classifies each field of to that from holds, as widenedProperties visits it with to as the
 // holder, and walks on into each one that isn't a member-literal slot when descend says widenedPast does. A
-// method is judged by widened, never walked past.
-func (l *lowering) walkViewCastFields(walk *viewCastSlotWalk, from, to *checker.Type, readonly, descend bool) {
+// method is judged by widened, never walked past. A field's contract is the one path.contract, to's, names for it;
+// a field whose own contract is unbuilt sets behind for everything walked under it.
+func (l *lowering) walkViewCastFields(walk *viewCastSlotWalk, from, to *checker.Type, path viewCastPath, descend bool) {
 	for _, viewed := range l.checker.GetPropertiesOfType(to) {
 		inside := l.checker.GetPropertyOfType(from, viewed.Name)
 		if inside == nil || viewed.Flags&ast.SymbolFlagsMethod != 0 || inside.Flags&ast.SymbolFlagsMethod != 0 {
 			continue
 		}
 		source, slot := l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)
-		through := readonly && l.checker.IsReadonlySymbol(viewed)
+		through := path.readonly && l.checker.IsReadonlySymbol(viewed)
 		if l.viewCastMemberSlot(slot) {
 			named := viewCastSlot{holder: to, field: viewed.Name}
 			switch {
@@ -223,12 +264,39 @@ func (l *lowering) walkViewCastFields(walk *viewCastSlotWalk, from, to *checker.
 				// A visit widened would refuse for more than the enum, or one a write through the view reaches.
 				walk.out[named] = true
 			}
+			if path.behind {
+				walk.behind[named] = true
+			} else {
+				walk.exposed[named] = true
+			}
 			continue
 		}
 		if descend {
-			l.walkViewCastSlots(walk, source, slot, through)
+			field := viewCastPath{readonly: through, contract: l.viewCastFieldContract(path.contract, viewed.Name), behind: path.behind}
+			if field.contract != 0 && strings.HasPrefix(l.result.ViewContracts[field.contract-1].Unsupported, unbuiltFieldFamily) {
+				field.behind = true
+			}
+			l.walkViewCastSlots(walk, source, slot, field)
 		}
 	}
+}
+
+// viewCastFieldContract is the contract holder, an object contract, gives its field name, or 0 where holder is
+// 0, isn't an object contract, or has no such field.
+func (l *lowering) viewCastFieldContract(holder ir.ViewContractID, name string) ir.ViewContractID {
+	if holder == 0 {
+		return 0
+	}
+	contract := l.result.ViewContracts[holder-1]
+	if contract.Kind != ir.ViewObject {
+		return 0
+	}
+	for _, field := range contract.Fields {
+		if field.Name == name {
+			return field.Contract
+		}
+	}
+	return 0
 }
 
 // viewCastMemberSlot is whether a field's type, less null and undefined, is a finite set of one numeric enum's
