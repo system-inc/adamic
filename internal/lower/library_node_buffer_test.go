@@ -91,6 +91,14 @@ func TestNodeBufferRefusals(t *testing.T) {
 		{"buffer union in a template", "import { Buffer } from 'node:buffer'; let held: string | Buffer = ''; held = Buffer.from('ab'); function show(): void { console.log(`${held}`); } show();", "a template interpolating a union with an object, an array, a map or a function in it"},
 		{"buffer union plus a string", "import { Buffer } from 'node:buffer'; let held: string | Buffer = ''; held = Buffer.from('ab'); function show(): void { console.log(held + ''); } show();", "a BinaryExpression with a union of differently held members and a string"},
 		{"a string plus a buffer union", "import { Buffer } from 'node:buffer'; let held: string | Buffer = ''; held = Buffer.from('ab'); function show(): void { console.log('' + held); } show();", "a BinaryExpression with a string and a union of differently held members"},
+		// toString(encoding) on a string | Buffer union lowers (nodeBufferUnionToString); without an argument,
+		// with offsets, another Buffer method on the union, and a union with any other member each stop where
+		// they did, and a number or a boolean beside the Buffer stops by name.
+		{"union toString without an argument", "import { Buffer } from 'node:buffer'; let held: string | Buffer = ''; held = Buffer.from('a'); function show(): void { console.log(held.toString()); } show();", "node:buffer.toString outside the host census"},
+		{"union toString with an offset", "import { Buffer } from 'node:buffer'; let held: string | Buffer = ''; held = Buffer.from('a'); function show(): void { console.log(held.toString('ascii', 1)); } show();", "node:buffer.toString outside the host census"},
+		{"union indexOf", "import { Buffer } from 'node:buffer'; let held: string | Buffer = ''; held = Buffer.from('a'); function show(): void { console.log(`${held.indexOf('a')}`); } show();", "node:buffer.indexOf outside the host census"},
+		{"union toString beside a Uint8Array", "import { Buffer } from 'node:buffer'; function show(value: string | Buffer | Uint8Array): string { return value.toString('ascii'); } console.log(show('a'));", "node:buffer.toString outside the host census"},
+		{"union toString beside a boolean", "import { Buffer } from 'node:buffer'; function show(value: boolean | Buffer): string { return value.toString('ascii'); } console.log(show(true));", "Buffer.toString on a union holding a number or a boolean beside its Buffer"},
 		{"indexOf of a Uint8Array", "import { Buffer } from 'node:buffer'; console.log(`${Buffer.from('abc').indexOf(new Uint8Array([98]))}`);", "a Buffer.indexOf value that isn't a string or a number"},
 		{"indexOf of a string or a number", "import { Buffer } from 'node:buffer'; function find(value: string | number): number { return Buffer.from('abc').indexOf(value); } console.log(`${find('b')}`);", "a Buffer.indexOf value that isn't a string or a number"},
 		// Node aborts on a lone surrogate needle, so only a literal proven free of one lowers: a literal holding
@@ -194,7 +202,42 @@ func TestNodeBufferUnionSlotLowers(t *testing.T) {
 	}
 }
 
-// Buffer.allocUnsafe(size) of a number is buffer_alloc_unsafe, which makes a Buffer, a Uint8Array as
+// toString(encoding) on a string | Buffer union is one buffer_union_to_string helper per call: the union read
+// once, and by typeof either the string itself or buffer_string over the Buffer narrowed out of it, with the
+// encoding and toString's whole range, (0, Infinity).
+func TestNodeBufferUnionToStringLowers(t *testing.T) {
+	t.Parallel()
+	program, err := lowerSource(t, "import { Buffer } from 'node:buffer';\nlet held: string | Buffer = '';\nheld = Buffer.from('>ONE');\nfunction show(): string { return held.toString('ascii') + held.toString('hex'); }\nconsole.log(show());")
+	if err != nil {
+		t.Fatal(err)
+	}
+	helpers, encodings := 0, []int{}
+	for _, function := range program.Functions {
+		if function.Name != "buffer_union_to_string" {
+			continue
+		}
+		helpers++
+		if len(function.Parameters) != 1 || program.Locals[function.Parameters[0]].Type != ir.Union || function.Returns != ir.String {
+			t.Errorf("buffer_union_to_string takes %d parameters and returns %v", len(function.Parameters), function.Returns)
+		}
+		walk(function.Body, func(node any) bool {
+			if call, isCall := node.(ir.NodeBufferCall); isCall {
+				narrow, isNarrow := call.Arguments[0].(ir.Narrow)
+				if call.Function != "buffer_string" || !isNarrow || narrow.To != ir.Uint8Array || len(call.Arguments) != 3 {
+					t.Errorf("the Buffer side lowered to %+v", call)
+				}
+				encodings = append(encodings, call.Encoding)
+			}
+			return true
+		})
+	}
+	slices.Sort(encodings)
+	if helpers != 2 || !slices.Equal(encodings, []int{3, nodeBufferAscii}) {
+		t.Fatalf("want two helpers decoding hex and ascii, found %d decoding %v", helpers, encodings)
+	}
+}
+
+// Buffer.allocUnsafe(size) of a number is buffer_alloc_unsafe, which makesa Buffer, a Uint8Array as
 // Buffer.from's are, and can throw: Node's RangeError for a size out of range or one it can't allocate,
 // so the function holding it is one a throw can leave.
 func TestNodeBufferAllocUnsafeLowers(t *testing.T) {
