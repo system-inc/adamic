@@ -91,7 +91,7 @@ func (l *lowering) nodeBufferUnsupportedUse(node *ast.Node) error {
 	if node.Kind == ast.KindIdentifier || node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression {
 		symbol := l.symbol(node)
 		if module := nodeBufferModule(symbol); module != "" {
-			if symbol.Name == "Buffer" && node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.Name().Text() == "from" && called(node.Parent) {
+			if symbol.Name == "Buffer" && node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && (node.Parent.Name().Text() == "from" || node.Parent.Name().Text() == "allocUnsafe") && called(node.Parent) {
 				return nil
 			}
 			return l.notYet(node, module+"."+symbol.Name+" read as a value")
@@ -127,6 +127,61 @@ func (l *lowering) nodeBufferView(from, to *checker.Type) bool {
 	return true
 }
 
+// nodeBufferUnionScalars are the members typeof tells from a Buffer: a string, a number or a boolean, their
+// literal and enum-literal forms among them.
+const nodeBufferUnionScalars = checker.TypeFlagsStringLike | checker.TypeFlagsNumberLike | checker.TypeFlagsBooleanLike
+
+// nodeBufferUnion is whether proven is a union that holds a Buffer as itself: one present member exactly
+// Buffer, at least one present member of nodeBufferUnionScalars beside it and no other, and null and
+// undefined beside them. A Buffer written into one stays the same allocation, held in the Union as a typed
+// array (union.c), and every read back out narrows it by typeof to that Buffer member (localRead), since
+// typeof says object for it alone. A Uint8Array or a structural member beside it could be read as the
+// Buffer, so it stops. Buffer | undefined and Buffer | null have no scalar, so they aren't one: present
+// makes each the nullable Buffer it is, as before.
+func (l *lowering) nodeBufferUnion(proven *checker.Type) bool {
+	if proven == nil || proven.Flags()&checker.TypeFlagsUnion == 0 {
+		return false
+	}
+	buffers, scalars, others := 0, 0, 0
+	for _, member := range proven.Types() {
+		switch {
+		case member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0:
+		case l.nodeBufferType(member, "Buffer"):
+			buffers++
+		case member.Flags()&nodeBufferUnionScalars != 0:
+			scalars++
+		default:
+			others++
+		}
+	}
+	return buffers == 1 && scalars > 0 && others == 0
+}
+
+// nodeBufferUnionSeenAs is whether a value of type own, a nodeBufferUnion, is seen as a slot of type slot
+// that is neither own nor another nodeBufferUnion: the one rule both valueSlotKeeps' check of the value
+// and the keeping walk's of every pair inside it (sameKeepingWalkMode) ask, so the two can't drift.
+func (l *lowering) nodeBufferUnionSeenAs(own, slot *checker.Type) bool {
+	return l.nodeBufferUnion(own) && own != slot && !l.nodeBufferUnion(slot)
+}
+
+// nodeBufferSlotView is nodeBufferView for a value going into a slot that may be a union present can't
+// collapse to one member: a Buffer goes into a slot of Buffer, or of a nodeBufferUnion, and every other pair
+// is nodeBufferView's, as it was. A union holding a Buffer is never judged here, since present answers nil
+// for it. valueSlotKeeps judges it after the host view check, which stops it first where the slot reaches
+// a member no registration names (string | Uint8Array, or a structural member's length).
+func (l *lowering) nodeBufferSlotView(own, slot *checker.Type) bool {
+	from, to := l.present(own), l.present(slot)
+	if l.nodeBufferType(from, "Buffer") && to == nil {
+		return l.nodeBufferUnion(slot)
+	}
+	return l.nodeBufferView(from, to)
+}
+
+// nodeBufferAscii is 'ascii', a decode only: toString reads each byte as its low seven bits, where
+// Buffer.from and Hash.update write each UTF-16 unit as its low eight, a latin1 write no runtime branch
+// makes yet. So libraryNodeBuffer admits it for toString alone, and the other two stop by name.
+const nodeBufferAscii = 4
+
 func (l *lowering) nodeBufferEncoding(node *ast.Node, fallback int) (int, error) {
 	if node == nil {
 		return fallback, nil
@@ -142,6 +197,8 @@ func (l *lowering) nodeBufferEncoding(node *ast.Node, fallback int) (int, error)
 			return 2, nil
 		case "hex":
 			return 3, nil
+		case "ascii":
+			return nodeBufferAscii, nil
 		}
 	}
 	return 0, l.notYet(node, "a Buffer encoding other than a census literal")
@@ -168,16 +225,30 @@ func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error
 	access := callee.AsPropertyAccessExpression()
 	name := callee.Name().Text()
 	switch {
+	case l.nodeBufferSymbol(access.Expression, "Buffer") && name == "allocUnsafe":
+		return l.nodeBufferAllocUnsafe(node)
 	case l.nodeBufferSymbol(access.Expression, "Buffer"):
 		if name != "from" || len(args) < 1 || len(args) > 2 {
 			return nil, true, l.notYet(node, "Buffer."+name+" outside from(input, encoding)")
 		}
 		operation = "buffer_from"
+	case l.nodeBufferType(l.checker.GetTypeAtLocation(access.Expression), "Buffer") && (name == "slice" || name == "subarray"):
+		return l.nodeBufferSubarray(node, access.Expression, name)
+	case l.nodeBufferType(l.checker.GetTypeAtLocation(access.Expression), "Buffer") && name == "indexOf":
+		return l.nodeBufferIndexOf(node, access.Expression)
 	case l.nodeBufferType(l.checker.GetTypeAtLocation(access.Expression), "Buffer"):
 		if name != "toString" || len(args) > 3 {
 			return nil, true, l.notYet(node, "Buffer."+name+" outside the host census")
 		}
 		operation, result, receiver = "buffer_string", ir.String, access.Expression
+	case name == "toString" && l.nodeBufferStringUnion(l.checker.GetTypeAtLocation(access.Expression)):
+		return l.nodeBufferUnionToString(node, access.Expression)
+	case name == "toString" && l.nodeBufferUnion(l.checker.GetTypeAtLocation(access.Expression)):
+		// Node's Number.prototype.toString reads an encoding as a radix and throws a RangeError, where a
+		// boolean's ignores it and answers "true" or "false": neither is a string's answer, so neither is
+		// built yet. tsc refuses an encoding on number | Buffer (TS2345), so a boolean is the one that
+		// reaches here.
+		return nil, true, l.notYet(node, "Buffer.toString on a union holding a number or a boolean beside its Buffer")
 	case l.nodeBufferType(l.checker.GetTypeAtLocation(access.Expression), "Hash"):
 		receiver = access.Expression
 		switch name {
@@ -211,6 +282,13 @@ func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error
 	var err error
 	if encoding, err = l.nodeBufferEncoding(encodingNode, 0); err != nil {
 		return nil, true, err
+	}
+	if encoding == nodeBufferAscii && operation != "buffer_string" {
+		writer := "Buffer.from"
+		if operation == "hash_update" {
+			writer = "Hash.update"
+		}
+		return nil, true, l.notYet(encodingNode, writer+" with the ascii encoding, a latin1 write")
 	}
 	values := []ir.Expression{}
 	if receiver != nil {
@@ -268,4 +346,178 @@ func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error
 		}
 	}
 	return ir.NodeBufferCall{Function: operation, Arguments: values, Encoding: encoding, Returns: result}, true, nil
+}
+
+// nodeBufferStringUnion is whether proven is a nodeBufferUnion whose every other member is a string: no
+// number, no boolean, and no null or undefined, which the checker keeps from a call without ?. or !.
+func (l *lowering) nodeBufferStringUnion(proven *checker.Type) bool {
+	if !l.nodeBufferUnion(proven) {
+		return false
+	}
+	for _, member := range proven.Types() {
+		if !l.nodeBufferType(member, "Buffer") && member.Flags()&checker.TypeFlagsStringLike == 0 {
+			return false
+		}
+	}
+	return true
+}
+
+// nodeBufferUnionToString lowers x.toString(encoding) on a nodeBufferStringUnion, revcomp's
+// headerPartial.toString('ascii'): the receiver read once, and by typeof either the string itself, as
+// String.prototype.toString ignores its argument, or the Buffer it holds decoded whole by buffer_string, as
+// a Buffer receiver's toString(encoding) is. The encoding is a census literal (nodeBufferEncoding), so it
+// has nothing to evaluate on the string side. toString with no argument or with offsets stays where it
+// stopped.
+func (l *lowering) nodeBufferUnionToString(node, receiver *ast.Node) (ir.Expression, bool, error) {
+	args := node.AsCallExpression().Arguments.Nodes
+	if len(args) != 1 || args[0].Kind == ast.KindSpreadElement {
+		return nil, true, l.notYet(node, "node:buffer.toString outside the host census")
+	}
+	if err := l.optionalCall(node); err != nil {
+		return nil, true, err
+	}
+	encoding, err := l.nodeBufferEncoding(args[0], 0)
+	if err != nil {
+		return nil, true, err
+	}
+	union, err := l.expression(receiver)
+	if err != nil {
+		return nil, true, err
+	}
+	if union.Type() != ir.Union {
+		return nil, true, l.notYet(node, "Buffer.toString on a string | Buffer receiver not held as a union")
+	}
+	b := l.libraryArrayBuilder([]ir.Expression{union})
+	held := b.read(b.parameters[0])
+	isString := ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant("string")}}
+	decoded := ir.NodeBufferCall{Function: "buffer_string", Arguments: []ir.Expression{ir.Narrow{Value: held, To: ir.Uint8Array}, ir.NumberConstant{Value: 0}, ir.NumberConstant{Value: math.Inf(1)}}, Encoding: encoding, Returns: ir.String}
+	return b.finish("buffer_union_to_string", ir.Conditional{Condition: isString, WhenTrue: ir.Narrow{Value: held, To: ir.String}, WhenNot: decoded, Of: ir.String}), true, nil
+}
+
+// nodeBufferAllocUnsafe lowers Buffer.allocUnsafe(size) of one number to a Buffer of that many bytes.
+// Node checks the size before it truncates it, so -0.5 throws ERR_OUT_OF_RANGE, and a size it can't
+// allocate throws ERR_MEMORY_ALLOCATION_FAILED: both are the runtime's (node_buffer.c), and the call is
+// one that can throw (ir.NodeBufferCall's MayThrow). Its bytes are unspecified on Node, and zero natively.
+func (l *lowering) nodeBufferAllocUnsafe(node *ast.Node) (ir.Expression, bool, error) {
+	args := node.AsCallExpression().Arguments.Nodes
+	if len(args) != 1 || args[0].Kind == ast.KindSpreadElement {
+		return nil, true, l.notYet(node, "Buffer.allocUnsafe outside allocUnsafe(size)")
+	}
+	size, err := l.expression(args[0])
+	if err != nil {
+		return nil, true, err
+	}
+	if size.Type() != ir.Number {
+		return nil, true, l.notYet(node, "Buffer.allocUnsafe of a size that isn't a number")
+	}
+	return ir.NodeBufferCall{Function: "buffer_alloc_unsafe", Arguments: []ir.Expression{size}, Returns: ir.Uint8Array}, true, nil
+}
+
+// nodeBufferSubarray lowers buffer.slice(start, end) and buffer.subarray(start, end) to a view sharing
+// the Buffer's bytes, as Node's do: a Buffer's slice is its subarray, where a Uint8Array's slice copies
+// (typedArrayExpression refuses that one, and a Uint8Array never reaches here). Each argument clamps as
+// a typed array's subarray's does, NaN as 0, a fraction truncated, a negative from the end, and
+// undefined as the default, so each is held as number | undefined, as typedArrayExpression holds
+// subarray's: the native emitter passes its present flag (typedArrayOffset). The view is a Buffer, an
+// ir.Uint8Array as every Buffer is, whose data points into its owner's (typed_array.c).
+func (l *lowering) nodeBufferSubarray(node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+	args := node.AsCallExpression().Arguments.Nodes
+	if len(args) > 2 {
+		return nil, true, l.notYet(node, "Buffer."+name+" outside "+name+"(start, end)")
+	}
+	for _, argument := range args {
+		if argument.Kind == ast.KindSpreadElement {
+			return nil, true, l.notYet(node, "Buffer."+name+" outside "+name+"(start, end)")
+		}
+	}
+	// A ?. call meets optional_host_call.go's stop for a host method first (#3625x53); this one is the
+	// guard behind it.
+	if err := l.optionalCall(node); err != nil {
+		return nil, true, err
+	}
+	array, err := l.expression(receiver)
+	if err != nil {
+		return nil, true, err
+	}
+	lowered := []ir.Expression{}
+	for _, argument := range args {
+		value, err := l.expression(argument)
+		if err != nil {
+			return nil, true, err
+		}
+		value = fit(value, ir.MaybeNumber)
+		if value.Type() != ir.MaybeNumber {
+			return nil, true, l.notYet(argument, "a Buffer."+name+" offset that isn't number or undefined")
+		}
+		lowered = append(lowered, value)
+	}
+	return ir.TypedArraySubarray{Array: array, Arguments: lowered}, true, nil
+}
+
+// nodeBufferIndexOf lowers buffer.indexOf(value, byteOffset) to buffer_index_of, the first index at or
+// past byteOffset where value's bytes are, or -1, as Node's bidirectionalIndexOf finds it. A string
+// value is a literal free of lone surrogates, searched as its UTF-8 bytes, and a number is one byte,
+// masked to 8 bits; a Buffer or a Uint8Array value isn't here yet. The offset is held as number |
+// undefined, as nodeBufferSubarray holds its own, since an absent or explicit undefined one is Node's
+// default; its clamp is the runtime's (node_buffer.c). A Uint8Array's indexOf finds one element value,
+// never a string, and never reaches here: typedArrayExpression refuses it.
+func (l *lowering) nodeBufferIndexOf(node, receiver *ast.Node) (ir.Expression, bool, error) {
+	args := node.AsCallExpression().Arguments.Nodes
+	if len(args) < 1 || len(args) > 2 {
+		return nil, true, l.notYet(node, "Buffer.indexOf outside indexOf(value, byteOffset)")
+	}
+	for _, argument := range args {
+		if argument.Kind == ast.KindSpreadElement {
+			return nil, true, l.notYet(node, "Buffer.indexOf outside indexOf(value, byteOffset)")
+		}
+	}
+	// A ?. call meets optional_host_call.go's stop for a host method first (#3625x53); this one is the
+	// guard behind it.
+	if err := l.optionalCall(node); err != nil {
+		return nil, true, err
+	}
+	buffer, err := l.expression(receiver)
+	if err != nil {
+		return nil, true, err
+	}
+	value, err := l.expression(args[0])
+	if err != nil {
+		return nil, true, err
+	}
+	if value.Type() != ir.String && value.Type() != ir.Number {
+		return nil, true, l.notYet(args[0], "a Buffer.indexOf value that isn't a string or a number")
+	}
+	// Node v24.19.0 aborts on a string needle holding a lone surrogate (node_buffer.cc's IndexOfString
+	// asserts, J-0rck7xp), which no backend can do as Node does. So a string lowers only when it's a
+	// constant whose bytes are proven free of one: any other string, computed or read from a local, stops.
+	if value.Type() == ir.String {
+		constant, isConstant := value.(ir.StringConstant)
+		if !isConstant || holdsLoneSurrogate(l.result.Strings[constant.Index]) {
+			return nil, true, l.notYet(args[0], "a Buffer.indexOf string other than a literal free of lone surrogates, on which Node aborts,")
+		}
+	}
+	lowered := []ir.Expression{buffer, value}
+	if len(args) == 2 {
+		offset, err := l.expression(args[1])
+		if err != nil {
+			return nil, true, err
+		}
+		offset = fit(offset, ir.MaybeNumber)
+		if offset.Type() != ir.MaybeNumber {
+			return nil, true, l.notYet(args[1], "a Buffer.indexOf byteOffset that isn't number or undefined")
+		}
+		lowered = append(lowered, offset)
+	}
+	return ir.NodeBufferCall{Function: "buffer_index_of", Arguments: lowered, Returns: ir.Number}, true, nil
+}
+
+// holdsLoneSurrogate reports whether text, as Adamic holds it in WTF-8, holds a lone surrogate: 0xED, a
+// lead byte that never continues a sequence, followed by a byte from 0xA0 to 0xBF.
+func holdsLoneSurrogate(text string) bool {
+	for index := 0; index+1 < len(text); index++ {
+		if text[index] == 0xed && text[index+1] >= 0xa0 && text[index+1] <= 0xbf {
+			return true
+		}
+	}
+	return false
 }

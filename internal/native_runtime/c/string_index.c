@@ -113,6 +113,9 @@ static struct adamic_string_index *build(adamic_string *string, size_t units) {
 	for (; checkpoint < count; checkpoint++) {
 		index->checkpoints[checkpoint] = (uint32_t)(string->length << 1);
 	}
+	// The walk above counted every unit, and the view below decodes the same bytes, so a units that
+	// isn't that count would size the view wrong and write past it. Stop instead, in every build.
+	if (unit != units) { adamic_invariant("a string's unit count is wrong"); }
 	index->view = malloc(units * sizeof *index->view);
 	if (index->view == NULL) {
 		static const char message[] = "out of memory";

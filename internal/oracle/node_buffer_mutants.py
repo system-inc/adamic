@@ -17,6 +17,7 @@ buffer = 'internal/native_runtime/c/node_buffer.c'
 crypto = 'internal/native_runtime/c/node_crypto.c'
 typed = 'internal/native_runtime/c/typed_array.c'
 lower = 'internal/lower/typed_arrays.go'
+buffer_lower = 'internal/lower/library_node_buffer.go'
 mutants = [
     ('from_utf8_surrogate', buffer, '(unsigned)adamic_utf8_at(text, (double)at)', '(unsigned char)text->bytes[at]', 'encodings'),
     ('from_numeric_bytes', typed, '((uint8_t *)array->data)[index] = (uint8_t)modulo;', '((uint8_t *)array->data)[index] = (uint8_t)modulo ^ 1;', 'writes'),
@@ -33,6 +34,16 @@ mutants = [
     ('hash_update_bytes', crypto, 'for (size_t i=0;i<input->length;i++)', 'for (size_t i=1;i<input->length;i++)', 'crypto'),
     ('hash_digest_hex', crypto, 'static const char hex[]="0123456789abcdef";', 'static const char hex[]="0123456789ABCDEF";', 'crypto'),
     ('hash_finalization', crypto, 'if (hash->slots[1].number != 0)', 'if (hash->slots[1].number == -1)', 'finalized'),
+    ('alloc_unsafe_truncate_first', buffer, 'if (!(size >= 0) || size > 9007199254740991.0) {', 'size = trunc(size); if (!(size >= 0) || size > 9007199254740991.0) {', 'alloc_unsafe'),
+    ('alloc_unsafe_separator', buffer, 'bool grouped = isfinite(value) &&', 'bool grouped = false && isfinite(value) &&', 'alloc_unsafe'),
+    ('alloc_unsafe_failure_panics', buffer, 'adamic_throw_coded("RangeError", "ERR_MEMORY_ALLOCATION_FAILED",', 'adamic_panic(message, sizeof message - 1); adamic_throw_coded("RangeError", "ERR_MEMORY_ALLOCATION_FAILED",', 'alloc_unsafe'),
+    ('slice_copy', buffer_lower, 'return ir.TypedArraySubarray{Array: array, Arguments: lowered}, true, nil', 'return ir.NodeBufferCall{Function: "buffer_copy", Arguments: []ir.Expression{ir.TypedArraySubarray{Array: array, Arguments: lowered}}, Returns: ir.Uint8Array}, true, nil', 'slice'),
+    ('slice_view_offset', typed, 'view->data = (unsigned char *)array->data + from * width(array->kind);', 'view->data = array->data;', 'slice'),
+    ('index_of_negative_offset', buffer, '*start = whole + size >= 0 ? (size_t)(whole + size) : 0;', '*start = 0;', 'index_of'),
+    ('index_of_number_unmasked', buffer, 'unsigned char byte = (unsigned char)((uint32_t)adamic_shift_right_unsigned(needle, 0) & 255);', 'if (needle != trunc(needle) || !(needle >= 0 && needle <= 255)) { return -1; } unsigned char byte = (unsigned char)needle;', 'index_of'),
+    ('index_of_empty_past_end', buffer, '*start = length; return needle_length == 0;', '*start = length; return false;', 'index_of'),
+    ('index_of_view_owner', buffer, 'const unsigned char *data = buffer->data; size_t last = buffer->length - length;', 'const unsigned char *data = buffer->owner != NULL ? buffer->owner->data : buffer->data; size_t last = buffer->length - length;', 'index_of'),
+    ('ascii_unmasked', buffer, 'out[at] = (char)(bytes[start + at] & 0x7f);', 'out[at] = (char)bytes[start + at];', 'ascii'),
 ]
 selection = sys.argv[1:]
 summary = []

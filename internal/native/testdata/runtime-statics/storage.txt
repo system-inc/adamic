@@ -151,7 +151,6 @@
 `node_fs_file.c:cache:8`
 `node_fs_file.c:cache:9`
 `node_fs_file.c:cache:10`
-`node_fs_file.c:dots:1`
 `normalize.c:cached_classes:1`
 `normalize.c:cached_mappings:1`
 `normalize.c:cached_pairs:1`
@@ -291,6 +290,7 @@
 `slab_quarantine.c:next:1`
 `stack.c:__stack_low:1`
 `stack.c:adamic_stack_limit:1`
+`string.c:dots:1`
 `string_build_impl.h:adamic_string_empty:1`
 `string_build_impl.h:adamic_string_false:1`
 `string_build_impl.h:adamic_string_true:1`
@@ -468,7 +468,6 @@
 `node_fs_directory.c:code:1`
 `node_fs_directory.c:colon:1`
 `node_fs_directory.c:comma:1`
-`node_fs_directory.c:dots:1`
 `node_fs_directory.c:end:1`
 `node_fs_directory.c:error_name:1`
 `node_fs_directory.c:quote:1`
@@ -601,6 +600,8 @@
 `exceptions.c:error_json_lock:1`
 `exceptions.c:error_shape_json:1`
 `exceptions.c:absent_message_shape_json:1`
+`exceptions.c:coded_error_shape_json:1`
+`exceptions.c:plain_coded_error_shape_json:1`
 `process.c:shape_json:1`
 `node_fs_directory.c:coded_error_shape_json:1`
 `node_fs_file.c:shape_json:1`

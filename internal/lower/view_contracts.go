@@ -113,6 +113,54 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 	return id, nil
 }
 
+// viewStaticsAdmitted is whether a class constructor may stand for contract's object (#s03ndgw): every
+// field it names is one only a static the class declares can hold, never a property Function or Object
+// gives every constructor (name, length, prototype, call, toString, constructor and the rest), asked of
+// the checker by name, so the library says which. GetPropertyOfType on Function's interface finds
+// Object's members too, and objectPrototypeName adds the __proto__ family the library doesn't declare.
+// A field whose finished contract is missing, unknown or unsupported, an unsupported contract, one with
+// no field, or a library without Function to ask leaves it false. Run time still asks that each
+// required field be the class's own data static (view_unions_untagged.c).
+//
+// An optional field also leaves it false: run time reads an optional field a class doesn't own as a data
+// slot as absent, so a static method, a static getter or a static the class inherits by that name read
+// undefined natively, where Node reads the member (#24kvb6k, J-d31s28f). Until run time asks whether the
+// class or a base answers the name in any form, no contract with an optional field admits a class.
+func (l *lowering) viewStaticsAdmitted(contract ir.ViewContract) bool {
+	function := l.checker.GetGlobalSymbol("Function", ast.SymbolFlagsInterface, nil)
+	if function == nil || contract.Unsupported != "" || len(contract.Fields) == 0 {
+		return false
+	}
+	functionType := l.checker.GetDeclaredTypeOfSymbol(function)
+	for _, field := range contract.Fields {
+		if field.Contract <= 0 || int(field.Contract) > len(l.result.ViewContracts) {
+			return false
+		}
+		if held := l.result.ViewContracts[field.Contract-1]; held.Kind == ir.ViewUnknown || held.Unsupported != "" {
+			return false
+		}
+		if field.Optional || l.objectPrototypeName(field.Name) || l.checker.GetPropertyOfType(functionType, field.Name) != nil {
+			return false
+		}
+	}
+	return true
+}
+
+// finishViewStaticsAdmitted sets StaticsAdmitted on every contract once the table is finished, after
+// lowering's last pass, so viewStaticsAdmitted reads each field's settled contract. Set inside a
+// contract's own field loop, a field whose contract is a back edge to an ancestor still being built
+// would read that ancestor's placeholder, and stay true once the ancestor was made Unknown or
+// Unsupported. It's an object's (strictViewContract) or an object union's (buildUnionReadContract,
+// which StaticsAdmittedReceiver reads for a write), never a fixed tuple's, whose positions no class
+// constructor holds.
+func (l *lowering) finishViewStaticsAdmitted() {
+	for index, contract := range l.result.ViewContracts {
+		object := contract.Kind == ir.ViewObject && !contract.FixedTuple
+		union := contract.Kind == ir.ViewUnion && contract.Of == ir.Object
+		l.result.ViewContracts[index].StaticsAdmitted = (object || union) && l.viewStaticsAdmitted(contract)
+	}
+}
+
 func (l *lowering) viewContractLiterals(target *checker.Type) []ir.ViewLiteral {
 	// A whole numeric enum admits numbers outside its declared members, a one-member enum's included.
 	if l.tagHoldsAnyNumber(target) {

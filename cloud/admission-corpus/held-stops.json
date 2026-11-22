@@ -1,4 +1,1199 @@
 {
-  "_comment": "Adding a row is a ruling. A row names a program whose both-stop a test already holds: the JavaScript backend and native stop alike, exit 70, with the same stdout and stderr, where Node runs the program to the end, exit 0. The agreement mode of cmd/adamic-admission-delta counts such a program as a checked stop, not as a disagreement, only when its path is listed here and the backends' stderr is the row's byte for byte. Schema: stops is an array of rows, each with path (the program's repository path, listed once), stderr (the backends' exact stderr) and test (the test that holds the stop, as <file>_test.go: <TestName>). A row without its test is refused.",
-  "stops": []
+  "_comment": "Adding a row is a ruling. A row names a program whose both-stop a test already holds: the JavaScript backend and native stop alike, exit 70, with the same stdout and stderr, where Node runs the program to the end, exit 0. The agreement mode of cmd/adamic-admission-delta counts such a program as a checked stop, not as a disagreement, only when its path is listed here and the backends' stderr is the row's byte for byte. A row is itself the pin of the stop's words (Adamic on #d358hc1), and only a hatch may stop a valid program loudly, so a program with no hatch in it is never a row. Schema: stops is an array of rows, each with path (the program's repository path, listed once), stderr (the backends' exact stderr, the run's checkout written {root}), hatch (the hatch the program uses, as <kind>[ (<detail>)], line <n>: <that line of the program, trimmed>, a language hatch's detail citing docs/rulings.md:<line>, \"<the row's opening words>\") and test (the test that holds the stop, as <repository path>_test.go: <TestName>). A row without its hatch or its test is refused, and TestHeldStopListHoldsItsRows holds each row's hatch line, ruling and test to the tree.",
+  "stops": [
+    {
+      "path": "internal/lower/testdata/predicate_values/open_tag_lie.a",
+      "stderr": "adamic: panic: field read failed: node.text is not initialized; expected string, found missing\n",
+      "hatch": "predicate, line 5: function isIdentifier(node: Node): node is Identifier { return node.kind === SyntaxKind.Identifier; }",
+      "test": "internal/oracle/predicate_values_test.go: TestPredicateValuesOverAnOpenTag"
+    },
+    {
+      "path": "internal/lower/testdata/predicates_checked/open_tag_view_lie.a",
+      "stderr": "adamic: panic: field read failed: node.width is not initialized; expected number, found missing\n",
+      "hatch": "predicate, line 5: function isIdentifier(node: Node): node is Identifier { return node.kind === SyntaxKind.Identifier; }",
+      "test": "internal/oracle/predicates_checked_test.go: TestCheckedPredicateOpenTagViews"
+    },
+    {
+      "path": "internal/lower/testdata/predicates_checked/open_tag_view_nested.a",
+      "stderr": "adamic: panic: field read failed: node.name.text is not initialized; expected string, found missing\n",
+      "hatch": "predicate, line 7: function isIdentifier(node: Node): node is Identifier { return node.kind === SyntaxKind.Identifier; }",
+      "test": "internal/oracle/predicates_checked_test.go: TestCheckedPredicateOpenTagViews"
+    },
+    {
+      "path": "internal/lower/testdata/predicates_checked/open_tag_view_retype.a",
+      "stderr": "adamic: panic: field read failed: node.width is not a number; expected number, found string\n",
+      "hatch": "predicate, line 5: function isIdentifier(node: Node): node is Identifier { return node.kind === SyntaxKind.Identifier; }",
+      "test": "internal/oracle/predicates_checked_test.go: TestCheckedPredicateOpenTagViews"
+    },
+    {
+      "path": "internal/lower/testdata/predicates_checked/shared_kind.a",
+      "stderr": "adamic: panic: field read failed: node.text is not initialized; expected string, found missing\n",
+      "hatch": "predicate, line 5: function isIdentifier(node: Node): node is Identifier { return node.kind === Kind.Identifier; }",
+      "test": "internal/oracle/predicates_checked_test.go: TestCheckedPredicateOpenTagViews"
+    },
+    {
+      "path": "internal/lower/testdata/predicates_function_type/iface_asserts_lie.ts",
+      "stderr": "adamic: panic: predicate a.assertIdentifier at {root}/internal/lower/testdata/predicates_function_type/iface_asserts_lie.ts:5:48 asserts branch: source Node, target Identifier\n",
+      "hatch": "predicate (the asserts claim is filled by the void function at line 4), line 3: interface Asserter { assertIdentifier(node: Node): asserts node is Identifier; }",
+      "test": "internal/lower/predicates_function_type_test.go: TestFunctionTypeClaimIsCheckedAtTheCall"
+    },
+    {
+      "path": "internal/lower/testdata/predicates_function_type/overload_checked_impl.ts",
+      "stderr": "adamic: panic: predicate assert at {root}/internal/lower/testdata/predicates_function_type/overload_checked_impl.ts:4:101 asserts branch: source Node, target Identifier\n",
+      "hatch": "predicate (the asserts claim is filled by the void function at line 5), line 4: export function check(node: Node, assert: (node: Node) => asserts node is Identifier): Identifier { assert(node); return node; }",
+      "test": "internal/lower/predicates_function_type_test.go: TestFunctionTypeClaimIsCheckedAtTheCall"
+    },
+    {
+      "path": "internal/lower/testdata/predicates_function_type/param_asserts_lie.ts",
+      "stderr": "adamic: panic: predicate assertIdentifier at {root}/internal/lower/testdata/predicates_function_type/param_asserts_lie.ts:3:108 asserts branch: source Node, target Identifier\n",
+      "hatch": "predicate (the asserts claim is filled by the void function at line 4), line 3: export function nameOf(node: Node, assertIdentifier: (node: Node) => asserts node is Identifier): string { assertIdentifier(node); return node.escapedText; }",
+      "test": "internal/lower/predicates_function_type_test.go: TestFunctionTypeClaimIsCheckedAtTheCall"
+    },
+    {
+      "path": "internal/lower/testdata/scalar_union_views/misfit_boolean.ts",
+      "stderr": "adamic: panic: field read failed: viewed.value matches no member of boolean | undefined; expected boolean | undefined, found string\n",
+      "hatch": "cast, line 5: const viewed = base as View;",
+      "test": "internal/oracle/scalar_union_views_test.go: TestScalarUnionViewMisfitBooleanNative"
+    },
+    {
+      "path": "internal/lower/testdata/scalar_union_views/misfit_number.ts",
+      "stderr": "adamic: panic: field read failed: viewed.value matches no member of number | undefined; expected number | undefined, found string\n",
+      "hatch": "cast, line 5: const viewed = base as View;",
+      "test": "internal/oracle/scalar_union_views_test.go: TestScalarUnionViewMisfitNumberNative"
+    },
+    {
+      "path": "internal/oracle/testdata/57f2d04_find_last_shrinks.a",
+      "stderr": "adamic: panic: findLastIndex: index 2 is undefined; element type string does not admit undefined\n",
+      "hatch": "library-claim (lib.d.ts types the findLastIndex callback's item string, Node passes undefined once the splice shrinks the array), line 2: const at = list.findLastIndex((item: string, index: number): boolean => {",
+      "test": "internal/oracle/search_shrink_test.go: TestSearchShrinkFindLastIndexChecked"
+    },
+    {
+      "path": "internal/oracle/testdata/57f2d04_find_last_shrinks2.a",
+      "stderr": "adamic: panic: findLast: index 2 is undefined; element type string does not admit undefined\n",
+      "hatch": "library-claim (lib.d.ts types the findLast callback's item string, Node passes undefined once the splice shrinks the array), line 2: const found = list.findLast((item: string, index: number): boolean => {",
+      "test": "internal/oracle/search_shrink_test.go: TestSearchShrinkFindLastChecked"
+    },
+    {
+      "path": "internal/oracle/testdata/cast_class_fails.a",
+      "stderr": "adamic: panic: cast failed: this Animal is not a Dog\n",
+      "hatch": "cast, line 4: function cast(value: Animal): Dog { return value as Dog; }",
+      "test": "internal/oracle/cast_test.go: TestCheckedCastFailureContract"
+    },
+    {
+      "path": "internal/oracle/testdata/cast_class_generic_fails.a",
+      "stderr": "adamic: panic: cast failed: this Base<number> is not a Box<number>\n",
+      "hatch": "cast, line 3: function cast(value: Base<number>): Box<number> { return value as Box<number>; }",
+      "test": "internal/oracle/cast_test.go: TestCheckedCastFailureContract"
+    },
+    {
+      "path": "internal/oracle/testdata/cast_class_union_fails.a",
+      "stderr": "adamic: panic: cast failed: this Bird | Cat | Dog is not a Cat | Dog\n",
+      "hatch": "cast, line 5: function cast(value: Dog | Cat | Bird): Dog | Cat { return value as Dog | Cat; }",
+      "test": "internal/oracle/cast_test.go: TestCheckedCastFailureContract"
+    },
+    {
+      "path": "internal/oracle/testdata/cast_enum_const_numeric_fails.ts",
+      "stderr": "adamic: panic: cast failed: this A | B is not a A\n",
+      "hatch": "cast, line 4: function cast(value: A | B): A { return value as A; }",
+      "test": "internal/oracle/cast_test.go: TestCheckedCastFailureContract"
+    },
+    {
+      "path": "internal/oracle/testdata/cast_enum_const_string_fails.ts",
+      "stderr": "adamic: panic: cast failed: this A | B is not a A\n",
+      "hatch": "cast, line 4: function cast(value: A | B): A { return value as A; }",
+      "test": "internal/oracle/cast_test.go: TestCheckedCastFailureContract"
+    },
+    {
+      "path": "internal/oracle/testdata/cast_enum_numeric_fails.ts",
+      "stderr": "adamic: panic: cast failed: this A | B is not a A\n",
+      "hatch": "cast, line 4: function cast(value: A | B): A { return value as A; }",
+      "test": "internal/oracle/cast_test.go: TestCheckedCastFailureContract"
+    },
+    {
+      "path": "internal/oracle/testdata/cast_enum_string_fails.ts",
+      "stderr": "adamic: panic: cast failed: this A | B is not a A\n",
+      "hatch": "cast, line 4: function cast(value: A | B): A { return value as A; }",
+      "test": "internal/oracle/cast_test.go: TestCheckedCastFailureContract"
+    },
+    {
+      "path": "internal/oracle/testdata/cast_fails.ts",
+      "stderr": "adamic: panic: cast failed: this Shape is not a { readonly kind: \"Circle\"; readonly radius: number; }\n",
+      "hatch": "cast, line 6: const circle = shape as Extract<Shape, { kind: 'Circle' }>;",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/cast_subunion_const_numeric_fails.ts",
+      "stderr": "adamic: panic: cast failed: this A | B | C is not a A | C\n",
+      "hatch": "cast, line 5: function cast(value: A | B | C): A | C { return value as A | C; }",
+      "test": "internal/oracle/cast_test.go: TestCheckedCastFailureContract"
+    },
+    {
+      "path": "internal/oracle/testdata/cast_subunion_const_string_fails.ts",
+      "stderr": "adamic: panic: cast failed: this A | B | C is not a A | C\n",
+      "hatch": "cast, line 5: function cast(value: A | B | C): A | C { return value as A | C; }",
+      "test": "internal/oracle/cast_test.go: TestCheckedCastFailureContract"
+    },
+    {
+      "path": "internal/oracle/testdata/cast_subunion_fails.ts",
+      "stderr": "adamic: panic: cast failed: this A | B | C is not a A | C\n",
+      "hatch": "cast, line 5: function cast(value: A | B | C): A | C { return value as A | C; }",
+      "test": "internal/oracle/cast_test.go: TestCheckedCastFailureContract"
+    },
+    {
+      "path": "internal/oracle/testdata/cast_subunion_string_fails.ts",
+      "stderr": "adamic: panic: cast failed: this A | B | C is not a A | C\n",
+      "hatch": "cast, line 5: function cast(value: A | B | C): A | C { return value as A | C; }",
+      "test": "internal/oracle/cast_test.go: TestCheckedCastFailureContract"
+    },
+    {
+      "path": "internal/oracle/testdata/census_overload_lie.a",
+      "stderr": "adamic: panic: overload 1 of lie result: expected string, got undefined\n",
+      "hatch": "relation-lie (the overload claims string where the implementation returns string | undefined, a pairing tsc's overload check accepts), line 1: function lie(value: number): string;",
+      "test": "internal/oracle/census_overload_result_test.go: TestCensusOverloadResultStop"
+    },
+    {
+      "path": "internal/oracle/testdata/entries_checked_literal.a",
+      "stderr": "adamic: panic: Object enumeration key 'hidden': actual string, declared \"good\"\n",
+      "hatch": "library-claim (Object.entries types every value as the view's value type; the hidden field enters through the structural assignment at line 6), line 2: Object.entries(view);",
+      "test": "internal/oracle/entries_provenance_test.go: TestEntriesProvenance"
+    },
+    {
+      "path": "internal/oracle/testdata/entries_checked_misfit.a",
+      "stderr": "adamic: panic: Object enumeration key 'hidden': actual string, declared number\n",
+      "hatch": "library-claim (Object.entries types every value number; the hidden string field enters through the structural assignment at line 6), line 2: Object.entries(view);",
+      "test": "internal/oracle/entries_provenance_test.go: TestEntriesProvenance"
+    },
+    {
+      "path": "internal/oracle/testdata/entries_record_misfit.a",
+      "stderr": "adamic: panic: Object enumeration key 'late': actual string, declared number\n",
+      "hatch": "library-claim (Object.entries on an interface returns [string, any][], annotated [string, number][] while 'late' holds a string), line 7: const entries: [string, number][] = Object.entries(view);",
+      "test": "internal/oracle/entries_provenance_test.go: TestEntriesProvenance"
+    },
+    {
+      "path": "internal/oracle/testdata/enums_open_never.a",
+      "stderr": "adamic: panic: unreachable value 42 for numeric enum SyntaxKind\n",
+      "hatch": "language (docs/rulings.md:251, \"Equality and switch against a numeric enum member\", with docs/rulings.md:76, \"A `never`-typed value in code\"), line 7: const unreachable: never = value;",
+      "test": "internal/oracle/enums_open_test.go: TestNumericEnumNeverPinned"
+    },
+    {
+      "path": "internal/oracle/testdata/enums_open_never_field.a",
+      "stderr": "adamic: panic: unreachable value 42 for numeric enum SyntaxKind\n",
+      "hatch": "language (docs/rulings.md:251, \"Equality and switch against a numeric enum member\", with docs/rulings.md:76, \"A `never`-typed value in code\"), line 5: const unreachable: never = box.value;",
+      "test": "internal/oracle/enums_open_test.go: TestNumericEnumNeverPathsPinned_field"
+    },
+    {
+      "path": "internal/oracle/testdata/enums_open_never_if.a",
+      "stderr": "adamic: panic: unreachable value 42 for numeric enum SyntaxKind\n",
+      "hatch": "language (docs/rulings.md:251, \"Equality and switch against a numeric enum member\", with docs/rulings.md:76, \"A `never`-typed value in code\"), line 6: const unreachable: never = value;",
+      "test": "internal/oracle/enums_open_test.go: TestNumericEnumNeverPathsPinned_if"
+    },
+    {
+      "path": "internal/oracle/testdata/enums_open_never_implicit.a",
+      "stderr": "adamic: panic: unreachable value 42 for numeric enum SyntaxKind\n",
+      "hatch": "language (docs/rulings.md:251, \"Equality and switch against a numeric enum member\", with docs/rulings.md:76, \"A `never`-typed value in code\"), line 8: switch (other()) {",
+      "test": "internal/oracle/enums_open_test.go: TestNumericEnumNeverPathsPinned_implicit"
+    },
+    {
+      "path": "internal/oracle/testdata/enums_open_never_index.a",
+      "stderr": "adamic: panic: unreachable value 42 for numeric enum SyntaxKind\n",
+      "hatch": "language (docs/rulings.md:251, \"Equality and switch against a numeric enum member\", with docs/rulings.md:76, \"A `never`-typed value in code\"), line 6: const unreachable: never = values[0];",
+      "test": "internal/oracle/enums_open_test.go: TestNumericEnumNeverPathsPinned_index"
+    },
+    {
+      "path": "internal/oracle/testdata/enums_open_never_return.a",
+      "stderr": "adamic: panic: unreachable value 42 for numeric enum SyntaxKind\n",
+      "hatch": "language (docs/rulings.md:251, \"Equality and switch against a numeric enum member\", with docs/rulings.md:76, \"A `never`-typed value in code\"), line 6: return value;",
+      "test": "internal/oracle/enums_open_test.go: TestNumericEnumNeverPathsPinned_return"
+    },
+    {
+      "path": "internal/oracle/testdata/enums_open_never_update.a",
+      "stderr": "adamic: panic: unreachable value 42 for numeric enum SyntaxKind\n",
+      "hatch": "language (docs/rulings.md:251, \"Equality and switch against a numeric enum member\", with docs/rulings.md:76, \"A `never`-typed value in code\"), line 5: value++;",
+      "test": "internal/oracle/enums_open_test.go: TestNumericEnumNeverPathsPinned_update"
+    },
+    {
+      "path": "internal/oracle/testdata/find_index_shrinks.a",
+      "stderr": "adamic: panic: findIndex: index 2 is undefined; element type number does not admit undefined\n",
+      "hatch": "library-claim (lib.d.ts types the findIndex callback's item number, Node passes undefined once pop shrinks the array), line 5: const at = others.findIndex((item) => {",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/find_shrinks.a",
+      "stderr": "adamic: panic: find: index 2 is undefined; element type number does not admit undefined\n",
+      "hatch": "library-claim (lib.d.ts types the find callback's item number, Node passes undefined once pop shrinks the array), line 7: const found = list.find((item) => {",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/map_shrinks.a",
+      "stderr": "adamic: panic: map: the array shrank while it was being mapped\n",
+      "hatch": "library-claim (lib.d.ts types map's result a dense string[], Node leaves a hole once pop shrinks the array mid-map), line 11: console.log(holder.list.map((item) => `${holder.list.pop() ?? -1}:${item}`).join(' '));",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_array.ts",
+      "stderr": "adamic: panic: non-null assertion failed at {root}/internal/oracle/testdata/non_null_array.ts:3:13: values[1]! is null or undefined\n",
+      "hatch": "non-null, line 3: console.log(values[1]!);",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_boolean.ts",
+      "stderr": "adamic: panic: non-null assertion failed at {root}/internal/oracle/testdata/non_null_boolean.ts:3:17: value! is null or undefined\n",
+      "hatch": "non-null, line 3: console.log(`${value!}`);",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_capture.ts",
+      "stderr": "adamic: panic: non-null assertion failed at {root}/internal/oracle/testdata/non_null_capture.ts:7:15: value! is null or undefined\n",
+      "hatch": "non-null, line 7: console.log(value!);",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_catch.ts",
+      "stderr": "adamic: panic: non-null assertion failed at {root}/internal/oracle/testdata/non_null_catch.ts:4:17: map.get('missing')! is null or undefined\n",
+      "hatch": "non-null, line 4: console.log(`${map.get('missing')!}`);",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_checked_initializer.ts",
+      "stderr": "adamic: panic: non-null assertion failed at {root}/internal/oracle/testdata/non_null_checked_initializer.ts:3:26: value! is null or undefined\n",
+      "hatch": "non-null, line 3: var stored: number = value!;",
+      "test": "internal/oracle/non_null_checked_test.go: TestCheckedNonNullTypeScript"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_checked_let_initializer.ts",
+      "stderr": "adamic: panic: non-null assertion failed at {root}/internal/oracle/testdata/non_null_checked_let_initializer.ts:3:26: value! is null or undefined\n",
+      "hatch": "non-null, line 3: let stored: number = value!;",
+      "test": "internal/oracle/non_null_checked_test.go: TestCheckedNonNullTypeScript"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_checked_null.ts",
+      "stderr": "adamic: panic: non-null assertion failed at {root}/internal/oracle/testdata/non_null_checked_null.ts:3:24: value! is null or undefined\n",
+      "hatch": "non-null, line 3: console.log(String(value! === null));",
+      "test": "internal/oracle/non_null_checked_test.go: TestCheckedNonNullTypeScript"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_checked_undefined.ts",
+      "stderr": "adamic: panic: non-null assertion failed at {root}/internal/oracle/testdata/non_null_checked_undefined.ts:3:24: value! is null or undefined\n",
+      "hatch": "non-null, line 3: console.log(String(value! === undefined));",
+      "test": "internal/oracle/non_null_checked_test.go: TestCheckedNonNullTypeScript"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_definite_field.ts",
+      "stderr": "adamic: panic: read before assignment: field 'value' in state.value\n",
+      "hatch": "definite-assignment, line 1: class State { value!: number; }",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_definite_local.ts",
+      "stderr": "adamic: panic: read before assignment: variable 'value' in value\n",
+      "hatch": "definite-assignment, line 1: function run(): void { let value!: number; console.log(`${value}`); }",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_field.ts",
+      "stderr": "adamic: panic: non-null assertion failed at {root}/internal/oracle/testdata/non_null_field.ts:6:17: box.value! is null or undefined\n",
+      "hatch": "non-null, line 6: console.log(`${box.value!}`);",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_lazy_default.ts",
+      "stderr": "adamic: panic: non-null assertion failed at {root}/internal/oracle/testdata/non_null_lazy_default.ts:2:31: initial()! is null or undefined\n",
+      "hatch": "non-null, line 2: function read(value: string = initial()!): void { console.log(`${value}`); }",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_lazy_field.ts",
+      "stderr": "adamic: panic: non-null assertion failed at {root}/internal/oracle/testdata/non_null_lazy_field.ts:2:22: initial()! is null or undefined\n",
+      "hatch": "non-null, line 2: class Frame { text = initial()!; }",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_lazy_initialized.ts",
+      "stderr": "adamic: panic: non-null assertion failed at {root}/internal/oracle/testdata/non_null_lazy_initialized.ts:2:16: textInitial! is null or undefined\n",
+      "hatch": "non-null (eager by docs/rulings.md:60, a .ts initializer assertion is eager), line 2: var text = textInitial!;",
+      "test": "internal/oracle/readiness_test.go: TestNonliteralInitializerCannotSkipCheck"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_lazy_read.ts",
+      "stderr": "adamic: panic: non-null assertion failed at {root}/internal/oracle/testdata/non_null_lazy_read.ts:2:16: textInitial! is null or undefined\n",
+      "hatch": "non-null, line 2: var text = textInitial!;",
+      "test": "internal/oracle/readiness_test.go: TestReadinessMutantReplaceMissingAssertionWithEmpty"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_lazy_static.ts",
+      "stderr": "adamic: panic: non-null assertion failed at {root}/internal/oracle/testdata/non_null_lazy_static.ts:2:29: initial()! is null or undefined\n",
+      "hatch": "non-null, line 2: class Frame { static text = initial()!; }",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_literal_assignment.ts",
+      "stderr": "adamic: panic: placeholder 'value' is unset at use as T via value\n",
+      "hatch": "non-null, line 2: value = null!;",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_literal_return.ts",
+      "stderr": "adamic: panic: non-null assertion failed at {root}/internal/oracle/testdata/non_null_literal_return.ts:1:33: undefined! is null or undefined\n",
+      "hatch": "non-null, line 1: function run(): number { return undefined!; }",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_literal_statement.ts",
+      "stderr": "adamic: panic: non-null assertion failed at {root}/internal/oracle/testdata/non_null_literal_statement.ts:2:1: undefined! is null or undefined\n",
+      "hatch": "non-null, line 2: undefined!;",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_map.ts",
+      "stderr": "adamic: panic: non-null assertion failed at {root}/internal/oracle/testdata/non_null_map.ts:3:16: map.get('missing')! is null or undefined\n",
+      "hatch": "non-null, line 3: console.log(`${map.get('missing')!}`);",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_null.ts",
+      "stderr": "adamic: panic: non-null assertion failed at {root}/internal/oracle/testdata/non_null_null.ts:2:16: 'a'.match(/z/)! is null or undefined\n",
+      "hatch": "non-null, line 2: console.log(`${'a'.match(/z/)! === null}`);",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_refuse_null.ts",
+      "stderr": "adamic: panic: non-null assertion failed at {root}/internal/oracle/testdata/non_null_refuse_null.ts:1:13: null! is null or undefined\n",
+      "hatch": "non-null, line 1: console.log(null!);",
+      "test": "internal/oracle/non_null_impossible_test.go: TestImpossibleNonNullFixturesAreRefused"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_refuse_undefined.ts",
+      "stderr": "adamic: panic: non-null assertion failed at {root}/internal/oracle/testdata/non_null_refuse_undefined.ts:1:13: undefined! is null or undefined\n",
+      "hatch": "non-null, line 1: console.log(undefined!);",
+      "test": "internal/oracle/non_null_impossible_test.go: TestImpossibleNonNullFixturesAreRefused"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_static_uninitialized.ts",
+      "stderr": "adamic: panic: placeholder 'value' is unset at use as T via State.value\n",
+      "hatch": "non-null, line 1: class State { static value: number = null!; }",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_uninitialized.ts",
+      "stderr": "adamic: panic: placeholder 'value' is unset at use as T via value\n",
+      "hatch": "non-null, line 2: let value: number = undefined!;",
+      "test": "internal/oracle/readiness_test.go: TestReadinessMutantReplaceUnsetCheckWithZero"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_uninitialized_append.ts",
+      "stderr": "adamic: panic: placeholder 'text' is unset at assignment via text\n",
+      "hatch": "non-null, line 2: let text: string = undefined!;",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_uninitialized_capture.ts",
+      "stderr": "adamic: panic: placeholder 'value' is unset at use as T via value\n",
+      "hatch": "non-null, line 2: let value: number = undefined!;",
+      "test": "internal/oracle/readiness_test.go: TestReadinessMutantMissCapturedRead"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_uninitialized_catch.ts",
+      "stderr": "adamic: panic: placeholder 'value' is unset at use as T via value\n",
+      "hatch": "non-null, line 2: let value: number = undefined!;",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_uninitialized_const.ts",
+      "stderr": "adamic: panic: placeholder 'value' is unset at use as T via value\n",
+      "hatch": "non-null, line 1: const value: number = null!;",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_uninitialized_default.ts",
+      "stderr": "adamic: panic: placeholder 'value' is unset at use as T via value\n",
+      "hatch": "non-null, line 1: function run(value: number = undefined!): void { console.log(`${value}`); }",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_uninitialized_exception.ts",
+      "stderr": "adamic: panic: placeholder 'value' is unset at use as T via value\n",
+      "hatch": "non-null, line 3: let value: number = undefined!;",
+      "test": "internal/oracle/readiness_test.go: TestReadinessMutantMissExceptionPath"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_uninitialized_field.ts",
+      "stderr": "adamic: panic: placeholder 'value' is unset at use as T via state.value\n",
+      "hatch": "non-null, line 1: class State { value: number = null!; }",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_uninitialized_interface.ts",
+      "stderr": "adamic: panic: placeholder 'value' is unset at use as T via state.value\n",
+      "hatch": "non-null, line 2: class State { value: number = undefined!; }",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_uninitialized_iteration.ts",
+      "stderr": "adamic: panic: placeholder 'value' is unset at use as T via value\n",
+      "hatch": "non-null, line 2: for (let value: number = undefined!, index = 0; index < 2; index++) {",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_uninitialized_loop.ts",
+      "stderr": "adamic: panic: placeholder 'value' is unset at use as T via value\n",
+      "hatch": "non-null, line 2: let value: number = null!;",
+      "test": "internal/oracle/readiness_test.go: TestReadinessMutantEraseWithoutProof"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_uninitialized_map_entry.ts",
+      "stderr": "adamic: panic: placeholder 'value' is unset at container element via value\n",
+      "hatch": "non-null, line 1: let value: number = undefined!;",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_uninitialized_spread.ts",
+      "stderr": "adamic: panic: placeholder 'value' is unset at use as T via copy.value\n",
+      "hatch": "non-null, line 1: class State { value: number = undefined!; }",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_union.ts",
+      "stderr": "adamic: panic: non-null assertion failed at {root}/internal/oracle/testdata/non_null_union.ts:3:17: value! is null or undefined\n",
+      "hatch": "non-null, line 3: console.log(`${value!}`);",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_weak.ts",
+      "stderr": "adamic: panic: non-null assertion failed at {root}/internal/oracle/testdata/non_null_weak.ts:10:20: holder.value! is null or undefined\n",
+      "hatch": "non-null, line 10: console.log(`${holder.value! === undefined}`);",
+      "test": "internal/oracle/readiness_test.go: TestReadinessMutantWeakGenericMessage"
+    },
+    {
+      "path": "internal/oracle/testdata/predicate_direction_uses/inferred_lie.ts",
+      "stderr": "adamic: panic: predicate isExportAssignment at {root}/internal/oracle/testdata/predicate_direction_uses/inferred_lie.ts:40:12 true branch: source Statement, target ExportAssignment\n",
+      "hatch": "predicate, line 19: function isExportAssignment(node: Statement): node is ExportAssignment {",
+      "test": "internal/oracle/predicate_direction_uses_test.go: TestPredicateDirectionUsesInferredLieStops"
+    },
+    {
+      "path": "internal/oracle/testdata/predicate_false_flow/direct/d01_not.ts",
+      "stderr": "adamic: panic: predicate isS at {root}/internal/oracle/testdata/predicate_false_flow/direct/d01_not.ts:23:10 false branch: source Node, target Statement\n",
+      "hatch": "predicate, line 12: function isS(n: Node): n is Statement {",
+      "test": "internal/oracle/predicate_false_flow_test.go: TestPredicateFalseDirectionLeavesDirectCalls"
+    },
+    {
+      "path": "internal/oracle/testdata/predicate_false_flow/direct/d10_alias_cond.ts",
+      "stderr": "adamic: panic: predicate isS at {root}/internal/oracle/testdata/predicate_false_flow/direct/d10_alias_cond.ts:23:16 false branch: source Node, target Statement\n",
+      "hatch": "predicate, line 12: function isS(n: Node): n is Statement {",
+      "test": "internal/oracle/predicate_false_flow_test.go: TestPredicateFalseDirectionLeavesDirectCalls"
+    },
+    {
+      "path": "internal/oracle/testdata/predicate_false_flow/direct/d11_switch_true.ts",
+      "stderr": "adamic: panic: predicate isS at {root}/internal/oracle/testdata/predicate_false_flow/direct/d11_switch_true.ts:24:14 false branch: source Node, target Statement\n",
+      "hatch": "predicate, line 12: function isS(n: Node): n is Statement {",
+      "test": "internal/oracle/predicate_false_flow_test.go: TestPredicateFalseDirectionLeavesDirectCalls"
+    },
+    {
+      "path": "internal/oracle/testdata/predicate_false_flow/direct/d12_eq_false.ts",
+      "stderr": "adamic: panic: predicate isS at {root}/internal/oracle/testdata/predicate_false_flow/direct/d12_eq_false.ts:23:9 false branch: source Node, target Statement\n",
+      "hatch": "predicate, line 12: function isS(n: Node): n is Statement {",
+      "test": "internal/oracle/predicate_false_flow_test.go: TestPredicateFalseDirectionLeavesDirectCalls"
+    },
+    {
+      "path": "internal/oracle/testdata/predicate_false_flow/direct/d14_ne_true.ts",
+      "stderr": "adamic: panic: predicate isS at {root}/internal/oracle/testdata/predicate_false_flow/direct/d14_ne_true.ts:23:9 false branch: source Node, target Statement\n",
+      "hatch": "predicate, line 12: function isS(n: Node): n is Statement {",
+      "test": "internal/oracle/predicate_false_flow_test.go: TestPredicateFalseDirectionLeavesDirectCalls"
+    },
+    {
+      "path": "internal/oracle/testdata/predicate_false_flow/direct/d15_false_eq.ts",
+      "stderr": "adamic: panic: predicate isS at {root}/internal/oracle/testdata/predicate_false_flow/direct/d15_false_eq.ts:23:19 false branch: source Node, target Statement\n",
+      "hatch": "predicate, line 12: function isS(n: Node): n is Statement {",
+      "test": "internal/oracle/predicate_false_flow_test.go: TestPredicateFalseDirectionLeavesDirectCalls"
+    },
+    {
+      "path": "internal/oracle/testdata/predicate_false_flow/direct/d17_comma.ts",
+      "stderr": "adamic: panic: predicate isS at {root}/internal/oracle/testdata/predicate_false_flow/direct/d17_comma.ts:23:18 false branch: source Node, target Statement\n",
+      "hatch": "predicate, line 12: function isS(n: Node): n is Statement {",
+      "test": "internal/oracle/predicate_false_flow_test.go: TestPredicateFalseDirectionLeavesDirectCalls"
+    },
+    {
+      "path": "internal/oracle/testdata/predicate_false_read/again.ts",
+      "stderr": "adamic: panic: predicate some at {root}/internal/oracle/testdata/predicate_false_read/again.ts:26:7 false branch: source readonly string[] | undefined, target readonly string[]\n",
+      "hatch": "predicate, line 7: function some<T>(array: readonly T[] | undefined): array is readonly T[];",
+      "test": "internal/oracle/predicate_false_read_test.go: TestPredicateFalseRead"
+    },
+    {
+      "path": "internal/oracle/testdata/predicate_false_read/capture.ts",
+      "stderr": "adamic: panic: predicate some at {root}/internal/oracle/testdata/predicate_false_read/capture.ts:23:7 false branch: source readonly string[] | undefined, target readonly string[]\n",
+      "hatch": "predicate, line 4: function some<T>(array: readonly T[] | undefined): array is readonly T[];",
+      "test": "internal/oracle/predicate_false_read_test.go: TestPredicateFalseRead"
+    },
+    {
+      "path": "internal/oracle/testdata/predicate_false_read/early_exit.ts",
+      "stderr": "adamic: panic: predicate some at {root}/internal/oracle/testdata/predicate_false_read/early_exit.ts:23:6 false branch: source readonly string[] | undefined, target readonly string[]\n",
+      "hatch": "predicate, line 4: function some<T>(array: readonly T[] | undefined): array is readonly T[];",
+      "test": "internal/oracle/predicate_false_read_test.go: TestPredicateFalseRead"
+    },
+    {
+      "path": "internal/oracle/testdata/predicate_false_read/else_read.ts",
+      "stderr": "adamic: panic: predicate some at {root}/internal/oracle/testdata/predicate_false_read/else_read.ts:23:6 false branch: source readonly string[] | undefined, target readonly string[]\n",
+      "hatch": "predicate, line 4: function some<T>(array: readonly T[] | undefined): array is readonly T[];",
+      "test": "internal/oracle/predicate_false_read_test.go: TestPredicateFalseRead"
+    },
+    {
+      "path": "internal/oracle/testdata/predicate_false_read/false_read.ts",
+      "stderr": "adamic: panic: predicate some at {root}/internal/oracle/testdata/predicate_false_read/false_read.ts:23:7 false branch: source readonly string[] | undefined, target readonly string[]\n",
+      "hatch": "predicate, line 4: function some<T>(array: readonly T[] | undefined): array is readonly T[];",
+      "test": "internal/oracle/predicate_false_read_test.go: TestPredicateFalseRead"
+    },
+    {
+      "path": "internal/oracle/testdata/predicate_false_read/getter_capture.ts",
+      "stderr": "adamic: panic: predicate some at {root}/internal/oracle/testdata/predicate_false_read/getter_capture.ts:38:7 false branch: source readonly string[] | undefined, target readonly string[]\n",
+      "hatch": "predicate, line 7: function some<T>(array: readonly T[] | undefined): array is readonly T[];",
+      "test": "internal/oracle/predicate_false_read_test.go: TestPredicateFalseRead"
+    },
+    {
+      "path": "internal/oracle/testdata/predicate_false_read/logical_assignment.ts",
+      "stderr": "adamic: panic: predicate some at {root}/internal/oracle/testdata/predicate_false_read/logical_assignment.ts:23:7 false branch: source readonly string[] | undefined, target readonly string[]\n",
+      "hatch": "predicate, line 4: function some<T>(array: readonly T[] | undefined): array is readonly T[];",
+      "test": "internal/oracle/predicate_false_read_test.go: TestPredicateFalseRead"
+    },
+    {
+      "path": "internal/oracle/testdata/predicate_false_read/renarrowed.ts",
+      "stderr": "adamic: panic: predicate some at {root}/internal/oracle/testdata/predicate_false_read/renarrowed.ts:6:6 false branch: source readonly string[] | undefined, target readonly string[]\n",
+      "hatch": "predicate, line 4: function some<T>(array: readonly T[] | undefined): array is readonly T[] { return array !== undefined && array.length > 0; }",
+      "test": "internal/oracle/predicate_false_read_test.go: TestPredicateFalseRead"
+    },
+    {
+      "path": "internal/oracle/testdata/predicate_false_read/shorthand.ts",
+      "stderr": "adamic: panic: predicate some at {root}/internal/oracle/testdata/predicate_false_read/shorthand.ts:23:7 false branch: source readonly string[] | undefined, target readonly string[]\n",
+      "hatch": "predicate, line 4: function some<T>(array: readonly T[] | undefined): array is readonly T[];",
+      "test": "internal/oracle/predicate_false_read_test.go: TestPredicateFalseRead"
+    },
+    {
+      "path": "internal/oracle/testdata/predicate_false_read/spread.ts",
+      "stderr": "adamic: panic: predicate some at {root}/internal/oracle/testdata/predicate_false_read/spread.ts:25:7 false branch: source readonly string[] | undefined, target readonly string[]\n",
+      "hatch": "predicate, line 6: function some<T>(array: readonly T[] | undefined): array is readonly T[];",
+      "test": "internal/oracle/predicate_false_read_test.go: TestPredicateFalseRead"
+    },
+    {
+      "path": "internal/oracle/testdata/predicate_qualified/defined_lie/main.ts",
+      "stderr": "adamic: panic: predicate assertIsDefined at {root}/internal/oracle/testdata/predicate_qualified/defined_lie/main.ts:2:49 asserts branch: source number | undefined, target number\n",
+      "hatch": "predicate, line 1: namespace Debug { export function assertIsDefined<T>(value: T): asserts value is NonNullable<T> { console.log(\"called\");  } }",
+      "test": "internal/oracle/predicates_qualified_test.go: TestQualifiedPredicateDefinedAssertions"
+    },
+    {
+      "path": "internal/oracle/testdata/predicate_qualified/each_lie/main.ts",
+      "stderr": "adamic: panic: predicate assertEachNode at {root}/internal/oracle/testdata/predicate_qualified/each_lie/main.ts:9:48 asserts branch: source readonly Value[], target readonly NumberNode[]\n",
+      "hatch": "predicate, line 5: export function assertEachNode(values: readonly Value[], test: (value: Value) => value is NumberNode): asserts values is readonly NumberNode[];",
+      "test": "internal/oracle/predicates_qualified_test.go: TestQualifiedPredicateArrayAssertions"
+    },
+    {
+      "path": "internal/oracle/testdata/predicate_qualified/false_read_lie/main.ts",
+      "stderr": "adamic: panic: predicate isX at {root}/internal/oracle/testdata/predicate_qualified/false_read_lie/main.ts:7:33 false branch: source N, target X\n",
+      "hatch": "predicate, line 4: namespace ts { export function isX(value: N): value is X { console.log(\"called\"); return false; } }",
+      "test": "internal/oracle/predicates_qualified_test.go: TestQualifiedPredicateFalseDirection"
+    },
+    {
+      "path": "internal/oracle/testdata/predicate_qualified/module_lie/main.ts",
+      "stderr": "adamic: panic: predicate assertNode at {root}/internal/oracle/testdata/predicate_qualified/module_lie/main.ts:3:36 asserts branch: source Value, target number\n",
+      "hatch": "predicate (claim written in provider.ts:2, reached through barrel.ts and ts.ts), line 3: function use(value: Value): void { ts.assertNode(value, (x): x is number => typeof x === \"number\"); console.log(\"after\"); }",
+      "test": "internal/oracle/predicates_qualified_test.go: TestQualifiedPredicateModuleAssertions"
+    },
+    {
+      "path": "internal/oracle/testdata/predicate_qualified/namespace_lie/main.ts",
+      "stderr": "adamic: panic: predicate assertNode at {root}/internal/oracle/testdata/predicate_qualified/namespace_lie/main.ts:7:36 asserts branch: source Value, target number\n",
+      "hatch": "predicate, line 3: export function assertNode(value: Value, test: (value: Value) => value is number): asserts value is number;",
+      "test": "internal/oracle/predicates_qualified_test.go: TestQualifiedPredicateNamespaceAssertions"
+    },
+    {
+      "path": "internal/oracle/testdata/predicate_qualified/nested_lie/main.ts",
+      "stderr": "adamic: panic: predicate isX at {root}/internal/oracle/testdata/predicate_qualified/nested_lie/main.ts:3:40 true branch: source Value, target number\n",
+      "hatch": "predicate, line 2: namespace a { export namespace b { export function isX(value: Value): value is number { console.log(\"called\"); return true; } } }",
+      "test": "internal/oracle/predicates_qualified_test.go: TestQualifiedPredicateNestedNamespace"
+    },
+    {
+      "path": "internal/oracle/testdata/predicate_qualified/reexport_lie/main.ts",
+      "stderr": "adamic: panic: predicate assertNode at {root}/internal/oracle/testdata/predicate_qualified/reexport_lie/main.ts:3:36 asserts branch: source Value, target number\n",
+      "hatch": "predicate (claim written in provider.ts:3, reached through barrel.ts and ts.ts), line 3: function use(value: Value): void { ts.Debug.assertNode(value, (x): x is number => typeof x === \"number\"); console.log(\"after\"); }",
+      "test": "internal/oracle/predicates_qualified_test.go: TestQualifiedPredicateReexportAssertions"
+    },
+    {
+      "path": "internal/oracle/testdata/predicate_qualified/type_lie/main.ts",
+      "stderr": "adamic: panic: predicate type at {root}/internal/oracle/testdata/predicate_qualified/type_lie/main.ts:3:36 asserts branch: source Value, target number\n",
+      "hatch": "predicate, line 2: namespace Debug { export function type<T>(value: unknown): asserts value is T; export function type(value: unknown): void { console.log(\"called\"); } }",
+      "test": "internal/oracle/predicates_qualified_test.go: TestQualifiedPredicateGenericTypeAssertions"
+    },
+    {
+      "path": "internal/oracle/testdata/process_env/prototype.a",
+      "stderr": "adamic: panic: node:process.Process.env inherited key: toString\n",
+      "hatch": "library-claim (process.env index signature types string | undefined, Node reads inherited toString), line 3: console.log(process.env[\"toString\"]);",
+      "test": "internal/oracle/library_node_environment_test.go: TestProcessEnvironmentInheritedKeyPanics"
+    },
+    {
+      "path": "internal/oracle/testdata/records_checked_names/merged_field.ts",
+      "stderr": "adamic: panic: field read failed: box.label is not initialized; expected string, found missing\n",
+      "hatch": "language (docs/rulings.md:126, \"Declaration merging that adds members to a class\"), line 4: interface Box { readonly label: string }",
+      "test": "internal/oracle/records_checked_names_test.go: TestCheckedNamesMergedField"
+    },
+    {
+      "path": "internal/oracle/testdata/records_options_base/added_lie.ts",
+      "stderr": "adamic: panic: field read failed: options.strict is not a boolean; expected boolean, found string, which a computed-key or index-signature write may have stored\n",
+      "hatch": "relation-lie, line 13: const options: Options = parsed();",
+      "test": "internal/oracle/records_options_base_test.go: TestOptionsBaseAddedNames"
+    },
+    {
+      "path": "internal/oracle/testdata/records_options_base/added_nested.ts",
+      "stderr": "adamic: panic: field read failed: lie.options.strict is not a boolean; expected boolean, found string, which a computed-key or index-signature write may have stored\n",
+      "hatch": "relation-lie, line 28: return worker(strict);",
+      "test": "internal/oracle/records_options_base_test.go: TestOptionsBaseAddedNames"
+    },
+    {
+      "path": "internal/oracle/testdata/records_options_base/computed_entry_dictionary.ts",
+      "stderr": "adamic: panic: field read failed: options.configFile is not a TsConfigSourceFile; expected TsConfigSourceFile, found another member of the index signature's union, which a computed-key or index-signature write may have stored\n",
+      "hatch": "computed-key (computed-key entry stores a value the declared property's type denies), line 22: const options: CompilerOptions = { outDir: \"out\", [configKey()]: paths };",
+      "test": "internal/oracle/records_options_base_test.go: TestOptionsBaseComputedEntryDictionaryStops"
+    },
+    {
+      "path": "internal/oracle/testdata/records_options_base/config_maplike.ts",
+      "stderr": "adamic: panic: field read failed: options.configFile is not a TsConfigSourceFile; expected TsConfigSourceFile, found another member of the index signature's union, which a computed-key or index-signature write may have stored\n",
+      "hatch": "index-write (index-signature write stores a value the declared property's type denies), line 20: options[name] = value;",
+      "test": "internal/oracle/records_options_base_test.go: TestOptionsBaseObjectFieldLiesStop"
+    },
+    {
+      "path": "internal/oracle/testdata/records_options_base/config_string.ts",
+      "stderr": "adamic: panic: field read failed: options.configFile is not a TsConfigSourceFile; expected TsConfigSourceFile, found another member of the index signature's union, which a computed-key or index-signature write may have stored\n",
+      "hatch": "index-write (index-signature write stores a value the declared property's type denies), line 20: options[name] = value;",
+      "test": "internal/oracle/records_options_base_test.go: TestOptionsBaseObjectFieldLiesStop"
+    },
+    {
+      "path": "internal/oracle/testdata/records_options_base/lib_number.ts",
+      "stderr": "adamic: panic: element read failed: lib[1] is not a string; expected string, found number\n",
+      "hatch": "index-write (index-signature write stores a value the declared property's type denies), line 16: options[name] = value;",
+      "test": "internal/oracle/records_options_base_test.go: TestOptionsBaseArrayFieldLiesStop"
+    },
+    {
+      "path": "internal/oracle/testdata/records_options_base/lib_road_every.ts",
+      "stderr": "adamic: panic: element read failed: lib's element, in every is not a string; expected string, found number\n",
+      "hatch": "index-write (index-signature write stores a value the declared property's type denies), line 17: options[name] = value;",
+      "test": "internal/oracle/records_options_base_test.go: TestOptionsBaseArrayMemberRoadsStop"
+    },
+    {
+      "path": "internal/oracle/testdata/records_options_base/lib_road_literal_key.ts",
+      "stderr": "adamic: panic: element read failed: lib[1] is not a string; expected string, found number\n",
+      "hatch": "index-write (index-signature write stores a value the declared property's type denies), line 17: options[name] = value;",
+      "test": "internal/oracle/records_options_base_test.go: TestOptionsBaseArrayMemberRoadsStop"
+    },
+    {
+      "path": "internal/oracle/testdata/records_options_base/lib_road_spread.ts",
+      "stderr": "adamic: panic: element read failed: lib[1] is not a string; expected string, found number\n",
+      "hatch": "index-write (index-signature write stores a value the declared property's type denies), line 17: options[name] = value;",
+      "test": "internal/oracle/records_options_base_test.go: TestOptionsBaseArrayMemberRoadsStop"
+    },
+    {
+      "path": "internal/oracle/testdata/records_options_base/lib_string.ts",
+      "stderr": "adamic: panic: field read failed: options.lib is not a string[]; expected string[], found another member of the index signature's union, which a computed-key or index-signature write may have stored\n",
+      "hatch": "index-write (index-signature write stores a value the declared property's type denies), line 16: options[name] = value;",
+      "test": "internal/oracle/records_options_base_test.go: TestOptionsBaseArrayFieldLiesStop"
+    },
+    {
+      "path": "internal/oracle/testdata/records_options_base/method_parameter.ts",
+      "stderr": "adamic: panic: field read failed: o.strict is not a boolean; expected boolean, found string, which a computed-key or index-signature write may have stored\n",
+      "hatch": "relation-lie (method parameter bivariance), line 23: const r: Reader = { read(o: CompilerOptions): string { return o.strict ? \"on\" : \"off\"; } };",
+      "test": "internal/oracle/records_options_base_test.go: TestOptionsBaseLiteralMethodStopsAtRead"
+    },
+    {
+      "path": "internal/oracle/testdata/records_options_base/paths_array.ts",
+      "stderr": "adamic: panic: field read failed: options.paths is not a MapLike<string[]>; expected MapLike<string[]>, found another member of the index signature's union, which a computed-key or index-signature write may have stored\n",
+      "hatch": "index-write (index-signature write stores a value the declared property's type denies), line 17: options[name] = value;",
+      "test": "internal/oracle/records_options_base_test.go: TestOptionsBaseObjectFieldLiesStop"
+    },
+    {
+      "path": "internal/oracle/testdata/records_options_base/paths_keys.ts",
+      "stderr": "adamic: panic: field read failed: options.paths is not a MapLike<string[]>; expected MapLike<string[]>, found another member of the index signature's union, which a computed-key or index-signature write may have stored\n",
+      "hatch": "index-write (index-signature write stores a value the declared property's type denies), line 16: options[name] = value;",
+      "test": "internal/oracle/records_options_base_test.go: TestOptionsBaseObjectFieldLiesStop"
+    },
+    {
+      "path": "internal/oracle/testdata/records_options_base/paths_mixed.ts",
+      "stderr": "adamic: panic: field read failed: options.paths is not a MapLike<string[]>; expected MapLike<string[]>, found another member of the index signature's union, which a computed-key or index-signature write may have stored\n",
+      "hatch": "index-write (index-signature write stores a value the declared property's type denies), line 17: options[name] = value;",
+      "test": "internal/oracle/records_options_base_test.go: TestOptionsBaseObjectFieldLiesStop"
+    },
+    {
+      "path": "internal/oracle/testdata/records_options_base/paths_number.ts",
+      "stderr": "adamic: panic: field read failed: options.paths is not a MapLike<string[]>; expected MapLike<string[]>, found another member of the index signature's union, which a computed-key or index-signature write may have stored\n",
+      "hatch": "index-write (index-signature write stores a value the declared property's type denies), line 17: options[name] = value;",
+      "test": "internal/oracle/records_options_base_test.go: TestOptionsBaseObjectFieldLiesStop"
+    },
+    {
+      "path": "internal/oracle/testdata/records_options_base/paths_string.ts",
+      "stderr": "adamic: panic: field read failed: options.paths is not a MapLike<string[]>; expected MapLike<string[]>, found another member of the index signature's union, which a computed-key or index-signature write may have stored\n",
+      "hatch": "index-write (index-signature write stores a value the declared property's type denies), line 17: options[name] = value;",
+      "test": "internal/oracle/records_options_base_test.go: TestOptionsBaseObjectFieldLiesStop"
+    },
+    {
+      "path": "internal/oracle/testdata/records_options_base/written_parameter.ts",
+      "stderr": "adamic: panic: field read failed: compilerOptions.strict is not a boolean; expected boolean, found string, which a computed-key or index-signature write may have stored\n",
+      "hatch": "index-write (index-signature write stores a value the declared property's type denies), line 18: options[name] = [\"y\", \"es\"].join(\"\");",
+      "test": "internal/oracle/records_options_base_test.go: TestOptionsBaseWrittenReadsStop"
+    },
+    {
+      "path": "internal/oracle/testdata/records_options_base/written_plain.ts",
+      "stderr": "adamic: panic: field read failed: options.strict is not a boolean; expected boolean, found string, which a computed-key or index-signature write may have stored\n",
+      "hatch": "index-write (index-signature write stores a value the declared property's type denies), line 18: options[name] = [\"y\", \"es\"].join(\"\");",
+      "test": "internal/oracle/records_options_base_test.go: TestOptionsBaseWrittenReadsStop"
+    },
+    {
+      "path": "internal/oracle/testdata/records_weak_read/literal_miss.ts",
+      "stderr": "adamic: panic: field read failed: options.mode is not a 1 | 2; expected 1 | 2, found number 3, which a computed-key or index-signature write may have stored\n",
+      "hatch": "computed-key (computed-key entry stores a value the declared property's type denies), line 6: const options: Options = { [key]: 3 };",
+      "test": "internal/oracle/records_weak_read_test.go: TestRecordLiteralMembershipStops"
+    },
+    {
+      "path": "internal/oracle/testdata/reland_refused/view_widened_generic.ts",
+      "stderr": "adamic: panic: field read failed: x.text is not a string; expected string, found number\n",
+      "hatch": "cast, line 6: function show(n: Node): void { if (n.kind === 9) { const l = n as Lit; console.log(get(l)); } }",
+      "test": "internal/oracle/view_widened_test.go: TestViewWidenedReadIsChecked"
+    },
+    {
+      "path": "internal/oracle/testdata/reland_refused/view_widened_held_closure.ts",
+      "stderr": "adamic: panic: field read failed: l.text is not a string; expected string, found number\n",
+      "hatch": "cast, line 5: function show(n: Node): void { if (n.kind === 9) { const l = n as Lit; const f = (): string => l.text; console.log(f()); } }",
+      "test": "internal/oracle/view_widened_test.go: TestViewWidenedRoadsHeld"
+    },
+    {
+      "path": "internal/oracle/testdata/reland_refused/view_widened_held_direct.ts",
+      "stderr": "adamic: panic: field read failed: l.text is not a string; expected string, found number\n",
+      "hatch": "cast, line 5: function show(n: Node): void { if (n.kind === 9) { const l = n as Lit; console.log(l.text); } }",
+      "test": "internal/oracle/view_widened_test.go: TestViewWidenedRoadsHeld"
+    },
+    {
+      "path": "internal/oracle/testdata/reland_refused/view_widened_held_generic.ts",
+      "stderr": "adamic: panic: field read failed: x.text is not a string; expected string, found number\n",
+      "hatch": "cast, line 6: function show(n: Node): void { if (n.kind === 9) { const l = n as Lit; console.log(textOf(l)); } }",
+      "test": "internal/oracle/view_widened_test.go: TestViewWidenedRoadsHeld"
+    },
+    {
+      "path": "internal/oracle/testdata/relation_views/generic_explicit_lie.ts",
+      "stderr": "adamic: panic: field read failed: target.label matches no member of string | undefined; expected string | undefined, found number\n",
+      "hatch": "relation-lie (a label of 5 hidden as Source crosses as a Target), line 24: const hidden: Source = lying;",
+      "test": "internal/oracle/relation_views_test.go: TestRelationViewsPanicAtTheRead"
+    },
+    {
+      "path": "internal/oracle/testdata/review/agree/fxspptb_57f2d04_find_last_shrinks.a",
+      "stderr": "adamic: panic: findLastIndex: index 2 is undefined; element type string does not admit undefined\n",
+      "hatch": "library-claim (lib.d.ts types the callback item string, Node passes undefined once the splice shrinks the array), line 2: const at = list.findLastIndex((item: string, index: number): boolean => {",
+      "test": "internal/oracle/review_test.go: TestReviewProgramsAgreeWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/review/agree/fxspptb_57f2d04_find_last_shrinks2.a",
+      "stderr": "adamic: panic: findLast: index 2 is undefined; element type string does not admit undefined\n",
+      "hatch": "library-claim (lib.d.ts types the callback item string, Node passes undefined once the splice shrinks the array), line 2: const found = list.findLast((item: string, index: number): boolean => {",
+      "test": "internal/oracle/review_test.go: TestReviewProgramsAgreeWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p72_tuple_count_mismatch.ts",
+      "stderr": "adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found array\n",
+      "hatch": "cast, line 6: const viewed = base as View;",
+      "test": "internal/oracle/review_test.go: TestReviewProgramsAgreeWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p09_tuple_destructure_wrong.ts",
+      "stderr": "adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found array\n",
+      "hatch": "cast, line 7: const viewed = base as View;",
+      "test": "internal/oracle/review_test.go: TestReviewProgramsAgreeWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p32_boxed_slot_string_good.ts",
+      "stderr": "adamic: panic: field read failed: viewed.name is not a string; expected string, found number\n",
+      "hatch": "cast, line 7: const viewed = base as View;",
+      "test": "internal/oracle/review_test.go: TestReviewProgramsAgreeWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p33_boxed_slot_union_member.ts",
+      "stderr": "adamic: panic: field read failed: value.name is not a string; expected string, found number\n",
+      "hatch": "cast, line 9: const value = (base as View).value;",
+      "test": "internal/oracle/review_test.go: TestReviewProgramsAgreeWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/review/agree/non_null.a",
+      "stderr": "adamic: panic: placeholder 'value' is unset at argument via value\n",
+      "hatch": "non-null, line 1: const value: number = undefined!;",
+      "test": "internal/oracle/review_test.go: TestReviewProgramsAgreeWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/search_shrink_findIndex_checked.a",
+      "stderr": "adamic: panic: findIndex: index 2 is undefined; element type number does not admit undefined\n",
+      "hatch": "library-claim (lib.d.ts types the findIndex callback's item number, Node passes undefined once pop shrinks the array), line 2: const found = list.findIndex((item: number, index: number): boolean => {",
+      "test": "internal/oracle/search_shrink_test.go: TestSearchShrinkFindIndexChecked"
+    },
+    {
+      "path": "internal/oracle/testdata/search_shrink_find_checked.a",
+      "stderr": "adamic: panic: find: index 2 is undefined; element type number does not admit undefined\n",
+      "hatch": "library-claim (lib.d.ts types the find callback's item number, Node passes undefined once pop shrinks the array), line 2: const found = list.find((item: number, index: number): boolean => {",
+      "test": "internal/oracle/search_shrink_test.go: TestSearchShrinkFindChecked"
+    },
+    {
+      "path": "internal/oracle/testdata/typed_arrays_integer_stop.a",
+      "stderr": "adamic: panic: index 2 is outside an array of length 2\n",
+      "hatch": "language (docs/rulings.md:326, \"A typed-array read past the end\"), line 5: values[index] = 300;",
+      "test": "internal/oracle/typed_arrays_test.go: TestTypedArrayIntegerWriteStopIsPinned"
+    },
+    {
+      "path": "internal/oracle/testdata/typed_arrays_stop.a",
+      "stderr": "adamic: panic: index 2 is outside an array of length 2\n",
+      "hatch": "language (docs/rulings.md:326, \"A typed-array read past the end\"), line 3: values[2] = 300;",
+      "test": "internal/oracle/typed_arrays_test.go: TestTypedArrayWriteStopIsPinned"
+    },
+    {
+      "path": "internal/oracle/testdata/typed_arrays_uint16_stop.a",
+      "stderr": "adamic: panic: index 2 is outside an array of length 2\n",
+      "hatch": "language (docs/rulings.md:326, \"A typed-array read past the end\"), line 3: values[2] = 65536;",
+      "test": "internal/oracle/typed_arrays_test.go: TestTypedArrayWriteStopIsPinned"
+    },
+    {
+      "path": "internal/oracle/testdata/view_array_object_stops/field_object.ts",
+      "stderr": "adamic: panic: field read failed: (node as Leaf).child is not a Thing; expected Thing, found array\n",
+      "hatch": "cast, line 9: const child = (node as Leaf).child;",
+      "test": "internal/oracle/view_array_object_test.go: TestViewArrayLiteralIsNotAnObject"
+    },
+    {
+      "path": "internal/oracle/testdata/view_literal_runs/stop_above.ts",
+      "stderr": "adamic: panic: field read failed: imported.argument.literal expected Kind, found number 14\n",
+      "hatch": "cast, line 11: const imported = node as LiteralImportTypeNode;",
+      "test": "internal/oracle/view_literal_runs_test.go: TestViewLiteralRunsStopAtTheRead"
+    },
+    {
+      "path": "internal/oracle/testdata/view_literal_runs/stop_below.ts",
+      "stderr": "adamic: panic: field read failed: imported.argument.literal expected Kind, found number -1\n",
+      "hatch": "cast, line 11: const imported = node as LiteralImportTypeNode;",
+      "test": "internal/oracle/view_literal_runs_test.go: TestViewLiteralRunsStopAtTheRead"
+    },
+    {
+      "path": "internal/oracle/testdata/view_literal_runs/stop_fraction.ts",
+      "stderr": "adamic: panic: field read failed: imported.argument.literal expected Kind, found number 0.5\n",
+      "hatch": "cast, line 11: const imported = node as LiteralImportTypeNode;",
+      "test": "internal/oracle/view_literal_runs_test.go: TestViewLiteralRunsStopAtTheRead"
+    },
+    {
+      "path": "internal/oracle/testdata/view_literal_runs/stop_hole.ts",
+      "stderr": "adamic: panic: field read failed: imported.argument.literal expected Kind, found number 8\n",
+      "hatch": "cast, line 10: const imported = node as LiteralImportTypeNode;",
+      "test": "internal/oracle/view_literal_runs_test.go: TestViewLiteralRunsStopAtTheRead"
+    },
+    {
+      "path": "internal/oracle/testdata/view_literal_runs/stop_nan.ts",
+      "stderr": "adamic: panic: field read failed: imported.argument.literal expected Kind, found number NaN\n",
+      "hatch": "cast, line 10: const imported = node as LiteralImportTypeNode;",
+      "test": "internal/oracle/view_literal_runs_test.go: TestViewLiteralRunsStopAtTheRead"
+    },
+    {
+      "path": "internal/oracle/testdata/view_logical_write_stops/before_cast_read.ts",
+      "stderr": "adamic: panic: field read failed: view.count is not a number; expected number, found string\n",
+      "hatch": "cast, line 11: bump(base as View);",
+      "test": "internal/oracle/view_logical_write_test.go: TestViewLogicalWritesStopAsTheirPlainTwinsDo"
+    },
+    {
+      "path": "internal/oracle/testdata/view_logical_write_stops/misfit_equals.ts",
+      "stderr": "adamic: panic: field read failed: <write>.count is not a string | number; expected string | number, found number\n",
+      "hatch": "cast, line 7: const viewed = base as View;",
+      "test": "internal/oracle/view_logical_write_test.go: TestViewLogicalWritesStopAsTheirPlainTwinsDo"
+    },
+    {
+      "path": "internal/oracle/testdata/view_logical_write_stops/read.ts",
+      "stderr": "adamic: panic: field read failed: viewed.count is not a number; expected number, found string\n",
+      "hatch": "cast, line 7: const viewed = base as View;",
+      "test": "internal/oracle/view_logical_write_test.go: TestViewLogicalWritesStopAsTheirPlainTwinsDo"
+    },
+    {
+      "path": "internal/oracle/testdata/view_write_misfit.ts",
+      "stderr": "adamic: panic: field read failed: <write>.count is not a number; expected number, found string\n",
+      "hatch": "cast, line 7: const viewed = base as View;",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/view_write_union_slot.ts",
+      "stderr": "adamic: panic: field read failed: <write>.count is not a number; expected number, found string\n",
+      "hatch": "cast, line 10: const viewed = base as View;",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/views_v3/record-slot-alias-lie.ts",
+      "stderr": "adamic: panic: element read failed: opts.lib[1] is not a string; expected string, found number\n",
+      "hatch": "computed-key (computed-key entry stores a value the declared property's type denies), line 5: const opts: Options = { target: 9, lib: [\"es2020\"], [key]: alias };",
+      "test": "internal/oracle/view_arrays_test.go: TestViewArrays"
+    },
+    {
+      "path": "internal/oracle/testdata/views_v3/record-slot-constant.ts",
+      "stderr": "adamic: panic: field read failed: options.rootDirs is not a string[]; expected string[], found another member of the index signature's union, which a computed-key or index-signature write may have stored\n",
+      "hatch": "computed-key (computed-key entry stores a value the declared property's type denies), line 8: const other: Options = { lib: [], rootDirs: [\"a\"], [key]: \"zz\" };",
+      "test": "internal/oracle/view_arrays_test.go: TestViewArrays"
+    },
+    {
+      "path": "internal/oracle/testdata/views_v3/record-slot-undefined-lie.ts",
+      "stderr": "adamic: panic: element read failed: opts.lib[1] is not a string; expected string, found undefined\n",
+      "hatch": "computed-key (computed-key entry stores a value the declared property's type denies), line 5: const opts: Options = { target: 9, lib: [\"es2020\"], [key]: holey };",
+      "test": "internal/oracle/view_arrays_test.go: TestViewArrays"
+    },
+    {
+      "path": "internal/oracle/testdata/write_after_shrink.a",
+      "stderr": "adamic: panic: index 2 is outside an array of length 2\n",
+      "hatch": "language (docs/rulings.md:320, \"Array writes are allowed only at\"), line 8: list[2] = shrink();",
+      "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
+    },
+    {
+      "path": "internal/oracle/testdata/writes_past_end.a",
+      "stderr": "adamic: panic: index 3 is outside an array of length 3\n",
+      "hatch": "language (docs/rulings.md:320, \"Array writes are allowed only at\"), line 4: numbers[numbers.length] = 4;",
+      "test": "internal/oracle/wasi_wasmtime_test.go: TestWasmtimeCheckedWitness"
+    },
+    {
+      "path": "stage1/cohere/markdownblocks/gaps/13_array_growth.ts",
+      "stderr": "adamic: panic: index 0 is outside an array of length 0\n",
+      "hatch": "language (docs/rulings.md:320, \"Array writes are allowed only at\"), line 2: values[0] = 1;",
+      "test": "stage1/cohere/markdownblocks/array_growth_gap_test.go: TestArrayGrowthWitness"
+    },
+    {
+      "path": "stage3/fixtures/entries/03_hidden_other_type.a",
+      "stderr": "adamic: panic: Object enumeration key 'hidden': actual string, declared number\n",
+      "hatch": "library-claim (Object.entries claims number values of a view hiding the string at line 5), line 7: const entries: [string, number][] = Object.entries(view);",
+      "test": "internal/oracle/entries_acceptance_test.go: TestEntriesAcceptance"
+    },
+    {
+      "path": "stage3/fixtures/enums/07_regex_array_map.a",
+      "stderr": "adamic: panic: index 1 is outside an array of length 0\n",
+      "hatch": "language (docs/rulings.md:320, \"Array writes are allowed only at\"), line 172: result[value] = name;",
+      "test": "internal/oracle/enums_stage3_test.go: TestStage3EnumSparseArrayBoundary"
+    },
+    {
+      "path": "stage3/interface-downcasts/fx7/p09.ts",
+      "stderr": "adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found array\n",
+      "hatch": "cast, line 7: const viewed = base as View;",
+      "test": "internal/oracle/fx7_depth_texts_test.go: TestFX7TextP09"
+    },
+    {
+      "path": "stage3/interface-downcasts/fx7/p32.ts",
+      "stderr": "adamic: panic: field read failed: viewed.name is not a string; expected string, found number\n",
+      "hatch": "cast, line 7: const viewed = base as View;",
+      "test": "internal/oracle/fx7_depth_texts_test.go: TestFX7TextP32"
+    },
+    {
+      "path": "stage3/interface-downcasts/fx7/p33.ts",
+      "stderr": "adamic: panic: field read failed: value.name is not a string; expected string, found number\n",
+      "hatch": "cast, line 9: const value = (base as View).value;",
+      "test": "internal/oracle/fx7_depth_texts_test.go: TestFX7TextP33"
+    },
+    {
+      "path": "stage3/interface-downcasts/fx7/p72.ts",
+      "stderr": "adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found array\n",
+      "hatch": "cast, line 6: const viewed = base as View;",
+      "test": "internal/oracle/fx7_depth_texts_test.go: TestFX7TextP72"
+    },
+    {
+      "path": "stage3/interface-downcasts/fx7/scalar-static.ts",
+      "stderr": "adamic: panic: field read failed: viewed.value is not a boolean; expected boolean, found function\n",
+      "hatch": "cast, line 6: const viewed = base as View;",
+      "test": "internal/oracle/fx7_depth_texts_test.go: TestFX7TextScalarStatic"
+    },
+    {
+      "path": "stage3/interface-downcasts/fx7/scalar-tuple.ts",
+      "stderr": "adamic: panic: field read failed: viewed.value is not a boolean; expected boolean, found array\n",
+      "hatch": "cast, line 6: const viewed = base as View;",
+      "test": "internal/oracle/fx7_depth_texts_test.go: TestFX7TextScalarTuple"
+    },
+    {
+      "path": "stage3/interface-downcasts/lane1/flag-downcast-wrong.ts",
+      "stderr": "adamic: panic: field read failed: (symbol as TransientSymbol).links.checkFlags is not a number; expected number, found boolean\n",
+      "hatch": "cast, line 7: return symbol.flags & SymbolFlags.Transient ? (symbol as TransientSymbol).links.checkFlags : 0;",
+      "test": "internal/oracle/checked_views_flag_downcast_test.go: TestCheckedViewFlagDowncast"
+    },
+    {
+      "path": "stage3/interface-downcasts/lane1/interfaces-missing-inherited.ts",
+      "stderr": "adamic: panic: field read failed: view.child.ready is not initialized; expected boolean, found missing\n",
+      "hatch": "cast, line 5: function narrow(node:Node):Container{return node as Container;}",
+      "test": "internal/oracle/checked_views_interfaces_test.go: TestCheckedViewInterfaces"
+    },
+    {
+      "path": "stage3/interface-downcasts/lane1/interfaces-wrong-inherited.ts",
+      "stderr": "adamic: panic: field read failed: view.child.ready is not a boolean; expected boolean, found number\n",
+      "hatch": "cast, line 5: function narrow(node:Node):Container{return node as Container;}",
+      "test": "internal/oracle/checked_views_interfaces_test.go: TestCheckedViewInterfaces"
+    },
+    {
+      "path": "stage3/interface-downcasts/lane1/objects-missing-nested.ts",
+      "stderr": "adamic: panic: field read failed: view.child.ready is not initialized; expected boolean, found missing\n",
+      "hatch": "cast, line 3: function narrow(node: Node): Container { return node as Container; }",
+      "test": "internal/oracle/checked_views_objects_test.go: TestCheckedViewObjects"
+    },
+    {
+      "path": "stage3/interface-downcasts/lane1/objects-uninitialized-nested.ts",
+      "stderr": "adamic: panic: field read failed: view.child.ready is not initialized; expected boolean, found uninitialized\n",
+      "hatch": "definite-assignment, line 4: class Child { ready!: boolean; readonly label='ok'; }",
+      "test": "internal/oracle/checked_views_objects_test.go: TestCheckedViewObjects"
+    },
+    {
+      "path": "stage3/interface-downcasts/lane1/objects-untagged-wrong.ts",
+      "stderr": "adamic: panic: field read failed: view.child.ready is not a boolean; expected boolean, found number\n",
+      "hatch": "cast, line 3: const raw={id:1,child:{ready:0}}; const held:Base=raw; const view=held as Detailed;",
+      "test": "internal/oracle/checked_views_objects_test.go: TestCheckedViewObjects"
+    },
+    {
+      "path": "stage3/interface-downcasts/lane1/objects-wrong-nested.ts",
+      "stderr": "adamic: panic: field read failed: view.child.ready is not a boolean; expected boolean, found number\n",
+      "hatch": "cast, line 3: function narrow(node: Node): Container { return node as Container; }",
+      "test": "internal/oracle/checked_views_objects_test.go: TestCheckedViewObjects"
+    },
+    {
+      "path": "stage3/interface-downcasts/lane4b/fixtures/diagnostic-boolean.ts",
+      "stderr": "adamic: panic: field read failed: value.messageText matches no member of string | Chain; expected string | Chain, found boolean\n",
+      "hatch": "cast, line 10: console.log(read(source0 as Box));",
+      "test": "internal/oracle/checked_views_v2_object_primitive_test.go: TestCheckedViewObjectPrimitiveSource"
+    },
+    {
+      "path": "stage3/interface-downcasts/lane4b/fixtures/diagnostic-code-wrong.ts",
+      "stderr": "adamic: panic: field read failed: value.messageText matches no member of string | Chain; expected string | Chain, found object\n",
+      "hatch": "cast, line 10: console.log(read(source0 as Box));",
+      "test": "internal/oracle/checked_views_v2_object_primitive_test.go: TestCheckedViewObjectPrimitiveSource"
+    },
+    {
+      "path": "stage3/interface-downcasts/lane4b/fixtures/diagnostic-wrong.ts",
+      "stderr": "adamic: panic: field read failed: value.messageText matches no member of string | Chain; expected string | Chain, found object\n",
+      "hatch": "cast, line 10: console.log(read(source0 as Box));",
+      "test": "internal/oracle/checked_views_v2_object_primitive_test.go: TestCheckedViewObjectPrimitiveSource"
+    },
+    {
+      "path": "stage3/interface-downcasts/lane4b/fixtures/literal-boolean.ts",
+      "stderr": "adamic: panic: field read failed: type.value matches no member of string | number | PseudoBigInt; expected string | number | PseudoBigInt, found boolean\n",
+      "hatch": "cast, line 14: console.log(read(source as LiteralType));",
+      "test": "internal/oracle/checked_views_v2_object_primitive_test.go: TestCheckedViewObjectPrimitiveSource"
+    },
+    {
+      "path": "stage3/interface-downcasts/lane4b/fixtures/literal-negative-wrong.ts",
+      "stderr": "adamic: panic: field read failed: type.value matches no member of string | number | PseudoBigInt; expected string | number | PseudoBigInt, found object\n",
+      "hatch": "cast, line 13: console.log(read(source as LiteralType));",
+      "test": "internal/oracle/checked_views_v2_object_primitive_test.go: TestCheckedViewObjectPrimitiveSource"
+    },
+    {
+      "path": "stage3/interface-downcasts/lane4b/fixtures/literal-text-wrong.ts",
+      "stderr": "adamic: panic: field read failed: member.base10Value is not a string; expected string, found number\n",
+      "hatch": "cast, line 13: console.log(read(source as LiteralType));",
+      "test": "internal/oracle/checked_views_v2_object_primitive_test.go: TestCheckedViewObjectPrimitiveSource"
+    },
+    {
+      "path": "stage3/interface-downcasts/lane4b/fixtures/node-indicator-false.ts",
+      "stderr": "adamic: panic: field read failed: value.externalModuleIndicator matches no member of true | Node | undefined; expected true | Node | undefined, found boolean\n",
+      "hatch": "cast, line 12: console.log(read(source0 as Box));",
+      "test": "internal/oracle/checked_views_v2_object_primitive_test.go: TestCheckedViewObjectPrimitiveSource"
+    },
+    {
+      "path": "stage3/interface-downcasts/lane4b/fixtures/node-indicator-flags-wrong.ts",
+      "stderr": "adamic: panic: field read failed: member.flags is not a number; expected number, found boolean\n",
+      "hatch": "cast, line 12: console.log(read(source0 as Box));",
+      "test": "internal/oracle/checked_views_v2_object_primitive_test.go: TestCheckedViewObjectPrimitiveSource"
+    },
+    {
+      "path": "stage3/interface-downcasts/lane4b/fixtures/node-indicator-wrong.ts",
+      "stderr": "adamic: panic: field read failed: value.externalModuleIndicator matches no member of true | Node | undefined; expected true | Node | undefined, found object\n",
+      "hatch": "cast, line 12: console.log(read(source0 as Box));",
+      "test": "internal/oracle/checked_views_v2_object_primitive_test.go: TestCheckedViewObjectPrimitiveSource"
+    },
+    {
+      "path": "stage3/interface-downcasts/lane4b/fixtures/required-missing.ts",
+      "stderr": "adamic: panic: field read failed: value.value is not initialized; expected true | Node | undefined, found missing\n",
+      "hatch": "cast, line 10: console.log(read(source as Box));",
+      "test": "internal/oracle/checked_views_v2_object_primitive_test.go: TestCheckedViewObjectPrimitiveSource"
+    },
+    {
+      "path": "stage3/interface-downcasts/missing-name.ts",
+      "stderr": "adamic: panic: field read failed: identifier(malformed).name is not initialized; expected string, found missing\n",
+      "hatch": "cast, line 2: function identifier(node: Node): Identifier { return node as Identifier; }",
+      "test": "internal/oracle/interface_cast_test.go: TestInterfaceCastChecksMalformedRead"
+    },
+    {
+      "path": "stage3/interface-downcasts/untagged/fixtures/binding-name-source-nested.ts",
+      "stderr": "adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ...; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ..., found object\n",
+      "hatch": "cast, line 18: const view = base as Holder;",
+      "test": "internal/oracle/checked_views_v2_source_test.go: TestCheckedViewUntaggedSourceDispatch"
+    },
+    {
+      "path": "stage3/interface-downcasts/untagged/fixtures/binding-name-source-wrong.ts",
+      "stderr": "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n",
+      "hatch": "cast, line 18: const view = base as Holder;",
+      "test": "internal/oracle/checked_views_v2_source_test.go: TestCheckedViewUntaggedSourceDispatch"
+    },
+    {
+      "path": "stage3/interface-downcasts/untagged/fixtures/class-data-wrong.ts",
+      "stderr": "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n",
+      "hatch": "cast, line 8: const view=base as Holder;",
+      "test": "internal/oracle/checked_views_v2_source_test.go: TestCheckedViewUntaggedOwnClassData"
+    },
+    {
+      "path": "stage3/interface-downcasts/untagged/fixtures/flow-callback-wrong.ts",
+      "stderr": "adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n",
+      "hatch": "cast, line 20: const view=base as Holder;",
+      "test": "internal/oracle/checked_views_v2_source_test.go: TestCheckedViewUntaggedSourceFlows"
+    },
+    {
+      "path": "stage3/interface-downcasts/untagged/fixtures/flow-generic-wrong.ts",
+      "stderr": "adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n",
+      "hatch": "cast, line 19: const view=base as Holder;",
+      "test": "internal/oracle/checked_views_v2_source_test.go: TestCheckedViewUntaggedSourceFlows"
+    },
+    {
+      "path": "stage3/interface-downcasts/untagged/fixtures/flow-helper-wrong.ts",
+      "stderr": "adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n",
+      "hatch": "cast, line 19: const view=base as Holder;",
+      "test": "internal/oracle/checked_views_v2_source_test.go: TestCheckedViewUntaggedSourceFlows"
+    },
+    {
+      "path": "stage3/interface-downcasts/untagged/fixtures/flow-stored-wrong.ts",
+      "stderr": "adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n",
+      "hatch": "cast, line 19: const view=base as Holder;",
+      "test": "internal/oracle/checked_views_v2_source_test.go: TestCheckedViewUntaggedSourceFlows"
+    },
+    {
+      "path": "stage3/interface-downcasts/untagged/fixtures/option-element-source-nested.ts",
+      "stderr": "adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }, found object\n",
+      "hatch": "cast, line 11: const view = base as Holder;",
+      "test": "internal/oracle/checked_views_v2_source_test.go: TestCheckedViewUntaggedSourceDispatch"
+    },
+    {
+      "path": "stage3/interface-downcasts/untagged/fixtures/option-element-source-wrong.ts",
+      "stderr": "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n",
+      "hatch": "cast, line 11: const view = base as Holder;",
+      "test": "internal/oracle/checked_views_v2_source_test.go: TestCheckedViewUntaggedSourceDispatch"
+    },
+    {
+      "path": "stage3/interface-downcasts/untagged/fixtures/recursive-nested.ts",
+      "stderr": "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n",
+      "hatch": "cast, line 8: const view=base as Receiver;",
+      "test": "internal/oracle/checked_views_v2_source_test.go: TestCheckedViewUntaggedRecursive"
+    },
+    {
+      "path": "stage3/interface-downcasts/untagged/fixtures/recursive-wrong.ts",
+      "stderr": "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n",
+      "hatch": "cast, line 8: const view=base as Receiver;",
+      "test": "internal/oracle/checked_views_v2_source_test.go: TestCheckedViewUntaggedRecursive"
+    },
+    {
+      "path": "stage3/interface-downcasts/untagged/fixtures/structural-source-nested.ts",
+      "stderr": "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n",
+      "hatch": "cast, line 8: const view = base as Holder;",
+      "test": "internal/oracle/checked_views_v2_source_test.go: TestCheckedViewUntaggedSourceDispatch"
+    },
+    {
+      "path": "stage3/interface-downcasts/untagged/fixtures/structural-source-wrong.ts",
+      "stderr": "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n",
+      "hatch": "cast, line 8: const view = base as Holder;",
+      "test": "internal/oracle/checked_views_v2_source_test.go: TestCheckedViewUntaggedSourceDispatch"
+    },
+    {
+      "path": "stage3/interface-downcasts/v2/tuple-identity-wrong.ts",
+      "stderr": "adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found object\n",
+      "hatch": "cast, line 5: const viewed=base as View;",
+      "test": "internal/oracle/checked_views_v2_migration_test.go: TestCheckedViewV2TupleIdentityMutant"
+    },
+    {
+      "path": "stage3/interface-downcasts/wrong-kind.ts",
+      "stderr": "adamic: panic: cast failed: this Node is not a Identifier\n",
+      "hatch": "cast, line 2: function identifier(node: Node): Identifier { return node as Identifier; }",
+      "test": "internal/oracle/interface_cast_test.go: TestInterfaceCastOracle"
+    }
+  ]
 }

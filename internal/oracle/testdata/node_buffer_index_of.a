@@ -1,0 +1,134 @@
+import { Buffer } from 'node:buffer';
+// Buffer.indexOf(value, byteOffset): a string searched as its UTF-8 bytes and a number as one byte
+// masked to 8 bits, from an offset clamped as Node clamps it, on a Buffer, on its views and on an empty
+// one, and the search revcomp makes, each '\n' found and the bytes between sliced out.
+function found(label: string, at: number): void {
+ console.log(`${label} ${at}`);
+}
+const p = Buffer.from('>ONE Homo sapiens\nACGT\n>TWO\nTTAA\n');
+found('newline', p.indexOf('\n'));
+found('caret', p.indexOf('>'));
+found('caret from 1', p.indexOf('>', 1));
+found('caret from -5', p.indexOf('>', -5));
+found('newline from 100', p.indexOf('\n', 100));
+found('absent', p.indexOf('Z'));
+found('two bytes', p.indexOf('AC'));
+found('caret from 1.5', p.indexOf('>', 1.5));
+found('caret from NaN', p.indexOf('>', NaN));
+found('caret from -100', p.indexOf('>', -100));
+found('caret from undefined', p.indexOf('>', undefined));
+found('caret from -0.5', p.indexOf('>', -0.5));
+found('caret from Infinity', p.indexOf('>', Infinity));
+found('caret from -Infinity', p.indexOf('>', -Infinity));
+found('T from -4.5', p.indexOf('T', -4.5));
+found('T from -5', p.indexOf('T', -5));
+found('newline from 32', p.indexOf('\n', 32));
+found('newline from 33', p.indexOf('\n', 33));
+found('tail from -3', p.indexOf('AA\n', -3));
+found('tail from -2', p.indexOf('AA\n', -2));
+found('empty', p.indexOf(''));
+found('empty from 3', p.indexOf('', 3));
+found('empty from 100', p.indexOf('', 100));
+found('empty from -5', p.indexOf('', -5));
+found('empty from -100', p.indexOf('', -100));
+found('empty from NaN', p.indexOf('', NaN));
+found('empty from 1.5', p.indexOf('', 1.5));
+found('empty from Infinity', p.indexOf('', Infinity));
+// A number is one byte, Node's value >>> 0 masked to 8 bits.
+found('byte 10', p.indexOf(10));
+found('byte 62 from 1', p.indexOf(62, 1));
+found('byte 266', p.indexOf(266));
+found('byte 300', p.indexOf(300));
+found('byte 10 from 33', p.indexOf(10, 33));
+found('byte 10 from -1', p.indexOf(10, -1));
+const bytes = Buffer.from([0x00, 0x01, 0x0a, 0x2c, 0x80, 0xfe, 0xff, 0x0a]);
+const needles: number[] = [-1, -1.5, 1.5, 1.9, NaN, Infinity, -Infinity, 255.9, 256, 266, 300, -246, -2, 4294967306, 0.5, -0.5];
+for (const needle of needles) {
+ found(`byte ${needle}`, bytes.indexOf(needle));
+}
+found('byte 255 from 6', bytes.indexOf(255, 6));
+found('byte 255 from 7', bytes.indexOf(255, 7));
+found('byte 10 from -1 of eight', bytes.indexOf(10, -1));
+found('byte 10 from -100 of eight', bytes.indexOf(10, -100));
+// A needle longer than the bytes left, or than the Buffer.
+const short = Buffer.from('abc');
+found('longer', short.indexOf('abcd'));
+found('bc from 2', short.indexOf('bc', 2));
+found('bc from 1', short.indexOf('bc', 1));
+found('bc from -1', short.indexOf('bc', -1));
+found('bc from -2', short.indexOf('bc', -2));
+found('abc from -100', short.indexOf('abc', -100));
+found('partial first', Buffer.from('aab aabc').indexOf('aabc'));
+found('overlap', Buffer.from('aaab').indexOf('aab'));
+// On a view, measured from the view's own start.
+const view = p.slice(5);
+found('view newline', view.indexOf('\n'));
+found('view caret', view.indexOf('>'));
+found('view caret from -3', view.indexOf('>', -3));
+found('view byte 62', view.indexOf(62));
+found('view empty from 100', view.indexOf('', 100));
+const inner = p.subarray(18, 22);
+found('inner newline', inner.indexOf('\n'));
+found('inner T', inner.indexOf('T'));
+found('inner empty from 10', inner.indexOf('', 10));
+found('inner of inner', inner.slice(1).indexOf('G'));
+// A string's UTF-8 bytes. A lone surrogate isn't here: Node aborts on one (node_buffer.cc's
+// IndexOfString asserts), so lowering admits only a literal free of one, and TestNodeBufferRefusals
+// holds the stop.
+const accented = Buffer.from([0xc3, 0xa9, 0x41]);
+found('e acute', accented.indexOf('\u00e9'));
+found('A after e acute', accented.indexOf('A'));
+found('accent byte', accented.indexOf(0xa9));
+found('cafe', Buffer.from('caf\u00e9 \u00e9t\u00e9').indexOf('\u00e9t'));
+found('astral', Buffer.from('x\u{1f600}y').indexOf('\u{1f600}y'));
+const replaced = Buffer.from([0x41, 0xef, 0xbf, 0xbd, 0x42]);
+found('replacement', replaced.indexOf('\ufffd'));
+// An empty Buffer.
+const empty = Buffer.from('');
+found('empty buffer a', empty.indexOf('a'));
+found('empty buffer empty', empty.indexOf(''));
+found('empty buffer empty from 5', empty.indexOf('', 5));
+found('empty buffer empty from -5', empty.indexOf('', -5));
+found('empty buffer byte', empty.indexOf(0));
+// Offsets the program computes, one that may be undefined among them.
+const offsets: number[] = [0, 1, -5, 100, 1.5, NaN, -100, -0.5, 24, -10];
+for (let index = 0; index < offsets.length; index += 1) {
+ let from: number | undefined;
+ if (index % 3 !== 0) { from = offsets[index] ?? 0; }
+ found(`computed ${String(from)}`, p.indexOf('>', from));
+ found(`computed byte ${String(from)}`, p.indexOf(10, from));
+ found(`computed empty ${String(from)}`, p.indexOf('', from));
+}
+// revcomp's search: each '\n' found, and the bytes between sliced out.
+const fasta = Buffer.from('>ONE first\nACGT\nTTGA\n>TWO second\nGGCC\nAT');
+let rest: Buffer = fasta;
+let lines = 0;
+while (rest.length > 0) {
+ const end = rest.indexOf('\n');
+ if (end < 0) {
+  console.log(`partial ${rest.length} [${rest.toString('utf8')}]`);
+  break;
+ }
+ const line = rest.slice(0, end);
+ console.log(`line ${lines} ${line.indexOf('>')} ${line.length} [${line.toString('utf8')}]`);
+ rest = rest.slice(end + 1);
+ lines += 1;
+}
+let chunk: Buffer = fasta;
+while (true) {
+ const caret = chunk.indexOf('>');
+ if (caret < 0) {
+  console.log(`last [${chunk.toString('utf8')}]`);
+  break;
+ }
+ console.log(`before caret [${chunk.slice(0, caret).toString('utf8')}]`);
+ chunk = chunk.slice(caret);
+ const headerEnds = chunk.indexOf('\n');
+ console.log(`header [${chunk.slice(0, headerEnds).toString('utf8')}]`);
+ chunk = chunk.slice(headerEnds + 1);
+}
+const positions: number[] = [];
+for (let at = fasta.indexOf('\n'); at >= 0; at = fasta.indexOf('\n', at + 1)) {
+ positions.push(at);
+}
+console.log(positions.join(' '));

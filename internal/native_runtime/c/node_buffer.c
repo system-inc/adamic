@@ -114,6 +114,144 @@ double adamic_node_buffer_set(adamic_typed_array *buffer, double index,
 	}
 	return value;
 }
+// received writes a number as Node's ERR_OUT_OF_RANGE writes the one it was
+// given, and returns its length: an integer past 2^32 in magnitude as String
+// writes it with addNumericalSeparator's underscores, one before every three
+// characters from the right past a sign, exponent notation included (1e+300
+// is 1e+_300); any other as String writes it. Node writes the others with
+// util.inspect, which differs from String only for -0, never out of range
+// here. process.c's exit code text groups the same way; its mutants pin its
+// text where it is, so this stays its own.
+static size_t received(double value, char out[ADAMIC_NUMBER_FORMAT_MAX * 2])
+{
+	char number[ADAMIC_NUMBER_FORMAT_MAX];
+	size_t length = adamic_number_format(value, number);
+	bool grouped = isfinite(value) && value == trunc(value) &&
+				   fabs(value) > 4294967296.0;
+	size_t sign = number[0] == '-' ? 1 : 0, used = 0;
+	for (size_t index = 0; index < length; index++) {
+		if (grouped && index > sign && (length - index) % 3 == 0) {
+			out[used++] = '_';
+		}
+		out[used++] = number[index];
+	}
+	return used;
+}
+// Buffer.allocUnsafe(size), as Node v24.19.0's: the size is checked before
+// it's truncated, so -0.5 is out of range where a Uint8Array's ToIndex would
+// make it 0, and only then allocated. Out of range, NaN and the infinities
+// among it, is ERR_OUT_OF_RANGE; a size that can't be allocated, one past
+// SIZE_MAX on wasm32 among them, is ERR_MEMORY_ALLOCATION_FAILED. Both are
+// RangeErrors with a code, left pending, and no Buffer comes back; only the
+// first's String brackets its code, as Node's does. Node's bytes are
+// unspecified, a small Buffer's from a shared pool; these are zero.
+adamic_typed_array *adamic_node_buffer_alloc_unsafe(double size)
+{
+	if (!(size >= 0) || size > 9007199254740991.0) {
+		static const char prefix[] =
+			"The value of \"size\" is out of range. It must be >= 0 && <= "
+			"9007199254740991. Received ";
+		char message[sizeof prefix + ADAMIC_NUMBER_FORMAT_MAX * 2];
+		memcpy(message, prefix, sizeof prefix - 1);
+		size_t written =
+			sizeof prefix - 1 + received(size, message + sizeof prefix - 1);
+		adamic_throw_coded("RangeError", "ERR_OUT_OF_RANGE", message, written, true);
+		return NULL;
+	}
+	double whole = trunc(size);
+	adamic_typed_array *buffer =
+		whole > (double)SIZE_MAX ?
+			NULL :
+			adamic_typed_array_try_make(adamic_typed_array_uint8,
+										(size_t)whole);
+	if (buffer == NULL) {
+		static const char message[] = "Failed to allocate memory";
+		adamic_throw_coded("RangeError", "ERR_MEMORY_ALLOCATION_FAILED",
+						   message, sizeof message - 1, false);
+	}
+	return buffer;
+}
+// Where Buffer.indexOf starts, as Node v24.19.0's bidirectionalIndexOf and
+// then IndexOfOffset place it for a forward search: the offset is clamped to
+// an int32's range, an absent or NaN one is 0, and the rest truncates toward
+// zero. A negative one counts from the end, floored at 0. Past where the
+// needle can fit, an empty needle starts at the length and any other finds
+// nothing, which is false.
+static bool index_of_start(double offset, bool has_offset, size_t length,
+						   size_t needle_length, size_t *start)
+{
+	if (!has_offset || isnan(offset)) {
+		offset = 0;
+	} else if (offset > 2147483647.0) {
+		offset = 2147483647.0;
+	} else if (offset < -2147483648.0) {
+		offset = -2147483648.0;
+	}
+	double whole = trunc(offset), size = (double)length;
+	if (whole < 0) {
+		*start = whole + size >= 0 ? (size_t)(whole + size) : 0;
+		return needle_length == 0 || *start + needle_length <= length;
+	}
+	if (whole + (double)needle_length <= size) {
+		*start = (size_t)whole;
+		return true;
+	}
+	*start = length;
+	return needle_length == 0;
+}
+// The first match of bytes at or past start, or -1: memchr for the first byte,
+// then a compare of the rest. It reads the view's data and length only, so a
+// slice searches its own bytes, measured from its own start.
+static double index_of_bytes(const adamic_typed_array *buffer, size_t start,
+							 const unsigned char *bytes, size_t length)
+{
+	const unsigned char *data = buffer->data;
+	size_t last = buffer->length - length;
+	for (size_t at = start; at <= last;) {
+		const unsigned char *found = memchr(data + at, bytes[0], last - at + 1);
+		if (found == NULL) {
+			return -1;
+		}
+		at = (size_t)(found - data);
+		if (memcmp(found + 1, bytes + 1, length - 1) == 0) {
+			return (double)at;
+		}
+		at++;
+	}
+	return -1;
+}
+// Buffer.indexOf of a string, searched as its UTF-8 bytes, which are Adamic's
+// own: lowering admits only a literal free of lone surrogates (Node v24.19.0
+// aborts on one), so its WTF-8 is plain UTF-8, the bytes Node searches.
+double adamic_node_buffer_index_of_string(const adamic_typed_array *buffer,
+										  const adamic_string *needle,
+										  double offset, bool has_offset)
+{
+	size_t start;
+	if (!index_of_start(offset, has_offset, buffer->length, needle->length,
+						&start)) {
+		return -1;
+	}
+	if (needle->length == 0) {
+		return (double)start;
+	}
+	return index_of_bytes(buffer, start, (const unsigned char *)needle->bytes,
+						  needle->length);
+}
+// Buffer.indexOf of a number: one byte, Node's val >>> 0 narrowed by memchr to
+// its low 8 bits, so 266 is 10, -1 is 255, and NaN and the infinities are 0.
+double adamic_node_buffer_index_of_number(const adamic_typed_array *buffer,
+										  double needle, double offset,
+										  bool has_offset)
+{
+	size_t start;
+	if (!index_of_start(offset, has_offset, buffer->length, 1, &start)) {
+		return -1;
+	}
+	unsigned char byte =
+		(unsigned char)((uint32_t)adamic_shift_right_unsigned(needle, 0) & 255);
+	return index_of_bytes(buffer, start, &byte, 1);
+}
 static int unbase64(unsigned c)
 {
 	if (c >= 'A' && c <= 'Z') {
@@ -291,6 +429,18 @@ adamic_string *adamic_node_buffer_string(const adamic_typed_array *buffer,
 			out[at * 2] = hex[byte >> 4];
 			out[at * 2 + 1] = hex[byte & 15];
 		}
+		return text;
+	}
+	if (encoding == 4) {
+		// 'ascii' reads each byte as its low seven bits, as Node does, so 0x80
+		// is U+0000 and 0xff U+007F. The text is one-byte UTF-8 throughout, a
+		// unit a byte, so units is length + 1, adamic.h's flag for that.
+		adamic_string *text = adamic_string_allocate(length);
+		char *out = (char *)text->bytes;
+		for (size_t at = 0; at < length; at++) {
+			out[at] = (char)(bytes[start + at] & 0x7f);
+		}
+		text->units = length + 1;
 		return text;
 	}
 	if (encoding == 2) {

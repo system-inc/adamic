@@ -191,11 +191,17 @@ func (l *lowering) judgeViewAccess(part *ast.Node, known bool) (bool, error) {
 			if of == ir.Object {
 				// Another alias may read the slot at a type the value doesn't fit. A plain write is
 				// admitted with its type recorded, and certifySourceSlots checks every read whose type
-				// doesn't hold what the slot can; any other write keeps this stop (#2msw6t8).
+				// doesn't hold what the slot can; any other write keeps this stop (#2msw6t8). The walk
+				// judges every write in the program from types, so the stop is held for the statement
+				// nearest the write and given only where that statement is lowered (#5qx6qv4).
 				stop := l.notYet(part, "writing a checked object field without its source-slot type certificate")
 				if err := l.recordSourceSlotWrite(part, symbol, stop); err != nil {
-					refused = err
+					if held := l.holdSourceSlotStop(part, sourceSlotWriteStatement(part), err); held != nil {
+						refused = held
+					}
 				}
+			} else if err := l.sourceSlotScalarWrite(part, symbol); err != nil {
+				refused = err
 			}
 		}
 	}
@@ -225,7 +231,10 @@ func (l *lowering) judgeViewKeyedWrite(part *ast.Node) error {
 		}
 		if field := l.checker.GetPropertyOfType(l.checker.GetNonNullableType(receiver), name); field != nil {
 			if of, _ := l.representation(l.checker.GetTypeOfSymbol(field)); of == ir.Object {
-				return l.notYet(part, "writing a checked object field without its source-slot type certificate")
+				// Held for the write's nearest statement, as judgeViewAccess's is (#5qx6qv4).
+				return l.holdSourceSlotStop(part, sourceSlotWriteStatement(part), l.notYet(part, "writing a checked object field without its source-slot type certificate"))
+			} else if err := l.sourceSlotScalarWrite(part, field); err != nil {
+				return err
 			}
 		}
 	}

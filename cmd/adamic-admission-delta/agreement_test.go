@@ -14,25 +14,26 @@ import (
 // refuse and accepts every other. It compiles a program to JavaScript as the program's own text, or, where the program
 // holds js-print or js-stop lines, as those lines alone, made print and stop lines. It builds a program natively as a shell script of the
 // program's native lines, and only with --sanitize after -o <out>: an unsanitized build fails, so a mode that forgot
-// the sanitizers would disagree everywhere.
+// the sanitizers would disagree everywhere. Both builds write @ROOT@ as the directory they compile in, the checkout,
+// as a real stop names its program's file there.
 const agreementCompiler = `#!/bin/sh
 case "$1" in
 admission-lower)
 	if grep -qx refuse "$2"; then echo "adamic: $2: stage 0 can't lower this yet" >&2; exit 1; fi
 	exit 0;;
 js)
-	if grep -q -e '^js-print: ' -e '^js-stop: ' "$2"; then sed -n -e 's/^js-print: /print: /p' -e 's/^js-stop: /stop: /p' "$2"; else cat "$2"; fi;;
+	if grep -q -e '^js-print: ' -e '^js-stop: ' "$2"; then sed -n -e "s|@ROOT@|$(pwd)|g" -e 's/^js-print: /print: /p' -e 's/^js-stop: /stop: /p' "$2"; else cat "$2"; fi;;
 build)
 	if [ "$5" != --sanitize ]; then echo "adamic: this native build is not sanitized" >&2; exit 1; fi
-	{ echo '#!/bin/sh'; sed -n 's/^native: //p' "$2"; } > "$4.tmp" && chmod +x "$4.tmp" && mv "$4.tmp" "$4";;
+	{ echo '#!/bin/sh'; sed -n -e "s|@ROOT@|$(pwd)|g" -e 's/^native: //p' "$2"; } > "$4.tmp" && chmod +x "$4.tmp" && mv "$4.tmp" "$4";;
 esac
 `
 
 // agreementNode is the fixture's oracle/node.mjs: it prints a program's print lines, so Node and the JavaScript
 // backend print what a program's print lines say, and at a stop line it writes the line's message to stderr and
-// stops with exit 70, as a backend's checked stop does. It sets the exit code rather than exiting, so what it printed
-// to a pipe is whole.
-const agreementNode = "import {readFileSync} from 'node:fs';\nfor (const line of readFileSync(process.argv[2], 'utf8').split('\\n')) {\n  if (line.startsWith('print: ')) console.log(line.slice('print: '.length));\n  else if (line.startsWith('stop: ')) { process.stderr.write(line.slice('stop: '.length) + '\\n'); process.exitCode = 70; break; }\n}\n"
+// stops with exit 70, as a backend's checked stop does. A print-env line prints the variable it names, or unset. It
+// sets the exit code rather than exiting, so what it printed to a pipe is whole.
+const agreementNode = "import {readFileSync} from 'node:fs';\nfor (const line of readFileSync(process.argv[2], 'utf8').split('\\n')) {\n  if (line.startsWith('print: ')) console.log(line.slice('print: '.length));\n  else if (line.startsWith('print-env: ')) console.log(process.env[line.slice('print-env: '.length)] ?? 'unset');\n  else if (line.startsWith('stop: ')) { process.stderr.write(line.slice('stop: '.length) + '\\n'); process.exitCode = 70; break; }\n}\n"
 
 // The four kinds of program the agreement mode tells apart, as agreementCompiler and agreementNode run them.
 const (
@@ -340,7 +341,7 @@ func heldStopsFile(t *testing.T, stops map[string]string) string {
 	t.Helper()
 	list := heldStopList{Comment: "Adding a row is a ruling, and a row names the test that holds its stop", Stops: []heldStop{}}
 	for path, message := range stops {
-		list.Stops = append(list.Stops, heldStop{Path: path, Stderr: message + "\n", Test: "agreement_test.go: TestAgreementHeldStops"})
+		list.Stops = append(list.Stops, heldStop{Path: path, Stderr: message + "\n", Hatch: "cast, line 1: print: 1", Test: "cmd/adamic-admission-delta/agreement_test.go: TestAgreementHeldStops"})
 	}
 	data, err := json.Marshal(list)
 	if err != nil {
@@ -373,6 +374,79 @@ func TestHeldStopsRefuseASanitizersReport(t *testing.T) {
 	}
 	if _, err := readHeldStops(path); err != nil {
 		t.Errorf("a hatch's own message: %v, want it read", err)
+	}
+}
+
+// A row names the hatch its program uses and the test that holds it by its repository path, or the list is refused: a
+// row with no hatch, an unknown kind, no line, a language hatch citing no ruling, or a test named by its file alone.
+// A language hatch citing its ruling, and a hatch with a detail, are read. Mutant (agreement.mutants.md): the hatch
+// check dropped, so the rows without one are read.
+func TestHeldStopsRefuseARowWithoutItsHatch(t *testing.T) {
+	t.Parallel()
+	write := func(stop heldStop) error {
+		stop.Path, stop.Stderr = "corpus/held.a", "adamic: panic: held\n"
+		data, err := json.Marshal(heldStopList{Comment: "Adding a row is a ruling", Stops: []heldStop{stop}})
+		if err != nil {
+			t.Fatal(err)
+		}
+		path := filepath.Join(t.TempDir(), "held-stops.json")
+		if err := os.WriteFile(path, data, 0o600); err != nil {
+			t.Fatal(err)
+		}
+		_, err = readHeldStops(path)
+		return err
+	}
+	const test = "cmd/adamic-admission-delta/agreement_test.go: TestAgreementHeldStops"
+	for name, stop := range map[string]heldStop{
+		"no hatch":                    {Test: test},
+		"an unknown kind":             {Hatch: "other, line 3: const viewed = base as View;", Test: test},
+		"no line":                     {Hatch: "cast: const viewed = base as View;", Test: test},
+		"no line text":                {Hatch: "cast, line 3: ", Test: test},
+		"a language hatch, no ruling": {Hatch: "language (stale narrowing), line 3: report(cell.value);", Test: test},
+		"a test named by its file":    {Hatch: "cast, line 3: const viewed = base as View;", Test: "agreement_test.go: TestAgreementHeldStops"},
+		"a test outside a repository": {Hatch: "cast, line 3: const viewed = base as View;", Test: "../agreement_test.go: TestAgreementHeldStops"},
+	} {
+		if err := write(stop); err == nil {
+			t.Errorf("a row with %s: read, want it refused", name)
+		}
+	}
+	for name, stop := range map[string]heldStop{
+		"a cast":                             {Hatch: "cast, line 3: const viewed = base as View;", Test: test},
+		"a detail":                           {Hatch: "index-write (an index signature stores a string), line 4: bag[key] = 1;", Test: test},
+		"a language hatch citing its ruling": {Hatch: `language (docs/rulings.md:318, "array writes only at"), line 7: xs[5] = 1;`, Test: test},
+	} {
+		if err := write(stop); err != nil {
+			t.Errorf("a row with %s: %v, want it read", name, err)
+		}
+	}
+}
+
+// A stop that names its own file names it inside the run's checkout, a random scratch directory: the row writes the
+// checkout as {root}, so it holds the stop, and the program's outcome hash is the same from one checkout to the next.
+// Mutants (agreement.mutants.md): the row's {root} not expanded, so rooted.a disagrees; the hash's checkout not
+// written {root}, so two runs of the same program hash apart.
+func TestAgreementHeldStopNamesItsRoot(t *testing.T) {
+	t.Parallel()
+	const message = "adamic: panic: predicate isCat at @ROOT@/corpus/rooted.a:1:1 true branch"
+	list := heldStopsFile(t, map[string]string{"corpus/rooted.a": strings.ReplaceAll(message, "@ROOT@", "{root}")})
+	read := func() agreementProgram {
+		dir, sha, head := agreementFixtureWith(t, []agreementSource{{"corpus/rooted.a", heldStopSource(message)}}, map[string]string{"cloud/admission-corpus/held-stops.json": list})
+		o, r := agreementCommand(t, dir, sha, head)
+		if o.Exit != 0 || r.CheckedStops != 1 || len(r.Programs) != 1 || r.Programs[0].Judgment != "checked-stop" {
+			t.Fatalf("exit %d, %+v, want rooted.a a checked stop: %s", o.Exit, r, o.Stderr)
+		}
+		return r.Programs[0]
+	}
+	if first, second := read(), read(); first.OutcomeHash != second.OutcomeHash || len(first.OutcomeHash) != 64 {
+		t.Fatalf("one program's stop from two checkouts hashes %q and %q, want one hash", first.OutcomeHash, second.OutcomeHash)
+	}
+	stop := observation{Exit: 70, Stderr: "adamic: panic: at /tmp/a/head/corpus/rooted.a\n"}
+	moved := observation{Exit: 70, Stderr: "adamic: panic: at /tmp/b/head/corpus/rooted.a\n"}
+	if outcomeHash("/tmp/a/head", observation{}, stop, stop) != outcomeHash("/tmp/b/head", observation{}, moved, moved) {
+		t.Fatal("the same stop in two checkouts hashes apart")
+	}
+	if outcomeHash("/tmp/a/head", observation{}, stop, stop) == outcomeHash("/tmp/a/head", observation{}, moved, moved) {
+		t.Fatal("a stop naming another directory hashes as the checkout's own")
 	}
 }
 
@@ -462,8 +536,8 @@ func TestAgreementPendingNeverExcusesAMemoryError(t *testing.T) {
 func TestAgreementOutcomeHash(t *testing.T) {
 	t.Parallel()
 	node, javascript, native := observation{Stdout: "42\n"}, observation{Stdout: "42\n"}, observation{Stdout: "42\n"}
-	same := outcomeHash(node, javascript, native)
-	if len(same) != 64 || outcomeHash(node, javascript, native) != same {
+	same := outcomeHash("", node, javascript, native)
+	if len(same) != 64 || outcomeHash("", node, javascript, native) != same {
 		t.Fatalf("hash %q isn't one hex SHA-256 the same runs make alike", same)
 	}
 	seen := map[string]string{same: "the runs as they were"}
@@ -472,12 +546,12 @@ func TestAgreementOutcomeHash(t *testing.T) {
 		return o
 	}
 	for name, hash := range map[string]string{
-		"node's stderr":                     outcomeHash(changed(node), javascript, native),
-		"javascript's stderr":               outcomeHash(node, changed(javascript), native),
-		"native's stderr":                   outcomeHash(node, javascript, changed(native)),
-		"native's newline moved to stderr":  outcomeHash(node, javascript, observation{Stdout: "42", Stderr: "\n"}),
-		"native's exit":                     outcomeHash(node, javascript, observation{Exit: 1, Stdout: "42\n"}),
-		"javascript's stdout moved to node": outcomeHash(observation{Stdout: "42\n42\n"}, observation{}, native),
+		"node's stderr":                     outcomeHash("", changed(node), javascript, native),
+		"javascript's stderr":               outcomeHash("", node, changed(javascript), native),
+		"native's stderr":                   outcomeHash("", node, javascript, changed(native)),
+		"native's newline moved to stderr":  outcomeHash("", node, javascript, observation{Stdout: "42", Stderr: "\n"}),
+		"native's exit":                     outcomeHash("", node, javascript, observation{Exit: 1, Stdout: "42\n"}),
+		"javascript's stdout moved to node": outcomeHash("", observation{Stdout: "42\n42\n"}, observation{}, native),
 	} {
 		if other, collides := seen[hash]; collides {
 			t.Errorf("%s hashes as %s does", name, other)
@@ -494,5 +568,54 @@ func TestAgreementOutcomeHash(t *testing.T) {
 	}
 	if warning, warnings := read("warning"), read("warnings"); warning.OutcomeHash == warnings.OutcomeHash || len(warning.OutcomeHash) != 64 {
 		t.Fatalf("native's stderr changed and the hash didn't: %q, %q", warning.OutcomeHash, warnings.OutcomeHash)
+	}
+}
+
+// Node's run of a program that decodes or encodes JSON sees the JSON types tool as ADAMIC_JSON_TYPES, as the oracle's
+// own runs do, and a program without JSON never does, so node.mjs never goes run the tool in a checkout without
+// cohere (#x0zh2gq). json.a prints the variable on Node and the tool's path on both backends, so it agrees only when
+// Node saw it; plain.a, the same lines with no JSON, disagrees with Node printing unset. Mutant (agreement.mutants.md):
+// the variable never set, so json.a disagrees too.
+func TestAgreementGivesNodeTheJSONTypesTool(t *testing.T) {
+	t.Parallel()
+	tool := filepath.Join(t.TempDir(), "json-types")
+	lines := "print-env: ADAMIC_JSON_TYPES\njs-print: " + tool + "\nnative: echo " + tool + "\n"
+	dir, sha, head := agreementFixture(t, []agreementSource{
+		{"corpus/json.a", "// decodeJson\n" + lines},
+		{"corpus/plain.a", lines},
+	})
+	o, r := agreementCommand(t, dir, sha, head, "--json-types", tool)
+	judgments := map[string]string{}
+	for _, judged := range r.Programs {
+		judgments[judged.Path] = judged.Judgment
+	}
+	if want := map[string]string{"corpus/json.a": "agreeing", "corpus/plain.a": "disagreeing"}; !reflect.DeepEqual(judgments, want) {
+		t.Fatalf("judgments %v, want %v: %s", judgments, want, o.Stderr)
+	}
+	if len(r.Disagreements) != 1 || r.Disagreements[0].Node.Stdout != "unset\n" {
+		t.Fatalf("plain.a's Node run: %+v, want it to print unset", r.Disagreements)
+	}
+}
+
+// A native build is a compile, so it runs under --compile-timeout, not the runtime's --timeout: slow.a's build sleeps
+// past the runtime limit and well inside the compile limit, and agrees. Before any program builds, one program of a
+// single line builds natively, so a cold build cache makes the runtime's archives once; when that build fails, the run
+// is void, naming it, and no program is judged as if its own build had failed (#x0zh2gq: every native build of a cold
+// box timed out under the runtime limit). Mutants (agreement.mutants.md): the native build under the runtime limit,
+// so slow.a is void; the warm-up's failure ignored, so the run reads every program as failing to build natively.
+func TestAgreementNativeBuildsUnderTheCompileLimit(t *testing.T) {
+	t.Parallel()
+	dir, sha, head := agreementFixture(t, []agreementSource{{"corpus/slow.a", "print: 42\nnative: echo 42\n"}})
+	slow := filepath.Join(t.TempDir(), "slow-adamic")
+	writeExecutable(t, slow, "#!/bin/sh\nif [ \"$1\" = build ]; then sleep 2; fi\nexec "+head+" \"$@\"\n")
+	o, r := agreementCommand(t, dir, sha, slow, "--timeout", "1s", "--compile-timeout", "20s")
+	if o.Exit != 0 || r.Agreeing != 1 || r.Void {
+		t.Fatalf("exit %d, %+v, want slow.a agreeing under the compile limit: %s", o.Exit, r, o.Stderr)
+	}
+	cold := filepath.Join(t.TempDir(), "cold-adamic")
+	writeExecutable(t, cold, "#!/bin/sh\ncase \"$2\" in */warm.a) echo 'adamic: the runtime archives failed to build' >&2; exit 1;; esac\nexec "+head+" \"$@\"\n")
+	o, r = agreementCommand(t, dir, sha, cold)
+	if o.Exit != 3 || !r.Void || !strings.Contains(r.VoidReason, "the native runtime didn't build") || r.Disagreeing != 0 {
+		t.Fatalf("exit %d, %+v, want the run void on its warm-up's failure: %s", o.Exit, r, o.Stderr)
 	}
 }

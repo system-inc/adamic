@@ -1,6 +1,6 @@
-// The key a union naming child and spare, through a checked view of Box, which checks both, object fields: the
-// write stops at the view (judgeViewKeyedWrite). Since Rule C (#2msw6t8) the plain write, checked_view_named.a, is
-// admitted there by its source-slot certificate, which doesn't reach a keyed write, so this one stays stricter.
+// A union key naming child and spare through a checked view of Box: the view's write stop is held until its statement
+// lowers (#5qx6qv4), so .a's refused downcast answers first. Rule C (#2msw6t8) admits the plain write,
+// checked_view_named.a, by a source-slot certificate that doesn't reach a keyed write, so this one stays stricter.
 interface Base { readonly kind: 'box' | 'other'; }
 interface Box extends Base { readonly kind: 'box'; child: { ready: boolean }; spare: { ready: boolean }; }
 function pick(first: boolean): 'child' | 'spare' {

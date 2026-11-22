@@ -18,7 +18,9 @@ import (
 //     recorded for the name f (recordSourceSlotWrite). Any other write keeps view's stop, and so does
 //     one to toString or valueOf, which ToPrimitive reads by name after the reads are judged. One to a
 //     field that may hold undefined or null is NotYet, since the checked write can't change its slot's
-//     representation.
+//     representation, wherever its statement is lowered (checkSourceSlotPending). A field held other than as
+//     an object keeps the plain checked write, and a write that can store undefined or null into one whose
+//     type holds either is NotYet too (sourceSlotScalarWrite), held the same way.
 //  2. What the slot can hold, W, is every type a view wrote to f and every type a declaration of f
 //     gives it, undefined included where one is optional (sourceSlotDeclared): an absent slot or one an
 //     initializer filled holds a value no view write records (Compiler's condition, binding).
@@ -63,6 +65,15 @@ type sourceSlot struct {
 	declared []*checker.Type
 }
 
+// sourceSlotPendingStop is a write to a checked field that may hold undefined or null, target its left side,
+// statement the expression statement it's the whole of, and stop Rule C's NotYet there, made where the view
+// walk met it (recordSourceSlotWrite, sourceSlotScalarWrite).
+type sourceSlotPendingStop struct {
+	target    *ast.Node
+	statement *ast.Node
+	stop      error
+}
+
 // sourceSlotNamedKinds are the IR kinds other than ir.Property that name a field, each judged without a
 // check: none reads a fixed object's slot at a type's claim. DynamicProperty reads by the allocation's
 // own runtime shape and gives a tagged union, as DynamicKeyedProperty and HasOwn do by a key; HasProperty,
@@ -91,8 +102,10 @@ var sourceSlotNamedKinds = map[reflect.Type]bool{
 // reads. A field whose type holds undefined or null, an optional one among them, is NotYet: its slot can
 // hold undefined, null or an object, and the checked write (object.c's adamic_object_view_write, and the
 // JavaScript backend's adamicViewWrite) stops a write that changes the representation the slot holds, so
-// a program Node runs would stop at it. A fresh object or array literal is made as the slot it's written
-// into (freshOrWidened), so it's recorded as the field's own type.
+// a program Node runs would stop at it. That NotYet is held, not given, since the view walk judges every
+// write in the program from types, lowered or not, and only a write lowering makes changes a slot
+// (checkSourceSlotPending, Adamic's ruling on #rgrtt32). A fresh object or array literal is made as the slot
+// it's written into (freshOrWidened), so it's recorded as the field's own type.
 func (l *lowering) recordSourceSlotWrite(target *ast.Node, field *ast.Symbol, stop error) error {
 	if l.sourceSlotsJudged {
 		return stop
@@ -111,7 +124,7 @@ func (l *lowering) recordSourceSlotWrite(target *ast.Node, field *ast.Symbol, st
 	}
 	declared := l.checker.GetTypeOfSymbol(field)
 	if field.Flags&ast.SymbolFlagsOptional != 0 || l.includesUndefined(declared) || l.includesNull(declared) {
-		return l.notYet(target, "writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds")
+		return l.holdSourceSlotStop(target, assignment.Parent, l.notYet(target, "writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds"))
 	}
 	for _, write := range l.sourceSlotWrites {
 		if write.target == target {
@@ -126,6 +139,153 @@ func (l *lowering) recordSourceSlotWrite(target *ast.Node, field *ast.Symbol, st
 	}
 	l.sourceSlotWrites = append(l.sourceSlotWrites, sourceSlotWrite{target: target, name: target.Name().Text(), written: written, stop: stop})
 	return nil
+}
+
+// sourceSlotNullishWrite is the words of Rule C's scalar arm (sourceSlotScalarWrite).
+const sourceSlotNullishWrite = "writing undefined or null into a checked field, whose checked write can't change the representation its slot holds"
+
+// sourceSlotScalarWrite is Rule C's arm for a field held other than as an object, a write to which takes the
+// plain checked write rather than recordSourceSlotWrite (#f95gkw2). A write that can store undefined or null
+// into a field whose type holds either is NotYet, for two reasons that are one hazard. The checked write
+// (object.c's adamic_object_view_write, the JavaScript backend's adamicViewWrite) stops a write that changes
+// the representation the slot holds, so `n.note = undefined` into a slot a literal filled with a string, or
+// `n.count = undefined` into a plain number's, stops a program Node runs. And a value that may be undefined
+// but isn't the literal passes that check as the slot's own representation, so another alias that declares
+// the field without undefined then reads a null string where it expects one, which native code follows into
+// the null (a segfault where Node throws). What the slot holds is fixed by every write before this one, so no
+// compile-time proof of it is asked; any written value whose type may hold undefined or null stops, failing
+// closed on any, unknown and an open type parameter (mayHoldNull). A value that can't be either writes as
+// before, and so does a write to a field whose type holds neither. Of a compound write only `??=`, `||=` and
+// `&&=` can store their right side, and arithmetic or `++`/`--` stores a number or a string; a write whose
+// value this can't name (a destructuring or a for-in or for-of target) stops where the field may hold either.
+func (l *lowering) sourceSlotScalarWrite(target *ast.Node, field *ast.Symbol) error {
+	// The indexed walk asks every keyed access (viewSiteAccesses), a read among them, and a read writes nothing.
+	if !ast.IsAssignmentTarget(target) {
+		return nil
+	}
+	declared := l.checker.GetTypeOfSymbol(field)
+	if field.Flags&ast.SymbolFlagsOptional == 0 && !l.includesUndefined(declared) && !l.includesNull(declared) {
+		return nil
+	}
+	written, named := l.sourceSlotWrittenType(target)
+	if !named || l.includesUndefined(written) || l.mayHoldNull(written) {
+		return l.holdSourceSlotStop(target, sourceSlotWriteStatement(target), l.notYet(target, sourceSlotNullishWrite))
+	}
+	return nil
+}
+
+// holdSourceSlotStop holds stop, a Rule C NotYet at target, for checkSourceSlotPending, keyed to statement, the
+// statement whose lowering lowers the write, and gives back nil. A write with no such statement
+// (sourceSlotWriteStatement's nil) has none to wait for, so its stop is given back at once, as the view walk gave
+// it before #5qx6qv4. A target already held keeps its first stop.
+func (l *lowering) holdSourceSlotStop(target, statement *ast.Node, stop error) error {
+	if statement == nil {
+		return stop
+	}
+	for _, pending := range l.sourceSlotPending {
+		if pending.target == target {
+			return nil
+		}
+	}
+	l.sourceSlotPending = append(l.sourceSlotPending, sourceSlotPendingStop{target: target, statement: statement, stop: stop})
+	return nil
+}
+
+// sourceSlotWriteStatement is the statement nearest target that statement lowers, the one whose lowering lowers
+// the write: walking out from target, through any expression and through an arrow or a function expression,
+// whose body is lowered only where the expression holding it is, to the first statement of a kind statement
+// handles (sourceSlotStatementKinds). It's nil, so the stop is given at once, where the walk meets a node whose
+// expressions lowering reaches by another road than its statement: a parameter's default, a class member, a
+// decorator, an enum member, a JSX attribute or a declaration that is lowered by itself (#5qx6qv4, on the 322
+// tsc units #rgrtt32's census stopped at utilities.ts:9006, `void (file.externalModuleIndicator = ...)` in an
+// arrow's expression body).
+func sourceSlotWriteStatement(target *ast.Node) *ast.Node {
+	for node := target.Parent; node != nil; node = node.Parent {
+		if sourceSlotStatementKinds[node.Kind] {
+			return node
+		}
+		switch node.Kind {
+		case ast.KindArrowFunction, ast.KindFunctionExpression:
+			continue
+		case ast.KindParameter, ast.KindPropertyDeclaration, ast.KindPropertySignature, ast.KindMethodDeclaration,
+			ast.KindConstructor, ast.KindGetAccessor, ast.KindSetAccessor, ast.KindClassStaticBlockDeclaration,
+			ast.KindDecorator, ast.KindEnumMember, ast.KindJsxAttribute, ast.KindFunctionDeclaration,
+			ast.KindClassDeclaration, ast.KindClassExpression, ast.KindSourceFile, ast.KindModuleBlock, ast.KindBlock:
+			return nil
+		}
+	}
+	return nil
+}
+
+// sourceSlotStatementKinds are the statements statement lowers by itself, each marked in loweredStatements as it
+// begins (statements.go). A Block is left out: a write is always inside a statement the Block holds, and a
+// function's body Block is lowered by its statements, not by statement.
+var sourceSlotStatementKinds = map[ast.Kind]bool{
+	ast.KindExpressionStatement: true,
+	ast.KindVariableStatement:   true,
+	ast.KindReturnStatement:     true,
+	ast.KindIfStatement:         true,
+	ast.KindForStatement:        true,
+	ast.KindWhileStatement:      true,
+	ast.KindDoStatement:         true,
+	ast.KindForInStatement:      true,
+	ast.KindForOfStatement:      true,
+	ast.KindSwitchStatement:     true,
+	ast.KindLabeledStatement:    true,
+	ast.KindThrowStatement:      true,
+	ast.KindTryStatement:        true,
+}
+
+// checkSourceSlotPending gives back the first held write's NotYet, in the view walk's order, whose statement
+// lowering lowered, once every pass that lowers a body has run: only IR the program emits can change a slot,
+// so a write whose statement was never lowered guards nothing (Adamic's ruling on #rgrtt32, 163 tsc units at
+// setValueDeclaration). A statement is marked where statement begins to lower it, before any road it takes,
+// so every form a plain write lowers to keeps the stop, a road that records no write site (a Node member
+// require makes doomed, a namespace member's assignment, an Apple property's setter, super's setter)
+// included, and so does a lowering that stopped or was thrown away. A write whose statement can't be found
+// keeps its stop too. Rule C's scalar arm (sourceSlotScalarWrite) holds its stop the same way.
+func (l *lowering) checkSourceSlotPending() error {
+	for _, pending := range l.sourceSlotPending {
+		if pending.statement == nil || l.loweredStatements[pending.statement] {
+			return pending.stop
+		}
+	}
+	return nil
+}
+
+// sourceSlotTargetWrapper says whether an expression of kind holds an assignment target as the same slot.
+func sourceSlotTargetWrapper(kind ast.Kind) bool {
+	switch kind {
+	case ast.KindParenthesizedExpression, ast.KindNonNullExpression, ast.KindAsExpression, ast.KindSatisfiesExpression, ast.KindTypeAssertionExpression:
+		return true
+	}
+	return false
+}
+
+// sourceSlotWrittenType is the type of the value an assignment to target stores, and whether it could be named.
+// An assignment target may sit inside parentheses, a non-null `!` (`n.count!++`), an `as`, a `satisfies` or
+// an angle assertion, each of which leaves the target the same slot.
+func (l *lowering) sourceSlotWrittenType(target *ast.Node) (*checker.Type, bool) {
+	held := target
+	for held.Parent != nil && sourceSlotTargetWrapper(held.Parent.Kind) {
+		held = held.Parent
+	}
+	switch parent := held.Parent; {
+	case parent == nil:
+		return nil, false
+	case parent.Kind == ast.KindBinaryExpression && parent.AsBinaryExpression().Left == held:
+		binary := parent.AsBinaryExpression()
+		switch binary.OperatorToken.Kind {
+		case ast.KindEqualsToken, ast.KindQuestionQuestionEqualsToken, ast.KindBarBarEqualsToken, ast.KindAmpersandAmpersandEqualsToken:
+			return l.checker.GetTypeAtLocation(binary.Right), true
+		}
+		if ast.IsCompoundAssignment(binary.OperatorToken.Kind) {
+			return l.checker.GetTypeAtLocation(parent), true
+		}
+	case parent.Kind == ast.KindPrefixUnaryExpression || parent.Kind == ast.KindPostfixUnaryExpression:
+		return l.checker.GetNumberType(), true
+	}
+	return nil, false
 }
 
 // certifySourceSlots holds every read of a name recordSourceSlotWrite recorded to what its slot can hold,

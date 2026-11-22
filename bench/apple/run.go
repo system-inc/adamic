@@ -21,12 +21,13 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func main() {
 	rounds := flag.Int("rounds", 5, "how many times to run each loop, keeping the best")
 	flag.Parse()
-	platform, err := native.ResolveTarget(native.Options{})
+	platform, err := native_runtime.ResolveTarget(native_runtime.Options{})
 	if err != nil {
 		fail(err)
 	}
@@ -52,10 +53,10 @@ func main() {
 		if err != nil {
 			fail(err)
 		}
-		if err := native.BuildApple(native.C(lowered), binaries[name]["adamic"], native.Options{}); err != nil {
+		if err := native.BuildApple(native.C(lowered), binaries[name]["adamic"], native_runtime.Options{}); err != nil {
 			fail(err)
 		}
-		if err := native.BuildApple(native.C(lowered), binaries[name]["counted"], native.Options{Count: true}); err != nil {
+		if err := native.BuildApple(native.C(lowered), binaries[name]["counted"], native_runtime.Options{Count: true}); err != nil {
 			fail(err)
 		}
 		command("xcrun", "swiftc", "-O", "bench/apple/testdata/"+name+".swift", "-o", binaries[name]["swift"])

@@ -358,6 +358,14 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 	if err := checkFlowLiveness(lowering.result, lowering.flowDead); err != nil {
 		return nil, err
 	}
+	// Last, after every pass that lowers a body or makes IR: a write Rule C held at the view walk stops only
+	// where its statement was lowered, and none is lowered past here (source_slot_certificate.go, #5qx6qv4).
+	if err := lowering.checkSourceSlotPending(); err != nil {
+		return nil, err
+	}
+	// Once no pass builds or changes a view contract: each admission reads its fields' finished
+	// contracts, and only the emitters read it (finishViewStaticsAdmitted).
+	lowering.finishViewStaticsAdmitted()
 	return lowering, nil
 }
 
@@ -553,6 +561,12 @@ type lowering struct {
 	// (source_slot_certificate.go, #2msw6t8).
 	sourceSlotWrites  []sourceSlotWrite
 	sourceSlotsJudged bool
+	// sourceSlotPending are the plain writes to a checked field that may hold undefined or null, each with Rule
+	// C's NotYet for it, in the view walk's order, which recordSourceSlotWrite holds instead of stopping there,
+	// and loweredStatements every expression statement lowering began to lower (statement): once lowering is
+	// done, checkSourceSlotPending gives back the first held stop whose statement was lowered (#5qx6qv4).
+	sourceSlotPending []sourceSlotPendingStop
+	loweredStatements map[*ast.Node]bool
 	// relationViews are the relations rule 3300 let cross as a checked view (rulings.md:72, #0b9xqhh), by
 	// the node whose lowered value enters the slot, recorded before lowering and never deleted, and
 	// relationViewsTaken the nodes some lowering viewed, which checkRelationViewsTaken holds every entry
@@ -730,12 +744,15 @@ type lowering struct {
 	// a view of it through any type naming the field reaches the same object (class.go's
 	// absentOptionalWrite).
 	omittedOptionals map[string]bool
-	classes          map[*ast.Symbol]*ast.Node
-	statics          map[*ast.Symbol]*instance
-	staticGlobals    map[*ast.Symbol]int
-	instances        map[string]*instance
-	derivedAncestors map[*ast.Symbol]bool
-	optionalClasses  *optionalClassHierarchy
+	// A concrete class layout can omit a merged field whose type has no storage, or whose slot could
+	// point onward (mergedLeaf): each class's omitted names, with the words a read or write of one stops in.
+	missingMergedSlots map[int]map[string]string
+	classes            map[*ast.Symbol]*ast.Node
+	statics            map[*ast.Symbol]*instance
+	staticGlobals      map[*ast.Symbol]int
+	instances          map[string]*instance
+	derivedAncestors   map[*ast.Symbol]bool
+	optionalClasses    *optionalClassHierarchy
 
 	// privateOwners numbers each class that declares a private name, in the order first met, to
 	// qualify its private members' names (privateName).
@@ -869,4 +886,8 @@ type lowering struct {
 	// toPrimitive is the program's to_string_hint helper plus one, or zero before a String of a union
 	// that may hold an object needs it (to_primitive.go).
 	toPrimitive int
+
+	// keptBufferUnionView is set when a keeping walk met a nodeBufferUnion seen as another type at some
+	// depth (nodeBufferUnionSeenAs), so valueSlotKeeps can stop it with the Buffer words.
+	keptBufferUnionView bool
 }

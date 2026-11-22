@@ -35,6 +35,13 @@ companions that implement `admission-lower <path>`. Otherwise each compiler
 builds in its own detached checkout with its pinned submodules.
 Compiler products use `internal/buildcache`, keyed by SHA, lowering adapter,
 build settings and toolchain. `ADAMIC_BUILD_LOG` records hits and misses.
+A program whose text holds `decodeJson` or `encodeJson` runs on Node with
+`ADAMIC_JSON_TYPES` naming head's `oracle/json_types.go` built, as the oracle's
+own tests run it: `oracle/node.mjs` otherwise runs `go run` on the tool in
+head's checkout, which has no cohere, so the run failed before the program did.
+The tool is built once, in a checkout laid as the compiler's is, cached by
+head's SHA, and only when a program asks for it; `--json-types` names a built
+one instead.
 Classification calls only the revision's own loader and lowerer, never the C
 emitter, in parallel (`--workers`, default available CPUs). Each classification
 process uses one Go CPU; identical binaries reuse the same observation.
@@ -392,7 +399,11 @@ diagnostic or times out on is named on a `compiler failure` line and in
 `compiler_failures`. Every accepted program runs on Node, the JavaScript backend
 and a native build under the address and undefined-behavior sanitizers
 (`build <file> -o <out> --sanitize`), through the same runner as the delta's
-newly accepted programs, with the same one retry after a runtime timeout, and
+newly accepted programs, with one retry after a runtime timeout, run beside the other workers, never alone as the delta's, and
+the native build under `--compile-timeout`, since it's a compile. Before any of
+them, one program of a single line builds natively with up to 15 minutes, so a
+cold build cache makes the runtime's sanitized archives once; if it fails, the
+run is void, naming what the build said. Then each accepted program runs and
 is judged by the same rules: it agrees, or it is a listed negative witness, a
 listed run-time stop or a ruled backend divergence, each exactly as ruled, or it
 disagrees. Two more judgments then count apart what would otherwise disagree:
@@ -400,10 +411,20 @@ disagrees. Two more judgments then count apart what would otherwise disagree:
 - `checked-stop`: a both-stop, where the JavaScript backend and native have the
   same exit, stdout and stderr, the exit is 70, and Node exits 0, at a path
   `cloud/admission-corpus/held-stops.json` lists, with the backends' stderr the
-  row's byte for byte. Each row is a ruling: `{"path", "stderr", "test"}`, the
-  test named as `<file>_test.go: <TestName>`, the one that holds the stop. A
-  both-stop with no row, or with a stderr that differs from its row's, disagrees.
-  `--held-stops` names another list; a missing file is an empty one.
+  row's byte for byte. Each row is a ruling and the pin of the stop's words:
+  `{"path", "stderr", "hatch", "test"}`. `stderr` writes the checkout the run
+  judges as `{root}`, since a stop naming its program's file names it there.
+  `hatch` is the hatch the program uses, `<kind>[ (<detail>)], line <n>:
+  <text>`, the kind one of cast, non-null, predicate, definite-assignment,
+  relation-lie, index-write, index-read, computed-key, library-claim and
+  language, the text that line of the program, trimmed. A `language` hatch is the
+  checker's own unsoundness a ruling makes a checked stop, so its detail cites
+  `docs/rulings.md:<line>, "<the row's opening words>"`. `test` is the test that
+  holds the stop, `<repository path>_test.go: <TestName>`. A row without its
+  hatch or its test is refused, and `TestHeldStopListHoldsItsRows` holds every
+  row's hatch line, ruling and test to the tree. A both-stop with no row, or with
+  a stderr that differs from its row's, disagrees. `--held-stops` names another
+  list; a missing file is an empty one.
 - `pending`: a program beside a pending sidecar, its name without its extension
   plus `.pending`, whose message is `awaits #<task>: <reason>`. The sidecar
   excuses the program only while that task is open, and the run is sealed and
@@ -443,9 +464,10 @@ path, Node's, JavaScript's and native's observations, both compiles and
 `memory_unsafe`), `compiler_failures`, `stale_runtime_stops`, every program
 with its judgment, and `verdict`. A program judged by what it did carries
 `outcome_hash`: hex SHA-256 over Node's, then JavaScript's, then native's exit,
-stdout and stderr, each field written as its length, a colon and its bytes, so
-a diff of two days' reports sees any change in output or stop message even
-where the judgment holds. A refused or void program has none, and a pending one
+stdout and stderr, each field written as its length, a colon and its bytes,
+with the run's checkout written `{root}` in stdout and stderr, so a diff of two
+days' reports sees any change in output or stop message even where the judgment
+holds, and never the run's own scratch directory. A refused or void program has none, and a pending one
 carries `task`. Exit codes are the delta's: a disagreement, a
 compiler failure or a listed run-time stop that now agrees exits 1, a run that
 proved nothing (a compile timeout, a runtime timeout that held after its retry,

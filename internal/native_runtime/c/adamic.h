@@ -891,6 +891,9 @@ adamic_typed_array *adamic_typed_array_new(enum adamic_typed_array_kind kind, do
 // A zeroed owner of a length the caller already knows, for the runtime's own byte producers (a Buffer).
 // Its data counts toward memoryUsage().arrayBuffers, as every owner's does, and heap.c's free takes it back.
 adamic_typed_array *adamic_typed_array_make(enum adamic_typed_array_kind kind, size_t length);
+// adamic_typed_array_try_make is make that fails instead of panicking: NULL, with nothing allocated or
+// counted, for a length whose bytes are past what a size_t holds or that can't be allocated.
+adamic_typed_array *adamic_typed_array_try_make(enum adamic_typed_array_kind kind, size_t length);
 adamic_typed_array *adamic_typed_array_from_numbers(enum adamic_typed_array_kind kind, const adamic_array *numbers);
 // The check is also called by compiler-inserted write checks. set always checks itself.
 // Panic text is the plain-array form: index <index> is outside an array of length <length>.
@@ -1520,6 +1523,11 @@ adamic_string *adamic_string_trim_sides(adamic_string *string, bool at_start, bo
 double adamic_string_last_index_of(const adamic_string *string, const adamic_string *search);
 adamic_string *adamic_string_replace(const adamic_string *string, const adamic_string *search, const adamic_string *replacement, bool all);
 
+// adamic_string_inspect_received is the preview a Node ERR_INVALID_ARG_VALUE message ends with after
+// `Received `: util.inspect's quoting of value, cut to 128 units and `...` (string.c), a string the
+// caller owns. node_fs_file.c and node_fs_directory.c both write theirs with it.
+adamic_string *adamic_string_inspect_received(const adamic_string *value);
+
 // ADAMIC_STRING_MAX_UNITS is V8's longest string, in UTF-16 units (String::kMaxLength on 64-bit).
 #define ADAMIC_STRING_MAX_UNITS 536870888
 
@@ -1681,6 +1689,10 @@ adamic_object *adamic_error_new(adamic_string *message);
 adamic_object *adamic_error_new_kind(const char *name, size_t name_length, adamic_string *message);
 // adamic_throw_kind sets adamic_thrown to new <name>(message), the message given as bytes.
 void adamic_throw_kind(const char *name, size_t name_length, const char *message, size_t message_length);
+// adamic_throw_coded sets adamic_thrown to a Node-coded error, code its one enumerable own key, whose
+// String is name [code]: message when bracketed, as Node's makeNodeErrorWithCode makes one, and
+// name: message when not, as one Node's C++ throws; name and code are C strings, the message bytes.
+void adamic_throw_coded(const char *name, const char *code, const char *message, size_t message_length, bool bracketed);
 const char *adamic_error_field_name(const adamic_object *object, const char *name);
 _Noreturn void adamic_uncaught(void);
 

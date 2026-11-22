@@ -32,6 +32,8 @@ type agreementRun struct {
 	runtimeStops                                                 runtimeNotYetStopList
 	divergences                                                  ruledBackendDivergenceList
 	heldStops                                                    heldStopList
+	// jsonTypesBinary is --json-types: head's JSON types tool, built from head when it's empty.
+	jsonTypesBinary string
 }
 
 // agreementProgram is one program of the run and how it was judged: agreeing, ruled, checked-stop, pending,
@@ -97,6 +99,10 @@ type agreementReport struct {
 	Void              bool                       `json:"void"`
 	VoidReason        string                     `json:"void_reason,omitempty"`
 }
+
+// nativeWarmLimit bounds the one native build that makes the runtime's archives before the run's own builds: the
+// archives of a sanitized build from a cold cache, which take a box minutes, never a program's 45 s.
+const nativeWarmLimit = 15 * time.Minute
 
 // agreementIgnores is every flag of the delta's that the agreement mode never reads, in the order it names them. Each
 // is refused rather than passed over, so a run can't look as if a base, a filter or a budget shaped it.
@@ -221,7 +227,15 @@ func runAgreement(agreement agreementRun) error {
 			break
 		}
 	}
-	runner := &programRunner{headTree: headTree, scratch: scratch, compiler: compiler, limit: agreement.limit, nativeFlags: []string{"--sanitize"}, nativeEnv: []string{"ASAN_OPTIONS=detect_leaks=0"}, negatives: agreement.negatives, runtimeStops: agreement.runtimeStops, divergences: agreement.divergences}
+	runner := &programRunner{headTree: headTree, scratch: scratch, compiler: compiler, limit: agreement.limit, nativeFlags: []string{"--sanitize"}, nativeEnv: []string{"ASAN_OPTIONS=detect_leaks=0"}, negatives: agreement.negatives, runtimeStops: agreement.runtimeStops, divergences: agreement.divergences, jsonTypes: jsonTypesTool(agreement.root, scratch, result.Head, agreement.jsonTypesBinary), compileLimit: agreement.compileLimit}
+	// One native build first, with room to make the runtime's archives, so no program's own build has to.
+	if clang && accepted > 0 {
+		progress("building the native runtime")
+		if err := runner.warmNative(nativeWarmLimit); err != nil {
+			voids = append(voids, err.Error())
+			clang = false
+		}
+	}
 	// Accepted programs run on agreement.workers at once, a corpus being thousands of sanitized builds. Each worker
 	// writes only its own program's record, stale and failed slot, and scratch files named by the program's index; the
 	// counting and the lines wait for the pool, in manifest order, so the output is the same whatever order the
@@ -284,7 +298,7 @@ func runAgreement(agreement agreementRun) error {
 				result.StaleRuntimeStops = append(result.StaleRuntimeStops, record.Path)
 				lines = append(lines, fmt.Sprintf("stale run-time stop %s: it agrees with Node, so its entry leaves the list", record.Path))
 			}
-			judged.OutcomeHash = outcomeHash(*record.Node, *record.JavaScript, *record.Native)
+			judged.OutcomeHash = outcomeHash(headTree, *record.Node, *record.JavaScript, *record.Native)
 			// A sidecar is read only for a program that would otherwise disagree: an agreeing program stays agreeing
 			// whether or not one sits beside it.
 			if record.disagrees() {
@@ -300,7 +314,7 @@ func runAgreement(agreement agreementRun) error {
 			case record.ruled():
 				result.Ruled++
 				judged.Judgment = "ruled"
-			case agreement.heldStops.holds(record.Path, *record.Node, *record.JavaScript, *record.Native):
+			case agreement.heldStops.holds(record.Path, headTree, *record.Node, *record.JavaScript, *record.Native):
 				result.CheckedStops++
 				judged.Judgment = "checked-stop"
 			case judged.Task != "" && !memoryUnsafe(*record.Native):
@@ -340,7 +354,9 @@ func runAgreement(agreement agreementRun) error {
 		// A shard alone never stands in for the whole corpus, as the delta's partial run doesn't.
 		result.Verdict = "partial"
 	}
-	fmt.Fprintf(os.Stderr, "runtime timeouts: %d runs timed out, %d retried alone, %d timed out again\n", result.TimedOutRuns, result.RetriedRuns, result.StillTimedOutRuns)
+	// The delta retries a timed-out run alone; here the retry runs beside the other workers' runs, so the line says so
+	// and never reads as the delta's.
+	fmt.Fprintf(os.Stderr, "runtime timeouts: %d runs timed out, %d retried once beside the other workers, %d timed out again\n", result.TimedOutRuns, result.RetriedRuns, result.StillTimedOutRuns)
 	for _, line := range lines {
 		fmt.Fprintln(os.Stderr, line)
 	}
@@ -392,11 +408,21 @@ func pendingTask(headTree, path string) (string, error) {
 
 // outcomeHash is hex SHA-256 over Node's, then JavaScript's, then native's exit, stdout and stderr, in that order.
 // Each field is written as its length, a colon and its bytes, so no output can be read as the end of one field and the
-// start of the next, and a byte moved from one stream to another changes the hash.
-func outcomeHash(node, javascript, native observation) string {
+// start of the next, and a byte moved from one stream to another changes the hash. The checkout the run judged, root,
+// is written {root} in stdout and stderr first, as a held stop's row writes it: a program whose stop names its own
+// file names it inside the run's random scratch directory, so without it that program's hash would change every day
+// and bury the changes the hash is there to show.
+func outcomeHash(root string, node, javascript, native observation) string {
+	// An empty root would write {root} between every byte, so only a named checkout is written.
+	rooted := func(output string) string {
+		if root == "" {
+			return output
+		}
+		return strings.ReplaceAll(output, root, "{root}")
+	}
 	digest := sha256.New()
 	for _, run := range []observation{node, javascript, native} {
-		for _, field := range []string{strconv.Itoa(run.Exit), run.Stdout, run.Stderr} {
+		for _, field := range []string{strconv.Itoa(run.Exit), rooted(run.Stdout), rooted(run.Stderr)} {
 			fmt.Fprintf(digest, "%d:%s", len(field), field)
 		}
 	}

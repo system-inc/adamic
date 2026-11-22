@@ -194,7 +194,7 @@ func TestKindUnionCastRoadsLowerAsked(t *testing.T) {
 	for _, probe := range []struct{ name, source, words string }{
 		{"Object.assign of a scalar", kindUnionWriteModel + cast + "Object.assign(access, { flags: 5 });\nconsole.log(String(access.flags));\n", "Object.assign on a shape not proven"},
 		{"Object.assign of an object", kindUnionWriteModel + cast + "Object.assign(access, { expression: id });\nconsole.log(String(access.expression.kind));\n", "Object.assign on a shape not proven"},
-		{"destructuring assignment target", kindUnionWriteModel + cast + "const src: { a: Node } = { a: id };\n({ a: access.expression } = src);\nconsole.log(String(access.expression.kind));\n", "without its source-slot type certificate"},
+		{"destructuring assignment target", kindUnionWriteModel + cast + "const src: { a: Node } = { a: id };\n({ a: access.expression } = src);\nconsole.log(String(access.expression.kind));\n", "which #b5w3ycg head 2 leaves waiting"},
 		{"for-of target", kindUnionWriteModel + cast + "const values: number[] = [1, 2];\nfor (access.flags of values) { console.log('x'); }\nconsole.log(String(access.flags));\n", "which #b5w3ycg head 2 leaves waiting"},
 		{"a method on the shared-kind lie", `enum SyntaxKind { Identifier = 80, PrivateIdentifier = 81, PropertyDeclaration = 172, MethodDeclaration = 174 }
 interface Node { readonly kind: SyntaxKind; readonly pos: number }
@@ -213,7 +213,7 @@ const method: MethodDeclaration = { kind: SyntaxKind.MethodDeclaration, pos: 1, 
 console.log('marking');
 mark(method);
 console.log(String(method.count));
-`, "unsupported callable contract"},
+`, "stage 0 can't lower a callable field retag read through a checked view, which needs a check at the call (rulings.md:27) yet"},
 		{"a getter-backed tag", kindUnionModel + `function target(node: Node): Expression { return (node as PropertyAccessExpression | ElementAccessExpression).expression; }
 const id: Identifier = { kind: SyntaxKind.Identifier, pos: 1, end: 2, text: 'a' };
 const property: PropertyAccessExpression = { get kind(): SyntaxKind.PropertyAccessExpression { return SyntaxKind.PropertyAccessExpression; }, pos: 0, end: 3, expression: id, name: id };
