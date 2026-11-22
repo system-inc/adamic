@@ -11,7 +11,7 @@ if ! go build -o "$work/adamic" ./cmd/adamic >"$work/build.log" 2>&1; then
 	echo "compiler build failed"; tail -40 "$work/build.log"; exit 2
 fi
 printf "import { registerHooks } from 'node:module';\nregisterHooks({ resolve(specifier, context, next) { return specifier === 'adamic' ? { url: 'file://%s/oracle/adamic.mjs', shortCircuit: true } : next(specifier, context); } });\n" "$root" >"$work/hook.mjs"
-for file in cloud/scratch-wk/*.ts; do
+for file in "${1:-cloud/scratch-wk}"/*.ts; do
 	name=$(basename "$file" .ts)
 	echo
 	echo "=== $name"
