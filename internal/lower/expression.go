@@ -502,6 +502,14 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 	if from == to {
 		return true
 	}
+	// A union holding a Buffer as itself is judged whole, before the union block below splits it into
+	// members the storage walk doesn't judge as Buffers: { readonly x: string | Buffer } seen as
+	// { readonly x: unknown } handed the Buffer out as an unknown, whose String panics natively where
+	// Node decodes it. valueSlotKeeps judges the same pair at the top (nodeBufferUnionSeenAs).
+	if l.nodeBufferUnionSeenAs(from, to) {
+		l.keptBufferUnionView = true
+		return false
+	}
 	members := func(t *checker.Type) ([]*checker.Type, int) {
 		parts := []*checker.Type{t}
 		if t.Flags()&checker.TypeFlagsUnion != 0 {
@@ -2613,7 +2621,8 @@ func (l *lowering) valueSlotKeeps(node *ast.Node, slot *checker.Type) error {
 	// other keeps the target, so the same object, array or function can't be both. A tuple is held
 	// as an object, so it can't be seen as an array either, here or anywhere inside. A literal is
 	// made as the type it's written into, so it never differs.
-	if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferView(l.present(own), l.present(slot)) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) {
+	// A Buffer goes into a union slot only as nodeBufferSlotView says.
+	if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferSlotView(own, slot) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) {
 		return l.notYet(node, "Buffer or Hash viewed as another object type (native host internal slots)")
 	}
 	// Any other host object may be seen through a type only as far as its registration names
@@ -2623,13 +2632,25 @@ func (l *lowering) valueSlotKeeps(node *ast.Node, slot *checker.Type) error {
 			return l.nodeHostViewRefusal(node, own, slot, reached)
 		}
 	}
+	// A union holding a Buffer as itself goes only into its own type or another nodeBufferUnion. Seen as
+	// unknown, {} or string | object, it could be narrowed by instanceof to a Uint8Array, whose slice
+	// copies where the Buffer's shares (must 10). A slot reaching a member no host registration names
+	// stops at the host view check above first. The keeping walk below asks the same of every pair
+	// inside the value.
+	if own := l.checker.GetTypeAtLocation(node); l.nodeBufferUnionSeenAs(own, slot) {
+		return l.notYet(node, "Buffer or Hash viewed as another object type (native host internal slots)")
+	}
 	// A listed adapter's own callback literal is the one rest function that may meet a view hiding its
 	// rest: only the adapter calls it, by its own signature (restAdapterCallback).
 	keeps := l.sameKeeping
 	if l.restAdapterCallback(node) {
 		keeps = l.sameKeepingWalk
 	}
+	l.keptBufferUnionView = false
 	if own := l.contextualGenericType(node, l.checker.GetTypeAtLocation(node)); !l.typedArraySetArgument(node) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) && !keeps(own, slot, map[[2]*checker.Type]bool{}) {
+		if l.keptBufferUnionView {
+			return l.notYet(node, "Buffer or Hash viewed as another object type (native host internal slots)")
+		}
 		if l.typedArrayKind(l.checker.GetNonNullableType(own)) != 0 {
 			return l.notYet(node, "a typed array seen through a structural view that loses its buffer representation")
 		}
