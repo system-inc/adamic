@@ -1,0 +1,19 @@
+# Mutant evidence for the family 3 relocated-site owner entries in stage3/meter/owners.json (#k8ed1f2)
+# Test: report_test.LatentReportTests.test_exact_prefix_and_variance_owners
+# The reasons are the tracker (cause 7) and directoryExists (cause 16) sites 99-readonly-family3-views relocated,
+# found unowned on the meter of 20261122T131040Z.tNkys1 (#38kdd4d).
+# Proof J-fn0kghs, sealed, at proof commit 7c9b031c over main 42d4a22a; log sha256
+# e9c20f96b48b7309972c0eb3277ad6d4f957aaf96ee0eef54e81de6774e74002.
+
+## With the entries (expected pass)
+Ran 1 test in 0.001s
+OK
+
+## Mutant: both entries removed (expected red, the reasons fall to the bare 'seen as' row)
+AssertionError: '' != '#k8ed1f2'
+Ran 1 test in 0.001s
+FAILED (failures=1)
+
+## Restored (expected pass)
+report_test: Ran 71 tests in 0.179s
+OK (skipped=2)
