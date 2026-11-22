@@ -24,13 +24,18 @@ function apply(v: Visitor<number>): number { return v(3, 1); }
 // is the overload set handed over as a value on the line below it (10). A Visitor<number> forwarded into a
 // Visitor<1> parameter, types that differ by a type argument, still stops at the forward (10), where its
 // binding can't be read. Mutant: the identity test dropped from valueTypeArgumentBindings, and the forward
-// row stops at its forward, line 9.
+// row stops at its forward, line 9. Inside a generic body (Compiler's ask): a Visitor<A> written into a
+// Visitor<A> slot is the same type, so the first stop moves to line 10, and the mutant brings it back to
+// 9; a V constrained to Visitor<number>, forwarded into a Visitor<number> parameter, is a type that only
+// relates, and stops at its forward, line 9, both ways.
 func TestValueOfItsSlotsTypeBindsNothing(t *testing.T) {
 	t.Parallel()
 	for _, row := range []struct {
 		name, source, at string
 	}{
 		{"forward", valueIdentityVisitor + "function forward(v: Visitor<number>): number { return apply(v); }\nconst made: Visitor<number> = id;\nconsole.log(String(forward(made)));\n", "main.ts:10:"},
+		{"generic_own_type", valueIdentityVisitor + "function forward<A extends number>(v: Visitor<A>): number { const w: Visitor<A> = v; return 1; }\nconst made: Visitor<number> = id;\nconsole.log(String(forward(made)));\n", "main.ts:10:"},
+		{"generic_constrained", valueIdentityVisitor + "function forward<V extends Visitor<number>>(v: V): number { return apply(v); }\nconst made: Visitor<number> = id;\nconsole.log(String(forward(made)));\n", "main.ts:9:"},
 		{"forward_differs", valueIdentityVisitor + "function applyOne(v: Visitor<1>): number { return v(3, 1); }\nfunction forward(v: Visitor<number>): number { return applyOne(v); }\nconst made: Visitor<number> = id;\nconsole.log(String(forward(made)));\n", "main.ts:10:"},
 	} {
 		t.Run(row.name, func(t *testing.T) {
