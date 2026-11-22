@@ -121,6 +121,11 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 // A field whose finished contract is missing, unknown or unsupported, an unsupported contract, one with
 // no field, or a library without Function to ask leaves it false. Run time still asks that each
 // required field be the class's own data static (view_unions_untagged.c).
+//
+// An optional field also leaves it false: run time reads an optional field a class doesn't own as a data
+// slot as absent, so a static method, a static getter or a static the class inherits by that name read
+// undefined natively, where Node reads the member (#24kvb6k, J-d31s28f). Until run time asks whether the
+// class or a base answers the name in any form, no contract with an optional field admits a class.
 func (l *lowering) viewStaticsAdmitted(contract ir.ViewContract) bool {
 	function := l.checker.GetGlobalSymbol("Function", ast.SymbolFlagsInterface, nil)
 	if function == nil || contract.Unsupported != "" || len(contract.Fields) == 0 {
@@ -134,7 +139,7 @@ func (l *lowering) viewStaticsAdmitted(contract ir.ViewContract) bool {
 		if held := l.result.ViewContracts[field.Contract-1]; held.Kind == ir.ViewUnknown || held.Unsupported != "" {
 			return false
 		}
-		if l.objectPrototypeName(field.Name) || l.checker.GetPropertyOfType(functionType, field.Name) != nil {
+		if field.Optional || l.objectPrototypeName(field.Name) || l.checker.GetPropertyOfType(functionType, field.Name) != nil {
 			return false
 		}
 	}

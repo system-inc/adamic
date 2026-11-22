@@ -11,7 +11,7 @@ const viewStaticClassDirectory = "internal/oracle/testdata/view_static_class/"
 
 // viewStaticClassAgreeing and viewStaticClassKeys are the directory's programs the tests below don't name in
 // their own tables; TestViewStaticClassProgramsAreAllRun holds the directory to every name.
-var viewStaticClassAgreeing = []string{"union_typeof.ts", "tagged_count.ts", "string_static.ts", "optional_absent.ts", "widened_write.ts"}
+var viewStaticClassAgreeing = []string{"union_typeof.ts", "tagged_count.ts", "string_static.ts", "widened_write.ts"}
 
 const viewStaticClassKeys = "object_keys.ts"
 
@@ -24,6 +24,8 @@ type viewStaticClassStop struct {
 }
 
 const viewStaticClassNoMember = "adamic: panic: field read failed: viewed.value matches no member of number | Inner; expected number | Inner, found function\n"
+
+const viewStaticClassNotInner = "adamic: panic: field read failed: viewed.value is not a Inner; expected Inner, found function\n"
 
 const viewStaticClassWrite = "adamic: panic: field write failed: a write to count through a checked view that holds a class constructor is not yet lowered\n"
 
@@ -44,6 +46,13 @@ var viewStaticClassStops = []viewStaticClassStop{
 	// The check lowering puts on a narrowed local (localRead, internal/lower/locals.go) asks typeof === 'object'
 	// of what the read put back, and a class answers 'function'. It awaits a follow-up there.
 	{name: "narrowed_read.ts", stderr: "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n"},
+	// A contract with an optional field admits no class (#24kvb6k's Now): read as absent, a static method, a static
+	// getter or an inherited static named like it read undefined natively, where Node reads the member.
+	{name: "optional_absent.ts", stdout: "before\n", stderr: viewStaticClassNotInner},
+	{name: "optional_method.ts", stdout: "before\n", stderr: viewStaticClassNotInner},
+	// Lowering stops a static getter a checked contract names before any backend runs, as static_getter.ts.
+	{name: "optional_getter.ts", lowering: "stage 0 can't lower a getter in a checked field contract yet"},
+	{name: "optional_inherited.ts", stdout: "before\n", stderr: viewStaticClassNotInner},
 	{name: "write.ts", stdout: "before\n", stderr: viewStaticClassWrite},
 	// The value is evaluated before the guard on both backends, as native's writeProperty orders it.
 	{name: "write_value_order.ts", stdout: "before\nvalue\n", stderr: viewStaticClassWrite},
@@ -173,7 +182,7 @@ func TestViewStaticClassProgramsAreAllRun(t *testing.T) {
 			t.Errorf("%s is named %d times by the tests, want once", entry.Name(), named[entry.Name()])
 		}
 	}
-	if programs != 19 || len(named) != 19 {
-		t.Fatalf("%d programs in %s and %d named, want 19: a program added or removed needs this count changed with it", programs, viewStaticClassDirectory, len(named))
+	if programs != 22 || len(named) != 22 {
+		t.Fatalf("%d programs in %s and %d named, want 22: a program added or removed needs this count changed with it", programs, viewStaticClassDirectory, len(named))
 	}
 }
