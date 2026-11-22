@@ -53,8 +53,9 @@ func TestFiniteKeyedWritesAgreeWithNode(t *testing.T) {
 // tsc_custom_levels.a are tsc's shape and its probes: past #7n03qzg's no-optional-widening, their arm meets
 // the absent optional field {} left out, as customLevels.Low = x would. checked_view_keyed.a has no twin
 // since Rule C (#2msw6t8): its plain write, checked_view_named.a, is admitted at the view by a source-slot
-// certificate that doesn't reach a keyed write, so the keyed one keeps the view's stop, the stricter. Its
-// row names its plain write as stricterThan: where the two rows part, the keyed program must still stop
+// certificate that doesn't reach a keyed write, so the keyed one keeps the view's stop, the stricter. That
+// stop is held until the write's statement lowers (#5qx6qv4), so in .a the cast before it, refused as the
+// plain program's is, answers first. Its row names its plain write as stricterThan: where the two rows part, the keyed program must still stop
 // whenever the plain one does, so a change that loosens the keyed write past the plain one goes red here
 // even if its own row is edited to match (Adamic's ask on #13p3y0c).
 var finiteKeyedWriteStops = []struct {
@@ -68,7 +69,7 @@ var finiteKeyedWriteStops = []struct {
 	{"accessor_keyed.a", false, 10, "a computed key without an own data field", "", ""},
 	{"absent_optional_keyed.a", false, 12, "writing a possibly absent optional own field, where a value reaching it is built as State without pending", "absent_optional_named.a", ""},
 	{"absent_optional_named.a", false, 10, "writing a possibly absent optional own field, where a value reaching it is built as State without pending", "", ""},
-	{"checked_view_keyed.a", false, 12, "writing a checked object field without its source-slot type certificate", "", "checked_view_named.a"},
+	{"checked_view_keyed.a", true, 11, "a downcast from Base to Box in .a whose checks no proof erases", "", "checked_view_named.a"},
 	{"checked_view_named.a", true, 9, "a downcast from Base to Box in .a whose checks no proof erases", "", ""},
 	{"coalesce.a", false, 5, "writing a possibly absent optional own field, where what reaches its receiver isn't known", "", ""},
 	{"index_signature_union.a", false, 8, "a computed field write to an object with an index signature", "", ""},
