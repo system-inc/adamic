@@ -182,8 +182,9 @@ func (l *lowering) instanceTypes(declaration *ast.Node, target, resolved *checke
 	// instantiated resolved with, as classGenericCall reads it (#vks2w2y). Only when resolved instantiates
 	// target itself: an overload's resolved signature is another declaration's, and its mapper names that
 	// one's binders. Only a binder some declared parameter holds inside an anonymous object's property
-	// (binderInAnonymousProperty): reading every unread binder this way is #c0cn7x8's own head, which moves
-	// pins that stop on an unread T today. A binding read back above stays, and an unreadable mapper leaves
+	// (binderInAnonymousProperty), or one held beside only undefined, null or void, which a resolved
+	// undefined or void absorbs (binderBesideNullish, #hm6sc4z): reading every unread binder this way is
+	// #c0cn7x8's own head, which moves pins that stop on an unread T today. A binding read back above stays, and an unreadable mapper leaves
 	// the parameter unread.
 	if resolved.Target() == target {
 		field := reflect.ValueOf(resolved).Elem().FieldByName("mapper")
@@ -191,7 +192,7 @@ func (l *lowering) instanceTypes(declaration *ast.Node, target, resolved *checke
 			mapper := (*typeMapper)(field.UnsafePointer())
 			for _, parameter := range declaration.TypeParameters() {
 				declaredType := l.checker.GetTypeAtLocation(parameter.Name())
-				if _, isKnown := concreteTypes[declaredType]; isKnown || !l.binderInAnonymousProperty(target, declaredType) {
+				if _, isKnown := concreteTypes[declaredType]; isKnown || !(l.binderInAnonymousProperty(target, declaredType) || l.binderBesideNullish(target, declaredType)) {
 					continue
 				}
 				concrete := l.concrete(instantiateType(l.checker, declaredType, mapper))
@@ -266,6 +267,73 @@ func (l *lowering) binderInAnonymousProperty(target *checker.Signature, binder *
 		}
 	}
 	return false
+}
+
+// binderBesideNullish is whether target holds binder as a union member beside only undefined, null or void,
+// in a declared parameter's type or its return, or in a function's parameter or return inside one, at any
+// depth through unions, a reference's type arguments and an anonymous type's call signatures:
+// callback: (element: T, index: number) => U | undefined. A resolved undefined or void absorbs the
+// binder's own member there (U | undefined given void is void), so inference reads nothing back, though the
+// checker's mapper holds the binding (#hm6sc4z, rulings.md row 68). A binder beside a non-nullish member,
+// combine's T | T[] | undefined, isn't one. Each type is walked once.
+func (l *lowering) binderBesideNullish(target *checker.Signature, binder *checker.Type) bool {
+	visited := map[*checker.Type]bool{}
+	var holds func(proven *checker.Type) bool
+	holds = func(proven *checker.Type) bool {
+		if proven == nil || visited[proven] {
+			return false
+		}
+		visited[proven] = true
+		if proven.Flags()&checker.TypeFlagsUnion != 0 {
+			beside, others := false, true
+			for _, member := range proven.Types() {
+				if member == binder {
+					beside = true
+				} else if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull|checker.TypeFlagsVoid) == 0 {
+					others = false
+				}
+			}
+			if beside && others {
+				return true
+			}
+			for _, member := range proven.Types() {
+				if holds(member) {
+					return true
+				}
+			}
+			return false
+		}
+		if proven.Flags()&checker.TypeFlagsObject == 0 {
+			return false
+		}
+		if proven.ObjectFlags()&checker.ObjectFlagsReference != 0 {
+			for _, argument := range l.checker.GetTypeArguments(proven) {
+				if holds(argument) {
+					return true
+				}
+			}
+		}
+		if proven.ObjectFlags()&checker.ObjectFlagsAnonymous == 0 {
+			return false
+		}
+		for _, signature := range l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall) {
+			for _, parameter := range signature.Parameters() {
+				if holds(l.checker.GetTypeOfSymbol(parameter)) {
+					return true
+				}
+			}
+			if holds(l.checker.GetReturnTypeOfSignature(signature)) {
+				return true
+			}
+		}
+		return false
+	}
+	for _, parameter := range target.Parameters() {
+		if holds(l.checker.GetTypeOfSymbol(parameter)) {
+			return true
+		}
+	}
+	return holds(l.checker.GetReturnTypeOfSignature(target))
 }
 
 // instanceMapper is the type mapper an instance's body is lowered under: each type parameter read back
