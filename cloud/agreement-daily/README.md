@@ -17,10 +17,11 @@ sanitized native build, so a wrong answer already on main shows here when no hea
   It lays the submodules as repositories (`sandboxed_repositories`), installs stage3/api offline
   (`sandboxed_npm`), builds the tool, writes the manifest at the job's commit and runs the shard on
   half the box's threads, since a run on all of them timed out under its own load (Nov 21). Then it
-  prints the tool's stderr without its progress lines (the timeout line, every `disagreeing`,
-  `pending`, `compiler failure` and `stale run-time stop` line, and the summary), one line
-  `AGREEMENT_DAILY shard=<k/n> head=<sha> exit=<n>`, and the compact report, gzipped and base64'd
-  on one line between `AGREEMENT_REPORT_BEGIN` and `AGREEMENT_REPORT_END`. The compact report is
+  prints the compact report, gzipped and base64'd on one line between `AGREEMENT_REPORT_BEGIN` and
+  `AGREEMENT_REPORT_END`; the tool's stderr without its progress lines (the timeout line, every
+  `disagreeing`, `pending`, `compiler failure` and `stale run-time stop` line, and the summary);
+  and last one line `AGREEMENT_DAILY shard=<k/n> head=<sha> exit=<n>`, so the job's ending, which
+  quotes its log's last 40 lines, reads as the run and never as base64. The compact report is
   `diff.py compact`'s: the head, shard, verdict, void, void_reason, counts, and each program's
   path, judgment, outcome_hash and task. It exits with the tool's exit, 0 for a pass or a partial
   shard, 1 red and 3 void; 64 is a shard that isn't k/n, 65 a preamble step, 66 the build or the
