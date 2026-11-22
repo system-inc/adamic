@@ -500,8 +500,15 @@ func (l *lowering) castUnionWrites(source *checker.Type) string {
 // carries no method flag, so a method every member declares (BuilderProgram | Program's
 // getSyntacticDiagnostics) read as a writable field there and refused a cast the rule admits (#b5w3ycg,
 // Diagnostics' count). A member that declares the name as a writable field, or whose own symbol is synthetic
-// too (an intersection), keeps the slot judged, failing closed.
+// too (an intersection), keeps the slot judged, failing closed. A union holding a primitive or an array keeps
+// its methods judged too, so unionMemberProof routes it to its own cause, as it did (castPrimitiveMember,
+// castArrayLike): the arm is for object members alone.
 func (l *lowering) castUnionUnwritten(source *checker.Type, name string) bool {
+	for _, member := range source.Types() {
+		if castPrimitiveMember(member) || l.castArrayLike(member) {
+			return false
+		}
+	}
 	found := false
 	for _, member := range source.Types() {
 		inside := l.checker.GetPropertyOfType(member, name)
