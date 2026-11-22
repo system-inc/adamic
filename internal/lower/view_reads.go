@@ -117,7 +117,8 @@ func viewReadOf(program *ir.Program, expression ir.Expression) viewRead {
 		ir.StringCall, ir.StringFromCodes, ir.StringIndex, ir.StringIterator, ir.StringLength, ir.ToFixed, ir.Trim,
 		ir.Truthy, ir.TypeOf, ir.TypedArrayFill, ir.TypedArrayNew, ir.TypedArraySet, ir.TypedArraySort,
 		ir.TypedArraySubarray, ir.Unary, ir.UnionToString, ir.UnknownKind, ir.Unwrap, ir.Utf8At, ir.Utf8Length, ir.Void,
-		ir.WeakCollectionDelete, ir.WeakCollectionHas, ir.WeakCollectionNew, ir.WeakOf, ir.WeakSetAdd, ir.WeakTarget, ir.WriteTextFile, ir.Yield:
+		ir.WeakCollectionDelete, ir.WeakCollectionHas, ir.WeakCollectionNew, ir.WeakMapGet, ir.WeakMapSet, ir.WeakOf, ir.WeakSetAdd,
+		ir.WeakTarget, ir.WriteTextFile, ir.Yield:
 		return viewReadsNoField
 	}
 	return 0

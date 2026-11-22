@@ -465,6 +465,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/weak_set_regions.a", true, false},
 	{"internal/oracle/testdata/record_scalar_dynamic_reads.a", true, false},
 	{"internal/oracle/testdata/maybe_collections.a", true, false},
+	{"internal/oracle/testdata/weak_map.a", true, false},
+	{"internal/oracle/testdata/weak_map_regions.a", true, false},
 	// Tail calls keep their frames, so recursion runs out of stack as on Node (native.go).
 	{"internal/oracle/testdata/stack_tail_call.a", true, false},
 	{"internal/oracle/testdata/stack_forever.a", true, false},
