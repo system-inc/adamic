@@ -400,10 +400,10 @@ func (l *lowering) overlapTarget(members, targets []*checker.Type) bool {
 func (l *lowering) unionMemberProof(source, target *checker.Type, stop func(castCause, string) error) (castProof, error) {
 	members, targets := castMembers(source), castMembers(target)
 	if field := l.castUnionWrites(source); field != "" {
-		// A primitive's apparent members (valueOf) read as writable fields here; its cast is judged as a
-		// primitive's, not as a write.
+		// A primitive's apparent members (valueOf) and an array's methods (pop) read as writable fields here;
+		// such a cast is judged as a primitive's or an array's, not as a write.
 		for _, member := range members {
-			if castPrimitiveMember(member) {
+			if castPrimitiveMember(member) || l.castArrayLike(member) {
 				return castProof{}, stop(l.unionCastCause(members, target), "")
 			}
 		}

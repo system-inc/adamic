@@ -127,6 +127,19 @@ func (l *lowering) castStop(node *ast.Node, cause castCause, source, target *che
 	return &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: l.castRepair(node)}
 }
 
+// castArrayLike is whether some member of proven, nullish aside, is an array or a tuple. A cast between
+// arrays isn't named yet: its own cause, an element checked one by one, is a later commit, so it keeps main's
+// sentence rather than borrow a field's words (an array's methods read as writable fields to castUnionWrites,
+// and its number index as an index signature).
+func (l *lowering) castArrayLike(proven *checker.Type) bool {
+	for _, member := range castMembers(l.checker.GetNonNullableType(proven)) {
+		if l.arrayLikeType(member) || checker.IsTupleType(member) {
+			return true
+		}
+	}
+	return false
+}
+
 // castKeptNullish names what a target keeps beside its objects: undefined, null, or both.
 func (l *lowering) castKeptNullish(target *checker.Type) string {
 	switch undefined, null := l.includesUndefined(target), l.includesNull(target); {
@@ -154,6 +167,8 @@ func castPrimitiveMember(proven *checker.Type) bool {
 func (l *lowering) objectCastCause(source, target *checker.Type) castCause {
 	present := l.checker.GetNonNullableType(target)
 	switch {
+	case l.castArrayLike(source) || l.castArrayLike(present):
+		return castUnnamed
 	case source.Flags()&checker.TypeFlagsUnknown != 0:
 		return castFromUnknown
 	case castPrimitiveMember(present) || castPrimitiveMember(source):
@@ -213,6 +228,11 @@ func (l *lowering) distinctTagField(members []*checker.Type) bool {
 // writable field and a refinement are ruled out.
 func (l *lowering) unionCastCause(members []*checker.Type, target *checker.Type) castCause {
 	present := l.checker.GetNonNullableType(target)
+	for _, member := range append(append([]*checker.Type{}, members...), present) {
+		if l.castArrayLike(member) {
+			return castUnnamed
+		}
+	}
 	primitive := false
 	for _, member := range members {
 		primitive = primitive || castPrimitiveMember(member)
