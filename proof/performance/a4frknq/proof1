@@ -1,0 +1,28 @@
+# #a4frknq head proof, round 1. Run with bash after the sealed opening (sandboxed_repositories, sandboxed_npm
+# stage3/api, sandboxed_typescript_source). Never merged. Each step prints PASS or FAIL, then a VERDICT line.
+set -u
+L="$TMPDIR/a4-proof"
+mkdir -p "$L"
+failed=0
+step() { echo "$1 $2"; [ "$1" = PASS ] || failed=1; }
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg)"
+dirs="internal/oracle internal/oracle/countproducts internal/buildcache"
+bad=$(gofmt -l $dirs); if [ -z "$bad" ]; then step PASS gofmt; else step FAIL gofmt; echo "$bad"; fi
+if go vet ./internal/oracle/ ./internal/oracle/countproducts/ ./internal/buildcache/ > "$L/vet.log" 2>&1; then step PASS vet; else step FAIL vet; head -40 "$L/vet.log"; fi
+
+run() {
+	name=$1; shift
+	begun=$SECONDS
+	if go test -count=1 "$@" > "$L/$name.log" 2>&1; then step PASS "$name ($((SECONDS - begun)) s)"; else step FAIL "$name ($((SECONDS - begun)) s)"; grep -E -- '--- FAIL|^FAIL|panic|\.go:[0-9]+:' "$L/$name.log" | head -40; fi
+	grep -E '^(ok|FAIL)\s' "$L/$name.log" | head -3
+}
+run countproducts -timeout 30m ./internal/oracle/countproducts/
+run buildcache-lean -timeout 20m -run 'TestEveryLeanCallersCensusIsATestOfItsPackage|TestOnlyReviewedPackagesBuildLean' ./internal/buildcache/
+run compilercensus -timeout 20m ./internal/compilercensus/
+export ADAMIC_BUILD_LOG="$L/build.log"
+run oracle-products -timeout 50m -v -run '^TestProduct_CountMeasurements[0-9]+$' ./internal/oracle/
+grep -E -- '^--- (PASS|FAIL): TestProduct_CountMeasurements' "$L/oracle-products.log" | sed 's/^/  /'
+echo "== product lines by name and outcome"
+awk '$1 == "build" { print $2, $4 }' "$L/build.log" | sort | uniq -c | sed 's/^/  /'
+run oracle-counts -timeout 50m -run '^(TestCountsAreRecorded.*|TestFamiliesCatchAPlantedCase_TestCountsAreRecorded|TestACountRowsFileIsTheSameBytesTwice)$' ./internal/oracle/
+if [ $failed -eq 0 ]; then echo "VERDICT PASS"; else echo "VERDICT FAIL"; false; fi
