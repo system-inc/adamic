@@ -73,10 +73,10 @@ console.log(String(target(property).pos) + ' ' + String(target(element).end));
 	}
 }
 
-// What the kind-union road leaves refused: in .a the cast is a check no proof erases, and its fix narrows by
+// What the kind-union road leaves stopped: in .a the cast is a check no proof erases, and its fix narrows by
 // the tag; in .a a source whose tag can only be one of the target's kinds makes the test vacuous; a target
-// holding an intersection is a later head; and a member that could be written, through the source, a slot it
-// can't hold is no checked view.
+// holding an intersection is a later head, NotYet in .ts (Adamic's principle on #b5w3ycg, Nov 22); and a member
+// that could be written, through the source, a slot it can't hold is no checked view, refused.
 func TestKindUnionCastStaysRefused(t *testing.T) {
 	t.Parallel()
 	cast := "function target(node: Node): Expression { return (node as PropertyAccessExpression | ElementAccessExpression).expression; }\n"
@@ -89,21 +89,22 @@ interface PropertyAccessExpression extends Node { readonly kind: SyntaxKind.Prop
 interface ElementAccessExpression extends Node { readonly kind: SyntaxKind.ElementAccessExpression; readonly expression: Node }
 function target(node: Node): Node { return (node as PropertyAccessExpression | ElementAccessExpression).expression; }
 `, ".a", "whose tag test is vacuous"},
-		{"intersection member", kindUnionModel + "interface Extra { readonly extra: number }\nfunction target(node: Node): Expression { return (node as (PropertyAccessExpression & Extra) | ElementAccessExpression).expression; }\n", ".ts", "a cast the runtime can't check"},
+		{"intersection member", kindUnionModel + "interface Extra { readonly extra: number }\nfunction target(node: Node): Expression { return (node as (PropertyAccessExpression & Extra) | ElementAccessExpression).expression; }\n", ".ts", "stage 0 can't lower a checked view of the union ElementAccessExpression | (PropertyAccessExpression & Extra) over Node, whose member PropertyAccessExpression & Extra is an intersection yet"},
 		{"widened slot", `enum SyntaxKind { Identifier = 80, Leaf = 90, Other = 91 }
 interface Node { readonly kind: SyntaxKind; parent: Node }
 interface Identifier extends Node { readonly kind: SyntaxKind.Identifier; readonly text: string }
 interface Leaf extends Node { readonly kind: SyntaxKind.Leaf; parent: Identifier }
 interface Other extends Node { readonly kind: SyntaxKind.Other; readonly size: number }
 function target(node: Node): Node { return (node as Leaf | Other).parent; }
-`, ".ts", "a cast the runtime can't check"},
+`, ".ts", "a cast the runtime can't check: a cast from Node to Leaf | Other, whose member Leaf can't be seen as Node"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSourceAs(t, probe.source, probe.extension)
 			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(err.Error(), probe.reason) {
-				t.Fatalf("want a refusal containing %q, got %v", probe.reason, err)
+			var notYet *NotYet
+			if !errors.As(err, &refused) && !(strings.HasPrefix(probe.reason, "stage 0 can't lower") && errors.As(err, &notYet)) || !strings.Contains(err.Error(), probe.reason) {
+				t.Fatalf("want a stop containing %q, got %v", probe.reason, err)
 			}
 		})
 	}
