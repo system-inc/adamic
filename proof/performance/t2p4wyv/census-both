@@ -1,0 +1,26 @@
+# #t2p4wyv's census, main against the head, both on one box: the scan-all census over binder.ts's closure at each
+# commit, checked out in turn, each side in a scratch of its own, then the two stop lists compared. Run with bash
+# after the sealed opening (sandboxed_repositories, sandboxed_npm stage3/api stage3/typescript,
+# sandboxed_typescript_source). Never merged.
+set -u
+BASE=0efbdb083a60086fec3a29687a162bbf21105336
+HEAD_COMMIT=$(git rev-parse HEAD^)
+ROOT=$TMPDIR/t2p-census
+mkdir -p "$ROOT"
+cp proof/performance/t2p4wyv/census "$ROOT/census.sh"
+for side in base head; do
+	commit=$BASE
+	[ "$side" = head ] && commit=$HEAD_COMMIT
+	git -c advice.detachedHead=false checkout -q -f --detach "$commit" || { echo "VERDICT FAIL checkout $side"; exit 1; }
+	mkdir -p "$ROOT/$side"
+	TMPDIR="$ROOT/$side" bash "$ROOT/census.sh" with binder.ts > "$ROOT/$side.log" 2>&1
+	echo "side $side at ${commit:0:12}: exit $?"
+	grep -E '^(STOPS printed|VERDICT|BOUNDARY)' "$ROOT/$side.log"
+	grep '^STOPGZ' "$ROOT/$side.log" | sed 's/^STOPGZ //' | base64 -d | gunzip | sed 's/[[:space:]]*$//' | sort -u > "$ROOT/$side.stops"
+done
+echo "== only at base"
+comm -23 "$ROOT/base.stops" "$ROOT/head.stops"
+echo "== only at the head"
+comm -13 "$ROOT/base.stops" "$ROOT/head.stops"
+echo "base $(wc -l < "$ROOT/base.stops") head $(wc -l < "$ROOT/head.stops")"
+echo "VERDICT OK"
