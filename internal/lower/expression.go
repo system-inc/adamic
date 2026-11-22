@@ -1956,9 +1956,11 @@ func (l *lowering) concatenated(value ir.Expression) ir.Expression {
 // any hint, so it's written as String writes it. One that may hold an object goes through the program's
 // ToPrimitive helper with the default hint, which asks an object's valueOf before its toString, by
 // #09dvwny's closed-world dispatch, when the union is an unknown or an object, as String's is, or holds
-// neither null nor undefined: a union holding a nullable reference may not tell its null from its
-// undefined (logical_and_reference_null.a), so it keeps its NotYet. Anything else is left as it was, and
-// combine's NotYet names it.
+// neither null nor undefined and only objects the helper converts (addedObjectsConvert): a union holding a
+// nullable reference may not tell its null from its undefined (logical_and_reference_null.a), and a
+// library object (a Map, a Date, a Buffer) has no conversion the helper knows, so each keeps its NotYet at
+// compile time rather than a stop at run time. Anything else is left as it was, and combine's NotYet
+// names it.
 func (l *lowering) addedUnion(operand *ast.Node, value ir.Expression) ir.Expression {
 	if value.Type() != ir.Union {
 		return value
@@ -1968,10 +1970,50 @@ func (l *lowering) addedUnion(operand *ast.Node, value ir.Expression) ir.Express
 		return ir.UnionToString{Value: value}
 	}
 	nullish := l.includesUndefined(observed) || l.includesNull(observed) || l.typeOfNull(operand) || observed.Flags()&checker.TypeFlagsVoid != 0
-	if dynamicObjectType(observed) || !nullish {
+	if dynamicObjectType(observed) || !nullish && l.addedObjectsConvert(observed, map[*checker.Type]bool{}) {
 		return l.toDefaultHint(value)
 	}
 	return value
+}
+
+// addedObjectsConvert is whether every object a value of type proven can be is one the ToPrimitive helper
+// converts as Node does: an object the program declares, a class instance or an interface or type literal,
+// with no call or construct signature. A function, a class object, an array (whose join stops on one of only
+// numbers or booleans, arrayToString) and an object of a library type (a Map, a Set, a Date, a Buffer, a
+// typed array) aren't, since the helper stops on each at run time.
+func (l *lowering) addedObjectsConvert(proven *checker.Type, visited map[*checker.Type]bool) bool {
+	proven = l.concrete(proven)
+	if visited[proven] {
+		return true
+	}
+	visited[proven] = true
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range proven.Types() {
+			if !l.addedObjectsConvert(member, visited) {
+				return false
+			}
+		}
+		return true
+	}
+	if proven.Flags()&checker.TypeFlagsObject == 0 {
+		return proven.Flags()&(checker.TypeFlagsIntersection|checker.TypeFlagsNonPrimitive|checker.TypeFlagsUnknown|checker.TypeFlagsAny|checker.TypeFlagsTypeParameter) == 0
+	}
+	if l.isArrayType(proven) {
+		return false
+	}
+	if len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0 || len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
+		return false
+	}
+	symbol := l.unbranded(proven).Symbol()
+	if symbol == nil || len(symbol.Declarations) == 0 {
+		return false
+	}
+	for _, declaration := range symbol.Declarations {
+		if load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+			return false
+		}
+	}
+	return true
 }
 
 // spelled is a string as + and a template write it: one that may be missing (a null reference) is

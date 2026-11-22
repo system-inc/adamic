@@ -51,23 +51,24 @@ func TestAddedUnionWithANullableObjectStaysNotYet(t *testing.T) {
 	}
 }
 
-// An arm with no conversion the helper knows stops loudly at run time on both backends, never a guess: a
-// Map, where Node prints [object Map], and a Date, whose own default hint is the string hint, where Node
-// prints the date (J-kd0h6pv).
-func TestAddedUnionUnknownArmsStop(t *testing.T) {
+// An arm with no conversion the helper knows keeps combine's NotYet at compile time, never a stop at run
+// time: a Map, where Node prints [object Map], and a Date, whose own default hint is the string hint. The
+// helper would stop on both at run time (J-kd0h6pv), but their types say so first. Node's Buffer, the same
+// way, is TestNodeBufferRefusals' (library_node_buffer_test.go).
+func TestAddedUnionUnknownArmsStayNotYet(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source string }{
 		{"map arm", "function pick(flag: boolean): Map<string, number> | string { return flag ? new Map<string, number>() : 's'; }\nconsole.log('' + pick(true));\n"},
 		{"date arm", "function pick(flag: boolean): Date | string { return flag ? new Date(0) : 's'; }\nconsole.log(String(('' + pick(true)).length > 10));\n"},
+		{"function arm", "function pick(flag: boolean): (() => number) | string { return flag ? () => 1 : 's'; }\nconsole.log('' + pick(true));\n"},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
 			t.Run(probe.name+extension, func(t *testing.T) {
 				t.Parallel()
-				program, err := lowerSourceAs(t, probe.source, extension)
-				if err != nil {
-					t.Fatalf("want it lowered, got %v", err)
+				_, err := lowerSourceAs(t, probe.source, extension)
+				if err == nil || !strings.Contains(err.Error(), "a BinaryExpression with a string and") {
+					t.Fatalf("want combine's NotYet, got %v", err)
 				}
-				brandedStopsProgram(t, program, "adamic: panic: ")
 			})
 		}
 	}
