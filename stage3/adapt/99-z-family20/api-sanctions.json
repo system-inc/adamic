@@ -1,0 +1,16 @@
+[
+  {
+    "path": ["JSDocReturnTag", "typeExpression"],
+    "kind": "PropertySignature",
+    "before": "JSDocTypeExpression",
+    "after": "JSDocTypeExpression | undefined",
+    "why": "Adamic, Nov 22, #bbssdcy decision 2 and ruling :78. The return tag factory assigns an own undefined value when no child is supplied."
+  },
+  {
+    "path": ["JSDocThrowsTag", "typeExpression"],
+    "kind": "PropertySignature",
+    "before": "JSDocTypeExpression",
+    "after": "JSDocTypeExpression | undefined",
+    "why": "Adamic, Nov 22, #bbssdcy decision 2 and ruling :78. The throws tag factory assigns an own undefined value when no child is supplied."
+  }
+]
