@@ -302,7 +302,7 @@ var regexWitnessRuntimeSources = map[string]bool{
 	"maybe.c": true, "node_path.c": true, "node_process.c": true, "number.c": true, "object.c": true, "parallel.c": true, "record.c": true,
 	"regexp.c": true, "regexp_regular.c": true, "region.c": true, "share.c": true, "sort.c": true, "stack.c": true, "string.c": true,
 	"string_index.c": true, "string_share.c": true, "union.c": true,
-	"view_unions_mixed.c": true, "weak.c": true,
+	"view_unions_mixed.c": true, "weak.c": true, "weak_collection.c": true,
 }
 
 // regexWitnessRuntime is the shared recipe used by the product units and

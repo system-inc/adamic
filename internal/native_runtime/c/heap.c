@@ -404,7 +404,7 @@ void *adamic_allocate(size_t size, enum adamic_kind kind) {
 
 // deallocate gives a value's memory back: to its chunk, or to free.
 static void deallocate(adamic_heap *heap) {
-	uint32_t slab = heap->slab & ~ADAMIC_SHARED_HEADER;
+	uint32_t slab = heap->slab & ~ADAMIC_SLAB_FLAGS;
 	if (slab == 0) {
 		free(heap);
 		return;
@@ -645,6 +645,9 @@ void adamic_heap_free_children(void *value, void (*let_go)(void *)) {
 	case adamic_kind_weak:
 		adamic_weak_dropped(value);
 		break;
+	case adamic_kind_weak_map:
+		adamic_weak_map_free_children(value, let_go);
+		break;
 	case adamic_kind_foreign:
 		adamic_foreign_dropped(value);
 		break;
@@ -681,7 +684,11 @@ static void free_one(void *value) {
 	}
 	adamic_heap_free_children(value, let_go);
 	// Anything weak that pointed here now points at nothing, before the memory can be anything else.
-	adamic_weak_forget(value);
+	// Only a value a handle was made for carries the named bit; a shared one can't be marked, since
+	// another thread may read its header, so it asks the table as every value once did.
+	if ((((adamic_heap *)value)->slab & (ADAMIC_WEAK_NAMED | ADAMIC_SHARED_HEADER)) != 0) {
+		adamic_weak_forget(value);
+	}
 	adamic_heap_free_storage(value, ((adamic_heap *)value)->slab);
 }
 
@@ -710,6 +717,8 @@ void adamic_heap_thread_end(void) {
 	for (chunk *each = owned_chunks; each != NULL; each = each->owned_next) { drain_remote(each); }
 	// The region blocks this thread kept for its next region (region.c, #yecmp1d).
 	adamic_region_thread_end();
+	// The list weak.c's forget lets go from.
+	adamic_weak_thread_end();
 	free(freeing);
 	freeing = NULL;
 	freeing_capacity = 0;

@@ -39,6 +39,10 @@ typedef struct adamic_counts {
 	// heap_chunks_released is the spare chunks heap.c gave back to the kernel at a quiet point
 	// (#vea9pph), written on a line of its own when there are any, never a column of the counts line.
 	_Atomic size_t heap_chunks_released;
+	// weak_entries is the entries WeakMaps and WeakSets hold (weak_collection.c), and weak_entries_peak
+	// the most they ever held at once, written on a line of their own when there were any.
+	_Atomic size_t weak_entries;
+	_Atomic size_t weak_entries_peak;
 	// join_capacity_peak is the one buffer measure, the exception to this header's rule: the largest
 	// capacity in bytes adamic_array_join's buffer ever reached (array.c). #sbvs9d4's pin reads it to
 	// hold the join's running length check, since resident memory moves with the box. Never printed.
