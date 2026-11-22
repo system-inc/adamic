@@ -1,0 +1,10 @@
+# #k8ed1f2: cause 9 (deprecated-suggestion) census at main f7fe5ce5, both sides in this one job on one box: the base side first (the adaptation's
+# directory set aside), then the with side, each in a scratch directory of its own. Run after environment.sh,
+# sandboxed-job.sh, sandboxed_typescript_source and sandboxed_npm stage3/api stage3/typescript. Never merged.
+set -u
+F="checker.ts"
+D=stage3/adapt/99-readonly-family3-deprecated-suggestion
+ROOT=$TMPDIR
+mkdir -p "$ROOT/base" "$ROOT/with"
+mv "$D" "$ROOT/aside" && TMPDIR="$ROOT/base" bash proof/performance/k8ed1f2-c9/census base $F; code=$?; mv "$ROOT/aside" "$D"; [ $code = 0 ] || exit $code
+TMPDIR="$ROOT/with" bash proof/performance/k8ed1f2-c9/census with $F
