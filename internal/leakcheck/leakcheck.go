@@ -57,9 +57,9 @@ func intentionalExit(run Run) bool {
 	if len(tail) == 0 {
 		return true
 	}
-	// Graph counters and the heap's released chunks (#vea9pph) are fixed runtime records, never
-	// arbitrary diagnostics.
-	records := regexp.MustCompile(`^(adamic: graph counts: regions \d+ merges \d+\n)?(adamic: heap counts: released \d+\n)?`)
+	// Graph counters, the heap's released chunks (#vea9pph) and the weak collections' entries are fixed
+	// runtime records, never arbitrary diagnostics.
+	records := regexp.MustCompile(`^(adamic: graph counts: regions \d+ merges \d+\n)?(adamic: heap counts: released \d+\n)?(adamic: weak entries: live \d+ peak \d+\n)?`)
 	tail = records.ReplaceAll(tail, nil)
 	location := CountsLine.FindIndex(tail)
 	return location != nil && location[0] == 0 && location[1] == len(tail)
