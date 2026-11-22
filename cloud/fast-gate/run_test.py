@@ -3888,6 +3888,9 @@ class PhaseUnreadAgrees(unittest.TestCase):
         # An inert executable (Node's must on 426b75d6): the set names plain files alone, as the lookup decides them.
         self.write("notes/tool.log", "x\n")
         os.chmod(os.path.join(self.tree, "notes/tool.log"), 0o755)
+        # The darwin leg's package, as adamic always holds it: darwin-vet (#gmrwkze) is a base phase, and a tree with no
+        # leg lists no darwin closure, so it keys on the whole tree and nothing reads as unread.
+        self.write("internal/apple/apple.go", "package apple\n")
         self.base = self.commit("phase shapes")
 
     def observed(self, change):
