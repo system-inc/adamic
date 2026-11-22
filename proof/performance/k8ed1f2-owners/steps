@@ -1,0 +1,19 @@
+# Proof for the owner rows of family 3's relocated tracker and directoryExists sites. Never merged.
+set -u
+cd stage3/meter
+if PYTHONDONTWRITEBYTECODE=1 python3 -m unittest report_test > "$TMPDIR/report_test.log" 2>&1; then echo "PASS report_test"; tail -3 "$TMPDIR/report_test.log"; else echo "FAIL report_test"; tail -30 "$TMPDIR/report_test.log"; fi
+PYTHONDONTWRITEBYTECODE=1 python3 - <<'PY'
+import json
+from pathlib import Path
+from report import reason_owner
+owners = json.loads(Path('owners.json').read_text())
+whats = [w for w in owners if owners[w] == '#k8ed1f2']
+print('rows naming #k8ed1f2:', len(whats))
+bad = 0
+for w in whats:
+    open_owner = reason_owner(w, owners, {'k8ed1f2'})
+    closed_owner = reason_owner(w, owners, set())
+    print(('PASS' if open_owner == '#k8ed1f2' and closed_owner == 'OWNER BLANK' else 'FAIL'), 'open', open_owner, 'closed', closed_owner, '|', w[:90])
+    bad += not (open_owner == '#k8ed1f2' and closed_owner == 'OWNER BLANK')
+print('VERDICT', 'OK' if bad == 0 and len(whats) == 2 else 'FAIL')
+PY
