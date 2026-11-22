@@ -24,6 +24,11 @@ void adamic_count_report(void) {
 	if (adamic_counted.heap_chunks_released != 0) {
 		fprintf(stderr, "adamic: heap counts: released %zu\n", adamic_counted.heap_chunks_released);
 	}
+	// The entries weak collections hold (weak_collection.c): live is what a finished program still holds
+	// in a collection it never let go of, apart from the counts line so its rows keep their columns.
+	if (adamic_counted.weak_entries_peak != 0) {
+		fprintf(stderr, "adamic: weak entries: live %zu peak %zu\n", adamic_counted.weak_entries, adamic_counted.weak_entries_peak);
+	}
 	char line[200];
 	int length = snprintf(line, sizeof line, "adamic: counts: allocations %zu frees %zu retains %zu releases %zu peak %zu regions %zu\n",
 		adamic_counted.allocations, adamic_counted.frees, adamic_counted.retains, adamic_counted.releases, adamic_counted.peak, adamic_counted.regions);

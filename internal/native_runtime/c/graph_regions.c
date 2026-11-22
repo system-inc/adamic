@@ -186,6 +186,8 @@ const char *adamic_region_unmovable(const adamic_heap *heap) {
 	case adamic_kind_number: return "a number box";
 	case adamic_kind_boolean: return "a boolean box";
 	case adamic_kind_weak: return "a Weak";
+	// Its keys' handles name it by address (weak.c), which a move would leave naming freed memory.
+	case adamic_kind_weak_map: return "a weak collection";
 	case adamic_kind_typed_array: return "a typed array";
 	case adamic_kind_typed_array_iterator: return "a typed array iterator";
 	case adamic_kind_async_frame: return "an async frame";
@@ -935,8 +937,11 @@ void adamic_graph_free(void *value, void (*release)(void *)) {
 	outside_release = release;
 	adamic_heap *head = root == NULL ? heap : root->head;
 	for (adamic_heap *each = head; each != NULL; each = adamic_graph_header_of(each)->next) {
-		adamic_weak_forget(each);
+		// Gated as free_one is (heap.c): only a member a handle was made for carries the named bit, and
+		// a member is never shared (share.c refuses one).
+		if ((each->slab & (ADAMIC_WEAK_NAMED | ADAMIC_SHARED_HEADER)) != 0) { adamic_weak_forget(each); }
 #ifdef ADAMIC_CANONICAL_CLOSURES
+		// An interior cell counts zero and has no flag of its own, so it's never marked: ungated.
 		if (each->kind == adamic_kind_environment) {
 			adamic_environment *environment = (adamic_environment *)each;
 			for (size_t i = 0; i < environment->count; i++) { adamic_weak_forget(&environment->cells[i]); }
