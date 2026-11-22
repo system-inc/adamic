@@ -60,7 +60,8 @@ const helperOf = new Map(creators);
 const kept = new Set(['parenthesizer', 'converters']);
 
 const text = fs.readFileSync(fileName, 'utf8');
-if (text.includes('\r')) throw new Error(`${relative} holds a carriage return`);
+// The tree keeps upstream's CRLF line endings. Each edit replaces one member's text with one line and writes no line
+// ending, so the file's endings are kept as they are.
 const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true);
 const factoryFunctions = source.statements.filter(node => ts.isFunctionDeclaration(node) && node.name?.text === 'createNodeFactory');
 if (factoryFunctions.length !== 1) throw new Error(`expected one createNodeFactory in ${relative}, found ${factoryFunctions.length}`);
