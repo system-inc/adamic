@@ -1,0 +1,7 @@
+set -u
+P=cmd/adamic-performance
+f=0
+if [ -z "$(gofmt -l $P)" ]; then echo "PASS gofmt"; else echo "FAIL gofmt"; f=1; fi
+if go vet ./$P/ > "$TMPDIR/vet.log" 2>&1; then echo "PASS vet"; else echo "FAIL vet"; cat "$TMPDIR/vet.log"; f=1; fi
+if go test -count=1 ./$P/ > "$TMPDIR/t.log" 2>&1; then echo "PASS tests"; tail -1 "$TMPDIR/t.log"; else echo "FAIL tests"; tail -30 "$TMPDIR/t.log"; f=1; fi
+[ $f -eq 0 ] && echo "VERDICT PASS" || { echo "VERDICT FAIL"; false; }
