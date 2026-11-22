@@ -3742,6 +3742,12 @@ func TestEveryLeanCallersCensusIsATestOfItsPackage(t *testing.T) {
 			t.Errorf("runtimeproducts' census doesn't name %s", want)
 		}
 	}
+	countproducts := slices.IndexFunc(leanCallers, func(reviewed leanCaller) bool { return reviewed.pkg == "internal/oracle/countproducts" })
+	for _, want := range []string{"TestTheCountBuildReachesOnlyItsDeclaredFiles", "TestTheCountProductsPathReadsOnlyWhatItsKeyHolds"} {
+		if countproducts < 0 || !slices.Contains(leanCallers[countproducts].census.tests, want) {
+			t.Errorf("countproducts' census doesn't name %s", want)
+		}
+	}
 	if !leanRecipeTaken("") || leanRecipeTaken(modulePath+"/stage1/cohere/lint") {
 		t.Error("buildcache's own build must take the lean recipe, and a package that isn't a lean caller never")
 	}
