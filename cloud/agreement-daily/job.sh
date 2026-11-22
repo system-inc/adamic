@@ -5,11 +5,10 @@
 #
 #   source /opt/adamic-block/environment.sh && source cloud/sandboxed-job.sh && bash cloud/agreement-daily/job.sh 2/4
 #
-# It prints, in order: the tool's stderr lines that aren't progress (its timeout line, every disagreeing, pending,
-# compiler failure and stale run-time stop line, and its summary); one line
-# `AGREEMENT_DAILY shard=<k/n> head=<sha> exit=<the tool's exit>`; then the compact report, diff.py compact's JSON
-# gzipped and base64'd on one line, between `AGREEMENT_REPORT_BEGIN` and `AGREEMENT_REPORT_END`, which
-# `diff.py extract` reads back out of the job's log.
+# It prints, in order: the compact report, diff.py compact's JSON gzipped and base64'd on one line, between
+# `AGREEMENT_REPORT_BEGIN` and `AGREEMENT_REPORT_END`, which `diff.py extract` reads back out of the job's log; the
+# tool's stderr lines that aren't progress (its timeout line, every disagreeing, pending, compiler failure and stale
+# run-time stop line, and its summary); and last one line `AGREEMENT_DAILY shard=<k/n> head=<sha> exit=<the tool's exit>`.
 #
 # Exit: the tool's own, 0 for a pass or a partial shard, 1 for red, 3 for void. Before the tool, 64 is a shard that
 # isn't k/n, 65 a preamble step that failed (the tree's commit, its submodules as repositories, npm) and 66 the tool's
@@ -48,13 +47,15 @@ toolExit=0
 "$TMPDIR/agreement-tool" --agreement --head "$head" --manifest "$TMPDIR/manifest.json" --shard "$shard" --workers "$workers" \
 	--json > "$TMPDIR/report.json" 2> "$TMPDIR/report.err" || toolExit=$?
 
-grep -Ev '^agreement: [0-9]+ s: ' "$TMPDIR/report.err"
-echo "AGREEMENT_DAILY shard=$shard head=$head exit=$toolExit"
+# The report goes first and the tool's lines last, since a job's ending quotes its log's last 40 lines: they read as
+# the run's summary and disagreements, never as a line of base64.
 python3 -I cloud/agreement-daily/diff.py compact "$TMPDIR/report.json" > "$TMPDIR/compact.json" ||
-	{ echo "agreement-daily: the tool's report.json didn't parse, so there is no report"; exit 67; }
+	{ grep -Ev '^agreement: [0-9]+ s: ' "$TMPDIR/report.err"; echo "agreement-daily: the tool's report.json didn't parse, so there is no report"; exit 67; }
 report=$(gzip -nc < "$TMPDIR/compact.json" | base64 -w0) && [ -n "$report" ] ||
 	{ echo "agreement-daily: the compact report didn't gzip and base64, so there is no report"; exit 67; }
 echo AGREEMENT_REPORT_BEGIN
 echo "$report"
 echo AGREEMENT_REPORT_END
+grep -Ev '^agreement: [0-9]+ s: ' "$TMPDIR/report.err"
+echo "AGREEMENT_DAILY shard=$shard head=$head exit=$toolExit"
 exit "$toolExit"
