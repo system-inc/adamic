@@ -27,16 +27,20 @@ function apply(v: Visitor<number>): number { return v(3, 1); }
 // row stops at its forward, line 9. Inside a generic body (Compiler's ask): a Visitor<A> written into a
 // Visitor<A> slot is the same type, so the first stop moves to line 10, and the mutant brings it back to
 // 9; a V constrained to Visitor<number>, forwarded into a Visitor<number> parameter, is a type that only
-// relates, and stops at its forward, line 9, both ways.
+// relates, and stops at its forward, line 9, both ways. The rule's neighbor (Language's should): an
+// overload set written into a slot typed as itself is identity at the value's own creation, so nothing
+// binds there, and what stops it is the overloaded-function-value NotYet at the value. Pinned by its
+// words, so the day that stop lifts, this row goes red here and not in a program.
 func TestValueOfItsSlotsTypeBindsNothing(t *testing.T) {
 	t.Parallel()
 	for _, row := range []struct {
-		name, source, at string
+		name, source, at, what string
 	}{
-		{"forward", valueIdentityVisitor + "function forward(v: Visitor<number>): number { return apply(v); }\nconst made: Visitor<number> = id;\nconsole.log(String(forward(made)));\n", "main.ts:10:"},
-		{"generic_own_type", valueIdentityVisitor + "function forward<A extends number>(v: Visitor<A>): number { const w: Visitor<A> = v; return 1; }\nconst made: Visitor<number> = id;\nconsole.log(String(forward(made)));\n", "main.ts:10:"},
-		{"generic_constrained", valueIdentityVisitor + "function forward<V extends Visitor<number>>(v: V): number { return apply(v); }\nconst made: Visitor<number> = id;\nconsole.log(String(forward(made)));\n", "main.ts:9:"},
-		{"forward_differs", valueIdentityVisitor + "function applyOne(v: Visitor<1>): number { return v(3, 1); }\nfunction forward(v: Visitor<number>): number { return applyOne(v); }\nconst made: Visitor<number> = id;\nconsole.log(String(forward(made)));\n", "main.ts:10:"},
+		{"overload_set_into_its_own_type", valueIdentityVisitor + "const g: typeof id = id;\nconsole.log(String(g(3, 1)));\n", "main.ts:9:", "overloaded function as a value"},
+		{"forward", valueIdentityVisitor + "function forward(v: Visitor<number>): number { return apply(v); }\nconst made: Visitor<number> = id;\nconsole.log(String(forward(made)));\n", "main.ts:10:", "can't be read"},
+		{"generic_own_type", valueIdentityVisitor + "function forward<A extends number>(v: Visitor<A>): number { const w: Visitor<A> = v; return 1; }\nconst made: Visitor<number> = id;\nconsole.log(String(forward(made)));\n", "main.ts:10:", "can't be read"},
+		{"generic_constrained", valueIdentityVisitor + "function forward<V extends Visitor<number>>(v: V): number { return apply(v); }\nconst made: Visitor<number> = id;\nconsole.log(String(forward(made)));\n", "main.ts:9:", "can't be read"},
+		{"forward_differs", valueIdentityVisitor + "function applyOne(v: Visitor<1>): number { return v(3, 1); }\nfunction forward(v: Visitor<number>): number { return applyOne(v); }\nconst made: Visitor<number> = id;\nconsole.log(String(forward(made)));\n", "main.ts:10:", "can't be read"},
 	} {
 		t.Run(row.name, func(t *testing.T) {
 			t.Parallel()
@@ -46,8 +50,8 @@ func TestValueOfItsSlotsTypeBindsNothing(t *testing.T) {
 				t.Fatalf("got %v, want NotYet at %s", err, row.at)
 			}
 			t.Logf("%s: %s: %s", row.name, notYet.Where, notYet.What)
-			if !strings.Contains(notYet.Where, row.at) {
-				t.Fatalf("NotYet at %s: %q, want it at %s", notYet.Where, notYet.What, row.at)
+			if !strings.Contains(notYet.Where, row.at) || !strings.Contains(notYet.What, row.what) {
+				t.Fatalf("NotYet at %s: %q, want it at %s, saying %q", notYet.Where, notYet.What, row.at, row.what)
 			}
 		})
 	}

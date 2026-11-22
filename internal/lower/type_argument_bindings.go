@@ -97,7 +97,10 @@ func (l *lowering) valueTypeArgumentBindings(node *ast.Node, visit func(typeArgu
 		// parameter, is no instantiation: nothing is related at the value, so it binds nothing here, and
 		// each call through the slot makes and judges its own bindings, as one generic slot does below
 		// (#3zvr9mq, Adamic's identity ruling, tsc's 22 visitor forwards). It's the checker's same type,
-		// undefined set aside on both sides, never a type that merely relates.
+		// undefined set aside on both sides, never a type that merely relates. Its neighbor: an overload set
+		// written into a slot typed as itself is identity too, and only the overloaded-function-value NotYet
+		// at the value stops it (TestValueOfItsSlotsTypeBindsNothing pins that stop). A per-overload lowering
+		// that lifts it must make one instance per overload there, since nothing is judged here.
 		if l.withoutUndefined(l.concrete(own)) == l.withoutUndefined(contextual) {
 			continue
 		}
