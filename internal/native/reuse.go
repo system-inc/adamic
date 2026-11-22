@@ -644,6 +644,11 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 		if field.Nullish != 0 && e.fieldTypesNeeded() {
 			e.line("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %s;", object, object, slot, fieldInitialRepresentation(field, slot+"->reference"))
 		}
+		if e.constructionNeeded() {
+			// #sx8pbw1's publish gap, as objectLiteral's spread arm: the object taken over or copied keeps a slot its
+			// staged source reserved absent unwritten, so the field written there is published and made ready.
+			e.line("adamic_object_publish(%s, adamic_slot_index(%s, %s)); adamic_object_initialized(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, object, object, slot, map[bool]int{true: 0, false: 1}[field.Uninitialized && !field.Unset])
+		}
 	}
 	// A spread produces a plain object, even when its source allocation is reused.
 	e.line("%s->class = NULL;", object)
