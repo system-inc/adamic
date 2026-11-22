@@ -210,13 +210,13 @@ static void stop_start(void) {
 	}
 }
 
-// stop_with installs stopped for a signal, unless the program itself ignores it (SIGPIPE, SIGXFSZ
-// and SIGUSR1, as Node does). What a parent ignored was reset at startup (adamic_start).
+// stop_with installs stopped for a signal, without asking what it held: a parent's ignore of it was
+// reset at startup (adamic_start), or is replaced here, as the reset would have, and none of the
+// signals the program ignores itself (SIGPIPE, SIGXFSZ and SIGUSR1, as Node does) is one of
+// stop_signals or a real-time signal. Asking cost a sigaction a signal, 42 on Linux, about a third of
+// the handlers' share of a hello world's start (#7z36qn6). TestSignal*IgnoredByTheProgramNative hold
+// the program's own ignores, so a stop signal added from among them goes red there.
 static void stop_with(int signal_number) {
-	struct sigaction current;
-	if (sigaction(signal_number, NULL, &current) != 0 || current.sa_handler == SIG_IGN) {
-		return;
-	}
 	struct sigaction handler;
 	memset(&handler, 0, sizeof handler);
 	handler.sa_handler = stopped;
