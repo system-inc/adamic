@@ -6,8 +6,10 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"io"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -545,6 +547,136 @@ sandboxed_repositories $SANDBOXED_REPOSITORIES_PATHS && echo "again=ok"
 				if status := standInGit(t, filepath.Join(tree, path), "status", "--porcelain"); status != "" {
 					t.Errorf("%s doesn't read clean:\n%s", path, status)
 				}
+			}
+		})
+	}
+}
+
+// sandboxed_repositories on a tree the runner's lay didn't lay says it's the box's gap, not the head's red (the trust
+// seat's ruling on #cq8rn2s): a job whose command didn't open with its sealed `source /opt/adamic-block/environment.sh`
+// reached a house box's keeper, which laid a git worktree with no submodules and no .tracked, and the refusal that the
+// manifest wasn't there read as the head's exit 1. The test lays layStandInTree's tree and takes its manifest away: gone
+// with sub an empty directory, as a keeper's worktree holds it, or a link to the manifest moved aside, which is no
+// manifest either. Each exits 3 with one `GAP sandboxed:` line naming the sealed opening, through a caller's `|| exit 1`,
+// and nothing is written under sub. A tree with no .tracked whose submodules are already repositories at their pins, as
+// lay.sh's --repositories leaves them, still passes.
+//
+// Mutant: the gap's `exit 3` made `return 1` (red on both gaps: the caller's `|| exit 1` ends the job with 1).
+func TestSandboxedRepositoriesSaysAKeeperLaidTreeIsTheBoxsGap(t *testing.T) {
+	t.Parallel()
+	script, err := filepath.Abs("sandboxed-job.sh")
+	if err != nil {
+		t.Fatal(err)
+	}
+	const gap = "GAP sandboxed: this tree carries no runner's manifest (.tracked)"
+	for _, test := range []struct {
+		name string
+		// forge changes the laid tree before the script runs; laidFirst lays it with its manifest and then moves the
+		// manifest aside, in the script, before the call the test reads; exit is the script's exit and said a line it says.
+		forge     func(t *testing.T, directory, tree string)
+		laidFirst bool
+		exit      int
+		said      string
+	}{
+		{"a keeper's worktree, sub an empty directory and no .tracked", func(t *testing.T, directory, tree string) {
+			for _, gone := range []string{filepath.Join(tree, ".tracked"), filepath.Join(tree, "sub")} {
+				if err := os.RemoveAll(gone); err != nil {
+					t.Fatal(err)
+				}
+			}
+			if err := os.Mkdir(filepath.Join(tree, "sub"), 0o755); err != nil {
+				t.Fatal(err)
+			}
+		}, false, 3, gap},
+		{"a .tracked that is a link to the manifest", func(t *testing.T, directory, tree string) {
+			aside := filepath.Join(directory, "manifest")
+			if err := os.Rename(filepath.Join(tree, ".tracked"), aside); err != nil {
+				t.Fatal(err)
+			}
+			if err := os.Symlink(aside, filepath.Join(tree, ".tracked")); err != nil {
+				t.Fatal(err)
+			}
+		}, false, 3, gap},
+		{"no .tracked, its submodules already repositories at their pins", nil, true, 0,
+			"submodules at their pins: 0 laid as repositories from their files, 2 already one"},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+			directory := t.TempDir()
+			tree, _ := layStandInTree(t, directory)
+			if test.forge != nil {
+				test.forge(t, directory, tree)
+			}
+			// The `|| exit 1` is a caller's chain: only an exit inside the call ends the job with 3
+			command := toolchain.Command("bash", "-c", `. "$SANDBOXED_JOB_SCRIPT" || exit 1
+if [ -n "$SANDBOXED_REPOSITORIES_LAID_FIRST" ]; then
+	sandboxed_repositories || exit 1
+	mv .tracked "$TMPDIR/runner-manifest" || exit 1
+fi
+sandboxed_repositories || exit 1
+echo "returned=ok"
+`)
+			if command.Err != nil {
+				t.Fatal(command.Err)
+			}
+			command.Dir = tree
+			environment := command.Env
+			if environment == nil {
+				environment = os.Environ()
+			}
+			kept := make([]string, 0, len(environment)+3)
+			for _, variable := range environment {
+				name, _, _ := strings.Cut(variable, "=")
+				switch name {
+				case "TMPDIR", "ADAMIC_BUILD_CACHE_DIR", "LOOM_JOB_SCRATCH", "GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE":
+				default:
+					kept = append(kept, variable)
+				}
+			}
+			laidFirst := ""
+			if test.laidFirst {
+				laidFirst = "yes"
+			}
+			command.Env = append(kept, "TMPDIR="+filepath.Join(directory, "tmp"), "SANDBOXED_JOB_SCRIPT="+script,
+				"SANDBOXED_REPOSITORIES_LAID_FIRST="+laidFirst)
+			output, err := command.CombinedOutput()
+			said := string(output)
+			exit := 0
+			if err != nil {
+				var exitError *exec.ExitError
+				if !errors.As(err, &exitError) {
+					t.Fatalf("bash: %v\n%s", err, said)
+				}
+				exit = exitError.ExitCode()
+			}
+			if exit != test.exit {
+				t.Fatalf("want the script to exit %d, got %d:\n%s", test.exit, exit, said)
+			}
+			if test.exit == 0 {
+				if !strings.Contains(said, "returned=ok") || !strings.Contains(said, test.said) {
+					t.Errorf("want sandboxed_repositories to return 0 saying %q, got:\n%s", test.said, said)
+				}
+				return
+			}
+			var gapLines []string
+			for _, line := range strings.Split(said, "\n") {
+				if strings.HasPrefix(line, "GAP sandboxed:") {
+					gapLines = append(gapLines, line)
+				}
+			}
+			if len(gapLines) != 1 || !strings.HasPrefix(gapLines[0], test.said) {
+				t.Fatalf("want one line starting %q, got:\n%s", test.said, said)
+			}
+			for _, want := range []string{"sub's pin can't be proved here", "'source /opt/adamic-block/environment.sh && ...'"} {
+				if !strings.Contains(gapLines[0], want) {
+					t.Errorf("want the GAP line to say %q, got:\n%s", want, gapLines[0])
+				}
+			}
+			if strings.Contains(said, "returned=ok") {
+				t.Errorf("want nothing after the gap, got:\n%s", said)
+			}
+			if _, err := os.Lstat(filepath.Join(tree, "sub", ".git")); !os.IsNotExist(err) {
+				t.Errorf("want nothing written under sub, but its .git reads as there or unreadable (%v)", err)
 			}
 		})
 	}
