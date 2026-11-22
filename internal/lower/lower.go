@@ -882,4 +882,8 @@ type lowering struct {
 	// toPrimitive is the program's to_string_hint helper plus one, or zero before a String of a union
 	// that may hold an object needs it (to_primitive.go).
 	toPrimitive int
+
+	// keptBufferUnionView is set when a keeping walk met a nodeBufferUnion seen as another type at some
+	// depth (nodeBufferUnionSeenAs), so valueSlotKeeps can stop it with the Buffer words.
+	keptBufferUnionView bool
 }

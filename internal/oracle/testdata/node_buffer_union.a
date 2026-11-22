@@ -1,0 +1,26 @@
+import { Buffer } from 'node:buffer';
+// A Buffer held in a string | Buffer slot is the same allocation, held in the union as itself, and every
+// read narrows it back by typeof: '' first, then a Buffer written directly, then one passed through a
+// string | Buffer parameter, its high byte masked by 'ascii', then '' again, which releases the Buffer the
+// union held. revcomp's headerPartial is this slot (bench/holdout/revcomp.a).
+let held: string | Buffer = '';
+function show(label: string): void {
+	if (typeof held === 'string') {
+		console.log(`${label} ${typeof held} ${held.length} [${held}]`);
+	} else {
+		console.log(`${label} ${typeof held} ${held.length} ${held[0] ?? -1} ${held.toString('ascii')}`);
+	}
+}
+function keep(value: string | Buffer): void {
+	held = value;
+}
+show('empty');
+held = Buffer.from('>ONE');
+show('buffer');
+keep(Buffer.from([0x3e, 0xd4, 0x57, 0x4f]));
+show('parameter');
+keep('');
+show('empty again');
+held = Buffer.from('>THREE');
+held = '';
+show('released');
