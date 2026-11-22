@@ -165,16 +165,8 @@ func (l *lowering) resolveCountTypes(modules []*ast.SourceFile) {
 		}
 	}
 	l.resolveStructuralMethodThunks(modules)
-	l.result.FunctionTypeTargets = map[int][]int{}
-	for id, proven := range types {
-		l.cycleTypeID(proven) // Retain transient count-target types for differential tests.
-		l.result.FunctionTypeTargets[id] = []int{}
-		for _, record := range l.closureRecords {
-			if l.checker.IsTypeAssignableTo(record.proven, proven) {
-				l.result.FunctionTypeTargets[id] = append(l.result.FunctionTypeTargets[id], record.function)
-			}
-		}
-	}
+	// Once per pair of identity classes of targets and records, not per pair of types (count_types_classes.go).
+	l.countTypeTargets(types)
 	// Reader facts must remain separate from padding a virtual C signature.
 	for changed := true; changed; {
 		changed = false
