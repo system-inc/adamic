@@ -1,0 +1,24 @@
+// A key a fresh function made, handed to a WeakSet (#hcgy751). A statement region's value can't be a
+// weak key, since its region frees it whatever counts it (weak.c refuses one), so a parameter that
+// keeps its argument in a WeakSet lets it escape, and the key is made on the counted heap. A parameter
+// only tested with has flows nowhere, and its key may live in the statement's region: has looks it up
+// without making it a handle.
+const seen = new WeakSet<{ round: number }>();
+function build(round: number): { round: number } {
+	return { round };
+}
+function keep(key: { round: number }): number {
+	seen.add(key);
+	return seen.has(key) ? key.round : -1;
+}
+function look(key: { round: number }): number {
+	return seen.has(key) ? -1 : key.round;
+}
+let kept = 0;
+let looked = 0;
+for (let round = 1; round <= 3; round++) {
+	kept += keep(build(round));
+	looked += look(build(round));
+}
+const lasting = build(7);
+console.log(`kept ${kept} looked ${looked} ${keep(lasting)} ${seen.has(lasting)} ${look(lasting)}`);
