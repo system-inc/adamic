@@ -1,1 +1,1 @@
-awaits #24kvb6k: Sub only inherits count from Base, and a checked view admits a class constructor by its own data statics alone, so both backends stop where Node prints 3
+awaits #775qbxz: the selection admits Sub, whose count Base holds, but the read through a local typeof narrowed stops at locals.go's narrowed-union check, which asks typeof === 'object' of a class
