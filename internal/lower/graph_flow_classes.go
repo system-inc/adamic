@@ -331,6 +331,8 @@ var graphFlowRules = map[reflect.Type]graphFlowRule{
 	reflect.TypeFor[ir.WeakSetAdd]():               {class: graphFlowCannotHold, why: "its WeakSet, which holds no key strongly (weak_collection.go:20)"},
 	reflect.TypeFor[ir.WeakCollectionHas]():        {class: graphFlowCannotHold, why: "a boolean (weak_collection.go:29)"},
 	reflect.TypeFor[ir.WeakCollectionDelete]():     {class: graphFlowCannotHold, why: "a boolean (weak_collection.go:36)"},
+	reflect.TypeFor[ir.WeakMapGet]():               {class: graphFlowCannotHold, why: "a number, a boolean or a string, the only values a WeakMap holds so far (weak_collection.go:47)"},
+	reflect.TypeFor[ir.WeakMapSet]():               {class: graphFlowCannotHold, why: "its WeakMap, which holds no key strongly and only numbers, booleans and strings (weak_collection.go:58)"},
 
 	// Stops: made outside the plan, or refused in a graph program.
 	reflect.TypeFor[ir.IteratorNext]():         {class: graphFlowStops, why: "a fresh { value, done } (generator.go:27) with no GraphTypes, which holds the yielded value: a graph type when the program holds results (Memory's row 12)"},
