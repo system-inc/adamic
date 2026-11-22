@@ -1,0 +1,31 @@
+# #fjs0yd9's proof. Never merged. gofmt, vet and cmd/adamic-performance whole at the head, then two mutants, each
+# applied by exact text, checked applied, run, and restored.
+set -u
+failed=0
+step() { echo "$1 $2"; [ "$1" = PASS ] || failed=1; }
+P=cmd/adamic-performance
+if [ -z "$(gofmt -l $P)" ]; then step PASS gofmt; else step FAIL gofmt; gofmt -l $P; fi
+if go vet ./$P/ > "$TMPDIR/vet.log" 2>&1; then step PASS vet; else step FAIL vet; cat "$TMPDIR/vet.log"; fi
+if go test -count=1 ./$P/ > "$TMPDIR/head.log" 2>&1; then step PASS head; tail -1 "$TMPDIR/head.log"; else step FAIL head; tail -40 "$TMPDIR/head.log"; fi
+
+mutant() {
+	name=$1 old=$2 new=$3 test=$4
+	cp $P/note.go "$TMPDIR/note.go"
+	python3 - "$P/note.go" "$old" "$new" <<'PY'
+import sys
+path, old, new = sys.argv[1:]
+text = open(path).read()
+assert text.count(old) == 1, 'mutant target not found once: ' + old
+open(path, 'w').write(text.replace(old, new))
+PY
+	if [ $? -ne 0 ]; then step FAIL "mutant-$name-applied"; cp "$TMPDIR/note.go" $P/note.go; return; fi
+	go test -count=1 -run "^${test}\$" ./$P/ > "$TMPDIR/mutant-$name.log" 2>&1
+	code=$?
+	grep -E -- '^(--- FAIL|ok|FAIL)|note_test.go' "$TMPDIR/mutant-$name.log" | head -8
+	if [ $code -ne 0 ] && grep -q -- "--- FAIL: $test" "$TMPDIR/mutant-$name.log"; then step PASS "mutant-$name-red"; else step FAIL "mutant-$name-red"; tail -20 "$TMPDIR/mutant-$name.log"; fi
+	cp "$TMPDIR/note.go" $P/note.go
+}
+mutant joined 'if len(apart.shared) > 0 {' 'if len(apart.shared)+len(apart.compile)+len(apart.execute) > 0 {' TestPerformanceNoteComparesEachHalfOnItsOwnToolsAndRounds
+mutant inclusive 'max(delta, -delta) <= movedFloor(before.Median)' 'max(delta, -delta) < movedFloor(before.Median)' TestPerformanceNoteMovesOnlyPastTheFloor
+if go test -count=1 ./$P/ > "$TMPDIR/restored.log" 2>&1; then step PASS restored; else step FAIL restored; tail -20 "$TMPDIR/restored.log"; fi
+if [ $failed -eq 0 ]; then echo "VERDICT PASS"; else echo "VERDICT FAIL"; false; fi
