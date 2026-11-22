@@ -1,0 +1,45 @@
+# #a4frknq's digest churn, run with bash after the sealed opening (with sandboxed_repositories and
+# sandboxed_typescript_source). Never merged. At each of main's first-parent commits named below, in order, the tree is
+# checked out, the digest probe copied in, and every count row keyed (no build, no run). Then, for each consecutive
+# pair: how many rows' digests moved, and how many of the 16 product shards hold at least one moved row, which is how
+# many shards a tree at that commit rebuilds whole.
+set -u
+L="$TMPDIR/churn"
+mkdir -p "$L"
+echo "A4 on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg)"
+cp internal/oracle/a4frknq_digests_test.go "$L/probe_test.go"
+COMMITS="1ad93a85c0^ 1ad93a85c0 6b53dccc54 5ff5724930 ee631cf9e6 87e1e44ce1 5fec2a2b75 91fa7305ef e86d56d2c4 19c05dd6fe"
+previous=""
+for commit in $COMMITS; do
+	sha=$(git rev-parse "$commit") || { echo "A4 FAIL no commit $commit"; exit 1; }
+	git -c advice.detachedHead=false checkout -q -f --detach "$sha" || { echo "A4 FAIL checkout $commit"; exit 1; }
+	cp "$L/probe_test.go" internal/oracle/a4frknq_digests_test.go
+	begun=$SECONDS
+	(cd internal/oracle && A4_DIGESTS="$L/${sha:0:10}.tsv" go test -count=1 -run '^TestPerformanceA4frknqRowDigests$' -v . > "$L/${sha:0:10}.log" 2>&1)
+	code=$?
+	rows=$(wc -l < "$L/${sha:0:10}.tsv" 2>/dev/null || echo 0)
+	echo "A4 keyed ${sha:0:10} exit $code rows $rows in $((SECONDS - begun)) s $(grep -o 'shared [0-9a-f]*' "$L/${sha:0:10}.log" | head -1) | $(git log -1 --format=%s "$sha" | cut -c1-90)"
+	[ $code -eq 0 ] || grep -E -- '--- FAIL|\.go:[0-9]+:' "$L/${sha:0:10}.log" | head -8
+	rm -f internal/oracle/a4frknq_digests_test.go
+	if [ -n "$previous" ] && [ -s "$L/${previous}.tsv" ] && [ -s "$L/${sha:0:10}.tsv" ]; then
+		python3 - "$L/${previous}.tsv" "$L/${sha:0:10}.tsv" "$previous" "${sha:0:10}" <<'PY'
+import sys
+def read(path):
+    rows = {}
+    for line in open(path):
+        key, shard, digest = line.rstrip('\n').split('\t')
+        rows[key] = (int(shard), digest)
+    return rows
+before, after = read(sys.argv[1]), read(sys.argv[2])
+moved = [key for key in after if key in before and before[key][1] != after[key][1]]
+new = [key for key in after if key not in before]
+gone = [key for key in before if key not in after]
+shards = sorted({after[key][0] for key in moved + new} | {before[key][0] for key in gone})
+per_shard = [sum(1 for key in moved if after[key][0] == shard) for shard in range(16)]
+print(f"A4 churn {sys.argv[3]} to {sys.argv[4]}: rows {len(after)}, moved {len(moved)}, new {len(new)}, gone {len(gone)}, "
+      f"shards with a change {len(shards)} of 16, moved per shard {per_shard}")
+PY
+	fi
+	previous=${sha:0:10}
+done
+echo "VERDICT OK"
