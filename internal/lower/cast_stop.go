@@ -283,10 +283,10 @@ func (l *lowering) unionTargetCause(source, present *checker.Type) (castCause, s
 		if member.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(member) || !l.checker.IsTypeAssignableTo(member, source) {
 			continue
 		}
-		if err := l.widened(member, source, map[[2]*checker.Type]bool{}); err != nil {
-			detail := l.checker.TypeToString(member) + " can't be seen as " + l.checker.TypeToString(source)
-			if reason, ok := err.(*Refused); ok {
-				detail += " (" + reason.What + ")"
+		if found := l.widened(member, source, map[[2]*checker.Type]bool{}); found != nil {
+			detail := l.checker.TypeToString(member) + " can't be seen as " + l.checker.TypeToString(source) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read"
+			if found.readonlyField != "" {
+				detail = l.checker.TypeToString(member) + " can't be seen as " + l.checker.TypeToString(source) + ", whose field " + found.readonlyField + " " + l.checker.TypeToString(member) + " keeps readonly and " + l.checker.TypeToString(source) + " can write"
 			}
 			return castWidenedMember, detail
 		}
