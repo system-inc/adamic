@@ -171,21 +171,29 @@ func functionPackage(symbol string) string {
 // (TestALibraryOraclesBuildReadsNoStateButItsInitializers); and stage3/lane's adapted tree, a LeanProductOf build of the
 // TypeScript source and the two installs it's handed, settled by its own package's binary, never lane's, whose census
 // holds its reach to its one file and buildcache's slice (TestTheAdaptedTreeBuildReachesOnlyItsDeclaredFile), and
-// whose runtime reads, apply.py's and node's, are its window's (TestAHandedBuildsUndeclaredReadIsKeyedByItsWindow).
+// whose runtime reads, apply.py's and node's, are its window's (TestAHandedBuildsUndeclaredReadIsKeyedByItsWindow); and
+// internal/oracle's counts table, a shard at a time, each a LeanProductOf build of the rows file internal/oracle writes,
+// clang, the checkout and the counted archives it's handed, through native.BuildLean, settled by oracle's sequential
+// TestProduct_CountMeasurements tests (#a4frknq).
 //
 // Each is keyed by its window and the settling binary's whole recipe, unless it names its census: the tests that prove
 // its build reaches nothing its key doesn't hold, which open the lean recipe to it (leanRecipeTaken, #gr5y0yf item 1,
 // Node's ruling: per caller, the census the gate, each test named and checked by
 // TestEveryLeanCallersCensusIsATestOfItsPackage). A caller naming none fails closed, to the whole recipe. runtimeproducts
-// alone names one: its archives' build is native_runtime.RuntimeRequest.Build, handed its jobserver as a value (#yzwm4rj), and
+// names one: its archives' build is native_runtime.RuntimeRequest.Build, handed its jobserver as a value (#yzwm4rj), and
 // everything that decides an archive's bytes is in its Inputs (runtimeproducts.Inputs: the runtime's files, every flag
 // and the IR's tags as the request's portable parts, the compiler and archiver by their reports). Its census is two
 // tests, each named, since each holds half of that: the build's reach to the files its key declares
 // (TestTheRuntimeBuildReachesOnlyItsDeclaredFiles), and what the path to it reads, the jobserver and every package
 // variable among them (TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds), so neither goes without failing the guard.
+// countproducts names one too, its two tests the same halves: a count's build reaches only its declared files
+// (TestTheCountBuildReachesOnlyItsDeclaredFiles), and its path from every exported function reads nothing its key
+// doesn't hold (TestTheCountProductsPathReadsOnlyWhatItsKeyHolds), its key's other inputs each held by a test of their
+// own, the rows file's digest, the harness, the runtime's sources, the counted flags, clang's report and the platform.
 var leanCallers = []leanCaller{
 	{pkg: "internal/native/agreementproducts"},
 	{pkg: "internal/native/runtimeproducts", census: leanCensus{pkg: "internal/native/runtimeproducts", tests: []string{"TestTheRuntimeBuildReachesOnlyItsDeclaredFiles", "TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds"}}},
+	{pkg: "internal/oracle/countproducts", census: leanCensus{pkg: "internal/oracle/countproducts", tests: []string{"TestTheCountBuildReachesOnlyItsDeclaredFiles", "TestTheCountProductsPathReadsOnlyWhatItsKeyHolds"}}},
 	{pkg: "stage1/cohere/tsprinter/oracles"},
 	{pkg: "stage3/lane/adaptedtree"},
 }
