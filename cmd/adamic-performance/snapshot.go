@@ -8,13 +8,16 @@ import (
 	"io"
 )
 
-// header opens every Performance.jsonc. It is fixed, so a landing's diff shows only the numbers that moved.
+// header opens every Performance.jsonc. It is fixed, so a landing's diff shows only the numbers that moved. Its last
+// line is for whoever writes the file next: the lander reads whole // lines at the head and then strict JSON, so a
+// comment inside the object would refuse every landing (Lander, on #ctft27r).
 const header = "// Performance.jsonc: Adamic's performance at this commit, rewritten by the line in every landing commit (#hed1mkb).\n" +
 	"// Git history is the series. Never edit it by hand. Times are integer milliseconds: the median of the rounds, with\n" +
 	"// their min and max. cmd/adamic-performance writes it; nothing that builds or tests reads it.\n" +
 	"// An execute program's ratio is native over Node on the judged measure, below 1 meaning native is faster; the\n" +
 	"// judged measure is user time unless its judge says wall. The note calls a number moved only when its new range\n" +
-	"// doesn't overlap the old one and its median moved at least 2% of the old median and at least 5 ms.\n"
+	"// doesn't overlap the old one and its median moved more than 2% of the old median and more than 5 ms.\n" +
+	"// Comments go only in these whole lines above the object: the lander reads them, then the object as strict JSON.\n"
 
 // schemaVersion is the file's schema, which a reader refuses when it is another.
 const schemaVersion = 1
