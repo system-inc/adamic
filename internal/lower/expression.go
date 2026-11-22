@@ -1906,7 +1906,17 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 					return ir.Conditional{Condition: ir.Truthy{Value: left}, WhenTrue: fit(right, of), WhenNot: missing, Of: of}, nil
 				}
 			}
-			return ir.Logical{Left: left, Right: fit(right, of), Of: of, KeepTruthy: operator == ast.KindBarBarToken}, nil
+			fitted := fit(right, of)
+			if fitted.Type() != of {
+				// fit leaves a value it can't convert as it is, so a number | undefined field the checker
+				// narrowed to undefined would reach a boolean | undefined result still held as its number
+				// pair, which C refuses to assign (#thwgcax). The emitter assigns the right to the result
+				// as it is (native's logicalValue), so any result it isn't held as would be C that clang
+				// refuses or, worse, one it converts silently: each stops here, named, before C. The left
+				// goes through the emitter's converted, which panics on a pair it has no rule for.
+				return nil, l.notYet(node, "a logical operand held as "+typeName(fitted.Type())+" where its result is held as "+typeName(of))
+			}
+			return ir.Logical{Left: left, Right: fitted, Of: of, KeepTruthy: operator == ast.KindBarBarToken}, nil
 		}
 		lowered := ir.And
 		if operator == ast.KindBarBarToken {
