@@ -54,6 +54,11 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if !known {
 				return nil, l.notYet(property, "an unsupported computed method")
 			}
+			if literal.Spread != nil {
+				if err := l.spreadMayLack(node, property, name); err != nil {
+					return nil, err
+				}
+			}
 			value, err := l.objectMethod(property)
 			if err != nil {
 				return nil, err
@@ -70,6 +75,11 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			}
 			if property.Kind == ast.KindPropertyAssignment && fieldName == "__proto__" {
 				return nil, &Refused{Where: l.program.Where(property), What: "__proto__ in an object literal", Fix: "JavaScript changes the prototype instead of making an own field; Adamic objects have fixed shapes and no prototype mutation"}
+			}
+			if literal.Spread != nil {
+				if err := l.spreadMayLack(node, property, fieldName); err != nil {
+					return nil, err
+				}
 			}
 			if property.Kind == ast.KindPropertyAssignment && l.uninitializedInitializer(property.AsPropertyAssignment().Initializer) {
 				declared := l.declaredField(node, fieldName)
@@ -255,6 +265,57 @@ func (l *lowering) hasProperty(node *ast.Node, name string) bool {
 		}
 	}
 	return false
+}
+
+// spreadMayLack stops a field written after a spread whose source may lack it (#sx8pbw1). Natively the spread copies
+// its source's own shape and then writes each later field into the copy by name (native/emit_objects.go's spread
+// arm, reuse.go's reused one), so a name the copy's shape doesn't hold has no slot, and native stopped there with
+// "compiler bug: a field the checker proved is there is missing" where Node adds the field. A field optional in the
+// source's type is one the source's object may lack, since an absent optional field takes no slot in a plain
+// literal (readObjectField). A literal holds one spread, first (object.go's single-spread refusal comes before any
+// field), so node's first property is the only spread a field can follow. The exemption is a source whose object
+// is a fresh literal naming the field (spreadSourceNames). Making the copy's shape grow is the lift owed.
+func (l *lowering) spreadMayLack(node *ast.Node, property *ast.Node, name string) error {
+	source := node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression
+	field := l.checker.GetPropertyOfType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(source)), name)
+	if field == nil || field.Flags&ast.SymbolFlagsOptional == 0 || l.spreadSourceNames(source, name) {
+		return nil
+	}
+	return l.notYet(property, "the field "+name+" written after a spread whose source may lack it")
+}
+
+// spreadSourceNames is whether a spread's source is an object literal naming name in a field of its own, written
+// there or as the initializer of the const the source reads. Such an object always holds name: a const is never
+// written again, and nothing removes a field (delete is refused). Only plain fields count; a spread, a method or an
+// accessor in that literal makes another shape, so it answers false.
+func (l *lowering) spreadSourceNames(source *ast.Node, name string) bool {
+	made := ast.SkipParentheses(source)
+	if ast.IsIdentifier(made) {
+		symbol := l.symbol(made)
+		if symbol == nil || len(symbol.Declarations) != 1 || symbol.Declarations[0].Kind != ast.KindVariableDeclaration {
+			return false
+		}
+		declaration := symbol.Declarations[0]
+		if declaration.Parent.Flags&ast.NodeFlagsConst == 0 || !ast.IsIdentifier(declaration.Name()) || declaration.AsVariableDeclaration().Initializer == nil {
+			return false
+		}
+		made = ast.SkipParentheses(declaration.AsVariableDeclaration().Initializer)
+	}
+	if made.Kind != ast.KindObjectLiteralExpression {
+		return false
+	}
+	names := false
+	for _, property := range made.AsObjectLiteralExpression().Properties.Nodes {
+		if property.Kind != ast.KindPropertyAssignment && property.Kind != ast.KindShorthandPropertyAssignment {
+			return false
+		}
+		fieldName, known := l.methodName(property)
+		if !known {
+			return false
+		}
+		names = names || fieldName == name
+	}
+	return names
 }
 
 func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
