@@ -163,6 +163,14 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			if field.Nullish != 0 && e.fieldTypesNeeded() {
 				e.line("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %s;", object, object, slot, fieldInitialRepresentation(field, slot+"->reference"))
 			}
+			if e.constructionNeeded() {
+				// #sx8pbw1's publish gap: a staged source's copy keeps the slots it reserved absent unwritten
+				// (adamic_object_copy_checked skips them), so a field the literal writes there is published and made
+				// ready, as a plain write's is (writeProperty), or keys, JSON and in leave it out and a read finds it
+				// absent. Publishing a slot already present keeps its place, and an object without write order has
+				// nothing to publish.
+				e.line("adamic_object_publish(%s, adamic_slot_index(%s, %s)); adamic_object_initialized(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, object, object, slot, map[bool]int{true: 0, false: 1}[field.Uninitialized && !field.Unset])
+			}
 		}
 		return object
 	}
