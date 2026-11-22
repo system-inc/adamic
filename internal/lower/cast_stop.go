@@ -25,10 +25,12 @@ const (
 	castUnionWrite                      // a union whose writable field a member can't hold every value of
 	castAmbiguousTag                    // a union whose every member holds a literal in a field, but no two apart
 	castCallable                        // a cast whose target or source has a call signature
-	// Refused until Adamic rules them (Q1 to Q3 on #b5w3ycg, Nov 22).
-	castIndexSignature // a target with an index signature
-	castTypeParameter  // a source that is a type parameter
-	castIntersection   // an intersection target
+	// Adamic's three rulings (Q1 to Q3 on #b5w3ycg, Nov 22), under one principle: in .ts a cast's stop is
+	// NotYet when a run-time check could decide the claim and nobody has built it, and Refused only when no
+	// check ever could.
+	castIndexSignature // a target with an index signature: NotYet, the dictionary view (rulings.md:26 narrowed)
+	castTypeParameter  // a type parameter source: NotYet under an object constraint, Refused unconstrained
+	castIntersection   // an intersection target: NotYet, unless a member is refused on its own
 	// NotYet in .ts: the untagged downcast row rules an unprovable cast to an object target a checked view,
 	// and the row beside it rules an unbuilt view contract NotYet, never a refusal. Refused in .a (item 8).
 	castUntaggedUnion // a union source whose members no literal tag tells apart
@@ -82,11 +84,21 @@ func (l *lowering) castStop(node *ast.Node, cause castCause, source, target *che
 	case castCallable:
 		return refused("a cast from "+from+" to "+to+", which asserts a call signature", "prove the callable body rather than asserting its signature"+rule)
 	case castIndexSignature:
-		return refused("a cast from "+from+" to "+to+", whose index signature a checked view doesn't hold", l.castRepair(node))
+		return l.notYet(node, "a checked dictionary view of "+to+" over "+from)
 	case castTypeParameter:
-		return refused("a cast from the type parameter "+from+" to "+to+", which a check would have to read through its erased type", l.castRepair(node))
+		constraint := l.checker.GetBaseConstraintOfType(source)
+		if constraint == nil || constraint == source || constraint.Flags()&(checker.TypeFlagsUnknown|checker.TypeFlagsAny) != 0 || castPrimitiveMember(constraint) {
+			return refused("a cast from the type parameter "+from+" to "+to+", which nothing at run time can test, since "+from+" may be any type", "constrain "+from+" to an object type (`"+from+" extends object`), or cast from the value's concrete type"+rule)
+		}
+		return l.notYet(node, "a checked view of "+to+" over the type parameter "+from+", constrained to "+l.checker.TypeToString(constraint))
 	case castIntersection:
-		return refused("a cast from "+from+" to the intersection "+to, l.castRepair(node))
+		// A member castProof refuses alone keeps that refusal, in the member's own words and fix.
+		for _, member := range l.checker.GetNonNullableType(target).Types() {
+			if cause := l.objectCastCause(source, member); cause <= castCallable {
+				return l.castStop(node, cause, source, member, "")
+			}
+		}
+		return l.notYet(node, "a checked view of the intersection "+to+" over "+from)
 	case castUntaggedUnion:
 		return l.notYet(node, "a checked view of "+to+" over the union "+from+", whose members no literal tag tells apart")
 	case castUnionTarget:
