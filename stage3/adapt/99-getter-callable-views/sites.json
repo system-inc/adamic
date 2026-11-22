@@ -1,0 +1,119 @@
+[
+  {
+    "site": "src/compiler/factory/emitHelpers.ts:315:25",
+    "receiver": "factory",
+    "member": "createAssignment",
+    "view": "assignmentFactoryView",
+    "declaration": "const assignmentFactoryView: { readonly createAssignment: (typeof factory)[\"createAssignment\"] } = factory;",
+    "before": "return factory.createPropertyAssignment(\n            \"set\",\n            factory.createArrowFunction(\n                /*modifiers*/ undefined,\n                /*typeParameters*/ undefined,\n                [\n                    factory.createParameterDeclaration(\n                        /*modifiers*/ undefined,\n                        /*dotDotDotToken*/ undefined,\n                        factory.createIdentifier(\"obj\"),\n                    ),\n                    factory.createParameterDeclaration(\n                        /*modifiers*/ undefined,\n                        /*dotDotDotToken*/ undefined,\n                        factory.createIdentifier(\"value\"),\n                    ),\n                ],\n                /*type*/ undefined,\n                /*equalsGreaterThanToken*/ undefined,\n                factory.createBlock([\n                    factory.createExpressionStatement(\n                        factory.createAssignment(\n                            accessor,\n                            factory.createIdentifier(\"value\"),\n                        ),\n                    ),\n                ]),\n            ),\n        );",
+    "after": "return factory.createPropertyAssignment(\n            \"set\",\n            factory.createArrowFunction(\n                /*modifiers*/ undefined,\n                /*typeParameters*/ undefined,\n                [\n                    factory.createParameterDeclaration(\n                        /*modifiers*/ undefined,\n                        /*dotDotDotToken*/ undefined,\n                        factory.createIdentifier(\"obj\"),\n                    ),\n                    factory.createParameterDeclaration(\n                        /*modifiers*/ undefined,\n                        /*dotDotDotToken*/ undefined,\n                        factory.createIdentifier(\"value\"),\n                    ),\n                ],\n                /*type*/ undefined,\n                /*equalsGreaterThanToken*/ undefined,\n                factory.createBlock([\n                    factory.createExpressionStatement(\n                        assignmentFactoryView.createAssignment(\n                            accessor,\n                            factory.createIdentifier(\"value\"),\n                        ),\n                    ),\n                ]),\n            ),\n        );"
+  },
+  {
+    "site": "src/compiler/factory/utilities.ts:1661:17",
+    "receiver": "factory",
+    "member": "createAssignment",
+    "view": "assignmentFactoryView",
+    "declaration": "const assignmentFactoryView: { readonly createAssignment: (typeof factory)[\"createAssignment\"] } = factory;",
+    "before": "return factory.createSetAccessorDeclaration(\n        modifiers,\n        name,\n        [factory.createParameterDeclaration(\n            /*modifiers*/ undefined,\n            /*dotDotDotToken*/ undefined,\n            \"value\",\n        )],\n        factory.createBlock([\n            factory.createExpressionStatement(\n                factory.createAssignment(\n                    factory.createPropertyAccessExpression(\n                        receiver,\n                        factory.getGeneratedPrivateNameForNode(node.name, /*prefix*/ undefined, \"_accessor_storage\"),\n                    ),\n                    factory.createIdentifier(\"value\"),\n                ),\n            ),\n        ]),\n    );",
+    "after": "return factory.createSetAccessorDeclaration(\n        modifiers,\n        name,\n        [factory.createParameterDeclaration(\n            /*modifiers*/ undefined,\n            /*dotDotDotToken*/ undefined,\n            \"value\",\n        )],\n        factory.createBlock([\n            factory.createExpressionStatement(\n                assignmentFactoryView.createAssignment(\n                    factory.createPropertyAccessExpression(\n                        receiver,\n                        factory.getGeneratedPrivateNameForNode(node.name, /*prefix*/ undefined, \"_accessor_storage\"),\n                    ),\n                    factory.createIdentifier(\"value\"),\n                ),\n            ),\n        ]),\n    );"
+  },
+  {
+    "site": "src/compiler/factory/utilities.ts:415:13",
+    "receiver": "factory",
+    "member": "createAssignment",
+    "view": "assignmentFactoryView",
+    "declaration": "const assignmentFactoryView: { readonly createAssignment: (typeof factory)[\"createAssignment\"] } = factory;",
+    "before": "return setOriginalNode(\n        setTextRange(\n            factory.createAssignment(\n                createMemberAccessForPropertyName(factory, receiver, property.name, /*location*/ property.name),\n                property.initializer,\n            ),\n            property,\n        ),\n        property,\n    );",
+    "after": "return setOriginalNode(\n        setTextRange(\n            assignmentFactoryView.createAssignment(\n                createMemberAccessForPropertyName(factory, receiver, property.name, /*location*/ property.name),\n                property.initializer,\n            ),\n            property,\n        ),\n        property,\n    );"
+  },
+  {
+    "site": "src/compiler/factory/utilities.ts:428:13",
+    "receiver": "factory",
+    "member": "createAssignment",
+    "view": "assignmentFactoryView",
+    "declaration": "const assignmentFactoryView: { readonly createAssignment: (typeof factory)[\"createAssignment\"] } = factory;",
+    "before": "return setOriginalNode(\n        setTextRange(\n            factory.createAssignment(\n                createMemberAccessForPropertyName(factory, receiver, property.name, /*location*/ property.name),\n                factory.cloneNode(property.name),\n            ),\n            /*location*/ property,\n        ),\n        /*original*/ property,\n    );",
+    "after": "return setOriginalNode(\n        setTextRange(\n            assignmentFactoryView.createAssignment(\n                createMemberAccessForPropertyName(factory, receiver, property.name, /*location*/ property.name),\n                factory.cloneNode(property.name),\n            ),\n            /*location*/ property,\n        ),\n        /*original*/ property,\n    );"
+  },
+  {
+    "site": "src/compiler/factory/utilities.ts:441:13",
+    "receiver": "factory",
+    "member": "createAssignment",
+    "view": "assignmentFactoryView",
+    "declaration": "const assignmentFactoryView: { readonly createAssignment: (typeof factory)[\"createAssignment\"] } = factory;",
+    "before": "return setOriginalNode(\n        setTextRange(\n            factory.createAssignment(\n                createMemberAccessForPropertyName(factory, receiver, method.name, /*location*/ method.name),\n                setOriginalNode(\n                    setTextRange(\n                        factory.createFunctionExpression(\n                            getModifiers(method),\n                            method.asteriskToken,\n                            /*name*/ undefined,\n                            /*typeParameters*/ undefined,\n                            method.parameters,\n                            /*type*/ undefined,\n                            method.body!, // TODO: GH#18217\n                        ),\n                        /*location*/ method,\n                    ),\n                    /*original*/ method,\n                ),\n            ),\n            /*location*/ method,\n        ),\n        /*original*/ method,\n    );",
+    "after": "return setOriginalNode(\n        setTextRange(\n            assignmentFactoryView.createAssignment(\n                createMemberAccessForPropertyName(factory, receiver, method.name, /*location*/ method.name),\n                setOriginalNode(\n                    setTextRange(\n                        factory.createFunctionExpression(\n                            getModifiers(method),\n                            method.asteriskToken,\n                            /*name*/ undefined,\n                            /*typeParameters*/ undefined,\n                            method.parameters,\n                            /*type*/ undefined,\n                            method.body!, // TODO: GH#18217\n                        ),\n                        /*location*/ method,\n                    ),\n                    /*original*/ method,\n                ),\n            ),\n            /*location*/ method,\n        ),\n        /*original*/ method,\n    );"
+  },
+  {
+    "site": "src/compiler/factory/utilities.ts:528:18",
+    "receiver": "factory",
+    "member": "createAssignment",
+    "view": "assignmentFactoryView",
+    "declaration": "const assignmentFactoryView: { readonly createAssignment: (typeof factory)[\"createAssignment\"] } = factory;",
+    "before": "expression = factory.createAssignment(temp, expression);",
+    "after": "expression = assignmentFactoryView.createAssignment(temp, expression);"
+  },
+  {
+    "site": "src/compiler/transformers/classFields.ts:3320:12",
+    "receiver": "factory",
+    "member": "createAssignment",
+    "view": "assignmentFactoryView",
+    "declaration": "const assignmentFactoryView: { readonly createAssignment: (typeof factory)[\"createAssignment\"] } = factory;",
+    "before": "return factory.createAssignment(\n        variableName,\n        factory.createObjectLiteralExpression([\n            factory.createPropertyAssignment(\"value\", initializer || factory.createVoidZero()),\n        ]),\n    );",
+    "after": "return assignmentFactoryView.createAssignment(\n        variableName,\n        factory.createObjectLiteralExpression([\n            factory.createPropertyAssignment(\"value\", initializer || factory.createVoidZero()),\n        ]),\n    );"
+  },
+  {
+    "site": "src/compiler/transformers/destructuring.ts:591:56",
+    "receiver": "flattenContext.context.factory",
+    "member": "createAssignment",
+    "view": "assignmentFactoryView",
+    "declaration": "const assignmentFactoryView: { readonly createAssignment: NodeFactory[\"createAssignment\"] } = flattenContext.context.factory;",
+    "before": "flattenContext.emitExpression(setTextRange(flattenContext.context.factory.createAssignment(temp, value), location));",
+    "after": "flattenContext.emitExpression(setTextRange(assignmentFactoryView.createAssignment(temp, value), location));"
+  },
+  {
+    "site": "src/compiler/transformers/es2017.ts:1105:25",
+    "receiver": "factory",
+    "member": "createAssignment",
+    "view": "assignmentFactoryView",
+    "declaration": "const assignmentFactoryView: { readonly createAssignment: (typeof factory)[\"createAssignment\"] } = factory;",
+    "before": "getterAndSetter.push(\n                factory.createPropertyAssignment(\n                    \"set\",\n                    factory.createArrowFunction(\n                        /*modifiers*/ undefined,\n                        /*typeParameters*/ undefined,\n                        /* parameters */ [\n                            factory.createParameterDeclaration(\n                                /*modifiers*/ undefined,\n                                /*dotDotDotToken*/ undefined,\n                                \"v\",\n                                /*questionToken*/ undefined,\n                                /*type*/ undefined,\n                                /*initializer*/ undefined,\n                            ),\n                        ],\n                        /*type*/ undefined,\n                        /*equalsGreaterThanToken*/ undefined,\n                        factory.createAssignment(\n                            setEmitFlags(\n                                factory.createPropertyAccessExpression(\n                                    setEmitFlags(\n                                        factory.createSuper(),\n                                        EmitFlags.NoSubstitution,\n                                    ),\n                                    name,\n                                ),\n                                EmitFlags.NoSubstitution,\n                            ),\n                            factory.createIdentifier(\"v\"),\n                        ),\n                    ),\n                ),\n            );",
+    "after": "getterAndSetter.push(\n                factory.createPropertyAssignment(\n                    \"set\",\n                    factory.createArrowFunction(\n                        /*modifiers*/ undefined,\n                        /*typeParameters*/ undefined,\n                        /* parameters */ [\n                            factory.createParameterDeclaration(\n                                /*modifiers*/ undefined,\n                                /*dotDotDotToken*/ undefined,\n                                \"v\",\n                                /*questionToken*/ undefined,\n                                /*type*/ undefined,\n                                /*initializer*/ undefined,\n                            ),\n                        ],\n                        /*type*/ undefined,\n                        /*equalsGreaterThanToken*/ undefined,\n                        assignmentFactoryView.createAssignment(\n                            setEmitFlags(\n                                factory.createPropertyAccessExpression(\n                                    setEmitFlags(\n                                        factory.createSuper(),\n                                        EmitFlags.NoSubstitution,\n                                    ),\n                                    name,\n                                ),\n                                EmitFlags.NoSubstitution,\n                            ),\n                            factory.createIdentifier(\"v\"),\n                        ),\n                    ),\n                ),\n            );"
+  },
+  {
+    "site": "src/compiler/transformers/namedEvaluation.ts:95:24",
+    "receiver": "factory",
+    "member": "createAssignment",
+    "view": "assignmentFactoryView",
+    "declaration": "const assignmentFactoryView: { readonly createAssignment: (typeof factory)[\"createAssignment\"] } = factory;",
+    "before": "const assignment = factory.createAssignment(assignedName, key);",
+    "after": "const assignment = assignmentFactoryView.createAssignment(assignedName, key);"
+  },
+  {
+    "site": "src/compiler/visitorPublic.ts:457:29",
+    "receiver": "factory",
+    "member": "createStrictEquality",
+    "view": "strictEqualityFactoryView",
+    "declaration": "const strictEqualityFactoryView: { readonly createStrictEquality: (typeof factory)[\"createStrictEquality\"] } = factory;",
+    "before": "context.addInitializationStatement(\n        factory.createVariableStatement(\n            /*modifiers*/ undefined,\n            factory.createVariableDeclarationList([\n                factory.createVariableDeclaration(\n                    parameter.name,\n                    /*exclamationToken*/ undefined,\n                    parameter.type,\n                    parameter.initializer ?\n                        factory.createConditionalExpression(\n                            factory.createStrictEquality(\n                                factory.getGeneratedNameForNode(parameter),\n                                factory.createVoidZero(),\n                            ),\n                            /*questionToken*/ undefined,\n                            parameter.initializer,\n                            /*colonToken*/ undefined,\n                            factory.getGeneratedNameForNode(parameter),\n                        ) :\n                        factory.getGeneratedNameForNode(parameter),\n                ),\n            ]),\n        ),\n    );",
+    "after": "context.addInitializationStatement(\n        factory.createVariableStatement(\n            /*modifiers*/ undefined,\n            factory.createVariableDeclarationList([\n                factory.createVariableDeclaration(\n                    parameter.name,\n                    /*exclamationToken*/ undefined,\n                    parameter.type,\n                    parameter.initializer ?\n                        factory.createConditionalExpression(\n                            strictEqualityFactoryView.createStrictEquality(\n                                factory.getGeneratedNameForNode(parameter),\n                                factory.createVoidZero(),\n                            ),\n                            /*questionToken*/ undefined,\n                            parameter.initializer,\n                            /*colonToken*/ undefined,\n                            factory.getGeneratedNameForNode(parameter),\n                        ) :\n                        factory.getGeneratedNameForNode(parameter),\n                ),\n            ]),\n        ),\n    );"
+  },
+  {
+    "site": "src/compiler/visitorPublic.ts:485:37",
+    "receiver": "factory",
+    "member": "createAssignment",
+    "view": "assignmentFactoryView",
+    "declaration": "const assignmentFactoryView: { readonly createAssignment: (typeof factory)[\"createAssignment\"] } = factory;",
+    "before": "context.addInitializationStatement(\n        factory.createIfStatement(\n            factory.createTypeCheck(factory.cloneNode(name), \"undefined\"),\n            setEmitFlags(\n                setTextRange(\n                    factory.createBlock([\n                        factory.createExpressionStatement(\n                            setEmitFlags(\n                                setTextRange(\n                                    factory.createAssignment(\n                                        setEmitFlags(factory.cloneNode(name), EmitFlags.NoSourceMap),\n                                        setEmitFlags(initializer, EmitFlags.NoSourceMap | getEmitFlags(initializer) | EmitFlags.NoComments),\n                                    ),\n                                    parameter,\n                                ),\n                                EmitFlags.NoComments,\n                            ),\n                        ),\n                    ]),\n                    parameter,\n                ),\n                EmitFlags.SingleLine | EmitFlags.NoTrailingSourceMap | EmitFlags.NoTokenSourceMaps | EmitFlags.NoComments,\n            ),\n        ),\n    );",
+    "after": "context.addInitializationStatement(\n        factory.createIfStatement(\n            factory.createTypeCheck(factory.cloneNode(name), \"undefined\"),\n            setEmitFlags(\n                setTextRange(\n                    factory.createBlock([\n                        factory.createExpressionStatement(\n                            setEmitFlags(\n                                setTextRange(\n                                    assignmentFactoryView.createAssignment(\n                                        setEmitFlags(factory.cloneNode(name), EmitFlags.NoSourceMap),\n                                        setEmitFlags(initializer, EmitFlags.NoSourceMap | getEmitFlags(initializer) | EmitFlags.NoComments),\n                                    ),\n                                    parameter,\n                                ),\n                                EmitFlags.NoComments,\n                            ),\n                        ),\n                    ]),\n                    parameter,\n                ),\n                EmitFlags.SingleLine | EmitFlags.NoTrailingSourceMap | EmitFlags.NoTokenSourceMaps | EmitFlags.NoComments,\n            ),\n        ),\n    );"
+  },
+  {
+    "site": "src/compiler/factory/utilities.ts:537:21",
+    "receiver": "factory",
+    "member": "createAssignment",
+    "view": "assignmentFactoryView",
+    "declaration": "const assignmentFactoryView: { readonly createAssignment: (typeof factory)[\"createAssignment\"] } = factory;",
+    "before": "operation = factory.createAssignment(resultVariable, operation);",
+    "after": "operation = assignmentFactoryView.createAssignment(resultVariable, operation);"
+  }
+]
