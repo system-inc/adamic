@@ -17,7 +17,7 @@ go build -buildvcs=false -overlay="$audit/latent-overlay/overlay.json" -o "$audi
 tail -5 "$audit/overlay.log" "$audit/build.log"
 export LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 LATENT_TAIL=1 CENSUS_MODULE_FORMAT=CommonJSBundle
 LATENT_TIMES="$audit/entry-times.jsonl" timeout 1500 "$audit/entry-census" "$audit/adapted/src/tsc/tsc.ts" "$audit/entry.jsonl" > "$audit/entry.out" 2>&1; echo "tq6: entry census exit=$?"
-LATENT_TIMES="$audit/compiler-times.jsonl" timeout 1500 "$audit/latent-census" "$audit/adapted/src/compiler" "$audit/compiler.jsonl" > "$audit/compiler.out" 2>&1; echo "tq6: compiler census exit=$?"
+[ "${TQ6_COMPILER:-0}" = 1 ] && LATENT_TIMES="$audit/compiler-times.jsonl" timeout 1500 "$audit/latent-census" "$audit/adapted/src/compiler" "$audit/compiler.jsonl" > "$audit/compiler.out" 2>&1; echo "tq6: compiler census exit=$?"
 tail -3 "$audit/entry.out" "$audit/compiler.out"
 python3 -I - "$audit" <<'PY'
 import json, os, sys
