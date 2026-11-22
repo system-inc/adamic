@@ -19,8 +19,6 @@ const (
 	castFromUnknown                     // a cast from unknown to an object type
 	castPrimitive                       // a cast whose target holds a primitive, or whose source is one
 	castClassArguments                  // a class downcast whose type arguments the source's ancestry doesn't fix
-	castClassAncestry                   // a class cast with no nominal ancestry between the two
-	castClassTarget                     // a cast to a class from a value that isn't a class instance
 	castRefinement                      // a cast from a union to something narrower than a member, not a member
 	castUnionWrite                      // a union whose writable field a member can't hold every value of
 	castAmbiguousTag                    // a union whose every member holds a literal in a field, but no two apart
@@ -38,6 +36,10 @@ const (
 	castKeepsNullish  // a target that keeps undefined or null
 	castSideways      // an object target the source isn't a supertype of
 	castMixedSource   // a union source holding primitives, cast to an object target
+	// NotYet in .ts by Adamic's principle, as Compiler applied it (R4 and R4b on #b5w3ycg, Nov 22): instanceof
+	// decides each at run time, and castProof's class road only wants every member a class.
+	castClassAncestry // a class cast with no nominal ancestry between the two
+	castClassTarget   // a cast to a class from a value that isn't a class instance
 	castFromObject    // a source typed object, which names no fields to read
 	// No branch above fits: the sentence main spoke before the split, so nothing is lost.
 	castUnnamed
@@ -71,10 +73,6 @@ func (l *lowering) castStop(node *ast.Node, cause castCause, source, target *che
 		return refused("a cast from "+from+" to "+to+", which holds a primitive no view can check", "compare the primitive's typeof first (`if (typeof value !== 'string') panic('why')`), or convert it (`String(value)`)"+rule)
 	case castClassArguments:
 		return refused("a downcast from "+from+" to "+to+" whose type arguments "+from+"'s class ancestry doesn't fix, so its identity test can't tell "+to+" from another instantiation", "downcast to a class whose type parameters "+from+"'s ancestry passes through, or narrow by a field only "+to+" holds"+rule)
-	case castClassAncestry:
-		return refused("a cast from "+from+" to "+to+", which isn't a class descending from it", "downcast along nominal class ancestry (a class that extends "+from+"), or build the value as a "+to+rule)
-	case castClassTarget:
-		return refused("a cast from "+from+" to the class "+to+", which "+from+" isn't by ancestry", "build the value with new, or downcast from a class along its ancestry"+rule)
 	case castRefinement:
 		return refused("a cast from "+from+" to "+to+", which is narrower than a member of "+from+" without being one, and a tag test can't prove what makes it narrower", "cast to the member itself and test the rest, or declare "+to+" as a member with a tag of its own"+rule)
 	case castUnionWrite:
@@ -109,6 +107,8 @@ func (l *lowering) castStop(node *ast.Node, cause castCause, source, target *che
 		return l.notYet(node, "a checked view of "+to+" over "+from+", which "+to+" doesn't extend")
 	case castFromObject:
 		return l.notYet(node, "a checked view of "+to+" over a value typed "+from+", which names no fields")
+	case castClassAncestry, castClassTarget:
+		return l.notYet(node, "a checked class cast from "+from+" to "+to+" by instanceof")
 	case castMixedSource:
 		return l.notYet(node, "a checked cast from "+from+", which holds primitives, to "+to+", which needs a typeof test before its view")
 	}

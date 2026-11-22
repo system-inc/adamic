@@ -41,6 +41,11 @@ func TestUncheckableCastsStayRefused(t *testing.T) {
 			if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/no-unchecked-cast") || !strings.Contains(err.Error(), "narrow a discriminated union by its tag") || !strings.Contains(err.Error(), "nominal class ancestry") {
 				t.Fatalf(".a: want unchecked-cast refusal and accepted forms, got %v", err)
 			}
+			// Two class casts are NotYet in .ts, since instanceof decides each at run time (Adamic's principle
+			// on #b5w3ycg, Nov 22); TestCastStopNamesItsCause pins their words.
+			if probe.name == "unrelated class" || probe.name == "structural class" {
+				return
+			}
 			_, err = lowerSourceAs(t, probe.source, ".ts")
 			if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/no-unchecked-cast") {
 				t.Fatalf(".ts: want an unchecked-cast refusal, got %v", err)
