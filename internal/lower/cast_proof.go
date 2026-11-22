@@ -477,10 +477,11 @@ func (l *lowering) unionMemberProof(source, target *checker.Type, stop func(cast
 
 // Writing through a union view must not change a member's tag or narrow payload promise. A common
 // mutable slot is safe only if everything the union can write fits every member that owns it. The answer
-// is the first field that doesn't, for the refusal to name, or "" when every one does.
+// is the first field that doesn't, for the refusal to name, or "" when every one does. A name no member
+// declares writable (castUnionUnwritten) is no slot.
 func (l *lowering) castUnionWrites(source *checker.Type) string {
 	for _, property := range l.checker.GetPropertiesOfType(source) {
-		if l.checker.IsReadonlySymbol(property) || property.Flags&ast.SymbolFlagsMethod != 0 {
+		if l.checker.IsReadonlySymbol(property) || property.Flags&ast.SymbolFlagsMethod != 0 || l.castUnionUnwritten(source, property.Name) {
 			continue
 		}
 		written := l.checker.GetTypeOfSymbol(property)
@@ -492,6 +493,34 @@ func (l *lowering) castUnionWrites(source *checker.Type) string {
 		}
 	}
 	return ""
+}
+
+// castUnionUnwritten is whether every member of source that declares name declares it as a method or a
+// readonly field, judged on each member's own symbol. The checker's property for a union is synthetic and
+// carries no method flag, so a method every member declares (BuilderProgram | Program's
+// getSyntacticDiagnostics) read as a writable field there and refused a cast the rule admits (#b5w3ycg,
+// Diagnostics' count). A member that declares the name as a writable field, or whose own symbol is synthetic
+// too (an intersection), keeps the slot judged, failing closed. A union holding a primitive or an array keeps
+// its methods judged too, so unionMemberProof routes it to its own cause, as it did (castPrimitiveMember,
+// castArrayLike): the arm is for object members alone.
+func (l *lowering) castUnionUnwritten(source *checker.Type, name string) bool {
+	for _, member := range source.Types() {
+		if castPrimitiveMember(member) || l.castArrayLike(member) {
+			return false
+		}
+	}
+	found := false
+	for _, member := range source.Types() {
+		inside := l.checker.GetPropertyOfType(member, name)
+		if inside == nil {
+			continue
+		}
+		found = true
+		if inside.Flags&ast.SymbolFlagsMethod == 0 && !l.checker.IsReadonlySymbol(inside) {
+			return false
+		}
+	}
+	return found
 }
 
 // An erased identity proves no type arguments. Every target parameter must survive directly in
