@@ -241,6 +241,14 @@ func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error
 			return nil, true, l.notYet(node, "Buffer."+name+" outside the host census")
 		}
 		operation, result, receiver = "buffer_string", ir.String, access.Expression
+	case name == "toString" && l.nodeBufferStringUnion(l.checker.GetTypeAtLocation(access.Expression)):
+		return l.nodeBufferUnionToString(node, access.Expression)
+	case name == "toString" && l.nodeBufferUnion(l.checker.GetTypeAtLocation(access.Expression)):
+		// Node's Number.prototype.toString reads an encoding as a radix and throws a RangeError, where a
+		// boolean's ignores it and answers "true" or "false": neither is a string's answer, so neither is
+		// built yet. tsc refuses an encoding on number | Buffer (TS2345), so a boolean is the one that
+		// reaches here.
+		return nil, true, l.notYet(node, "Buffer.toString on a union holding a number or a boolean beside its Buffer")
 	case l.nodeBufferType(l.checker.GetTypeAtLocation(access.Expression), "Hash"):
 		receiver = access.Expression
 		switch name {
@@ -338,6 +346,52 @@ func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error
 		}
 	}
 	return ir.NodeBufferCall{Function: operation, Arguments: values, Encoding: encoding, Returns: result}, true, nil
+}
+
+// nodeBufferStringUnion is whether proven is a nodeBufferUnion whose every other member is a string: no
+// number, no boolean, and no null or undefined, which the checker keeps from a call without ?. or !.
+func (l *lowering) nodeBufferStringUnion(proven *checker.Type) bool {
+	if !l.nodeBufferUnion(proven) {
+		return false
+	}
+	for _, member := range proven.Types() {
+		if !l.nodeBufferType(member, "Buffer") && member.Flags()&checker.TypeFlagsStringLike == 0 {
+			return false
+		}
+	}
+	return true
+}
+
+// nodeBufferUnionToString lowers x.toString(encoding) on a nodeBufferStringUnion, revcomp's
+// headerPartial.toString('ascii'): the receiver read once, and by typeof either the string itself, as
+// String.prototype.toString ignores its argument, or the Buffer it holds decoded whole by buffer_string, as
+// a Buffer receiver's toString(encoding) is. The encoding is a census literal (nodeBufferEncoding), so it
+// has nothing to evaluate on the string side. toString with no argument or with offsets stays where it
+// stopped.
+func (l *lowering) nodeBufferUnionToString(node, receiver *ast.Node) (ir.Expression, bool, error) {
+	args := node.AsCallExpression().Arguments.Nodes
+	if len(args) != 1 || args[0].Kind == ast.KindSpreadElement {
+		return nil, true, l.notYet(node, "node:buffer.toString outside the host census")
+	}
+	if err := l.optionalCall(node); err != nil {
+		return nil, true, err
+	}
+	encoding, err := l.nodeBufferEncoding(args[0], 0)
+	if err != nil {
+		return nil, true, err
+	}
+	union, err := l.expression(receiver)
+	if err != nil {
+		return nil, true, err
+	}
+	if union.Type() != ir.Union {
+		return nil, true, l.notYet(node, "Buffer.toString on a string | Buffer receiver not held as a union")
+	}
+	b := l.libraryArrayBuilder([]ir.Expression{union})
+	held := b.read(b.parameters[0])
+	isString := ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant("string")}}
+	decoded := ir.NodeBufferCall{Function: "buffer_string", Arguments: []ir.Expression{ir.Narrow{Value: held, To: ir.Uint8Array}, ir.NumberConstant{Value: 0}, ir.NumberConstant{Value: math.Inf(1)}}, Encoding: encoding, Returns: ir.String}
+	return b.finish("buffer_union_to_string", ir.Conditional{Condition: isString, WhenTrue: ir.Narrow{Value: held, To: ir.String}, WhenNot: decoded, Of: ir.String}), true, nil
 }
 
 // nodeBufferAllocUnsafe lowers Buffer.allocUnsafe(size) of one number to a Buffer of that many bytes.
