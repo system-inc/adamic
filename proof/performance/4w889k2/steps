@@ -1,0 +1,56 @@
+# #4w889k2's proof, sourced in the job's own shell after cloud/sandboxed-job.sh, sandboxed_repositories, sandboxed_npm
+# stage3/api stage3/typescript and sandboxed_typescript_source. Prints PASS or FAIL per step and a VERDICT line.
+w2iFailed=0
+w2iLogs="$TMPDIR/w2i"
+mkdir -p "$w2iLogs"
+w2iStep() { echo "$1 $2"; [ "$1" = PASS ] || w2iFailed=1; }
+w2iTest='^(TestProduct_Stage3AdaptedTree|TestTwoImplementsTagsKeepBothInTheDeclaration)$'
+
+if [ -z "$(gofmt -l stage3/lane/adaptedtree)" ]; then w2iStep PASS gofmt; else w2iStep FAIL gofmt; gofmt -l stage3/lane/adaptedtree; fi
+if go vet ./stage3/lane/adaptedtree/ > "$w2iLogs/vet.log" 2>&1; then w2iStep PASS vet; else w2iStep FAIL vet; cat "$w2iLogs/vet.log"; fi
+
+# 1. The head: the new test green against the adapted tree, and the stock declaration it holds the tree to, printed.
+go test ./stage3/lane/adaptedtree/ -run "$w2iTest" -count=1 -v > "$w2iLogs/head.log" 2>&1
+w2iHead=$?
+grep -E '^(=== RUN|--- |ok|FAIL|PASS)' "$w2iLogs/head.log"
+if [ $w2iHead -eq 0 ] && grep -q -- '--- PASS: TestTwoImplementsTagsKeepBothInTheDeclaration' "$w2iLogs/head.log"; then w2iStep PASS head; else w2iStep FAIL head; tail -40 "$w2iLogs/head.log"; fi
+echo "== stock TypeScript's declaration of the fixture"
+node stage3/lane/adaptedtree/testdata/implements/declaration.cjs stage3/api/node_modules/typescript stage3/lane/adaptedtree/testdata/implements/fixture.js
+
+# 2. The reviewer's writer mutant: the unequal arm keeps only the last implements type. Applied by exact text, checked
+# applied, and the adapted tree rebuilt from it (stage3/adapt moves the product's key).
+w2iAdapt=stage3/adapt/99-readonly-family3-implements-types/adapt.cjs
+cp "$w2iAdapt" "$w2iLogs/adapt.cjs.orig"
+python3 - "$w2iAdapt" <<'PYTHON'
+import sys
+path = sys.argv[1]
+text = open(path, encoding='utf-8').read()
+old = "const after = [name + ' = [...' + name + ', implementsType];', 'readonly BaseType[]'];"
+new = "const after = [name + ' = [implementsType];', 'readonly BaseType[]'];"
+assert text.count(old) == 1, 'mutant target not found once'
+open(path, 'w', encoding='utf-8').write(text.replace(old, new))
+PYTHON
+if grep -qF "' = [implementsType];'" "$w2iAdapt"; then
+	go test ./stage3/lane/adaptedtree/ -run "$w2iTest" -count=1 -v > "$w2iLogs/mutant.log" 2>&1
+	w2iMutant=$?
+	grep -E '^(=== RUN|--- |ok|FAIL|PASS)|implements' "$w2iLogs/mutant.log"
+	if [ $w2iMutant -ne 0 ] && grep -q -- '--- FAIL: TestTwoImplementsTagsKeepBothInTheDeclaration' "$w2iLogs/mutant.log" &&
+		grep -q 'class Both implements B {' "$w2iLogs/mutant.log" && grep -q -- '--- PASS: TestProduct_Stage3AdaptedTree' "$w2iLogs/mutant.log"; then
+		w2iStep PASS mutant-red
+	else
+		w2iStep FAIL mutant-red
+		tail -60 "$w2iLogs/mutant.log"
+	fi
+else
+	w2iStep FAIL mutant-applied
+fi
+cp "$w2iLogs/adapt.cjs.orig" "$w2iAdapt"
+if cmp -s "$w2iLogs/adapt.cjs.orig" "$w2iAdapt"; then w2iStep PASS restored; else w2iStep FAIL restored; fi
+
+# 3. The package whole at the head, on the restored adaptation.
+go test ./stage3/lane/adaptedtree/ -count=1 > "$w2iLogs/whole.log" 2>&1
+w2iWhole=$?
+grep -E '^(--- FAIL|ok|FAIL|panic)' "$w2iLogs/whole.log"
+if [ $w2iWhole -eq 0 ]; then w2iStep PASS package-whole; else w2iStep FAIL package-whole; tail -40 "$w2iLogs/whole.log"; fi
+
+if [ $w2iFailed -eq 0 ]; then echo "VERDICT PASS"; else echo "VERDICT FAIL"; false; fi
