@@ -39,3 +39,29 @@ type WeakCollectionDelete struct {
 }
 
 func (WeakCollectionDelete) Type() Type { return Boolean }
+
+// WeakMapGet is map.get(Key): the value stored under the key, or undefined for a key the map holds no
+// entry for (a null string, or a Maybe pair), as Map's get is. Its values are numbers, booleans or
+// strings so far (lower/library_weak_collections.go's weakCollectionAdmitted); a string comes back as the
+// map's own, borrowed, and the reader retains it.
+type WeakMapGet struct {
+	Map, Key  Expression
+	KeyType   Type
+	ValueType Type
+}
+
+func (g WeakMapGet) Type() Type { return Maybe(g.ValueType) }
+
+// WeakMapSet is map.set(Key, Value), which is the map. The entry holds the key's weak handle, never the
+// key, and holds the value: Site is the value's write, for the cycle finder, and the key is no strong
+// write at all.
+type WeakMapSet struct {
+	Map, Key, Value Expression
+	KeyType         Type
+	ValueType       Type
+	// Site is which write of the program this is, for the cycle finder (lowering keeps the type of what it
+	// writes into), or 0 when nothing recorded one.
+	Site int
+}
+
+func (WeakMapSet) Type() Type { return WeakCollection }

@@ -1,0 +1,67 @@
+// WeakMap's get, set, has and delete against Node, with the values held so far, numbers, booleans and
+// strings (#hcgy751, W2): an entry overwritten, a key never set, a key deleted, sets chained, keys freed
+// while the map that holds them lives on, and a string got from the map outliving the key it was stored
+// under.
+const scores = new WeakMap<object, number>();
+const flags = new WeakMap<object, boolean>();
+const names = new WeakMap<object, string>();
+const point = { x: 1 };
+const list = [1, 2];
+const table = new Map<string, number>();
+const step = (): number => 1;
+const bytes = new Uint8Array(4);
+console.log(`fresh ${scores.get(point)} ${flags.get(point)} ${names.get(point)} ${scores.has(point)} ${names.has(point)}`);
+scores.set(point, 1);
+flags.set(point, true);
+names.set(point, 'point');
+console.log(`set ${scores.get(point)} ${flags.get(point)} ${names.get(point)} ${scores.has(point)} ${flags.has(point)} ${names.has(point)}`);
+scores.set(point, 2);
+flags.set(point, false);
+names.set(point, `point ${scores.get(point)}`);
+console.log(`overwritten ${scores.get(point)} ${flags.get(point)} ${names.get(point)}`);
+console.log(`missing ${scores.get(list)} ${flags.get(list)} ${names.get(list)} ${scores.has(list)} ${names.get(list) ?? 'none'} ${(scores.get(list) ?? 0) + 1}`);
+scores.set(list, 3).set(table, 4).set(step, 5);
+console.log(`chained ${scores.get(list)} ${scores.get(table)} ${scores.get(step)} ${scores.get(bytes)}`);
+const returned = names.set(bytes, 'bytes').set(list, 'list');
+console.log(`returned ${returned.get(bytes)} ${returned.get(list)} ${names.get(bytes)}`);
+console.log(`deleted ${scores.delete(list)} ${scores.delete(list)} ${scores.get(list)} ${scores.has(list)}`);
+console.log(`kept ${scores.get(point)} ${scores.get(table)} ${scores.get(step)} ${names.get(list)}`);
+console.log(`a twin ${scores.get({ x: 1 })} ${scores.has({ x: 1 })} ${scores.delete({ x: 1 })} ${names.get([1, 2])}`);
+console.log(`never set ${names.delete(new Map<string, number>())} ${flags.get(step)}`);
+console.log(`one map, not another ${scores.has(bytes)} ${names.has(bytes)} ${flags.has(table)}`);
+
+// A key made in a call and gone when it returns, while the maps live on: its entries go with it.
+const rounds = new WeakMap<{ round: number }, number>();
+const labels = new WeakMap<{ round: number }, string>();
+function visit(round: number): string {
+	const key = { round };
+	const before = rounds.get(key);
+	rounds.set(key, round * 10);
+	labels.set(key, `round ${round}`);
+	const label = labels.get(key) ?? 'none';
+	const removed = round % 2 === 0 ? rounds.delete(key) : false;
+	return `${round} ${before} ${rounds.get(key)} ${label} ${removed} ${rounds.has(key)}`;
+}
+for (let round = 0; round < 4; round++) {
+	console.log(`visit ${visit(round)}`);
+}
+
+// A string got from the map outlives its key: the key goes when the call returns, and the string the
+// map held for it with it, while the caller still holds what get handed back.
+function made(round: number): string {
+	const key = { round };
+	labels.set(key, `made ${round} ${'!'.repeat(round)}`);
+	return labels.get(key) ?? 'none';
+}
+const outlived: string[] = [];
+for (let round = 0; round < 3; round++) {
+	outlived.push(made(round));
+}
+console.log(`outlived ${outlived.join(', ')}`);
+
+// A map handed to a function, and kept in an object.
+function remember(into: WeakMap<object, string>, key: object, text: string): string {
+	return into.set(key, text).get(key) ?? 'none';
+}
+const holder = { names: new WeakMap<object, string>() };
+console.log(`remembered ${remember(holder.names, point, `held ${point.x}`)} ${holder.names.get(point)} ${holder.names.get(list)} ${remember(names, step, 'step')}`);
