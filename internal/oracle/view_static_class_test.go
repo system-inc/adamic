@@ -36,8 +36,9 @@ var viewStaticClassStops = []viewStaticClassStop{
 	{name: "name_field.ts", stdout: "before\n", stderr: viewStaticClassNoMember},
 	// Klass owns call, so only StaticsAdmitted stops it: without the flag it would read Node's 5.
 	{name: "call_field.ts", stdout: "before\n", stderr: viewStaticClassNoMember},
-	// Lowering refuses the read of a union a callable could also stand in: its contract is unsupported.
-	{name: "callable_union.ts", lowering: "unsupported representation conversion contract"},
+	// Lowering stops the read of a union a callable could also stand in: that field's own contract isn't built, so
+	// its read is NotYet while its siblings keep theirs (#rgrtt32).
+	{name: "callable_union.ts", lowering: "whose contract isn't built: an unavailable checked union member contract"},
 	// A static declared wider than Inner's count, holding a string, stops at lowering today (class_static.go).
 	// Pinned for its own sake: when wide statics get native slots, the view's check must still stop it.
 	{name: "wide_static.ts", lowering: "a static field without a native slot"},
