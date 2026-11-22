@@ -28,8 +28,10 @@ size_t adamic_view_untagged_union_select(const adamic_view_union_value *value, c
 
 /* Own-data adapters reuse the shared initialization and representation
  * bytes, including initialized class instance fields. Accessor storage is
- * not certified by this adapter. A class constructor's own data statics are,
- * only where its contract sets statics_admitted (view_unions_untagged.c). */
+ * not certified by this adapter. A class constructor's data statics, its own
+ * and those a base holds for it, are, only where its contract sets
+ * statics_admitted, each read from the class that holds it
+ * (view_unions_untagged.c's static_own_slot). */
 typedef struct adamic_view_untagged_field {
     const char *name;
     size_t contract;
@@ -72,9 +74,10 @@ size_t adamic_view_untagged_plain_select(const adamic_object *object, const adam
 void adamic_view_static_write(const adamic_object *object, const char *name);
 
 // A checked read that expects an object outside a union (ir.Program's ObjectReadContract) stops when
-// value is a class constructor, unless its contract admits one (admitted, StaticsAdmitted) and it owns
-// each of the count required names as a data static, as plain_matches admits one in a union.
-void adamic_view_static_read(const adamic_object *value, bool admitted, const char *const *required, size_t count, const char *expression, const char *type);
+// value is a class constructor, unless its contract admits one (admitted, StaticsAdmitted), each of the
+// count required names is a data static on its chain, and none of the optional_count optional names
+// is one the walk refuses, as plain_matches admits one in a union.
+void adamic_view_static_read(const adamic_object *value, bool admitted, const char *const *required, size_t count, const char *const *optional, size_t optional_count, const char *expression, const char *type);
 
 adamic_view_union_value adamic_view_element(const adamic_view_untagged_contract *contracts, size_t count, size_t id, const adamic_array *array, double index, bool relative, unsigned int wanted, const char *where, const char *view_type);
 
