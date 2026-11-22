@@ -26,6 +26,9 @@ func unknownKindRuntime(program *ir.Program) string {
 	kind("value instanceof AdamicClosure", ir.UnknownFunction)
 	kind("Array.isArray(value)", ir.UnknownArray)
 	kind("value instanceof Map || value instanceof Set", ir.UnknownCollection)
+	// Native's adamic_union_kind answers other for a weak map, which holds no fields, so a WeakMap or
+	// WeakSet takes the same arm here and never reads as a plain object (unknownView stops one first).
+	kind("value instanceof WeakMap || value instanceof WeakSet", ir.UnknownOther)
 	kind("ArrayBuffer.isView(value)", ir.UnknownTypedArray)
 	kind("value instanceof Error", ir.UnknownError)
 	if len(program.Classes) > 0 {

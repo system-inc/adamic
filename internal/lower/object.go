@@ -1074,6 +1074,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if _, isVisit := visits[name]; receiverType == ir.Array && (isVisit || arrayMethods[name]) {
 		return l.arrayMethod(node, receiver, name)
 	}
+	if receiverType == ir.WeakCollection {
+		return l.weakCollectionMethod(node, receiver, name)
+	}
 	if receiverType == ir.Map && (name == "keys" || name == "values" || name == "entries") {
 		return l.libraryCollectionIterator(node, receiver, name)
 	}
@@ -1954,6 +1957,9 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 	}
 	if l.isLibraryGlobal(created.Expression, "Set") {
 		return l.newSet(node)
+	}
+	if l.isLibraryGlobal(created.Expression, "WeakSet") || l.isLibraryGlobal(created.Expression, "WeakMap") {
+		return l.newWeakCollection(node)
 	}
 	if l.errorClass(node) != "" {
 		return l.newError(node)

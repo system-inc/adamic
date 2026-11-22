@@ -327,6 +327,10 @@ var graphFlowRules = map[reflect.Type]graphFlowRule{
 	reflect.TypeFor[ir.TypedArraySort]():           {class: graphFlowCannotHold, why: "its typed array, numbers (typed_arrays.go:40)"},
 	reflect.TypeFor[ir.TypedArraySet]():            {class: graphFlowCannotHold, why: "void (typed_arrays.go:41)"},
 	reflect.TypeFor[ir.TypedArraySubarray]():       {class: graphFlowCannotHold, why: "a view of a typed array's numbers (typed_arrays.go:42)"},
+	reflect.TypeFor[ir.WeakCollectionNew]():        {class: graphFlowCannotHold, why: "a WeakMap or WeakSet, a table keyed by weak handles that holds no key strongly (weak_collection.go:11)"},
+	reflect.TypeFor[ir.WeakSetAdd]():               {class: graphFlowCannotHold, why: "its WeakSet, which holds no key strongly (weak_collection.go:20)"},
+	reflect.TypeFor[ir.WeakCollectionHas]():        {class: graphFlowCannotHold, why: "a boolean (weak_collection.go:29)"},
+	reflect.TypeFor[ir.WeakCollectionDelete]():     {class: graphFlowCannotHold, why: "a boolean (weak_collection.go:36)"},
 
 	// Stops: made outside the plan, or refused in a graph program.
 	reflect.TypeFor[ir.IteratorNext]():         {class: graphFlowStops, why: "a fresh { value, done } (generator.go:27) with no GraphTypes, which holds the yielded value: a graph type when the program holds results (Memory's row 12)"},

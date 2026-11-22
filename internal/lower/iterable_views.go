@@ -567,9 +567,10 @@ func handNextReceiver(node any, parameter int) (ir.Expression, bool) {
 // #qk8rztp S2c-2b), so a maybe-number, a maybe-boolean, whose one byte read as a pointer would be a
 // wrong answer rather than a stop, the null and undefined representations, and anything the
 // classifier doesn't name stay not yet built. generatorSignature admits none of them as a yield
-// today, so this is the second line, and the runtime's own allowlist the third.
+// today, so this is the second line, and the runtime's own allowlist the third. A WeakMap or a WeakSet
+// is a reference no step's result was ever measured holding (#hcgy751), so it stays out until one is.
 func handNextHolds(of ir.Type) bool {
-	return of == ir.Number || of == ir.Boolean || of.IsReference()
+	return (of == ir.Number || of == ir.Boolean || of.IsReference()) && of != ir.WeakCollection
 }
 
 // handView admits a hand view a generator feeds (#qk8rztp S2c-2b), a collection's iterator feeding
