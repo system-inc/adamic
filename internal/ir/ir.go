@@ -340,6 +340,12 @@ const (
 	// body's locals between steps. Until generators are values (#qk8rztp S2), the only slot that holds
 	// one is the local a for-of over a generator's call steps, and a call dropped as a statement.
 	Generator
+
+	// WeakCollection is a WeakMap or a WeakSet (runtime/weak_collection.c): a counted table keyed by
+	// its keys' weak handles, so an entry holds its key without keeping it alive, and goes when the
+	// key is freed. It's its own type, never a Map, so no Map operation (iteration, size, spread, a
+	// graph or Program region's adoption) reaches one (ir/weak_collection.go).
+	WeakCollection
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |
@@ -372,7 +378,7 @@ func (t Type) Present() Type {
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
 func (t Type) IsReference() bool {
-	return t == String || t == Object || t == Array || t == Map || t == Record || t == Closure || t == Union || t == Weak || t == Promise || t == Generator || t.IsTypedArray()
+	return t == String || t == Object || t == Array || t == Map || t == Record || t == Closure || t == Union || t == Weak || t == Promise || t == Generator || t == WeakCollection || t.IsTypedArray()
 }
 
 // Local is a variable: its name as written, for reading the output, and its type.

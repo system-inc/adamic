@@ -1655,6 +1655,17 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 		return e.value(expression.Map) + ".delete(" + e.value(expression.Key) + ")"
 	case ir.MapSize:
 		return e.value(expression.Map) + ".size"
+	case ir.WeakCollectionNew:
+		if expression.Set {
+			return "new WeakSet()"
+		}
+		return "new WeakMap()"
+	case ir.WeakSetAdd:
+		return e.value(expression.Set) + ".add(" + e.value(expression.Key) + ")"
+	case ir.WeakCollectionHas:
+		return e.value(expression.Collection) + ".has(" + e.value(expression.Key) + ")"
+	case ir.WeakCollectionDelete:
+		return e.value(expression.Collection) + ".delete(" + e.value(expression.Key) + ")"
 	case ir.HasOwn:
 		return "adamicHostHasOwn(" + e.value(expression.Object) + ", " + e.value(expression.Key) + ")"
 	case ir.ParallelMap:

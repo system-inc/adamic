@@ -1,0 +1,63 @@
+// WeakSet's add, has and delete against Node: every key kind the runtime keys by its weak handle (an
+// object, an array, a Map, a Set, a function and a typed array), a key added twice, deleted twice, and
+// keys freed while the set that holds them lives on (#hcgy751).
+const keys = new WeakSet<object>();
+const point = { x: 1 };
+const list = [1, 2];
+const table = new Map<string, number>();
+const group = new Set<string>();
+const step = (): number => 1;
+const bytes = new Uint8Array(4);
+console.log(`fresh ${keys.has(point)} ${keys.has(list)} ${keys.has(table)} ${keys.has(group)} ${keys.has(step)} ${keys.has(bytes)}`);
+keys.add(point);
+keys.add(list).add(table);
+keys.add(group);
+keys.add(step);
+keys.add(bytes);
+console.log(`added ${keys.has(point)} ${keys.has(list)} ${keys.has(table)} ${keys.has(group)} ${keys.has(step)} ${keys.has(bytes)}`);
+keys.add(point);
+console.log(`added again ${keys.has(point)}`);
+console.log(`deleted ${keys.delete(list)} ${keys.delete(list)} ${keys.has(list)}`);
+console.log(`kept ${keys.has(point)} ${keys.has(table)} ${keys.has(group)} ${keys.has(step)} ${keys.has(bytes)}`);
+console.log(`a twin ${keys.has({ x: 1 })} ${keys.has([1, 2])} ${keys.delete({ x: 1 })}`);
+console.log(`never added ${keys.delete(new Map<string, number>())}`);
+
+// A set of one key type, each kind on its own.
+const points = new WeakSet<{ x: number }>();
+const arrays = new WeakSet<number[]>();
+const tables = new WeakSet<Map<string, number>>();
+const groups = new WeakSet<Set<string>>();
+const steps = new WeakSet<() => number>();
+const buffers = new WeakSet<Uint8Array>();
+points.add(point);
+arrays.add(list);
+tables.add(table);
+groups.add(group);
+steps.add(step);
+buffers.add(bytes);
+console.log(`typed ${points.has(point)} ${arrays.has(list)} ${tables.has(table)} ${groups.has(group)} ${steps.has(step)} ${buffers.has(bytes)}`);
+console.log(`typed deleted ${points.delete(point)} ${arrays.delete(list)} ${tables.delete(table)} ${groups.delete(group)} ${steps.delete(step)} ${buffers.delete(bytes)}`);
+console.log(`typed after ${points.has(point)} ${arrays.has(list)} ${tables.has(table)} ${groups.has(group)} ${steps.has(step)} ${buffers.has(bytes)}`);
+console.log(`one set, not another ${keys.has(point)} ${points.has(point)}`);
+
+// A key made in a call and gone when it returns, while the set lives on: its entry goes with it.
+const seen = new WeakSet<{ round: number }>();
+function visit(round: number): string {
+	const key = { round };
+	const before = seen.has(key);
+	seen.add(key);
+	const added = seen.has(key);
+	const removed = round % 2 === 0 ? seen.delete(key) : false;
+	return `${round} ${before} ${added} ${removed} ${seen.has(key)}`;
+}
+for (let round = 0; round < 4; round++) {
+	console.log(`visit ${visit(round)}`);
+}
+
+// A set handed to a function, and kept in an object.
+function mark(into: WeakSet<object>, key: object): boolean {
+	into.add(key);
+	return into.has(key);
+}
+const holder = { marked: new WeakSet<object>() };
+console.log(`marked ${mark(holder.marked, point)} ${holder.marked.has(point)} ${holder.marked.has(list)} ${mark(keys, list)}`);

@@ -19,6 +19,8 @@ func cType(valueType ir.Type) string {
 		return "adamic_async_promise *"
 	case ir.Generator:
 		return "adamic_generator *"
+	case ir.WeakCollection:
+		return "adamic_weak_map *"
 	case ir.Object:
 		return "adamic_object *"
 	case ir.Uint8Array, ir.Uint16Array, ir.Int32Array, ir.Float64Array:
