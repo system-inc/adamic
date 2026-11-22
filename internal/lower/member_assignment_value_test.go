@@ -7,8 +7,9 @@ import (
 
 // An assignment to a member used as a value is the value stored, evaluated once, after the receiver and
 // before the store (#4gxxhvf): revcomp's two shapes, a chain, a short circuit that skips the store, and a
-// value with a side effect, each agreeing with Node on the JavaScript backend and natively under the
-// sanitizers. Mutant: the result evaluates the stored value again in place of reading it back, and the
+// value with a side effect, a this receiver, and a setter whose getter gives back twice what was stored, so
+// the result is the value and never the slot read back, each agreeing with Node on the JavaScript backend
+// and natively under the sanitizers. Mutant: the result evaluates the stored value again in place of reading it back, and the
 // side-effect row counts two calls.
 func TestMemberAssignmentValueAgrees(t *testing.T) {
 	t.Parallel()
@@ -20,6 +21,7 @@ func TestMemberAssignmentValueAgrees(t *testing.T) {
 		{"short circuit", "class Box { f = 1; }\nconst o = new Box();\nconst skip = Date.now() > 0;\nconst r = skip || (o.f = 9) > 0;\nconsole.log(String(r) + ' ' + String(o.f));\n", "true 1\n"},
 		{"side effect once", "class Box { f = 0; }\nconst o = new Box();\nlet calls = 0;\nfunction bump(): number { calls++; return calls * 10; }\nconst r = (o.f = bump());\nconsole.log(String(r) + ' ' + String(o.f) + ' ' + String(calls));\n", "10 10 1\n"},
 		{"this", "class Box {\n  f = 0;\n  set(v: number): number { return (this.f = v) + 1; }\n}\nconst o = new Box();\nconsole.log(String(o.set(4)) + ' ' + String(o.f));\n", "5 4\n"},
+		{"setter", "class Box {\n  private held = 0;\n  get f(): number { return this.held * 2; }\n  set f(v: number) { this.held = v; }\n}\nconst o = new Box();\nconst r = (o.f = 3);\nconsole.log(String(r) + ' ' + String(o.f));\n", "3 6\n"},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
 			t.Run(probe.name+extension, func(t *testing.T) {
@@ -72,6 +74,22 @@ func TestMemberAssignmentValueKeepsTheStatementFormsStop(t *testing.T) {
 			words := func(err error) string { return err.Error()[strings.Index(err.Error(), " ")+1:] }
 			if !strings.Contains(statementErr.Error(), "optional") || words(statementErr) != words(valuedErr) {
 				t.Fatalf("want the value stopped as the statement is, got statement %v and value %v", statementErr, valuedErr)
+			}
+		})
+	}
+}
+
+// A record write stores into counted own-key storage, which this doesn't hold the value of yet, so it stays
+// NotYet in its own words. Mutant: the record check dropped, and the row lowers.
+func TestMemberAssignmentValueRecordStaysNotYet(t *testing.T) {
+	t.Parallel()
+	const source = "const rec: Record<string, number> = {};\nconst r = (rec.k = 4);\nconsole.log(String(r));\n"
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, source, extension)
+			if err == nil || !strings.Contains(err.Error(), "an assignment value to a member that isn't a plain field store") {
+				t.Fatalf("want the record write NotYet, got %v", err)
 			}
 		})
 	}
