@@ -199,6 +199,8 @@
   "reading the global eval: a native binary has no compiler at runtime": "#53r37a3 (Platforms)",
   "constructing a function with the global Function: a native binary has no compiler at runtime": "#53r37a3 (Platforms)",
   "a cast that makes a viewed readonly array writable": "#b5w3ycg",
+  "a value of type Readonly<(CompilerHost | ProgramHost<T>) & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter; }> seen as DirectoryStructureHost, whose readonly field directoryExists becomes writable: a readonly field may hold something narrower than ((directoryName: string) => boolean) | undefined, which a write of ((path: string) => boolean) | undefined would replace": "#k8ed1f2",
+  "a value of type SyntacticTypeNodeBuilderContext seen as NodeBuilderContext, whose readonly field tracker becomes writable: a readonly field may hold something narrower than Required<Pick<SymbolTracker, \"reportInferenceFallback\">>, which a write of SymbolTrackerImpl would replace": "#k8ed1f2",
   "a checked cast from never[] to [] whose value isn't a plain object": "#b5w3ycg",
   "a value of type ArrayLiteralExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": "#aryr7ea",
   "a value of type ArrayLiteralExpression | AssignmentExpression<EqualsToken> | BindingElement | ElementAccessExpression | ... 8 more ... | VariableDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": "#aryr7ea",
