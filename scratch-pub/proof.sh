@@ -6,7 +6,8 @@ export GOFLAGS="${GOFLAGS:+$GOFLAGS }-timeout=40m"
 # absent is published and made ready, in objectLiteral's spread arm (internal/native/emit_objects.go) and on the
 # reused path (internal/native/reuse.go), so it reads, enumerates and stringifies as written.
 # PART=a: gofmt, vet, products, the pins at head with each subtest's verdict, each mutant from a whole-file copy in
-# scratch-pub/, put back from the head copy and checked put back, then native whole (ADAMIC_TEST_WASI=1).
+# scratch-pub/, put back from the head copy and checked put back, then native whole (ADAMIC_TEST_WASI=1) and
+# compilercensus whole.
 # PART=b: oracle whole, so each part fits one job.
 part=${PART:-a}
 ok=1
@@ -59,9 +60,9 @@ if [ "$part" = a ]; then
 	subtests
 
 	# M1: the publish removed from objectLiteral's spread arm, so the copy path's programs read the field absent
-	# again: g01 and g03 print undefined and drop it from keys and JSON, g04 stops at its read.
+	# again: g01, g03 and g08 print undefined and drop it from keys and JSON, g04 stops at its read.
 	if mutate internal/native/emit_objects.go emit_objects.go.publish_removed.mutant; then
-		red "M1 spread arm's publish removed" go test -count=1 -run 'TestSpreadStagedOverride' ./internal/oracle/ -v -- '--- FAIL: TestSpreadStagedOverride/g01_cast_spread_override.ts' '--- FAIL: TestSpreadStagedOverride/g03_factory_spread_override.ts' '--- FAIL: TestSpreadStagedOverride/g04_merged_class_spread_override.ts' "read before assignment: field 'label' in m.label"
+		red "M1 spread arm's publish removed" go test -count=1 -run 'TestSpreadStagedOverride' ./internal/oracle/ -v -- '--- FAIL: TestSpreadStagedOverride/g01_cast_spread_override.ts' '--- FAIL: TestSpreadStagedOverride/g03_factory_spread_override.ts' '--- FAIL: TestSpreadStagedOverride/g04_merged_class_spread_override.ts' '--- FAIL: TestSpreadStagedOverride/g08_nested_spread.ts' "read before assignment: field 'label' in m.label"
 	fi
 	put_back internal/native/emit_objects.go
 
@@ -74,6 +75,8 @@ if [ "$part" = a ]; then
 	trap - EXIT
 
 	whole "native whole, ADAMIC_TEST_WASI=1" env ADAMIC_TEST_WASI=1 go test -count=1 -timeout 40m ./internal/native/
+	step "products compilercensus" sandboxed_products ./internal/compilercensus
+	whole "compilercensus whole" go test -count=1 ./internal/compilercensus/
 fi
 
 if [ "$part" = b ]; then
