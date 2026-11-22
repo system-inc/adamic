@@ -54,9 +54,11 @@ const adamicUntaggedPlainSelect = (value, contracts, id, expression, declared, e
  // A class constructor keeps its stop in a union a callable could stand in: a callable or closure member,
  // or one native's table names unknown (a nominal or unsupported one), as plain_union_holds_callable reads it.
  const callable=(union)=>(union?.Members || []).some(member=>{const held=contracts[member-1];return held===undefined || held.Kind===0 || held.Kind===5 || held.Of===` + strconv.Itoa(int(ir.Closure)) + ` || !!held.Nominal || (!!held.Unsupported && held.Unsupported!=='untagged object union');});
- // statics reads a class constructor its contract admitted (StaticsAdmitted). Own data only, as for an object.
+ // statics reads a class constructor its contract admitted (StaticsAdmitted): a data static on its chain, its own
+ // or a base's, as native's static_own_slot walks it (adamicViewStaticField). An object's is own data only.
  const slot = (object,name,statics=false) => {
-  if(object===null || (typeof object!=='object' && !(statics && adamicViewConstructor(object))) || object instanceof Map) return undefined;
+  if(statics && adamicViewConstructor(object)) return adamicViewStaticField(object,name);
+  if(object===null || typeof object!=='object' || object instanceof Map) return undefined;
   const field=Object.getOwnPropertyDescriptor(object,name);
   if(field===undefined || !Object.hasOwn(field,'value') || adamicFieldReadiness.get(object)?.has(name)) return undefined;
   return field;
@@ -98,8 +100,10 @@ const adamicUntaggedPlainSelect = (value, contracts, id, expression, declared, e
   if(contract.Kind===4){for(const member of contract.Members || []){if(matches(value,member,depth+1,!callable(contract))) return true;}return false;}
   if(contract.Kind===2 && contract.Of===10) return value!==null && (typeof value==='object' || typeof value==='function' || value instanceof AdamicClosure);
   // A class constructor stands for an object whose contract admits one, outside a union a callable could
-  // stand in, when every required field is its own data static: never an accessor, never one only a base declares.
-  const admitted=statics && contract.Kind===2 && contract.StaticsAdmitted===true && adamicViewConstructor(value) && (contract.Fields || []).every(field=>field.Optional || slot(value,field.Name,true)!==undefined);
+  // stand in, when every required field is a data static it holds, its own or a base's, and no optional one
+  // is a name the walk refuses (an accessor, a builtin only a base declares): only an absent one may be missing.
+  // A tagged contract returns before the fields loop below, so the optional fields are asked here.
+  const admitted=statics && contract.Kind===2 && contract.StaticsAdmitted===true && adamicViewConstructor(value) && (contract.Fields || []).every(field=>slot(value,field.Name,true)!==undefined || field.Optional && adamicViewStaticAbsent(value,field.Name));
   if(!admitted && (contract.Kind!==2 || value===null || typeof value!=='object' || (Array.isArray(value) && !adamicTupleObjects.has(value)) || value instanceof Map)) return false;
   if(contract.FixedTuple && (!Array.isArray(value) || !adamicTupleObjects.has(value) || value.length !== contract.Tuple.length)) return false;
   const fields=contract.Fields || [];
@@ -107,7 +111,8 @@ const adamicUntaggedPlainSelect = (value, contracts, id, expression, declared, e
   if(ownKind){const actual=slot(value,'kind',admitted);return actual!==undefined && matches(actual.value,ownKind.Contract,depth+1);}
   const tags=fields.filter(field=>!field.Optional && contracts[field.Contract-1]?.Kind===1 && contracts[field.Contract-1]?.Allowed?.length);
   if(tags.length) return tags.every(field=>{const actual=slot(value,field.Name,admitted);return actual!==undefined && matches(actual.value,field.Contract,depth+1);});
-  for(const field of fields){const actual=slot(value,field.Name,admitted);if(!(actual===undefined ? field.Optional && !Object.hasOwn(value,field.Name) : matches(actual.value,field.Contract,depth+1))) return false;}
+  // An optional field is absent where the object has no own key, or a class constructor holds nothing under the name.
+  for(const field of fields){const actual=slot(value,field.Name,admitted);if(!(actual===undefined ? field.Optional && (admitted ? adamicViewStaticAbsent(value,field.Name) : !Object.hasOwn(value,field.Name)) : matches(actual.value,field.Contract,depth+1))) return false;}
   return true;
   } finally {if(reference){seen.delete(id);if(seen.size===0) active.delete(value);}}
  };

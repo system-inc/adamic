@@ -1,5 +1,5 @@
-// #24kvb6k, a Now's third road: an optional field the class only inherits as a data static from its base.
-// Node reads the base's value through the prototype chain; it must never read as absent.
+// #24kvb6k: an optional field the class only inherits as a data static from its base. Node reads the base's
+// value through the prototype chain, and so does the view's walk, so it reads 6, never absent.
 interface Root { readonly kind: 'Holder'; }
 interface Inner { readonly tag: 'I'; readonly extra?: number; }
 interface Viewed extends Root { readonly value: Inner; }

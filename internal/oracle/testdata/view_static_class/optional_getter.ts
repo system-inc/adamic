@@ -1,5 +1,5 @@
-// #24kvb6k, a Now's second road: a static getter named like an optional field. Node runs the getter and reads
-// its value; it must never read as absent. A contract with an optional field admits no class.
+// #24kvb6k: a static getter named like an optional field. Node runs the getter and reads its value; it must never
+// read as absent. Lowering stops a getter a checked contract names, and the run time walk refuses an accessor.
 interface Root { readonly kind: 'Holder'; }
 interface Inner { readonly tag: 'I'; readonly extra?: number; }
 interface Viewed extends Root { readonly value: Inner; }
