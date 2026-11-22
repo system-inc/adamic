@@ -155,6 +155,9 @@ func (l *lowering) representationReason(proven *checker.Type) (ir.Type, bool, st
 		return ir.Map, true, ""
 	case flags&checker.TypeFlagsObject != 0 && l.isLibraryType(proven, "Promise"):
 		return ir.Promise, true, ""
+	case flags&checker.TypeFlagsObject != 0 && l.isLibraryType(proven, "WeakMap", "WeakSet"):
+		// Its own type, never a Map's, so no Map road reaches one (library_weak_collections.go).
+		return ir.WeakCollection, true, ""
 	case flags&checker.TypeFlagsObject != 0 && !isClassInstance(proven) && (l.checker.IsTypeAssignableTo(l.checker.GetNumberType(), proven) || l.checker.IsTypeAssignableTo(l.checker.GetStringType(), proven) || l.checker.IsTypeAssignableTo(l.checker.GetBooleanType(), proven)):
 		// Structural types such as {} admit primitives. Their slots must preserve
 		// the runtime brand with the same boxes used for scalar/reference unions.
