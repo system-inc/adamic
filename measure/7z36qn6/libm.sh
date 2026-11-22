@@ -1,7 +1,8 @@
 #!/bin/bash
 # #7z36qn6: what libm's dynamic load costs a hello world's start (Seats' lead, J on #7z36qn6). C hello as is and with
-# libm forced into its NEEDED list, Adamic hello as built and with libm linked statically (native.go's -lm made
-# -Bstatic for the measure only, never a head). Never lands.
+# libm forced into its NEEDED list, Adamic hello as built and with libm linked --as-needed (native.go's -lm, for
+# the measure only, never a head), and which libm symbols hello leaves undefined. A static libm can't link into a
+# dynamic executable on glibc 2.39: its pow ifunc needs _dl_x86_cpu_features (J-7y1adbd). Never lands.
 set -uo pipefail
 echo "box $(hostname) $(nproc) cpus, $(uname -r), load $(cut -d' ' -f1-3 /proc/loadavg), tree $(git rev-parse HEAD)"
 grep -m1 "model name" /proc/cpuinfo
@@ -27,13 +28,13 @@ text = open(path).read()
 seam = '\targuments = append(arguments, "-lm")\n'
 if text.count(seam) != 1:
     sys.exit("seam not found once")
-open(path, "w").write(text.replace(seam, '\targuments = append(arguments, "-Wl,-Bstatic", "-lm", "-Wl,-Bdynamic")\n', 1))
+open(path, "w").write(text.replace(seam, '\targuments = append(arguments, "-Wl,--as-needed", "-lm", "-Wl,--no-as-needed")\n', 1))
 PY
-go build -buildvcs=false -o "$T/adamic-static" ./cmd/adamic > "$T/b.log" 2>&1 || { cp "$T/native.go.orig" "$N"; cat "$T/b.log"; echo "FAIL static build"; exit 1; }
+go build -buildvcs=false -o "$T/adamic-static" ./cmd/adamic > "$T/b.log" 2>&1 || { cp "$T/native.go.orig" "$N"; cat "$T/b.log"; echo "FAIL as-needed build"; exit 1; }
 cp "$T/native.go.orig" "$N"
 git diff --quiet -- "$N" && echo "PASS native.go restored" || { echo "FAIL native.go not restored"; exit 1; }
 for variant in dynamic static; do
-	XDG_CACHE_HOME="$T/cache-$variant" ADAMIC_BUILD_CACHE_DIR="$T/build-$variant" "$T/adamic-$variant" build "$T/hello.a" -o "$T/adamic-$variant-hello" > "$T/b.log" 2>&1 || { cat "$T/b.log"; echo "FAIL hello build $variant (a static libm the image lacks would fail here)"; exit 1; }
+	XDG_CACHE_HOME="$T/cache-$variant" ADAMIC_BUILD_CACHE_DIR="$T/build-$variant" "$T/adamic-$variant" build "$T/hello.a" -o "$T/adamic-$variant-hello" > "$T/b.log" 2>&1 || { cat "$T/b.log"; echo "FAIL hello build $variant "; exit 1; }
 done
 for binary in c c-libm adamic-dynamic-hello adamic-static-hello; do
 	[ "$("$T/$binary")" = "hello world" ] || { echo "FAIL $binary prints another line"; exit 1; }
@@ -43,6 +44,8 @@ for binary in c c-libm adamic-dynamic-hello adamic-static-hello; do
 		echo "   $(wc -l < "$T/$binary.trace") calls, $(grep -c 'openat(' "$T/$binary.trace") openat, $(grep -c 'mmap(' "$T/$binary.trace") mmap"
 	fi
 done
+libm_exports=$(nm -D --defined-only "$(readlink -f /lib/x86_64-linux-gnu/libm.so.6)" | awk '{print $3}' | sed 's/@.*//' | sort -u)
+echo "== libm symbols adamic hello leaves undefined: $(nm -D --undefined-only "$T/adamic-dynamic-hello" | awk '{print $2}' | sed 's/@.*//' | sort -u | comm -12 - <(echo "$libm_exports") | tr '\n' ' ')"
 binaries="$T/c $T/c-libm $T/adamic-dynamic-hello $T/adamic-static-hello"
 "$T/spawnloop" 200 pipe $binaries > /dev/null || { echo "FAIL warm-up"; exit 1; }
 for block in 1 2 3 4 5; do
