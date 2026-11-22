@@ -688,6 +688,15 @@ static void free_one(void *value) {
 	// another thread may read its header, so it asks the table as every value once did.
 	if ((((adamic_heap *)value)->slab & (ADAMIC_WEAK_NAMED | ADAMIC_SHARED_HEADER)) != 0) {
 		adamic_weak_forget(value);
+#ifdef ADAMIC_CANONICAL_CLOSURES
+		// An environment's interior cells are values of their own a Weak can name, inside its storage;
+		// a handle made for one marks the environment (weak.c), so they're forgotten here, as the graph
+		// free and the Program end forget their members' cells (#0h34h5w).
+		if (((adamic_heap *)value)->kind == adamic_kind_environment) {
+			adamic_environment *environment = value;
+			for (size_t i = 0; i < environment->count; i++) { adamic_weak_forget(&environment->cells[i]); }
+		}
+#endif
 	}
 	adamic_heap_free_storage(value, ((adamic_heap *)value)->slab);
 }
