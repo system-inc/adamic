@@ -178,6 +178,10 @@ reads internal/ir internal/fresh/*.go
 reads internal/ir internal/lower/*.go
 # TestCallTargetReaders — internal/ir/call_targets_guard_test.go:114
 reads internal/ir internal/native/*.go
+# TestEverySwitchOverLengthNamesFunctionLength (internal/ir/function_length_guard_test.go:18) and
+# TestEverySwitchOverGeneratorNextNamesIteratorNext (iterator_next_guard_test.go:23) parse every non-test .go under
+# internal/ outside testdata; a glob can't leave out tests or testdata, so it keys them too.
+reads internal/ir internal/*.go
 # TestTypeScriptIsThePinnedCommit — internal/load/pin_test.go:19
 reads internal/load cohere
 # TestClassFeaturesPrivateStorage — internal/lower/class_features_test.go:52
@@ -1503,6 +1507,10 @@ reads stage3/lane .gitattributes
 # must, never less.
 reads stage3/lane/adaptedtree stage3/*
 reads stage3/lane/adaptedtree .gitattributes
+# TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes (performance_pins_test.go:40) reads Lower's two host binding
+# pins and holds the adapted product's performanceCore.ts to their bytes.
+reads stage3/lane/adaptedtree internal/lower/testdata/host_binding/performance_core_adapted.txt
+reads stage3/lane/adaptedtree internal/lower/testdata/host_binding/performance_core_hooks.txt
 # TestFixtures, TestFixturePaths via transformedNodeRunner — stage3/fixtures/fixtures_test.go:121
 # TestFixtures — stage3/fixtures/fixtures_test.go:264
 # TestTransformedNodeRunnerGuardHook — stage3/fixtures/runner_guard_test.go:21
@@ -1527,6 +1535,24 @@ reads cmd/adamic-gate/parallelcensus *_test.go
 # green past chg_gm7k75w9's clang lookup in internal/oracle, and main went red unseen. Its own package, so only the
 # census runs again.
 reads internal/compilercensus *.go
+# TestNothingOutsideItsCommandReadsPerformanceJsonc (cmd/adamic-performance/noreader/noreader_test.go:36) reads every
+# .go, .sh, .py, .mjs, .cjs and .js from the root, skipping cmd/adamic-performance, node_modules, .git and the paths
+# .gitmodules lists, which it reads, as it reads go.mod to find the root. A glob can't skip those, so they're keyed too.
+reads cmd/adamic-performance/noreader *.go
+reads cmd/adamic-performance/noreader *.sh
+reads cmd/adamic-performance/noreader *.py
+reads cmd/adamic-performance/noreader *.mjs
+reads cmd/adamic-performance/noreader *.cjs
+reads cmd/adamic-performance/noreader *.js
+reads cmd/adamic-performance/noreader .gitmodules
+reads cmd/adamic-performance/noreader go.mod
+# internal/native_runtime/source_paths' two tests (source_paths_test.go:95, :138) read and parse every tracked .go
+# outside records (review, performance and evidence directories, three prefixes); a glob keys the records too.
+reads internal/native_runtime/source_paths *.go
+# TestRuntimeFilesHoldNoTest (internal/native/runtimeproducts/runtime_files_test.go:20) walks each runtimeFiles entry
+# for a _test.go by name and fails on one that's gone; it reads no content, and runtimeFiles is all under
+# internal/native_runtime.
+reads internal/native/runtimeproducts internal/native_runtime/* paths
 reads cmd/adamic-stage1-progress stage1/cohere/gitignore/gitignore_test.go
 reads internal/flow internal/oracle/testdata/non_null.ts
 reads internal/flow internal/oracle/testdata/non_null_array.ts
@@ -1743,6 +1769,11 @@ reads internal/corpusfiles cohere
 reads internal/oracle stage3/drivers/scanner/probes/*/main.a
 reads internal/oracle stage3/fixtures/*
 reads internal/lower internal/oracle/testdata/*.a
+# The view walk's and the placeholder cache's shards (view_sites_test.go:162, placeholder_cache_test.go:185) load every
+# .a and non-.d.ts .ts program under internal/oracle/testdata, and load reads whatever each imports beside it. No
+# program there imports a relative path (adamic main 0efbdb08), so the .a line above and this one are the whole read,
+# and the directory's .counts, .stop and evidence files, edited about 600 times in the two weeks to Nov 22, key nothing.
+reads internal/lower internal/oracle/testdata/*.ts
 # internal/lower's program region census (program_region_census_test.go) reads the pinned tsc corpus, internal/oracle's
 # TestProduct_ProgramTscSource product, keyed by stage3/source.json's TypeScript pin and the region parse manifest
 # (internal/programsource/source.go:34-39): lower's key named neither, so a pin move reused its census (#vah7g5n, Node's
@@ -1791,6 +1822,24 @@ reads internal/flow internal/ir/*.go
 reads internal/lower internal/ir/*.go
 reads stage3/census/latent/statecopy internal/ir/*.go
 reads stage3/census/latent/statecopy internal/lower/*.go
+# stage3/census/latent/overlaytext's tests hold make_overlay.py's text edits to main's internal/lower files
+# (anchors_test.go:95, carry_replay_test.go:75, module_format_test.go:131, relation_overflow_test.go:12) and read the
+# census templates and script beside it in stage3/census/latent, another package's files.
+reads stage3/census/latent/overlaytext internal/lower/lower.go
+reads stage3/census/latent/overlaytext internal/lower/expression.go
+reads stage3/census/latent/overlaytext internal/lower/functions.go
+reads stage3/census/latent/overlaytext internal/lower/generic.go
+reads stage3/census/latent/overlaytext internal/lower/locals.go
+reads stage3/census/latent/overlaytext internal/lower/entries_records.go
+reads stage3/census/latent/overlaytext stage3/census/latent/lower.go.txt
+reads stage3/census/latent/overlaytext stage3/census/latent/main.go.txt
+reads stage3/census/latent/overlaytext stage3/census/latent/make_overlay.py
+reads stage3/census/latent/overlaytext stage3/census/latent/relation_overflow.go.txt
+reads stage3/census/latent/overlaytext stage3/census/latent/speculative.go.txt
+reads stage3/census/latent/overlaytext stage3/census/latent/units.go.txt
+# importclean's TestImportCleanKeepsMainLowerImports (main_test.go:62) globs internal/lower/*.go and cleans each
+# non-test file; the line's glob also takes the tests and the subpackages.
+reads stage3/census/latent/importclean internal/lower/*.go
 reads internal/split internal/oracle/testdata/*
 reads internal/worker internal/oracle/testdata/json_*.a
 reads internal/worker oracle/node.mjs
