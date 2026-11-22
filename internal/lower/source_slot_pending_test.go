@@ -25,6 +25,10 @@ const (
 	sourceSlotPendingReach = "main.ts:7:2: stage 0 can't lower a write to optional field flowNode through a checked view, where what reaches its receiver isn't known yet"
 )
 
+// logicalRefused is the logical-assignment rule's refusal, which answers a lowered `??=` through the view before
+// view's own held stop does.
+const logicalRefused = "Adamic 0.1 refuses a logical assignment through a checked view; write the field through the object's own type, or read it, decide, then assign with ="
+
 // sourceSlotPendingRow is a program and its stop matched from main.ts: on, or empty for one that lowers and
 // agrees with Node.
 type sourceSlotPendingRow struct{ name, source, want string }
@@ -41,8 +45,9 @@ func judgeSourceSlotPending(t *testing.T, rows []sourceSlotPendingRow) {
 			}
 			_, err := lowerSourceAs(t, row.source, ".ts")
 			var notYet *NotYet
-			if !errors.As(err, &notYet) {
-				t.Fatalf("want NotYet %q, got %v", row.want, err)
+			var refused *Refused
+			if !errors.As(err, &notYet) && !errors.As(err, &refused) {
+				t.Fatalf("want a stop %q, got %v", row.want, err)
 			}
 			at := strings.Index(err.Error(), "main.ts:")
 			if at < 0 || err.Error()[at:] != row.want {
@@ -89,13 +94,12 @@ func TestSourceSlotPendingStopsOnlyWhereTheWriteIsLowered(t *testing.T) {
 // getter the view's contract would read through (4:85, "a getter in a checked field contract").
 func TestSourceSlotPendingOtherWriteFormsStop(t *testing.T) {
 	t.Parallel()
-	const certificate = "stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
 	coalesce := strings.Replace(sourceSlotPendingPrelude, "t.flowNode = v;", "t.flowNode ??= v;", 1)
 	destructure := strings.Replace(sourceSlotPendingPrelude, "function setIt(t: NodeA, v: FlowNode): void {\n\tt.flowNode = v;", "function setIt(t: NodeA, v: { flowNode: FlowNode }): void {\n\t({ flowNode: t.flowNode } = v);", 1)
 	setter := strings.Replace(sourceSlotPendingPrelude, `const node: Node = { kind: "a", flowNode: { id: 1 } };`, `class Held { readonly kind = "a" as const; #flow: FlowNode | undefined = undefined; get flowNode(): FlowNode | undefined { return this.#flow; } set flowNode(v: FlowNode | undefined) { this.#flow = v; } }`+"\nconst node: Node = new Held();", 1)
 	judgeSourceSlotPending(t, []sourceSlotPendingRow{
-		{"??=", coalesce + "setIt(view, { id: 2 });\nconsole.log(String(view.kind));\n", "main.ts:7:2: " + certificate},
-		{"destructuring", destructure + "setIt(view, { flowNode: { id: 2 } });\nconsole.log(String(view.kind));\n", "main.ts:7:15: " + certificate},
+		{"??=", coalesce + "setIt(view, { id: 2 });\nconsole.log(String(view.kind));\n", "main.ts:7:2: " + logicalRefused},
+		{"destructuring", destructure + "setIt(view, { flowNode: { id: 2 } });\nconsole.log(String(view.kind));\n", "main.ts:7:15: stage 0 can't lower assigning to a PropertyAccessExpression in a destructuring assignment yet"},
 		{"through a setter", setter + "setIt(view, { id: 2 });\nconsole.log(String(view.kind));\n", "main.ts:4:85: stage 0 can't lower a getter in a checked field contract yet"},
 	})
 }
@@ -192,5 +196,33 @@ function clear(t: Nd, v: string | undefined): void {
 		// instantiates never lowers. Mutant: sourceSlotWriteStatement stopping at the arrow, and this row goes red.
 		{"arrow body, generic never instantiated", arrowGeneric + "console.log(String(n.kind));\n", ""},
 		{"arrow body, lowered", arrow + "console.log(String(n.kind));\n", "main.ts:7:37: stage 0 can't lower writing undefined or null into a checked field, whose checked write can't change the representation its slot holds yet"},
+	})
+}
+
+// Every write judgment the view walk makes from types is held the same way, view's own stop for a write Rule C
+// records nothing for included: a `??=` or a destructuring write to an object field, and a keyed write. tsc's
+// factory/emitNode.ts:43 is the shape #rgrtt32's census then met (J-ksc7wkr). A generic function nothing
+// instantiates writes nothing and lowers; a lowered one stops at the write in view's words. Mutant: judgeViewAccess
+// giving its stop at once, and the generic `??=` row goes red.
+func TestSourceSlotPendingViewWriteStopsHeldTheSameWay(t *testing.T) {
+	t.Parallel()
+	coalesce := strings.Replace(sourceSlotPendingPrelude, "t.flowNode = v;", "t.flowNode ??= v;", 1)
+	coalesceGeneric := strings.Replace(coalesce, "function setIt(t: NodeA, v: FlowNode)", "function setIt<V extends FlowNode>(t: NodeA, v: V)", 1)
+	keyed := strings.Replace(sourceSlotPendingPrelude, "t.flowNode = v;", "t[\"flowNode\"] ??= v;", 1)
+	twice := strings.Replace(sourceSlotPendingPrelude, "t.flowNode = v;", "t.flowNode = v;\n\tt.flowNode = v;", 1)
+	// Correctness's shape on #rgrtt32: an assignment used as an expression, `t.flowNode || (t.flowNode = v)`.
+	inner := strings.Replace(sourceSlotPendingPrelude, "t.flowNode = v;", "t.flowNode || (t.flowNode = v);", 1)
+	innerGeneric := strings.Replace(inner, "function setIt(t: NodeA, v: FlowNode)", "function setIt<V extends FlowNode>(t: NodeA, v: V)", 1)
+	keyedGeneric := strings.Replace(keyed, "function setIt(t: NodeA, v: FlowNode)", "function setIt<V extends FlowNode>(t: NodeA, v: V)", 1)
+	judgeSourceSlotPending(t, []sourceSlotPendingRow{
+		{"??= generic never instantiated", coalesceGeneric + "console.log(String(view.kind));\n", ""},
+		{"??= lowered", coalesce + "setIt(view, { id: 2 });\nconsole.log(String(view.kind));\n", "main.ts:7:2: " + logicalRefused},
+		{"keyed generic never instantiated", keyedGeneric + "console.log(String(view.kind));\n", ""},
+		{"keyed lowered", keyed + "setIt(view, { id: 2 });\nconsole.log(String(view.kind));\n", "main.ts:7:2: stage 0 can't lower writing a possibly absent optional own field yet"},
+		{"inner assignment generic never instantiated", innerGeneric + "console.log(String(view.kind));\n", ""},
+		{"inner assignment lowered", inner + "setIt(view, { id: 2 });\nconsole.log(String(view.kind));\n", "main.ts:7:2: stage 0 can't lower a BinaryExpression as a statement yet"},
+		// Two held writes in one lowered program: the first in the view walk's order fires, its line 7 (the order
+		// TestViewRefusesItsFirstSiteInPreorder pinned at the view walk before the write stops were held).
+		{"two writes, the first fires", twice + "setIt(view, { id: 2 });\nconsole.log(String(view.kind));\n", sourceSlotPendingRuleC},
 	})
 }
