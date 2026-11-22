@@ -17,7 +17,7 @@ func TestCallableBoxedSplitNamesTheSlot(t *testing.T) {
 	for _, probe := range []struct{ name, source, words string }{
 		{"result unboxed in the function, boxed in the view",
 			"function run(n: number): void {\n\tconst f: () => boolean | 'quit' = (): boolean => n > 0;\n\tconsole.log(`${f()}`);\n}\nrun(1);\n",
-			"a () => boolean seen as a () => boolean | \"quit\", whose result is boolean, held unboxed, in one and boolean | \"quit\", held as a boxed union, in the other (a callable's boxed and unboxed representations differ, and the adapter between them isn't built)"},
+			"a () => boolean seen as a () => \"quit\" | boolean, whose result is boolean, held unboxed, in one and \"quit\" | boolean, held as a boxed union, in the other (a callable's boxed and unboxed representations differ, and the adapter between them isn't built)"},
 		{"parameter boxed in the function, unboxed in the view",
 			"function run(n: number): void {\n\tconst g: (x: number) => string = (x: number | string): string => `${x}`;\n\tconsole.log(g(n));\n}\nrun(1);\n",
 			"a (x: string | number) => string seen as a (x: number) => string, whose parameter x is string | number, held as a boxed union, in one and number, held unboxed, in the other (a callable's boxed and unboxed representations differ, and the adapter between them isn't built)"},
