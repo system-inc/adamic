@@ -5,6 +5,7 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
 )
 
 // castCause is the branch of castProof that found no road for a cast, so its stop can say which one
@@ -53,6 +54,39 @@ const (
 // .ts each cause says what stopped it: a Refused names its own fix, and a NotYet names the check it needs.
 // source and target are the cast's as written; field is the field castUnionWrite names.
 func (l *lowering) castStop(node *ast.Node, cause castCause, source, target *checker.Type, field string) error {
+	if cause == castUnnamed && !strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".a") {
+		// Scratch only, never lands: why the structural road missed each unnamed cast (#53amvnn's scout).
+		present := l.checker.GetNonNullableType(target)
+		from, fromKnown := l.representation(source)
+		to, toKnown := l.representation(present)
+		widened := l.widened(present, source, map[[2]*checker.Type]bool{}) != nil
+		diag := []string{}
+		add := func(name string, on bool) {
+			if on {
+				diag = append(diag, name)
+			}
+		}
+		add("sourceUnion", source.Flags()&checker.TypeFlagsUnion != 0)
+		add("targetUnion", present.Flags()&checker.TypeFlagsUnion != 0)
+		add("sourceArray", l.castArrayLike(source))
+		add("targetArray", l.castArrayLike(present))
+		add("sourceTuple", checker.IsTupleType(l.checker.GetNonNullableType(source)))
+		add("targetTuple", checker.IsTupleType(present))
+		add("targetTypeParameter", present.Flags()&checker.TypeFlagsTypeParameter != 0)
+		add("sourceTypeParameter", source.Flags()&checker.TypeFlagsTypeParameter != 0)
+		add("targetNullish", l.includesUndefined(target) || l.includesNull(target))
+		add("sourceNullish", l.includesUndefined(source) || l.includesNull(source))
+		add("sourcePrimitive", castPrimitiveMember(source))
+		add("targetAssignable", l.checker.IsTypeAssignableTo(present, source))
+		add("widened", widened)
+		add("targetIndex", len(l.checker.GetIndexInfosOfType(present)) != 0)
+		add("fromUnknownRep", !fromKnown)
+		add("toUnknownRep", !toKnown)
+		add("fromNotObject", fromKnown && from != ir.Object)
+		add("toNotObject", toKnown && to != ir.Object)
+		add("targetClass", isClassInstance(present))
+		return &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check: UNNAMED [" + strings.Join(diag, " ") + "] " + l.checker.TypeToString(source) + " -> " + l.checker.TypeToString(target), Fix: l.castRepair(node)}
+	}
 	if strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".a") || cause == castUnnamed {
 		return &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: l.castRepair(node)}
 	}
