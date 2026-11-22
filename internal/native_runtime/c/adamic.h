@@ -36,6 +36,7 @@ enum adamic_ir_type {
 	adamic_ir_Promise = 18,
 	adamic_ir_Uint16Array = 19,
 	adamic_ir_Generator = 20,
+	adamic_ir_WeakCollection = 21,
 };
 
 // adamic_ir_type_reference is ir.Type.IsReference: whether a value of the type lives on the heap and
@@ -64,6 +65,7 @@ static inline bool adamic_ir_type_reference(enum adamic_ir_type type) {
 	case adamic_ir_Promise:
 	case adamic_ir_Uint16Array:
 	case adamic_ir_Generator:
+	case adamic_ir_WeakCollection:
 		return true;
 	}
 	return false;
