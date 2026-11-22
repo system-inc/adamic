@@ -69,8 +69,10 @@ func TestPerformanceNoteNamesWhatMovedFasterOrSlower(t *testing.T) {
 }
 
 // Numbers from another machine, another tool or another count of rounds are never compared, even where every range
-// moved: the note names what differs, old to new, and nothing else. Mutant: the comparison done across machines (the
-// incomparable check dropped), and each case reads a moved number instead.
+// moved: the note names what differs, old to new. What both halves measure with stops the whole snapshot; the compile
+// rounds stop the compile half alone; Node is the execute half's, and this snapshot has none, so hello's compile move
+// is still read. Mutant: the comparison done across machines (the incomparable check dropped), and each case reads a
+// moved number instead.
 func TestPerformanceNoteRefusesToCompareAcrossMachinesToolsOrRounds(t *testing.T) {
 	t.Parallel()
 	previous := noteSnapshot(earlierCommit, timed("hello", spread{Median: 1668, Min: 1600, Max: 1700}, spread{Median: 45, Min: 44, Max: 47}))
@@ -83,8 +85,8 @@ func TestPerformanceNoteRefusesToCompareAcrossMachinesToolsOrRounds(t *testing.T
 		{change: func(current *snapshot) { current.Machine.Cores = 64 }, want: "not compared: machine.cores 16 to 64"},
 		{change: func(current *snapshot) { current.Tools.Adamic = "go1.28.0" }, want: `not compared: tools.adamic "go1.27.1" to "go1.28.0"`},
 		{change: func(current *snapshot) { current.Tools.Clang = "Ubuntu clang version 21.1.0" }, want: `not compared: tools.clang "Ubuntu clang version 20.1.8" to "Ubuntu clang version 21.1.0"`},
-		{change: func(current *snapshot) { current.Tools.Node = "" }, want: `not compared: tools.node "v24.19.0" to ""`},
-		{change: func(current *snapshot) { current.Compile.Rounds = 3 }, want: "not compared: compile.rounds 5 to 3"},
+		{change: func(current *snapshot) { current.Tools.Node = "" }, want: "hello warmBuild 1668 to 349 ms (faster)"},
+		{change: func(current *snapshot) { current.Compile.Rounds = 3 }, want: "compile not compared: compile.rounds 5 to 3"},
 		{change: func(current *snapshot) { current.Machine.Name, current.Compile.Rounds = "Lunatic", 3 }, want: `not compared: machine.name "Home" to "Lunatic"; compile.rounds 5 to 3`},
 	}
 	for _, each := range cases {
@@ -184,8 +186,9 @@ func TestPerformanceNoteNamesOnlyNativesJudgedMove(t *testing.T) {
 }
 
 // An execute program in only one of the two is named new or gone beside the compile half's, and one judged on another
-// measure is named and not compared; another count of execute rounds is never compared at all. Mutants: a new program
-// compared against zeros, and it reads slower; execute.rounds left out of incomparable, and the note reads level.
+// measure is named and not compared; another count of execute rounds keeps the execute half from being compared, and
+// the compile half reads level beside it. Mutants: a new program compared against zeros, and it reads slower;
+// execute.rounds left out of incomparable, and the note reads level with the execute half's names.
 func TestPerformanceNoteNamesNewGoneAndRejudgedExecutePrograms(t *testing.T) {
 	t.Parallel()
 	trees := spread{Median: 1301, Min: 1290, Max: 1320}
@@ -196,7 +199,7 @@ func TestPerformanceNoteNamesNewGoneAndRejudgedExecutePrograms(t *testing.T) {
 		t.Errorf("note %q, want %q", got, want)
 	}
 	current.Execute.Rounds = 5
-	if got, want := compareNote(&previous, current), "not compared: execute.rounds 3 to 5"; got != want {
+	if got, want := compareNote(&previous, current), "level against 1ed745b; execute not compared: execute.rounds 3 to 5"; got != want {
 		t.Errorf("note %q, want %q", got, want)
 	}
 }
@@ -220,11 +223,12 @@ func TestPerformanceNoteNamesAnExecuteHalfFirstMeasured(t *testing.T) {
 	}
 }
 
-// A number moved only when its ranges don't overlap and its median moved at least the floor, 2% of the old median and
-// never under 5 ms, in both halves. Clear ranges with sort's 3 ms (J-45rkvr9's noise) read level; a median that moved
-// exactly the floor reads moved, by 2% at 500 ms and by the 5 ms least at 30 ms; 4 ms at 30 ms reads level. Mutants:
-// the floor dropped (sort's 3 ms reads faster); the floor taken as more than it is (the 10 ms at 500 reads level); the
-// 5 ms least dropped (30 to 34 reads slower).
+// A number moved only when its ranges don't overlap and its median moved more than the floor, 2% of the old median
+// and never under 5 ms, in both halves. Clear ranges with sort's 3 ms (J-45rkvr9's noise) read level; a median that
+// moved exactly the floor reads level too, 10 ms at 500 ms and the 5 ms least at 30 ms (J-n5vnrtq's loaded 163 to
+// 168), and one past it moved, 11 ms at 500 and 6 ms at 30. Mutants: the floor dropped (sort's 3 ms reads faster); the
+// floor's edge inclusive again (500 to 510 reads slower); the floor taken as more than it is (500 to 511 reads level);
+// the 5 ms least dropped (30 to 35 reads slower).
 func TestPerformanceNoteMovesOnlyPastTheFloor(t *testing.T) {
 	t.Parallel()
 	for _, each := range []struct {
@@ -232,10 +236,13 @@ func TestPerformanceNoteMovesOnlyPastTheFloor(t *testing.T) {
 		want          string
 	}{
 		{before: spread{Median: 239, Min: 238, Max: 242}, after: spread{Median: 236, Min: 234, Max: 237}, want: ""},
-		{before: spread{Median: 500, Min: 495, Max: 505}, after: spread{Median: 510, Min: 507, Max: 512}, want: "slower"},
-		{before: spread{Median: 500, Min: 495, Max: 505}, after: spread{Median: 490, Min: 488, Max: 493}, want: "faster"},
-		{before: spread{Median: 30, Min: 29, Max: 31}, after: spread{Median: 35, Min: 33, Max: 36}, want: "slower"},
-		{before: spread{Median: 30, Min: 29, Max: 31}, after: spread{Median: 34, Min: 32, Max: 35}, want: ""},
+		{before: spread{Median: 500, Min: 495, Max: 505}, after: spread{Median: 510, Min: 507, Max: 512}, want: ""},
+		{before: spread{Median: 500, Min: 495, Max: 505}, after: spread{Median: 490, Min: 488, Max: 493}, want: ""},
+		{before: spread{Median: 500, Min: 495, Max: 505}, after: spread{Median: 511, Min: 507, Max: 512}, want: "slower"},
+		{before: spread{Median: 500, Min: 495, Max: 505}, after: spread{Median: 489, Min: 488, Max: 493}, want: "faster"},
+		{before: spread{Median: 30, Min: 29, Max: 31}, after: spread{Median: 35, Min: 33, Max: 36}, want: ""},
+		{before: spread{Median: 30, Min: 29, Max: 31}, after: spread{Median: 36, Min: 33, Max: 37}, want: "slower"},
+		{before: spread{Median: 163, Min: 161, Max: 165}, after: spread{Median: 168, Min: 166, Max: 170}, want: ""},
 	} {
 		if got := movedDirection(each.before, each.after); got != each.want {
 			t.Errorf("%+v to %+v moved %q, want %q", each.before, each.after, got, each.want)
@@ -252,5 +259,51 @@ func TestPerformanceNoteMovesOnlyPastTheFloor(t *testing.T) {
 	executedAfter := executeNoteSnapshot(laterCommit, executed("sort", "user", sortAfter, spread{Median: 700, Min: 690, Max: 710}))
 	if got, want := compareNote(&executedBefore, executedAfter), "level against 1ed745b"; got != want {
 		t.Errorf("execute half: note %q, want %q", got, want)
+	}
+}
+
+// Each half is compared against its own tools and rounds (#fjs0yd9): Node's version and the execute rounds stop only
+// the execute half, and the compile rounds only the compile half, so the other half's move is still read and the one
+// not compared is named after it. A note with only the half that wasn't compared, and nothing moved in the other,
+// reads level, since the other was compared. Mutant: the gates joined again (every difference stops the whole
+// snapshot), and each case reads "not compared" instead.
+func TestPerformanceNoteComparesEachHalfOnItsOwnToolsAndRounds(t *testing.T) {
+	t.Parallel()
+	trees := spread{Median: 1301, Min: 1290, Max: 1320}
+	onNode := spread{Median: 2032, Min: 2000, Max: 2050}
+	previous := executeNoteSnapshot(earlierCommit, executed("trees", "user", trees, onNode))
+	for _, each := range []struct {
+		change func(current *snapshot)
+		want   string
+	}{
+		{
+			change: func(current *snapshot) { current.Tools.Node = "v24.20.0" },
+			want:   `hello warmBuild 349 to 500 ms (slower); execute not compared: tools.node "v24.19.0" to "v24.20.0"`,
+		},
+		{
+			change: func(current *snapshot) { current.Execute.Rounds = 5 },
+			want:   "hello warmBuild 349 to 500 ms (slower); execute not compared: execute.rounds 3 to 5",
+		},
+		{
+			change: func(current *snapshot) { current.Compile.Rounds = 3 },
+			want:   "trees native user 1301 to 1402 ms (slower); compile not compared: compile.rounds 5 to 3",
+		},
+		{
+			change: func(current *snapshot) { current.Compile.Rounds, current.Tools.Node = 3, "v24.20.0" },
+			want:   `compile not compared: compile.rounds 5 to 3; execute not compared: tools.node "v24.19.0" to "v24.20.0"`,
+		},
+	} {
+		current := executeNoteSnapshot(laterCommit, executed("trees", "user", spread{Median: 1402, Min: 1380, Max: 1420}, onNode))
+		current.Compile.Programs[0].Program.WarmBuild = spread{Median: 500, Min: 480, Max: 520}
+		each.change(&current)
+		if got := compareNote(&previous, current); got != each.want {
+			t.Errorf("note %q, want %q", got, each.want)
+		}
+	}
+	// Nothing moved in the half that was compared: it reads level, with the other named after.
+	level := executeNoteSnapshot(laterCommit, executed("trees", "user", trees, onNode))
+	level.Tools.Node = "v24.20.0"
+	if got, want := compareNote(&previous, level), `level against 1ed745b; execute not compared: tools.node "v24.19.0" to "v24.20.0"`; got != want {
+		t.Errorf("note %q, want %q", got, want)
 	}
 }
