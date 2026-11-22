@@ -5,8 +5,9 @@
 #   source /opt/adamic-block/environment.sh && source cloud/sandboxed-job.sh && <command>
 #
 # Sourced, never run: it changes only the caller's environment, never its shell options, and returns nonzero on any
-# step that fails, so the `&&` stops the job before its command. A rented machine runs the job in a laid tree with no
-# .git, an empty HOME at /tmp/home and a read-only /opt/adamic-block, so:
+# step that fails, so the `&&` stops the job before its command. One step exits instead: sandboxed_repositories on a
+# tree the runner's lay didn't lay is the box's gap, and ends the job with 3 however the caller chained it. A rented
+# machine runs the job in a laid tree with no .git, an empty HOME at /tmp/home and a read-only /opt/adamic-block, so:
 #   - TMPDIR is made, since the job's tools write there first;
 #   - the build cache (ADAMIC_BUILD_CACHE_DIR) and the TypeScript copy live outside the tree, in LOOM_JOB_SCRATCH where
 #     the runner names one (the job's own directory on the tree's data disk) and in TMPDIR where it doesn't: a walker
@@ -18,7 +19,8 @@
 #     `git show HEAD:<file>` or reads `git status`. It costs about 27 s over adamic's tree (Loom's J-a5zgp8d), so only a
 #     script that needs it calls it. HEAD has no history, no parent and no remote, so a job that reads `git log` or a
 #     remote still wants a house box. A tree the runner laid with a .git keeps it. A submodule's own repository, one
-#     commit deep at its pin, is sandboxed_repositories'.
+#     commit deep at its pin, is sandboxed_repositories', which says a tree with no runner's manifest (.tracked) is the
+#     box's gap, a keeper's worktree, and exits 3.
 #   - GOMODCACHE is the node's laid cache when loom-node's cache proxy laid this very commit whole, and the image's
 #     otherwise (#nodecache). The proxy's word is a lay file it writes only once every module the commit names is in
 #     its cache. The node's cache is taken only when that file names this repository and commit, names the cache at
@@ -181,6 +183,12 @@ sandboxed_git() {
 # first. A submodule that is already a repository at its pin is left as it is, as lay.sh leaves one, and one at another
 # commit refuses. It hashes every file each submodule holds, about 77,000 over cohere's and TypeScript's pins, so only a
 # script that reads a submodule's git calls it.
+# A submodule to lay in a tree with no .tracked at its root (or a .tracked that is a link, no manifest either) is one the
+# runner's lay didn't lay: a house box's keeper laid it, a git worktree with no submodules, because the command didn't
+# open with the sealed `source /opt/adamic-block/environment.sh && ...` and the placer read it as house form. Its pin
+# can't be proved there, and that's the box's gap, not the head's red: one `GAP sandboxed:` line naming the sealed
+# opening as the fix, and the job exits 3 before anything under the submodule is written. A tree whose submodules are
+# already repositories at their pins, as lay.sh's --repositories leaves one, needs no manifest and still passes.
 sandboxed_repositories() {
 	[ -f go.work ] || [ -f go.mod ] || sandboxedJobFail "sandboxed_repositories runs from the tree's root" || return 1
 	# laid and kept are counted by sandboxedJobRepository, which sees them as bash's locals of its caller
@@ -233,6 +241,13 @@ sandboxedJobRepository() {
 		echo "sandboxed-job: $path ${gitlink:0:12} is its own repository at the pin, left as it is" >&2
 		kept=$((kept + 1))
 	else
+		# No runner's manifest at the root: a keeper's worktree, the box's gap (sandboxed_repositories says why). It exits
+		# rather than returns, so the job ends with 3 however its caller chained this (a `|| exit 1` after a return would
+		# turn the box's gap into the head's red), as the lay kit's GAP lines exit 3 (loom's contract/proof/lay.sh, gap).
+		if [ ! -d .tracked ] || [ -L .tracked ]; then
+			echo "GAP sandboxed: this tree carries no runner's manifest (.tracked), so the runner's lay didn't lay it (a keeper laid it: a git worktree with no submodules) and $path's pin can't be proved here; the fix: ask the command with its sealed opening, 'source /opt/adamic-block/environment.sh && ...', so the placer sends it to a box whose runner lays the tree" >&2
+			exit 3
+		fi
 		[ -f "$manifest/HEAD" ] && [ -f "$manifest/commit" ] && [ -f "$manifest/files" ] ||
 			sandboxedJobFail "$manifest doesn't hold the runner's HEAD, commit and files for $path" || return 1
 		local named made tree built
