@@ -295,31 +295,23 @@ func TestWeakCollection(t *testing.T) {
 			}
 		})
 	}
-	// Each build is a row of its own: a sanitizer's quarantine can hold the freed address past the cap,
-	// and a row that never saw the address reused says so as a skip, never as a pass.
+	// Address reuse runs in the plain build alone: under a sanitizer, ASan's quarantine and the slab
+	// quarantine both hold a freed slot past any cap a test can afford (J-7232pdp: no reuse in 4096
+	// objects in all three), so the row can't happen there, and a skip would read as a test that ran.
+	// The plain build's size classes hand a freed slot out again first, so there a miss is a failure.
 	t.Run("reuse", func(t *testing.T) {
 		t.Parallel()
-		for _, build := range builds {
-			t.Run(build.name, func(t *testing.T) {
-				t.Parallel()
-				result := run(binaries[build.name], "reuse", "1")
-				if result.ExitCode != 0 {
-					t.Fatalf("exit %d\n%s%s", result.ExitCode, result.Stdout, result.Stderr)
-				}
-				if strings.Contains(string(result.Stdout), "no reuse") {
-					t.Skipf("the freed key's address wasn't taken again: %s", strings.TrimSpace(string(result.Stdout)))
-				}
-				if !strings.Contains(string(result.Stdout), "reused after") {
-					t.Fatalf("no reuse report\n%s", result.Stdout)
-				}
-				if build.options.Count {
-					if report := leakcheck.Unbalanced(result); report != "" {
-						t.Fatal(report)
-					}
-				}
-				t.Log(strings.TrimSpace(string(result.Stdout)))
-			})
+		result := run(binaries["plain"], "reuse", "1")
+		if result.ExitCode != 0 {
+			t.Fatalf("exit %d\n%s%s", result.ExitCode, result.Stdout, result.Stderr)
 		}
+		if !strings.Contains(string(result.Stdout), "reused after") {
+			t.Fatalf("the freed key's address wasn't taken again, where the plain build's size classes took it after 2 objects on J-7232pdp\n%s", result.Stdout)
+		}
+		if report := leakcheck.Unbalanced(result); report != "" {
+			t.Fatal(report)
+		}
+		t.Log(strings.TrimSpace(string(result.Stdout)))
 	})
 	// Each refusal is a panic with its own message, exit 70, in every build.
 	for _, refusal := range []struct{ mode, message string }{
