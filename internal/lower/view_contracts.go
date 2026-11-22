@@ -113,14 +113,17 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 	return id, nil
 }
 
-// viewStaticsAdmitted is whether a class constructor may stand for contract's object (#s03ndgw): every
-// field it names is one only a static the class declares can hold, never a property Function or Object
-// gives every constructor (name, length, prototype, call, toString, constructor and the rest), asked of
-// the checker by name, so the library says which. GetPropertyOfType on Function's interface finds
-// Object's members too, and objectPrototypeName adds the __proto__ family the library doesn't declare.
-// A field whose finished contract is missing, unknown or unsupported, an unsupported contract, one with
-// no field, or a library without Function to ask leaves it false. Run time still asks that each
-// required field be the class's own data static (view_unions_untagged.c).
+// viewStaticsAdmitted is whether a class constructor may stand for contract's object (#s03ndgw). A field
+// Object's prototype names (toString, constructor and the rest, and the __proto__ family the library
+// doesn't declare, objectPrototypeName) leaves it false. So does an optional field Function's interface
+// names (call, apply, bind, name, length, prototype and the rest), asked of the checker by name with
+// GetPropertyOfType, which finds Object's members too: a class that doesn't declare it reads Function's
+// on Node, where an absent optional field would read undefined. A required one is admitted: the run time
+// walk (view_unions_untagged.c's static_own_slot, readiness.go's adamicViewStaticField) finds it only as
+// a data static a class on the chain wrote, and name, length and prototype only as the class's own, so
+// Function's own never stands in for it. A field whose finished contract is missing, unknown or
+// unsupported, an unsupported contract, one with no field, or a library without Function to ask leaves
+// it false.
 func (l *lowering) viewStaticsAdmitted(contract ir.ViewContract) bool {
 	function := l.checker.GetGlobalSymbol("Function", ast.SymbolFlagsInterface, nil)
 	if function == nil || contract.Unsupported != "" || len(contract.Fields) == 0 {
@@ -134,7 +137,7 @@ func (l *lowering) viewStaticsAdmitted(contract ir.ViewContract) bool {
 		if held := l.result.ViewContracts[field.Contract-1]; held.Kind == ir.ViewUnknown || held.Unsupported != "" {
 			return false
 		}
-		if l.objectPrototypeName(field.Name) || l.checker.GetPropertyOfType(functionType, field.Name) != nil {
+		if l.objectPrototypeName(field.Name) || field.Optional && l.checker.GetPropertyOfType(functionType, field.Name) != nil {
 			return false
 		}
 	}

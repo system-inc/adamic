@@ -34,30 +34,38 @@ func (e *emitter) staticViewWrite(statement ir.SetProperty, object string) {
 // staticViewRead stops value, a checked read's object, when it's a class constructor its object contract
 // doesn't admit (ir.Program's ObjectReadContract): a class constructor is an object here, so the read's
 // own kind test passes one, where the JavaScript backend's adamicViewField finds a function. Admitted, it
-// is the object read when it owns every required field as a data static, as plain_matches admits one.
+// is the object read when every required field is a data static on its chain and no optional one is a
+// name the runtime's walk refuses, as plain_matches admits one.
 func (e *emitter) staticViewRead(property ir.Property, value string) {
 	contract, checked := e.program.ObjectReadContract(property)
 	if !checked {
 		return
 	}
-	required := []string{}
+	required, optional := []string{}, []string{}
 	for _, field := range contract.Fields {
-		if !field.Optional {
+		if field.Optional {
+			optional = append(optional, cString(field.Name))
+		} else {
 			required = append(required, cString(field.Name))
 		}
 	}
-	names := "NULL"
-	if contract.StaticsAdmitted && len(required) != 0 {
-		names = "(const char *const[]){" + strings.Join(required, ", ") + "}"
-	} else {
-		required = nil
+	if !contract.StaticsAdmitted {
+		required, optional = nil, nil
 	}
 	expected := property.ViewType
 	if expected == "" {
 		expected = "object"
 	}
 	e.declarations = append(e.declarations, "#include \"view_unions_untagged.h\"")
-	e.line("adamic_view_static_read((const adamic_object *)%s, %t, %s, %d, %s, %s);", value, contract.StaticsAdmitted, names, len(required), cString(property.View), cString(expected))
+	e.line("adamic_view_static_read((const adamic_object *)%s, %t, %s, %d, %s, %d, %s, %s);", value, contract.StaticsAdmitted, staticViewNames(required), len(required), staticViewNames(optional), len(optional), cString(property.View), cString(expected))
+}
+
+// staticViewNames is adamic_view_static_read's array of quoted field names, NULL when there's none.
+func staticViewNames(names []string) string {
+	if len(names) == 0 {
+		return "NULL"
+	}
+	return "(const char *const[]){" + strings.Join(names, ", ") + "}"
 }
 
 func (e *emitter) viewUntaggedContracts() (string, int) {

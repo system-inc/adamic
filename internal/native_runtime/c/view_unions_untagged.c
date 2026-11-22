@@ -39,17 +39,46 @@ size_t adamic_view_untagged_union_select(const adamic_view_union_value *value, c
     return adamic_view_mixed_union_select(value, NULL, 0, NULL, NULL, expression, declared);
 }
 
-// static_own_slot is a class constructor's own data static named field, or NULL: a public slot whose
-// presence a write has set, the own keys Object.keys reads (class_features.c). A static the class only
-// inherits has a slot here too, copied from its base's layout, but no presence, and reads through the
-// parent (class_static.c), so it isn't the class's own. An accessor has no slot at all.
-static adamic_value *static_own_slot(const adamic_object *object, const char *field) {
-    adamic_slot_cache cache = {0};
-    adamic_value *slot = adamic_object_optional_find(object, field, &cache);
-    if (slot == NULL || object->class->static_flags == NULL) { return NULL; }
-    size_t flag = object->class->static_flags[adamic_slot_index(object, slot)];
-    if (flag == 0 || object->slots[flag - 1].number == 0) { return NULL; }
-    return slot;
+// static_lookup is what a class constructor holds under a field's name, as Node's Klass[field] finds
+// it: a data static some class on its chain wrote (found), a name no class on it declares and Function
+// gives no constructor of its own (absent), or one this runtime can't answer for Node (refused).
+typedef enum static_lookup { static_found, static_absent, static_refused } static_lookup;
+
+// static_builtin_name is a name Node gives every class constructor as its own property: its name,
+// its length and its prototype. A base's static of that name is hidden by the subclass's own, so only
+// a static the class itself wrote is the value Node reads.
+static bool static_builtin_name(const char *field) {
+    return strcmp(field, "name") == 0 || strcmp(field, "length") == 0 || strcmp(field, "prototype") == 0;
+}
+
+// static_own_slot is a class constructor's data static named field, walked as Node's prototype chain
+// walks it, with the object that holds it (owner) and its slot there. A subclass's static object has
+// a slot for each static it inherits, copied from its base's layout, whose presence stays unset until
+// the subclass writes its own (class_static.c), so an unset presence goes on to the parent constructor
+// (static_parent), as adamic_object_field_owned reads it. An accessor anywhere on the chain is refused,
+// whatever slot shadows it (adamic_accessor_find walks class->base), as is a slot with no presence flag
+// (a private one) and a parent this walk can't read. A builtin name is found only on the class itself.
+// Callers index a slot's initialized and type bytes by owner, never by the object asked.
+static static_lookup static_own_slot(const adamic_object *object, const char *field, const adamic_object **owner, adamic_value **slot) {
+    if (adamic_accessor_find(object, field) != NULL) { return static_refused; }
+    bool builtin = static_builtin_name(field);
+    const adamic_object *held = object;
+    while (true) {
+        if (held == NULL || held->heap.kind != adamic_kind_object || held->class == NULL || !held->class->is_static || held->class->static_flags == NULL) { return static_refused; }
+        adamic_slot_cache cache = {0};
+        adamic_value *found = adamic_object_optional_find(held, field, &cache);
+        // No class on the chain from here declares it: Node finds Function's own builtins or nothing.
+        if (found == NULL) { return builtin ? static_refused : static_absent; }
+        size_t flag = held->class->static_flags[adamic_slot_index(held, found)];
+        if (flag == 0) { return static_refused; }
+        if (held->slots[flag - 1].number != 0) {
+            *owner = held;
+            *slot = found;
+            return static_found;
+        }
+        if (builtin || held->class->static_parent == 0) { return static_refused; }
+        held = held->slots[held->class->static_parent - 1].reference;
+    }
 }
 
 // plain_union_holds_callable is whether a callable could stand in union id: a callable or closure
@@ -68,21 +97,22 @@ static bool plain_union_holds_callable(const adamic_view_untagged_contract *cont
     return false;
 }
 
-// plain_slot_read is the plain slot probe, and with statics, a class constructor's own data static
-// too. Only a member its contract admitted (statics_admitted) reads one.
+// plain_slot_read is the plain slot probe, and with statics, a class constructor's data static too,
+// read from the class on its chain that holds it (static_own_slot). Only a member its contract
+// admitted (statics_admitted) reads one.
 static bool plain_slot_read(const adamic_view_union_value *value, const char *field, bool statics, adamic_view_union_value *result) {
     if (value->kind != adamic_view_union_object || value->payload.reference == NULL) { return false; }
     const adamic_object *object = value->payload.reference;
+    const adamic_object *owner = object;
     adamic_value *slot = NULL;
     if (object->class != NULL && object->class->is_static) {
-        if (!statics) { return false; }
-        slot = static_own_slot(object, field);
+        if (!statics || static_own_slot(object, field, &owner, &slot) != static_found) { return false; }
     } else {
         adamic_slot_cache cache = {0};
         slot = adamic_object_optional_field(object, field, &cache);
     }
-    if (slot == NULL || !adamic_object_initialized(object)[adamic_slot_index(object, slot)]) { return false; }
-    unsigned char actual = adamic_object_field_type(object, adamic_slot_index(object, slot));
+    if (slot == NULL || !adamic_object_initialized(owner)[adamic_slot_index(owner, slot)]) { return false; }
+    unsigned char actual = adamic_object_field_type(owner, adamic_slot_index(owner, slot));
     *result = (adamic_view_union_value){adamic_view_union_unknown, *slot};
     if (actual == adamic_rep_number) { result->kind = adamic_view_union_number; return true; }
     if (actual == adamic_rep_boolean) { result->kind = adamic_view_union_boolean; return true; }
@@ -212,12 +242,17 @@ bool adamic_view_untagged_plain_matches(const adamic_view_untagged_contract *con
             const adamic_object *object = current->payload.reference;
             if (object->class != NULL && object->class->is_static) {
                 // A class constructor stands for an object whose contract admits one (statics_admitted),
-                // outside a union a callable could stand in, when every required field is its own data
-                // static, as Node reads Klass.count: never an accessor, never one only a base declares.
+                // outside a union a callable could stand in, when every required field is a data static
+                // it holds, its own or a base's, as Node reads Klass.count, and no field is one this
+                // runtime refuses (an accessor, a builtin only a base declares). A tagged contract
+                // never reaches plain_fields, so an optional field's refusal is asked here.
                 size_t parent = length >= 2 && frames[length - 2].state == plain_union ? frames[length - 2].contract : 0;
                 if (!contract->statics_admitted || plain_union_holds_callable(contracts, count, parent)) { goto complete; }
                 for (size_t i = 0; i < contract->field_count; i++) {
-                    if (!contract->fields[i].optional && static_own_slot(object, contract->fields[i].name) == NULL) { goto complete; }
+                    const adamic_object *owner = NULL;
+                    adamic_value *slot = NULL;
+                    static_lookup lookup = static_own_slot(object, contract->fields[i].name, &owner, &slot);
+                    if (lookup == static_refused || (!contract->fields[i].optional && lookup != static_found)) { goto complete; }
                 }
                 frame->statics = true;
             }
@@ -265,8 +300,18 @@ bool adamic_view_untagged_plain_matches(const adamic_view_untagged_contract *con
             while (frame->next < contract->field_count) {
                 const adamic_view_untagged_field *field = &contract->fields[frame->next++];
                 adamic_slot_cache cache = {0};
-                // A class's optional static it doesn't own is absent here, as Object.hasOwn says on Node.
-                bool absent = frame->statics ? static_own_slot(object, field->name) == NULL : adamic_object_optional_field(object, field->name, &cache) == NULL;
+                // A class's optional static no class on its chain declares is absent here, as `in` says on
+                // Node. One the walk refuses fails the match, optional or not: Node would read a value.
+                bool absent = false;
+                if (frame->statics) {
+                    const adamic_object *owner = NULL;
+                    adamic_value *slot = NULL;
+                    static_lookup lookup = static_own_slot(object, field->name, &owner, &slot);
+                    if (lookup == static_refused) { result = false; goto complete; }
+                    absent = lookup == static_absent;
+                } else {
+                    absent = adamic_object_optional_field(object, field->name, &cache) == NULL;
+                }
                 if (absent && field->optional) { continue; }
                 adamic_view_union_value slot;
                 if (!plain_slot_read(current, field->name, frame->statics, &slot)) { result = false; goto complete; }
@@ -318,16 +363,21 @@ void adamic_view_static_write(const adamic_object *object, const char *name) {
     adamic_panic(message, (size_t)length);
 }
 
-void adamic_view_static_read(const adamic_object *value, bool admitted, const char *const *required, size_t count, const char *expression, const char *type) {
+void adamic_view_static_read(const adamic_object *value, bool admitted, const char *const *required, size_t count, const char *const *optional, size_t optional_count, const char *expression, const char *type) {
     if (value == NULL || value->heap.kind != adamic_kind_object || value->class == NULL || !value->class->is_static) { return; }
-    // Each required field the class's own data static, initialized, as plain_slot_read reads one.
+    // Each required field a data static on the class's chain, initialized where it's held, as
+    // plain_slot_read reads one; each optional one absent, or held and initialized, never refused.
     size_t owned = 0;
-    while (admitted && owned < count) {
-        adamic_value *slot = static_own_slot(value, required[owned]);
-        if (slot == NULL || !adamic_object_initialized(value)[adamic_slot_index(value, slot)]) { break; }
+    while (admitted && owned < count + optional_count) {
+        const adamic_object *owner = NULL;
+        adamic_value *slot = NULL;
+        bool required_field = owned < count;
+        static_lookup lookup = static_own_slot(value, required_field ? required[owned] : optional[owned - count], &owner, &slot);
+        if (lookup == static_refused || (required_field && lookup != static_found)) { break; }
+        if (lookup == static_found && !adamic_object_initialized(owner)[adamic_slot_index(owner, slot)]) { break; }
         owned++;
     }
-    if (admitted && owned == count) { return; }
+    if (admitted && owned == count + optional_count) { return; }
     // object.c's view_failure words, as a class constructor read where no object contract admits one used to stop.
     size_t capacity = strlen(expression) + 2 * strlen(type) + 64;
     char *message = malloc(capacity);
