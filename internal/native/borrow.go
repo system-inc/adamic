@@ -98,9 +98,10 @@ func pureKind(expression ir.Expression) bool {
 		ir.IsUndefined, ir.Unwrap, ir.MaybeOf, ir.Box, ir.Narrow, ir.TypeOf, ir.Conditional, ir.Coalesce,
 		ir.MathCall, ir.NumberCall, ir.ToFixed, ir.NumberFormat, ir.Trim, ir.StringCall, ir.CodePoints,
 		ir.ArraySearch, ir.ViewElement, ir.CheckedCast, ir.UnionToString, ir.MaybeToString, ir.Defined, ir.InstanceOf,
-		// A weak collection's lookup reads its table and the key's handle, and writes neither. Its delete
-		// isn't here: removing an entry writes the table and lets go of the handle, as MapDelete isn't.
-		ir.WeakCollectionHas:
+		// A weak collection's lookups read its table and the key's handle, and write neither. Its delete
+		// isn't here: removing an entry writes the table and lets go of the handle, as MapDelete isn't; nor
+		// is a WeakMap's set, which keeps the key's handle and the value (region.go's escape reads that).
+		ir.WeakCollectionHas, ir.WeakMapGet:
 	default:
 		return false
 	}

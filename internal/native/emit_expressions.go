@@ -718,6 +718,30 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		key := e.value(expression.Key)
 		e.line("adamic_weak_map_store(%s, adamic_weak_key(%s), (adamic_value){0});", set, key)
 		return set
+	case ir.WeakMapSet:
+		// The key is borrowed, as add's is: adamic_weak_key hands over its handle retained, and the store
+		// takes that count for the entry (or lets it go, the key already in). The store takes the value's
+		// count too (weak_collection.c), so a string is retained for it, the map's own until the entry goes
+		// or is replaced, and a number or a boolean is held in its slot. The map is new'd with
+		// value_is_reference true exactly when its values are strings, so its free and forget let go of them.
+		collection := e.value(expression.Map)
+		key := e.value(expression.Key)
+		value := e.value(expression.Value)
+		held := borrowed(expression.ValueType, value)
+		if expression.ValueType.IsReference() {
+			held = fmt.Sprintf("(adamic_value){.reference = %s}", retained(value))
+		}
+		e.line("adamic_weak_map_store(%s, adamic_weak_key(%s), %s);", collection, key, held)
+		return collection
+	case ir.WeakMapGet:
+		// A missing handle or a missing entry is undefined, read from the slot as Map's get reads its own: a
+		// number or a boolean as a Maybe pair, a string as itself, retained, since the map's is borrowed and a
+		// set or a freed key later in the statement could let go of it from under its reader.
+		slot := e.weakMapGetSlot(expression)
+		if expression.Type().IsMaybe() {
+			return e.snapshot(expression.Type(), maybeSlot(expression.ValueType, slot))
+		}
+		return e.own(expression.ValueType, fmt.Sprintf("%s == NULL ? NULL : adamic_retain(%s->reference)", slot, slot))
 	case ir.WeakCollectionHas:
 		// A key with no handle was never in any collection: adamic_weak_key_find gives NULL, which the
 		// lookup answers false.

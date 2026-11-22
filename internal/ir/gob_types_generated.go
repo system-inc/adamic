@@ -169,6 +169,8 @@ var gobTypes = []any{
 	WeakCollectionDelete{},
 	WeakCollectionHas{},
 	WeakCollectionNew{},
+	WeakMapGet{},
+	WeakMapSet{},
 	WeakOf{},
 	WeakSetAdd{},
 	WeakTarget{},
