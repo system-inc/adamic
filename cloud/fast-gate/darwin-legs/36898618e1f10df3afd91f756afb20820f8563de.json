@@ -25,7 +25,7 @@
       "exit": 0
     },
     "internal/apple/testdata/cycles/controller.a": {
-      "errors": "adamic: /var/folders/67/vmx4fj4j5w93ps2hv01rpjgr0000gq/T/tmp.gZ6Pbn4OOd/adamic/internal/apple/testdata/cycles/controller.a:18:21: Adamic 0.1 refuses Controller, handed to Apple as a delegate the TableView holds from then on, which can reach back to that TableView: a cycle reference counting can't free; hold the TableView weakly where the delegate reaches it (Weak<TableView>, import type { Weak } from 'adamic'), or keep the delegate apart from what it's the delegate of (adamic/cycle-capable)\n",
+      "errors": "adamic: /var/folders/67/vmx4fj4j5w93ps2hv01rpjgr0000gq/T/tmp.cfBf7pZfmj/adamic/internal/apple/testdata/cycles/controller.a:18:21: Adamic 0.1 refuses Controller, handed to Apple as a delegate the TableView holds from then on, which can reach back to that TableView: a cycle reference counting can't free; hold the TableView weakly where the delegate reaches it (Weak<TableView>, import type { Weak } from 'adamic'), or keep the delegate apart from what it's the delegate of (adamic/cycle-capable)\n",
       "exit": 1
     },
     "internal/apple/testdata/cycles/local-capture-weak.a": {
@@ -33,15 +33,15 @@
       "exit": 0
     },
     "internal/apple/testdata/cycles/local-capture.a": {
-      "errors": "adamic: /var/folders/67/vmx4fj4j5w93ps2hv01rpjgr0000gq/T/tmp.gZ6Pbn4OOd/adamic/internal/apple/testdata/cycles/local-capture.a:12:8: Adamic 0.1 refuses 'label', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; capture it weakly, const labelHeld: Weak<TextField> = label (import type { Weak } from 'adamic'), and keep it somewhere strong, as its superview does a view; or keep it in a module-level constant, which nothing frees (adamic/cycle-capable)\n",
+      "errors": "adamic: /var/folders/67/vmx4fj4j5w93ps2hv01rpjgr0000gq/T/tmp.cfBf7pZfmj/adamic/internal/apple/testdata/cycles/local-capture.a:12:8: Adamic 0.1 refuses 'label', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; capture it weakly, const labelHeld: Weak<TextField> = label (import type { Weak } from 'adamic'), and keep it somewhere strong, as its superview does a view; or keep it in a module-level constant, which nothing frees (adamic/cycle-capable)\n",
       "exit": 1
     },
     "internal/apple/testdata/cycles/timer.a": {
-      "errors": "adamic: /var/folders/67/vmx4fj4j5w93ps2hv01rpjgr0000gq/T/tmp.gZ6Pbn4OOd/adamic/internal/apple/testdata/cycles/timer.a:21:20: Adamic 0.1 refuses Keeper, handed to Apple as a delegate the Window holds from then on, which can reach back to that Window: a cycle reference counting can't free; hold the Window weakly where the delegate reaches it (Weak<Window>, import type { Weak } from 'adamic'), or keep the delegate apart from what it's the delegate of (adamic/cycle-capable)\n",
+      "errors": "adamic: /var/folders/67/vmx4fj4j5w93ps2hv01rpjgr0000gq/T/tmp.cfBf7pZfmj/adamic/internal/apple/testdata/cycles/timer.a:21:20: Adamic 0.1 refuses Keeper, handed to Apple as a delegate the Window holds from then on, which can reach back to that Window: a cycle reference counting can't free; hold the Window weakly where the delegate reaches it (Weak<Window>, import type { Weak } from 'adamic'), or keep the delegate apart from what it's the delegate of (adamic/cycle-capable)\n",
       "exit": 1
     },
     "internal/apple/testdata/cycles/url-subclass.a": {
-      "errors": "adamic: /var/folders/67/vmx4fj4j5w93ps2hv01rpjgr0000gq/T/tmp.gZ6Pbn4OOd/adamic/internal/apple/testdata/cycles/url-subclass.a:18:1: stage 0 can't lower a class extending Apple's Url (a program's class can implement an Apple protocol) yet\n",
+      "errors": "adamic: /var/folders/67/vmx4fj4j5w93ps2hv01rpjgr0000gq/T/tmp.cfBf7pZfmj/adamic/internal/apple/testdata/cycles/url-subclass.a:18:1: stage 0 can't lower a class extending Apple's Url (a program's class can implement an Apple protocol) yet\n",
       "exit": 1
     },
     "internal/apple/testdata/cycles/url.a": {
@@ -80,14 +80,14 @@
     "passed": 326,
     "skipped": 0
   },
-  "darwinPaths": "6428e23b709ef34be2bd2d4468518685574b68c327dd4b7eb358b3658e5544be",
+  "darwinPaths": "2b4d8b3ed4cbce01bfa56d43bb75b448cf2750c2702c809955af223db3f66057",
   "exit": 0,
   "host": "Shackler",
   "log": {
-    "kept": "Shackler:/Users/loom/scratch/system_loom_capacity_machines/apple-records/candidate-67247592-20261121T215826Z.log",
-    "sha256": "54bcf6a77094d689eb24bb8a7d761b609d04798b7c44b16674ac4fe133b7cfc6"
+    "kept": "Shackler:/Users/loom/scratch/system_loom_capacity_machines/apple-records/candidate-36898618-20261122T015725Z.log",
+    "sha256": "23670ddca1058f22231e1b63c3216c18646fd549503e42ff146f0d27018de00b"
   },
-  "tip": "67247592f81869a640e295c1543caf18fd5113b3",
+  "tip": "36898618e1f10df3afd91f756afb20820f8563de",
   "tools": {
     "go": "go1.27.1 darwin/arm64",
     "node": "v24.19.0",
