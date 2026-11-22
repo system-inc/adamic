@@ -164,15 +164,16 @@ func TestIntersectionViewWidenedReadIsChecked(t *testing.T) {
 }
 
 // An intersection can't be the entry itself: a cast from Node straight to Node & { ... } is no tagged member
-// of a union, so it's refused as a cast the runtime can't check, and a predicate claiming one is NotYet as an
-// overload target. Both fail closed before any view exists, so the roads above enter through a field.
+// of a union, so it's NotYet as a checked view of the intersection (Adamic's Q3 on #b5w3ycg, Nov 22: a check
+// could decide it, and none is built), and a predicate claiming one is NotYet as an overload target. Both fail
+// closed before any view exists, so the roads above enter through a field.
 func TestIntersectionDirectEntryFailsClosed(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct {
 		name, source, at, words string
 		refused                 bool
 	}{
-		{"cast.ts", "interface Node { readonly kind: number; readonly pos: number; }\ntype Lit = Node & { readonly kind: 9; readonly text: string; };\nfunction show(n: Node): void { if (n.kind === 9) { const l = n as Lit; console.log(l.text); } }\nshow({ kind: 9, pos: 1 });\n", "cast.ts:3:62", "a cast the runtime can't check", true},
+		{"cast.ts", "interface Node { readonly kind: number; readonly pos: number; }\ntype Lit = Node & { readonly kind: 9; readonly text: string; };\nfunction show(n: Node): void { if (n.kind === 9) { const l = n as Lit; console.log(l.text); } }\nshow({ kind: 9, pos: 1 });\n", "cast.ts:3:62", "stage 0 can't lower a checked view of the intersection Lit over Node yet", false},
 		{"predicate.ts", "interface Node { readonly kind: number; readonly pos: number; }\ntype Lit = Node & { readonly kind: 9; readonly text: string; };\nfunction isLit(n: Node): n is Lit { return n.kind === 9; }\nfunction show(n: Node): void { if (isLit(n)) { console.log(n.text); } }\nshow({ kind: 9, pos: 1 });\n", "predicate.ts:3:1", "checked predicate overload target Lit", false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
