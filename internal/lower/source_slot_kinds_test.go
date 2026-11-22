@@ -51,6 +51,8 @@ var sourceSlotKindClasses = map[string]struct{ class, why string }{
 	"WeakSetAdd":           {"elsewhere", "a WeakSet's key, never a field"},
 	"WeakCollectionHas":    {"elsewhere", "a WeakMap's or WeakSet's key, never a field"},
 	"WeakCollectionDelete": {"elsewhere", "a WeakMap's or WeakSet's key, never a field"},
+	"WeakMapGet":           {"elsewhere", "a WeakMap's key, never a field"},
+	"WeakMapSet":           {"elsewhere", "a WeakMap's key, never a field"},
 }
 
 // Every IR expression and statement that holds an operand and has a field named Name, Key, Field,
