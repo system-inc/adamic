@@ -41,10 +41,11 @@ class Scratch(unittest.TestCase):
         path.write_text(text)
         return str(path)
 
-    def log(self, name, full_report, stamp=''):
+    def log(self, name, full_report, stamp='', width=0):
         """A job log as job.sh prints it: the tool's lines, the AGREEMENT_DAILY line, then the compact report, made by
         diff.py compact itself, gzipped and base64'd on one line between the markers. stamp goes before every line, as a
-        log that stamps its lines would."""
+        log that stamps its lines would, and a width splits the report's line into lines of that width, as Loom's log
+        does at 49,152 bytes."""
         source = self.write(name + '.report.json', json.dumps(full_report))
         made = diff('compact', source)
         self.assertEqual(made.returncode, 0, made.stderr)
@@ -52,7 +53,8 @@ class Scratch(unittest.TestCase):
         lines = ['sandboxed-job: npm installed offline in 1 projects', 'pending stage3/p.ts: awaits #abc1234',
                  'agreement: compared 2, agreeing 1, ruled 0, checked stops 0, pending 1, disagreeing 0, memory-unsafe 0, refused 0',
                  f"AGREEMENT_DAILY shard={full_report['shard']} head={full_report['head']} exit=0",
-                 'AGREEMENT_REPORT_BEGIN', blob, 'AGREEMENT_REPORT_END']
+                 'AGREEMENT_REPORT_BEGIN', *([blob[at:at + width] for at in range(0, len(blob), width)] if width else [blob]),
+                 'AGREEMENT_REPORT_END']
         return self.write(name, ''.join(stamp + line + '\n' for line in lines))
 
     def extract(self, *logs):
@@ -94,7 +96,7 @@ class Extract(Scratch):
         second = self.log('two.log', report('1/2', [
             {'path': 'a.ts', 'judgment': 'agreeing', 'outcome_hash': 'h1'},
             {'path': 'c.ts', 'judgment': 'pending', 'outcome_hash': 'h3', 'task': 'abc1234'},
-        ], compared=2, agreeing=1, pending=1), stamp='2026-11-21T06:00:00Z ')
+        ], compared=2, agreeing=1, pending=1), stamp='2026-11-21T06:00:00Z ', width=16)
         made = self.extract(first, second)
         self.assertEqual(made.returncode, 0, made.stderr)
         self.assertEqual(json.loads(made.stdout), {
@@ -110,6 +112,11 @@ class Extract(Scratch):
         self.assertEqual(made.returncode, 2, made.stdout)
         self.assertIn(name, made.stderr)
         self.assertEqual(made.stdout, '')
+
+    def test_a_report_with_no_end_is_refused(self):
+        good = self.log('good.log', report('1/2', []))
+        open_ended = self.write('open.log', 'AGREEMENT_REPORT_BEGIN\nbm90IGd6aXA=\n')
+        self.assertRefused(self.extract(good, open_ended), 'open.log')
 
     def test_a_log_with_no_report_is_refused(self):
         good = self.log('good.log', report('1/2', []))
