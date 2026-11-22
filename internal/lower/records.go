@@ -708,7 +708,16 @@ func (l *lowering) sameRecordStorage(from, to *checker.Type, walk *recordStorage
 		}
 		return true
 	}
+	target := to
 	from, to = l.present(from), l.present(to)
+	if to == nil && l.plainObjectIntersection(target) {
+		// An intersection of plain object shapes is held as a fixed object (objectIntersection), so it's
+		// judged as one: present has no single object type for it, and answering same storage let a
+		// finite Partial<Record<K, V>> declaring each of its fields cross, and a fixed-object read of it
+		// panic natively as a compiler bug where Node runs (#mft3zc6). Any other intersection keeps the
+		// nil answer, as does every other type present has none for.
+		to = target
+	}
 	// A Pick of a record is stored as the whole record, so it's compared as that record.
 	if base := l.pickedRecordBase(from); base != nil {
 		from = base
@@ -793,6 +802,18 @@ func (l *lowering) sameRecordStorage(from, to *checker.Type, walk *recordStorage
 		}
 	}
 	return true
+}
+
+// plainObjectIntersection reports whether proven is an intersection held as a fixed object: every
+// member a plain object shape and every field one it holds, as objectIntersection admits it. A Weak's
+// narrowing (Target & WeakBrand) and a primitive brand are held as their target or base instead, so
+// neither is one.
+func (l *lowering) plainObjectIntersection(proven *checker.Type) bool {
+	if proven == nil || proven.Flags()&checker.TypeFlagsIntersection == 0 || l.weakTarget(proven) != nil || l.phantomBase(proven) != nil {
+		return false
+	}
+	held, known, _ := l.objectIntersection(proven)
+	return known && held == ir.Object
 }
 
 // Catch literal reads before method/builtin dispatch can bypass ordinary value lowering.
