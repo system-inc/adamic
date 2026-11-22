@@ -1,0 +1,52 @@
+# #a4frknq's measure, run with bash after the sealed opening. Never merged. Each of the 16 CountMeasurements product
+# tests runs alone in its own process, three passes:
+#   cold    an empty build cache and an empty gate cache (XDG_CACHE_HOME), so every row lowers, builds and runs;
+#   hit     the same caches again, so the product hits and the shard costs only its keying (every row lowered);
+#   gate    a fresh build cache over the warm gate cache: the product misses, but every counted run is a gate hit,
+#           the nearest stand-in for a warm compiler tree, where only rows whose C moved build and run.
+# For each run: wall, user and sys of the test process and its children (bash's time), the Go process's own CPU from
+# its profile, and clang's seconds by kind from ADAMIC_BUILD_LOG. Children minus clang is the counted programs' runs.
+set -u
+L="$TMPDIR/a4"
+mkdir -p "$L"
+echo "A4 on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg)"
+root=$(pwd)
+TIMEFORMAT='%R %U %S'
+compiled=$( { time go test -c -o "$L/oracle.test" ./internal/oracle > "$L/compile.log" 2>&1; } 2>&1 )
+echo "A4 test binary built in (wall user sys) $compiled, exit status in compile.log"
+[ -x "$L/oracle.test" ] || { echo "VERDICT FAIL test binary"; tail -20 "$L/compile.log"; exit 1; }
+cd internal/oracle
+XDG_CACHE_HOME="$L/xdg" ADAMIC_BUILD_CACHE_DIR="$L/cache-cold" "$L/oracle.test" -test.run '^TestPerformanceA4frknqShardSizes$' -test.v 2>&1 | grep 'A4 shard sizes'
+
+summarize() {
+	pass=$1 shard=$2 timing=$3
+	go_cpu=$(cd "$root" && go tool pprof -top -nodecount=1 "$L/oracle.test" "$L/$pass-$shard.prof" 2>/dev/null | sed -n 's/.*Total samples = \([0-9.]*\)\(m\?s\).*/\1\2/p')
+	clang=$(awk '$1 ~ /^c(Compile|Link|Build|Archive)$/ { seconds[$1" "$4] += $5; count[$1" "$4]++ } END { for (k in seconds) printf "%s %d %.1fs; ", k, count[k], seconds[k] }' "$L/$pass-$shard.log" 2>/dev/null)
+	verdict=$(grep -E -- '^(--- (PASS|FAIL|SKIP)|ok|FAIL)' "$L/$pass-$shard.out" | head -1)
+	echo "A4 $pass $shard wall/user/sys $timing go-cpu $go_cpu clang [$clang] $verdict"
+}
+
+run_pass() {
+	pass=$1 cache=$2
+	for shard in 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15; do
+		timing=$( { time XDG_CACHE_HOME="$L/xdg" ADAMIC_BUILD_CACHE_DIR="$cache" ADAMIC_BUILD_LOG="$L/$pass-$shard.log" \
+			"$L/oracle.test" -test.run "^TestProduct_CountMeasurements${shard}\$" -test.count=1 -test.v \
+			-test.cpuprofile "$L/$pass-$shard.prof" > "$L/$pass-$shard.out" 2>&1; } 2>&1 )
+		summarize "$pass" "$shard" "$timing"
+	done
+}
+
+run_pass cold "$L/cache-cold"
+run_pass hit "$L/cache-cold"
+run_pass gate "$L/cache-gate"
+
+echo "== where shard 00's Go time goes, cold and hit (cumulative, top 30)"
+for pass in cold hit; do
+	echo "-- $pass"
+	(cd "$root" && go tool pprof -top -cum -nodecount=30 "$L/oracle.test" "$L/$pass-00.prof" 2>/dev/null | sed -n '1,40p')
+done
+echo "== shard 00's cold build log, lines by kind and outcome"
+awk '{ print $1, $4 }' "$L/cold-00.log" | sort | uniq -c
+failed=$(grep -l -E '^(--- FAIL|FAIL)' "$L"/*.out 2>/dev/null | wc -l)
+echo "A4 runs with a failure: $failed"
+if [ "$failed" -eq 0 ]; then echo "VERDICT OK"; else echo "VERDICT FAIL"; grep -h -E -B2 -A8 '^--- FAIL' "$L"/*.out | head -60; fi
