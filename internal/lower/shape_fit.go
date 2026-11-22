@@ -22,6 +22,9 @@ import (
 const (
 	shapeFitMapStop   = "a Map or Set going where a plain object type is held"
 	shapeFitArrayStop = "an array going where a plain object type is held"
+	// A WeakMap or WeakSet is a table the runtime keys by weak handles (ir.WeakCollection), with no object
+	// layout at all, so a structural slot reads none of its members: it has no entry in shapeFitServed.
+	shapeFitWeakStop = "a WeakMap or WeakSet going where a plain object type is held"
 )
 
 // shapeFitServed is every member a container's value is read by correctly through a structural slot, keyed
@@ -51,7 +54,7 @@ var shapeFitProtocols = []string{"Iterable", "ReadonlySetLike"}
 func (l *lowering) shapeFit(value *checker.Type, target *checker.Type, libraryArgument bool) (stop string, judged bool) {
 	held, valueKnown := l.representation(value)
 	slot, slotKnown := l.representation(target)
-	if !valueKnown || !slotKnown || (held != ir.Map && held != ir.Array) || (slot != ir.Object && slot != ir.Union) {
+	if !valueKnown || !slotKnown || (held != ir.Map && held != ir.Array && held != ir.WeakCollection) || (slot != ir.Object && slot != ir.Union) {
 		return "", false
 	}
 	if target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 || l.isArrayType(target) || checker.IsTupleType(target) {
@@ -67,6 +70,9 @@ func (l *lowering) shapeFit(value *checker.Type, target *checker.Type, libraryAr
 	stop = shapeFitArrayStop
 	if held == ir.Map {
 		stop = shapeFitMapStop
+	}
+	if held == ir.WeakCollection {
+		stop = shapeFitWeakStop
 	}
 	if len(members) == 0 {
 		return stop, true

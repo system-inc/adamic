@@ -29,6 +29,7 @@ func TypeTags() map[string]Type {
 		"Record":                  Record,
 		"Promise":                 Promise,
 		"Generator":               Generator,
+		"WeakCollection":          WeakCollection,
 	}
 }
 

@@ -166,6 +166,13 @@ func (l *lowering) unknownView(node *ast.Node, own, contextual *checker.Type) er
 	if l.reaches(present, l.appleObject, map[*checker.Type]bool{}) {
 		return l.notYet(node, "an Apple object viewed as unknown or object (Objective-C property metadata)")
 	}
+	// A WeakMap or WeakSet holds nothing a run-time read could find, and Node's reads answer from its
+	// class (String gives [object WeakSet], `in` gives false), which neither backend's unknown keeps. The
+	// walk follows the reach, as the Apple object's does, so a field holding one stops too (Runtime's must
+	// on #hcgy751's W1).
+	if l.reaches(present, l.weakCollectionType, map[*checker.Type]bool{}) {
+		return l.notYet(node, "a WeakMap or WeakSet viewed as unknown or object (weak collection metadata)")
+	}
 	if held, known := l.representation(present); known && held == ir.Closure {
 		return l.notYet(node, "a function viewed as unknown or object (dynamic function descriptors)")
 	}
@@ -269,6 +276,12 @@ func (l *lowering) nullableReference(element *checker.Type) bool {
 // is the program's own and isn't one.
 func (l *lowering) appleObject(proven *checker.Type) bool {
 	return isForeign(l.unbranded(proven).Symbol())
+}
+
+// weakCollectionType says whether this is lib's WeakMap or WeakSet, which unknownView stops wherever an
+// unknown reaches one.
+func (l *lowering) weakCollectionType(proven *checker.Type) bool {
+	return l.isLibraryType(proven, "WeakMap", "WeakSet")
 }
 
 // variableTuple says whether this is a tuple with an optional or rest element, whose length on Node
