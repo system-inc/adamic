@@ -16,8 +16,8 @@ File: internal/childguard/childguard.go, captureTo. After `stop()`, add the kill
 	signal(cmd.Process.Pid)
 ```
 
-Expected: `TestCaptureSignalsTheGroupOnlyBeforeTheReap` goes red at group_linux_test.go:50 with "signals, true where
+Expected: `TestCaptureSignalsTheGroupOnlyBeforeTheReap` goes red at group_linux_test.go:51 with "signals, true where
 after the reap: [false true], want one before it", and `TestCaptureCancelSignalsTheGroupOnlyBeforeTheReap` at
-group_linux_test.go:68 with "[false false true], want two before it". The test's signal asks the kernel, not the
+group_linux_test.go:69 with "[false false true], want two before it". The test's signal asks the kernel, not the
 group's flag (waitid on a reaped child fails with `ECHILD`), and sends nothing once the leader is reaped, so the
 mutant run itself signals no reused id.
