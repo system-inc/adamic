@@ -2,7 +2,6 @@ package oracle
 
 import (
 	"context"
-	"fmt"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -10,7 +9,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/internal/native_runtime"
+	"github.com/system-inc/adamic/internal/oracle/countproducts"
 )
 
 func processEnvironmentFixtureEnvironment(name string) []string {
@@ -48,18 +47,10 @@ func init() {
 			environment := processEnvironmentFixtureEnvironment(name)
 			// Environment bytes are inputs to the measurement, never inherited state.
 			runs := countPortable(t, source, path) + "\nenvironment " + strings.Join(environment, "\n")
-			return runs, func() string {
-				binary := filepath.Join(t.TempDir(), "program")
-				if err := native.Build(source, binary, native_runtime.Options{Count: true}); err != nil {
-					t.Fatal(err)
-				}
-				got := processEnvironmentRun(t, environment, binary)
-				match := countsLine.FindSubmatch(got.stderr)
-				if got.exitCode != 0 || match == nil {
-					t.Fatalf("counted environment fixture: exit %d stderr %q", got.exitCode, got.stderr)
-				}
-				return fmt.Sprintf("| %s | %s | %s | %s | %s | %s | %s |", key, match[1], match[2], match[3], match[4], match[5], match[6])
-			}
+			// It runs with exactly these variables, as processEnvironmentRun runs it, and must finish.
+			row := countproducts.Row{Key: key, C: source, Run: countproducts.Environment, Variables: environment, Checked: true}
+			countRows.Store(key, row)
+			return runs, func() string { return countMeasuredHere(t, row) }
 		}})
 	}
 }
