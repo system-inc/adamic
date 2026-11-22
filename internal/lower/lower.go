@@ -622,9 +622,15 @@ type lowering struct {
 	// elementKey is which element reads a checked view's element check is built for (view_arrays.go).
 	// Nil, in a lowering a test builds by hand, checks every read.
 	elementKey *viewElementKey
-	// objectIntersections are the intersections objectIntersection is proving, so a field that
-	// holds one of them again ends there.
-	objectIntersections map[*checker.Type]bool
+	// objectIntersections are the intersections objectIntersection is proving, each at its depth on the
+	// walk's path, so a field that holds one of them again ends there.
+	objectIntersections map[*checker.Type]int
+	// objectIntersectionVerdicts is objectIntersection's answer per intersection and type mapper, kept once
+	// it's settled (#vp9f4yd): a failure always, a success once its walk leaned on no intersection still
+	// being proven above it. objectIntersectionLow is the shallowest depth such a lean reached, for the
+	// walk in progress.
+	objectIntersectionVerdicts map[objectIntersectionKey]objectIntersectionVerdict
+	objectIntersectionLow      int
 	// elementFits is elementsHeldOtherwise's walk answered once per value type and slot type, so
 	// judging every value handed to a slot costs each pair once (element_fit.go).
 	elementFits map[elementFitKey]*elementMismatch
