@@ -98,6 +98,8 @@ enum adamic_kind {
 	adamic_kind_environment,
 	adamic_kind_generator,
 #endif
+	// A WeakMap or a WeakSet (weak_collection.c).
+	adamic_kind_weak_map,
 	// A union's null, the static adamic_null and nothing else: a bare header, so a reader that tests
 	// for an object's kind never reads past it (#ch0xvam). It comes last so no other kind's number moves.
 	adamic_kind_null,
@@ -116,9 +118,10 @@ typedef struct adamic_heap {
 // immutable slab bit dispatches before reading a count. Zero remains immortal, including regions.
 #define ADAMIC_SHARED ((size_t)1 << (sizeof(size_t) * 8 - 1))
 _Static_assert((intptr_t)ADAMIC_SHARED == INTPTR_MIN, "native count tags require two-complement intptr_t conversion");
-// adamic_heap.slab is a chunk number plus one (zero for malloc) in its low 29 bits, and three
-// flags above them: shared, a statement region's value (region.c), and a graph region member with
-// its two-word prefix (graph_regions.h). The heap keeps chunk numbers below the lowest flag.
+// adamic_heap.slab is a chunk number plus one (zero for malloc) in its low 27 bits, and five flags
+// above them: shared, a statement region's value (region.c), a graph region member with its two-word
+// prefix (graph_regions.h), a Program member, and a value some weak handle has named (weak.c). The
+// heap keeps chunk numbers below the lowest flag (heap_parallel.h).
 #define ADAMIC_SHARED_HEADER UINT32_C(0x80000000)
 #define ADAMIC_REGION_VALUE UINT32_C(0x40000000)
 #define ADAMIC_GRAPH_FLAG UINT32_C(0x20000000)
@@ -129,11 +132,19 @@ _Static_assert((ADAMIC_SHARED_HEADER & ADAMIC_REGION_VALUE) == 0 && (ADAMIC_SHAR
 // on the ownership dispatch path even though their slow operation is a no-op.
 #define ADAMIC_SLOW_COUNT (ADAMIC_SHARED_HEADER | ADAMIC_GRAPH_FLAG | ADAMIC_PROGRAM_FLAG)
 // Slab bits 31 and 30 are shared and statement-region flags. Bit 29 stays
-// reserved for graph storage; opt-in Program members use bit 28. With Program
-// regions on, chunk number + 1 must fit below bit 28 (heap_parallel.h).
+// reserved for graph storage; opt-in Program members use bit 28.
 #define ADAMIC_PROGRAM_FLAG UINT32_C(0x10000000)
 _Static_assert((ADAMIC_PROGRAM_FLAG & (ADAMIC_SHARED_HEADER | ADAMIC_REGION_VALUE | ADAMIC_GRAPH_FLAG)) == 0,
     "Program flag overlaps another slab flag");
+// Bit 27 says a weak handle was made for the value (weak.c), so freeing it must ask the side table
+// to forget it; a value without it, and not shared, skips the table and its lock. It's set only on
+// writable heap storage, never on a count-zero value in static storage, and it isn't a slow count:
+// the inline retain and release never read it. Chunk number + 1 must fit below it (heap_parallel.h).
+#define ADAMIC_WEAK_NAMED UINT32_C(0x08000000)
+_Static_assert((ADAMIC_WEAK_NAMED & (ADAMIC_SHARED_HEADER | ADAMIC_REGION_VALUE | ADAMIC_GRAPH_FLAG | ADAMIC_PROGRAM_FLAG)) == 0 &&
+	ADAMIC_WEAK_NAMED < ADAMIC_PROGRAM_FLAG, "weak-named flag overlaps another slab flag");
+// Every flag bit, which a slab number is read without (heap.c's deallocate).
+#define ADAMIC_SLAB_FLAGS (ADAMIC_SHARED_HEADER | ADAMIC_REGION_VALUE | ADAMIC_GRAPH_FLAG | ADAMIC_PROGRAM_FLAG | ADAMIC_WEAK_NAMED)
 static inline bool adamic_program_is(const void *value) {
 #ifdef ADAMIC_PROGRAM_REGION
     return value != NULL && (((const adamic_heap *)value)->slab & ADAMIC_PROGRAM_FLAG) != 0;
@@ -1645,6 +1656,38 @@ void adamic_weak_dropped(adamic_weak *handle);
 // adamic_weak_held reports whether a Weak points at a value: reuse in place takes over only a value
 // nothing else can reach, and a Weak reaches without counting.
 bool adamic_weak_held(const void *target);
+// adamic_weak_named says whether a WeakMap or WeakSet holds an entry for the value, which share.c
+// refuses to publish: a collection and its keys stay on the thread that made them.
+bool adamic_weak_named(const void *target);
+// adamic_weak_thread_end frees the calling thread's list of what forget lets go of (heap.c).
+void adamic_weak_thread_end(void);
+
+// adamic_weak_map is a WeakMap, or a WeakSet when set is true, which has no values (weak_collection.c).
+// It's keyed by the key's weak handle, never its address: an entry holds a count on the handle, so the
+// handle's address can't be reused while the entry lives, and a new value at a freed key's address
+// gets a new handle. reference_values says whether values are counted references, as adamic_map's.
+//
+// adamic_weak_key is the key's handle for set and add, made if needed, retained for the caller, and
+// marked named. adamic_weak_key_find is the handle for get, has and delete, not retained, or NULL when
+// the key has none. adamic_weak_map_lookup says whether the map holds the key, and its value through
+// value when that isn't NULL, borrowed. adamic_weak_map_store takes the handle's count and the value's;
+// replacing an entry lets go of the old value and the extra handle count. adamic_weak_map_remove lets
+// go of the entry's value and handle count. When a key is freed, every entry for it goes, and its
+// value is let go of (adamic_weak_forget).
+typedef struct adamic_weak_map adamic_weak_map;
+adamic_weak_map *adamic_weak_map_new(bool set, bool reference_values);
+adamic_weak *adamic_weak_key(void *key);
+adamic_weak *adamic_weak_key_find(const void *key);
+bool adamic_weak_map_lookup(adamic_weak_map *map, const adamic_weak *key, adamic_value *value);
+void adamic_weak_map_store(adamic_weak_map *map, adamic_weak *key, adamic_value value);
+bool adamic_weak_map_remove(adamic_weak_map *map, const adamic_weak *key);
+// The heap frees a collection through this (heap.c): it takes the collection's names off its keys'
+// handles, then lets go of every value and handle count.
+void adamic_weak_map_free_children(adamic_weak_map *map, void (*let_go)(void *));
+#ifdef ADAMIC_COUNT
+// The entries every weak collection holds right now, for a harness (count.h has the peak).
+size_t adamic_weak_entries_live(void);
+#endif
 
 // OrdinaryToPrimitive's typed call seam (exceptions.c, docs/step22-to-primitive.md).
 // The existing method ABI is untagged; generated adapters must classify its result.

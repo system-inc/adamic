@@ -342,6 +342,7 @@ static const char *heap_kind_name(enum adamic_kind kind) {
 	case adamic_kind_async_promise: return "promise";
 	case adamic_kind_async_reaction: return "async reaction";
 	case adamic_kind_foreign: return "foreign value";
+	case adamic_kind_weak_map: return "WeakMap or WeakSet";
 #ifdef ADAMIC_CANONICAL_CLOSURES
 	case adamic_kind_environment: return "environment";
 	case adamic_kind_generator: return "generator";
