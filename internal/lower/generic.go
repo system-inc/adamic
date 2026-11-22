@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"reflect"
 	"strconv"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -67,7 +68,8 @@ func (l *lowering) instantiateFunctionSignature(call *ast.Node, declaration *ast
 		parameterType := l.checker.GetTypeAtLocation(parameter.Name())
 		concrete, isKnown := concreteTypes[parameterType]
 		if !isKnown {
-			// Not read back (it stands only inside a union or an object, Result<Value>): left
+			// Not read back (it stands only inside a union or an object, Result<Value>, and the call's
+			// mapper names another declaration's binders or can't be read, instanceTypes): left
 			// unmapped, so whatever in the body needs to know how it's held says not yet, there.
 			key += ",unread"
 			name += "_unread"
@@ -175,6 +177,27 @@ func (l *lowering) instanceTypes(declaration *ast.Node, target, resolved *checke
 		}
 	}
 	l.inferTypes(l.checker.GetReturnTypeOfSignature(target), l.checker.GetReturnTypeOfSignature(resolved), concreteTypes)
+	// A type parameter standing only in an anonymous object's property, host: { create: () => T }, has no
+	// reference or call signature to be read back through, so it's read from the mapper the checker
+	// instantiated resolved with, as classGenericCall reads it (#vks2w2y). Only when resolved instantiates
+	// target itself: an overload's resolved signature is another declaration's, and its mapper names that
+	// one's binders. A binding read back above stays, and an unreadable mapper leaves the parameter unread.
+	if resolved.Target() == target {
+		field := reflect.ValueOf(resolved).Elem().FieldByName("mapper")
+		if field.IsValid() && field.Kind() == reflect.Pointer && !field.IsNil() {
+			mapper := (*typeMapper)(field.UnsafePointer())
+			for _, parameter := range declaration.TypeParameters() {
+				declaredType := l.checker.GetTypeAtLocation(parameter.Name())
+				if _, isKnown := concreteTypes[declaredType]; isKnown {
+					continue
+				}
+				concrete := l.concrete(instantiateType(l.checker, declaredType, mapper))
+				if concrete != nil && concrete != declaredType && concrete.Flags()&checker.TypeFlagsTypeParameter == 0 {
+					concreteTypes[declaredType] = concrete
+				}
+			}
+		}
+	}
 	return concreteTypes
 }
 
