@@ -48,6 +48,19 @@ func (e *emitter) mapGetSlot(expression ir.MapGet) string {
 	return slot
 }
 
+// weakMapGetSlot is a WeakMap's entry for a key as Map's lookup gives one, the value's slot or NULL: the
+// key's handle, not made (NULL when it has none, which no entry holds), and the value copied out of the
+// entry, borrowed.
+func (e *emitter) weakMapGetSlot(expression ir.WeakMapGet) string {
+	collection := e.value(expression.Map)
+	key := e.value(expression.Key)
+	entry := e.temporary()
+	slot := e.temporary()
+	e.line("adamic_value %s = {0};", entry)
+	e.line("adamic_value *%s = adamic_weak_map_lookup(%s, adamic_weak_key_find(%s), &%s) ? &%s : NULL;", slot, collection, key, entry, entry)
+	return slot
+}
+
 // typeOfReference evaluates a reference once and retains the lookup's presence where null and
 // undefined could otherwise collapse into the same pointer. The classifier remains union_typeof.
 func (e *emitter) typeOfReference(observation ir.TypeOf) (string, string) {

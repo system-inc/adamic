@@ -1,0 +1,31 @@
+// A key a fresh function made, handed to a WeakMap's set (#hcgy751, W2). A statement region's value can't
+// be a weak key, since its region frees it whatever counts it (weak.c refuses one), so a parameter that
+// keeps its argument in a WeakMap lets it escape, and the key is made on the counted heap. A parameter only
+// looked up with get flows nowhere, and its key may live in the statement's region: get looks it up without
+// making it a handle.
+const seen = new WeakMap<{ round: number }, number>();
+const named = new WeakMap<{ round: number }, string>();
+function build(round: number): { round: number } {
+	return { round };
+}
+function keep(key: { round: number }): number {
+	seen.set(key, key.round * 2);
+	named.set(key, `round ${key.round}`);
+	return seen.get(key) ?? -1;
+}
+function look(key: { round: number }): number {
+	return seen.get(key) ?? key.round;
+}
+function name(key: { round: number }): string {
+	return named.get(key) ?? `none ${key.round}`;
+}
+let kept = 0;
+let looked = 0;
+const names: string[] = [];
+for (let round = 1; round <= 3; round++) {
+	kept += keep(build(round));
+	looked += look(build(round));
+	names.push(name(build(round)));
+}
+const lasting = build(7);
+console.log(`kept ${kept} looked ${looked} ${names.join(', ')} ${keep(lasting)} ${seen.get(lasting)} ${look(lasting)} ${name(lasting)}`);
