@@ -85,23 +85,20 @@ func TestFreshAssignmentLanguageAttacksStayStopped(t *testing.T) {
 	}
 }
 
-// A field written through an assignment used as a value clears this rule, then meets main's own gap for an
-// assignment value to a member, a separate stop. Each row holds both: the invariance refusal is gone, and
-// the next stop is that gap's, exactly.
-func TestFreshAssignmentValueMemberReachesTheNextStop(t *testing.T) {
+// A field written through an assignment used as a value clears this rule, and since #4gxxhvf the member
+// gap behind it too: each row lowers and agrees with Node, natively as well.
+func TestFreshAssignmentValueMemberLowers(t *testing.T) {
 	t.Parallel()
-	for _, probe := range []struct{ name, source, where string }{
-		{"nullish field", "class Holder { r?: number[]; }\nconst o = new Holder();\nconst r = o.r ?? (o.r = []);\nr.push(4);\nconsole.log(String(o.r.length));\n", ":3:19:"},
-		{"class field", "class C { items?: string[]; add(s: string): void { (this.items || (this.items = [])).push(s); } }\nconst c = new C();\nc.add('a');\nconsole.log(String(c.items?.length));\n", ":1:68:"},
+	for _, probe := range []struct{ name, source, stdout string }{
+		{"nullish field", "class Holder { r?: number[]; }\nconst o = new Holder();\nconst r = o.r ?? (o.r = []);\nr.push(4);\nconsole.log(String(o.r.length));\n", "1\n"},
+		{"class field", "class C { items?: string[]; add(s: string): void { (this.items || (this.items = [])).push(s); } }\nconst c = new C();\nc.add('a');\nconsole.log(String(c.items?.length));\n", "1\n"},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
 			t.Run(probe.name+extension, func(t *testing.T) {
 				t.Parallel()
-				_, err := lowerSourceAs(t, probe.source, extension)
-				want := "main" + extension + probe.where + " stage 0 can't lower an assignment value to a member yet"
-				var notYet *NotYet
-				if !errors.As(err, &notYet) || !strings.HasSuffix(err.Error(), want) {
-					t.Fatalf("got %v, want the next stop ending %q", err, want)
+				program := lowersAndAgreesWithNodeAs(t, probe.source, extension)
+				if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != probe.stdout {
+					t.Fatalf("native: exit %d, stdout %q, stderr %q; want 0 and %q", code, stdout, stderr, probe.stdout)
 				}
 			})
 		}
