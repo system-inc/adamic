@@ -49,18 +49,35 @@ func TestNullishBinderGivenOptionalStringReachesAStringOperation(t *testing.T) {
 	}
 }
 
-// Bound to void, as tsc's forEach is by a callback that returns nothing, the instance meets the generic-at-
-// void rule (#p7t8tmh), which Lower and Optimizer agreed on #hm6sc4z: forEach's body reads the result, so the
-// call is refused there, honestly, where main said NotYet at the declaration.
-func TestNullishBinderGivenVoidMeetsTheVoidReadRule(t *testing.T) {
+// A callback that returns nothing, as tsc's forEach callers pass, binds U to undefined: the checker gives
+// a block arrow with no return its contextual undefined, so the instance lowers and agrees with Node. Annotated
+// : void, U is void, and it still agrees: a literal arrow returning nothing holds undefined. A void value that
+// holds something, a number-returning function seen as () => void and called in the callback, never reaches
+// the slot: it's refused at the argument as void widening, at main and here alike (J-s92k0yb, J-v98egh9).
+func TestNullishBinderGivenAVoidCallback(t *testing.T) {
 	t.Parallel()
-	const source = "function forEach<T, U>(array: readonly T[], callback: (element: T) => U | undefined): U | undefined {\n    for (const element of array) {\n        const result = callback(element);\n        if (result) {\n            return result;\n        }\n    }\n    return undefined;\n}\nlet total = 0;\nforEach([1, 2], (n) => { total += n; });\nconsole.log(String(total));\n"
+	const forEach = "function forEach<T, U>(array: readonly T[], callback: (element: T) => U | undefined): U | undefined {\n    for (const element of array) {\n        const result = callback(element);\n        if (result) {\n            return result;\n        }\n    }\n    return undefined;\n}\nlet total = 0;\n"
+	for _, probe := range []struct{ name, source string }{
+		{"block arrow", forEach + "forEach([1, 2], (n) => { total += n; });\nconsole.log(String(total));\n"},
+		{"annotated void arrow", forEach + "forEach([1, 2], (n): void => { total += n; });\nconsole.log(String(total));\n"},
+	} {
+		for _, extension := range []string{".a", ".ts"} {
+			t.Run(probe.name+extension, func(t *testing.T) {
+				t.Parallel()
+				program := lowersAndAgreesWithNodeAs(t, probe.source, extension)
+				if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != "3\n" {
+					t.Fatalf("native: exit %d, stdout %q, stderr %q; want 0 and %q", code, stdout, stderr, "3\n")
+				}
+			})
+		}
+	}
+	const widened = forEach + "const h: () => void = () => 5;\nconsole.log(String(forEach([1], (n) => h()) === undefined));\n"
 	for _, extension := range []string{".a", ".ts"} {
-		t.Run(extension, func(t *testing.T) {
+		t.Run("widened void value"+extension, func(t *testing.T) {
 			t.Parallel()
-			_, err := lowerSourceAs(t, source, extension)
-			if err == nil || !strings.Contains(err.Error(), "a generic instantiated at void whose body reads the value") {
-				t.Fatalf("want the void read refused, got %v", err)
+			_, err := lowerSourceAs(t, widened, extension)
+			if err == nil || !strings.Contains(err.Error(), "a void-returning function at the argument site") {
+				t.Fatalf("want the widened void value refused at the argument, got %v", err)
 			}
 		})
 	}
