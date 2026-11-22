@@ -421,6 +421,30 @@ class LatentReportTests(unittest.TestCase):
         # The broad variance catch-all must not override assigned exact keys.
         self.assertEqual(reason_owner('a value of type X seen as Y', owners, set(patterns)), 'OWNER BLANK')
 
+    def test_recorded_pos_family_reads_zero_once_node_ranges_are_writable(self):
+        # #aryr7ea's done-when: Node and NodeArray extend TextRange (adaptation 80, 17a20029) and
+        # the four range setters take a TextRange (adaptation 85, fbe5b72b), so no reason whose
+        # field is pos, or end beside it, is left on a daily meter at a main holding both. The
+        # Nov 15 record, before either, proves the pattern matches the family's real wording.
+        meter = Path(__file__).parent
+        family = r'a value of type .+ seen as .+, whose readonly field (?:pos|end) becomes writable: .+'
+
+        def sizes(run):
+            record = json.loads((meter / 'runs' / run / 'report.json').read_text())
+            tree = record['trees']['main']
+            summaries = (tree['latent_lowering'], tree['tsc_entry']['lowering_census'])
+            for summary in summaries:
+                # A zero from a census that measured nothing would be no reading at all.
+                self.assertTrue(summary['relation_report_complete'])
+                self.assertGreater(summary['totals']['Refused'] + summary['totals']['NotYet'], 0)
+            matched = [[row for row in summary['reason_rows'] if re.fullmatch(family, row['reason'])]
+                       for summary in summaries]
+            return record['adamic_commit'], [(len(rows), sum(row['count'] for row in rows)) for rows in matched]
+
+        self.assertEqual(sizes('20261115T131735Z.PG4H0R')[1], [(173, 550), (173, 550)])
+        self.assertEqual(sizes('20261122T131040Z.tNkys1'),
+                         ('178b45d36c8989e22f9e8ef4fb611adb6eded24c', [(0, 0), (0, 0)]))
+
     def test_table_groups_same_reason_across_kinds(self):
         self.records[1]['findings'].append(self.finding('Refused', 'existing', 3))
         result = self.render()
