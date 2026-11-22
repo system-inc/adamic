@@ -1,0 +1,23 @@
+# Mutant evidence for the family 3 owner rows (#k8ed1f2). Never merged.
+set -u
+cd stage3/meter
+T=report_test.LatentReportTests.test_exact_prefix_and_variance_owners
+export PYTHONDONTWRITEBYTECODE=1
+echo "## With the entries (expected pass)"
+python3 -m unittest "$T" 2>&1 | grep -E '^(Ran|OK|FAILED)'
+cp owners.json "$TMPDIR/owners.json"
+python3 - <<'PY'
+import json
+from pathlib import Path
+path = Path('owners.json')
+text = path.read_text()
+lines = [line for line in text.splitlines(keepends=True) if not line.rstrip().endswith('"#k8ed1f2",')]
+assert len(lines) == len(text.splitlines()) - 2, 'expected exactly two #k8ed1f2 rows'
+path.write_text(''.join(lines))
+json.loads(path.read_text())
+PY
+echo "## Mutant: both entries removed (expected red, the reasons fall to the bare 'seen as' row)"
+python3 -m unittest "$T" 2>&1 | grep -E '^(AssertionError|Ran|OK|FAILED)'
+cp "$TMPDIR/owners.json" owners.json
+echo "## Restored (expected pass)"
+python3 -m unittest report_test 2>&1 | grep -E '^(Ran|OK|FAILED)' | sed 's/^Ran/report_test: Ran/'
