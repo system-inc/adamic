@@ -1781,7 +1781,8 @@ func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Ty
 		return nil, true, err
 	}
 	visit.Callback, visit.CallbackType = callback, callbackType
-	visit.ElementCheck, err = l.viewArrayElementCheck(node, node.AsCallExpression().Expression.AsPropertyAccessExpression().Expression)
+	// The receiver as the dispatch found it, past parentheses: (xs.forEach)(f) is xs.forEach(f).
+	visit.ElementCheck, err = l.viewArrayElementCheck(node, ast.SkipParentheses(node.AsCallExpression().Expression).AsPropertyAccessExpression().Expression)
 	if err == nil && visit.ElementCheck == nil {
 		l.recordViewArrayUse(node, array, name)
 	}
