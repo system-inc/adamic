@@ -1775,6 +1775,9 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 	both := func(want ir.Type) bool { return left.Type() == want && right.Type() == want }
 	if operator == ast.KindPlusToken && (left.Type() == ir.String || right.Type() == ir.String) {
 		left, right = l.concatenated(left), l.concatenated(right)
+		if node.Kind == ast.KindBinaryExpression && node.AsBinaryExpression().OperatorToken.Kind == ast.KindPlusToken {
+			left, right = l.addedUnion(node.AsBinaryExpression().Left, left), l.addedUnion(node.AsBinaryExpression().Right, right)
+		}
 	}
 	if operator == ast.KindPlusToken && both(ir.String) {
 		return ir.Concat{Parts: []ir.Expression{left, right}, Site: l.stringSite(node)}, nil
@@ -1944,6 +1947,29 @@ func (l *lowering) concatenated(value ir.Expression) ir.Expression {
 		return ir.BooleanToString{Value: value}
 	case ir.MaybeNumber, ir.MaybeBoolean:
 		return ir.MaybeToString{Value: value}
+	}
+	return value
+}
+
+// addedUnion is a union operand of string addition, "" + value, written as + writes it: ToPrimitive with
+// addition's default hint, then ToString (#e0cnaa9, rulings.md:200). A union of primitives is itself under
+// any hint, so it's written as String writes it. One that may hold an object goes through the program's
+// ToPrimitive helper with the default hint, which asks an object's valueOf before its toString, by
+// #09dvwny's closed-world dispatch, when the union is an unknown or an object, as String's is, or holds
+// neither null nor undefined: a union holding a nullable reference may not tell its null from its
+// undefined (logical_and_reference_null.a), so it keeps its NotYet. Anything else is left as it was, and
+// combine's NotYet names it.
+func (l *lowering) addedUnion(operand *ast.Node, value ir.Expression) ir.Expression {
+	if value.Type() != ir.Union {
+		return value
+	}
+	observed := l.checker.GetTypeAtLocation(operand)
+	if l.writable(observed) || l.dynamicScalarProperty(operand) {
+		return ir.UnionToString{Value: value}
+	}
+	nullish := l.includesUndefined(observed) || l.includesNull(observed) || l.typeOfNull(operand) || observed.Flags()&checker.TypeFlagsVoid != 0
+	if dynamicObjectType(observed) || !nullish {
+		return l.toDefaultHint(value)
 	}
 	return value
 }
