@@ -304,6 +304,11 @@ class LatentReportTests(unittest.TestCase):
             'node:module.require("crypto"): CommonJS loading with no ES-module answer yet (fix: import it with an import declaration)': '#redxes2 (WebAssembly)',
             'node:module.require("source-map-support"): CommonJS loading with no ES-module answer yet (fix: import it with an import declaration)': '#redxes2 (WebAssembly)',
             'node:module.require of a computed module path: CommonJS loading with no ES-module answer yet (fix: import each module it can load with an import declaration)': '#redxes2 (WebAssembly)',
+            # Family 3's views relocated these sites onto reasons of their own (#k8ed1f2, causes 7 and 16).
+            'a value of type Readonly<(CompilerHost | ProgramHost<T>) & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter; }> seen as DirectoryStructureHost, whose readonly field directoryExists becomes writable: a readonly field may hold something narrower than ((directoryName: string) => boolean) | undefined, which a write of ((path: string) => boolean) | undefined would replace':
+                '#k8ed1f2',
+            'a value of type SyntacticTypeNodeBuilderContext seen as NodeBuilderContext, whose readonly field tracker becomes writable: a readonly field may hold something narrower than Required<Pick<SymbolTracker, "reportInferenceFallback">>, which a write of SymbolTrackerImpl would replace':
+                '#k8ed1f2',
             # The bare reason, the inspector require's (#cn4yapb), stays unowned: no CommonJS prefix matches it.
             'node:module.require': 'OWNER BLANK',
         }.items():
