@@ -197,11 +197,6 @@ func measureSnapshot(request writeRequest, previous *snapshot) (snapshot, error)
 		return snapshot{}, err
 	}
 	defer os.RemoveAll(work)
-	// The reaper is built before anything is timed, into work, so it goes when work does.
-	reaper, err := benchmark.BuildReaper(work)
-	if err != nil {
-		return snapshot{}, err
-	}
 
 	started := time.Now()
 	loadBefore, err := loadAverage()
@@ -210,6 +205,13 @@ func measureSnapshot(request writeRequest, previous *snapshot) (snapshot, error)
 	}
 	compiling := compileRequest{root: root, work: work, rounds: request.rounds}
 	measured, err := measureCompile(compiling, adamicRunner(adamic))
+	if err != nil {
+		return snapshot{}, err
+	}
+	// The reaper is built here, after the compile half and before anything in the execute half is timed, into work, so
+	// it goes when work does. Built before the compile half, its untimed clang run would warm clang's pages for the cold
+	// build of hello, whose number would then read faster for a reason that isn't the commit's.
+	reaper, err := benchmark.BuildReaper(work)
 	if err != nil {
 		return snapshot{}, err
 	}
