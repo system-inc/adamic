@@ -1605,6 +1605,20 @@ func (a *analysis) value(expression ir.Expression) value {
 		holder := a.value(expression.Set)
 		a.value(expression.Key)
 		return holder
+	case ir.WeakMapSet:
+		// The entry holds the key's weak handle, never the key, so the key is no strong write: only the value
+		// is written, an entry as a Map's set writes one (Lower's ask on #hcgy751). The values are numbers,
+		// booleans and strings so far, which hold nothing a cycle could run through.
+		holder := a.value(expression.Map)
+		a.value(expression.Key)
+		held := a.value(expression.Value)
+		a.write(WriteMapEntry, expression.Site, "", holder, held, elementKey)
+		return holder
+	case ir.WeakMapGet:
+		// A value the map holds, read as a Map's get reads one.
+		object := a.value(expression.Map)
+		a.value(expression.Key)
+		return a.load(object, elementKey)
 	case ir.WeakCollectionHas:
 		a.value(expression.Collection)
 		a.value(expression.Key)

@@ -11,7 +11,7 @@ import (
 // primitive fits (Runtime's ruling 1 on #hcgy751: lib's Object and String interfaces, and any shape a
 // primitive satisfies, which tsc lets take a primitive without a cast), a WeakSet seen as one of another
 // key type (invariance), a WeakSet going where a structural type is held and the converse, a method read as
-// a value, an iterable handed to the constructor, and every WeakMap, until its get and set are built.
+// a value, and an iterable handed to the constructor.
 // Mutants: weakCollectionKey without its noPrimitiveFits test, and the String and Object rows lower or stop
 // in other words; containers() without WeakMap and WeakSet, and the widening rows no longer stop in
 // invariance's words; containerPairGoes without its WeakCollection slot, and an object held where a WeakSet
@@ -42,8 +42,6 @@ func TestWeakSetStopsByName(t *testing.T) {
 		{"a WeakSet held where an interface extending it is held", `interface Marks extends WeakSet<object> { readonly label?: string } function label(marks: Marks): string { return marks.label ?? 'none'; } console.log(label(new WeakSet<object>()));`, []string{"a WeakMap or WeakSet going where a plain object type is held", "a view naming", "label"}},
 		{"a method read as a value", `const s = new WeakSet<object>(); const add = s.add;`, []string{"a method read as a value"}},
 		{"an iterable handed to the constructor", `const k = {}; const s = new WeakSet<object>([k]);`, []string{"new WeakSet from an iterable"}},
-		{"a WeakMap", `const m = new WeakMap<object, number>();`, []string{"a WeakMap (its get and set aren't built yet, #hcgy751)"}},
-		{"a WeakMap's method through a parameter", `function has(m: WeakMap<object, number>, k: object): boolean { return m.has(k); }`, []string{"a WeakMap (its get and set aren't built yet, #hcgy751)"}},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -61,10 +59,11 @@ func TestWeakSetStopsByName(t *testing.T) {
 	}
 }
 
-// A WeakSet an unknown or an object reaches stops by name, held directly or through a field, since
+// A WeakSet or a WeakMap an unknown or an object reaches stops by name, held directly or through a field, since
 // neither backend's unknown can answer a run-time read of one as Node does (String gives [object WeakSet],
 // `in` gives false). Runtime's must on W1: before this, each compiled and stopped or panicked at run
-// time. Mutant: unknownView's weakCollectionType test taken out, and every row lowers.
+// time. W2 adds a WeakMap's three rows, which lower now that its get and set are built. Mutant:
+// unknownView's weakCollectionType test taken out, and every row lowers.
 func TestWeakSetViewedAsUnknownStops(t *testing.T) {
 	t.Parallel()
 	const reason = "a WeakMap or WeakSet viewed as unknown or object (weak collection metadata)"
@@ -74,6 +73,9 @@ func TestWeakSetViewedAsUnknownStops(t *testing.T) {
 		{"unknown holding a WeakSet through a field", `interface Holder { readonly marks: WeakSet<object> } const h: Holder = { marks: new WeakSet<object>() }; const u: unknown = h; console.log(String(u));`},
 		{"object holding a WeakSet through a field", `interface Holder { readonly marks: WeakSet<object> } const h: Holder = { marks: new WeakSet<object>() }; const o: object = h; console.log(String('marks' in o));`},
 		{"a WeakSet passed where unknown is taken", `function show(value: unknown): string { return String(value); } console.log(show(new WeakSet<object>()));`},
+		{"unknown holding a WeakMap", `const u: unknown = new WeakMap<object, number>(); console.log(String(u));`},
+		{"object holding a WeakMap through a field", `interface Holder { readonly scores: WeakMap<object, number> } const h: Holder = { scores: new WeakMap<object, number>() }; const o: object = h; console.log(String('scores' in o));`},
+		{"a WeakMap passed where unknown is taken", `function show(value: unknown): string { return String(value); } console.log(show(new WeakMap<object, string>()));`},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -132,6 +134,105 @@ buffers.add(new Uint8Array(1));
 	for _, want := range []ir.Type{ir.Union, ir.Array, ir.Uint8Array} {
 		if !keys[want] {
 			t.Errorf("no WeakSet keyed as %v among %v", want, keys)
+		}
+	}
+}
+
+// A WeakMap lowers on W1's weak collection with the values Runtime's ruling 2 on #hcgy751 admits, numbers,
+// booleans and strings, and what it can't hold stops by name: a WeakMap seen as one of a wider value
+// (invariance, by assignment and through a parameter, as tsc lets either through), a key type a primitive
+// fits (k5), a value that may be missing (in the words a Map of one stops in), an object, an array, a
+// union or a closure value (Lower's admission, #q2ybjr1), a method read as a value, and an iterable handed
+// to the constructor. Mutant: weakCollectionAdmitted admits every value, and the object rows lower.
+func TestWeakMapStopsByName(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct {
+		name, source string
+		reasons      []string
+	}{
+		{"a WeakMap assigned to one of unknown values", `const m = new WeakMap<object, string>(); const wide: WeakMap<object, unknown> = m;`, []string{"WeakMap<object, string> seen as WeakMap<object, unknown>, which can write"}},
+		{"a WeakMap passed as one of unknown values", `function keep(m: WeakMap<object, unknown>): void {} const m = new WeakMap<object, string>(); keep(m);`, []string{"WeakMap<object, string> seen as WeakMap<object, unknown>, which can write"}},
+		{"a WeakMap assigned to one of a wider union value", `const m = new WeakMap<object, string>(); const wide: WeakMap<object, string | object> = m;`, []string{"WeakMap<object, string> seen as WeakMap<object, string | object>, which can write", "WeakMap<object, string> seen as WeakMap<object, object | string>, which can write"}},
+		{"a WeakMap passed as one of a wider union value", `function keep(m: WeakMap<object, string | object>): void {} const m = new WeakMap<object, string>(); keep(m);`, []string{"WeakMap<object, string> seen as WeakMap<object, string | object>, which can write", "WeakMap<object, string> seen as WeakMap<object, object | string>, which can write"}},
+		{"an Object key, which a number fits", `const m = new WeakMap<Object, number>(); m.set(1, 1);`, []string{"a WeakMap keyed by Object, which a primitive fits"}},
+		{"an Object key reached through a parameter", `function put(m: WeakMap<Object, number>): void { m.set(1, 1); }`, []string{"a WeakMap keyed by Object, which a primitive fits"}},
+		{"a string or null value", `const m = new WeakMap<object, string | null>();`, []string{"a WeakMap of string | null"}},
+		{"a number or undefined value", `const m = new WeakMap<object, number | undefined>();`, []string{"a WeakMap of number | undefined"}},
+		{"an object value", `const m = new WeakMap<object, { x: number }>();`, []string{"#q2ybjr1"}},
+		{"an array value through a parameter", `function count(m: WeakMap<object, number[]>, k: object): number { return m.get(k)?.length ?? 0; }`, []string{"#q2ybjr1"}},
+		{"a union value", `const m = new WeakMap<object, string | number>();`, []string{"#q2ybjr1"}},
+		{"a closure value", `const m = new WeakMap<object, () => number>();`, []string{"#q2ybjr1"}},
+		{"a method read as a value", `const m = new WeakMap<object, number>(); const get = m.get;`, []string{"a method read as a value"}},
+		{"an iterable handed to the constructor", `const k = {}; const m = new WeakMap<object, number>([[k, 1]]);`, []string{"new WeakMap from an iterable"}},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSource(t, probe.source)
+			if err == nil {
+				t.Fatalf("lowered; want a stop naming one of %q", probe.reasons)
+			}
+			for _, reason := range probe.reasons {
+				if strings.Contains(err.Error(), reason) {
+					return
+				}
+			}
+			t.Fatalf("want a stop naming one of %q, got %v", probe.reasons, err)
+		})
+	}
+}
+
+// A WeakMap lowers to its own nodes on W1's weak collection, never a Map's: new is a WeakCollectionNew
+// holding its values' representation, set a WeakMapSet with a write site, get a WeakMapGet, and has and
+// delete W1's own.
+func TestWeakMapLowersOnItsOwnType(t *testing.T) {
+	t.Parallel()
+	program, err := lowerSource(t, `const m = new WeakMap<object, number>();
+const k = { x: 1 };
+m.set(k, 1).set([1], 2);
+console.log(String(m.get(k)));
+console.log(String(m.has(k)));
+console.log(String(m.delete(k)));
+const flags = new WeakMap<number[], boolean>();
+flags.set([1], true);
+const names = new WeakMap<object, string>();
+names.set(k, 'k');
+console.log(names.get(k) ?? 'none');
+`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	found := map[string]int{}
+	values := map[ir.Type]bool{}
+	walk(program.Main, func(node any) bool {
+		switch node := node.(type) {
+		case ir.WeakCollectionNew:
+			found["new"]++
+			values[node.Value] = true
+			if node.Set {
+				t.Errorf("a WeakMap made as a WeakSet: %+v", node)
+			}
+		case ir.WeakMapSet:
+			found["set"]++
+			if node.Site == 0 {
+				t.Errorf("a WeakMap's set with no write site: %+v", node)
+			}
+		case ir.WeakMapGet:
+			found["get"]++
+		case ir.WeakCollectionHas:
+			found["has"]++
+		case ir.WeakCollectionDelete:
+			found["delete"]++
+		case ir.MapNew, ir.MapSet, ir.MapGet, ir.MapHas, ir.MapDelete, ir.SetNew, ir.SetAdd, ir.WeakSetAdd:
+			t.Errorf("a WeakMap lowered to another collection's node: %T", node)
+		}
+		return true
+	})
+	if found["new"] != 3 || found["set"] != 4 || found["get"] != 2 || found["has"] != 1 || found["delete"] != 1 {
+		t.Errorf("found %v, want 3 new, 4 set, 2 get, 1 has and 1 delete", found)
+	}
+	for _, want := range []ir.Type{ir.Number, ir.Boolean, ir.String} {
+		if !values[want] {
+			t.Errorf("no WeakMap holding %v among %v", want, values)
 		}
 	}
 }
