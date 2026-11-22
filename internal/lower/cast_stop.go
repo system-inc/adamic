@@ -23,6 +23,7 @@ const (
 	castUnionWrite                      // a union whose writable field a member can't hold every value of
 	castAmbiguousTag                    // a union whose every member holds a literal in a field, but no two apart
 	castCallable                        // a cast whose target or source has a call signature
+	castWidenedMember                   // a union target whose member widens a writable field the source holds
 	// Adamic's three rulings (Q1 to Q3 on #b5w3ycg, Nov 22), under one principle: in .ts a cast's stop is
 	// NotYet when a run-time check could decide the claim and nobody has built it, and Refused only when no
 	// check ever could.
@@ -38,9 +39,11 @@ const (
 	castMixedSource   // a union source holding primitives, cast to an object target
 	// NotYet in .ts by Adamic's principle, as Compiler applied it (R4 and R4b on #b5w3ycg, Nov 22): instanceof
 	// decides each at run time, and castProof's class road only wants every member a class.
-	castClassAncestry // a class cast with no nominal ancestry between the two
-	castClassTarget   // a cast to a class from a value that isn't a class instance
-	castFromObject    // a source typed object, which names no fields to read
+	castClassAncestry      // a class cast with no nominal ancestry between the two
+	castClassTarget        // a cast to a class from a value that isn't a class instance
+	castFromObject         // a source typed object, which names no fields to read
+	castDropsNullish       // a union source cast to its own members without undefined or null: a presence test
+	castIntersectionMember // a union target one of whose members is an intersection
 	// No branch above fits: the sentence main spoke before the split, so nothing is lost.
 	castUnnamed
 )
@@ -81,6 +84,8 @@ func (l *lowering) castStop(node *ast.Node, cause castCause, source, target *che
 		return refused("a cast from "+from+" to "+to+", whose tag field "+field+" holds a literal in every member but doesn't tell each apart (a value two members share, two enums' members equal at run time, or a member that holds any number)", "give each member of "+from+" a "+field+" of its own, one literal per member"+rule)
 	case castCallable:
 		return refused("a cast from "+from+" to "+to+", which asserts a call signature", "prove the callable body rather than asserting its signature"+rule)
+	case castWidenedMember:
+		return refused("a cast from "+from+" to "+to+", whose member "+field, "declare the field readonly in both, or cast to a member whose fields "+from+" holds as written"+rule)
 	case castIndexSignature:
 		return l.notYet(node, "a checked dictionary view of "+to+" over "+from)
 	case castTypeParameter:
@@ -100,7 +105,14 @@ func (l *lowering) castStop(node *ast.Node, cause castCause, source, target *che
 	case castUntaggedUnion:
 		return l.notYet(node, "a checked view of "+to+" over the union "+from+", whose members no literal tag tells apart")
 	case castUnionTarget:
+		if l.distinctTagField(castMembers(l.checker.GetNonNullableType(target))) {
+			return l.notYet(node, "a checked view of the union "+to+" over "+from+", whose tag the kind-union road can't test from "+from)
+		}
 		return l.notYet(node, "a checked view of the union "+to+" over "+from+", whose members no literal tag tells apart")
+	case castIntersectionMember:
+		return l.notYet(node, "a checked view of the union "+to+" over "+from+", whose member "+field+" is an intersection")
+	case castDropsNullish:
+		return l.notYet(node, "a checked cast from "+from+" to "+to+", which removes "+l.castKeptNullish(source))
 	case castKeepsNullish:
 		return l.notYet(node, "a checked cast from "+from+" to "+to+", which keeps "+l.castKeptNullish(target))
 	case castSideways:
@@ -161,7 +173,8 @@ func (l *lowering) objectCastCause(source, target *checker.Type) castCause {
 	case l.includesUndefined(target) || l.includesNull(target):
 		return castKeepsNullish
 	case present.Flags()&checker.TypeFlagsUnion != 0:
-		return castUnionTarget
+		cause, _ := l.unionTargetCause(source, present)
+		return cause
 	case present.Flags()&checker.TypeFlagsObject != 0 && !l.checker.IsTypeAssignableTo(present, source):
 		return castSideways
 	}
@@ -216,5 +229,47 @@ func (l *lowering) unionCastCause(members []*checker.Type, target *checker.Type)
 	case l.includesUndefined(target) || l.includesNull(target):
 		return castKeepsNullish
 	}
+	nullish, others := false, []*checker.Type{}
+	for _, member := range members {
+		if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull|checker.TypeFlagsVoid) != 0 {
+			nullish = true
+		} else {
+			others = append(others, member)
+		}
+	}
+	if nullish && len(others) > 0 {
+		dropped := true
+		for _, member := range others {
+			dropped = dropped && l.castAssignable(member, present)
+		}
+		if dropped {
+			return castDropsNullish
+		}
+	}
 	return castUntaggedUnion
+}
+
+// unionTargetCause is why kindUnionCast took no cast from an object source to the union target present,
+// in its own order: an intersection member (a later head), a member that widens a writable field the
+// source holds (no check can stop a later write through the source), and otherwise the view nobody has
+// built. detail words the member for castStop.
+func (l *lowering) unionTargetCause(source, present *checker.Type) (castCause, string) {
+	for _, member := range present.Types() {
+		if member.Flags()&checker.TypeFlagsIntersection != 0 {
+			return castIntersectionMember, l.checker.TypeToString(member)
+		}
+	}
+	for _, member := range present.Types() {
+		if member.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(member) || !l.checker.IsTypeAssignableTo(member, source) {
+			continue
+		}
+		if err := l.widened(member, source, map[[2]*checker.Type]bool{}); err != nil {
+			detail := l.checker.TypeToString(member) + " can't be seen as " + l.checker.TypeToString(source)
+			if reason, ok := err.(*Refused); ok {
+				detail += " (" + reason.What + ")"
+			}
+			return castWidenedMember, detail
+		}
+	}
+	return castUnionTarget, ""
 }

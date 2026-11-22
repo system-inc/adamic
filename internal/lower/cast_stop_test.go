@@ -21,7 +21,7 @@ var castStopProbes = []struct {
 		"a cast the runtime can't check: a cast from string | number | boolean to number, which holds a primitive no view can check; compare the primitive's typeof first"},
 	{"class arguments", "class Base {} class Box<T> extends Base { readonly value: T; constructor(value: T) { super(); this.value = value; } } function f(x: Base): Box<number> { return x as Box<number>; }", true,
 		"a cast the runtime can't check: a downcast from Base to Box<number> whose type arguments Base's class ancestry doesn't fix"},
-	{"class ancestry", "class A { readonly n = 1; } class B { readonly n = 1; } function f(x: A): B { return x as B; }", false,
+	{"class ancestry", "class A { readonly n: number = 1; } class B { readonly n: number = 1; readonly m: number = 2; } function f(x: A): B { return x as B; }", false,
 		"stage 0 can't lower a checked class cast from A to B by instanceof yet"},
 	{"class target", "class A { readonly n = 1; } function f(x: { readonly n: number }): A { return x as A; }", false,
 		"stage 0 can't lower a checked class cast from { readonly n: number; } to A by instanceof yet"},
@@ -51,6 +51,8 @@ var castStopProbes = []struct {
 		"stage 0 can't lower a checked cast from Base | undefined to Sub | undefined, which keeps undefined yet"},
 	{"from object", "interface B { readonly b: number } function f(x: object): B { return x as B; }", false,
 		"stage 0 can't lower a checked view of B over a value typed object, which names no fields yet"},
+	{"removes undefined", "interface S { readonly n: number } function f(x: S | undefined): S { return x as S; }", false,
+		"stage 0 can't lower a checked cast from S | undefined to S, which removes undefined yet"},
 	{"mixed source", "interface O { readonly n: number } function f(x: O | string): O { return x as O; }", false,
 		"stage 0 can't lower a checked cast from string | O, which holds primitives, to O, which needs a typeof test before its view yet"},
 }

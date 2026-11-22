@@ -226,7 +226,8 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 		if l.overloadDefaultPair(node) {
 			return castProof{overloadDefault: true}, nil
 		}
-		return castProof{}, stop(castDouble, "")
+		// The pair's words name the innermost value, which is what the program has.
+		return castProof{}, l.castStop(node, castDouble, l.concrete(l.checker.GetTypeAtLocation(inner.AsAsExpression().Expression)), target, "")
 	}
 	if source.Flags()&checker.TypeFlagsAny != 0 || target.Flags()&checker.TypeFlagsAny != 0 {
 		return castProof{}, stop(castAny, "")
@@ -332,7 +333,11 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 			return castProof{structuralView: true}, nil
 		}
 
-		return castProof{}, stop(l.objectCastCause(source, target), "")
+		cause, detail := l.objectCastCause(source, target), ""
+		if cause == castUnionTarget || cause == castWidenedMember || cause == castIntersectionMember {
+			cause, detail = l.unionTargetCause(source, l.checker.GetNonNullableType(target))
+		}
+		return castProof{}, stop(cause, detail)
 	}
 	return l.unionMemberProof(source, target, stop)
 }
@@ -395,6 +400,13 @@ func (l *lowering) overlapTarget(members, targets []*checker.Type) bool {
 func (l *lowering) unionMemberProof(source, target *checker.Type, stop func(castCause, string) error) (castProof, error) {
 	members, targets := castMembers(source), castMembers(target)
 	if field := l.castUnionWrites(source); field != "" {
+		// A primitive's apparent members (valueOf) read as writable fields here; its cast is judged as a
+		// primitive's, not as a write.
+		for _, member := range members {
+			if castPrimitiveMember(member) {
+				return castProof{}, stop(l.unionCastCause(members, target), "")
+			}
+		}
 		return castProof{}, stop(castUnionWrite, field)
 	}
 	if l.overlapTarget(members, targets) {
