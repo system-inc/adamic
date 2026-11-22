@@ -18,9 +18,11 @@ const recordSeenAsIntersectionDirectory = "internal/oracle/testdata/record_seen_
 // each program is known to check and run. The stop is a NotYet, never a refusal, since each is a valid
 // program Node runs (Adamic's condition on #mft3zc6). On main partial_number.ts compiled and panicked
 // natively as a compiler bug, and the two intersection sources compiled and were an AddressSanitizer SEGV
-// natively (J-rmbk4bb), where Node printed.
+// natively (J-rmbk4bb), where Node printed. partial_boolean is partial_number's road with an optional
+// boolean field, whose intersection is held as a fixed object since #tq6yzqy.
 var recordSeenAsIntersectionStops = []struct{ name, where, stop, want string }{
 	{"partial_number", "12:7", `stage 0 can't lower a Partial<Record<"count", number>> seen as Entry (fixed objects and records have different storage; copy explicitly) yet`, "1\nundefined\n2\n"},
+	{"partial_boolean", "12:7", `stage 0 can't lower a Partial<Record<"valid", boolean>> seen as Entry (fixed objects and records have different storage; copy explicitly) yet`, "false\nundefined\ntrue\n"},
 	{"intersection_partial_record", "6:7", `stage 0 can't lower a Entry seen as Partial<Record<"count" | "label", number>> (fixed objects and records have different storage; copy explicitly) yet`, "3\nundefined\n"},
 	{"intersection_argument", "9:7", `stage 0 can't lower a Entry seen as Partial<Record<"count" | "label", number>> (fixed objects and records have different storage; copy explicitly) yet`, "3\n"},
 	{"intersection_index_signature", "6:7", `stage 0 can't lower a Entry seen as { [key: string]: number | undefined; } (fixed objects and records have different storage; copy explicitly) yet`, "3\nundefined\n"},
