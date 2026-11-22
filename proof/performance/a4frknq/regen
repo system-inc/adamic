@@ -1,0 +1,32 @@
+# #a4frknq: the seven count records measured again under the harness's own TMPDIR (Harness v4). Run with bash after the
+# sealed opening (sandboxed_repositories, sandboxed_npm stage3/api, sandboxed_typescript_source). Never merged.
+set -u
+L="$TMPDIR/a4-regen"
+mkdir -p "$L"
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg), clang $(clang --version | head -1)"
+[ -d .git ] || { echo "the tree has no .git"; exit 1; }
+counts=internal/oracle/testdata/counts
+echo "== 1. the old records under the new harness"
+go test -count=1 -timeout 50m -run '^TestCountsAreRecorded' ./internal/oracle/ > "$L/old.log" 2>&1
+echo "exit $?"
+grep -oE -- '--- FAIL: TestCountsAreRecorded_[0-9]+/[^ ]+' "$L/old.log" | sed 's/^--- FAIL: TestCountsAreRecorded_[0-9]*\///' | sort -u | tee "$L/red.txt"
+echo "red rows: $(wc -l < "$L/red.txt")"
+echo "== 2. -update-counts"
+go test -count=1 -timeout 50m -run 'TestCountsAreRecorded' ./internal/oracle/ -args -update-counts > "$L/update.log" 2>&1
+echo "exit $?"
+tail -3 "$L/update.log"
+echo "== changed record files"
+git status --porcelain -- "$counts" | tee "$L/changed.txt"
+echo "changed files: $(wc -l < "$L/changed.txt")"
+git diff -- "$counts"
+echo "== each changed file whole"
+for file in $(git status --porcelain -- "$counts" | awk '{print $2}'); do
+	echo "FILE $file"
+	cat "$file"
+done
+echo "== 3. the new records"
+go test -count=1 -timeout 50m -run '^TestCountsAreRecorded' ./internal/oracle/ > "$L/new.log" 2>&1
+code=$?
+echo "exit $code"
+grep -E -- '^--- FAIL' "$L/new.log" | head -10
+if [ $code -eq 0 ]; then echo "VERDICT OK"; else echo "VERDICT FAIL"; false; fi
