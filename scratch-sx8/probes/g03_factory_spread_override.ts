@@ -7,8 +7,8 @@ function make(): Token {
 }
 const n = make();
 const m = { ...n, pos: 5, kind: 2, text: 'x' };
-console.log(m.pos); // Node: 5
-console.log(m.text); // Node: x
+console.log(String(m.pos)); // Node: 5
+console.log(String(m.text)); // Node: x
 console.log(Object.keys(m).join()); // Node: kind,pos,text
-console.log(JSON.stringify(m)); // Node: {"kind":2,"pos":5,"text":"x"}
-console.log('text' in m); // Node: true
+console.log(String(JSON.stringify(m))); // Node: {"kind":2,"pos":5,"text":"x"}
+console.log(String('text' in m)); // Node: true

@@ -4,7 +4,7 @@ interface Token { kind: number; pos: number }
 const n = { kind: 1 } as Token;
 n.pos = 3;
 const m = { ...n, pos: 5 };
-console.log(m.pos); // Node: 5
+console.log(String(m.pos)); // Node: 5
 console.log(Object.keys(m).join()); // Node: kind,pos
-console.log(JSON.stringify(m)); // Node: {"kind":1,"pos":5}
+console.log(String(JSON.stringify(m))); // Node: {"kind":1,"pos":5}
 console.log(Object.keys(n).join()); // Node: kind,pos

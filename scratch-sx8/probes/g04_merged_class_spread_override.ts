@@ -9,7 +9,7 @@ interface Box {
 }
 const b = new Box();
 const m = { ...b, label: 'x' };
-console.log(m.label); // Node: x
+console.log(String(m.label)); // Node: x
 console.log(Object.keys(m).join()); // Node: kind,label
-console.log(JSON.stringify(m)); // Node: {"kind":1,"label":"x"}
-console.log('label' in m); // Node: true
+console.log(String(JSON.stringify(m))); // Node: {"kind":1,"label":"x"}
+console.log(String('label' in m)); // Node: true
