@@ -142,8 +142,16 @@ static bool region_value(const adamic_heap *heap) {
 // handle_of is the target's handle, retained for the caller, made if it has none. Under the lock.
 static adamic_weak *handle_of(void *target) {
 	adamic_heap *heap = target;
-	if (markable(heap) && (heap->slab & ADAMIC_WEAK_NAMED) == 0) {
-		heap->slab |= ADAMIC_WEAK_NAMED;
+	// An environment's interior cell has no header of its own to mark and counts on its environment,
+	// so the environment carries the bit for it, and its free forgets every cell (heap.c's free_one).
+	adamic_heap *marked = heap;
+#ifdef ADAMIC_CANONICAL_CLOSURES
+	if (heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) {
+		marked = ((adamic_cell *)heap)->owner;
+	}
+#endif
+	if (markable(marked) && (marked->slab & ADAMIC_WEAK_NAMED) == 0) {
+		marked->slab |= ADAMIC_WEAK_NAMED;
 	}
 	uintptr_t *entry = find(target);
 	if (entry != NULL) {
