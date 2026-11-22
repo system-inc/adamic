@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"reflect"
 	"strconv"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -67,7 +68,8 @@ func (l *lowering) instantiateFunctionSignature(call *ast.Node, declaration *ast
 		parameterType := l.checker.GetTypeAtLocation(parameter.Name())
 		concrete, isKnown := concreteTypes[parameterType]
 		if !isKnown {
-			// Not read back (it stands only inside a union or an object, Result<Value>): left
+			// Not read back (it stands only inside a union or an object, Result<Value>, and the call's
+			// mapper names another declaration's binders or can't be read, instanceTypes): left
 			// unmapped, so whatever in the body needs to know how it's held says not yet, there.
 			key += ",unread"
 			name += "_unread"
@@ -175,7 +177,95 @@ func (l *lowering) instanceTypes(declaration *ast.Node, target, resolved *checke
 		}
 	}
 	l.inferTypes(l.checker.GetReturnTypeOfSignature(target), l.checker.GetReturnTypeOfSignature(resolved), concreteTypes)
+	// A type parameter standing in an anonymous object's property, host: { create: () => T }, has no
+	// reference or call signature to be read back through, so it's read from the mapper the checker
+	// instantiated resolved with, as classGenericCall reads it (#vks2w2y). Only when resolved instantiates
+	// target itself: an overload's resolved signature is another declaration's, and its mapper names that
+	// one's binders. Only a binder some declared parameter holds inside an anonymous object's property
+	// (binderInAnonymousProperty): reading every unread binder this way is #c0cn7x8's own head, which moves
+	// pins that stop on an unread T today. A binding read back above stays, and an unreadable mapper leaves
+	// the parameter unread.
+	if resolved.Target() == target {
+		field := reflect.ValueOf(resolved).Elem().FieldByName("mapper")
+		if field.IsValid() && field.Kind() == reflect.Pointer && !field.IsNil() {
+			mapper := (*typeMapper)(field.UnsafePointer())
+			for _, parameter := range declaration.TypeParameters() {
+				declaredType := l.checker.GetTypeAtLocation(parameter.Name())
+				if _, isKnown := concreteTypes[declaredType]; isKnown || !l.binderInAnonymousProperty(target, declaredType) {
+					continue
+				}
+				concrete := l.concrete(instantiateType(l.checker, declaredType, mapper))
+				if concrete != nil && concrete != declaredType && concrete.Flags()&checker.TypeFlagsTypeParameter == 0 {
+					concreteTypes[declaredType] = concrete
+				}
+			}
+		}
+	}
 	return concreteTypes
+}
+
+// binderInAnonymousProperty is whether one of target's declared parameters holds binder inside a function
+// an anonymous object's property holds, at any depth: through unions, intersections, a reference's type
+// arguments, and an anonymous type's call signatures and properties. Each type is walked once. A binder held
+// as a data property's own type, n: { readonly kind: K }, isn't one: bound, it lets the branded rule judge
+// a lying predicate's target at the instance, which then traps at run time where Node runs
+// (TestBrandedSupertypeStaysNotYet's generic anonymous argument, J-0dj8h8g), so it stays unread, #c0cn7x8's.
+func (l *lowering) binderInAnonymousProperty(target *checker.Signature, binder *checker.Type) bool {
+	visited := map[[2]any]bool{}
+	var holds func(proven *checker.Type, inProperty bool) bool
+	holds = func(proven *checker.Type, inProperty bool) bool {
+		if proven == nil || visited[[2]any{proven, inProperty}] {
+			return false
+		}
+		visited[[2]any{proven, inProperty}] = true
+		if proven == binder {
+			return inProperty
+		}
+		if proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+			for _, member := range proven.Types() {
+				if holds(member, inProperty) {
+					return true
+				}
+			}
+			return false
+		}
+		if proven.Flags()&checker.TypeFlagsObject == 0 {
+			return false
+		}
+		if proven.ObjectFlags()&checker.ObjectFlagsReference != 0 {
+			for _, argument := range l.checker.GetTypeArguments(proven) {
+				if holds(argument, inProperty) {
+					return true
+				}
+			}
+		}
+		if proven.ObjectFlags()&checker.ObjectFlagsAnonymous == 0 {
+			return false
+		}
+		for _, signature := range l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall) {
+			for _, parameter := range signature.Parameters() {
+				if holds(l.checker.GetTypeOfSymbol(parameter), inProperty) {
+					return true
+				}
+			}
+			if holds(l.checker.GetReturnTypeOfSignature(signature), inProperty) {
+				return true
+			}
+		}
+		for _, property := range l.checker.GetPropertiesOfType(proven) {
+			held := l.checker.GetTypeOfSymbol(property)
+			if holds(held, inProperty || len(l.checker.GetSignaturesOfType(held, checker.SignatureKindCall)) > 0) {
+				return true
+			}
+		}
+		return false
+	}
+	for _, parameter := range target.Parameters() {
+		if holds(l.checker.GetTypeOfSymbol(parameter), false) {
+			return true
+		}
+	}
+	return false
 }
 
 // instanceMapper is the type mapper an instance's body is lowered under: each type parameter read back
