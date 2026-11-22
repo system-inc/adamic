@@ -104,3 +104,49 @@ func TestViewCastSlotsStayRefused(t *testing.T) {
 		})
 	}
 }
+
+// viewCastUnbuiltPrelude is binder 3078's shape at small scale: the view reaches Holder's kind, a member slot,
+// only through an optional map field whose own contract isn't built (#rgrtt32 measured an optional Map field as
+// one: "an unavailable checked union member contract"), as tsc's view reaches HasJSDoc's members only through
+// parent.parent, a union no checked contract places.
+const viewCastUnbuiltPrelude = "enum Kind { Root, Doc, Tag, Param, Prop, Name, Computed, Literal, Other } " +
+	"interface Node { readonly kind: Kind; readonly parent: Node | undefined; readonly extra?: ReadonlyMap<string, Node>; } " +
+	"interface Holder extends Node { readonly kind: Kind.Name; } " +
+	"interface Doc extends Node { readonly kind: Kind.Doc; readonly extra?: ReadonlyMap<string, Holder>; } " +
+	"interface Tag extends Node { readonly kind: Kind.Param | Kind.Prop; readonly parent: Doc; } "
+
+// A member slot every visit reaches only past a field whose contract isn't built is walked past, since no read
+// or write through the view reaches it: the field's demanded read is NotYet at compile time, and its whole-value
+// readers stay stopped (#rgrtt32). So binder 3078's and emitter 1888's casts lower, where c6 alone left the
+// slot out and refused them at the relation. The read of the slot's own holder stops where the field is read,
+// in #rgrtt32's words. Mutant M5 in view_cast_enum_slots.mutants.md, the bit never set past an unbuilt field,
+// refuses the cast again.
+func TestViewCastSlotsBehindAnUnbuiltFieldLower(t *testing.T) {
+	t.Parallel()
+	if _, err := lowerSourceAs(t, viewCastUnbuiltPrelude+"function owner(node: Node): Kind { const tag = node as Tag; return tag.parent.kind; }", ".ts"); err != nil {
+		t.Fatal(err)
+	}
+	_, err := lowerSourceAs(t, viewCastUnbuiltPrelude+"function holder(node: Node): number { const tag = node as Tag; const extra = tag.parent.extra; return extra === undefined ? 0 : extra.size; }", ".ts")
+	var notYet *NotYet
+	if err == nil || !errors.As(err, &notYet) || !strings.Contains(err.Error(), "whose contract isn't built") {
+		t.Fatalf("want the unbuilt field's read NotYet, got %v", err)
+	}
+}
+
+// A slot whose holder the view has no contract for, reached by a path that crosses no unbuilt field, stays out
+// however its holder is named: a generic instance here, whose contract a lookup by the instance's own type id
+// wouldn't find either way. Deciding the unbuilt arm by a holder's absence from such a lookup would walk past
+// it; the walk decides it on its own path, so it stays refused (Lower's row). Mutant M4, the bit set past every
+// field whatever its contract, lowers it and this one with it.
+func TestViewCastSlotsUnderAnotherIdentityStayRefused(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSourceAs(t, viewCastEnumPrelude+
+		"interface Callable<K extends Kind> extends Node { readonly kind: K; (value: number): number; } "+
+		"interface GenericTag extends Node { readonly kind: Kind.Param | Kind.Prop; readonly parent: Callable<Kind.Doc>; } "+
+		"function f(node: Node): Kind { return (node as GenericTag).parent.kind; }", ".ts")
+	var refused *Refused
+	var notYet *NotYet
+	if err == nil || !errors.As(err, &refused) && !errors.As(err, &notYet) || !strings.Contains(err.Error(), "enum member slot Kind.Doc") {
+		t.Fatalf("want a refusal naming %q, got %v", "enum member slot Kind.Doc", err)
+	}
+}

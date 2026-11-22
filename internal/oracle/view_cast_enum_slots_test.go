@@ -80,7 +80,7 @@ func TestViewCastEnumSlotsLiesStopAtTheRead(t *testing.T) {
 func TestViewCastEnumSlotsRiskRowsAgreeOrStop(t *testing.T) {
 	t.Parallel()
 	for _, row := range []struct{ name, node, stdout, stop string }{
-		{"contracts", "1 0\n1 8\n", "1 0\n", "tag.parent.parent.kind expected "},
+		{"contracts", "1 0\n1 8\n", "1 0\n", "tag.parent.parent matches no member of HasDoc; "},
 		{"union_parent", "1\n8\n", "1\n", "tag.parent matches no member of Doc | TypeLiteral; "},
 		{"set_parent", "1\n0\n", "1\n", "tag.parent.kind expected "},
 		{"two_level", "5\n8\n", "5\n", "declaration.name.expression.kind expected "},
