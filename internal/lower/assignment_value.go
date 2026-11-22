@@ -63,9 +63,11 @@ func (l *lowering) memberAssignmentValue(node, target *ast.Node) (ir.Expression,
 		return nil, l.notYet(target, "an assignment value to a member with no field store")
 	}
 	store, isStore := body[len(body)-1].(ir.SetProperty)
-	if !isStore || store.Uninitialized || store.Unset || store.Define {
-		// A setter, a private static, a record or foreign write: each stores through a call or a shape this
-		// can't hold the value of.
+	if !isStore || store.Uninitialized || store.Unset || store.Define || store.Record {
+		// A private static, a super accessor or a foreign write stores through a call, and a record write
+		// into counted own-key storage, none of which this holds the value of yet. A setter the statement
+		// form writes as a field store lowers here, and finishAccessors turns that store into its dispatcher
+		// call, which takes the two reads: the result is still the value, never what a getter gives back.
 		return nil, l.notYet(target, "an assignment value to a member that isn't a plain field store")
 	}
 	result, err := l.typeOf(node)
