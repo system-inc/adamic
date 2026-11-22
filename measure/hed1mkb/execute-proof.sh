@@ -7,7 +7,8 @@ echo "box $(hostname) $(nproc) cpus, $(uname -r), load $(cut -d' ' -f1-3 /proc/l
 T="$TMPDIR/exe"
 mkdir -p "$T"
 packages="./cmd/adamic-performance/... ./internal/benchmark/... ./bench/..."
-unformatted=$(gofmt -l cmd/adamic-performance internal/benchmark bench internal/compilercensus)
+# bench/game/ is the Benchmarks Game's own Go, vendored byte for byte, which the gate's gofmt skips too.
+unformatted=$(gofmt -l cmd/adamic-performance internal/benchmark bench internal/compilercensus | grep -v '^bench/game/')
 [ -z "$unformatted" ] && echo "PASS gofmt" || { echo "$unformatted"; echo "FAIL gofmt"; exit 1; }
 go vet $packages > "$T/vet.log" 2>&1 && echo "PASS vet" || { cat "$T/vet.log"; echo "FAIL vet"; exit 1; }
 go test -count=1 $packages ./internal/compilercensus ./cmd/adamic-gate/parallelcensus > "$T/tests.log" 2>&1; code=$?
