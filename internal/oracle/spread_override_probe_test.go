@@ -22,12 +22,12 @@ func TestSpreadOverrideProbe(t *testing.T) {
 		truth := onNode(t, absolute)
 		program, err := lowered(t, absolute)
 		if err != nil {
-			t.Logf("ROW %s: node %q exit %d | STOP %v", entry.Name(), strings.TrimSpace(truth.stdout), truth.exitCode, err)
+			t.Logf("ROW %s: node %q exit %d | STOP %v", entry.Name(), strings.TrimSpace(string(truth.stdout)), truth.exitCode, err)
 			continue
 		}
 		sanitized, _ := natively(t, program)
 		js := onJavaScriptBackend(t, program)
-		t.Logf("ROW %s: node %q exit %d | native exit %d %q %q | js exit %d %q", entry.Name(), strings.TrimSpace(truth.stdout), truth.exitCode, sanitized.exitCode, strings.TrimSpace(sanitized.stdout), firstLine(sanitized.stderr), js.exitCode, strings.TrimSpace(js.stdout))
+		t.Logf("ROW %s: node %q exit %d | native exit %d %q %q | js exit %d %q", entry.Name(), strings.TrimSpace(string(truth.stdout)), truth.exitCode, sanitized.exitCode, strings.TrimSpace(string(sanitized.stdout)), firstLine(string(sanitized.stderr)), js.exitCode, strings.TrimSpace(string(js.stdout)))
 	}
 }
 
