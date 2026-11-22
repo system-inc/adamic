@@ -127,6 +127,56 @@ func (l *lowering) nodeBufferView(from, to *checker.Type) bool {
 	return true
 }
 
+// nodeBufferUnionScalars are the members typeof tells from a Buffer: a string, a number or a boolean, their
+// literal and enum-literal forms among them.
+const nodeBufferUnionScalars = checker.TypeFlagsStringLike | checker.TypeFlagsNumberLike | checker.TypeFlagsBooleanLike
+
+// nodeBufferUnion is whether proven is a union that holds a Buffer as itself: one present member exactly
+// Buffer, at least one present member of nodeBufferUnionScalars beside it and no other, and null and
+// undefined beside them. A Buffer written into one stays the same allocation, held in the Union as a typed
+// array (union.c), and every read back out narrows it by typeof to that Buffer member (localRead), since
+// typeof says object for it alone. A Uint8Array or a structural member beside it could be read as the
+// Buffer, so it stops. Buffer | undefined and Buffer | null have no scalar, so they aren't one: present
+// makes each the nullable Buffer it is, as before.
+func (l *lowering) nodeBufferUnion(proven *checker.Type) bool {
+	if proven == nil || proven.Flags()&checker.TypeFlagsUnion == 0 {
+		return false
+	}
+	buffers, scalars, others := 0, 0, 0
+	for _, member := range proven.Types() {
+		switch {
+		case member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0:
+		case l.nodeBufferType(member, "Buffer"):
+			buffers++
+		case member.Flags()&nodeBufferUnionScalars != 0:
+			scalars++
+		default:
+			others++
+		}
+	}
+	return buffers == 1 && scalars > 0 && others == 0
+}
+
+// nodeBufferUnionSeenAs is whether a value of type own, a nodeBufferUnion, is seen as a slot of type slot
+// that is neither own nor another nodeBufferUnion: the one rule both valueSlotKeeps' check of the value
+// and the keeping walk's of every pair inside it (sameKeepingWalkMode) ask, so the two can't drift.
+func (l *lowering) nodeBufferUnionSeenAs(own, slot *checker.Type) bool {
+	return l.nodeBufferUnion(own) && own != slot && !l.nodeBufferUnion(slot)
+}
+
+// nodeBufferSlotView is nodeBufferView for a value going into a slot that may be a union present can't
+// collapse to one member: a Buffer goes into a slot of Buffer, or of a nodeBufferUnion, and every other pair
+// is nodeBufferView's, as it was. A union holding a Buffer is never judged here, since present answers nil
+// for it. valueSlotKeeps judges it after the host view check, which stops it first where the slot reaches
+// a member no registration names (string | Uint8Array, or a structural member's length).
+func (l *lowering) nodeBufferSlotView(own, slot *checker.Type) bool {
+	from, to := l.present(own), l.present(slot)
+	if l.nodeBufferType(from, "Buffer") && to == nil {
+		return l.nodeBufferUnion(slot)
+	}
+	return l.nodeBufferView(from, to)
+}
+
 // nodeBufferAscii is 'ascii', a decode only: toString reads each byte as its low seven bits, where
 // Buffer.from and Hash.update write each UTF-16 unit as its low eight, a latin1 write no runtime branch
 // makes yet. So libraryNodeBuffer admits it for toString alone, and the other two stop by name.

@@ -41,6 +41,56 @@ func TestNodeBufferRefusals(t *testing.T) {
 		{"indexOf spread", "import { Buffer } from 'node:buffer'; const found: [string] = ['b']; console.log(`${Buffer.from('abc').indexOf(...found)}`);", "Buffer.indexOf outside indexOf(value, byteOffset)"},
 		// A Buffer needle meets the host view stop first, a Buffer seen as indexOf's string | number | Uint8Array.
 		{"indexOf of a Buffer", "import { Buffer } from 'node:buffer'; console.log(`${Buffer.from('abc').indexOf(Buffer.from('b'))}`);", "Buffer or Hash viewed as another object type"},
+		// A union slot holds a Buffer only as its one exact Buffer member beside strings, numbers and booleans
+		// (nodeBufferUnion); beside a Uint8Array or a structural member it's a view, and stops as one.
+		{"union with a Uint8Array", "import { Buffer } from 'node:buffer'; let held: string | Uint8Array = Buffer.from('a'); function show(): void { console.log(typeof held); } show();", "Buffer or Hash viewed as another object type (native host internal slots)"},
+		{"union with a structural member", "import { Buffer } from 'node:buffer'; let held: string | { readonly byteLength: number } = Buffer.from('a'); function show(): void { console.log(typeof held); } show();", "Buffer or Hash viewed as another object type (native host internal slots)"},
+		{"union of a Buffer and a Uint8Array", "import { Buffer } from 'node:buffer'; let held: string | Buffer | Uint8Array = Buffer.from('a'); function show(): void { console.log(typeof held); } show();", "Buffer or Hash viewed as another object type (native host internal slots)"},
+		{"union of a Buffer and a structural member", "import { Buffer } from 'node:buffer'; let held: string | Buffer | { readonly byteLength: number } = Buffer.from('a'); function show(): void { console.log(typeof held); } show();", "Buffer or Hash viewed as another object type (native host internal slots)"},
+		{"conditional Buffer arm in a Uint8Array union", "import { Buffer } from 'node:buffer'; function view(flag: boolean): number { const seen: string | Uint8Array = flag ? '' : Buffer.from('a'); return seen.length; } console.log(`${view(false)}`);", "Buffer or Hash viewed as another object type (native host internal slots)"},
+		// Union to union, a string | Buffer seen as another union stops at the host view check behind
+		// nodeBufferSlotView (nodeHostViewAt): string | Uint8Array would give a Uint8Array's copying slice
+		// over a Buffer's bytes (must 10), and a structural member's length would read the Buffer as an object.
+		{"buffer union seen as a Uint8Array union", "import { Buffer } from 'node:buffer'; let held: string | Buffer = ''; held = Buffer.from('a'); function view(): number { const seen: string | Uint8Array = held; return seen.length; } console.log(`${view()}`);", "holding a host object seen as string | Uint8Array"},
+		{"buffer union seen as a structural union", "import { Buffer } from 'node:buffer'; let held: string | Buffer = ''; held = Buffer.from('a'); function view(): number { const seen: string | { readonly length: number } = held; return typeof seen === 'string' ? -1 : seen.length; } console.log(`${view()}`);", "holding a host object seen as string | { readonly length: number; }"},
+		// Any other slot stops too: through unknown, an object or {}, instanceof could narrow the Buffer back as a
+		// Uint8Array, whose slice copies where a Buffer's shares (must 10).
+		{"buffer union seen as unknown", "import { Buffer } from 'node:buffer'; let held: string | Buffer = ''; held = Buffer.from('a'); function view(): void { const seen: unknown = held; console.log(typeof seen); } view();", "Buffer or Hash viewed as another object type (native host internal slots)"},
+		{"buffer union seen as an object union", "import { Buffer } from 'node:buffer'; let held: string | Buffer = ''; held = Buffer.from('a'); function view(): void { const seen: string | object = held; console.log(typeof seen); } view();", "Buffer or Hash viewed as another object type (native host internal slots)"},
+		{"buffer union seen as the empty object type", "import { Buffer } from 'node:buffer'; let held: string | Buffer = ''; held = Buffer.from('a'); function view(): void { const seen: {} = held; console.log(typeof seen); } view();", "Buffer or Hash viewed as another object type (native host internal slots)"},
+		{"buffer union laundered as a Uint8Array through unknown", "import { Buffer } from 'node:buffer'; let held: string | Buffer = ''; held = Buffer.from('ab'); function launder(): number { const seen: unknown = held; if (seen instanceof Uint8Array) { const part = seen.slice(0, 1); part[0] = 122; } return typeof held === 'string' ? -1 : (held[0] ?? -1); } console.log(`${launder()}`);", "Buffer or Hash viewed as another object type (native host internal slots)"},
+		// Main's own gap, not this one's: a literal null or undefined going into a Buffer | null or Buffer |
+		// undefined slot stops, as nodeBufferView reads present's nil against Buffer. The day that lifts, this
+		// row moves.
+		{"a literal null or undefined into a nullable Buffer slot stops (main's gap)", "import { Buffer } from 'node:buffer'; let held: Buffer | null = null; held = Buffer.from('a'); function show(): void { const kept: Buffer | undefined = held ?? undefined; console.log(`${kept === undefined ? -1 : kept.length}`); } show();", "Buffer or Hash viewed as another object type (native host internal slots)"},
+		// A Buffer union at depth: every pair the keeping walk compares is judged by nodeBufferUnionSeenAs, as the
+		// value itself is, so a readonly field, a readonly tuple element and a field two deep seen as unknown stop
+		// by the Buffer words; the mutable views stop first at the variance refusal, and the rest where they did,
+		// a ReadonlyMap's and a ReadonlySet's at the read. tsc refuses a callback seen as taking unknown itself.
+		{"buffer union field seen as a readonly unknown field", "import { Buffer } from 'node:buffer'; const o: { readonly x: string | Buffer } = { x: Buffer.from('ab') }; const v: { readonly x: unknown } = o; function show(): void { console.log(String(v.x)); } show();", "Buffer or Hash viewed as another object type (native host internal slots)"},
+		{"buffer union field seen as an unknown field", "import { Buffer } from 'node:buffer'; const o: { x: string | Buffer } = { x: Buffer.from('ab') }; const v: { x: unknown } = o; function show(): void { console.log(String(v.x)); } show();", "which can write unknown where string | Buffer<ArrayBufferLike> is read"},
+		{"buffer union array seen as an unknown array", "import { Buffer } from 'node:buffer'; const a: (string | Buffer)[] = [Buffer.from('ab')]; const u: unknown[] = a; function show(): void { console.log(String(u[0])); } show();", "which can write unknown where string | Buffer<ArrayBufferLike> is read"},
+		{"readonly buffer union array seen as a readonly unknown array", "import { Buffer } from 'node:buffer'; const a: readonly (string | Buffer)[] = [Buffer.from('ab')]; const u: readonly unknown[] = a; function show(): void { console.log(String(u[0])); } show();", "an array of unknown with erased element storage"},
+		{"buffer union method seen as an unknown method", "import { Buffer } from 'node:buffer'; const holder: { take(b: unknown): void } = { take: (b: string | Buffer): void => { console.log(typeof b === 'string' ? b : b.toString('ascii')); } }; holder.take(Buffer.from('ab'));", "a function taking string | Buffer<ArrayBufferLike> seen as one taking unknown (tsc relates a method's parameters both ways)"},
+		{"unknown callback seen as a buffer union callback", "import { Buffer } from 'node:buffer'; const take = (b: unknown): void => { console.log(String(b)); }; const seen: (b: string | Buffer) => void = take; let held: string | Buffer = ''; held = Buffer.from('ab'); function run(): void { seen(held); } run();", "holding a host object seen as (b: string | Buffer<ArrayBufferLike>) => void, which hides a host object behind any, unknown or an unbound type parameter"},
+		{"buffer union tuple seen as a readonly unknown tuple", "import { Buffer } from 'node:buffer'; const t: readonly [string | Buffer] = [Buffer.from('ab')]; const v: readonly [unknown] = t; function show(): void { console.log(String(v[0])); } show();", "Buffer or Hash viewed as another object type (native host internal slots)"},
+		{"buffer union field two deep seen as an unknown field", "import { Buffer } from 'node:buffer'; const o: { readonly a: { readonly x: string | Buffer } } = { a: { x: Buffer.from('ab') } }; const v: { readonly a: { readonly x: unknown } } = o; function show(): void { console.log(String(v.a.x)); } show();", "Buffer or Hash viewed as another object type (native host internal slots)"},
+		{"buffer union ReadonlyMap value seen as unknown", "import { Buffer } from 'node:buffer'; const m: ReadonlyMap<string, string | Buffer> = new Map<string, string | Buffer>([['a', Buffer.from('ab')]]); const v: ReadonlyMap<string, unknown> = m; function show(): void { console.log(String(v.get('a'))); } show();", "a Map of unknown"},
+		{"buffer union ReadonlySet value seen as unknown", "import { Buffer } from 'node:buffer'; const s: ReadonlySet<string | Buffer> = new Set<string | Buffer>([Buffer.from('ab')]); const v: ReadonlySet<unknown> = s; function show(): void { for (const item of v) { console.log(String(item)); } } show();", "a Set of unknown (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"},
+		{"buffer union Map value seen as unknown", "import { Buffer } from 'node:buffer'; const m: Map<string, string | Buffer> = new Map<string, string | Buffer>([['a', Buffer.from('ab')]]); const v: Map<string, unknown> = m; function show(): void { console.log(String(v.get('a'))); } show();", "which can write unknown where string | Buffer<ArrayBufferLike> is read"},
+		{"buffer union readonly record seen as unknown", "import { Buffer } from 'node:buffer'; const r: Readonly<Record<string, string | Buffer>> = { a: Buffer.from('ab') }; const v: Readonly<Record<string, unknown>> = r; function show(): void { console.log(String(v['a'])); } show();", "a type with an index signature that isn't a string record"},
+		// The walk's other callers judge the same pairs: a cast of a Buffer union, at the top or at depth, and a
+		// record spread whose values hold one.
+		{"buffer union field cast to an unknown field", "import { Buffer } from 'node:buffer'; const o: { readonly x: string | Buffer } = { x: Buffer.from('ab') }; const v = o as { readonly x: unknown }; function show(): void { console.log(String(v.x)); } show();", "a cast that changes the runtime representation or ownership of a reference"},
+		{"buffer union cast to unknown", "import { Buffer } from 'node:buffer'; let held: string | Buffer = ''; held = Buffer.from('ab'); function show(): void { const v = held as unknown; console.log(String(v)); } show();", "a cast that changes the runtime representation or ownership of a reference"},
+		{"buffer union cast to a Uint8Array union", "import { Buffer } from 'node:buffer'; let held: string | Buffer = ''; held = Buffer.from('ab'); function show(): void { const v = held as string | Uint8Array; console.log(typeof v === 'string' ? v : String(v.slice(0, 1).length)); } show();", "a cast that changes the runtime representation or ownership of a reference"},
+		{"buffer union record spread into an unknown record", "import { Buffer } from 'node:buffer'; const src: Record<string, string | Buffer> = { a: Buffer.from('ab') }; const r: Record<string, unknown> = { ...src }; function show(): void { console.log(String(r['a'])); } show();", "record spread values seen through different storage"},
+		// The union written as a string: Node decodes the Buffer as utf8, where union.c's to_string would
+		// panic natively, so each form stops in lowering.
+		{"buffer union through String", "import { Buffer } from 'node:buffer'; let held: string | Buffer = ''; held = Buffer.from('ab'); function show(): void { console.log(String(held)); } show();", "Buffer or Hash viewed as another object type (native host internal slots)"},
+		{"buffer union in a template", "import { Buffer } from 'node:buffer'; let held: string | Buffer = ''; held = Buffer.from('ab'); function show(): void { console.log(`${held}`); } show();", "a template interpolating a union with an object, an array, a map or a function in it"},
+		{"buffer union plus a string", "import { Buffer } from 'node:buffer'; let held: string | Buffer = ''; held = Buffer.from('ab'); function show(): void { console.log(held + ''); } show();", "a BinaryExpression with a union of differently held members and a string"},
+		{"a string plus a buffer union", "import { Buffer } from 'node:buffer'; let held: string | Buffer = ''; held = Buffer.from('ab'); function show(): void { console.log('' + held); } show();", "a BinaryExpression with a string and a union of differently held members"},
 		{"indexOf of a Uint8Array", "import { Buffer } from 'node:buffer'; console.log(`${Buffer.from('abc').indexOf(new Uint8Array([98]))}`);", "a Buffer.indexOf value that isn't a string or a number"},
 		{"indexOf of a string or a number", "import { Buffer } from 'node:buffer'; function find(value: string | number): number { return Buffer.from('abc').indexOf(value); } console.log(`${find('b')}`);", "a Buffer.indexOf value that isn't a string or a number"},
 		// Node aborts on a lone surrogate needle, so only a literal proven free of one lowers: a literal holding
@@ -112,6 +162,32 @@ func TestNodeBufferStaysApartFromUint8Array(t *testing.T) {
 		t.Run(control.name+" kept as Buffer", func(t *testing.T) {
 			t.Parallel()
 			if _, err := lowerSource(t, prefix+control.source); err != nil {
+				t.Fatalf("want it lowered, got %v", err)
+			}
+		})
+	}
+}
+
+// A Buffer written into a string | Buffer slot is the same allocation, held in the Union as itself, and
+// read back out narrowed by typeof, so it lowers: a declared initializer, the same with undefined beside
+// it, a Buffer passed to a string | Buffer parameter, and a string | Buffer written into its own type.
+// revcomp's headerPartial is the first (bench/holdout/revcomp.a).
+func TestNodeBufferUnionSlotLowers(t *testing.T) {
+	t.Parallel()
+	const prefix = "import { Buffer } from 'node:buffer';\n"
+	for _, probe := range []struct{ name, source string }{
+		{"declared", "let held: string | Buffer = Buffer.from('a');\nfunction show(): void { console.log(typeof held); }\nshow();"},
+		{"declared with undefined", "let held: string | Buffer | undefined = Buffer.from('a');\nfunction show(): void { console.log(typeof held); }\nshow();"},
+		{"parameter", "function take(value: string | Buffer): string { return typeof value === 'string' ? value : value.toString('ascii'); }\nconsole.log(take(Buffer.from('a')) + take('b'));"},
+		{"union into its own type", "let held: string | Buffer = '';\nfunction keep(value: string | Buffer): void { held = value; }\nkeep(Buffer.from('a'));\nfunction show(): void { console.log(typeof held); }\nshow();"},
+		// Buffer | undefined and Buffer | null hold no scalar, so they're no nodeBufferUnion: each is the
+		// nullable Buffer it was before, revcomp's `line ?? panic(...)` into a Buffer parameter among them.
+		{"nullable Buffer into a Buffer parameter", "import { panic } from 'adamic';\nlet held: Buffer | undefined = Buffer.from('a');\nfunction takes(bytes: Buffer): number { return bytes.length; }\nfunction show(): void { console.log(`${takes(held ?? panic('x'))}`); }\nshow();"},
+		{"nullable Buffer into a nullable Buffer parameter", "let held: Buffer | undefined = Buffer.from('a');\nfunction takes(bytes: Buffer | undefined): number { return bytes === undefined ? -1 : bytes.length; }\nfunction show(): void { console.log(`${takes(held)}`); }\nshow();"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			if _, err := lowerSource(t, prefix+probe.source); err != nil {
 				t.Fatalf("want it lowered, got %v", err)
 			}
 		})
