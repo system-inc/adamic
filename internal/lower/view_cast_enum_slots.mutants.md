@@ -33,12 +33,36 @@ green, since no slot is recorded there and the walk is refuseWidening's.
 A slot reached through a writable field is recorded as if the field were readonly.
 
 In `walkViewCastFields`, old:
-		through := readonly && l.checker.IsReadonlySymbol(viewed)
+		through := path.readonly && l.checker.IsReadonlySymbol(viewed)
 new:
-		through := readonly
+		through := path.readonly
 
 Must red: TestViewCastSlotsStayRefused's a_writable_parent. The overlap's Wider member holds a writable parent, and
 its Doc's kind is then walked past, so the cast lowers.
+
+## M4: the unbuilt bit set past every field, whatever its contract
+
+A slot behind any field is walked past as if every field's contract were unbuilt, so a holder the view has no
+contract for is walked past too.
+
+In `walkViewCastFields`, old:
+			if field.contract != 0 && strings.HasPrefix(l.result.ViewContracts[field.contract-1].Unsupported, unbuiltFieldFamily) {
+new:
+			if true || strings.HasPrefix(l.result.ViewContracts[field.contract-1].Unsupported, unbuiltFieldFamily) {
+
+Must red: TestViewCastSlotsUnderAnotherIdentityStayRefused, and TestViewCastSlotsStayRefused's
+a_holder_with_no_contract.
+
+## M5: the unbuilt bit never set
+
+A slot behind an unbuilt field is judged only by the checked arm, as c6 alone judged it.
+
+In `walkViewCastFields`, old:
+				field.behind = true
+new:
+				field.behind = path.behind
+
+Must red: TestViewCastSlotsBehindAnUnbuiltFieldLower, the cast refused at Holder's kind.
 
 ## Measured
 
