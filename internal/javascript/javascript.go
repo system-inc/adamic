@@ -1662,6 +1662,10 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 		return "new WeakMap()"
 	case ir.WeakSetAdd:
 		return e.value(expression.Set) + ".add(" + e.value(expression.Key) + ")"
+	case ir.WeakMapGet:
+		return e.value(expression.Map) + ".get(" + e.value(expression.Key) + ")"
+	case ir.WeakMapSet:
+		return e.value(expression.Map) + ".set(" + e.value(expression.Key) + ", " + e.value(expression.Value) + ")"
 	case ir.WeakCollectionHas:
 		return e.value(expression.Collection) + ".has(" + e.value(expression.Key) + ")"
 	case ir.WeakCollectionDelete:
