@@ -37,22 +37,25 @@ func (e *emitter) checkedViewFieldAt(property ir.Property, object string) string
 	return fmt.Sprintf("adamicViewField(%s, %s, %s, %d, %s, [%s]%s)", object, quote(property.Name), quote(property.View), property.Of, quote(expected), e.values(property.ViewAllowed), e.viewStatics(property))
 }
 
-// viewStatics is adamicViewField's last argument where a checked read expects an object outside a union
+// viewStatics is adamicViewField's last arguments where a checked read expects an object outside a union
 // whose contract admits a class constructor (ir.Program's ObjectReadContract, StaticsAdmitted): the fields
-// it requires, which one has to own as data statics to be the object read, as native's staticViewRead
-// admits it. Anywhere else it's empty, and adamicViewField finds a class constructor a function.
+// it requires, which one has to hold as data statics, its own or a base's, to be the object read, then the
+// optional ones, none of which may be a name the walk refuses, as native's staticViewRead admits it.
+// Anywhere else it's empty, and adamicViewField finds a class constructor a function.
 func (e *emitter) viewStatics(property ir.Property) string {
 	contract, checked := e.program.ObjectReadContract(property)
 	if !checked || !contract.StaticsAdmitted {
 		return ""
 	}
-	required := []string{}
+	required, optional := []string{}, []string{}
 	for _, field := range contract.Fields {
-		if !field.Optional {
+		if field.Optional {
+			optional = append(optional, quote(field.Name))
+		} else {
 			required = append(required, quote(field.Name))
 		}
 	}
-	return ", [" + strings.Join(required, ", ") + "]"
+	return ", [" + strings.Join(required, ", ") + "], [" + strings.Join(optional, ", ") + "]"
 }
 
 // throughOptionalReceiver is a ?. read through a checked view: undefined from an absent receiver
