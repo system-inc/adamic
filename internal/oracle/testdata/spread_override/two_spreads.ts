@@ -5,4 +5,4 @@ interface B { readonly name: string }
 const a: A = { id: 1 };
 const b: B = { name: 'n' };
 const c = { ...a, ...b, label: 'x' };
-console.log(c.label); // Node: x
+console.log(String(c.label)); // Node: x
