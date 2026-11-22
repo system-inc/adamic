@@ -927,6 +927,53 @@ func (l *lowering) restElementHeldOtherwise(from, to *checker.Type) (element, pa
 	})
 }
 
+// callableBoxedSplit names the first slot of a callable seen through one call signature that one side holds
+// as a boxed union and the other unboxed, the pair callableKeeping turns down before it weighs Weak: a
+// parameter in the walk's order, then the result, judged by the view's declaration as callableKeeping
+// judges it. A closure's slots carry no type descriptor, so the two need an adapter nobody has built, and
+// the weak sentence named the wrong cause for them (#bjtwhg8, five sites in tsc). slot is "result"
+// or "parameter <name>", own and viewed that slot's two types.
+func (l *lowering) callableBoxedSplit(from, to *checker.Type) (slot string, own, viewed *checker.Type, ok bool) {
+	from, to = l.present(from), l.present(to)
+	if from == nil || to == nil {
+		return "", nil, nil, false
+	}
+	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
+	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
+	if len(fromSignatures) != 1 || len(toSignatures) != 1 {
+		return "", nil, nil, false
+	}
+	if declaration := toSignatures[0].Declaration(); declaration != nil && load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+		return "", nil, nil, false
+	}
+	split := func(inside, viewed *checker.Type) bool {
+		fromKept, _ := l.kept(inside)
+		toKept, _ := l.kept(viewed)
+		return fromKept == ir.Union && !toKept.IsReference() || toKept == ir.Union && !fromKept.IsReference()
+	}
+	fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
+	if l.censusNeverRestSignature(toSignatures[0]) {
+		toParameters = nil
+	}
+	for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
+		if inside, seen := l.checker.GetTypeOfSymbol(fromParameters[index]), l.checker.GetTypeOfSymbol(toParameters[index]); split(inside, seen) {
+			return "parameter " + toParameters[index].Name, inside, seen, true
+		}
+	}
+	if inside, seen := l.checker.GetReturnTypeOfSignature(fromSignatures[0]), l.checker.GetReturnTypeOfSignature(toSignatures[0]); split(inside, seen) {
+		return "result", inside, seen, true
+	}
+	return "", nil, nil, false
+}
+
+// boxedOrNot says how a callable's slot holds a type, for callableBoxedSplit's words.
+func (l *lowering) boxedOrNot(proven *checker.Type) string {
+	if kept, _ := l.kept(proven); kept == ir.Union {
+		return l.checker.TypeToString(proven) + ", held as a boxed union,"
+	}
+	return l.checker.TypeToString(proven) + ", held unboxed,"
+}
+
 // restHiddenByView reports whether a function with a rest parameter, seen as viewed through its
 // signature to, would be seen through a view with no rest. Every fixed view can be widened by arity in
 // the next view, (a: string) => string seen as (a: string, b: number) => string, and that relation no
@@ -2679,6 +2726,9 @@ func (l *lowering) valueSlotKeeps(node *ast.Node, slot *checker.Type) error {
 				restName = viewParameters[len(viewParameters)-1].Name
 			}
 			return l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(slot)+", whose rest's element "+elementName+" is held otherwise than the "+l.checker.TypeToString(parameter)+" the view hands it at parameter "+strconv.Itoa(position+1)+" (give the view's rest that element, ..."+restName+": "+l.checker.TypeToString(restType)+", or declare the function's parameters one by one)")
+		}
+		if where, inside, viewed, split := l.callableBoxedSplit(own, slot); split {
+			return l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(slot)+", whose "+where+" is "+l.boxedOrNot(inside)+" in one and "+l.boxedOrNot(viewed)+" in the other (a callable's boxed and unboxed representations differ, and the adapter between them isn't built)")
 		}
 		return l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(slot)+" (one keeps something weakly that the other keeps strongly)")
 	} else if tuple, array := l.tupleSeenAsArray(own, slot, map[[2]*checker.Type]bool{}); tuple != nil {
