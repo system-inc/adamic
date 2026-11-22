@@ -791,6 +791,19 @@ func RuntimeLinkFlags(library string) []string {
 	return []string{"-Xlinker", "--whole-archive", library, "-Xlinker", "--no-whole-archive"}
 }
 
+// MathLinkFlags link libm, which a program's own C calls where its numbers need it (fmod for % on doubles, #pc29n2k).
+// On macOS it is libSystem's, and a wasm32-wasi link names it as it always has. On Linux it is a library of its own,
+// and named plainly it loads at every start whether or not anything calls it: hello world calls none of it, since the
+// runtime's Math is V8's ported in, and paid 53 to 54 microseconds a start for the load, about a quarter of what it
+// spent over C's (#7z36qn6, J-bcbj5q8). --as-needed keeps it only when something linked before it references it, and
+// --no-as-needed after it leaves every library a later flag names as that flag names it.
+func MathLinkFlags(options Options) []string {
+	if DarwinBuild() || options.Target == "wasm32-wasi" {
+		return []string{"-lm"}
+	}
+	return []string{"-Wl,--as-needed", "-lm", "-Wl,--no-as-needed"}
+}
+
 func slicesContain(values []string, wanted string) bool {
 	for _, value := range values {
 		if value == wanted {
