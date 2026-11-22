@@ -1727,6 +1727,12 @@ adamic_string *adamic_date_to_iso_string(double milliseconds);
 // buffer is not terminated.
 size_t adamic_number_format(double value, char buffer[ADAMIC_NUMBER_FORMAT_MAX]);
 
+// adamic_number_received writes value as Node's ERR_OUT_OF_RANGE writes the number it received and
+// returns the length, grouped with underscores where Node groups it when separated is true (number.c).
+// The buffer is not terminated. Grouping adds at most one underscore a character.
+#define ADAMIC_NUMBER_RECEIVED_MAX (ADAMIC_NUMBER_FORMAT_MAX * 2)
+size_t adamic_number_received(double value, bool separated, char out[ADAMIC_NUMBER_RECEIVED_MAX]);
+
 // adamic_power is JavaScript's ** (number.c).
 double adamic_power(double base, double exponent);
 
