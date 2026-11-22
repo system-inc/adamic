@@ -1596,6 +1596,23 @@ func (a *analysis) value(expression ir.Expression) value {
 		held := a.value(expression.Value)
 		a.write(WriteSetElement, expression.Site, "", holder, held, elementKey)
 		return holder
+	case ir.WeakCollectionNew:
+		// A new WeakMap or WeakSet, holding nothing yet.
+		return a.fresh(elementKey, value{})
+	case ir.WeakSetAdd:
+		// The set keeps the key's weak handle, never the key: no strong write, so nothing a cycle could
+		// run through, and no write site.
+		holder := a.value(expression.Set)
+		a.value(expression.Key)
+		return holder
+	case ir.WeakCollectionHas:
+		a.value(expression.Collection)
+		a.value(expression.Key)
+		return value{}
+	case ir.WeakCollectionDelete:
+		a.value(expression.Collection)
+		a.value(expression.Key)
+		return value{}
 	case ir.BoundMethod:
 		operands := []value{a.value(expression.Object)}
 		for _, fixed := range expression.Fixed {

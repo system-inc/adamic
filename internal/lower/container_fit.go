@@ -26,6 +26,9 @@ import (
 // its own stop where an array goes (tupleWhereArrayGoes).
 const containerFitStop = "a Map or Set interface implemented by a value that isn't a Map or Set"
 
+// containerFitWeakStop is containerFitStop for a WeakMap's or a WeakSet's slot.
+const containerFitWeakStop = "a WeakMap or WeakSet interface implemented by a value that isn't one"
+
 // containerFitDepth is how many positions deep containerWhereOtherGoes walks any pair of a value and its
 // slot unconditionally. Past it a generic pair that can't reach a map fails closed for the converse
 // (shape_fit.go): it stops if an array either side can hold could go where a shape the other can hold is,
@@ -122,8 +125,9 @@ func (walk *containerFitWalk) absorb(answer containerFitAnswer) {
 	walk.frame.leans = min(walk.frame.leans, answer.leans)
 }
 
-// containerHeld is what either direction carries: a map, and for the converse an array too.
-var containerHeld = []ir.Type{ir.Map, ir.Array}
+// containerHeld is what either direction carries: a map or a weak collection, and for the converse an
+// array too.
+var containerHeld = []ir.Type{ir.Map, ir.Array, ir.WeakCollection}
 
 // mentionsHeld reports whether a value of type proven can hold a value held as one of held anywhere
 // inside (eachReached), and past containerMentionDepth it answers yes.
@@ -394,6 +398,15 @@ func (l *lowering) containerPairJudged(value *checker.Type, target *checker.Type
 		}
 		// A map's keys and values go where the slot's go.
 		return l.pairwiseContainerPairGoes(l.typeArguments(value), l.typeArguments(target), depth, walk)
+	}
+	if slot, known := l.representation(target); known && slot == ir.WeakCollection {
+		// A WeakMap's or WeakSet's slot takes only a real one: anything else tsc lets through (an object
+		// implementing the interface, which needs [Symbol.toStringTag], a computed field that stops already)
+		// would reach the runtime's weak table as an object. Its keys and values are invariance's.
+		if held, known := l.representation(value); !known || held != ir.WeakCollection {
+			return containerFitWeakStop
+		}
+		return ""
 	}
 	if stop, judged := l.shapeFit(value, target, libraryArgument); judged {
 		// The converse: a map or an array where a structural object type is held, a leaf that costs

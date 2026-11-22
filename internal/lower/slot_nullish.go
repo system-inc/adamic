@@ -10,7 +10,7 @@ import (
 // type is erased. Boxed references already distinguish null from undefined.
 func (l *lowering) slotNullish(proven *checker.Type, of ir.Type) ir.Type {
 	switch of {
-	case ir.Object, ir.Array, ir.Map, ir.Closure, ir.Promise, ir.Uint8Array, ir.Int32Array, ir.Float64Array, ir.Uint16Array, ir.Generator:
+	case ir.Object, ir.Array, ir.Map, ir.Closure, ir.Promise, ir.Uint8Array, ir.Int32Array, ir.Float64Array, ir.Uint16Array, ir.Generator, ir.WeakCollection:
 	default:
 		return 0
 	}
