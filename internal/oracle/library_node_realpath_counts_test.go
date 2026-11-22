@@ -2,15 +2,13 @@ package oracle
 
 import (
 	"context"
-	"fmt"
-	"os"
 	"path/filepath"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/internal/native_runtime"
+	"github.com/system-inc/adamic/internal/oracle/countproducts"
 )
 
 func init() {
@@ -35,25 +33,12 @@ func init() {
 				t.Fatal(err)
 			}
 			source := native.C(program)
-			harness, err := os.ReadFile("library_node_realpath_test.go")
-			if err != nil {
-				t.Fatal(err)
-			}
-			// Key the actual filesystem/cwd/environment builder as well as emitted C;
-			// temporary directory spelling changes no value count.
-			inputs := countPortable(t, source, path) + "\nrealpath harness\n" + string(harness)
-			return inputs, func() string {
-				binary := filepath.Join(t.TempDir(), "counted")
-				if err := native.Build(source, binary, native_runtime.Options{Count: true}); err != nil {
-					t.Fatal(err)
-				}
-				got := realpathRun(t, realpathDirectory(t), binary)
-				match := countsLine.FindSubmatch(got.stderr)
-				if got.exitCode != 0 || match == nil {
-					t.Fatalf("counted realpath fixture: exit %d stderr %q", got.exitCode, got.stderr)
-				}
-				return fmt.Sprintf("| %s | %s | %s | %s | %s | %s | %s |", key, match[1], match[2], match[3], match[4], match[5], match[6])
-			}
+			// The filesystem, working directory and environment it runs in are countproducts' (its realpath layout, as
+			// realpathDirectory lays one out), which key its shard's product with countproducts' files; temporary
+			// directory spelling changes no value count. It must finish.
+			row := countproducts.Row{Key: key, C: source, Run: countproducts.Realpath, Checked: true}
+			countRows.Store(key, row)
+			return countPortable(t, source, path) + "\nrealpath", func() string { return countMeasuredHere(t, row) }
 		}})
 	}
 }
