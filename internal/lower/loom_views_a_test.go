@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"errors"
 	"os"
 	"path/filepath"
 	"strings"
@@ -28,6 +29,23 @@ func requireLoomViewTwinRefusal(t *testing.T, name, diagnostic, fix string) {
 	}
 }
 
+// requireLoomViewUnbuiltTwins lowers the fixture's source as main.ts, where an unbuilt field is the
+// field's alone (#rgrtt32): as written it agrees with Node; with its honest count: 0 swapped for a
+// value the view's type doesn't hold it stops at the read on both backends, printed what Node printed
+// before it; and with its read line swapped for read, a read of the unbuilt field, it's NotYet at
+// at, in the unbuilt field's words.
+func requireLoomViewUnbuiltTwins(t *testing.T, name, line, printed, read, field, at string) {
+	t.Helper()
+	source, _ := loomViewFixture(t, name+".a")
+	lowersAndAgreesWithNodeAs(t, source, ".ts")
+	overloadCheckStops(t, strings.Replace(source, "count: 0", "count: true", 1), printed, "view.count")
+	_, err := lowerSourceAs(t, strings.Replace(source, line, read, 1), ".ts")
+	var notYet *NotYet
+	if !errors.As(err, &notYet) || !strings.HasSuffix(notYet.Where, "main.ts:"+at) || !strings.Contains(notYet.What, "field "+field+" whose contract isn't built") {
+		t.Fatalf("reading %s: want a NotYet at main.ts:%s naming the field, got %v", field, at, err)
+	}
+}
+
 func requireLoomViewRefusal(t *testing.T, name, output, diagnostic, fix string) {
 	t.Helper()
 	source, extension := loomViewFixture(t, name+".a")
@@ -51,11 +69,13 @@ func TestLoomViewKeyRead(t *testing.T) {
 }
 
 // In .a unsupported's cast is an untagged view whose checked reads no proof erases, so the cast is refused
-// (#m8dvvmf) before the read is reached; its .ts twin pins the read's own refusal.
+// (#m8dvvmf) before the read is reached. Its .ts twin lowers since #rgrtt32: extra's unbuilt contract is
+// the field's alone, and the read of its sibling count is checked, so a lie in count stops at the read and
+// a read of extra is NotYet.
 func TestLoomViewUnsupportedRead(t *testing.T) {
 	t.Parallel()
 	requireLoomViewRefusal(t, "unsupported", "xx / 0\n", "a downcast from Base to View in .a whose checks no proof erases", "move the file to .ts")
-	requireLoomViewTwinRefusal(t, "unsupported", "checked view read of field", "contract before reading this field")
+	requireLoomViewUnbuiltTwins(t, "unsupported", "console.log(`${view.label} / ${view.count}`);", "", "console.log(String(view.extra));", "extra", "10:20")
 }
 
 // Views D checks this read against its contract, so it compiles and prints what Node prints.
@@ -121,10 +141,12 @@ func TestLoomViewOriginalNativeP21(t *testing.T) {
 	lowersAndAgreesWithNodeAs(t, source, extension)
 }
 
+// native_p37's .ts twin lowers since #rgrtt32 as unsupported's does: value's unbuilt contract is the
+// field's alone, and count's read is checked.
 func TestLoomViewOriginalNativeP37(t *testing.T) {
 	t.Parallel()
 	requireLoomViewRefusal(t, "native_p37", "xx\n0\n", "a downcast to OtherView whose tag test is vacuous", "give OtherView a tag of its own")
-	requireLoomViewTwinRefusal(t, "native_p37", "checked view read of field", "contract before reading this field")
+	requireLoomViewUnbuiltTwins(t, "native_p37", "console.log(`${view.count}`);", "xx\n", "console.log(String(view.value));", "value", "12:20")
 }
 
 func TestLoomViewUnionKeyRead(t *testing.T) {
