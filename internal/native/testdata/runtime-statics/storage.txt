@@ -285,6 +285,10 @@
 `runtime-file:view_unions_untagged.c`
 `runtime-file:view_unions_untagged.h`
 `runtime-file:weak.c`
+`runtime-file:weak.h`
+# WeakMap and WeakSet: each collection's table is its own heap value's, and every name and entry change
+# happens under weak.c's table_lock; the file keeps no storage of its own.
+`runtime-file:weak_collection.c`
 `share.c:sharing:1`
 `slab_quarantine.c:held:1`
 `slab_quarantine.c:next:1`
@@ -349,6 +353,14 @@
 `weak.c:table_count:1`
 `weak.c:table_lock:1`
 `weak.c:table_used:1`
+# region_handles counts the handles to statement regions' values: atomic, changed only under
+# table_lock, read relaxed as the region end's gate. releasing is thread-local, the list one forget
+# lets go of once table_lock is free, taken off by the thread that listed it, and freed at its
+# thread's end (adamic_weak_thread_end).
+`weak.c:region_handles:1`
+`weak.c:releasing:1`
+`weak.c:releasing_count:1`
+`weak.c:releasing_capacity:1`
 
 # Runtime compiler storage is per parse/compile arena; generated tables are const.
 `runtime-file:regexp_compile.h`

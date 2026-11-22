@@ -72,6 +72,12 @@ void adamic_share(void *value) {
         if (adamic_program_is(heap)) {
             adamic_panic("Program region members cannot cross into parallel work", sizeof "Program region members cannot cross into parallel work" - 1);
         }
+		// A WeakMap's or WeakSet's key stays on the collection's thread: freed on another, its forget
+		// would remove entries the collection's own thread reads without the table lock (weak_collection.c).
+		// Only a value a handle was made for carries the bit, so the table is asked only for one.
+		if ((heap->slab & ADAMIC_WEAK_NAMED) != 0 && adamic_weak_named(heap)) {
+			adamic_panic("a WeakMap or WeakSet key can't cross into parallel work", sizeof "a WeakMap or WeakSet key can't cross into parallel work" - 1);
+		}
 		bool shared = adamic_is_shared(heap);
 		// Immutable shared leaves cannot gain children. Containers can have gained fresh descendants
 		// through unique reuse before the caller retained them again, so always revisit containers.
@@ -153,6 +159,9 @@ void adamic_share(void *value) {
 			adamic_panic("compiler bug: an Apple object reached parallel work", sizeof "compiler bug: an Apple object reached parallel work" - 1);
 		case adamic_kind_weak: case adamic_kind_map_iterator: case adamic_kind_typed_array: case adamic_kind_typed_array_iterator:
 			adamic_panic("compiler bug: non-shareable value reached a task", sizeof "compiler bug: non-shareable value reached a task" - 1);
+		// Its entries are read without the table lock, by its own thread alone (weak_collection.c).
+		case adamic_kind_weak_map:
+			adamic_panic("a WeakMap or WeakSet can't cross into parallel work", sizeof "a WeakMap or WeakSet can't cross into parallel work" - 1);
 		// The union's null is immortal, passed over above with every other count-zero value.
 		case adamic_kind_null:
 			adamic_invariant("the union's null was marked shared");

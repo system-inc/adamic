@@ -1,13 +1,8 @@
 // Private to heap.c. Chunk addresses never move, including while another thread grows the table.
-// Chunk number + 1 stays below the opt-in Program flag; bit 29 is reserved otherwise.
+// Chunk number + 1 stays below the lowest slab flag, the weak-named bit 27, in every build.
 #define PAGE_SIZE 1024
-#ifdef ADAMIC_PROGRAM_REGION
-#define PAGE_COUNT 262144
-#define ADAMIC_FIRST_FLAG ADAMIC_PROGRAM_FLAG
-#else
-#define PAGE_COUNT 524288
-#define ADAMIC_FIRST_FLAG ADAMIC_GRAPH_FLAG
-#endif
+#define PAGE_COUNT 131072
+#define ADAMIC_FIRST_FLAG ADAMIC_WEAK_NAMED
 _Static_assert((uint64_t)PAGE_SIZE * PAGE_COUNT <= ADAMIC_FIRST_FLAG,
     "chunk numbers would reach the slab flags");
 
