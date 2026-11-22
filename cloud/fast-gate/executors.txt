@@ -87,37 +87,17 @@ a-check        *.a
 # the case-insensitive corpus walks. cohere is a gitlink, so use its exact path.
 # TestBridge — bridge/tsgo/bridge_test.go:219
 reads bridge/tsgo internal/lower/tsgo.go
-# TestBridge — bridge/tsgo/bridge_test.go:274
-reads bridge/tsgo internal/native/runtime/tsgo.c
+# TestProduct_RegionStage0's mutant overlays it, read by path: bridge/tsgo/products_test.go:256, :317
+reads bridge/tsgo internal/native_runtime/c/tsgo.c
 # The census tests in cmd/adamic-gate/parallelcensus, which name it beside *_test.go (resume_test.go's
 # TestLiteralChildrenAndParentCost reads a table of its own since 113707a8)
 reads cmd/adamic-gate/parallelcensus stage1/cohere/typeaware/volume_test.go
-# TestParallelCachedMatchesSerial — cmd/adamic-test262/cache_test.go:138
-# TestOrderedProgress — cmd/adamic-test262/cache_test.go:219
-# TestUnavailableCacheStillRuns — cmd/adamic-test262/cache_test.go:239
-# TestImportedInputsRunFresh — cmd/adamic-test262/cache_test.go:260
-# TestCompilerCacheAcrossScratchDirectories — cmd/adamic-test262/cache_test.go:329
-# TestCompilerWorkerMatchesSubprocess — cmd/adamic-test262/compiler_test.go:14
-# TestMiniRunner — cmd/adamic-test262/corpus_test.go:186
-# TestLargeCompilerOutputIsComplete — cmd/adamic-test262/corpus_test.go:226
-# TestEditCacheSeparation — cmd/adamic-test262/edit_test.go:16
-# TestWorkerLazyFallback — cmd/adamic-test262/edit_test.go:68
-# TestLoweringSourceEdit — cmd/adamic-test262/edit_test.go:99
-# TestLoweringSourceEdit — cmd/adamic-test262/edit_test.go:120
-reads cmd/adamic-test262 internal/native/runtime/*.c
-# TestParallelCachedMatchesSerial — cmd/adamic-test262/cache_test.go:138
-# TestOrderedProgress — cmd/adamic-test262/cache_test.go:219
-# TestUnavailableCacheStillRuns — cmd/adamic-test262/cache_test.go:239
-# TestImportedInputsRunFresh — cmd/adamic-test262/cache_test.go:260
-# TestCompilerCacheAcrossScratchDirectories — cmd/adamic-test262/cache_test.go:329
-# TestCompilerWorkerMatchesSubprocess — cmd/adamic-test262/compiler_test.go:14
-# TestMiniRunner — cmd/adamic-test262/corpus_test.go:186
-# TestLargeCompilerOutputIsComplete — cmd/adamic-test262/corpus_test.go:226
-# TestEditCacheSeparation — cmd/adamic-test262/edit_test.go:16
-# TestWorkerLazyFallback — cmd/adamic-test262/edit_test.go:68
-# TestLoweringSourceEdit — cmd/adamic-test262/edit_test.go:99
-# TestLoweringSourceEdit — cmd/adamic-test262/edit_test.go:120
-reads cmd/adamic-test262 internal/native/runtime/*.h
+# cmd/adamic-test262's runner builds the runtime from the checkout's internal/native_runtime/c (run.go:83, :325), which
+# RuntimeInputs reads by path through os.DirFS, every .c and .h; TestLoweringSourceEdit links that directory into its
+# own root (edit_test.go:105).
+reads cmd/adamic-test262 internal/native_runtime/c/*.c
+# The same runner's reads: the headers.
+reads cmd/adamic-test262 internal/native_runtime/c/*.h
 # TestEveryFunctionIsInSingleAssignment via programs — internal/flow/flow_test.go:27
 reads internal/flow dedication/dedication.a
 # TestEveryFunctionIsInSingleAssignment via programs — internal/flow/flow_test.go:28
@@ -158,12 +138,12 @@ reads internal/fresh internal/oracle/testdata/modules/counter.a
 reads internal/fresh internal/oracle/testdata/modules/format.a
 # TestEveryWriteIsRecordedAndKnown — internal/fresh/fresh_test.go:25
 reads internal/fresh internal/oracle/testdata/modules/main.a
-# TestReduceKeepsTheSignature — internal/fuzz/reduce_test.go:72
-# TestFuzzerSharesRuntimeLibrary — internal/fuzz/runtime_test.go:13
-reads internal/fuzz internal/native/runtime/*.c
-# TestReduceKeepsTheSignature — internal/fuzz/reduce_test.go:72
-# TestFuzzerSharesRuntimeLibrary — internal/fuzz/runtime_test.go:13
-reads internal/fuzz internal/native/runtime/*.h
+# TestFuzzerSharesRuntimeLibrary (internal/fuzz/runtime_test.go:26) and every PrepareBuilt checkout, as
+# TestReduceKeepsTheSignature's, build the runtime from the checkout's internal/native_runtime/c by path (run.go:68,
+# :469).
+reads internal/fuzz internal/native_runtime/c/*.c
+# The same reads: the headers.
+reads internal/fuzz internal/native_runtime/c/*.h
 # TestReduceKeepsTheSignature — internal/fuzz/reduce_test.go:72
 # TestFuzzerSharesRuntimeLibrary — internal/fuzz/runtime_test.go:13
 reads internal/fuzz oracle/adamic.mjs
@@ -188,10 +168,6 @@ reads internal/load cohere
 reads internal/lower internal/oracle/testdata/class_features_private.a
 # TestGenericUnionFixtureHasSeparateInstances — internal/lower/generic_instance_key_test.go:28
 reads internal/lower internal/oracle/testdata/generic_instance_key_typeof.a
-# TestClassWrongOutputIteratorReceiver — internal/lower/class_wrong_output_test.go:10
-reads internal/lower internal/oracle/testdata/iterators_override_this.a
-# TestClassWrongOutputKeysRepair — internal/lower/class_wrong_output_test.go:37
-reads internal/lower internal/oracle/testdata/iterators_sym_keys_view.a
 # TestOptionalWideningAllowed — internal/lower/optional_widening_test.go:76
 reads internal/lower internal/oracle/testdata/optional_widening_*.a
 # TestGenericJSONUnionArrayIsNotYet — internal/lower/generic_instance_key_test.go:49
@@ -395,12 +371,10 @@ reads stage1/cohere/css *.[sS][cC][sS][sS]
 # TestCSSProfileArtifacts — stage1/cohere/css/profile_test.go:118
 # TestCSSProfileArtifacts — stage1/cohere/css/profile_test.go:124
 reads stage1/cohere/css cohere
-# TestCSS via askedCases/adamicCohereTexts — stage1/cohere/css/testdata/cohere_side_test.go:24
-reads stage1/cohere/css cohere/internal/format/css/*_test.go
-# TestCSSProfileArtifacts — stage1/cohere/css/profile_test.go:104
-reads stage1/cohere/css internal/native/runtime/*.c
-# TestCSSProfileArtifacts — stage1/cohere/css/profile_test.go:104
-reads stage1/cohere/css internal/native/runtime/*.h
+# TestCSSProfileArtifacts: stage1/cohere/css/profile_test.go:108-111
+reads stage1/cohere/css internal/native_runtime/c/*.c
+# TestCSSProfileArtifacts: stage1/cohere/css/profile_test.go:108-111
+reads stage1/cohere/css internal/native_runtime/c/*.h
 # TestThePortParsesAsGoCohereDoes, TestCompositionMatchesGo, TestCSSThroughput, TestTheCanonicalRangeChecksCanFail via onNode — stage1/cohere/css/css_test.go:284
 # TestCSSThroughput — stage1/cohere/css/css_test.go:434
 # TestCSSPrinterThroughput — stage1/cohere/css/print_test.go:246
@@ -462,10 +436,6 @@ reads stage1/cohere/css stage1/cohere/values/tokenize.ts
 reads stage1/cohere/css stage1/cohere/values/values.ts
 # TestCSSNumbers — stage1/cohere/cssnumbers/port_test.go:159
 reads stage1/cohere/cssnumbers *.[cC][sS][sS]
-# TestCSSNumbers — stage1/cohere/cssnumbers/port_test.go:159
-reads stage1/cohere/cssnumbers *.[lL][eE][sS][sS]
-# TestCSSNumbers — stage1/cohere/cssnumbers/port_test.go:159
-reads stage1/cohere/cssnumbers *.[sS][cC][sS][sS]
 # TestCSSNumbers — stage1/cohere/cssnumbers/port_test.go:225
 # TestCSSNumbers — stage1/cohere/cssnumbers/port_test.go:227
 # TestCSSNumbers — stage1/cohere/cssnumbers/port_test.go:228
@@ -482,10 +452,6 @@ reads stage1/cohere/cssnumbers oracle/node.mjs
 reads stage1/cohere/cssnumbers stage1/cohere/cssstrings/strings.ts
 # TestCSSStrings — stage1/cohere/cssstrings/port_test.go:159
 reads stage1/cohere/cssstrings *.[cC][sS][sS]
-# TestCSSStrings — stage1/cohere/cssstrings/port_test.go:159
-reads stage1/cohere/cssstrings *.[lL][eE][sS][sS]
-# TestCSSStrings — stage1/cohere/cssstrings/port_test.go:159
-reads stage1/cohere/cssstrings *.[sS][cC][sS][sS]
 # TestCSSStrings — stage1/cohere/cssstrings/port_test.go:212
 # TestCSSStrings — stage1/cohere/cssstrings/port_test.go:214
 # TestCSSStrings — stage1/cohere/cssstrings/port_test.go:215
@@ -575,8 +541,6 @@ reads stage1/cohere/graphql cohere
 reads stage1/cohere/graphql oracle/adamic.mjs
 # TestThePortParsesAsGoCohereDoes via onNode — stage1/cohere/graphql/graphql_test.go:448
 reads stage1/cohere/graphql oracle/node.mjs
-# TestPrinterUpstreamPreflight, TestPrinterAsGoCohere, TestPrinterMutants, TestPrinterFileDriver via printerCases — stage1/cohere/graphql/printer/printer_test.go:19
-reads stage1/cohere/graphql/printer *.graphql
 # TestPrinterWhitespaceGap — stage1/cohere/graphql/printer/gaps_test.go:93
 # TestPrinterThroughput — stage1/cohere/graphql/printer/performance_test.go:48
 # TestPrinterThroughput — stage1/cohere/graphql/printer/performance_test.go:49
@@ -1201,8 +1165,6 @@ reads stage1/cohere/mediaquery oracle/node.mjs
 # TestThePortParsesAsGoCohereDoes, TestSelectorThroughput, TestCorpusKeepsEveryParseableFile, TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars via cohereSide — stage1/cohere/selector/selector_test.go:216
 # TestThePortParsesAsGoCohereDoes, TestSelectorThroughput, TestCorpusKeepsEveryParseableFile, TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars via cohereSide — stage1/cohere/selector/selector_test.go:220
 reads stage1/cohere/selector cohere
-# TestSelector via askedCases/adamicCohereTexts — stage1/cohere/selector/testdata/cohere_side_test.go:26
-reads stage1/cohere/selector cohere/internal/format/css/*_test.go
 # TestThePortParsesAsGoCohereDoes, TestSelectorThroughput, TestCorpusKeepsEveryParseableFile, TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars via onNode — stage1/cohere/selector/selector_test.go:339
 # TestSelectorThroughput — stage1/cohere/selector/selector_test.go:431
 reads stage1/cohere/selector oracle/adamic.mjs
@@ -1340,10 +1302,6 @@ reads stage1/cohere/values cohere
 reads stage1/cohere/values oracle/adamic.mjs
 # TestThePortParsesAsGoCohereDoes via onNode — stage1/cohere/values/values_test.go:451
 reads stage1/cohere/values oracle/node.mjs
-# TestLexerMatchesGo, TestLexerMutants via lexCases — stage1/cohere/yaml/lexer_test.go:52
-reads stage1/cohere/yaml *.[yY][aA][mM][lL]
-# TestLexerMatchesGo, TestLexerMutants via lexCases — stage1/cohere/yaml/lexer_test.go:52
-reads stage1/cohere/yaml *.[yY][mM][lL]
 # TestComposeMatchGo, TestComposeMutants via goCompose — stage1/cohere/yaml/compose_test.go:28
 # TestComposeMatchGo, TestComposeMutants via goCompose — stage1/cohere/yaml/compose_test.go:42
 # TestComposeMatchGo, TestComposeMutants via goCompose — stage1/cohere/yaml/compose_test.go:51
@@ -1460,10 +1418,10 @@ reads stage1/typescript/parser stage1/typescript/scanner/tokens.ts
 # TestScannerAgreesWithTypescriptGo, TestPerformance via askedCorpus — stage1/typescript/scanner/scanner_test.go:231
 # TestScannerAgreesWithTypescriptGo, TestPerformance via askedCorpus — stage1/typescript/scanner/scanner_test.go:286
 reads stage1/typescript/scanner cohere
-# TestProfileArtifacts — stage1/typescript/scanner/profile_test.go:67
-reads stage1/typescript/scanner internal/native/runtime/*.c
-# TestProfileArtifacts — stage1/typescript/scanner/profile_test.go:67
-reads stage1/typescript/scanner internal/native/runtime/*.h
+# TestProfileArtifacts: stage1/typescript/scanner/profile_test.go:70
+reads stage1/typescript/scanner internal/native_runtime/c/*.c
+# TestProfileArtifacts: stage1/typescript/scanner/profile_test.go:70
+reads stage1/typescript/scanner internal/native_runtime/c/*.h
 # TestGapStandsWhereGapsMdSays — stage1/typescript/scanner/gaps_test.go:18
 # TestBigintGapStandsWhereGapsMdSays — stage1/typescript/scanner/gaps_test.go:42
 # TestScannerAgreesWithTypescriptGo, TestPerformance via node — stage1/typescript/scanner/scanner_test.go:127
@@ -1653,71 +1611,19 @@ reads internal/native oracle/wasi.mjs
 reads internal/native stage1/typescript/parser/main.ts
 reads internal/oracle dedication/dedication.a
 reads internal/oracle docs/verification/non-null-fixture-migration.json
-reads internal/oracle internal/native/runtime/regexp_replace.c
+reads internal/oracle internal/native_runtime/c/regexp_replace.c
 reads internal/oracle stage3/drivers/scanner/probes/cyclic-initialized-value/main.a
 reads internal/oracle stage3/drivers/scanner/probes/cyclic-premature-value/main.a
-reads internal/oracle stage3/fixtures/assertions/13_flag_downcast.a
 reads internal/oracle stage3/fixtures/enums/07_regex_array_map.a
 reads internal/oracle stage3/fixtures/namespaces/08_parser_jsdoc_nested.a
 reads internal/oracle stage3/fixtures/nested-functions/09_checker_constituent_recursion.ts
 reads internal/oracle stage3/fixtures/nested-functions/refused/01_scanner_frame.a
 reads internal/oracle stage3/fixtures/taste/17_binder_flow.a
-reads internal/oracle stage3/interface-downcasts/lane1/optional-read.a
-reads internal/oracle stage3/interface-downcasts/lane4b/fixtures/diagnostic-boolean.a
-reads internal/oracle stage3/interface-downcasts/lane4b/fixtures/diagnostic-code-wrong.a
-reads internal/oracle stage3/interface-downcasts/lane4b/fixtures/diagnostic-good.a
-reads internal/oracle stage3/interface-downcasts/lane4b/fixtures/diagnostic-wrong.a
-reads internal/oracle stage3/interface-downcasts/lane4b/fixtures/literal-boolean.a
-reads internal/oracle stage3/interface-downcasts/lane4b/fixtures/literal-good.a
-reads internal/oracle stage3/interface-downcasts/lane4b/fixtures/literal-negative-wrong.a
-reads internal/oracle stage3/interface-downcasts/lane4b/fixtures/literal-text-wrong.a
-reads internal/oracle stage3/interface-downcasts/lane4b/fixtures/node-indicator-false.a
-reads internal/oracle stage3/interface-downcasts/lane4b/fixtures/node-indicator-flags-wrong.a
-reads internal/oracle stage3/interface-downcasts/lane4b/fixtures/node-indicator-good.a
-reads internal/oracle stage3/interface-downcasts/lane4b/fixtures/node-indicator-wrong.a
-reads internal/oracle stage3/interface-downcasts/lane4b/fixtures/required-missing.a
-reads internal/oracle stage3/interface-downcasts/missing-name.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/binding-name-source-good.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/binding-name-source-nested.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/binding-name-source-wrong.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/callable-union-good-number.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/callable-union-good-string.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/callable-union-nested.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/callable-union-optional-boundary.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/callable-union-wrong.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/class-data-good.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/class-data-wrong.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/flow-callback-good.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/flow-callback-wrong.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/flow-generic-good.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/flow-generic-wrong.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/flow-helper-good.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/flow-helper-wrong.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/flow-stored-good.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/flow-stored-wrong.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/option-element-source-good.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/option-element-source-nested.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/option-element-source-wrong.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/recursive-absent.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/recursive-good.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/recursive-nested.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/recursive-wrong.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/structural-source-good.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/structural-source-nested.a
-reads internal/oracle stage3/interface-downcasts/untagged/fixtures/structural-source-wrong.a
-reads internal/oracle stage3/interface-downcasts/untagged/source-refusals.json
-reads internal/oracle stage3/interface-downcasts/v2/array-arm.a
-reads internal/oracle stage3/interface-downcasts/v2/callable-producer-wrong.a
-reads internal/oracle stage3/interface-downcasts/v2/fixed-tuple-good.a
-reads internal/oracle stage3/interface-downcasts/v2/fixed-tuple-wrong.a
-reads internal/oracle stage3/interface-downcasts/v2/fs-option-boxing.a
-reads internal/oracle stage3/interface-downcasts/v2/mixed-read-write.a
-reads internal/oracle stage3/interface-downcasts/v2/null-read-write.a
-reads internal/oracle stage3/interface-downcasts/v2/representation-read-write.a
-reads internal/oracle stage3/interface-downcasts/v2/tuple-identity-wrong.a
-reads internal/oracle stage3/interface-downcasts/v2/undefined-read-write.a
-reads internal/oracle stage3/interface-downcasts/visitor.a
-reads internal/oracle stage3/interface-downcasts/wrong-kind.a
+# internal/oracle reads stage3/interface-downcasts by path in eight test files (interface_cast_test.go, its counts,
+# checked_views_v2's three, fx7_depth_texts, view_snapshot, view_widened), its fixtures under default, fx7, lane1,
+# lane4b, untagged and v2 among them, and interfaceFixturePath (interface_cast_test.go:26) stats a stem's .a and .ts:
+# the directory whole, so a fixture the per-file lines left out is keyed too (#r2a9vd4).
+reads internal/oracle stage3/interface-downcasts/*
 reads internal/oracle stage3/namespace-init-sys/cwd-control.a
 reads internal/oracle stage3/namespace-init-sys/realpath-control.a
 reads internal/oracle stage3/namespace-live-export/live.a
@@ -1783,7 +1689,9 @@ reads internal/lower internal/oracle/testdata/program_region/parse_manifest.json
 reads internal/flow internal/load/testdata/*.ts
 reads internal/fresh internal/load/testdata/*.ts
 reads internal/native internal/regexp/testdata/*
-reads stage1/cohere/lint internal/native/runtime/*.[ch]
+# stage1/cohere/lint's decoded options product hashes every non-test .go, .c and .h under internal/ outside testdata and
+# performance (bv61ffb_decoded_options_test.go:182-202): these are its .c and .h.
+reads stage1/cohere/lint internal/*.[ch]
 reads stage1/cohere/typeaware stage1/cohere/lint/*
 reads stage1/cohere/typeaware stage1/typescript/*
 reads stage1/cohere/graphql/printer stage1/cohere/json/*
@@ -1792,27 +1700,28 @@ reads stage1/cohere/markdownblocks stage1/cohere/markdowninline/*
 reads stage1/cohere/tsprinter stage1/typescript/parser/*
 reads stage1/typescript/parser stage1/typescript/scanner/*
 # Walks past each package's closure that Adamic Operations' repowalk rule found on #7pmja7p (Oct 20), every one run over
-# the tracked tree: cmd/adamic-test262's prepareMode sources walk internal/lower's non-test Go files; estree_test.go
-# walks internal/native/runtime keeping its .c and .h; list_layout_shards_test.go walks internal/native's Go files, its
-# tests included; and cloud/generated_test.go's checkGenerated walks whatever generated.json names: the list's own
-# bytes, a stat of each path, and each under's listing at every depth with a stat of its suffix files (Adamic Operations'
-# trace on #q11k6k6, Golem:~/adamiclint-recut-work/trace-generated/strace.txt), so the list bounds what cloud reads.
+# the tracked tree: cmd/adamic-test262's prepareMode sources walk internal/lower's non-test Go files; estree's
+# recovery_cache_test.go:162 globs internal/native_runtime/c keeping its .c and .h; list_layout_shards_test.go walks
+# internal/native's Go files, its tests included; and cloud/generated_test.go's checkGenerated walks whatever
+# generated.json names: the list's own bytes, a stat of each path, and each under's listing at every depth with a stat
+# of its suffix files (Adamic Operations' trace on #q11k6k6, Golem:~/adamiclint-recut-work/trace-generated/strace.txt),
+# so the list bounds what cloud reads.
 reads cmd/adamic-test262 internal/lower/*.go
-reads stage1/cohere/estree internal/native/runtime/*.[ch]
+reads stage1/cohere/estree internal/native_runtime/c/*.[ch]
 reads stage1/cohere/markdownblocks internal/native/*.go
 reads cloud cloud/fast-gate/generated.json generated
 # cmd/adamic's TestDocumentedCitationsResolve (cli_doc_test.go) reads docs/cli.md and every path it cites but Go, which
 # treewalk reads: another file's lines, or that a path exists. Main 31408f80's page cites docs, cloud scripts, oracle
-# hosts, bridge/tsgo/README.md and internal/native/runtime's sources, each class keyed by its directory so a new
+# hosts, bridge/tsgo/README.md and internal/native_runtime/c's sources, each class keyed by its directory so a new
 # citation of the same kind is covered without a line (CLI's question on #mjh6rd5).
 reads cmd/adamic docs/*.md
 reads cmd/adamic cloud/*.sh
 reads cmd/adamic oracle/*.mjs
 reads cmd/adamic bridge/tsgo/README.md
-reads cmd/adamic internal/native/runtime/*
-# internal/oracle's views_deep_chain_test.go reads every file of internal/native/runtime (os.ReadDir), and internal/flow's
-# writes_test.go parses ../ir/*.go: Adamic Operations' repowalk over main e50e502c and 876cdd2e.
-reads internal/oracle internal/native/runtime/*
+reads cmd/adamic internal/native_runtime/c/*
+# internal/oracle's views_deep_chain_test.go:61 reads every file of internal/native_runtime/c (os.ReadDir), and
+# internal/flow's writes_test.go parses ../ir/*.go: Adamic Operations' repowalk over main e50e502c and 876cdd2e.
+reads internal/oracle internal/native_runtime/c/*
 reads internal/flow internal/ir/*.go
 # Walks that landed on main since Oct 23 with no line, from Adamic Operations' repowalk over main 977c3b9f (#7pmja7p):
 # internal/lower's graph_flow_walk_test.go:29 globs ../ir/*.go; statecopy's guard_test.go:44 roots at the repository and
