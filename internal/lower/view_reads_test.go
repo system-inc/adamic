@@ -185,6 +185,8 @@ var viewNoField = []viewReadExample{
 	{ir.WeakCollectionDelete{}, "removes a key's entry by its weak handle, reading no field of the key"},
 	{ir.WeakCollectionHas{}, "tests for a key's entry by its weak handle, reading no field of the key"},
 	{ir.WeakCollectionNew{}, "a new WeakMap or WeakSet, holding nothing"},
+	{ir.WeakMapGet{}, "looks up a key's entry by its weak handle, reading no field of the key, and hands back a number, a boolean or a string"},
+	{ir.WeakMapSet{}, "keeps a key's weak handle and a number, a boolean or a string, reading no field of either"},
 	{ir.WeakOf{}, "the target's weak handle"},
 	{ir.WeakSetAdd{}, "keeps a key's weak handle, reading no field of the key"},
 	{ir.WeakTarget{}, "reads a weak reference"},

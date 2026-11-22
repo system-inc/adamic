@@ -33,6 +33,7 @@ func TestPassThroughsAreNotConsumers(t *testing.T) {
 		"NumberFormat": ir.NumberFormat{}, "Trim": ir.Trim{}, "StringCall": ir.StringCall{}, "CodePoints": ir.CodePoints{},
 		"ArraySearch": ir.ArraySearch{}, "UnionToString": ir.UnionToString{}, "MaybeToString": ir.MaybeToString{},
 		"InstanceOf": ir.InstanceOf{}, "ViewElement": ir.ViewElement{}, "WeakCollectionHas": ir.WeakCollectionHas{},
+		"WeakMapGet": ir.WeakMapGet{},
 	}
 	for name, expression := range passesThrough {
 		if consumes(expression) {

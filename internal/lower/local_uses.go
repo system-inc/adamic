@@ -63,6 +63,7 @@ var localFields = map[string]localField{
 	"ArraySplice.Site":                {why: "a write site, numbered for the cycle proof"},
 	"MapSet.Site":                     {why: "a write site, numbered for the cycle proof"},
 	"SetAdd.Site":                     {why: "a write site, numbered for the cycle proof"},
+	"WeakMapSet.Site":                 {why: "a write site, numbered for the cycle proof"},
 	"SetIndex.Site":                   {why: "a write site, numbered for the cycle proof"},
 	"SetProperty.Site":                {why: "a write site, numbered for the cycle proof"},
 	"ParallelMap.Site":                {why: "a move site, numbered for its diagnostics"},
