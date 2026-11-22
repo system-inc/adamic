@@ -1,0 +1,27 @@
+# #a4frknq condition 5 (Correctness): does a compiler-only landing move the 16 count-measurement keys with no row
+# digest moving? Run with bash after the sealed opening (sandboxed_repositories, sandboxed_typescript_source). Never
+# merged. At commit A all 16 product tests build into one build cache; at commit B, the next first-parent landing
+# (J-hvc6sw1: 0 of 1,930 row digests moved between them), they run again on the same cache. Each run's build log
+# names every product it settled with its key and whether it hit, so the two runs' count-measurements lines are the
+# keys, printed.
+set -u
+L="$TMPDIR/a4-keys"
+mkdir -p "$L"
+export ADAMIC_BUILD_CACHE_DIR="$L/cache" XDG_CACHE_HOME="$L/xdg"
+echo "A4 on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg)"
+for pair in "A ee631cf9e6" "B 87e1e44ce1"; do
+	side=${pair% *} commit=${pair#* }
+	sha=$(git rev-parse "$commit") || { echo "A4 FAIL no commit $commit"; exit 1; }
+	git -c advice.detachedHead=false checkout -q -f --detach "$sha" || { echo "A4 FAIL checkout $commit"; exit 1; }
+	begun=$SECONDS
+	(cd internal/oracle && ADAMIC_BUILD_LOG="$L/$side.log" go test -count=1 -run '^TestProduct_CountMeasurements' . > "$L/$side.out" 2>&1)
+	code=$?
+	echo "A4 side $side ${sha:0:10} exit $code in $((SECONDS - begun)) s | $(git log -1 --format=%s "$sha" | cut -c1-90)"
+	[ $code -eq 0 ] || grep -E -- '--- FAIL|\.go:[0-9]+:' "$L/$side.out" | head -8
+	echo "A4 side $side count-measurements lines:"
+	grep -E 'count-measurements' "$L/$side.log" | sort | sed 's/^/  /'
+	echo "A4 side $side other product lines: $(grep -c -v -E 'count-measurements|^c(Compile|Link|Build|Archive) ' "$L/$side.log")"
+done
+a=$(grep -c 'count-measurements' "$L/A.log"); b_miss=$(grep 'count-measurements' "$L/B.log" | grep -c -w miss); b_hit=$(grep 'count-measurements' "$L/B.log" | grep -c -w hit)
+echo "A4 summary: A settled $a count-measurements lines; B hit $b_hit, missed $b_miss"
+echo "VERDICT OK"
