@@ -361,17 +361,16 @@ console.log(String(run(first)) + ' ' + String(run(second)) + ' ' + String(a.next
 // What lowering does with a function value whose own parameter is wider than the slot its call names: narrow is
 // a (h: { n: undefined }) => void holding a (h: Holder) => void that writes a Node into h.n, and each hands it a
 // fresh { n: undefined } through a call with Unknown targets, a literal whose type and slot reach no graph type
-// though the callee writes a graph pointer into it. Lowering must stop before that plan is asked. Two stops can:
-// invariance's walk of the mutable field n through the flipped parameter, refusing the view of wide as narrow, or
-// #avybwv1's stop on writing a possibly absent optional own field. By reading, the first holds it, since #avybwv1's
-// judges only an optional field (class.go's absentOptionalFieldWrite) and Holder's n isn't one; the pin takes
-// either and logs which, so a run says which holds it.
+// though the callee writes a graph pointer into it. Lowering must stop before that plan is asked, and invariance
+// does: its walk of the mutable field n through the flipped parameter refuses the view of wide as narrow
+// (J-8aa38vp, at 8:47). #avybwv1's stop on writing a possibly absent optional own field can't fire here, since it
+// judges only an optional field (class.go's absentOptionalFieldWrite) and Holder's n isn't one, so the pin names
+// invariance alone: if it ever stops holding, this says so instead of passing on another stop (Lower's should).
 func TestGraphFlowWiderTargetParameterStops(t *testing.T) {
 	t.Parallel()
 	// invarianceWords end wideningRefusal's words for the field: Holder's n can be written a Node where the
 	// { n: undefined } the call hands over reads undefined.
 	const invarianceWords = "which can write Node | undefined where undefined is read"
-	const optionalWords = "writing a possibly absent optional own field"
 	_, err := lowerSource(t, `interface Node { name: string; next: Node | undefined }
 interface Holder { n: Node | undefined }
 const a: Node = { name: 'a' + '', next: undefined };
@@ -384,15 +383,10 @@ each(narrow);
 console.log(String(a.next === b));
 `)
 	var refused *Refused
-	var later *NotYet
-	switch {
-	case err == nil:
-		t.Fatal("lowered a (h: Holder) => void seen as a (h: { n: undefined }) => void, whose fresh { n: undefined } argument the callee writes a Node into: want one of the two stops")
-	case errors.As(err, &refused) && strings.Contains(refused.What, invarianceWords):
-		t.Logf("held by invariance: %v", err)
-	case errors.As(err, &later) && strings.Contains(later.What, optionalWords):
-		t.Logf("held by #avybwv1's optional field stop: %v", err)
-	default:
-		t.Fatalf("got %v, want a Refused naming %q or a NotYet naming %q", err, invarianceWords, optionalWords)
+	if err == nil {
+		t.Fatal("lowered a (h: Holder) => void seen as a (h: { n: undefined }) => void, whose fresh { n: undefined } argument the callee writes a Node into: want invariance's refusal")
+	}
+	if !errors.As(err, &refused) || !strings.Contains(refused.What, invarianceWords) {
+		t.Fatalf("got %v, want invariance's refusal naming %q", err, invarianceWords)
 	}
 }
