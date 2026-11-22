@@ -136,6 +136,11 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 				if where == nil {
 					where = declaration
 				}
+				// A result typed any is any, which Adamic refuses for good (open question 16), never a
+				// representation stage 0 hasn't learned (#cxhztpd, tsc's tryParseJson).
+				if returns.Flags()&checker.TypeFlagsAny != 0 {
+					return l.refuseAnyValue(where)
+				}
 				return l.notYet(where, "a function returning "+l.checker.TypeToString(returns))
 			}
 			function.Returns = valueType
