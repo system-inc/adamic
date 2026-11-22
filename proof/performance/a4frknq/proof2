@@ -1,0 +1,13 @@
+# #a4frknq head proof, round 2: internal/oracle whole and countproducts whole at the head. Run with bash after the
+# sealed opening (sandboxed_repositories, sandboxed_npm stage3/api, sandboxed_typescript_source). Never merged.
+set -u
+L="$TMPDIR/a4-proof2"
+mkdir -p "$L"
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg)"
+begun=$SECONDS
+go test -count=1 -timeout 80m ./internal/oracle/ ./internal/oracle/countproducts/ > "$L/whole.log" 2>&1
+code=$?
+echo "oracle and countproducts whole: exit $code in $((SECONDS - begun)) s"
+grep -E '^(ok|FAIL|---)\s|^--- FAIL|^panic' "$L/whole.log" | head -40
+grep -c -- '--- FAIL' "$L/whole.log" | sed 's/^/failing entries: /'
+if [ $code -eq 0 ]; then echo "VERDICT PASS"; else echo "VERDICT FAIL"; grep -E -B2 -A12 -- '^--- FAIL' "$L/whole.log" | head -80; false; fi
