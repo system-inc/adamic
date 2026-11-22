@@ -687,6 +687,11 @@
       "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeExpression\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"JSDocTypeExpression\"]],[\"UndefinedKeyword\"]]]"
     },
     {
+      "declaration": "member:[\"ts\",\"JSDocReturnTag\",\"typeExpression\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeExpression\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"JSDocTypeExpression\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeExpression\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"JSDocTypeExpression\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
       "declaration": "member:[\"ts\",\"JSDocSeeTag\",\"name\"]#0",
       "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"JSDocNameReference\"]]]",
       "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"JSDocNameReference\"]],[\"UndefinedKeyword\"]]]"
@@ -700,6 +705,11 @@
       "declaration": "member:[\"ts\",\"JSDocTag\",\"comment\"]#0",
       "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"comment\"],[\"QuestionToken\"],[\"UnionType\",[\"StringKeyword\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"JSDocComment\"]]]]]",
       "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"comment\"],[\"QuestionToken\"],[\"UnionType\",[\"StringKeyword\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"JSDocComment\"]]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"JSDocThrowsTag\",\"typeExpression\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeExpression\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"JSDocTypeExpression\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeExpression\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"JSDocTypeExpression\"]],[\"UndefinedKeyword\"]]]"
     },
     {
       "declaration": "member:[\"ts\",\"JSDocType\",\"_jsDocTypeBrand\"]#0",
@@ -3709,6 +3719,22 @@
       "line": 6826
     },
     {
+      "adaptation": "adapt/99-z-family20/api-sanctions.json row 1 {\"path\":[\"JSDocReturnTag\",\"typeExpression\"],\"kind\":\"PropertySignature\",\"before\":\"JSDocTypeExpression\",\"after\":\"JSDocTypeExpression | undefined\",\"why\":\"Adamic, Nov 22, #bbssdcy decision 2 and ruling :78. The return tag factory assigns an own undefined value when no child is supplied.\"}",
+      "path": [
+        "JSDocReturnTag",
+        "typeExpression"
+      ],
+      "line": 5834
+    },
+    {
+      "adaptation": "adapt/99-z-family20/api-sanctions.json row 2 {\"path\":[\"JSDocThrowsTag\",\"typeExpression\"],\"kind\":\"PropertySignature\",\"before\":\"JSDocTypeExpression\",\"after\":\"JSDocTypeExpression | undefined\",\"why\":\"Adamic, Nov 22, #bbssdcy decision 2 and ruling :78. The throws tag factory assigns an own undefined value when no child is supplied.\"}",
+      "path": [
+        "JSDocThrowsTag",
+        "typeExpression"
+      ],
+      "line": 5861
+    },
+    {
       "adaptation": "75",
       "path": [
         "JsonSourceFile",
@@ -3861,6 +3887,10 @@
     {
       "file": "stage3/adapt/99-readonly-inferred-bindings/api-sanctions.json",
       "sha256": "7d04faceffc7b6dda82fa5a3f161a3cbf74280eb313a6c37f2ad8f3a3dadd46a"
+    },
+    {
+      "file": "stage3/adapt/99-z-family20/api-sanctions.json",
+      "sha256": "1a119294a4714b6e7c6d8ac0c6cabe80266e1edbc7dc635553de2fd2081f05c7"
     }
   ],
   "baseline_diffs": [
@@ -4798,7 +4828,7 @@
     "         text: string;\n",
     "     }\n",
     "     type JSDocComment = JSDocText | JSDocLink | JSDocLinkCode | JSDocLinkPlain;\n",
-    "@@ -5827,7 +5824,7 @@\n",
+    "@@ -5827,11 +5824,11 @@\n",
     "     }\n",
     "     interface JSDocSeeTag extends JSDocTag {\n",
     "         readonly kind: SyntaxKind.JSDocSeeTag;\n",
@@ -4807,6 +4837,11 @@
     "     }\n",
     "     interface JSDocReturnTag extends JSDocTag {\n",
     "         readonly kind: SyntaxKind.JSDocReturnTag;\n",
+    "-        readonly typeExpression?: JSDocTypeExpression;\n",
+    "+        readonly typeExpression?: JSDocTypeExpression | undefined;\n",
+    "     }\n",
+    "     interface JSDocTypeTag extends JSDocTag {\n",
+    "         readonly kind: SyntaxKind.JSDocTypeTag;\n",
     "@@ -5840,15 +5837,15 @@\n",
     "     interface JSDocTypedefTag extends JSDocTag, NamedDeclaration, LocalsContainer {\n",
     "         readonly kind: SyntaxKind.JSDocTypedefTag;\n",
@@ -4828,7 +4863,12 @@
     "         readonly typeExpression: JSDocSignature;\n",
     "     }\n",
     "     interface JSDocOverloadTag extends JSDocTag {\n",
-    "@@ -5862,14 +5859,14 @@\n",
+    "@@ -5858,18 +5855,18 @@\n",
+    "     }\n",
+    "     interface JSDocThrowsTag extends JSDocTag {\n",
+    "         readonly kind: SyntaxKind.JSDocThrowsTag;\n",
+    "-        readonly typeExpression?: JSDocTypeExpression;\n",
+    "+        readonly typeExpression?: JSDocTypeExpression | undefined;\n",
     "     }\n",
     "     interface JSDocSignature extends JSDocType, Declaration, JSDocContainer, LocalsContainer {\n",
     "         readonly kind: SyntaxKind.JSDocSignature;\n",
