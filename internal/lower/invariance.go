@@ -548,8 +548,10 @@ func (l *lowering) hidingWrite(source, target *checker.Type, visited map[[2]*che
 	return &widening{source: source, target: target, hiding: true}
 }
 
-// containers is a type's arrays, tuples, maps and sets: itself, or its members that are, when it's an
-// intersection.
+// containers is a type's arrays, tuples, maps and sets, weak ones included: itself, or its members that
+// are, when it's an intersection. A WeakMap's or WeakSet's type arguments are slots as a Map's are, so a
+// WeakSet<Keyed> seen as a WeakSet<object> stops here, as a Map does, where its methods would otherwise
+// take the wider type's keys.
 func (l *lowering) containers(proven *checker.Type) []*checker.Type {
 	members := []*checker.Type{proven}
 	if proven.Flags()&checker.TypeFlagsIntersection != 0 {
@@ -558,7 +560,7 @@ func (l *lowering) containers(proven *checker.Type) []*checker.Type {
 	var found []*checker.Type
 	for _, member := range members {
 		if member.Flags()&checker.TypeFlagsObject != 0 && member.ObjectFlags()&checker.ObjectFlagsReference != 0 &&
-			(l.isArrayType(member) || checker.IsTupleType(member) || l.isLibraryType(member, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
+			(l.isArrayType(member) || checker.IsTupleType(member) || l.isLibraryType(member, "Map", "ReadonlyMap", "Set", "ReadonlySet", "WeakMap", "WeakSet")) {
 			found = append(found, member)
 		}
 	}
@@ -566,13 +568,17 @@ func (l *lowering) containers(proven *checker.Type) []*checker.Type {
 }
 
 // sameContainer reports whether two containers are the same kind, whose type arguments pair up: two
-// arrays or tuples (readonly or not), two maps, or two sets.
+// arrays or tuples (readonly or not), two maps, two sets, two WeakMaps or two WeakSets.
 func (l *lowering) sameContainer(from *checker.Type, to *checker.Type) bool {
 	switch {
 	case l.isArrayType(to) || checker.IsTupleType(to):
 		return l.isArrayType(from) || checker.IsTupleType(from)
 	case l.isLibraryType(to, "Map", "ReadonlyMap"):
 		return l.isLibraryType(from, "Map", "ReadonlyMap")
+	case l.isLibraryType(to, "WeakMap"):
+		return l.isLibraryType(from, "WeakMap")
+	case l.isLibraryType(to, "WeakSet"):
+		return l.isLibraryType(from, "WeakSet")
 	default:
 		return l.isLibraryType(from, "Set", "ReadonlySet")
 	}
