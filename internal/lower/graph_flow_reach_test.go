@@ -111,10 +111,9 @@ func TestGraphFlowScalarArgumentsUnplanned(t *testing.T) {
 		t.Fatal("no graph types selected: the fixture's cycle didn't make it a graph program")
 	}
 	visits := 0
+	// The fixture's one call with Unknown targets is visitor.visit, so the count names it without reading its
+	// callee, which only ClosureTargets may answer (internal/ir's TestCallTargetReadersLower).
 	for _, call := range unknownClosureCalls(program) {
-		if property, _, isMethod := ir.MethodCallee(call.Closure); !isMethod || property.Name != "visit" {
-			continue
-		}
 		visits++
 		if len(call.ArgumentTypeIDs) != len(call.Arguments) {
 			t.Fatalf("a call with %d arguments names %d argument types", len(call.Arguments), len(call.ArgumentTypeIDs))
