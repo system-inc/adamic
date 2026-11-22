@@ -91,6 +91,7 @@ var gccRuntimeUnits = []string{
 	"view_unions_mixed.c",
 	"view_unions_untagged.c",
 	"weak.c",
+	"weak_collection.c",
 }
 
 func TestProduct_GCCRuntimeAdamic(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "adamic.c") }
@@ -509,6 +510,15 @@ func TestGCCRuntimeViewUnionsUntagged(t *testing.T) {
 
 func TestProduct_GCCRuntimeWeak(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "weak.c") }
 func TestGCCRuntimeWeak(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "weak.c") }
+
+func TestProduct_GCCRuntimeWeakCollection(t *testing.T) {
+	t.Parallel()
+	gccRuntimeUnit(t, "weak_collection.c")
+}
+func TestGCCRuntimeWeakCollection(t *testing.T) {
+	t.Parallel()
+	checkGCCRuntimeUnit(t, "weak_collection.c")
+}
 
 func TestProduct_GCCRuntimeNodeCwdWasi(t *testing.T) {
 	t.Parallel()
