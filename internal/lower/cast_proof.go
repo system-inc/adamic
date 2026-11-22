@@ -218,16 +218,18 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	if mint := l.brandMintOf(operand, from, target); mint != nil {
 		return castProof{brandMint: mint}, l.brandMintRefusal(node, target, mint)
 	}
-	refused := &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: l.castRepair(node)}
+	// Every exit that finds no road names its branch, and castStop words it (cast_stop.go): the source and
+	// target as written, undefined included, so an absent arm's cast reads as the program spelled it.
+	stop := func(cause castCause, field string) error { return l.castStop(node, cause, source, target, field) }
 	inner := ast.SkipParentheses(as.Expression)
 	if inner.Kind == ast.KindAsExpression && l.checker.GetTypeAtLocation(inner).Flags()&checker.TypeFlagsUnknown != 0 {
 		if l.overloadDefaultPair(node) {
 			return castProof{overloadDefault: true}, nil
 		}
-		return castProof{}, refused
+		return castProof{}, stop(castDouble, "")
 	}
 	if source.Flags()&checker.TypeFlagsAny != 0 || target.Flags()&checker.TypeFlagsAny != 0 {
-		return castProof{}, refused
+		return castProof{}, stop(castAny, "")
 	}
 	if l.captureFreeSplit(as.Expression, target) {
 		return castProof{}, nil
@@ -281,27 +283,27 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 			for _, member := range members {
 				if l.castAssignable(wanted, member) && l.nominalAncestor(wanted, member, map[[2]*checker.Type]bool{}) {
 					if !l.classCastArguments(member, wanted) {
-						return castProof{}, refused
+						return castProof{}, stop(castClassArguments, "")
 					}
 					related = true
 				}
 				// An erased identity cannot distinguish incompatible arguments of the same
 				// generic class, even if another source member provides a valid ancestor.
 				if l.classView(member, l.classNodeFor(wanted)) != nil && !l.nominalAncestor(member, wanted, map[[2]*checker.Type]bool{}) {
-					return castProof{}, refused
+					return castProof{}, stop(castClassArguments, "")
 				}
 			}
 			if !related {
 				if upcastFailure != nil {
 					return castProof{}, upcastFailure
 				}
-				return castProof{}, refused
+				return castProof{}, stop(castClassAncestry, "")
 			}
 		}
 		return castProof{classes: targets}, nil
 	}
 	if present := l.absentArm(source, target); present != nil {
-		proof, err := l.unionMemberProof(present, target, refused)
+		proof, err := l.unionMemberProof(present, target, stop)
 		proof.absent = err == nil
 		return proof, err
 	}
@@ -330,9 +332,9 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 			return castProof{structuralView: true}, nil
 		}
 
-		return castProof{}, refused
+		return castProof{}, stop(l.objectCastCause(source, target), "")
 	}
-	return l.unionMemberProof(source, target, refused)
+	return l.unionMemberProof(source, target, stop)
 }
 
 // absentArm is source without its undefined, where the cast is a member cast over a represented union
@@ -389,11 +391,11 @@ func (l *lowering) overlapTarget(members, targets []*checker.Type) bool {
 }
 
 // unionMemberProof proves a cast from a represented union to some of its members by a tag every
-// member holds as a distinct literal.
-func (l *lowering) unionMemberProof(source, target *checker.Type, refused error) (castProof, error) {
+// member holds as a distinct literal. stop words the branch that finds no proof (castStop).
+func (l *lowering) unionMemberProof(source, target *checker.Type, stop func(castCause, string) error) (castProof, error) {
 	members, targets := castMembers(source), castMembers(target)
-	if !l.castUnionWrites(source) {
-		return castProof{}, refused
+	if field := l.castUnionWrites(source); field != "" {
+		return castProof{}, stop(castUnionWrite, field)
 	}
 	if l.overlapTarget(members, targets) {
 		return castProof{overlap: true}, nil
@@ -407,7 +409,12 @@ func (l *lowering) unionMemberProof(source, target *checker.Type, refused error)
 			}
 		}
 		if !found {
-			return castProof{}, refused
+			for _, member := range members {
+				if l.castAssignable(wanted, member) {
+					return castProof{}, stop(castRefinement, "")
+				}
+			}
+			return castProof{}, stop(l.unionCastCause(members, target), "")
 		}
 	}
 	for _, property := range l.checker.GetPropertiesOfType(members[0]) {
@@ -436,12 +443,13 @@ func (l *lowering) unionMemberProof(source, target *checker.Type, refused error)
 			return proof, nil
 		}
 	}
-	return castProof{}, refused
+	return castProof{}, stop(l.unionCastCause(members, target), "")
 }
 
 // Writing through a union view must not change a member's tag or narrow payload promise. A common
-// mutable slot is safe only if everything the union can write fits every member that owns it.
-func (l *lowering) castUnionWrites(source *checker.Type) bool {
+// mutable slot is safe only if everything the union can write fits every member that owns it. The answer
+// is the first field that doesn't, for the refusal to name, or "" when every one does.
+func (l *lowering) castUnionWrites(source *checker.Type) string {
 	for _, property := range l.checker.GetPropertiesOfType(source) {
 		if l.checker.IsReadonlySymbol(property) || property.Flags&ast.SymbolFlagsMethod != 0 {
 			continue
@@ -450,11 +458,11 @@ func (l *lowering) castUnionWrites(source *checker.Type) bool {
 		for _, member := range source.Types() {
 			inside := l.checker.GetPropertyOfType(member, property.Name)
 			if inside == nil || !l.castAssignable(written, l.checker.GetTypeOfSymbol(inside)) {
-				return false
+				return property.Name
 			}
 		}
 	}
-	return true
+	return ""
 }
 
 // An erased identity proves no type arguments. Every target parameter must survive directly in
