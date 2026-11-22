@@ -192,9 +192,10 @@ func Run(cmd *exec.Cmd, options Options) error {
 // Capture runs an unstarted command to completion in its own process group and returns what it wrote to stdout and to
 // stderr, each read to its end. No timer decides when the output is complete: once the command exits its group is
 // killed, so a process it started that still holds an output pipe (a background job, a sanitizer's helper) can't keep
-// a read open, and the reads end when the last writer has. exec.Cmd's own pipes with a WaitDelay instead close the
-// reads a fixed time after the exit and report exec.ErrWaitDelay, so a run that was slow to finish them, or a
-// descendant that held them, is red by chance (#n3gk22h).
+// a read open, and the reads end when the last writer has. The group is killed before the command is reaped, so its
+// id can't have been reused; where that order isn't possible (see processGroup.reap) it isn't killed. exec.Cmd's own
+// pipes with a WaitDelay instead close the reads a fixed time after the exit and report exec.ErrWaitDelay, so a run
+// that was slow to finish them, or a descendant that held them, is red by chance (#n3gk22h).
 //
 // ctx bounds it: when ctx is done the group is killed, and a writer outside the group (one that left it with setsid)
 // ends the reads with ctx's error. A command bound to ctx should be exec.CommandContext with the same ctx. Its exit
@@ -209,7 +210,12 @@ func Capture(ctx context.Context, cmd *exec.Cmd) (stdout, stderr []byte, err err
 // retention without a timer on either drain. Nil destinations discard output.
 // Destinations are written concurrently and must not share unsynchronized state.
 // A destination error is reported after draining the remainder to discard.
-func CaptureTo(ctx context.Context, cmd *exec.Cmd, stdout, stderr io.Writer) (err error) {
+func CaptureTo(ctx context.Context, cmd *exec.Cmd, stdout, stderr io.Writer) error {
+	return captureTo(ctx, cmd, stdout, stderr, killGroup)
+}
+
+// captureTo is CaptureTo with the group's signal given, so a test can see when each kill lands.
+func captureTo(ctx context.Context, cmd *exec.Cmd, stdout, stderr io.Writer, signal func(leader int)) (err error) {
 	if cmd.Stdout != nil || cmd.Stderr != nil {
 		return fmt.Errorf("childguard: output already configured")
 	}
@@ -267,12 +273,10 @@ func CaptureTo(ctx context.Context, cmd *exec.Cmd, stdout, stderr io.Writer) (er
 	}
 	finished := make(chan struct{})
 	go func() { reads.Wait(); close(finished) }()
-	stop := context.AfterFunc(ctx, func() { _ = syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL) })
-	err = cmd.Wait()
+	group := &processGroup{leader: cmd.Process.Pid, signal: signal}
+	stop := context.AfterFunc(ctx, group.kill)
+	err = group.reap(cmd)
 	stop()
-	// The leader is reaped, but while any member of its group lives the group's id can't be reused, so this reaches
-	// exactly the processes it left behind, and none when it left none.
-	_ = syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
 	closeReads := func() {
 		for _, p := range pipes {
 			p.read.Close()
@@ -306,6 +310,60 @@ func captureEnd(ctx context.Context, finished <-chan struct{}, closeReads func()
 		<-finished
 		return ctx.Err()
 	}
+}
+
+// processGroup is a started command's process group, signalled only while its leader's pid is held. Kill(-pid)
+// reaches whatever group has that id, and once the leader is reaped and no member of its group lives, the id is free
+// for an unrelated process to take and lead a group of its own, so a kill after the reap can reach processes this
+// package never started. A leader that has exited but isn't reaped yet still holds its pid and its group's id, so
+// every kill here lands before the reap, and kill and reap share one lock so ctx ending as the leader exits can't
+// slip a kill in after it.
+type processGroup struct {
+	leader int
+	signal func(leader int)
+	sync.Mutex
+	reaped bool
+}
+
+// kill signals the group, unless its leader is already reaped.
+func (g *processGroup) kill() {
+	g.Lock()
+	defer g.Unlock()
+	if !g.reaped {
+		g.signal(g.leader)
+	}
+}
+
+// reap waits for the leader to exit, kills the processes it left behind in its group, then reaps it with cmd.Wait.
+// The kill reaches exactly what the leader left in its group, and nothing when it left nothing, because the unreaped
+// leader keeps the group's id from being reused.
+//
+// Where the leader's exit can't be seen without reaping it (awaitExit reports false), cmd.Wait reaps it and the
+// group is marked reaped after. That gives up two things: the processes the leader left behind aren't killed, so one
+// that holds an output pipe keeps the reads open until ctx ends; and a kill from ctx that starts between the reap
+// inside cmd.Wait and the mark can still reach a group that reused the id.
+func (g *processGroup) reap(cmd *exec.Cmd) error {
+	if !awaitExit(g.leader) {
+		err := cmd.Wait()
+		g.Lock()
+		g.reaped = true
+		g.Unlock()
+		return err
+	}
+	g.Lock()
+	g.signal(g.leader)
+	g.reaped = true
+	g.Unlock()
+	return cmd.Wait()
+}
+
+// killGroup sends `SIGKILL` to the process group whose id is leader. It refuses a leader below 2: 1 would make it
+// Kill(-1), every process this user owns, and 0 Kill(0), this process's own group.
+func killGroup(leader int) {
+	if leader < 2 {
+		return
+	}
+	_ = syscall.Kill(-leader, syscall.SIGKILL)
 }
 
 // CombinedOutput is Run with both streams captured in one buffer.
