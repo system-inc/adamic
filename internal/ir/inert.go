@@ -46,7 +46,8 @@ var inertExpressions = func() map[string]bool {
 		RecordStorage RegExpGroup RegExpNew RegExpProperty SetAdd SetNew SetValues StringCall StringConstant
 		StringFromCodes StringIndex StringIterator StringLength ToFixed Trim Truthy TypeOf TypedArrayFill TypedArrayNew
 		TypedArraySet TypedArraySort TypedArraySubarray Unary Undefined UnknownKind Unwrap Utf8At Utf8Length Void
-		WeakCollectionDelete WeakCollectionHas WeakCollectionNew WeakOf WeakSetAdd WeakTarget`) {
+		WeakCollectionDelete WeakCollectionHas WeakCollectionNew WeakMapGet WeakMapSet WeakOf WeakSetAdd
+		WeakTarget`) {
 		result[name] = true
 	}
 	// The seven that can run program code in JavaScript, each with the stop that keeps it out.
