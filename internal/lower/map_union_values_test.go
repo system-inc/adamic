@@ -19,7 +19,9 @@ func TestMapUnionValueBoundaries(t *testing.T) {
 		{"boolean_and_undefined", `const map = new Map<string, boolean | undefined>();`, "a Map of", false},
 		{"unknown_value", `const map = new Map<string, unknown>();`, "a Map of", false},
 		{"branded_string", `type Path = string & { readonly _path: never }; const map = new Map<string, Path>();`, "a primitive brand member _path whose type is not void", true},
-		{"intersection_optional_boolean_field", `interface Node { readonly flag?: boolean; } type Value = Node & { readonly isTypeOnly: true }; const map = new Map<string, Value>();`, "a Map of", false},
+		// A value with no representation: an intersection whose member holds flag as boolean | string, since one
+		// whose members all hold it as an optional boolean is an object now (#tq6yzqy).
+		{"intersection_optional_boolean_field", `interface Node { readonly flag?: boolean; } type Value = Node & { readonly flag?: boolean | string; readonly isTypeOnly: true }; const map = new Map<string, Value>();`, "a Map of", false},
 		{"union_keys", `const map = new Map<string | number, string>();`, "a Map whose keys", false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
