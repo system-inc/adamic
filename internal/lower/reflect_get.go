@@ -12,8 +12,9 @@ import (
 // time, as 94's propertyOf writes it (Adamic's ruling on #axochk; the shape accepted on #zhgxzjg). It
 // matches that one shape: the same identifier v in both places, held as a union and proven by the
 // checker neither null nor undefined there (propertyOf's guard narrows it to {}), and a key that is
-// a string. So the node never sees a nullish v, Object(v) is v, and the receiver is moot: what's read
-// is ir.DynamicKeyedProperty{v, key}. Every other Reflect.get is NotYet here, as is Reflect or
+// a string written as an identifier or a string literal, which runs nothing, so v can't be rebound
+// between the target and the receiver (#m26ebzy). So the node never sees a nullish v, Object(v) is v,
+// and the receiver is moot: what's read is ir.DynamicKeyedProperty{v, key}. Every other Reflect.get is NotYet here, as is Reflect or
 // Object(x) as a value anywhere else (namespaceExpression, libraryGlobalValue), exactly as before.
 func (l *lowering) reflectGet(node *ast.Node) (ir.Expression, bool, error) {
 	call := node.AsCallExpression()
@@ -38,6 +39,13 @@ func (l *lowering) reflectGet(node *ast.Node) (ir.Expression, bool, error) {
 	receiver := ast.SkipParentheses(arguments[2])
 	if !ast.IsIdentifier(value) || !ast.IsIdentifier(receiver) || l.symbol(value) == nil || l.symbol(value) != l.symbol(receiver) {
 		return nil, true, l.notYet(node, shape)
+	}
+	// JavaScript evaluates the key between the target and the receiver, so a key that runs code could
+	// rebind value between them, and the getter would run on the receiver, not the target the read uses
+	// (#m26ebzy). One symbol is one instance only where the key runs nothing: an identifier or a string
+	// literal (Adamic's ruling (a1) on #bbssdcy).
+	if key := ast.SkipParentheses(arguments[1]); !ast.IsIdentifier(key) && key.Kind != ast.KindStringLiteral {
+		return nil, true, l.notYet(arguments[1], "Reflect.get by a key other than an identifier or a string literal (a key that runs code could rebind the value between the target and the receiver)")
 	}
 	// Object(null) and Object(undefined) are a new empty object, which no backend's read sees: the
 	// node is only ever made for a value the checker proved is neither.

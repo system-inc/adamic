@@ -1,0 +1,23 @@
+// notyet_key_rebinds.a with a getter that reads through another object: the key's stop comes first.
+class Holder {
+	readonly value: number;
+	constructor(value: number) {
+		this.value = value;
+	}
+}
+class Counter {
+	readonly holder: Holder;
+	constructor(value: number) {
+		this.holder = new Holder(value);
+	}
+	get answer(): number {
+		return this.holder.value;
+	}
+}
+let value: object = new Counter(1);
+function key(): string {
+	value = new Counter(42);
+	return 'answer';
+}
+const answer: unknown = Reflect.get(Object(value), key(), value);
+if (typeof answer === 'number') console.log(String(answer));
