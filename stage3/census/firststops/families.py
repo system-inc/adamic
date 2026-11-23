@@ -1,0 +1,126 @@
+"""The refusal families: each latent census reason belongs to the first rule whose regex matches all of it.
+
+The rules began as Seats' families.py (an attachment on #bbssdcy, Nov 22), which groups the meter's reason rows; they
+live here so the first-stop census on a cadence (#f2kma1s) and anyone grouping reasons read one list. familyOf strips
+nothing: callers strip positions first. A reason no rule takes is its own family.
+"""
+
+import re
+
+# Each rule is (regex over the whole reason, family pattern). The fixed words
+# stay literal; only names, types and literals become placeholders. Order
+# matters: the first match wins, so the more specific tails come first.
+rules = [
+    (r"a function taking .+ seen as one taking .+ \(tsc relates a method's parameters both ways\), so it can be handed what it can't take",
+     "a function taking <A> seen as one taking <B> (tsc relates a method's parameters both ways), so it can be handed what it can't take"),
+    (r"a method read as a value \(\S+ would lose its object, and this with it\)",
+     "a method read as a value (<name> would lose its object, and this with it)"),
+    (r"a value of type .+ seen as .+, whose readonly field \S+ becomes writable: a readonly field may hold something narrower than .+, which a write of .+ would replace",
+     "a value of type <A> seen as <B>, whose readonly field <f> becomes writable: a readonly field may hold something narrower than <X>, which a write of <Y> would replace"),
+    (r"a value of type .+ seen as .+, whose method \S+ becomes a writable field: a write of .+ would replace a method of type .+",
+     "a value of type <A> seen as <B>, whose method <m> becomes a writable field: a write of <X> would replace a method of type <Y>"),
+    (r"a value of type .+ seen as .+, a type parameter whose constraint .+ can be written, so it can write what .+ can't hold",
+     "a value of type <A> seen as <T>, a type parameter whose constraint <C> can be written, so it can write what <A> can't hold"),
+    (r"a value of type .+ seen as .+, which can write .+ where .+ is read",
+     "a value of type <A> seen as <B>, which can write <X> where <Y> is read"),
+    (r"a value of type .+ where an array goes",
+     "a value of type <T> where an array goes"),
+    (r"a host object of type .+ seen as .+, which names \S*, a host method its runtime shape doesn't hold \(call it on the host's own type, or wrap it in a closure\)",
+     "a host object of type <A> seen as <B>, which names <m>, a host method its runtime shape doesn't hold (call it on the host's own type, or wrap it in a closure)"),
+    (r"optional property \S+ in .+ absent from structural source .+, which can hide fields",
+     "optional property <P> in <T> absent from structural source <S>, which can hide fields"),
+    (r"an unproven value assigned to a numeric literal or enum member slot .+",
+     "an unproven value assigned to a numeric literal or enum member slot <M>"),
+    (r"a generic instantiation whose type argument for \S+, constrained to .+, can't be read",
+     "a generic instantiation whose type argument for <T>, constrained to <C>, can't be read"),
+    (r"a generic instantiated at void whose body reads the value: \S+'s \S+ = void \(read from the signature\), read at \S+ as a returned value",
+     "a generic instantiated at void whose body reads the value: <name>'s <T> = void (read from the signature), read at <where> as a returned value"),
+    (r"a .+ seen as a .+ \(one keeps something weakly that the other keeps strongly\)",
+     "a <A> seen as a <B> (one keeps something weakly that the other keeps strongly)"),
+    # Lower's d36ba425 (Nov 22) split the reason above: a callable whose slot is boxed in one view and unboxed in
+    # the other now says which slot and how each side holds it.
+    (r"a .+ seen as a .+, whose (?:result|parameter \S+) is .+, held .+, in one and .+, held .+, in the other \(a callable's boxed and unboxed representations differ, and the adapter between them isn't built\)",
+     "a <A> seen as a <B>, whose <slot> is <X>, held <how>, in one and <Y>, held <how>, in the other (a callable's boxed and unboxed representations differ, and the adapter between them isn't built)"),
+    (r"an? .+ seen as .+ \(fixed objects and records have different storage; copy explicitly\)",
+     "a <A> seen as <B> (fixed objects and records have different storage; copy explicitly)"),
+    (r"a .+ bound to \S+, whose constraint .+ is stored otherwise \(fixed objects and records have different storage; copy explicitly\)",
+     "a <A> bound to <T>, whose constraint <C> is stored otherwise (fixed objects and records have different storage; copy explicitly)"),
+    (r"a Map<.+> where Map<.+> goes: its .+ elements are stored as .+ and read there as .+, held as a boxed union \(build it as the slot's type where it's made, or copy its elements into one\)",
+     "a <A> where <B> goes: its <E> elements are stored as <X> and read there as <Y>, held as a boxed union (build it as the slot's type where it's made, or copy its elements into one)"),
+    (r"a checked predicate target .+ that narrows .+, which isn't its supertype",
+     "a checked predicate target <T> that narrows <S>, which isn't its supertype"),
+    (r"a checked predicate target whose base has no required field to check \(.+\)",
+     "a checked predicate target whose base has no required field to check (<T>)"),
+    (r"a checked predicate target whose check would read past the depth bound \(.+\)",
+     "a checked predicate target whose check would read past the depth bound (<T>)"),
+    (r"checked predicate overload target .+",
+     "checked predicate overload target <T>"),
+    (r"checked view field \S+ of type .+",
+     "checked view field <f> of type <T>"),
+    (r"a checked cast from .+ to .+ whose value isn't a plain object",
+     "a checked cast from <A> to <B> whose value isn't a plain object"),
+    (r"a member typed any \(.+\) related to .+ at the assertion site",
+     "a member typed any (<id>) related to <T> at the assertion site"),
+    (r"a member typed any \(\S+, declared\): any has no proven type, so every read of it through a typed view is unchecked",
+     "a member typed any (<name>, declared): any has no proven type, so every read of it through a typed view is unchecked"),
+    (r"a tuple literal leaving out an element of type .+",
+     "a tuple literal leaving out an element of type <T>"),
+    (r"an assignment used as a value whose target write type .+ cannot be read as .+",
+     "an assignment used as a value whose target write type <A> cannot be read as <B>"),
+    (r"an unrestricted dictionary write that can violate named property \S+; use a literal key or a value accepted by every named property",
+     "an unrestricted dictionary write that can violate named property <P>; use a literal key or a value accepted by every named property"),
+    (r"a primitive brand member \S+ whose type is not void",
+     "a primitive brand member <name> whose type is not void"),
+    (r"inherited library member \S+ read as an own field",
+     "inherited library member <name> read as an own field"),
+    (r"overload \d+ of \S+ result .+ cannot be served by implementation result .+",
+     "overload <n> of <name> result <A> cannot be served by implementation result <B>"),
+    (r"overload \d+ of \S+ parameter \S+ cannot be served by implementation parameter \S+",
+     "overload <n> of <name> parameter <p> cannot be served by implementation parameter <q>"),
+    (r"overload \d+ of \S+ with a non-array rest parameter",
+     "overload <n> of <name> with a non-array rest parameter"),
+    (r"forEach with a callback returning .+",
+     "forEach with a callback returning <T>"),
+    (r"a .+ variable a function value captures",
+     "a <T> variable a function value captures"),
+    (r"an element of an array literal a type argument is inferred from, whose type in its constraint .+ can't be read",
+     "an element of an array literal a type argument is inferred from, whose type in its constraint <C> can't be read"),
+    (r"a spread argument \S+'s type argument can be inferred from, judged against its constraint .+",
+     "a spread argument <T>'s type argument can be inferred from, judged against its constraint <C>"),
+    (r"an argument to a rest parameter that isn't an array, which \S+'s type argument can be inferred from, judged against its constraint .+",
+     "an argument to a rest parameter that isn't an array, which <T>'s type argument can be inferred from, judged against its constraint <C>"),
+    (r"an unproven predicate argument for parameter \S+ \(argument '.+'\)".replace("'", '"'),
+     "an unproven predicate argument for parameter <p> (argument '<expression>')".replace("'", '"')),
+    (r"an unproven relation from .+ to .+: optional field \S+ has no proven compatible presence/type",
+     "an unproven relation from <A> to <B>: optional field <f> has no proven compatible presence/type"),
+    (r"an unproven relation from .+ to .+: the source is not assignable to the target",
+     "an unproven relation from <A> to <B>: the source is not assignable to the target"),
+    (r"a value without nominal ancestry seen as .+",
+     "a value without nominal ancestry seen as <T>"),
+    (r"a void-returning function at the assignment site seen as .+",
+     "a void-returning function at the assignment site seen as <T>"),
+    (r"a write through a union of .+ into a slot that holds .+ in \S+",
+     "a write through a union of <A> into a slot that holds <B> in <T>"),
+    (r"a write through a union to a slot .+ doesn't name",
+     "a write through a union to a slot <S> doesn't name"),
+    (r"\S+ value needs exactly .+, not .+ with no slot",
+     "<name> value needs exactly <A>, not <B> with no slot"),
+    (r"a function returning .+",
+     "a function returning <T>"),
+    (r"a value of type any: any has no proven type",
+     "a value of type any: any has no proven type"),
+    (r"a value of type (?!.* seen as ).+",
+     "a value of type <T>"),
+    (r"a Map of .+",
+     "a Map of <T>"),
+    (r"an array of (?!unknown with erased element storage).+",
+     "an array of <T>"),
+]
+compiledRules = [(re.compile(expression), pattern) for expression, pattern in rules]
+
+
+def familyOf(reason):
+    for expression, pattern in compiledRules:
+        if expression.fullmatch(reason):
+            return pattern
+    return reason

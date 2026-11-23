@@ -408,6 +408,11 @@ func TestCensusPairPython(t *testing.T) {
 	runPython(t, "stage3/census/pair", "test_pair")
 }
 
+func TestFirstStopsDiffPython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "stage3/census/firststops", "test_fsdiff")
+}
+
 // runPython runs modules' unittest suites from directory, with a stage3 cache of the test's own, and fails with
 // unittest's output when any of them fails.
 func runPython(t *testing.T, directory string, modules ...string) {
