@@ -8,8 +8,10 @@ import (
 
 // untaggedUnionArm is whether a cast from a union no literal tag tells apart takes the checked view of its
 // target (#axqgdck, rulings.md:18: an untagged downcast makes a checked view with no tag test). Every member
-// and the target are plain objects held as ir.Object: no class instance, callable, array, tuple, dictionary
-// or phantom extension, so nothing reaches the view that a field read can't check. The target is one object,
+// and the target are plain objects held as ir.Object: no class instance, callable, array, tuple or
+// dictionary, so nothing reaches the view that a field read can't check. A phantom extension (tsc's Expression
+// and Declaration, a Node that adds only a brand) is held as its base, so it's a plain object here too; reading
+// or observing its phantom member stays refused by the brand rules, view or no view (#axqgdck head 2). The target is one object,
 // a member or narrower than one (castAssignable to it), so the cast is a downcast; a sideways target and a
 // union target keep their stops. A union with a field every member holds as a literal is tagged, whether or
 // not the literals tell the members apart: unionMemberProof proves its cast or refuses it, and its refusals
@@ -29,15 +31,12 @@ func (l *lowering) untaggedUnionArm(members, targets []*checker.Type) bool {
 }
 
 // plainViewObject is an object type a checked view reads field by field: an object held as ir.Object that's
-// no class instance, callable, array, tuple, dictionary or phantom extension.
+// no class instance, callable, array, tuple or dictionary.
 func (l *lowering) plainViewObject(proven *checker.Type) bool {
 	if proven.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(proven) || l.arrayLikeType(proven) || checker.IsTupleType(proven) {
 		return false
 	}
 	if of, known := l.representation(proven); !known || of != ir.Object {
-		return false
-	}
-	if base, _ := l.phantomExtension(proven); base != nil {
 		return false
 	}
 	return len(l.checker.GetIndexInfosOfType(proven)) == 0 && len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) == 0 && len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) == 0
