@@ -23,6 +23,8 @@ func TestUntaggedUnionViewStopsAtTheRead(t *testing.T) {
 	if string(native.stderr) != string(javaScript.stderr) {
 		t.Errorf("the backends stop differently: native %q, JavaScript %q", native.stderr, javaScript.stderr)
 	}
+	// The stop's words, for its negative witness (cloud/admission-corpus/negative-witnesses.json).
+	t.Logf("stderr %q", native.stderr)
 	if node := onNode(t, path); node.exitCode != 0 || string(node.stdout) != "casting\nundefined\n" {
 		t.Fatalf("source on Node must run on: exit %d stdout %q", node.exitCode, node.stdout)
 	}
