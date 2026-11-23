@@ -53,9 +53,7 @@ func statementsSmallTypeScriptCounted(t *testing.T, path string) (string, func()
 		t.Fatal(err)
 	}
 	source := native.C(program)
-	return countPortable(t, source, ""), func() string {
-		return countedRun(t, path, typed, source, false, nil, false, false)
-	}
+	return countPortable(t, source, ""), countedMeasure(t, path, source, false, nil, false, false)
 }
 
 func init() {

@@ -257,9 +257,7 @@ func checkedPredicateCounted(t *testing.T, key, name string) (string, func() str
 		t.Fatal(err)
 	}
 	source := native.C(program)
-	return countPortable(t, source, ""), func() string {
-		return countedRun(t, key, typed, source, false, nil, false, false)
-	}
+	return countPortable(t, source, ""), countedMeasure(t, key, source, false, nil, false, false)
 }
 
 // TestCountsAreRecorded's shards hold these rows with every other; this focused verifier
