@@ -76,6 +76,15 @@ func (l *lowering) castValue(node *ast.Node) (ir.Expression, error) {
 		}
 		value = ir.Coalesce{Value: value, Panic: ir.StringConstant{Index: l.constant(message)}, Of: ir.Object}
 	}
+	return l.castRoadValue(node, proof, value, source, target, message)
+}
+
+// castRoadValue lowers the road a proof found over a value already lowered: the view, the tag test or the
+// class test, with message as its failure. It takes the value, source and target rather than reading the
+// cast's operand, so a composed cast can lower its inner road over a value it made itself (the present
+// value of a cast that keeps nullish, once tested, #b5w3ycg). node is the cast, for its place and its
+// view's site.
+func (l *lowering) castRoadValue(node *ast.Node, proof castProof, value ir.Expression, source, target *checker.Type, message string) (ir.Expression, error) {
 	if proof.overlap {
 		return l.overlapViewCast(node, value, source, target)
 	}
