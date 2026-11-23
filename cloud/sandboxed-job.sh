@@ -27,6 +27,8 @@
 #     its one path, and lists the tree's go.sum and go.work.sum files exactly as laid here, each with the same sha256.
 #     Anything else, a failed read included, keeps the image's cache, and one line on stderr says which and why.
 #     GOPROXY, GOSUMDB and GOFLAGS stay the image's either way.
+#   - cohere_typescript_path, from cloud/cohere-typescript-path.sh beside this file, prints where cohere keeps its
+#     TypeScript submodule as cohere's .gitmodules in the tree names it, for a command that lays or names it.
 # Loom folds what's settled here into the image's environment.sh at its next build, so this file shrinks over time.
 
 sandboxedJobFail() {
@@ -52,6 +54,10 @@ mkdir -p "$npm_config_logs_dir" || sandboxedJobFail "couldn't make npm's log dir
 # empty and git refuses a commit with no name. A house box's own identity is never overridden.
 export GIT_AUTHOR_NAME="${GIT_AUTHOR_NAME:-sandboxed-job}" GIT_AUTHOR_EMAIL="${GIT_AUTHOR_EMAIL:-sandboxed-job@loom.invalid}"
 export GIT_COMMITTER_NAME="${GIT_COMMITTER_NAME:-sandboxed-job}" GIT_COMMITTER_EMAIL="${GIT_COMMITTER_EMAIL:-sandboxed-job@loom.invalid}"
+# The one reader of cohere's TypeScript submodule's path, from beside this file however the caller named it.
+# shellcheck disable=SC1091
+. "$(dirname -- "${BASH_SOURCE[0]}")/cohere-typescript-path.sh" ||
+	sandboxedJobFail "couldn't source cohere-typescript-path.sh from beside ${BASH_SOURCE[0]}" || return 1
 
 # The node's laid Go module cache, or the image's. The lay file is the proxy's contract with Loom (#nodecache): one JSON
 # object, written atomically and only once the commit's modules are all laid, naming the repository, the commit, the
