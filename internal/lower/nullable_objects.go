@@ -18,6 +18,29 @@ func (l *lowering) nullableObjectUnion(proven *checker.Type) bool {
 	return known && held == ir.Object && present.Flags()&checker.TypeFlagsObject != 0
 }
 
+// nullableBareLookup is whether value, held as a bare reference, is read where its type holds both null and
+// undefined. Every slot of such a type is boxed (#7yt238q), so the only way a value gets here bare is a
+// lookup: a Map's get, an element read past an array's end, a pop. A bare pointer has one empty value, so a
+// missing key and a stored null are the same pointer, and one of them reads wrong (#92cnfpf: Map<string,
+// RegExpExecArray | null>'s get of a missing key and an array read past its end, on both backends). An
+// object is nullableObjectUnion's, as it was; every other bare reference kind is judged here the same way.
+func (l *lowering) nullableBareLookup(node *ast.Node, value ir.Expression) bool {
+	if value.Type() == ir.Object {
+		return l.nullableObjectUnion(l.checker.GetTypeAtLocation(node))
+	}
+	switch value.Type() {
+	case ir.Array, ir.Map, ir.Closure, ir.Promise, ir.Uint8Array, ir.Int32Array, ir.Float64Array, ir.Uint16Array, ir.Generator:
+	default:
+		return false
+	}
+	proven := l.concrete(l.checker.GetTypeAtLocation(node))
+	if proven.Flags()&checker.TypeFlagsUnion == 0 || !l.includesNull(proven) || !l.includesUndefined(proven) {
+		return false
+	}
+	held, known := l.representation(l.checker.GetNonNullableType(proven))
+	return known && held == value.Type()
+}
+
 func unionObservation(node *ast.Node) bool {
 	parent := node.Parent
 	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
