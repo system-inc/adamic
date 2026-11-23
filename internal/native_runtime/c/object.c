@@ -162,7 +162,8 @@ adamic_closure *adamic_object_callee(const adamic_object *object, const char *na
 		// key answers not callable before anything reads the slot as a pointer (#3tjjcjs).
 		bool references = adamic_record_values(object) == adamic_field_reference;
 		if (references && slot->reference == NULL) { return NULL; }
-		if (references && slot->reference->kind == adamic_kind_closure) { return slot->reference; }
+		const adamic_heap *reference = references ? slot->reference : NULL;
+		if (reference != NULL && reference->kind == adamic_kind_closure) { return slot->reference; }
 		size_t capacity = strlen(name) + 64;
 		char *message = malloc(capacity);
 		if (message == NULL) {
