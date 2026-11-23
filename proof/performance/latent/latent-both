@@ -1,0 +1,31 @@
+# #t2p4wyv: the latent census's files pass, main then the head, both on one box, each side in its own scratch: every
+# write the kind-union write check stops (site, unit, first stop), and both sides' totals, then the rows that differ.
+# Run with bash after the sealed opening (sandboxed_repositories, sandboxed_npm stage3/api stage3/typescript,
+# sandboxed_typescript_source). Never merged.
+set -u
+BASE=${LATENT_BASE:-0efbdb083a60086fec3a29687a162bbf21105336}
+HEAD_COMMIT=$(git rev-parse HEAD^)
+ROOT=$TMPDIR/t2p-latent
+mkdir -p "$ROOT"
+cp "${LATENT_KIT:-proof/performance/t2p4wyv}/latent-one" "$ROOT/latent-one"
+for side in base head; do
+	commit=$BASE
+	[ "$side" = head ] && commit=$HEAD_COMMIT
+	git -c advice.detachedHead=false checkout -q -f --detach "$commit" || { echo "VERDICT FAIL checkout $side"; exit 1; }
+	mkdir -p "$ROOT/$side"
+	TMPDIR="$ROOT/$side" bash "$ROOT/latent-one" > "$ROOT/$side.log" 2>&1
+	code=$?
+	echo "side $side at ${commit:0:12}: exit $code"
+	grep -v -E '^(ROWSGZ|STOP )' "$ROOT/$side.log" | cut -c1-300 | tail -30
+	if [ $code -ne 0 ]; then echo "VERDICT FAIL side $side"; exit 1; fi
+	grep '^ROWSGZ' "$ROOT/$side.log" | sed 's/^ROWSGZ //' | tr -d '\n' | base64 -d | gunzip > "$ROOT/$side.tsv"
+	echo "== $side: $(($(wc -l < "$ROOT/$side.tsv") - 1)) rows"
+	if [ -z "${LATENT_QUIET:-}" ]; then
+		awk -F'\t' 'NR > 1 { printf "%s:%s:%s first=%s units=%s | %s | %s\n", $2, $3, $4, $5, $7, substr($11, 1, 200), substr($12, 1, 120) }' "$ROOT/$side.tsv"
+	fi
+done
+echo "== rows only at base (site and words)"
+comm -23 <(awk -F'\t' 'NR > 1 { print $2 ":" $3 ":" $4 " " $11 }' "$ROOT/base.tsv" | sort) <(awk -F'\t' 'NR > 1 { print $2 ":" $3 ":" $4 " " $11 }' "$ROOT/head.tsv" | sort) | cut -c1-260
+echo "== rows only at the head"
+comm -13 <(awk -F'\t' 'NR > 1 { print $2 ":" $3 ":" $4 " " $11 }' "$ROOT/base.tsv" | sort) <(awk -F'\t' 'NR > 1 { print $2 ":" $3 ":" $4 " " $11 }' "$ROOT/head.tsv" | sort) | cut -c1-260
+echo "VERDICT OK"
