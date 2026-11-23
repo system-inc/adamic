@@ -1,0 +1,38 @@
+# #hwjx7gw family 46: the decoder probes held to Node, unsanitized, at base (main's entries_records.go) and head,
+# five runs a backend. Source it in the job's shell after the sealed opening. Never merged.
+W="$TMPDIR/hwp"; mkdir -p "$W/out"; failed=0
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg), $(node --version), $(clang --version | head -1)"
+base=$(cat proof/performance/hwjx7gw/base)
+F=internal/lower/entries_records.go; cp "$F" "$W/head.go"
+if go build -o "$W/head" ./cmd/adamic > "$W/build-head.log" 2>&1; then echo "PASS build head"; else echo "FAIL build head"; head -20 "$W/build-head.log"; failed=1; fi
+cp proof/performance/hwjx7gw/base.go.txt "$F"
+if go build -o "$W/base" ./cmd/adamic > "$W/build-base.log" 2>&1; then echo "PASS build base"; else echo "FAIL build base"; head -20 "$W/build-base.log"; failed=1; fi
+cp "$W/head.go" "$F"
+printf "import { registerHooks } from 'node:module';\nregisterHooks({ resolve(specifier, context, next) { return specifier === 'adamic' ? { url: %s, shortCircuit: true } : next(specifier, context); } });\n" "'file://$PWD/oracle/adamic.mjs'" > "$W/hook.mjs"
+flat() { tr '\n' '/' < "$1" | cut -c1-160; }
+for file in proof/performance/hwjx7gw/probes/*.ts internal/oracle/testdata/weak_field_union_membership/*.ts; do
+	name=$(basename "$file" .ts); o="$W/out/$name"; mkdir -p "$o"
+	for run in 1 2 3 4 5; do
+		timeout 60 node --disable-warning=ExperimentalWarning oracle/node.mjs "$file" > "$o/node.$run.out" 2> "$o/node.$run.err"; echo "$?" > "$o/node.$run.exit"
+	done
+	echo "== $name"
+	echo "node: exit $(cat "$o/node.1.exit") | $(flat "$o/node.1.out") | $(flat "$o/node.1.err")"
+	for r in 2 3 4 5; do cmp -s "$o/node.1.out" "$o/node.$r.out" && cmp -s "$o/node.1.exit" "$o/node.$r.exit" || echo "node run $r differs: exit $(cat "$o/node.$r.exit") | $(flat "$o/node.$r.out")"; done
+	for b in base head; do
+		if "$W/$b" js "$file" > "$o/$b.mjs" 2> "$o/$b.js-compile.err"; then
+			for run in 1 2 3 4 5; do timeout 60 node --import "$W/hook.mjs" "$o/$b.mjs" > "$o/$b.js.$run.out" 2> "$o/$b.js.$run.err"; echo "$?" > "$o/$b.js.$run.exit"; done
+			echo "$b js: exit $(cat "$o/$b.js.1.exit") | $(flat "$o/$b.js.1.out") | $(flat "$o/$b.js.1.err")"
+			for r in 2 3 4 5; do cmp -s "$o/$b.js.1.out" "$o/$b.js.$r.out" && cmp -s "$o/$b.js.1.exit" "$o/$b.js.$r.exit" && cmp -s "$o/$b.js.1.err" "$o/$b.js.$r.err" || echo "$b js run $r differs: exit $(cat "$o/$b.js.$r.exit") | $(flat "$o/$b.js.$r.out") | $(flat "$o/$b.js.$r.err")"; done
+		else
+			echo "$b js stops: $(head -1 "$o/$b.js-compile.err" | cut -c1-240)"
+		fi
+		if "$W/$b" build "$file" -o "$o/$b.bin" > "$o/$b.build.out" 2> "$o/$b.build-compile.err"; then
+			for run in 1 2 3 4 5; do timeout 60 "$o/$b.bin" > "$o/$b.native.$run.out" 2> "$o/$b.native.$run.err"; echo "$?" > "$o/$b.native.$run.exit"; done
+			echo "$b release: exit $(cat "$o/$b.native.1.exit") | $(flat "$o/$b.native.1.out") | $(flat "$o/$b.native.1.err")"
+			for r in 2 3 4 5; do cmp -s "$o/$b.native.1.out" "$o/$b.native.$r.out" && cmp -s "$o/$b.native.1.exit" "$o/$b.native.$r.exit" || echo "$b release run $r differs: exit $(cat "$o/$b.native.$r.exit") | $(flat "$o/$b.native.$r.out")"; done
+		else
+			echo "$b build stops: $(head -1 "$o/$b.build-compile.err" | cut -c1-240)"
+		fi
+	done
+done
+if [ $failed -eq 0 ]; then echo "VERDICT PASS (built and ran; read the rows)"; else echo "VERDICT FAIL"; fi
