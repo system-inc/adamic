@@ -474,6 +474,13 @@ func (l *lowering) objectTagCall(node, receiver *ast.Node, written []*ast.Node) 
 		if reason := l.prototypeHazard(receiver, "toString"); reason != "" {
 			return nil, l.notYet(node, "Object.prototype.toString through a view ("+reason+")")
 		}
+		// A library object with a tag of its own, an iterator's Map Iterator, isn't Object, so the call's road
+		// stops as the direct toString's does (libraryObjectOwnAnswer, #20e4t06). A RegExp match's groups have no
+		// prototype but no tag either, and Object.prototype.toString answers [object Object] for them on Node,
+		// so they keep lowering here.
+		if library := l.libraryObjectOwnAnswer(receiver); library != "" && library != regexpGroupsAnswer {
+			return nil, l.notYet(node, "Object.prototype.toString on "+library+", whose own tag isn't Object")
+		}
 		tag = "Object"
 	default:
 		return nil, l.notYet(node, "Object.prototype.toString on this representation")
