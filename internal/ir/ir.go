@@ -733,6 +733,12 @@ type (
 		To      Type
 		Checked bool
 		Message string
+		// ReferencesMessage, on a checked narrow to a Record, is a second test after the first: the record
+		// holds its values as references, so each one reads as a Union, or it stops with these words. A
+		// record's value kind is fixed when it's made (natively its shape's adamic_field_kind, on the
+		// JavaScript backend its adamicRecords mark), so no later write can move it. lower's dictionary view
+		// asks it (cast_dictionary_view.go); "" asks nothing.
+		ReferencesMessage string
 	}
 
 	// TypeOf is typeof Value: "number", "string", "boolean", "undefined", "object" or "function".

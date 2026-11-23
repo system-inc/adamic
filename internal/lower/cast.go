@@ -43,6 +43,11 @@ func (l *lowering) castValue(node *ast.Node) (ir.Expression, error) {
 		l.keepSlot(operand, l.checker.GetTypeAtLocation(node))
 		return l.expression(operand)
 	}
+	if proof.dictionaryView {
+		// The view changes the representation on purpose, a union to the record it tests for, so it's lowered
+		// before sameKeeping, which would stop it.
+		return l.dictionaryViewValue(node)
+	}
 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
 	target := l.concrete(l.checker.GetTypeAtLocation(node))
 	// The message names the source as written, undefined included; everything after the absent check

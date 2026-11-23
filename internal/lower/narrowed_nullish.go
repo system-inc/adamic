@@ -943,6 +943,14 @@ type propertyWrites struct {
 	// accessors is a write that could make a name a getter, on an object or its prototype: a
 	// descriptor, a prototype set, a write of __proto__, or Object or Reflect handed on whole.
 	accessors bool
+	// targets is every write's target, in the walk's order, a key no literal names included, for a judge that
+	// asks what a write's receiver is rather than which name it writes (dictionaryViewWritten).
+	targets []*ast.Node
+	// libraryWrites is each access of a library member that writes any name (writingLibraryMembers), and
+	// libraryWhole is Object or Reflect handed on whole, whose calls can't be told: for the same judge, which
+	// reads the receiver a call writes, or fails closed where it can't.
+	libraryWrites []*ast.Node
+	libraryWhole  bool
 }
 
 // writingLibraryMembers are the library's members that can write any name of an object the program
@@ -980,11 +988,13 @@ func (l *lowering) propertyWritesOf() *propertyWrites {
 			member := node.Parent
 			if member.Kind != ast.KindPropertyAccessExpression || member.AsPropertyAccessExpression().Expression != node {
 				l.propertyWrites.accessors = true
+				l.propertyWrites.libraryWhole = true
 				return
 			}
 			if installs, writes := writingLibraryMembers[node.Text()][member.Name().Text()]; writes {
 				l.propertyWrites.everyName = true
 				l.propertyWrites.accessors = l.propertyWrites.accessors || installs
+				l.propertyWrites.libraryWrites = append(l.propertyWrites.libraryWrites, member)
 			}
 		}
 	})
@@ -995,6 +1005,7 @@ func (l *lowering) propertyWritesOf() *propertyWrites {
 // name written through a property access or a literal key is that name, whatever the receiver's type:
 // an any or a dictionary that aliases the object writes it by that name too.
 func (l *lowering) notePropertyWrite(target *ast.Node) {
+	l.propertyWrites.targets = append(l.propertyWrites.targets, target)
 	if target.Kind == ast.KindPropertyAccessExpression {
 		name := target.Name().Text()
 		l.propertyWrites.accessors = l.propertyWrites.accessors || name == "__proto__"
