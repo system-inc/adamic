@@ -1,0 +1,74 @@
+# #mh5kdde round 3 (bd90c7f1): compiles, the six pins, each pin's mutant compiling and red, internal/lower (its
+# products settled) and internal/ir whole. Source it in the job's shell after the sealed opening, never run it with
+# bash, since it calls sandboxed_products. Never merged.
+L="$TMPDIR/mh5"
+mkdir -p "$L"
+failed=0
+step() { echo "$1 $2"; [ "$1" = PASS ] || failed=1; }
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg)"
+F=internal/lower/count_types_classes.go
+bad=$(gofmt -l internal/lower); if [ -z "$bad" ]; then step PASS gofmt; else step FAIL gofmt; echo "$bad"; fi
+if go vet ./internal/lower/ > "$L/vet.log" 2>&1; then step PASS vet; else step FAIL vet; head -40 "$L/vet.log"; fi
+pins='^TestCountType'
+if go test -count=1 -timeout 20m -v -run "$pins" ./internal/lower/ > "$L/pins.log" 2>&1; then step PASS pins; else step FAIL pins; fi
+grep -E -- '^(--- |ok|FAIL)|_test.go:[0-9]+|panic' "$L/pins.log" | cut -c1-300 | head -40
+cp "$F" "$L/orig.go"
+# mutant <name> <test>, reading pairs of old and new lines from python on stdin
+mutant() {
+	local name=$1 test=$2
+	cp "$L/orig.go" "$F"
+	python3 - "$F" || { step FAIL "mutant-$name-applies"; return; }
+	go test -count=1 -timeout 20m -v -run "^${test}\$" ./internal/lower/ > "$L/m-$name.log" 2>&1
+	local code=$?
+	if grep -q -E '\[build failed\]|\[setup failed\]|declared and not used|cannot use|undefined:|imported and not used' "$L/m-$name.log"; then step FAIL "mutant-$name-compiles"; head -10 "$L/m-$name.log"; else step PASS "mutant-$name-compiles"; fi
+	grep -E -- '--- (PASS|FAIL)|_test.go:[0-9]+|panic:' "$L/m-$name.log" | cut -c1-300 | head -6
+	if [ $code -ne 0 ] && grep -q -- "--- FAIL: $test" "$L/m-$name.log"; then step PASS "mutant-$name-red"; else step FAIL "mutant-$name-red"; fi
+}
+cat > "$L/swap.py" <<'PY'
+import sys
+def swap(path, pairs):
+    t = open(path).read()
+    for old, new in pairs:
+        assert t.count(old) == 1, old
+        t = t.replace(old, new)
+    open(path, "w").write(t)
+PY
+export PYTHONPATH="$L"
+echo "== mutant classing: one class per type"
+mutant classing TestCountTypeTargetsAskOncePerPairOfClasses <<'PY'
+import sys, swap
+swap.swap(sys.argv[1], [("\t\tif countTypeFresh(proven) {\n", "\t\tif true || countTypeFresh(proven) {\n")])
+PY
+echo "== mutant shared: bucket key empty and identity always true"
+mutant shared TestCountTypeTargetsCompareFindsNoSharedRowWrong <<'PY'
+import sys, swap
+swap.swap(sys.argv[1], [("\t\tshape := countTypeShape(typeChecker, proven)\n", "\t\tshape := \"\"\n"),
+    ("\t\t\tif checker.Checker_isTypeIdenticalTo(typeChecker, representatives[held], proven) {\n", "\t\t\tif true || checker.Checker_isTypeIdenticalTo(typeChecker, representatives[held], proven) {\n")])
+PY
+echo "== mutant fresh: freshness guard and the fresh-literal bit both dropped"
+mutant fresh TestCountTypeClassesKeepFreshTypesApart <<'PY'
+import sys, swap
+swap.swap(sys.argv[1], [("\t\tif countTypeFresh(proven) {\n", "\t\tif false && countTypeFresh(proven) {\n"),
+    ("key.number(int64(objectFlags &^ countTypeCacheFlags &^ countTypeObjectCacheFlags))", "key.number(int64(objectFlags &^ countTypeCacheFlags &^ countTypeObjectCacheFlags &^ checker.ObjectFlagsFreshLiteral))")])
+PY
+echo "== mutant kind: declaration kind and symbol flags dropped from the key"
+mutant kind TestCountTypeTargetsKeepMethodsApartFromFunctions <<'PY'
+import sys, swap
+swap.swap(sys.argv[1], [("\t\t\t\tkey.number(int64(declaration.Kind))\n", ""), ("\t\tkey.number(int64(symbol.Flags))\n", "\t\t_ = symbol\n")])
+PY
+echo "== mutant return: the return type id dropped"
+mutant return TestCountTypeClassesKeepNestedMethodsApartFromFunctions <<'PY'
+import sys, swap
+swap.swap(sys.argv[1], [("\t\t\tkey.typeID(typeChecker.GetReturnTypeOfSignature(signature))\n", "")])
+PY
+echo "== mutant abstract: the signature flags dropped"
+mutant abstract TestCountTypeClassesKeepAbstractConstructorsApart <<'PY'
+import sys, swap
+swap.swap(sys.argv[1], [("\t\t\tkey.number(int64(signature.Flags()))\n", "")])
+PY
+cp "$L/orig.go" "$F"
+cmp -s "$L/orig.go" "$F" || step FAIL restore
+if sandboxed_products ./internal/lower > "$L/products.log" 2>&1; then step PASS products; else step FAIL products; tail -5 "$L/products.log"; fi
+if go test -count=1 -timeout 40m ./internal/lower/ ./internal/ir/ > "$L/whole.log" 2>&1; then step PASS whole; else step FAIL whole; fi
+grep -E '^(ok|FAIL|---)|panic:' "$L/whole.log" | head -30
+if [ $failed -eq 0 ]; then echo "VERDICT PASS"; else echo "VERDICT FAIL"; fi
