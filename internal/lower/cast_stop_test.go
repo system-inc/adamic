@@ -69,7 +69,7 @@ var castStopProbes = []struct {
 		"whose length a check at the cast can't hold"},
 	{"tuple from tuples", "function f(x: readonly [1] | readonly [1, 2]): readonly [1] { return x as readonly [1]; }", false,
 		"stage 0 can't lower a checked cast from readonly [1] | readonly [1, 2] to the tuple readonly [1], which needs its length checked yet"},
-	{"array arm", "interface P { readonly p: number } function f(x: P | readonly string[]): P { return x as P; }", false,
+	{"array arm", "interface P { readonly p: number } interface Q { readonly q: string } function f(x: P | Q | readonly string[]): P { return x as P; }", false,
 		"which needs Array.isArray to tell"},
 	{"empty source", "interface C { readonly c: number } function f(x: {}): C { return x as C; }", false,
 		"stage 0 can't lower a checked view of C over a value typed {}, which holds anything but null and undefined yet"},

@@ -57,6 +57,9 @@ func (l *lowering) castValue(node *ast.Node) (ir.Expression, error) {
 	// The message names the source as written, undefined included; everything after the absent check
 	// reads the present members (absentArm).
 	message := "cast failed: this " + l.checker.TypeToString(source) + " is not a " + l.checker.TypeToString(target)
+	if proof.arrayArm != nil {
+		return l.arrayArmValue(node, proof.arrayArm, source, target, message)
+	}
 	if proof.keepsNullish {
 		return l.keepsNullishValue(node, proof, source, target, message)
 	}

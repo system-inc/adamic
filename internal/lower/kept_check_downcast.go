@@ -24,7 +24,7 @@ func (l *lowering) keptCheckDowncastRefusal(node *ast.Node) error {
 	if err != nil {
 		return err
 	}
-	if len(proof.classes) > 0 || !proof.interfaceView && !proof.structuralView && !proof.overlap && proof.kindUnion == nil && len(proof.allowed) == 0 {
+	if len(proof.classes) > 0 || !proof.interfaceView && !proof.structuralView && !proof.overlap && proof.kindUnion == nil && len(proof.allowed) == 0 && proof.arrayArm == nil {
 		return nil
 	}
 	source := l.checker.TypeToString(l.concrete(l.checker.GetTypeAtLocation(node.AsAsExpression().Expression)))
@@ -35,6 +35,8 @@ func (l *lowering) keptCheckDowncastRefusal(node *ast.Node) error {
 	switch {
 	case len(proof.allowed) > 0:
 		refused.Fix = "narrow it, as .a writes !: " + l.tagNarrowing(node, proof.field, proof.allowed, proof.absent) + ", " + ts
+	case proof.arrayArm != nil:
+		refused.Fix = "narrow it, as .a writes !: " + l.arrayArmNarrowing(node, proof.arrayArm) + ", " + ts
 	case proof.kindUnion != nil:
 		refused.Fix = "declare " + source + " as a union with " + target + "'s members and narrow it, as .a writes !: " + l.tagNarrowing(node, proof.kindUnion.field, proof.kindUnion.literals, false) + ", " + ts
 	case proof.interfaceView && literal != nil:
@@ -53,12 +55,7 @@ func init() {
 // allowed, written with the operand's own name when it's a reference a narrowing can name. absent is an
 // operand that may be undefined (absentArm), read through ?. so that undefined fails the test too.
 func (l *lowering) tagNarrowing(node *ast.Node, field string, allowed []*checker.Type, absent bool) string {
-	operand := ast.SkipParentheses(node.AsAsExpression().Expression)
-	reference := ast.IsIdentifier(operand) || operand.Kind == ast.KindPropertyAccessExpression || operand.Kind == ast.KindThisKeyword
-	held := "value"
-	if reference {
-		held = sourceExpression(operand)
-	}
+	held, reference := castNarrowingOperand(node)
 	access := "."
 	if absent {
 		access = "?."
@@ -72,4 +69,14 @@ func (l *lowering) tagNarrowing(node *ast.Node, field string, allowed []*checker
 		return "hold it as const value, then " + narrowing
 	}
 	return narrowing
+}
+
+// castNarrowingOperand is how a narrowing names a cast's operand: its own text when it's a reference a narrowing
+// can name, and otherwise value, which the narrowing first holds it as.
+func castNarrowingOperand(node *ast.Node) (string, bool) {
+	operand := ast.SkipParentheses(node.AsAsExpression().Expression)
+	if ast.IsIdentifier(operand) || operand.Kind == ast.KindPropertyAccessExpression || operand.Kind == ast.KindThisKeyword {
+		return sourceExpression(operand), true
+	}
+	return "value", false
 }
