@@ -2,6 +2,7 @@ package lower
 
 import (
 	"fmt"
+	"slices"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -1032,7 +1033,14 @@ func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, sour
 			return nil, ir.Binary{Operator: ir.And, Left: isType("object"), Right: ir.InstanceOf{Value: object, Class: instance.class}}, nil
 		}
 	}
-	if target.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(target) && value.Type() == ir.Object {
+	// An intersection of plain object types, tsc's Expr & { kind: 9; operator: { kind: 1 } } and
+	// EndOfFileToken's Token & JSDocContainer, takes its interface twin's road when its merged kind is one
+	// literal: the tag at the call and the view at every read, which checks each field, a nested one's
+	// own literal and layout included (#c7w6j0y's compound-node cause, J-cjhxcz6). A part that's a class
+	// instance keeps it out, since a class's object is told apart by its identity, not its tag, and an
+	// intersection never takes the branded-supertype road.
+	intersection := l.plainObjectIntersection(target) && !slices.ContainsFunc(target.Types(), isClassInstance)
+	if (target.Flags()&checker.TypeFlagsObject != 0 || intersection) && !isClassInstance(target) && value.Type() == ir.Object {
 		tag := l.fieldLiteral(target, "kind")
 		if tag != nil {
 			// The tag chooses the member, and the view checks its layout at every read. A checked
@@ -1049,7 +1057,7 @@ func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, sour
 			if known {
 				return nil, ir.Binary{Operator: ir.And, Left: censusCondition(value), Right: equal(ir.Property{Object: value, Name: "kind", Of: of, View: "predicate argument.kind", ViewType: l.checker.TypeToString(tag)}, literal)}, nil
 			}
-		} else if l.brandedSupertype(target) {
+		} else if !intersection && l.brandedSupertype(target) {
 			// No kind set can say which kinds a branded supertype holds (#c7w6j0y, ruled Oct 31), so the call
 			// checks only that the value is an object, and the views check every field where it's read.
 			if err := l.brandedSupertypeViews(node, source, target); err != nil {
