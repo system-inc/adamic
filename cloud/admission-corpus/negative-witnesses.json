@@ -1442,6 +1442,18 @@
       "type_correct_sha256": "9d48872822242830c34f2b201a46d25e728eb0912cfb2e0ddae38ced43d65453",
       "exit": 70,
       "stderr": "adamic: panic: cast failed: this Expression is not a Literal\n"
+    },
+    "4e3c47f237b580d6afa68184172c089b52f6025f2928e7966b350b7882111760": {
+      "form": "checked_boundary",
+      "ruling_task": "#axqgdck",
+      "ruling": "rulings.md:18: an untagged union's cast to a member is a checked view with no test at the cast, its lie stopped at the read",
+      "declaration": "internal/oracle/testdata/cast_untagged_union_lie.ts:4",
+      "declared_type": "string",
+      "repair_from": "{ packageDirectory: '/missing', directoryExists: false }",
+      "repair_to": "{ packageDirectory: '/found', version: '1.0.0' }",
+      "type_correct_sha256": "7a0d9aab9de590c554a949d7d1031d8f9d699575157db6d83ab253253b69d945",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: info({ packageDirectory: '/missing', directoryExists: false }).version is not initialized; expected string, found missing\n"
     }
   }
 }

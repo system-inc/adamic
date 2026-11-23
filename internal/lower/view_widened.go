@@ -18,8 +18,11 @@ import (
 type viewSource struct {
 	source, target *checker.Type
 	cast, narrows  bool
-	entry          ir.Expression
-	node           *ast.Node
+	// untagged is a view an untagged union's cast made (untaggedUnionCast), whose cast tests nothing, so
+	// viewPairGuard pairs every arm of its source with its target's, related or not.
+	untagged bool
+	entry    ir.Expression
+	node     *ast.Node
 }
 
 // viewLie is what one view checks that its source doesn't guarantee. Lied are the names read raw
