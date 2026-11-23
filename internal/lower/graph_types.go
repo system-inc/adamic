@@ -493,7 +493,7 @@ func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 			links = append(links, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)})
 		}
 		for _, shape := range f.shapes {
-			if shape != proven && f.l.checker.IsTypeAssignableTo(shape, proven) {
+			if shape != proven && f.l.checker.IsTypeAssignableTo(f.l.relatedShape(shape), proven) {
 				links = append(links, cycleNode{proven: shape})
 			}
 		}
