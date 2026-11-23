@@ -90,10 +90,12 @@ console.log(String(accessor.area));
 // A toString or valueOf field a base class declares is an own field of every subclass's object, which
 // Node reads before any method (Lower's should on #09dvwny), so a subclass's arm stops as its base's
 // does, never calling an inherited method or answering "[object Object]". It holds because a subclass's
-// Fields begin with its base's (class.go's instantiate). Every arm here stops, Valued's and Below's too,
-// where Node answers "[object Object]" and "method": a field of either name stops the class, an
-// over-stop that fails closed. Mutant: classToString reading only the class's
-// own fields, from OwnStart, so Derived's arm answers "[object Object]" and Below's calls its method.
+// Fields begin with its base's (class.go's instantiate). A field stops only where the hint's order reaches
+// it (#1rxjj3m, Language's p18): under String's hint Base's and Derived's toString field stops, while
+// Valued answers "[object Object]" and Below calls its method, as Node does, never reading the valueOf
+// field; under addition's default hint the valueOf field is read first, so all four stop. Mutant:
+// classToString reading only the class's own fields, from OwnStart, so Derived's string arm answers
+// "[object Object]".
 func TestToPrimitiveInheritedFieldStops(t *testing.T) {
 	t.Parallel()
 	program, err := lowerSource(t, `class Base {
@@ -120,7 +122,7 @@ show(new Below());
 	}
 	want := "converting an object whose class has a toString or valueOf field to a string is not yet lowered"
 	// The class arms sit inside the instance kind's branch, so they're found at any depth.
-	arms := map[string]string{}
+	arms := map[string][2]string{}
 	walk(toPrimitiveHelper(t, program).Body, func(node any) bool {
 		branch, ok := node.(ir.If)
 		if !ok {
@@ -131,24 +133,39 @@ show(new Below());
 			return true
 		}
 		name := program.Classes[test.Class-1].Name
-		arms[name] = ""
+		arms[name] = [2]string{}
+		// Each arm is one If on the hint: Then is addition's default hint, Else the string hint.
 		if len(branch.Then) == 1 {
-			if panicked, ok := branch.Then[0].(ir.Panic); ok {
-				if text, ok := panicked.Message.(ir.StringConstant); ok {
-					arms[name] = program.Strings[text.Index]
+			if hinted, ok := branch.Then[0].(ir.If); ok {
+				stopOf := func(body []ir.Statement) string {
+					if len(body) == 1 {
+						if panicked, ok := body[0].(ir.Panic); ok {
+							if text, ok := panicked.Message.(ir.StringConstant); ok {
+								return program.Strings[text.Index]
+							}
+						}
+					}
+					return ""
 				}
+				arms[name] = [2]string{stopOf(hinted.Then), stopOf(hinted.Else)}
 			}
 		}
 		return true
 	})
-	for _, name := range []string{"Base", "Derived", "Valued", "Below"} {
-		got, found := arms[name]
+	for _, row := range []struct {
+		name       string
+		stringStop bool
+	}{{"Base", true}, {"Derived", true}, {"Valued", false}, {"Below", false}} {
+		got, found := arms[row.name]
 		if !found {
-			t.Errorf("no arm for %s", name)
+			t.Errorf("no arm for %s", row.name)
 			continue
 		}
-		if got != want {
-			t.Errorf("%s's arm stops with %q, want %q", name, got, want)
+		if got[0] != want {
+			t.Errorf("%s's default-hint arm stops with %q, want %q", row.name, got[0], want)
+		}
+		if wantString := map[bool]string{true: want, false: ""}[row.stringStop]; got[1] != wantString {
+			t.Errorf("%s's string-hint arm stops with %q, want %q", row.name, got[1], wantString)
 		}
 	}
 }
