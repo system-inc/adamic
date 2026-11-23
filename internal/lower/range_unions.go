@@ -207,10 +207,11 @@ func rangeUnionRoad(expression ir.Expression) string {
 
 // rangeOperands answers whether a Union operand may be a range type's value: by the checker's type where the
 // IR keeps one, a local's (localTypes), and otherwise by where the value came from, through the shared flow
-// graph's sources (a parameter's arguments, a local's writes, a function's returns), failing closed on any
-// it can't place. A field read is judged by its name (rangeFieldNamed). A boxed value is held as its own kind
-// until the box, an object or a scalar that any road reads right, but for an array, which is the NodeArray a
-// range type may take, and counts. The graph is built at the first question that needs it.
+// graph's sources (a parameter's arguments, a local's writes, a helper's returns), failing closed on any it
+// can't place. A call of a function lowered from a declaration is judged by the return type it declares, and a
+// field read by its name (rangeFieldNamed). A box and a literal made in place are their values: a slot's range
+// type is answered where the slot is read, never where a value enters it. The graph is built at the first
+// question that needs it.
 type rangeOperands struct {
 	l     *lowering
 	graph *allocationFlowGraph
@@ -268,6 +269,15 @@ func (r *rangeOperands) held(operand ir.Expression) bool {
 				return true
 			}
 			for _, target := range targets {
+				// A function lowered from a declaration gives back a value of the type it declares, whatever it
+				// returns was held as before (a Box makes no type of its own), so that type answers; a helper
+				// lowering made is followed to what it returns.
+				if declaration := r.l.functionNodes[target]; declaration != nil {
+					if r.l.holdsRangeUnion(r.l.checker.GetReturnTypeOfSignature(r.l.checker.GetSignatureFromDeclaration(declaration))) {
+						return true
+					}
+					continue
+				}
 				if sources(r.flow().resultNode(target)) {
 					return true
 				}
@@ -283,9 +293,11 @@ func (r *rangeOperands) held(operand ir.Expression) bool {
 				}
 			}
 		case ir.Box:
-			if value.Value == nil || value.Value.Type() == ir.Array {
-				return true
-			}
+			// A box holds its value as it was before a union slot took it: a range type's value only where that
+			// value was one, and a slot's own range type is answered where the slot is read (a typed local, a
+			// declared return, a named field), never here. An in test's own box of a NodeArray-typed local
+			// (node-array-keys.a's 'pos' in nodes) is that local's value, and no range type's.
+			queue = append(queue, value.Value)
 		case ir.Conditional:
 			queue = append(queue, value.WhenTrue, value.WhenNot)
 		case ir.Coalesce:
@@ -316,6 +328,9 @@ func (r *rangeOperands) held(operand ir.Expression) bool {
 				return true
 			}
 		case ir.Undefined, ir.Null, ir.NumberConstant, ir.StringConstant, ir.BooleanConstant:
+		case ir.ObjectLiteral, ir.ArrayLiteral:
+			// A value made right here, an object or an array of its own type; a slot that takes it as a range
+			// type is answered where the slot is read, as a box's is.
 		default:
 			// A value read out of storage the IR keeps no type for: an element, a map's or a record's value, a
 			// dynamic key's read, a settled promise.
