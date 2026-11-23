@@ -1,0 +1,11 @@
+M	internal/lower/cast.go
+M	internal/lower/cast_absent_arm_test.go
+A	internal/lower/cast_drops_nullish_test.go
+M	internal/lower/cast_proof.go
+M	internal/lower/cast_stop.go
+M	internal/lower/cast_stop_test.go
+M	internal/lower/inspector_doomed_let_test.go
+M	internal/lower/non_null.go
+A	internal/oracle/cast_drops_nullish_test.go
+A	internal/oracle/testdata/cast_drops_nullish/honest.ts
+A	internal/oracle/testdata/cast_drops_nullish/lie.ts
