@@ -7,6 +7,10 @@ import "github.com/system-inc/adamic/stage3/census/latent"
 // independent body lowering cannot establish their applicability.
 var latentPostLoweringSteps = []latent.PassStep{
 	{Name: "checkOverloadResults"},
+	// checkOverloadVerdictCalls holds every call in the program to an unserved overload to the gate that judges
+	// it (#4czdn4q): it walks every module whole and rewrites nothing, so a body lowered on its own is recorded
+	// as not run, as checkOverloadResults is.
+	{Name: "checkOverloadVerdictCalls"},
 	{Name: "forwarderValues", Scoped: true, Production: "lowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)"},
 	{Name: "finishClassCalls", Scoped: true},
 	// certifySourceSlots holds every read of a name a checked view wrote to everything its slot can hold:

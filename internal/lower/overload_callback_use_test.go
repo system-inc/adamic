@@ -95,7 +95,9 @@ console.log(other.text);
 // each in overload_callback_use.go (scratchpad b3-mutants): rule 1 taking the overload's type through any
 // narrowing reds "a narrowing"; rule 1 without its never-assigned check reds "a closure assigns node"; rule 4
 // admitting a nested call reds "a closure calls test"; the argument check against promised's parameters
-// dropped reds "another node"; and any use admitted reds "passed on".
+// dropped reds "another node"; and any use admitted reds "passed on". Since #4czdn4q the body lowers
+// before the call, and in "through call" another rule stops there first, so that row reads the census's
+// verdict (overloadVerdictOf), and the program still stops.
 func TestOverloadCallbackRefusals(t *testing.T) {
 	t.Parallel()
 	const refusal = "overload 1 of assertNode parameter test cannot be served by implementation parameter test"
@@ -143,6 +145,10 @@ func TestOverloadCallbackRefusals(t *testing.T) {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			source := probe.prelude + overloadCallbackAssertNode(probe.parameters, probe.body) + overloadCallbackCall
+			if probe.name == "through call" {
+				overloadVerdictRefused(t, source, ".ts", "assertNode", 1, refusal)
+				return
+			}
 			_, err := lowerSourceAs(t, source, ".ts")
 			var refused *Refused
 			if !errors.As(err, &refused) || !strings.Contains(refused.What, refusal) {
@@ -316,7 +322,8 @@ for (const node of others) {
 // overload_callback_use.go (scratchpad s2-mutants): any loop source accepted reds "a copy" and "another
 // array"; overloadCallbackOnlyIterated dropped reds every row from "an index write in the loop" to "a
 // length read"; the const check dropped reds "a let reassigned"; and the binding's flow check dropped reds
-// "a narrowing".
+// "a narrowing". Since #4czdn4q the body lowers before the call, and in "for await" another rule stops there
+// first, so that row reads the census's verdict (overloadVerdictOf), and the program still stops.
 func TestOverloadCallbackEachRefusals(t *testing.T) {
 	t.Parallel()
 	const refusal = "overload 1 of assertEachNode parameter test cannot be served by implementation parameter test"
@@ -393,6 +400,10 @@ console.log("checked");
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
+			if probe.name == "for await" {
+				overloadVerdictRefused(t, probe.source, ".ts", "assertEachNode", 1, refusal)
+				return
+			}
 			_, err := lowerSourceAs(t, probe.source, ".ts")
 			var refused *Refused
 			if errors.As(err, &refused) && strings.Contains(refused.What, refusal) {
@@ -413,19 +424,21 @@ console.log("checked");
 // An overload parameter written any admits whatever its caller passes, so an argument or a loop element
 // typed through it promises the callback nothing: `assertNode(cat, isDog)` type-checks against
 // `(node: any, test: (node: T) => node is U)`, and the body would hand isDog a cat. Both rule 1 and the for-of
-// binding keep the flow type there, and the census refuses. Neither function is called, so no argument-site
-// stop comes first. .ts only, since .a refuses a written any where it's written. Mutants: the any test
-// dropped in rule 1 (g1) reddens "rule 1"; dropped for the element (g2) reddens "a for-of" if the checker
-// gives an index type of any for any.
+// binding keep the flow type there, and the census refuses, at run's call, the one that resolves to the
+// overload (#4czdn4q), which stops before any argument is lowered, so no argument-site stop comes first.
+// Each row's place is measured (J-7bkh7xq). .ts only, since .a refuses a written any where it's written. Mutants:
+// the any test dropped in rule 1 (g1) reddens "rule 1"; dropped for the element (g2) reddens "a for-of" if
+// the checker gives an index type of any for any.
 func TestOverloadCallbackAnyOverloadParameterRefuses(t *testing.T) {
 	t.Parallel()
-	for _, probe := range []struct{ name, source, refusal string }{
+	for _, probe := range []struct{ name, source, refusal, where string }{
 		{"rule 1", overloadCallbackNodes + `function assertNode<T extends N, U extends T>(node: any, test: (node: T) => node is U): void;
 function assertNode(node: N | undefined, test: ((node: N) => boolean) | undefined): void {
     check(node !== undefined && (test === undefined || test(node)), "Unexpected node.");
 }
+function run(n: N): void { assertNode(n, isId); }
 console.log("declared");
-`, "overload 1 of assertNode parameter test cannot be served by implementation parameter test"},
+`, "overload 1 of assertNode parameter test cannot be served by implementation parameter test", "main.ts:9:28"},
 		{"a for-of", overloadCallbackNodes + `function assertEachNode<T extends N, U extends T>(nodes: any, test: (node: T) => node is U): void;
 function assertEachNode(nodes: readonly N[] | undefined, test: ((node: N) => boolean) | undefined): void {
     let passed = true;
@@ -439,8 +452,9 @@ function assertEachNode(nodes: readonly N[] | undefined, test: ((node: N) => boo
     }
     check(passed, "Unexpected node.");
 }
+function run(nodes: readonly N[]): void { assertEachNode(nodes, isId); }
 console.log("declared");
-`, "overload 1 of assertEachNode parameter test cannot be served by implementation parameter test"},
+`, "overload 1 of assertEachNode parameter test cannot be served by implementation parameter test", "main.ts:18:43"},
 		// An array of any holds any in its type argument, which the walk reads though it skips a library
 		// type's members.
 		{"a for-of over an array of any", overloadCallbackNodes + `function assertEachNode<T extends N, U extends T>(nodes: readonly any[], test: (node: T) => node is U): void;
@@ -456,15 +470,16 @@ function assertEachNode(nodes: readonly N[] | undefined, test: ((node: N) => boo
     }
     check(passed, "Unexpected node.");
 }
+function run(nodes: readonly N[]): void { assertEachNode(nodes, isId); }
 console.log("declared");
-`, "overload 1 of assertEachNode parameter test cannot be served by implementation parameter test"},
+`, "overload 1 of assertEachNode parameter test cannot be served by implementation parameter test", "main.ts:18:43"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSourceAs(t, probe.source, ".ts")
 			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(refused.What, probe.refusal) {
-				t.Fatalf("want %q, got %v", probe.refusal, err)
+			if !errors.As(err, &refused) || !strings.Contains(refused.What, probe.refusal) || !strings.HasSuffix(refused.Where, probe.where) {
+				t.Fatalf("want %q at %s, got %v", probe.refusal, probe.where, err)
 			}
 		})
 	}

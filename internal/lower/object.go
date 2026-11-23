@@ -2199,6 +2199,11 @@ func (l *lowering) arraySort(node *ast.Node, array ir.Expression, element ir.Typ
 		}
 		return ir.ArraySort{Array: array, Callback: callback, Element: element, CallbackType: callbackType}, true, nil
 	}
+	// A comparator taken by name is its set as a value, never a call the checker resolved to one overload,
+	// so an overload set with an unserved overload stops here in its whole set's words (#4czdn4q).
+	if err := l.overloadSetStop(comparator, l.symbol(comparator)); err != nil {
+		return nil, true, err
+	}
 	declared := l.result.Functions[function]
 	if declared.Returns == ir.Number && len(declared.Parameters) == 2 && (l.result.Locals[declared.Parameters[0]].Type != element || l.result.Locals[declared.Parameters[1]].Type != element) {
 		callback, err := l.expression(comparator)

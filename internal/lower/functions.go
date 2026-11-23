@@ -65,9 +65,8 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	if implementation := l.censusImplementation(declaration); implementation != nil {
 		declaration = implementation
 	}
-	if err := l.censusOverloads(declaration); err != nil {
-		return err
-	}
+	// The implementation lowers whatever its overloads' verdicts, which judge each call (#4czdn4q).
+	l.censusOverloads(declaration)
 	function := l.result.Functions[index]
 	function.SourceLength = sourceFunctionLength(declaration)
 	name := declaration.Name()
