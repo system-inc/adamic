@@ -53,32 +53,47 @@ func TestUntaggedUnionCastLowers(t *testing.T) {
 	}
 }
 
-// What the arm leaves as it was, each by its own words: a member that isn't a plain object (a primitive, a
-// class instance, a dictionary), a union target, and a union a tag does tell apart, whose payload refinement
-// stays refused (rulings.md, the object-union member entry). A union whose tags collide (duplicate enum
-// aliases, mixed tag representations) stays refused too, pinned by TestUncheckableCastsStayRefused. In .a the
-// arm's cast is refused as every downcast whose checks no proof erases. tsc refuses a sideways cast whose
-// types don't overlap itself (TS2352), so no row holds one. Mutants: plainViewObject returning true reds the
-// class and dictionary rows (a primitive member is refused before the arm, J-dmj0jzs); unionHoldsLiterals returning false reds "a tagged union's refinement"
-// and TestUncheckableCastsStayRefused's colliding-tag rows; keptCheckDowncastRefusal without proof.untagged
-// reds "in .a".
-func TestUntaggedUnionCastsStayRefused(t *testing.T) {
+// What the arm leaves to the stops it found, each by its own words since the cast causes (#b5w3ycg): a member
+// that isn't a plain object (a primitive, a class instance, a dictionary), a sub-union target, and a union a tag
+// does tell apart, whose payload refinement stays refused (rulings.md, the object-union member entry). A union
+// whose tags collide (duplicate enum aliases, mixed tag representations) stays refused too, pinned by
+// TestUncheckableCastsStayRefused. In .a the arm's cast is refused as every downcast whose checks no proof
+// erases. tsc refuses a sideways cast whose types don't overlap itself (TS2352), so no row holds one. A row
+// with no words holds only that the arm leaves it stopped. Mutants: plainViewObject returning true reds the
+// class and dictionary rows (a primitive member is stopped before the arm, J-dmj0jzs); unionHoldsLiterals
+// returning false reds "a tagged union's refinement" and TestUncheckableCastsStayRefused's colliding-tag rows;
+// keptCheckDowncastRefusal without proof.untagged reds "in .a".
+func TestUntaggedUnionCastsKeepTheirStops(t *testing.T) {
 	t.Parallel()
 	members := "interface A { readonly a: number; readonly shared: string } interface B { readonly b: string; readonly shared: string } "
-	for _, probe := range []struct{ name, source, extension, want string }{
-		{"a primitive member", members + "function f(x: A | string): A { return x as A; }", ".ts", "a cast the runtime can't check"},
-		{"a class instance member", members + "class K { readonly k = 1; } function f(x: A | K): A { return x as A; }", ".ts", "a cast the runtime can't check"},
-		{"a dictionary member", members + "function f(x: A | Record<string, number>): A { return x as A; }", ".ts", "a cast the runtime can't check"},
-		{"a union target", members + "interface C { readonly c: boolean } function f(x: A | B | C): A | B { return x as A | B; }", ".ts", "a cast the runtime can't check"},
-		{"a tagged union's refinement", "interface P { readonly kind: 'p'; readonly v: string | number } interface Q { readonly kind: 'q' } interface PN { readonly kind: 'p'; readonly v: number } function f(x: P | Q): PN { return x as PN; }", ".ts", "a cast the runtime can't check"},
-		{"in .a", members + "function f(x: A | B): A { return x as A; }", ".a", "in .a whose checks no proof erases"},
+	for _, probe := range []struct {
+		name, source, extension string
+		refused                 bool
+		want                    string
+	}{
+		{"a primitive member", members + "function f(x: A | string): A { return x as A; }", ".ts", false, "which holds primitives"},
+		{"a class instance member", members + "class K { readonly k = 1; } function f(x: A | K): A { return x as A; }", ".ts", false, "whose members no literal tag tells apart"},
+		{"a dictionary member", members + "function f(x: A | Record<string, number>): A { return x as A; }", ".ts", false, ""},
+		{"a sub-union target", members + "interface C { readonly c: boolean } function f(x: A | B | C): A | B { return x as A | B; }", ".ts", false, "a checked view of A | B over the union A | B | C, whose members no literal tag tells apart"},
+		{"a tagged union's refinement", "interface P { readonly kind: 'p'; readonly v: string | number } interface Q { readonly kind: 'q' } interface PN { readonly kind: 'p'; readonly v: number } function f(x: P | Q): PN { return x as PN; }", ".ts", true, "which is narrower than a member of P | Q"},
+		{"in .a", members + "function f(x: A | B): A { return x as A; }", ".a", true, "in .a whose checks no proof erases"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSourceAs(t, probe.source, probe.extension)
 			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(err.Error(), probe.want) {
-				t.Fatalf("want a refusal %q, got %v", probe.want, err)
+			var notYet *NotYet
+			switch {
+			case err == nil:
+				t.Fatal("lowered: the arm must leave this cast stopped")
+			case probe.want == "":
+				if !errors.As(err, &refused) && !errors.As(err, &notYet) {
+					t.Fatalf("want a stop, got %v", err)
+				}
+			case probe.refused && (!errors.As(err, &refused) || !strings.Contains(err.Error(), probe.want)):
+				t.Fatalf("want a refusal holding %q, got %v", probe.want, err)
+			case !probe.refused && (!errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.want)):
+				t.Fatalf("want NotYet holding %q, got %v", probe.want, err)
 			}
 		})
 	}
