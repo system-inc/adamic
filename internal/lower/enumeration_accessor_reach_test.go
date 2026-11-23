@@ -342,9 +342,16 @@ const enumerationReachShared = "type Shared = { b: number };\nconst lit = { b: 2
 // slot type, the asserted type) turns it red.
 func TestEnumerationReachAssertedLiteralRefused(t *testing.T) {
 	t.Parallel()
-	const held = "export type View = { b: number; d: 4; e?: number };\nexport const asserted = { b: 1, d: 4, get a(): number { return 1; } } as View;\n"
 	const main = "import { type View, asserted } from './held';\nfunction read(view: View): number[] { return Object.values(view); }\nconsole.log(read(asserted).join(','));\n"
-	enumerationReachRefusedAs(t, "asserted literal", ".ts", held, main)
+	for _, row := range []struct{ name, held string }{
+		{"asserted literal", "export type View = { b: number; d: 4; e?: number };\nexport const asserted = { b: 1, d: 4, get a(): number { return 1; } } as View;\n"},
+		{"asserted downcast", "export type View = { b: number; c: number };\nexport const asserted = { b: 1, get a(): number { return 1; } } as View;\n"},
+	} {
+		t.Run(row.name, func(t *testing.T) {
+			t.Parallel()
+			enumerationReachRefusedAs(t, row.name, ".ts", row.held, main)
+		})
+	}
 }
 
 func TestEnumerationReachViewRefused(t *testing.T) {
