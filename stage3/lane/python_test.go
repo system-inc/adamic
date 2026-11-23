@@ -342,6 +342,11 @@ func TestLaneSanctionedApiFreshnessPython(t *testing.T) {
 	runPython(t, "stage3/lane", "test_sanctioned_api_freshness")
 }
 
+func TestUpstreamLedgerPython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "stage3/lane", "test_upstream_ledger")
+}
+
 func TestLaneTablePython(t *testing.T) {
 	t.Parallel()
 	runPython(t, "stage3/lane", "test_table")

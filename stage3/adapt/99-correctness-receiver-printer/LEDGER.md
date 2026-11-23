@@ -1,0 +1,1 @@
+- **JavaScript-changing, value-identical; #trxxkge: readonly PrintHandlers property view and ten once-resolved aliases (option (i)), measured at 739,160 alias reads over 73,916 printer entries, with no forwarding calls.** Evidence: typescript/receiver-split-evidence; stage3/adapt/99-correctness-receiver-printer/PROOF.md.

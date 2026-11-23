@@ -83,6 +83,6 @@ Proposed source diff inside generateTSConfig's emitOption, against stock 6.0.3:
          let comment: boolean;
 ```
 
-For `--init --outFile null`, outFile would be omitted. This also skips own undefined values for preset options, while preserving presets for options absent from the input object. It changes output only for own options whose value is undefined. This diff has not been applied or built. If ruled in, 99g would implement it with an entry in stage3/upstream/LEDGER.md documenting the stock defect, the pinned Go behavior, upstream snapshot and changed output. No ledger entry claims a fix yet.
+For `--init --outFile null`, outFile would be omitted. This also skips own undefined values for preset options, while preserving presets for options absent from the input object. It changes output only for own options whose value is undefined. This diff has not been applied or built. If ruled in, 99g would implement it with an entry in [99g’s ledger](../99-correctness-axolotl-g/LEDGER.md) documenting the stock defect, the pinned Go behavior, upstream snapshot and changed output. No ledger entry claims a fix yet.
 
 Research logs: /workspace/scratch/build-pinned-tsgo.log, pinned-tsgo-init/stdout.log and stderr.log, its generated tsconfig.json, upstream-main-fetch.log, and 99g-research.json. The upstream read used a depth-1 main fetch; an initial unrestricted-depth fetch was stopped to avoid downloading unnecessary history. No 99g source has been changed.

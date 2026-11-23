@@ -1,0 +1,1 @@
+- **Type-only (#x2cjvy9):** The one-member enum names a sentinel in a slot that holds positions. `99-correctness-last-queried-position` annotates `lastQueriedPosition` as `number`.

@@ -1,0 +1,1 @@
+- **Type-only, #ad161ms (Adamic's ruling):** 99-correctness-property-name-claim makes `isPropertyName` claim the five kinds its body accepts in place of `PropertyName`, which also holds `NoSubstitutionTemplateLiteral` and `BigIntLiteral`, so the published predicate in `typescript.d.ts` names them. No JavaScript changes. Evidence: typescript/property-name-claim-1.

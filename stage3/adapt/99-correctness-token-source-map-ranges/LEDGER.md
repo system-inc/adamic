@@ -1,0 +1,1 @@
+- **Type-only (#dt55mtb):** 99-correctness-token-source-map-ranges preserves the SourceMapRange element type at the token source-map merge. Evidence: typescript/type-parameter-appends-evidence.

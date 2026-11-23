@@ -36,7 +36,7 @@ The repository pins system-inc/TypeScript d92d9bfee114c80be2c375d72edae966176e3a
 
 There is one named exception: the pinned Go CLI panics for `--init --target null`, exits 2, and writes no config. Its enum lookup tries to match nil and reports `panic: No matching value of <nil>`. Following the user's ruling, 99g instead writes `"target": null,` and reads that file cleanly. No attempt is made to copy the Go panic.
 
-The earlier upstream investigation at Microsoft/TypeScript main [6161772c1370bdd4a82f808e6823bd755eb1870d](https://github.com/microsoft/TypeScript/commit/6161772c1370bdd4a82f808e6823bd755eb1870d), dated 2026-10-30, found active Go init.go identical to the pinned Go source and a retained TypeScript fixture whose generateTSConfig, including emitOption, is unchanged from 6.0.3. The fork issue and fix are recorded in [the upstream ledger](../../upstream/LEDGER.md).
+The earlier upstream investigation at Microsoft/TypeScript main [6161772c1370bdd4a82f808e6823bd755eb1870d](https://github.com/microsoft/TypeScript/commit/6161772c1370bdd4a82f808e6823bd755eb1870d), dated 2026-10-30, found active Go init.go identical to the pinned Go source and a retained TypeScript fixture whose generateTSConfig, including emitOption, is unchanged from 6.0.3. The fork issue and fix are recorded in [the upstream ledger entry](LEDGER.md).
 
 ## Runnable proofs
 
@@ -107,7 +107,7 @@ Both install/build phases exit 0. Both test phases exit 1 solely for the sanctio
 
 **Zero baseline moves.** Both complete baseline diffs are byte-identical at 51123 bytes, SHA-256 `6d52cd09811c6846c977ea492071c14325816a631706cc79128c4299b9faa031`. The only baseline path is the inherited api/typescript.d.ts exception. Public typescript.d.ts bytes match between the actual control and 99g artifacts. All memory-event counters stayed unchanged during both retry suites; oom and kill counters remained zero throughout. The original pressure-affected control result is retained and disclosed above.
 
-Only this adaptation directory and stage3/upstream/LEDGER.md are committed. No lane manifest, baseline, test input, checker option or production compiler implementation is edited.
+The adaptation and its upstream ledger entry live in this directory. No lane manifest, baseline, test input, checker option or production compiler implementation is edited.
 
 ## Evidence outside the adaptation input key
 
