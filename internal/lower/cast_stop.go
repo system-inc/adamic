@@ -34,7 +34,7 @@ const (
 	// and the row beside it rules an unbuilt view contract NotYet, never a refusal. Refused in .a (item 8).
 	castUntaggedUnion // a union source whose members no literal tag tells apart
 	castUnionTarget   // an object cast to a union target that no literal tag tells apart
-	castKeepsNullish  // a target that keeps undefined or null
+	castKeepsNullish  // a target that keeps undefined or null, past keepsNullishCast's road
 	castSideways      // an object target the source isn't a supertype of
 	castMixedSource   // a union source holding primitives, cast to an object target
 	// NotYet in .ts by Adamic's principle, as Compiler applied it (R4 and R4b on #b5w3ycg, Nov 22): instanceof
