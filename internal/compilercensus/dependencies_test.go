@@ -120,3 +120,33 @@ func TestDependenciesCoverTheDeclaredMap(t *testing.T) {
 	}
 	t.Logf("%d declared, each derived among the census's %d", len(declared.Packages), len(dependencies))
 }
+
+// cmd/adamic names the compiler as a whole path, and only another command (a hyphen) and a possessive are left out, so
+// every launch spelling still names it. Mutant: the hyphen or the possessive dropped, red at their rows; the old bound,
+// which took both for the compiler, red at the first two.
+func TestCmdAdamicIsTheCompilerOnlyAsAWholePath(t *testing.T) {
+	t.Parallel()
+	for _, row := range []struct {
+		source string
+		names  bool
+	}{
+		{"// cmd/adamic-gate/parallelcensus reads this", false},
+		{"// cmd/adamic's walk", false},
+		{`const command = "cmd/adamic_path"`, false},
+		{`"cmd/adamicx"`, false},
+		{`"./cmd/adamic"`, true},
+		{"cmd/adamic", true},
+		{"// go run ./cmd/adamic\n", true},
+		{`"go run ./cmd/adamic\nx"`, true},
+		{`"./cmd/adamic\"`, true},
+		{"sh -c 'go run ./cmd/adamic'", true},
+		{"go run ./cmd/adamic; echo", true},
+		{"cmd/adamic/internal", true},
+		{"go run ./cmd/adamic's", false},
+		{"cmd/adamic'sx", true},
+	} {
+		if got := compilerReference([]byte(row.source)); got != row.names {
+			t.Errorf("compilerReference(%q) = %v, want %v", row.source, got, row.names)
+		}
+	}
+}

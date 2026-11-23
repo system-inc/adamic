@@ -30,21 +30,34 @@ var (
 )
 
 // compilerReference is whether source names the compiler: one of compilerImport's forms, or cmd/adamic followed by
-// anything but a letter, a digit or an underscore.
+// anything but a letter, a digit, an underscore, a hyphen (cmd/adamic-gate, another command) or a possessive
+// (cmd/adamic's, in prose), so every launch spelling still names it: a quote, a backslash in a Go string holding
+// generated source, a shell's ' and ;, a newline. run.py's compilerMarker reads it the same way (Adamic Loom's ruling
+// on #ry3pfc6 and her must on #r2a9vd4).
 func compilerReference(source []byte) bool {
 	if compilerImport.Match(source) {
 		return true
 	}
 	for _, found := range compilerDriver.FindAllIndex(source, -1) {
-		if found[1] == len(source) {
+		rest := source[found[1]:]
+		if len(rest) == 0 {
 			return true
 		}
-		next := source[found[1]]
-		if !(next == '_' || '0' <= next && next <= '9' || 'a' <= next && next <= 'z' || 'A' <= next && next <= 'Z') {
+		if !(nameByte(rest[0]) || rest[0] == '-' || possessive(rest)) {
 			return true
 		}
 	}
 	return false
+}
+
+// nameByte is whether b continues a name: a letter, a digit or an underscore.
+func nameByte(b byte) bool {
+	return b == '_' || '0' <= b && b <= '9' || 'a' <= b && b <= 'z' || 'A' <= b && b <= 'Z'
+}
+
+// possessive is whether rest opens with 's ending a word, as run.py's 's\b reads it.
+func possessive(rest []byte) bool {
+	return len(rest) >= 2 && rest[0] == '\'' && rest[1] == 's' && (len(rest) == 2 || !nameByte(rest[2]))
 }
 
 // Dependencies is the compiler dependency census of the repository at root, derived and never declared: each package
