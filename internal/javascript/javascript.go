@@ -89,12 +89,13 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	// A static constructor's live parent prototype carries inherited fields. Keep its
 	// named method map separately, keyed by the actual constructor function.
 	builder.WriteString("const adamicStaticMethods = new WeakMap();\n")
+	builder.WriteString("const adamicMethodSlot = (object, name, own = Object.hasOwn(object, name)) => { const methods = own ? undefined : adamicStaticMethods.get(object); return methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; };\n")
 	// object.name(...) through an interface: the object's own function value, or else its class's
 	// method (on the prototype its constructor gave it), called with the object as this.
 	if counted {
-		builder.WriteString("const adamicCallee = (object, name) => { if (Object.hasOwn(object, name)) { const fn = object[name]; return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } const methods = adamicStaticMethods.get(object); const fn = methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; if (fn === RegExp.prototype.test) return { code: (closure, values) => Reflect.apply(fn, object, values) }; return { code: (closure, values) => adamicDirect(fn, [object, ...values]) }; };\n")
+		builder.WriteString(calleeLookup + "if (own) { return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } if (fn === RegExp.prototype.test) return { code: (closure, values) => Reflect.apply(fn, object, values) }; return { code: (closure, values) => adamicDirect(fn, [object, ...values]) }; };\n")
 	} else {
-		builder.WriteString("const adamicCallee = (object, name) => { if (Object.hasOwn(object, name)) { const fn = object[name]; return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } const methods = adamicStaticMethods.get(object); const fn = methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; if (fn === RegExp.prototype.test) return { code: (closure, values) => Reflect.apply(fn, object, values) }; return { code: (closure, values) => fn(object, ...values) }; };\n")
+		builder.WriteString(calleeLookup + "if (own) { return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } if (fn === RegExp.prototype.test) return { code: (closure, values) => Reflect.apply(fn, object, values) }; return { code: (closure, values) => fn(object, ...values) }; };\n")
 	}
 	builder.WriteString("const adamicOptionalCall = (object, name, values) => object === undefined ? undefined : adamicCall(adamicCallee(object, name), values());\n")
 	// callback?.(...) on a function value: undefined, with the arguments not evaluated, where the value,
@@ -321,12 +322,10 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 		code = code[:jsonDescriptorPosition] + strings.Join(emitter.jsonDescriptors, "") + code[jsonDescriptorPosition:]
 	}
 	if emitter.hostCalleeUsed {
-		const callee = "const adamicCallee = (object, name) => { "
-		code = strings.Replace(code, callee, callee+"if (object === performance) return { code: (closure, values) => object[name](...values) }; ", 1)
+		code = strings.Replace(code, calleeLookup, calleeLookup+"if (object === performance) return { code: (closure, values) => Reflect.apply(fn, object, values) }; ", 1)
 	}
 	if emitter.stdoutHandleUsed {
-		const callee = "const adamicCallee = (object, name) => { "
-		code = strings.Replace(code, callee, callee+stdoutHandleCallee, 1)
+		code = strings.Replace(code, calleeLookup, calleeLookup+stdoutHandleCallee, 1)
 		if strings.Contains(code, "adamicOptionalMethodCall(") {
 			if strings.Count(code, stdoutHandleOptionalAnchor) != 1 {
 				panic("compiler bug: adamicOptionalMethodCall's lookup test isn't where the stdout handle's splice goes")
@@ -1811,10 +1810,12 @@ func (e *emitter) methodCalleeCheck(check ir.Expression, value string) string {
 	panic(fmt.Sprintf("compiler bug: a method callee checked by %T", check))
 }
 
+const calleeLookup = "const adamicCallee = (object, name, own = Object.hasOwn(object, name), slot = []) => { const fn = slot.length ? slot[0] : adamicMethodSlot(object, name, own); "
+
 // checkedCalleeRuntime is a narrowed o.m()'s or an asserted o.m!()'s lookup (ir.MethodCallee): check
 // is the call's, made on what adamicCallee finds, the object's own field, else its class's method,
 // before adamicCallee makes the call's callee of it. Only a program with such a call carries it.
-const checkedCalleeRuntime = "const adamicCheckedCallee = (object, name, check) => { const methods = Object.hasOwn(object, name) ? undefined : adamicStaticMethods.get(object); check(methods !== undefined && Object.hasOwn(methods, name) ? methods[name] : object[name]); return adamicCallee(object, name); };\n"
+const checkedCalleeRuntime = "const adamicCheckedCallee = (object, name, check) => { const own = Object.hasOwn(object, name); const fn = adamicMethodSlot(object, name, own); check(fn); return adamicCallee(object, name, own, [fn]); };\n"
 
 func (e *emitter) allocateEnvironment(cells []int) {
 	if len(cells) == 0 {

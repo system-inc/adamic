@@ -22,9 +22,8 @@ import (
 // Adamic holds as its own array or string (array.fill, ch.repeat), a program class's method on a
 // receiver of that class's type, and a method a host object's registration names on a receiver
 // hostOrigin proves is that host object by how it was made (#q9nfg88, tsc's tryGetPerformanceHooks).
-// Anything else, a method signature on a program's interface or object
-// type above all, may be a checked view or a host value whose real object lacks the method, where Node
-// says "undefined": it is not yet (methodPresenceUnproven), never folded. The library cases are true
+// A required structural method tested for truthiness reads its slot, including absence. Its receiver
+// can be a checked view or a host object. Structural typeof remains unproven. The library cases are true
 // only because load pins every program to lib.es2024.d.ts (load.go's compilerOptions): a bundled
 // declaration is then one Node 24 has, where lib.es2026's Math.sumPrecise and Uint8Array.fromBase64,
 // say, are not (TestMethodPresenceLibraryStopsAtES2024 goes red if the pin moves). And all three rest
@@ -118,9 +117,8 @@ func truthinessOnly(node *ast.Node) bool {
 	return false
 }
 
-// methodPresenceRead is what testing for a method comes to: the receiver's evaluation, kept for its
-// effects, and, read through ?., whether the receiver is there, which is then the answer. present is
-// nil when the method is always there.
+// methodPresenceRead keeps the receiver's effects and the runtime presence result when needed.
+// present is nil when construction has already proved the method is there.
 type methodPresenceRead struct {
 	effects []ir.Statement
 	present ir.Expression
@@ -164,7 +162,28 @@ func (l *lowering) methodPresence(operand *ast.Node) (read methodPresenceRead, h
 	// a host object whose registration names it as a method, as a class's is on its instance.
 	host := !class && !library && l.hostOriginMethod(node)
 	if !class && !library && !host {
-		return methodPresenceRead{}, true, l.notYet(node, methodPresenceUnproven)
+		if !l.requiredStructuralMethod(node) || l.objectPrototypeName(access.Name().Text()) {
+			return methodPresenceRead{}, true, l.notYet(node, methodPresenceUnproven)
+		}
+		for outer := node; outer.Parent != nil; outer = outer.Parent {
+			if outer.Parent.Kind == ast.KindTypeOfExpression {
+				return methodPresenceRead{}, true, l.notYet(node, methodPresenceUnproven)
+			}
+			if outer.Parent.Kind != ast.KindParenthesizedExpression {
+				break
+			}
+		}
+		value, err := l.expression(access.Expression)
+		if err != nil {
+			return methodPresenceRead{}, true, err
+		}
+		if value.Type() != ir.Object {
+			return methodPresenceRead{}, true, l.notYet(node, methodPresenceUnproven)
+		}
+		return methodPresenceRead{present: ir.Property{
+			Object: value, Name: l.fieldName(access.Name()), Of: ir.Boolean,
+			Optional: access.QuestionDotToken != nil, MethodTruthiness: true,
+		}}, true, nil
 	}
 	value, err := l.expression(access.Expression)
 	if err != nil {
@@ -185,6 +204,22 @@ func (l *lowering) methodPresence(operand *ast.Node) (read methodPresenceRead, h
 		return methodPresenceRead{present: ir.Truthy{Value: value}}, true, nil
 	}
 	return methodPresenceRead{}, true, l.notYet(node, "a presence test of a method read through ?. on a "+typeName(value.Type()))
+}
+
+// requiredStructuralMethod identifies required method signatures in the program.
+func (l *lowering) requiredStructuralMethod(node *ast.Node) bool {
+	symbol := l.checker.GetSymbolAtLocation(node)
+	if symbol == nil || len(symbol.Declarations) == 0 {
+		return false
+	}
+	for _, declaration := range symbol.Declarations {
+		file := ast.GetSourceFileOfNode(declaration)
+		if declaration.Kind != ast.KindMethodSignature || ast.HasQuestionToken(declaration) ||
+			load.IsLibrary(file) || load.IsNodeLibrary(file) || load.IsPrelude(file) {
+			return false
+		}
+	}
+	return true
 }
 
 // methodPresenceUnproven is what a presence test stops as where nothing about how the receiver was made
@@ -653,8 +688,7 @@ func (l *lowering) methodPresenceTypeOf(node *ast.Node) (ir.Expression, bool, er
 	return ir.Conditional{Condition: read.present, WhenTrue: function, WhenNot: ir.StringConstant{Index: l.constant("undefined")}}, true, nil
 }
 
-// methodPresenceCondition lowers a condition that is a method read only to test for it: true, or
-// through ?. whether the receiver is there.
+// methodPresenceCondition lowers a condition that tests whether a method is there.
 func (l *lowering) methodPresenceCondition(node *ast.Node) (ir.Expression, bool, error) {
 	read, handled, err := l.methodPresence(node)
 	if !handled || err != nil {
@@ -725,6 +759,16 @@ func (l *lowering) methodPresenceAnd(node *ast.Node) (ir.Expression, bool, error
 	read, handled, err := l.methodPresence(binary.Left)
 	if !handled || err != nil {
 		return nil, handled, err
+	}
+	if _, structural := read.present.(ir.Property); structural {
+		if !truthinessOnly(node) {
+			return nil, true, l.notYet(binary.Left, methodPresenceUnproven)
+		}
+		right, err := l.condition(binary.Right)
+		if err != nil {
+			return nil, true, err
+		}
+		return ir.Conditional{Condition: read.present, WhenTrue: right, WhenNot: ir.BooleanConstant{}, Of: ir.Boolean}, true, nil
 	}
 	if read.present != nil {
 		// The receiver's undefined would be the whole value, a slot right's representation may not hold.

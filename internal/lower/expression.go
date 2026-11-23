@@ -2537,6 +2537,10 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		// fields (ir.Property's Method).
 		callee.Method = true
 		closure = callee
+		member := ast.SkipParentheses(node.AsCallExpression().Expression)
+		if ownField && !callee.Optional && member.Kind == ast.KindPropertyAccessExpression && l.requiredStructuralMethod(member) {
+			closure = ir.Defined{Value: callee, Message: l.program.Where(member) + ": method " + callee.Name + " is absent"}
+		}
 	case ir.Defined:
 		// The same call where the checker narrowed undefined out of an optional field, if (o.m) o.m():
 		// defined (narrowed.go) checks the read, and the call keeps its object, so a host's method or

@@ -697,6 +697,8 @@ adamic_string *adamic_error_to_string(const adamic_object *error);
 // method of that name, which it puts in *method, returning NULL. When absent,
 // both arms remain empty, for optional binding; callers initialize *method to zero.
 adamic_closure *adamic_object_callee(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method_entry *method);
+bool adamic_object_method_truthy(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+bool adamic_object_slot_truthy(const adamic_object *object, size_t index);
 
 // adamic_object_new makes an object of a shape, its fields zeroed for the caller to fill; a reference
 // stored in a field belongs to the object.

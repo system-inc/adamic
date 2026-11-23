@@ -655,6 +655,7 @@ var irSpecFields = map[string]irFieldPolicy{
 	"Property.Absent":                    {"bool", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"Property.Class":                     {"int", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"Property.Method":                    {"bool", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
+	"Property.MethodTruthiness":          {"bool", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"Property.NotRecord":                 {"bool", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"Read.Local":                         {"int", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"Read.Of":                            {"Type", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
