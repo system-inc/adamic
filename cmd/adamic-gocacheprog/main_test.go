@@ -268,9 +268,11 @@ func runGo(t *testing.T, dir, url, token string, args ...string) (string, time.D
 	defer cancel()
 	// runtime.GOROOT is empty in a test binary built with -trimpath, so the go command is toolchain's, and it runs with
 	// toolchain's environment, the helper's settings over it: go hands them to the helper it starts as GOCACHEPROG.
+	// A go test that's running has a Go, so toolchain not finding one is the box's, said red: a skip here is recorded as
+	// a pass, a green that never ran the case, and no key holds where toolchain looks.
 	goCommand, err := toolchain.Path("go")
 	if err != nil {
-		t.Skipf("no go command: %v", err)
+		t.Fatalf("no go command: %v", err)
 	}
 	cmd := exec.CommandContext(ctx, goCommand, args...)
 	cmd.Dir = dir
