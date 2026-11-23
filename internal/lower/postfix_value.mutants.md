@@ -2,6 +2,6 @@
 
 ## M1: the new value
 
-In `internal/lower/postfix_value.go`, the helper returns the local after the write (`l.expression(operand)` read again) instead of the held old value, which is prefix's value.
+In `internal/lower/postfix_value.go`, `updateValue` returns the local after the write for a postfix update too (the held old value never replaces it), which is prefix's value.
 
 Expected: internal/oracle's `TestPostfixUpdateValueOnANumericLocal` goes red on every row (Node prints the old value), and `TestPostfixUpdateValueOfAFieldStops` stays green.
