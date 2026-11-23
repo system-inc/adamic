@@ -26,6 +26,10 @@ import (
 // its own stop where an array goes (tupleWhereArrayGoes).
 const containerFitStop = "a Map or Set interface implemented by a value that isn't a Map or Set"
 
+// pickedArrayFitStop is the stop for a value held other than as an array going where a Pick of an array's
+// methods, held as that array, is (pickedArray).
+const pickedArrayFitStop = "a Pick of an array's methods implemented by a value that isn't an array"
+
 // containerFitDepth is how many positions deep containerWhereOtherGoes walks any pair of a value and its
 // slot unconditionally. Past it a generic pair that can't reach a map fails closed for the converse
 // (shape_fit.go): it stops if an array either side can hold could go where a shape the other can hold is,
@@ -374,6 +378,16 @@ func (l *lowering) containerPairJudged(value *checker.Type, target *checker.Type
 	}
 	if value.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsNever) != 0 {
 		return ""
+	}
+	if picked := l.pickedArray(target); picked != nil {
+		// A Pick of an array's methods is held as the array (pickedArray), but tsc lets any value with those
+		// methods go there: an object literal with a push, or a class instance with one, both held as
+		// ir.Object, which natively clang refused where an array goes (J-jjmfxnc). Only an array goes, and its
+		// elements go where the Pick's array's do (#kr1v0tn A, Lower's first condition).
+		if held, known := l.representation(value); !known || held != ir.Array {
+			return pickedArrayFitStop
+		}
+		target = picked
 	}
 	if slot, known := l.representation(target); known && slot == ir.Map {
 		held, known := l.representation(value)
