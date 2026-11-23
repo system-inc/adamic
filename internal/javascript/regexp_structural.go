@@ -7,6 +7,13 @@ import (
 )
 
 func (e *emitter) objectFieldRead(expression ir.Property) string {
+	if expression.MethodTruthiness {
+		read := "adamicMethodSlot(receiver, " + quote(expression.Name) + ")"
+		if expression.Optional {
+			read = "receiver != null && " + read
+		}
+		return "((receiver) => Boolean(" + read + "))(" + e.value(expression.Object) + ")"
+	}
 	if expression.Unset && expression.View != "" {
 		return fmt.Sprintf("adamicPlaceholderViewField(%s, %s, %s, %d, %s, [%s], %t, %t)", e.value(expression.Object), quote(expression.Name), quote(expression.View), expression.UnsetType, quote(expression.ViewType), e.values(expression.ViewAllowed), expression.Optional, expression.Absent)
 	}

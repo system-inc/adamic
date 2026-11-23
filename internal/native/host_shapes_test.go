@@ -344,7 +344,7 @@ var hostShapeReaders = []struct {
 	{"node_fs_file.c", "node_system_error", "fills an errno error of its caller's own static shape by the slot names it laid out, and names no key a program gives", "", ""},
 	{"object.c", "adamic_object_copy_checked", "a spread of a host is refused", "door_spread.a", "an object spread through a view that may hold library class Stats (its internal fields are not own enumerable properties)"},
 	{"object.c", "adamic_object_find", "a static read by a name the program's type declares, which lowering maps to the shape's own field", "", ""},
-	{"object.c", "adamic_object_callee", "a method call by a name the program's type declares", "", ""},
+	{"object.c", "object_callee_slot", "a method call or truthiness read by a name the program's type declares", "", ""},
 	{"object.c", "adamic_object_optional_find", "a static read by a name the program's type declares", "", ""},
 	{"object.c", "adamic_object_view_write", "a static write by a name the program's type declares", "", ""},
 	{"regexp.c", "regex_storage", "the regular expression runtime reading its own objects", "", ""},

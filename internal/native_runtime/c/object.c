@@ -153,22 +153,8 @@ void adamic_intl_collator_shape_publish(const adamic_shape *shape) {
 	atomic_store_explicit(&intl_collator_shape, shape, memory_order_release);
 }
 
-adamic_closure *adamic_object_callee(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method_entry *method) {
-	if (adamic_record_is(object)) {
-		adamic_string key = {{0, adamic_kind_string, 0}, strlen(name), name, 0, NULL, NULL, 0};
-		const adamic_value *slot = adamic_record_get_own(object, &key);
-		if (slot == NULL || slot->reference == NULL) { return NULL; }
-		const adamic_heap *reference = slot->reference;
-		if (reference->kind == adamic_kind_closure) { return slot->reference; }
-		size_t capacity = strlen(name) + 64;
-		char *message = malloc(capacity);
-		if (message == NULL) {
-			static const char oom[] = "out of memory";
-			adamic_panic(oom, sizeof oom - 1);
-		}
-		int length = snprintf(message, capacity, "TypeError: record key '%s' is not a function", name);
-		adamic_panic(message, (size_t)length);
-	}
+// Fixed methods and their truthiness use the same lookup, including host registrations.
+static size_t object_callee_slot(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
 	const adamic_shape *shape = object->shape;
 	// The cache's index counts the fields, then the methods after them.
 	uint64_t packed = __atomic_load_n(&cache->packed, __ATOMIC_RELAXED);
@@ -187,26 +173,71 @@ adamic_closure *adamic_object_callee(const adamic_object *object, const char *na
 				found = true;
 			}
 		}
-		// A collator's compare is a getter on Intl.Collator.prototype on Node, never an own field, so its
-		// shape names it #compare and the lookups above miss it (library_intl.c, #zjndrx5). x.compare(...)
-		// on one calls its #compare closure, the shape's first slot. The collator is known by its shape's
-		// address, never by a field's name, so a program's own object, whose compare field or class method
-		// the lookups above found, never reaches here.
-		if (!found && shape == atomic_load_explicit(&intl_collator_shape, memory_order_acquire) && strcmp(name, "compare") == 0) {
-			slot = 0;
-			found = true;
-		}
-		// RegExp's prototype method is not a shape field, and keeps the object's receiver.
-		if (!found && adamic_regex_method(object, name, method)) { return NULL; }
 		// Optional binding observes absence without caching a made-up slot.
-		if (!found) { return NULL; }
+		if (!found) { return SIZE_MAX; }
 		adamic_slot_cache_store(cache, shape, slot);
 	}
+	return slot;
+}
+adamic_closure *adamic_object_callee(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method_entry *method) {
+	if (adamic_record_is(object)) {
+		adamic_string key = {{0, adamic_kind_string, 0}, strlen(name), name, 0, NULL, NULL, 0};
+		const adamic_value *slot = adamic_record_get_own(object, &key);
+		if (slot == NULL || slot->reference == NULL) { return NULL; }
+		const adamic_heap *reference = slot->reference;
+		if (reference->kind == adamic_kind_closure) { return slot->reference; }
+		size_t capacity = strlen(name) + 64;
+		char *message = malloc(capacity);
+		if (message == NULL) {
+			static const char oom[] = "out of memory";
+			adamic_panic(oom, sizeof oom - 1);
+		}
+		int length = snprintf(message, capacity, "TypeError: record key '%s' is not a function", name);
+		adamic_panic(message, (size_t)length);
+	}
+	size_t slot = object_callee_slot(object, name, cache);
+	const adamic_shape *shape = object->shape;
+	if (slot == SIZE_MAX) {
+		// A direct Collator call uses its private placeholder. The host view walk
+		// forbids this member through a structural view.
+		if (shape == atomic_load_explicit(&intl_collator_shape, memory_order_acquire) && strcmp(name, "compare") == 0) {
+			return adamic_object_field(object, "#compare", &(adamic_slot_cache){0})->reference;
+		}
+		adamic_regex_method(object, name, method);
+		return NULL;
+	}
 	if (slot < shape->count) {
-		return object->slots[slot].reference;
+		if (!shape->references[slot] || !adamic_object_present(object, slot) ||
+		    !adamic_object_initialized(object)[slot]) return NULL;
+		adamic_heap *value = object->slots[slot].reference;
+		return value != NULL && value->kind == adamic_kind_closure ? (adamic_closure *)value : NULL;
 	}
 	*method = shape->methods->code[slot - shape->count];
 	return NULL;
+}
+
+bool adamic_object_method_truthy(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	if (object == NULL || (const adamic_heap *)object == &adamic_null) {
+		static const char message[] = "method truthiness read on null or undefined";
+		adamic_panic(message, sizeof message - 1);
+	}
+	if (adamic_record_is(object)) {
+		adamic_string key = {{0, adamic_kind_string, 0}, strlen(name), name, 0, NULL, NULL, 0};
+		const adamic_value *slot = adamic_record_get_own(object, &key);
+		if (slot == NULL) return false;
+		switch (adamic_record_values(object)) {
+		case adamic_field_reference: return adamic_census_to_boolean(slot->reference);
+		case adamic_field_boolean: return slot->boolean;
+		default: return slot->number != 0 && !isnan(slot->number);
+		}
+	}
+	adamic_method_entry method = {0};
+	size_t slot = object_callee_slot(object, name, cache);
+	// The host view walk holds Collator.compare out of structural truthiness reads.
+	// Admitting that view would require handling its prototype getter here.
+	if (slot == SIZE_MAX) return adamic_regex_method(object, name, &method);
+	if (slot >= object->shape->count) return true;
+	return adamic_object_slot_truthy(object, slot);
 }
 
 // A field made as undefined alone holds NULL, whereas number | undefined holds a packed number.
