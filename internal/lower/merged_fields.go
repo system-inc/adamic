@@ -327,7 +327,7 @@ func (l *lowering) mergedComputedRead(node *ast.Node) (ir.Expression, bool, erro
 	if !known {
 		return nil, true, l.notYet(node, "a merged field without runtime storage")
 	}
-	return ir.Property{Object: object, Name: field.Name, Of: of, Optional: access.QuestionDotToken != nil,
+	return ir.Property{Object: object, Name: field.Name, Of: of, Optional: l.questionDot(node),
 		View: mergedFieldView(node, class), ViewType: l.checker.TypeToString(declared), ViewWhere: l.program.Where(node),
 		ViewTypeID: int(declared.Id()), ViewContract: l.result.ViewContractTypes[int(declared.Id())],
 		ViewReceiverTypeID: int(l.checker.GetTypeAtLocation(access.Expression).Id())}, true, nil

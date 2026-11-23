@@ -276,6 +276,29 @@ func (l *lowering) optionalChainOperandType(node *ast.Node) *checker.Type {
 	return proven
 }
 
+// optionalChainStepType is the type a step of a guarded chain has in the guard's present arm, where only the
+// undefined the chain adds is gone (#cdpxjmb, Lower's must): an inner step's own type without tsc's optional
+// marker, and the last step, a field, the field's own declared type, so a field declared n?: number is still
+// number | undefined there, as the plain road reads it. A step's real undefined is never stripped, so a ! on
+// it keeps its check. It's nil for a node no guard is around, or a last step that isn't a field.
+func (l *lowering) optionalChainStepType(node *ast.Node) *checker.Type {
+	if !l.optionalChainGuarded(node) {
+		return nil
+	}
+	proven := l.checker.GetTypeAtLocation(node)
+	if ast.IsOutermostOptionalChain(node) {
+		if node.Kind != ast.KindPropertyAccessExpression {
+			return nil
+		}
+		field := l.checker.GetSymbolAtLocation(node.Name())
+		if field == nil {
+			return nil
+		}
+		proven = l.checker.GetTypeOfSymbol(field)
+	}
+	return l.checker.GetNonOptionalType(proven)
+}
+
 // optionalChainResult is the type a call returns in a guarded chain's present arm: an inner step's
 // without tsc's optional marker, and the last step's what its signature returns, since the undefined
 // tsc adds to the chain's type is the guard's, not the call's. Any other call's is its own.

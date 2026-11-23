@@ -435,14 +435,9 @@ func (l *lowering) enumExpression(node *ast.Node) (ir.Expression, bool, error) {
 			return nil, true, err
 		}
 		of, err := l.typeOf(member.Name())
-		optional := false
-		if node.Kind == ast.KindPropertyAccessExpression {
-			optional = node.AsPropertyAccessExpression().QuestionDotToken != nil
-		}
-		if node.Kind == ast.KindElementAccessExpression {
-			optional = node.AsElementAccessExpression().QuestionDotToken != nil
-		}
-		if !optional && node.Flags&ast.NodeFlagsOptionalChain != 0 {
+		// A guarded optional chain's steps read as plain ones (optional_chain.go).
+		optional := l.questionDot(node)
+		if !optional && l.inOptionalChain(node) {
 			return nil, true, l.notYet(node, "an optional enum chain longer than one step")
 		}
 		return ir.Property{Object: object, Name: member.Name().Text(), Of: of, Optional: optional}, true, err

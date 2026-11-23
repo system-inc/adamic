@@ -11,7 +11,7 @@ import (
 func (l *lowering) isOptionalJoin(node *ast.Node) bool {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
-	if call.QuestionDotToken != nil || callee.Kind != ast.KindPropertyAccessExpression {
+	if l.questionDot(node) || callee.Kind != ast.KindPropertyAccessExpression {
 		return false
 	}
 	access := callee.AsPropertyAccessExpression()

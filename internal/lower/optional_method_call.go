@@ -96,6 +96,11 @@ func (l *lowering) optionalMethodSignature(node *ast.Node) *checker.Signature {
 			return nil
 		}
 	}
+	if len(method.Declarations) > 1 && l.unionFieldStorageDiffers(l.checker.GetTypeAtLocation(receiver), call.Expression.Name().Text()) != "" {
+		// Members of the union that store the method in different representations can't be read at one
+		// (#svtsk2x), so the call keeps optionalCall's stop.
+		return nil
+	}
 	declared := l.checker.GetTypeOfSymbol(method)
 	if l.includesNull(declared) {
 		return nil

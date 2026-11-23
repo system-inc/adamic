@@ -22,7 +22,7 @@ func (l *lowering) indexedTupleRead(node *ast.Node, object ir.Expression) (ir.Ex
 			return nil, false, nil
 		}
 	}
-	if access.QuestionDotToken != nil {
+	if l.questionDot(node) {
 		return nil, false, nil
 	}
 	if checker.IsTupleType(receiver) && ast.SkipParentheses(access.ArgumentExpression).Kind == ast.KindNumericLiteral {

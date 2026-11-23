@@ -12,7 +12,7 @@ import (
 // optionalChain's (optional_chain.go).
 func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error) {
 	call := node.AsCallExpression()
-	if call.QuestionDotToken != nil || hasSpread(node) || optionalIntrinsicContinues(node) {
+	if l.questionDot(node) || hasSpread(node) || optionalIntrinsicContinues(node) {
 		return nil, false, nil
 	}
 	// join already owns its receiver guard and effect-local lifetime.
@@ -27,7 +27,7 @@ func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error
 		return nil, false, nil
 	}
 	access := callee.AsPropertyAccessExpression()
-	if access.QuestionDotToken == nil {
+	if !l.questionDot(callee) {
 		return nil, false, nil
 	}
 	receiver, err := l.expression(access.Expression)
