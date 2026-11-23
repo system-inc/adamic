@@ -25,6 +25,9 @@ func TestUntaggedUnionCastLowers(t *testing.T) {
 		{"a member out of three", members + "interface C { readonly c: boolean } function f(x: A | B | C): B { return x as B; } console.log(f({ b: 'b', shared: 's' }).b);", false},
 		{"narrower than a member", "interface Declaration { readonly kind: number; readonly pos: number } interface Expression { readonly kind: number; readonly end: number } interface Identifier extends Expression { readonly text: string } function f(x: Declaration | Expression): Identifier { return x as Identifier; } console.log(f({ kind: 80, end: 1, text: 't' } as Identifier).text);", false},
 		{"a member beside undefined", members + "function f(x: A | B | undefined): A { return x as A; } console.log(String(f({ a: 1, shared: 's' }).a));", true},
+		// An optional literal field is no tag (fieldLiteral answers nil for kind?: 'a'), so the union takes this arm,
+		// held by the checked reads; recorded here so a ruling either way moves this row (Lower's should).
+		{"an optional literal field", "interface A { readonly kind?: 'a'; readonly a: number } interface B { readonly kind?: 'b'; readonly b: string } function f(x: A | B): A { return x as A; } console.log(String(f({ kind: 'a', a: 1 }).a));", false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
