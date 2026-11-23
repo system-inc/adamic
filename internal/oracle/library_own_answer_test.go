@@ -27,7 +27,8 @@ func libraryOwnAnswerFixture(t *testing.T, name string) string {
 	return path
 }
 
-// Each line main printed wrong stops at its own call, as NotYet naming the receiver. Mutant: the stop dropped
+// Each line main printed wrong stops at its own call, as NotYet naming the receiver, the Object.prototype.toString.call
+// road's iterator row (k1, Compiler's ask) among them. Mutant: the stop dropped
 // (scratch-ts), which lowers every row again.
 func TestLibraryObjectOwnAnswerStops(t *testing.T) {
 	t.Parallel()
@@ -38,12 +39,13 @@ func TestLibraryObjectOwnAnswerStops(t *testing.T) {
 		{"g1_tostring.a", "3:14", "a RegExp match's groups"},
 		{"g4_valueof.a", "3:21", "a RegExp match's groups"},
 		{"g5_local.a", "4:14", "a RegExp match's groups"},
+		{"k1_call_iterator.a", "2:13", "a library "},
 	} {
 		t.Run(stop.name, func(t *testing.T) {
 			t.Parallel()
 			_, err := lowered(t, libraryOwnAnswerFixture(t, stop.name))
 			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "whose own answer isn't Object.prototype's") || !strings.Contains(err.Error(), stop.receiver) || !strings.Contains(err.Error(), stop.name+":"+stop.position) {
+			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "whose own ") || !strings.Contains(err.Error(), stop.receiver) || !strings.Contains(err.Error(), stop.name+":"+stop.position) {
 				t.Fatalf("want a NotYet at %s:%s naming %s, got %v", stop.name, stop.position, stop.receiver, err)
 			}
 		})
@@ -51,11 +53,12 @@ func TestLibraryObjectOwnAnswerStops(t *testing.T) {
 }
 
 // What keeps its answer and still agrees with Node natively, sanitized and on JavaScript: an iterator result,
+// Object.prototype.toString.call of a RegExp match's groups (Object's own tag, prototype or none),
 // which next makes as a plain object; a Map's own tag and an array's join; and a program's object literal and
 // class instance, Object.prototype's own.
 func TestLibraryObjectOwnAnswerControlsAgree(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"i4_result.a", "c3_map_array.a", "c1_control.a"} {
+	for _, name := range []string{"i4_result.a", "c3_map_array.a", "c1_control.a", "k2_call_groups.a"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			loomViewsDAgrees(t, libraryOwnAnswerDirectory+name)
