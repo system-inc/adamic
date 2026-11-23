@@ -31,6 +31,10 @@ func TestGraphIteratorSlotsByAssignability(t *testing.T) {
 		{"a type alias", "type Keys = Iterator<string>;\n" + holder("Keys", "map.keys()")},
 		{"a Map's entries", holder("Iterator<[string, Holder]>", "map.entries()")},
 		{"a Set's values", "type Holder = { cursor: Iterator<Holder> | undefined };\nconst set = new Set<Holder>();\nconst holder: Holder = { cursor: undefined };\nset.add(holder);\nholder.cursor = set.values();\nconsole.log(`${set.size}`);\n"},
+		// Probe rows (#66acn2a, J-wb3qk4h): the name the arm on main already links, and both shapes inside a function.
+		{"probe: a MapIterator<string> field", holder("MapIterator<string>", "map.keys()")},
+		{"probe: an Iterator<string> field in a function", "function run(): void {\n" + holder("Iterator<string>", "map.keys()") + "}\nrun();\n"},
+		{"probe: a MapIterator<string> field in a function", "function run(): void {\n" + holder("MapIterator<string>", "map.keys()") + "}\nrun();\n"},
 		{"the control, no iterator", "type Holder = { size: number };\nconst map = new Map<string, Holder>();\nconst holder: Holder = { size: 0 };\nmap.set('a'.repeat(2), holder);\nholder.size = map.size;\nconsole.log(`${map.size}`);\n"},
 	}
 	for _, c := range cases {
