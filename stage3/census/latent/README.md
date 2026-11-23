@@ -249,6 +249,11 @@ an imported binding. Selecting the parent's sibling must exit 1 at the signature
 assertion. Run the positive test with `LATENT_REPLAY_MUTANT_PARENT_SIBLING=1` to
 prove that the equality/reproduction check itself fails under that mutant.
 
+A replay from `-project <entry file>` keeps the entry first, since lowering routes module identities from the first
+file (#4ft3dyf); `test_replay_order.py` reads that order from the source and builds nothing, so its gate wrapper,
+`TestReplayOrderPython`, runs it. The integration suite above hasn't run in a gate (its name never matched the test
+census's pattern), and its directory cases meet the directory census's first-sorted-file route (#pn630c6).
+
 [Replay validation and three real-project timings](replay/REPORT.md) compare the command with the 10,551-attempt full entry census.
 
 
