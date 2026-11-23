@@ -1,0 +1,286 @@
+{
+  "version": 5,
+  "about": "Adamic's submit script input: what a head's diff requires before it submits. Every rule is read from the head's diff against main's tip at submit. A rule fires when any of its triggers matches; a head owes the union of what its fired rules require. Written by Compiler from #system_adamic_compiler's standing rules (#mbtv3vv, #07a4th6). When unsure, a rule fires: a gate run needlessly costs a job, a gate missed costs a red block.",
+  "definitions": {
+    "productionGo": "a .go file not ending _test.go",
+    "compilerProduction": "productionGo under internal/lower/, internal/ir/, internal/flow/, internal/native/ (outside internal/native_runtime/), internal/javascript/, internal/load/, cmd/adamic/",
+    "fresh": "a job counts only when its commit is the head's own sha, and its base (for a paired job) is main's tip at submit, or a main commit with no change under internal/lower, internal/ir, internal/flow, internal/native or internal/load since",
+    "green": "the job's outcome is exit 0, and its command's sha256 equals the sha256 of the named gate recipe read at the head (Loom keeps a command's hash, never its text, so a gate is a fixed recipe file, cloud/gates/<gate>.sh, and the script compares hashes)",
+    "red": "for a mutant job: exit non-zero, with the named test's FAIL line in its kept tail",
+    "goFunctionBodyChanged": "the named function's body differs between base and head by go/ast, comments and formatting ignored",
+    "freshStack": "for several adaptation heads submitted together (Seats' stacked form, Compiler on #bbssdcy Nov 23): each head carries its own unit census at a recent main, 0 newly stopping; and the set carries one combined census at main's tip at submit, base the tip, head every change applied, read by unit and by site: 0 units newly stopping, every cleared unit attributable to a named head, the added sites equal to the union of each head's own added sites, and any unit in two heads' cleared lists or holding an extra site censused for those heads alone. If lower moves during the combined job it is re-asked once, then the set submits on that green"
+  },
+  "gates": {
+    "format": "gofmt -l on the head's changed .go files prints nothing; go vet of every touched package",
+    "touched-packages-whole": "go test of every package holding a changed file, whole",
+    "compilercensus": "go test ./internal/compilercensus/ whole",
+    "parallelcensus": "go test ./cmd/adamic-gate/parallelcensus/ whole",
+    "lower-whole": "go test ./internal/lower/ whole, products settled",
+    "oracle-whole": "go test ./internal/oracle/ whole, products settled (one job or its three recorded parts)",
+    "native-whole-wasi": "go test ./internal/native/ whole with ADAMIC_TEST_WASI=1",
+    "ir-whole": "go test ./internal/ir/ whole (its call-target census)",
+    "latent-whole": "go test ./stage3/census/latent/... whole (the statecopy guard and the pass ledger)",
+    "admission-delta": "the admission delta against main's tip: its verdict line pass, and its admitted programs listed",
+    "unit-census-pair": "tsc's paired census, base main's tip and head, by stage3/census/pair/pair.py's rule: 0 units newly stopping, or each newly stopping unit named in the commit message with the ruling that allows it",
+    "lane-whole-sealed": "stage3/lane whole, sealed",
+    "mutants-red": "for every mutant the head's *.mutants.md names: its own job, red on the test it names",
+    "value-count-reached": "the adaptation's value count job: 0 counterexamples, and calls observed above 0 on the changed path (a count that never reached its path proves nothing), or a fixture held to Node that drives it",
+    "declarations-identical": "the adapted tree's public .d.ts byte-identical to stock, or the head carries Adamic's ruling on the declaration diff",
+    "stock-js-identical": "tsc's emitted JavaScript for the adapted files byte-identical to stock; true makes an adaptation type-only and drops value-count-reached"
+  },
+  "sameDiff": {
+    "statecopy-row": "stage3/census/latent/statecopy/main.go names each new exported internal/ir field in irSpecFields",
+    "pass-ledger-row": "stage3/census/latent/pass_ledger.go.txt names each new lowering pass",
+    "skip-census-row": "a skip-census row for each new t.Skip on a path Loom runs",
+    "pending-sidecar": "a .pending sidecar naming a task, beside each newly added program whose expected outcome is a stop where Node runs",
+    "ledger-line": "stage3/upstream/LEDGER.md changed",
+    "mutant-evidence-path": "a file among the head's own paths naming the test that goes red with the change undone (Loom's HarnessWithoutMutant law)",
+    "adapter-output-test": "a test.cjs beside the adapter that runs its edited output and goes red when a reviewer's mutation of the adapter's output (a swapped pair, a dropped entry) is applied; required where stock-js-identical is false (family 101, Nov 23: a swapped pair passed every other check). It runs on a tree stage3/apply.sh wrote, so the gate runs the apply first and hands the test its -before and -after refs",
+    "adapter-structural-pins": "the adapter pins its input by the nodes it edits (kind and text), never by a whole-file digest: adapters run in sorted order (stage3/apply.py:272), so a whole-file pin refuses the apply once any earlier adapter edits that file (family 98's round 3 against 99-cli-resolution-cycle-length, Nov 23). Checked by refusing an adapt.cjs that hashes a whole input file it then edits. An adapter's tests are held to the same rule: a test reads its adapter's own snapshot (its -after ref, as 112's test does), never the final applied tree or a constant digest of a file, since a later adapter in sorted order may edit that file (89's and 88's tests, Nov 23)"
+  },
+  "rules": [
+    {
+      "id": "every-head",
+      "source": "domain body: every head runs compilercensus whole beside gofmt and parallelcensus (Nov 20)",
+      "triggers": [
+        {
+          "always": true
+        }
+      ],
+      "requires": [
+        "format",
+        "touched-packages-whole",
+        "compilercensus",
+        "parallelcensus"
+      ]
+    },
+    {
+      "id": "compiler-change",
+      "source": "domain body: a head that adds a stop or changes what lowering admits runs native whole with ADAMIC_TEST_WASI=1, oracle whole and lower whole (Nov 15); never a silent miscompile. A script can't tell a words-only change from an admission change, so any compiler production change counts",
+      "triggers": [
+        {
+          "paths": "compilerProduction"
+        }
+      ],
+      "requires": [
+        "lower-whole",
+        "oracle-whole",
+        "native-whole-wasi",
+        "admission-delta",
+        "unit-census-pair"
+      ]
+    },
+    {
+      "id": "refusal-added",
+      "source": "domain body: a head that adds a refusal also runs internal/oracle whole, since the admission delta can't see oracle's own fixtures (Nov 12)",
+      "triggers": [
+        {
+          "paths": "productionGo under internal/",
+          "addedLineMatches": "&Refused\\{|\\.notYet\\(|\\brefused\\("
+        }
+      ],
+      "requires": [
+        "oracle-whole",
+        "admission-delta"
+      ]
+    },
+    {
+      "id": "lower-tests-or-pass",
+      "source": "domain body: a head that touches internal/lower's tests or adds a pass runs internal/ir's call-target census and stage3/census/latent whole (Nov 13)",
+      "triggers": [
+        {
+          "paths": "internal/lower/**/*_test.go"
+        },
+        {
+          "goFunctionBodyChanged": [
+            "internal/lower/lower.go: lowerChecked",
+            "internal/lower/lower.go: lowerTarget"
+          ]
+        }
+      ],
+      "requires": [
+        "ir-whole",
+        "latent-whole"
+      ]
+    },
+    {
+      "id": "new-call-site",
+      "source": "internal/ir's call-target census reads every closure and call target lowering makes",
+      "triggers": [
+        {
+          "paths": "productionGo under internal/lower/",
+          "addedLineMatches": "ir\\.(CallClosure|MakeClosure|Call)\\{"
+        }
+      ],
+      "requires": [
+        "ir-whole"
+      ]
+    },
+    {
+      "id": "lowering-struct-field",
+      "source": "domain body: a new field on the lowering struct runs stage3/census/latent whole in its proof",
+      "triggers": [
+        {
+          "goStructFieldAdded": "internal/lower: type lowering struct"
+        }
+      ],
+      "requires": [
+        "latent-whole"
+      ]
+    },
+    {
+      "id": "ir-field",
+      "source": "domain body: a new exported IR field carries its statecopy row in the same commit (Nov 7)",
+      "triggers": [
+        {
+          "goStructFieldAdded": "internal/ir: any exported struct, exported field"
+        }
+      ],
+      "requires": [
+        "latent-whole",
+        "ir-whole"
+      ],
+      "sameDiff": [
+        "statecopy-row"
+      ]
+    },
+    {
+      "id": "pass-added",
+      "source": "domain body: a head that adds a pass registers it in stage3/census/latent's pass ledger in the same commit. Amended Nov 23 on Adamic's read of internal/lower/lower.go: passes aren't all named check* or finish*, the receiver is `lowering.`, and some are free functions (checkWorkerBindings, checkGeneratorRoads), so the trigger is the pass lists' bodies, never a callee's name",
+      "triggers": [
+        {
+          "goFunctionBodyChanged": [
+            "internal/lower/lower.go: lowerChecked",
+            "internal/lower/lower.go: lowerTarget"
+          ]
+        }
+      ],
+      "requires": [
+        "latent-whole",
+        "ir-whole"
+      ],
+      "sameDiff": [
+        "pass-ledger-row"
+      ],
+      "sameDiffWhen": "a call statement is added to either body, by go/ast comparison of the call expressions in the base and head bodies, whatever its callee's name or receiver; a body change that adds no call owes the gates but not the row",
+      "note": "Fires on any change to the two bodies, a needless gate now and then, never a missed one (Adamic, #mbtv3vv)"
+    },
+    {
+      "id": "test-skip",
+      "source": "domain body: a test that skips where Loom runs it needs a skip-census row, or it runs everywhere (Nov 7)",
+      "triggers": [
+        {
+          "paths": "**/*_test.go",
+          "addedLineMatches": "\\bt\\.Skip(f|Now)?\\("
+        }
+      ],
+      "sameDiff": [
+        "skip-census-row"
+      ]
+    },
+    {
+      "id": "stopping-pin",
+      "source": "domain body: a pin that stops a program Node runs carries its .pending sidecar naming the task that lifts it (Nov 21, J-z6bxcxr)",
+      "triggers": [
+        {
+          "addedPaths": "internal/oracle/testdata/**/*.{a,ts}",
+          "withExpectedStop": true
+        }
+      ],
+      "sameDiff": [
+        "pending-sidecar"
+      ],
+      "note": "Partly mechanical: the script reads the program's expected-outcome file beside it; where none says, it asks the author to declare stop or agree in the commit message"
+    },
+    {
+      "id": "harness",
+      "source": "Loom's door (HarnessWithoutMutant), and stage3/lane whole for a lane-harness head (#07a4th6 item 5)",
+      "triggers": [
+        {
+          "paths": "stage3/lane/**"
+        },
+        {
+          "paths": "**/status.json"
+        },
+        {
+          "paths": "stage3/**/check.py"
+        },
+        {
+          "paths": "stage3/**/shard_plan.py"
+        }
+      ],
+      "requires": [
+        "lane-whole-sealed"
+      ],
+      "sameDiff": [
+        "mutant-evidence-path"
+      ]
+    },
+    {
+      "id": "mutants",
+      "source": "the review method: a check never proved able to fail is a relay; #07a4th6 item 7 (1 of 9 lane heads carried it last week)",
+      "triggers": [
+        {
+          "addedOrChangedPaths": "**/*.mutants.md"
+        },
+        {
+          "rule": "adaptation"
+        }
+      ],
+      "requires": [
+        "mutants-red"
+      ]
+    },
+    {
+      "id": "adaptation",
+      "source": "the Nov 7 delegation and Adamic's Nov 22 split; #07a4th6 items 1 to 4 and 6",
+      "triggers": [
+        {
+          "paths": "stage3/adapt/**"
+        }
+      ],
+      "requires": [
+        "unit-census-pair",
+        "stock-js-identical",
+        "declarations-identical",
+        "mutants-red"
+      ],
+      "sameDiff": [
+        "adapter-structural-pins",
+        "ledger-line"
+      ],
+      "thenIf": {
+        "stock-js-identical": false,
+        "requires": [
+          "value-count-reached"
+        ],
+        "accepter": "Adamic, unless the shape is one she ruled Compiler's (the enumerated-table shape)",
+        "sameDiff": [
+          "adapter-output-test"
+        ]
+      },
+      "fresh": "fresh, or freshStack when submitted as a set"
+    },
+    {
+      "id": "buildcache",
+      "source": "Loom's heavy-wave rule: a buildcache change lands alone, in a buildcache hour",
+      "triggers": [
+        {
+          "paths": "internal/buildcache/**"
+        }
+      ],
+      "requires": [
+        "touched-packages-whole"
+      ],
+      "routing": "alone, in a buildcache hour named by Loom; never in a block with another change"
+    }
+  ],
+  "exceptions": [
+    {
+      "id": "two-hour-clock",
+      "source": "a live miscompile on main gets a fix or a narrow refusal within two hours",
+      "rule": "a head naming a live-hole task on the clock may submit on format, compilercensus, parallelcensus, its pins and lower-whole alone, and owes the rest after it lands, each run named on the task within the day"
+    }
+  ],
+  "tonight": "Compiler's nine accepts on Nov 23 04:00Z to 05:45Z, against these rules: seven owed a gate the author hadn't run. #32e763w owed oracle-whole; #mh5kdde compilercensus and parallelcensus; #b5w3ycg's removes-nullish and #t2p4wyv native-whole-wasi, oracle-whole and admission-delta; #4czdn4q native-whole-wasi; #f3n0gyp native-whole-wasi and ir-whole; #e0cnaa9 latent-whole."
+}
