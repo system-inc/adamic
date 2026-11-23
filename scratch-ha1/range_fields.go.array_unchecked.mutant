@@ -1,0 +1,225 @@
+package lower
+
+import (
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
+)
+
+// A closed range type held as a Union (range_types.go) holds either an object or a NodeArray, so pos and end
+// are read and written through it by kind (#hae423v wave 2): a helper function, the receiver evaluated once as
+// its argument, asks ArrayIsArray, and each arm takes the receiver through a checked narrow to its own kind, so
+// no object road is ever handed an adamic_array and no array road an object. The array arm reads and writes the
+// NodeArray's side record, as a read or write of a NodeArray-typed value's field does today; the object arm is
+// the read or write an object-held receiver of the range type gets, built by the same code, so an ir.Property or
+// ir.SetProperty that finishAccessors turns into its accessor dispatcher where a getter or setter of the name
+// may be reached (Lower's Must 3): a class with get pos() whose instance goes where a TextRange is held runs its
+// getter. The read never asks dynamicReadHazard, so tsc's get pos() in decodeMappings can't stop it.
+
+// rangeOnly is whether a type, without null and undefined, is a closed range type held as a Union or a union of
+// nothing but such types, which is what the dispatch's two arms cover.
+func (l *lowering) rangeOnly(proven *checker.Type) bool {
+	proven = l.concrete(proven)
+	if proven == nil {
+		return false
+	}
+	proven = l.checker.GetNonNullableType(proven)
+	members := []*checker.Type{proven}
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		members = proven.Types()
+	}
+	for _, member := range members {
+		if !l.rangeHeldAsUnion(member) {
+			return false
+		}
+	}
+	return true
+}
+
+// rangeReceiverOnly is rangeOnly of a field access's receiver.
+func (l *lowering) rangeReceiverOnly(receiver *ast.Node) bool {
+	return l.rangeOnly(l.checker.GetTypeAtLocation(receiver))
+}
+
+// rangeNarrowMessage is what a range helper's checked narrow stops with: the value was neither of the two kinds
+// a range type holds, which lowering never lets in, so reaching it is a compiler bug said out loud.
+func (l *lowering) rangeNarrowMessage(node *ast.Node) string {
+	return "a range type held something other than an object or a NodeArray at " + l.program.Where(node)
+}
+
+// rangeHelper is a helper function in the IR, as libraryArrayBuilder's are, evaluating each operand once as an
+// argument. It differs in when it takes its function index: at finish, not at the start. Its arms are built by
+// lowering calls (unsetSpecialization, propertyRead) that may add helper functions of their own in between,
+// which would leave an index taken at the start naming one of theirs. Until finish its parameters name no
+// function.
+type rangeHelper struct {
+	l          *lowering
+	parameters []int
+	arguments  []ir.Expression
+}
+
+func (l *lowering) rangeHelper(arguments []ir.Expression) *rangeHelper {
+	h := &rangeHelper{l: l, arguments: arguments}
+	for _, argument := range arguments {
+		local := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "argument", Type: argument.Type(), Function: -1})
+		h.parameters = append(h.parameters, local)
+	}
+	return h
+}
+
+func (h *rangeHelper) read(index int) ir.Expression {
+	local := h.parameters[index]
+	return ir.Read{Local: local, Of: h.l.result.Locals[local].Type}
+}
+
+// finish adds the helper with body and returns its call: a value of returns, or nothing when returns is 0.
+func (h *rangeHelper) finish(name string, body []ir.Statement, returns ir.Type) ir.Call {
+	function := len(h.l.result.Functions)
+	for _, local := range h.parameters {
+		h.l.result.Locals[local].Function = function
+	}
+	h.l.result.Functions = append(h.l.result.Functions, ir.Function{Name: name, Parameters: h.parameters, Returns: returns, Body: body})
+	return ir.Call{Function: function, Arguments: h.arguments, Returns: returns}
+}
+
+// rangeFieldRead is object.name, pos or end, where object is held as a range type's Union (propertyRead's road
+// in place of dynamicProperty): the object arm is propertyRead's own read of an object-held receiver.
+func (l *lowering) rangeFieldRead(node *ast.Node, object ir.Expression, name string) (ir.Expression, error) {
+	field := l.checker.GetSymbolAtLocation(node.Name())
+	if field == nil {
+		return nil, l.notYet(node, "a field read through a range type the checker names no field for")
+	}
+	declared := l.checker.GetTypeOfSymbol(field)
+	return l.rangeFieldDispatch(node, object, name, declared, func(plain ir.Expression) (ir.Expression, error) {
+		return l.propertyRead(node, plain, name)
+	})
+}
+
+// rangeFieldDispatch is a read of the number field name through object, held as a range type's Union, as a
+// helper of its own: the array arm reads the side record through the NodeArray allocation's unset check, as
+// nodeArrayProperty does, and objectRead builds the object arm from the receiver narrowed to an object. node is
+// where the read is, which each arm's checks name.
+func (l *lowering) rangeFieldDispatch(node *ast.Node, object ir.Expression, name string, declared *checker.Type, objectRead func(plain ir.Expression) (ir.Expression, error)) (ir.Expression, error) {
+	h := l.rangeHelper([]ir.Expression{object})
+	held := h.read(0)
+	message := l.rangeNarrowMessage(node)
+	array := ir.Narrow{Value: held, To: ir.Array, Message: message}
+	arrayArm, err := l.unsetSpecialization(node, ir.DynamicProperty{Object: ir.Box{Value: array}, Name: name}, declared, "field '"+name+"', factory 'NodeArray allocation'")
+	if err != nil {
+		return nil, err
+	}
+	plain := ir.Narrow{Value: held, To: ir.Object, Checked: true, Message: message}
+	objectArm, err := objectRead(plain)
+	if err != nil {
+		return nil, err
+	}
+	// A use that observes an unset field (a template, typeof, String(), a comparison with undefined, an untyped
+	// save: unsetObserved) gets the side record's read as the tagged union itself, with no check, as every caller
+	// of nodeArrayProperty does there, since an unset record field reads as undefined on Node and that use
+	// shows it. The object arm is boxed to match, so the use reads one union either way and neither arm is
+	// narrowed to a kind its value may not have: a checked narrow to number would stop where Node prints
+	// undefined.
+	if arrayArm.Type() == ir.Union && objectArm.Type() != ir.Union {
+		objectArm = fit(objectArm, ir.Union)
+	}
+	// An optional slot gives unsetSpecialization's arm number | undefined where the field's own read is number.
+	if arrayArm.Type() != objectArm.Type() && arrayArm.Type().IsMaybe() && arrayArm.Type().Present() == objectArm.Type() {
+		objectArm = fit(objectArm, arrayArm.Type())
+	}
+	if objectArm.Type() != arrayArm.Type() && objectArm.Type().IsMaybe() && objectArm.Type().Present() == arrayArm.Type() {
+		arrayArm = fit(arrayArm, objectArm.Type())
+	}
+	if arrayArm.Type() != objectArm.Type() {
+		return nil, l.notYet(node, "a field read through a range type whose array and object arms are held differently")
+	}
+	result := ir.Conditional{Condition: ir.ArrayIsArray{Value: held}, WhenTrue: arrayArm, WhenNot: objectArm, Of: arrayArm.Type()}
+	return h.finish("range_field_read", []ir.Statement{ir.Return{Value: result}}, result.Type()), nil
+}
+
+// rangeFieldWrite is object.name = value, pos or end, where object is held as a range type's Union (setProperty's
+// road in place of its stop for a Union receiver): tsc's setTextRangePos and setTextRangeEnd write through one,
+// and so does the emitter's own TextRange local. The receiver and the value are each evaluated once, in that
+// order, as the helper's arguments. The array arm writes the side record as a write to a NodeArray's field does
+// today, with no class, since the record has no class's layout; the object arm is fieldStore's write, as an
+// object-held receiver's is. Only a scalar field is written here.
+func (l *lowering) rangeFieldWrite(target, valueNode *ast.Node, object ir.Expression) ([]ir.Statement, error) {
+	value, err := l.expression(valueNode)
+	if err != nil {
+		return nil, err
+	}
+	field := l.checker.GetSymbolAtLocation(target.Name())
+	value, of, declared, err := l.fieldWriteValue(target, field, value)
+	if err != nil {
+		return nil, err
+	}
+	if of != ir.Number {
+		return nil, l.notYet(target, "a write through a range type to a field that isn't a number")
+	}
+	receiver := target.AsPropertyAccessExpression().Expression
+	h := l.rangeHelper([]ir.Expression{object, value})
+	held, written := h.read(0), h.read(1)
+	message := l.rangeNarrowMessage(target)
+	store := l.fieldStore(target, receiver, valueNode, field, declared, l.fieldName(target.Name()), nil, written)
+	arrayStore, objectStore := store, store
+	arrayStore.Object = ir.Narrow{Value: held, To: ir.Array, Checked: true, Message: message}
+	arrayStore.Class = 0
+	objectStore.Object = ir.Narrow{Value: held, To: ir.Object, Checked: true, Message: message}
+	body := []ir.Statement{ir.If{Condition: ir.ArrayIsArray{Value: held}, Then: []ir.Statement{arrayStore}, Else: []ir.Statement{objectStore}}}
+	return []ir.Statement{ir.Evaluate{Value: h.finish("range_field_write", body, 0)}}, nil
+}
+
+// rangeDestructure declares const { pos, end } = range's names from the local held, holding a value of the range
+// type destructured as its Union (destructureFrom's road in place of its stop): each name is its field's read by
+// kind, the object arm the plain field read destructureFrom makes of an object. A default, a rest, a nested
+// pattern or a name other than pos and end stays NotYet.
+func (l *lowering) rangeDestructure(pattern *ast.Node, destructured *checker.Type, held int) ([]ir.Statement, error) {
+	statements := []ir.Statement{}
+	for _, binding := range pattern.AsBindingPattern().Elements.Nodes {
+		if binding.Kind == ast.KindOmittedExpression || binding.Name() == nil {
+			continue
+		}
+		declared := binding.AsBindingElement()
+		if declared.DotDotDotToken != nil || declared.Initializer != nil || !ast.IsIdentifier(binding.Name()) {
+			return nil, l.notYet(binding, "destructuring a range type held as a union into anything but plain names")
+		}
+		field := binding.Name().Text()
+		if declared.PropertyName != nil {
+			if !ast.IsIdentifier(declared.PropertyName) && declared.PropertyName.Kind != ast.KindStringLiteral {
+				return nil, l.notYet(declared.PropertyName, "a computed field name")
+			}
+			field = declared.PropertyName.Text()
+		}
+		if field != "pos" && field != "end" {
+			return nil, l.notYet(binding, "destructuring field "+field+" of a range type held as a union")
+		}
+		property, err := l.destructuredField(binding, destructured, field)
+		if err != nil {
+			return nil, err
+		}
+		fieldType := l.checker.GetTypeOfSymbol(property)
+		local, err := l.declareLocal(binding.Name())
+		if err != nil {
+			return nil, err
+		}
+		stored := l.result.Locals[local].Type
+		if element, known := l.representation(fieldType); !known || element != stored || stored != ir.Number {
+			return nil, l.notYet(binding, "a destructured name held otherwise than its field")
+		}
+		value, err := l.rangeFieldDispatch(binding, ir.Read{Local: held, Of: ir.Union}, field, fieldType, func(plain ir.Expression) (ir.Expression, error) {
+			read := ir.Property{Object: plain, Name: field, Of: stored, Absent: property.Flags&ast.SymbolFlagsOptional != 0}
+			read.View = sourceExpression(binding) + " (field " + field + ")"
+			read.ViewReceiverTypeID = l.viewFieldReceiverTypeID(nil, destructured)
+			read.ViewTypeID = l.viewTypeID(fieldType)
+			read.ViewWhere = l.program.Where(binding)
+			read.ViewType = l.checker.TypeToString(fieldType)
+			read.ViewAllowed = l.viewLiterals(fieldType)
+			return read, nil
+		})
+		if err != nil {
+			return nil, err
+		}
+		statements = append(statements, l.initializeLocal(local, value)...)
+	}
+	return statements, nil
+}
