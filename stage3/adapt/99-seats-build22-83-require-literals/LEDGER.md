@@ -1,0 +1,1 @@
+- **JavaScript-changing, family 83 (#bbssdcy, Adamic accepts after review and census):** 99-seats-build22-83-require-literals pushes each proven require argument-zero literal in scan order and passes the literals directly to inferPreference.
