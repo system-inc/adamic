@@ -68,13 +68,19 @@ func rangeUnionOf(expression ir.Expression) rangeUnion {
 			return rangeUnionMoves
 		}
 		return rangeUnionStops
+	case ir.HasProperty:
+		// An in test asks the kind on both backends: native's has_property (union.c) switches on the heap kind
+		// and answers an array's own names from its index, its side record and its methods, and JavaScript's in
+		// handles an array. So a NodeArray's in test (node-array-keys.a's 'pos' in nodes) lowers because its
+		// reader asks, never because its boxed operand was followed.
+		return rangeUnionDispatches
 	}
 	switch expression.(type) {
 	case ir.ArrayIsArray, ir.CheckedCast, ir.DynamicKeyedProperty, ir.DynamicProperty, ir.ErrorToString,
 		ir.IsCollectionIterator, ir.IsGenerator, ir.JSONStringify, ir.OwnFunction, ir.TypeOf, ir.UnionToString,
 		ir.UnknownKind, ir.ViewElement:
 		return rangeUnionDispatches
-	case ir.BoundMethod, ir.HasAccessor, ir.HasOwn, ir.HasProperty, ir.InstanceOf, ir.JSONEncode, ir.ObjectKeys,
+	case ir.BoundMethod, ir.HasAccessor, ir.HasOwn, ir.InstanceOf, ir.JSONEncode, ir.ObjectKeys,
 		ir.Property, ir.RecordStorage:
 		return rangeUnionStops
 	case ir.ArrayConcat, ir.ArrayFill, ir.ArrayFrom, ir.ArrayIndex, ir.ArrayJoin, ir.ArrayLiteral, ir.ArrayMap,
@@ -293,10 +299,14 @@ func (r *rangeOperands) held(operand ir.Expression) bool {
 				}
 			}
 		case ir.Box:
-			// A box holds its value as it was before a union slot took it: a range type's value only where that
-			// value was one, and a slot's own range type is answered where the slot is read (a typed local, a
-			// declared return, a named field), never here. An in test's own box of a NodeArray-typed local
-			// (node-array-keys.a's 'pos' in nodes) is that local's value, and no range type's.
+			// A box of an array may be the NodeArray a range type takes, so it counts, failing closed: a reader
+			// that reads a layout raw and is handed a boxed array stops. Lower's condition on #hae423v: following
+			// the box to its value would let a NodeArray-typed local's box past every such reader with no
+			// witness. A reader that asks the kind (an in test, a dynamic read) never asks this. Any other box
+			// holds its value as it was before a union slot took it, so it's followed.
+			if value.Value == nil || value.Value.Type() == ir.Array {
+				return true
+			}
 			queue = append(queue, value.Value)
 		case ir.Conditional:
 			queue = append(queue, value.WhenTrue, value.WhenNot)
