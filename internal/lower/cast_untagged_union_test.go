@@ -54,12 +54,14 @@ func TestUntaggedUnionCastLowers(t *testing.T) {
 }
 
 // What the arm leaves as it was, each by its own words: a member that isn't a plain object (a primitive, a
-// class instance, a dictionary), a target no member is or narrows (sideways), a union target, and a union a
-// tag does tell apart, whose payload refinement stays refused (rulings.md, the object-union member entry). In
-// .a the arm's cast is refused as every downcast whose checks no proof erases. Mutants: plainViewObject
-// returning true reds the primitive, class and dictionary rows; the downcast test dropped reds "sideways";
-// unionTagged returning false reds "a tagged union's refinement"; keptCheckDowncastRefusal without
-// proof.untagged reds "in .a".
+// class instance, a dictionary), a union target, and a union a tag does tell apart, whose payload refinement
+// stays refused (rulings.md, the object-union member entry). A union whose tags collide (duplicate enum
+// aliases, mixed tag representations) stays refused too, pinned by TestUncheckableCastsStayRefused. In .a the
+// arm's cast is refused as every downcast whose checks no proof erases. tsc refuses a sideways cast whose
+// types don't overlap itself (TS2352), so no row holds one. Mutants: plainViewObject returning true reds the
+// primitive, class and dictionary rows; unionHoldsLiterals returning false reds "a tagged union's refinement"
+// and TestUncheckableCastsStayRefused's colliding-tag rows; keptCheckDowncastRefusal without proof.untagged
+// reds "in .a".
 func TestUntaggedUnionCastsStayRefused(t *testing.T) {
 	t.Parallel()
 	members := "interface A { readonly a: number; readonly shared: string } interface B { readonly b: string; readonly shared: string } "
@@ -67,7 +69,6 @@ func TestUntaggedUnionCastsStayRefused(t *testing.T) {
 		{"a primitive member", members + "function f(x: A | string): A { return x as A; }", ".ts", "a cast the runtime can't check"},
 		{"a class instance member", members + "class K { readonly k = 1; } function f(x: A | K): A { return x as A; }", ".ts", "a cast the runtime can't check"},
 		{"a dictionary member", members + "function f(x: A | Record<string, number>): A { return x as A; }", ".ts", "a cast the runtime can't check"},
-		{"sideways", members + "interface W { readonly w: number; readonly shared: string } function f(x: A | B): W { return x as W; }", ".ts", "a cast the runtime can't check"},
 		{"a union target", members + "interface C { readonly c: boolean } function f(x: A | B | C): A | B { return x as A | B; }", ".ts", "a cast the runtime can't check"},
 		{"a tagged union's refinement", "interface P { readonly kind: 'p'; readonly v: string | number } interface Q { readonly kind: 'q' } interface PN { readonly kind: 'p'; readonly v: number } function f(x: P | Q): PN { return x as PN; }", ".ts", "a cast the runtime can't check"},
 		{"in .a", members + "function f(x: A | B): A { return x as A; }", ".a", "in .a whose checks no proof erases"},
@@ -91,8 +92,9 @@ func TestUntaggedUnionCastsStayRefused(t *testing.T) {
 // untagged reds "an arm the finder doesn't relate".
 func TestUntaggedUnionCastInAGraphProgram(t *testing.T) {
 	t.Parallel()
-	declarations := "interface X { readonly x: Link | undefined } interface Y { readonly y: Link | undefined } interface A { readonly a: number; readonly inner: X } interface C { readonly c: number } "
-	use := "function f(u: A | B | C): X { return (u as A).inner; } console.log(String(f({ a: 1, inner: { x: link } }).x === link));"
+	// X and Y hold leaves of their own, so the view's contract never reaches the cycle's Link.
+	declarations := "interface XLeaf { readonly v: number } interface YLeaf { readonly w: string } interface X { readonly x: XLeaf } interface Y { readonly y: YLeaf } interface A { readonly a: number; readonly inner: X } interface C { readonly c: number } "
+	use := "function f(u: A | B | C): X { return (u as A).inner; } console.log(String(f({ a: 1, inner: { x: { v: 4 } } }).x.v) + String(link.next === link));"
 	for _, probe := range []struct{ name, b, want string }{
 		{"an arm the finder doesn't relate", "interface B { readonly b: number; readonly inner: Y } ", "through an arm no test tells (B as A) through its field inner (Y as X)"},
 		{"an arm whose fields pair", "interface B { readonly b: number; readonly inner: X } ", ""},

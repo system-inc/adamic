@@ -11,10 +11,11 @@ import (
 // and the target are plain objects held as ir.Object: no class instance, callable, array, tuple, dictionary
 // or phantom extension, so nothing reaches the view that a field read can't check. The target is one object,
 // a member or narrower than one (castAssignable to it), so the cast is a downcast; a sideways target and a
-// union target keep their stops. A union one tag does tell apart is unionMemberProof's to prove or refuse
-// (a payload refinement stays refused), never this arm's.
+// union target keep their stops. A union with a field every member holds as a literal is tagged, whether or
+// not the literals tell the members apart: unionMemberProof proves its cast or refuses it, and its refusals
+// (duplicate enum aliases, mixed tag representations, a payload refinement) are rulings this arm keeps.
 func (l *lowering) untaggedUnionArm(members, targets []*checker.Type) bool {
-	if len(members) < 2 || len(targets) != 1 || !l.plainViewObject(targets[0]) || l.unionTagged(members) {
+	if len(members) < 2 || len(targets) != 1 || !l.plainViewObject(targets[0]) || l.unionHoldsLiterals(members) {
 		return false
 	}
 	downcast := false
@@ -42,24 +43,16 @@ func (l *lowering) plainViewObject(proven *checker.Type) bool {
 	return len(l.checker.GetIndexInfosOfType(proven)) == 0 && len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) == 0 && len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) == 0
 }
 
-// unionTagged is whether some field holds a distinct literal in every member, the tag unionMemberProof
-// proves a member cast by. A one-member enum's member tells no member apart (tagHoldsAnyNumber).
-func (l *lowering) unionTagged(members []*checker.Type) bool {
+// unionHoldsLiterals is whether some field holds a literal in every member: a tag, distinct or not, which
+// unionMemberProof judges. A one-member enum's member counts, so its union keeps the stop that's ruled for it
+// (tagHoldsAnyNumber).
+func (l *lowering) unionHoldsLiterals(members []*checker.Type) bool {
 	for _, property := range l.checker.GetPropertiesOfType(members[0]) {
-		literals := []*checker.Type{}
-		valid := true
+		held := true
 		for _, member := range members {
-			literal := l.fieldLiteral(member, property.Name)
-			if literal == nil || l.tagHoldsAnyNumber(literal) {
-				valid = false
-				break
-			}
-			for _, previous := range literals {
-				valid = valid && tagLiteralsDistinct(previous, literal)
-			}
-			literals = append(literals, literal)
+			held = held && l.fieldLiteral(member, property.Name) != nil
 		}
-		if valid {
+		if held {
 			return true
 		}
 	}
