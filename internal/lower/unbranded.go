@@ -97,8 +97,11 @@ func (l *lowering) pickedArray(t *checker.Type) *checker.Type {
 		names = keys.Types()
 	}
 	for _, name := range names {
+		if name.Flags()&checker.TypeFlagsStringLiteral == 0 {
+			return nil
+		}
 		text, isText := name.AsLiteralType().Value().(string)
-		if name.Flags()&checker.TypeFlagsStringLiteral == 0 || !isText {
+		if !isText {
 			return nil
 		}
 		property := l.checker.GetPropertyOfType(array, text)
