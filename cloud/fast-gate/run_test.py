@@ -4903,7 +4903,8 @@ class GateToolCrashes(unittest.TestCase):
         if go is None:
             self.skipTest("no go on this box to list a module with")
         for name, files in (
-                ("parse", {"a/a.go": "package a\n\nfunc (\n"}),
+                # go list reads a file's package clause and imports alone, so a parse error it names is one there.
+                ("parse", {"a/a.go": "x := 1\n"}),
                 ("cycle", {"a/a.go": "package a\n\nimport _ \"example/b\"\n", "b/b.go": "package b\n\nimport _ \"example/a\"\n"})):
             with self.subTest(name=name):
                 tree = os.path.join(self.directory, name)
