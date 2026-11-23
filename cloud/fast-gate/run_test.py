@@ -3531,8 +3531,13 @@ class PhaseUnitTests(unittest.TestCase):
                     result = json.load(handle)
                 self.assertEqual(result[phase+"_unit_count"],2)
                 self.assertEqual(result["failure"]["step"], "catalog/02 planted" if phase=="catalog" else "wasi/planted")
+                # The rows whole on a miss, so a red says what the good unit did, its exit and status among them.
                 self.assertEqual([row["name"] for row in result[phase+"_units"] if row["status"]=="failed"],
-                                 ["02 planted"] if phase=="catalog" else ["planted"])
+                                 ["02 planted"] if phase=="catalog" else ["planted"], json.dumps(result[phase+"_units"], indent=1))
+                # The good unit either finished before the planted one failed or was cancelled by the whole gate's cancel,
+                # never failed (#z89w67t).
+                self.assertIn([row["status"] for row in result[phase+"_units"] if row["name"] in ("01 good", "good")],
+                              (["passed"], ["cancelled"]), json.dumps(result[phase+"_units"], indent=1))
                 if phase == "wasi":
                     self.assertIn("TestWASI/planted", result["failure"]["detail"])
                     self.assertIn("example.com/phase-probe/internal/native TestWASI/planted",result["failed_tests"])
@@ -3572,6 +3577,33 @@ class PhaseUnitTests(unittest.TestCase):
             self.assertTrue(gate.result["wasi_units"][0]["over_budget"])
             self.assertEqual(gate.exits["wasi"], 0)
             self.assertNotIn("wasi/slow", failures)
+
+    def test_a_unit_the_whole_gate_cancelled_reads_cancelled(self):
+        # Pins #z89w67t without a race: the first unit's failure cancels the whole gate, as fail's full branch does, and
+        # the second, which then ends on the cancel's kill (exit -9), reads cancelled and fails nothing. The phase stays
+        # red. A unit that failed on its own exit after the cancel still reads failed. Mutant: the cancelled branch taken
+        # out, which writes the killed unit failed beside the planted one.
+        with tempfile.TemporaryDirectory() as out:
+            gate = object.__new__(run.Gate)
+            gate.arguments = types.SimpleNamespace(out=out, parallel=1)
+            gate.result, gate.steps, gate.exits = {}, {}, {}
+            failures = []
+            gate.failure = None
+            def fail(name, detail):
+                failures.append(name)
+                gate.failure = gate.failure or {"step": name}
+                gate.cancelled = True
+            gate.fail = fail
+            # The planted unit's failing event fails the gate from inside its stream, as stream does, and the cancel then
+            # kills its own process too, so it ends at -9 like its sibling; it caused the cancel, so it stays failed.
+            def execute(name, command, scratch):
+                if name == "planted":
+                    gate.fail("wasi/planted", "TestWASI/planted failed")
+                return {"ok": False, "exit": {"planted": -9, "killed": -9, "own": 2}[name]}
+            gate.phaseUnits("wasi", ["planted", "killed", "own"], [["x"]] * 3, execute)
+            self.assertEqual([row["status"] for row in gate.result["wasi_units"]], ["failed", "cancelled", "failed"])
+            self.assertEqual(failures, ["wasi/planted", "wasi/planted", "wasi/own"])
+            self.assertEqual(gate.exits["wasi"], 1)
 
 class CacheDrains(unittest.TestCase):
     setUp = FailClosed.setUp
@@ -5165,6 +5197,22 @@ class FastCheckDarwinVet(unittest.TestCase):
         self.assertEqual(run.lastLines("a\nb\n", 1500), "a\nb")
         self.assertEqual(run.lastLines("first line\n" + "x" * 10 + "\nlast", 12), "last")
         self.assertEqual(run.lastLines("y" * 20, 5), "yyyyy")
+
+    def test_a_finding_replayed_from_another_checkout_is_said_tree_relative(self):
+        # Go replays a cached vet's output with the paths of the run that made it: on a box whose build cache is shared,
+        # another checkout's (J-wxqxnre on Golem). The file is named by its tail in this tree. Mutant: the tail search
+        # dropped, so the other checkout's absolute path is refused.
+        self.write("internal/apple/say.go", 'package apple\n\nfunc Say() {}\n')
+        elsewhere = "/srv/loom-keeper/ahra/lh-other/tmp.x/tree/internal/apple/say.go"
+        replayed = '{\n\t"example.com/fixture/internal/apple": {\n\t\t"printf": [\n\t\t\t{\n\t\t\t\t"posn": "%s:5:26",\n' \
+                   '\t\t\t\t"message": "fmt.Printf format %%d has arg \\"s\\" of wrong type string"\n\t\t\t}\n\t\t]\n\t}\n}\n' % elsewhere
+        diagnostics, errors = run.vetDiagnostics(replayed + "vet: %s:3:1: undefined: x\n" % elsewhere, self.tree)
+        self.assertEqual(errors, [])
+        self.assertEqual(diagnostics, ['internal/apple/say.go:5:26: fmt.Printf format %d has arg "s" of wrong type string (printf)',
+                                       "vet: internal/apple/say.go:3:1: undefined: x"])
+        # A file no tail of which is in the tree stays as go said it, and a relative one is kept.
+        self.assertEqual(run.treePosition("/nowhere/at/all.go:1:2", self.tree), "/nowhere/at/all.go:1:2")
+        self.assertEqual(run.treePosition("internal/apple/say.go:1:2", self.tree), "internal/apple/say.go:1:2")
 
 
 class VetDiagnostics(unittest.TestCase):
