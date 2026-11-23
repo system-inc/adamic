@@ -58,6 +58,15 @@
     "retiring_task": "#xjdce2d"
   },
   {
+    "path": "internal/lower/cast_stop.go",
+    "kind": "rule",
+    "rule_id": "adamic/invariant-mutable",
+    "counterpart": "cohere/internal/lint/rules/adamic/invariant_mutable.go",
+    "decision": "delete",
+    "reason": "The mutable-array cast's fix names this rule (#53amvnn). Retires with cast_proof.go's judgment when cohere owns it by reference.",
+    "retiring_task": "#brf7xmj"
+  },
+  {
     "path": "internal/lower/class_generic_calls.go",
     "kind": "rule",
     "rule_id": "adamic/nominal-class",
