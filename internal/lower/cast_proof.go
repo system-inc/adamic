@@ -34,6 +34,10 @@ type castProof struct {
 	// present is a .ts cast that only removes undefined or null (presentCast): the presence check a non-null
 	// assertion makes, and nothing after it.
 	present bool
+	// keepsNullish is a .ts cast that keeps its source's undefined or null and claims something of the rest
+	// (keepsNullishCast): the other fields are the road castRoad found from the present source to the present
+	// target, which runs only on a present value, and a nullish one passes through as itself.
+	keepsNullish bool
 	// overlap is a cast from a represented union to one object type that only overlaps it (overlapTarget): a
 	// checked view of the target with no test at the cast (overlapViewCast).
 	overlap bool
@@ -321,6 +325,15 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	if l.presentCast(node, source, target) {
 		return castProof{present: true}, nil
 	}
+	// The inner road is found from the present types, but stop words it on the cast as written, so a pair with
+	// no road names its own cause (an untagged union, a sideways view) rather than the undefined it keeps,
+	// which is no longer what stops it. interfaceCast and kindUnionCast word a vacuous tag from the types
+	// they're given, so that refusal, and interfaceCast's failure at run time, name the present types.
+	if l.keepsNullishCast(node, source, target) {
+		proof, err := l.castRoad(node, l.checker.GetNonNullableType(source), l.checker.GetNonNullableType(target), stop)
+		proof.keepsNullish = err == nil
+		return proof, err
+	}
 	return l.castRoad(node, source, target, stop)
 }
 
@@ -371,7 +384,7 @@ func (l *lowering) castRoad(node *ast.Node, source, target *checker.Type, stop f
 // with undefined beside it (`node as IsContainer` of a `HasContainerFlags | undefined`): the source holds
 // one plain undefined and two or more other members, none of them void, null or a phantom undefined, and
 // the target holds no undefined, void or null. Otherwise nil, and the cast is judged as it was. A target
-// that keeps undefined would pass an absent value through, which CheckedCast can't hold yet.
+// that keeps undefined passes an absent value through, which is keepsNullishCast's road.
 func (l *lowering) absentArm(source, target *checker.Type) *checker.Type {
 	if source.Flags()&checker.TypeFlagsUnion == 0 || l.includesUndefined(target) || l.includesNull(target) {
 		return nil
@@ -418,6 +431,55 @@ func (l *lowering) presentCast(node *ast.Node, source, target *checker.Type) boo
 		}
 	}
 	return nullish && checker.Checker_isTypeIdenticalTo(l.checker, l.checker.GetNonNullableType(source), target) && l.unionCastCause(source.Types(), target) == castDropsNullish
+}
+
+// keepsNullishCast is whether a cast in .ts keeps what its source holds of undefined and null and claims
+// something of the rest (`x as L | undefined` of an `N | undefined`, #b5w3ycg), so its meaning composes: a
+// nullish value passes through as itself, and a present one is the cast from the present source to the
+// present target, which castRoad may already have a road for. Both sides hold only plain undefined or null
+// beside other members, as presentCast asks, and the target keeps one. A source with none qualifies
+// (binder.ts:2467's `Node as IsBlockScopedContainer | undefined`). Every nullish member the source holds must
+// be in the target: an Object holds null and undefined as one null pointer, so a source's null cast to a
+// target that keeps only undefined, or the reverse, would print as the target says where Node prints the
+// other, and keeps castKeepsNullish's stop. So does a present pair of classes, whose road is castProof's class
+// branch, which castRoad doesn't reach, and any cast in .a, where a checked downcast is refused.
+func (l *lowering) keepsNullishCast(node *ast.Node, source, target *checker.Type) bool {
+	if !l.checkedAssertionSource(node) {
+		return false
+	}
+	sourceUndefined, sourceNull, sourcePresent, plain := l.plainNullish(source)
+	if !plain || len(sourcePresent) == 0 {
+		return false
+	}
+	targetUndefined, targetNull, targetPresent, plain := l.plainNullish(target)
+	if !plain || len(targetPresent) == 0 || !targetUndefined && !targetNull || sourceUndefined && !targetUndefined || sourceNull && !targetNull {
+		return false
+	}
+	for _, member := range append(append([]*checker.Type{}, sourcePresent...), targetPresent...) {
+		if !isClassInstance(member) {
+			return true
+		}
+	}
+	return false
+}
+
+// plainNullish is whether proven holds plain undefined and plain null, and its other members. plain is false
+// where a member is void, a phantom undefined, or carries undefined or null beside other flags, which
+// keepsNullishCast leaves as castProof judges it.
+func (l *lowering) plainNullish(proven *checker.Type) (undefined, null bool, present []*checker.Type, plain bool) {
+	for _, member := range castMembers(proven) {
+		switch {
+		case member.Flags() == checker.TypeFlagsUndefined:
+			undefined = true
+		case member.Flags() == checker.TypeFlagsNull:
+			null = true
+		case member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsVoid|checker.TypeFlagsNull) != 0 || l.phantomUndefined(member):
+			return false, false, nil, false
+		default:
+			present = append(present, member)
+		}
+	}
+	return undefined, null, present, true
 }
 
 // overlapTarget is a cast from a represented union to one object type that no member is and some member upcasts
