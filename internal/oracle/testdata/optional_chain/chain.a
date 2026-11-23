@@ -1,0 +1,83 @@
+// One guard around an optional chain's work after its receiver (#cdpxjmb, docs/rulings.md row 207). The
+// receiver is read once, as reads counts. An undefined one and a null one stop the whole chain, with no
+// step run and no argument evaluated, as argued counts; a present one runs every step: a?.b(), a?.b.c.d,
+// a?.b.c(), a?.b?.c and a?.b().c, a call as a statement, and a void one. A function replaced while its
+// call's arguments run isn't the one called: the one read before them is, through ?. on the object and
+// through a field after it.
+interface Leaf {
+	readonly d: number;
+	readonly label: string;
+	shout(suffix: string): string;
+	note(line: string): void;
+}
+interface Middle {
+	readonly c: Leaf;
+	readonly maybe: Leaf | undefined;
+	talk: (n: number) => string;
+}
+interface Root {
+	readonly b: Middle;
+	make(tag: string): Leaf;
+	greet(): string;
+	run: (n: number) => string;
+}
+let reads = 0;
+let argued = 0;
+function leaf(d: number): Leaf {
+	return {
+		d: d,
+		label: `leaf${d}`,
+		shout: (suffix: string): string => `L${d}${suffix}`,
+		note: (line: string): void => {
+			console.log(`note ${line}`);
+		},
+	};
+}
+const present: Root = {
+	b: { c: leaf(4), maybe: undefined, talk: (n: number): string => `talk ${n}` },
+	make: (tag: string): Leaf => leaf(tag.length),
+	greet: (): string => 'hello',
+	run: (n: number): string => `first ${n}`,
+};
+function missing(here: boolean): Root | undefined {
+	reads += 1;
+	return here ? present : undefined;
+}
+function empty(here: boolean): Root | null {
+	reads += 1;
+	return here ? present : null;
+}
+function arg(text: string): string {
+	argued += 1;
+	return text;
+}
+for (const here of [false, true]) {
+	reads = 0;
+	argued = 0;
+	const greeted = missing(here)?.greet();
+	const deep = missing(here)?.b.c.d;
+	const viaField = missing(here)?.b.c.shout(arg('!'));
+	const nested = missing(here)?.b.maybe?.label;
+	const afterCall = missing(here)?.make(arg('abc')).label;
+	const viaNull = empty(here)?.b.c.label;
+	const callNull = empty(here)?.make(arg('xy')).d;
+	missing(here)?.make(arg('st')).shout(arg('?'));
+	empty(here)?.b.c.note(arg('void'));
+	console.log(`${here}: ${String(greeted)} ${String(deep)} ${String(viaField)} ${String(nested)} ${String(afterCall)} ${String(viaNull)} ${String(callNull)} reads=${reads} argued=${argued}`);
+}
+function swapRun(root: Root): number {
+	root.run = (n: number): string => `second ${n}`;
+	return 1;
+}
+function swapTalk(middle: Middle): number {
+	middle.talk = (n: number): string => `retalk ${n}`;
+	return 2;
+}
+function callRun(root: Root | undefined): string | undefined {
+	return root?.run(swapRun(present));
+}
+function callTalk(root: Root | undefined): string | undefined {
+	return root?.b.talk(swapTalk(present.b));
+}
+console.log(`${String(callRun(undefined))} ${String(callRun(present))} ${String(callRun(present))}`);
+console.log(`${String(callTalk(undefined))} ${String(callTalk(present))} ${String(callTalk(present))}`);

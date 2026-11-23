@@ -616,6 +616,9 @@ type lowering struct {
 	optionalReceiverCall *ast.Node
 	// optionalReceiverBinding is scoped to the builtin of that call, never carried.
 	optionalReceiverBinding optionalReceiverBinding
+	// optionalChains are the optional chains optionalChain is guarding, innermost last, each held only
+	// while its steps lower (optional_chain.go).
+	optionalChains []optionalChainBinding
 	// generatorArguments are the generators' calls handed into an Iterable<T> parameter, by
 	// IterableOf's Site (iterableOfGenerator), which checkIterableViews proves.
 	generatorArguments []generatorArgument

@@ -1,0 +1,33 @@
+// tsc's moduleNameResolver.ts reads host?.getGlobalTypingsCacheLocation?.() on a union of two host types,
+// each declaring the optional method (#cdpxjmb): the union's member is the call's, looked up by its name
+// on whichever object is there. The receiver is read once, as reads counts, and the method runs only
+// where it's there, as calls counts.
+interface HostA {
+	readonly name: string;
+	cache?(): string | undefined;
+}
+interface HostB {
+	readonly kind: number;
+	cache?(): string | undefined;
+}
+let calls = 0;
+let reads = 0;
+const hosts: (HostA | HostB)[] = [
+	{ name: 'a' },
+	{
+		kind: 1,
+		cache: (): string | undefined => {
+			calls += 1;
+			return '/cache';
+		},
+	},
+	{ kind: 2, cache: (): string | undefined => undefined },
+];
+function pick(index: number): HostA | HostB | undefined {
+	reads += 1;
+	return index < hosts.length ? hosts[index] : undefined;
+}
+function location(index: number): string {
+	return String(pick(index)?.cache?.());
+}
+console.log(`${location(5)} ${location(0)} ${location(1)} ${location(2)} calls=${calls} reads=${reads}`);

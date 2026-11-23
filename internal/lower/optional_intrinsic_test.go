@@ -63,6 +63,11 @@ func TestOptionalIntrinsicArgumentsAgreeWithNode(t *testing.T) {
 	}
 }
 
+// A spread argument and an optional call of the library method keep optionalCall's stop. A chain read on
+// past the call lowers under optionalChain's one guard (#cdpxjmb): property and call, and in TypeScript
+// non_null_property, whose ! .a still refuses; and optional_property's second ?. owns its guard around
+// Set.add's result, whose ?.size is number | undefined (#8zcm7g4). The oracle's
+// testdata/optional_chain/size.a holds the add rows to Node.
 func TestOptionalIntrinsicArgumentBoundariesRefuse(t *testing.T) {
 	t.Parallel()
 	for _, name := range []string{"property", "optional_property", "non_null_property", "call", "spread", "function"} {
@@ -74,24 +79,24 @@ func TestOptionalIntrinsicArgumentBoundariesRefuse(t *testing.T) {
 			}
 			_, err = lowerSource(t, string(source))
 			var refused *NotYet
-			if name == "optional_property" {
-				// The second ?. owns its guard. The current property representation,
-				// rather than the call continuation rule, still refuses Set.add's result.
-				if !errors.As(err, &refused) || refused.What != "optional chaining to .size on a value" {
-					t.Fatalf("want the optional size property refusal, got %v", err)
+			switch name {
+			case "property", "optional_property", "call":
+				if err != nil {
+					t.Fatalf("want it lowered under the chain's guard, got %v", err)
 				}
-			} else if name == "non_null_property" {
+			case "non_null_property":
 				var assertion *Refused
 				if !errors.As(err, &assertion) || assertion.What != "the non-null assertion !" {
 					t.Fatalf("want the non-null assertion refusal, got %v", err)
 				}
-				// TypeScript admits !, but property lowering still refuses the chain.
-				_, err = lowerTypeScriptAssertionSource(t, string(source))
-				if !errors.As(err, &refused) || refused.What != "an optional chain longer than one step" {
-					t.Fatalf("want the continuation refusal through !, got %v", err)
+				// TypeScript admits !, which runs inside the chain's guard.
+				if _, err = lowerTypeScriptAssertionSource(t, string(source)); err != nil {
+					t.Fatalf("want the chain through ! lowered under its guard, got %v", err)
 				}
-			} else if !errors.As(err, &refused) || (refused.What != "a call through ?. (an optional call)" && refused.What != "an optional chain longer than one step") {
-				t.Fatalf("want optional call/chain refusal, got %v", err)
+			default:
+				if !errors.As(err, &refused) || (refused.What != "a call through ?. (an optional call)" && refused.What != "an optional chain longer than one step") {
+					t.Fatalf("want optional call/chain refusal, got %v", err)
+				}
 			}
 		})
 	}

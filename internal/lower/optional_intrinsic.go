@@ -7,8 +7,9 @@ import (
 )
 
 // Receiver-optional library methods keep the receiver once and evaluate the call
-// (including its arguments) only when it is present. Optional function calls and
-// continuations need a different guard and ABI.
+// (including its arguments) only when it is present. Optional function calls need a
+// different guard and ABI, and a chain that continues past the call is
+// optionalChain's (optional_chain.go).
 func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error) {
 	call := node.AsCallExpression()
 	if call.QuestionDotToken != nil || hasSpread(node) || optionalIntrinsicContinues(node) {
@@ -116,9 +117,10 @@ func optionalIntrinsicContinues(node *ast.Node) bool {
 }
 
 // A guarded builtin sees the same generic receiver type as its plain call after
-// narrowing. Other type queries retain the checker's original nullish members.
+// narrowing, a guarded optional chain's steps included (optionalChainOperandType).
+// Other type queries retain the checker's original nullish members.
 func (l *lowering) intrinsicReceiverType(node *ast.Node) *checker.Type {
-	proven := l.checker.GetTypeAtLocation(node)
+	proven := l.optionalChainOperandType(node)
 	if call := l.optionalReceiverCall; call != nil {
 		callee := ast.SkipParentheses(call.AsCallExpression().Expression)
 		if callee.Kind == ast.KindPropertyAccessExpression && callee.AsPropertyAccessExpression().Expression == node {

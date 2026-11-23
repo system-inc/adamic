@@ -7,6 +7,7 @@ import (
 
 // Only receiver-optional intrinsic join is supported here. Its arguments belong
 // inside the present branch, and the receiver must be held before that branch.
+// A guarded optional chain's join is plain: its guard holds the receiver.
 func (l *lowering) isOptionalJoin(node *ast.Node) bool {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
@@ -14,7 +15,7 @@ func (l *lowering) isOptionalJoin(node *ast.Node) bool {
 		return false
 	}
 	access := callee.AsPropertyAccessExpression()
-	if access.QuestionDotToken == nil || access.Name().Text() != "join" {
+	if !l.questionDot(callee) || access.Name().Text() != "join" {
 		return false
 	}
 	of, known := l.representation(l.checker.GetTypeAtLocation(access.Expression))
