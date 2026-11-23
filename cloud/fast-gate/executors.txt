@@ -1676,10 +1676,17 @@ reads internal/oracle stage3/drivers/scanner/probes/*/main.a
 reads internal/oracle stage3/fixtures/*
 reads internal/lower internal/oracle/testdata/*.a
 # The view walk's and the placeholder cache's shards (view_sites_test.go:162, placeholder_cache_test.go:185) load every
-# .a and non-.d.ts .ts program under internal/oracle/testdata, and load reads whatever each imports beside it. No
-# program there imports a relative path (adamic main 0efbdb08), so the .a line above and this one are the whole read,
-# and the directory's .counts, .stop and evidence files, edited about 600 times in the two weeks to Nov 22, key nothing.
+# .a and non-.d.ts .ts program under internal/oracle/testdata, and load reads whatever each imports. The .a line above
+# and this one hold the programs; the directory's .counts, .stop and evidence files are never loaded, so they key
+# nothing. 209 programs import by relative path, and followed transitively from all 4,808 (adamic main 0efbdb08) the
+# imports leave testdata for exactly eleven files, keyed by the four lines after it: program_region's parse.a and
+# context.a reach stage1/typescript/parser and scanner, node_fs_directory_*.a reaches stage3/host/fs_directory.a, and
+# optional_widening_refused's node_fs_file_*.a reach internal/load/node_fs_file_system.a (Adamic Loom's must on #r2a9vd4).
 reads internal/lower internal/oracle/testdata/*.ts
+reads internal/lower stage1/typescript/parser/*.ts
+reads internal/lower stage1/typescript/scanner/*.ts
+reads internal/lower stage3/host/fs_directory.a
+reads internal/lower internal/load/node_fs_file_system.a
 # internal/lower's program region census (program_region_census_test.go) reads the pinned tsc corpus, internal/oracle's
 # TestProduct_ProgramTscSource product, keyed by stage3/source.json's TypeScript pin and the region parse manifest
 # (internal/programsource/source.go:34-39): lower's key named neither, so a pin move reused its census (#vah7g5n, Node's
