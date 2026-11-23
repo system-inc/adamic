@@ -117,7 +117,7 @@ func TestIteratorDescriptorReasons(t *testing.T) {
 	probes := []struct{ source, reason string }{
 		{"interface Step{value:number;done?:boolean} const source={[Symbol.iterator](){return{next():Step{return{value:1};}}}};for(const value of source){break;}", "required boolean done"},
 		{"interface Step{value?:number;done:boolean} const source={[Symbol.iterator](){return{next():Step{return{done:false};}}}};for(const value of source){break;}", "represented value field"},
-		{"interface Step{value:number;done:boolean} function closing():{return():Step}|undefined{return undefined;} const source={[Symbol.iterator](){return{...closing(),next():Step{return{value:1,done:false};}}}};for(const value of source){break;}", "optional iterator method"},
+		{"interface Step{value:number;done:boolean} function closing():{return():Step;next():Step}|undefined{return undefined;} const source={[Symbol.iterator](){return{...closing(),next():Step{return{value:1,done:false};}}}};for(const value of source){break;}", "optional iterator method"},
 		{"class Iterator{next(unused=1):{value:number;done:boolean}{return{value:1,done:false};}[Symbol.iterator]():Iterator{return this;}}for(const value of new Iterator()){break;}", "arguments or overloads"},
 		{"class Result{declare value:number;declare done:boolean;}const source={[Symbol.iterator](){return{next(){return new Result();}}}};for(const value of source){break;}", "declare or abstract class field"},
 		{"const source={[Symbol.iterator](){return{next:()=>({value:1,done:false})};}};const iterator=source[Symbol.iterator]();iterator.next=():{value:number;done:boolean}=>({value:2,done:true});for(const value of source){break;}", "replacing an iterator protocol"},
