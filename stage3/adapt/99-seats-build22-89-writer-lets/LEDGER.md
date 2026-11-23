@@ -1,0 +1,1 @@
+- **Temporary JavaScript-changing writer locals (#bbssdcy, family 89, row 400):** 99-seats-build22-89-writer-lets uses initialized let bindings in utilities.ts's single-line and multiline writer factories. The multiline initializers copy reset's six values, and the existing initial reset and later clears retain each writer's own captured cells.
