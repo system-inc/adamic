@@ -137,11 +137,13 @@ func TestKeepsNullishCastOutsideItsShapeStops(t *testing.T) {
 // The composed cast's view has the operand's local as its origin, a Read of a local the Effects declares, so what
 // reaches the view is what the operand's value reaches through that Declare. A read through the view of a field
 // whose contract stage 0 can't check yet (TestViewDiagnosticClassInstanceField's plain shape) stops at the read
-// in the view's own words, as it does through `base as Viewed`; and a write through the view is judged by the
-// source-slot certificate as any view's write is, Rule C's NotYet at the write
-// (TestSourceSlotPendingStopsOnlyWhereTheWriteIsLowered's "called on the viewed allocation").
-// Mutant: the Declare's value left unforwarded, the local's reach going raw, and the read lowers unchecked while
-// the write stops at the optional-field rule's unknown reach instead.
+// in the view's own words, as it does through `base as Viewed`. A write through the view stops sooner than a
+// plain view's does: the optional-field write rule asks what reaches the receiver, and that reach doesn't yet
+// forward the cast_operand local to its value, so the write stops at 7:2 on the unknown reach and the source-slot
+// certificate (Rule C, TestSourceSlotPendingStopsOnlyWhereTheWriteIsLowered's "called on the viewed allocation")
+// is never consulted. That fails closed, a stop and never an unchecked write; #e885ymf forwards the local and moves
+// this row to the certificate's judgment.
+// Mutant: the Declare's value left unforwarded for the read, which then lowers unchecked.
 func TestKeepsNullishCastViewOriginIsTheOperandsLocal(t *testing.T) {
 	t.Parallel()
 	const read = `interface Root { readonly kind: 'Holder'; }
@@ -156,6 +158,6 @@ console.log(String(viewed!.value.thing.n));
 	write := strings.Replace(sourceSlotPendingPrelude, "const view = node as NodeA;", "const view = node as NodeA | undefined;", 1)
 	judgeSourceSlotPending(t, []sourceSlotPendingRow{
 		{"a read through the view", read, "main.ts:8:20: stage 0 can't lower a class instance field thing of class Thing read through a checked view, which needs a check of the value's class at the read yet"},
-		{"a write through the view", write + "setIt(view!, { id: 2 });\nconsole.log(String(node.flowNode === undefined));\n", sourceSlotPendingRuleC},
+		{"a write through the view", write + "setIt(view!, { id: 2 });\nconsole.log(String(node.flowNode === undefined));\n", "main.ts:7:2: stage 0 can't lower a write to optional field flowNode through a checked view, where what reaches its receiver isn't known yet"},
 	})
 }
