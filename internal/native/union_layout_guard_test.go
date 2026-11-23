@@ -18,6 +18,9 @@ import (
 // unionNarrowProof is why narrow's reads past its kind test are safe where the narrow isn't Checked.
 const unionNarrowProof = "a Checked narrow stops on the line above unless the heap's kind is the member's. An unchecked one stands on lowering's proof that the union is this member (ir.Narrow: by typeof, === or assignment): lower's narrowed_union_member tests typeof, and Array.isArray where the member excludes an array, before its narrow, and to_primitive.go narrows only under adamic_union_kind's arms for its member. Adamic's (b1) keeps that proof true of the layout: a type whose value can be an array or a box is held as Array or Union, never as the Object, String or scalar member this reads"
 
+// unionCoalesceTypeHolds is why the checker's type of a coalesce's value is its type at run time.
+const unionCoalesceTypeHolds = ". The value is the checker's type of an expression no unchecked cast or any reaches, which Adamic's (b1) and lowering's cast stops guarantee: internal/lower/cast_proof.go refuses \"a cast the runtime can't check\", and internal/lower/never_refused.go refuses \"a value of type any: any has no proven type\""
+
 // unionLayoutListed is every Union layout site TestUnionLayoutReadsAreKindTested finds without a kind
 // test before it on every path. tested is the Go condition under which one is, as the walk renders it,
 // empty when none is; reason is why the read is safe where none is. A key is file:function:ordinal, the
@@ -25,25 +28,25 @@ const unionNarrowProof = "a Checked narrow stops on the line above unless the he
 // key. An entry that matches no such site fails as stale.
 var unionLayoutListed = map[string]unionLayoutListing{
 	"class_accessors.go:emitter.accessorCall:1": {
-		reason: "the checker typed this accessor read as number, so the getter the descriptor names returns a number; one held as Union hands it in a box, which the descriptor's `->type`, compared with Union's tag, picks out before this reads the box",
+		reason: "the checker typed this accessor read as number, so the getter the descriptor names returns a number; one held as Union hands it in a box, which the descriptor's `->type`, compared with Union's tag, picks out before this reads the box. The checker's type at the read is the getter's own only because internal/lower/object.go refuses \"a narrowed accessor reread, which can return a different value\": after a typeof test the read's type can be narrower than the getter's, and a getter run again can return something else. Whoever lifts that stop has to kind-test this read",
 	},
 	"class_accessors.go:emitter.accessorCall:2": {
-		reason: "the checker typed this accessor read as boolean, so the getter the descriptor names returns a boolean; one held as Union hands it in a box, which the descriptor's `->type`, compared with Union's tag, picks out before this reads the box",
+		reason: "the checker typed this accessor read as boolean, so the getter the descriptor names returns a boolean; one held as Union hands it in a box, which the descriptor's `->type`, compared with Union's tag, picks out before this reads the box. The checker's type at the read is the getter's own only because internal/lower/object.go refuses \"a narrowed accessor reread, which can return a different value\": after a typeof test the read's type can be narrower than the getter's, and a getter run again can return something else. Whoever lifts that stop has to kind-test this read",
 	},
 	"emit_branches.go:emitter.coalesce:1": {
-		reason: "the checker typed value ?? fallback as number, and this read is used only past the present test (`!= NULL && != &adamic_null`), so the present union is a number and this reads its box",
+		reason: "the checker typed value ?? fallback as number, and this read is used only past the present test (`!= NULL && != &adamic_null`), so the present union is a number and this reads its box" + unionCoalesceTypeHolds,
 	},
 	"emit_branches.go:emitter.coalesce:2": {
-		reason: "the checker typed value ?? fallback as boolean, and this read is used only past the present test (`!= NULL && != &adamic_null`), so the present union is a boolean and this reads its box",
+		reason: "the checker typed value ?? fallback as boolean, and this read is used only past the present test (`!= NULL && != &adamic_null`), so the present union is a boolean and this reads its box" + unionCoalesceTypeHolds,
 	},
 	"emit_branches.go:emitter.coalesce:3": {
-		reason: "the checker typed value ?? fallback as number | undefined, and this read is used only past the present test, so the present union is a number and this reads its box",
+		reason: "the checker typed value ?? fallback as number | undefined, and this read is used only past the present test, so the present union is a number and this reads its box" + unionCoalesceTypeHolds,
 	},
 	"emit_branches.go:emitter.coalesce:4": {
-		reason: "the checker typed value ?? fallback as boolean | undefined, and this read is used only past the present test, so the present union is a boolean and this reads its box",
+		reason: "the checker typed value ?? fallback as boolean | undefined, and this read is used only past the present test, so the present union is a boolean and this reads its box" + unionCoalesceTypeHolds,
 	},
 	"emit_branches.go:emitter.coalesce:5": {
-		reason: "the checker typed value ?? fallback as the reference type Of, and this cast is used only past the present test; by Adamic's (b1) a value whose heap kind can differ from Of's is held as Union, never as Of, so a present value of type Of has Of's layout",
+		reason: "the checker typed value ?? fallback as the reference type Of, and this cast is used only past the present test; by Adamic's (b1) a value whose heap kind can differ from Of's is held as Union, never as Of, so a present value of type Of has Of's layout" + unionCoalesceTypeHolds,
 	},
 	"taste.go:logicalConverted:1": {
 		reason: "the checker typed this && or || as number, and logicalValue reads the left only on the branch that keeps it, so the union it keeps is a number and this reads its box",
@@ -61,7 +64,7 @@ var unionLayoutListed = map[string]unionLayoutListing{
 		reason: "the checker typed this && or || as the reference type to, so the union left it keeps is a to; by Adamic's (b1) a value whose heap kind can differ from to's is held as Union, never as to, so it has to's layout",
 	},
 	"union.go:converted:1": {
-		reason: "no caller reaches this case with a Union today: coalesce and logicalConverted read a Union themselves before they fall back to converted, an array search's SearchFirst is its element, Union or the element's Maybe (lowering's arraySearchContract), and every other caller converts to Union or Weak",
+		reason: "no caller reaches this case with a Union: every call of converted spells its to as ir.Union or ir.Weak, which this case can't take, or is listed in unionConvertedCallers with why its from is never a Union there, and TestConvertedUnionCallersAreListed holds that list exact",
 	},
 	"union.go:emitter.narrow:1": {
 		reason: "the record test is written into the Checked narrow's own line after `->kind != adamic_kind_object ||`, so C's short circuit reads the record flag only off an object",
@@ -91,6 +94,17 @@ var unionLayoutListed = map[string]unionLayoutListing{
 	},
 }
 
+// unionConvertedCallers is every call of converted whose to the walk can't see is ir.Union or ir.Weak, so
+// that it could reach converted's raw cast of a Union to String or Object, with why its from is never a
+// Union going there. A key is file:function:ordinal, the ordinal counting the function's such calls in
+// source order.
+var unionConvertedCallers = map[string]string{
+	"emit_arrays.go:emitter.arrayVisit:1":   "from is the array's element and to its search callback's SearchFirst, which internal/lower/array_search_contract.go makes the element, Union or the element's Maybe, stopping anything else as \"with an unsupported callback value representation\": a Union element goes to Union",
+	"emit_branches.go:emitter.coalesce:1":   "the branch above takes every Union value whose Of isn't Union, so here from is a Present that isn't Union, or a Union going to Union",
+	"emit_functions.go:emitter.arguments:1": "to is takes, the parameter's type, which the branch it sits in tests is Union or Weak",
+	"taste.go:logicalConverted:1":           "the branch above returns for every Union from whose to isn't Union, so here from isn't Union, or goes to Union",
+}
+
 // unionLayoutListing is one entry of unionLayoutListed.
 type unionLayoutListing struct {
 	tested string
@@ -111,6 +125,18 @@ type unionLayoutLiteral struct {
 	literal   *ast.BasicLit
 	text      string
 	ancestors []ast.Node
+}
+
+// unionLayoutFunction is a function the emitter's source declares, with the file it's in.
+type unionLayoutFunction struct {
+	path        string
+	declaration *ast.FuncDecl
+}
+
+// unionConvertedCall is a call of converted whose to the walk can't see is Union or Weak.
+type unionConvertedCall struct {
+	prefix, at string
+	position   token.Pos
 }
 
 // unionLayoutName is a Go variable a function makes hold a C Union value, read after it's made in the
@@ -196,15 +222,75 @@ func unionLayoutTested(tested string) string {
 	return "when " + tested
 }
 
-// unionLayoutSites is every Union layout site in the emitter's source, keyed as unionLayoutListed is.
-func unionLayoutSites(t *testing.T) []unionLayoutSite {
+// converted's Union case casts a Union to String or Object with no kind test (unionLayoutListed's
+// union.go:converted:1), safe only while no caller reaches it with a Union. This finds every call of
+// converted whose to isn't spelled ir.Union or ir.Weak, the two that case can't take, and fails on one
+// unionConvertedCallers doesn't list with why its from is never a Union there, and on a listed one
+// that's gone. It reads spelling, not types, so a to it can't see is never Union is listed, not trusted.
+// Its mutant: union.go's box handing converted ir.Union+0, a Union the walk can't see, goes red as an
+// unlisted call.
+func TestConvertedUnionCallersAreListed(t *testing.T) {
+	t.Parallel()
+	fileSet := token.NewFileSet()
+	var calls []unionConvertedCall
+	spelled := 0
+	for _, function := range unionLayoutFunctions(t, fileSet) {
+		ast.Inspect(function.declaration, func(node ast.Node) bool {
+			call, isCall := node.(*ast.CallExpr)
+			if !isCall {
+				return true
+			}
+			if name, isName := call.Fun.(*ast.Ident); !isName || name.Name != "converted" || len(call.Args) != 3 {
+				return true
+			}
+			if unionLayoutIsIR(call.Args[1], "Union") || unionLayoutIsIR(call.Args[1], "Weak") {
+				spelled++
+				return true
+			}
+			position := fileSet.Position(call.Pos())
+			calls = append(calls, unionConvertedCall{
+				prefix:   function.path + ":" + rawStoreFunctionName(function.declaration),
+				at:       position.Filename + ":" + strconv.Itoa(position.Line),
+				position: call.Pos(),
+			})
+			return true
+		})
+	}
+	slices.SortStableFunc(calls, func(left, right unionConvertedCall) int { return cmp.Compare(left.position, right.position) })
+	ordinals := map[string]int{}
+	found := map[string]bool{}
+	for _, call := range calls {
+		ordinals[call.prefix]++
+		key := call.prefix + ":" + strconv.Itoa(ordinals[call.prefix])
+		found[key] = true
+		t.Logf("%s (%s): converted to a type the walk can't see is Union or Weak", key, call.at)
+		if _, listed := unionConvertedCallers[key]; !listed {
+			t.Errorf("%s (%s) calls converted with a to the walk can't see is ir.Union or ir.Weak, so it may reach converted's raw cast of a Union to String or Object: list it in unionConvertedCallers with why its from is never a Union there, or kind-test the Union before it", key, call.at)
+		}
+	}
+	for _, key := range slices.Sorted(maps.Keys(unionConvertedCallers)) {
+		if unionConvertedCallers[key] == "" {
+			t.Errorf("unionConvertedCallers lists %s without why", key)
+		}
+		if !found[key] {
+			t.Errorf("unionConvertedCallers lists %s, which matches no call of converted: stale, remove it", key)
+		}
+	}
+	// box, a rest slot, a placeholder, a callable's argument and its result convert to a spelled Union
+	// today, so a reading that finds fewer has stopped seeing converted's calls.
+	if spelled < 3 {
+		t.Fatalf("read %d calls of converted to a spelled ir.Union or ir.Weak from the emitter's source; the test's reading of internal/native is out of date", spelled)
+	}
+}
+
+// unionLayoutFunctions is every function with a body the emitter's source declares, with its file.
+func unionLayoutFunctions(t *testing.T, fileSet *token.FileSet) []unionLayoutFunction {
 	t.Helper()
 	paths, err := filepath.Glob("*.go")
 	if err != nil {
 		t.Fatal(err)
 	}
-	fileSet := token.NewFileSet()
-	var sites []unionLayoutSite
+	var functions []unionLayoutFunction
 	for _, path := range paths {
 		if strings.HasSuffix(path, "_test.go") {
 			continue
@@ -218,8 +304,19 @@ func unionLayoutSites(t *testing.T) []unionLayoutSite {
 			if !isFunction || function.Body == nil {
 				continue
 			}
-			sites = append(sites, unionLayoutFunctionSites(t, fileSet, path, function)...)
+			functions = append(functions, unionLayoutFunction{path: path, declaration: function})
 		}
+	}
+	return functions
+}
+
+// unionLayoutSites is every Union layout site in the emitter's source, keyed as unionLayoutListed is.
+func unionLayoutSites(t *testing.T) []unionLayoutSite {
+	t.Helper()
+	fileSet := token.NewFileSet()
+	var sites []unionLayoutSite
+	for _, function := range unionLayoutFunctions(t, fileSet) {
+		sites = append(sites, unionLayoutFunctionSites(t, fileSet, function.path, function.declaration)...)
 	}
 	slices.SortStableFunc(sites, func(left, right unionLayoutSite) int { return cmp.Compare(left.position, right.position) })
 	ordinals := map[string]int{}
