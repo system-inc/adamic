@@ -1368,12 +1368,13 @@ def readsGuardFindings(tree, tools, changed=None, pathSetChanged=None, record=No
     allow lines exempt nothing: a change can't exempt itself.
     With changed (and pathSetChanged, the paths it adds or deletes, as cover() gets them), the findings are the
     change's: a line that matched a path the change deleted and now matches none (one dead on the base was never this
-    change's to fix, and is the census's), the comments of its changed Go files, and any comment naming a path it
+    change's to fix, and is the census's), every dead line of the tree's executors.txt when the change edits it (the
+    tools' lines are never the change's), the comments of its changed Go files, and any comment naming a path it
     deleted; or every comment, when the change can shrink a key elsewhere (its executors.txt, a generated list, the
-    compiler map, a go.mod or go.work, a .go file added or deleted), the paths that did and the seconds it took then set
-    in record, a dict, as reads_comment_census. Without, they're the whole tree's (--reads-census). Every line, and
-    every comment checked, is refused when its glob reads apart in the gate and the planner (readsGlobApart), whatever
-    allows it. A listing that can't be made raises, never reads as covered."""
+    compiler map, a go.mod or go.work, any .go file it adds, deletes or modifies), the paths that did and the seconds it
+    took then set in record, a dict, as reads_comment_census. Without, they're the whole tree's (--reads-census). Every
+    line, and every comment checked, is refused when its glob reads apart in the gate and the planner (readsGlobApart),
+    whatever allows it. A listing that can't be made raises, never reads as covered."""
     census = changed is None
     files = sorted(path for path in git(tree, "ls-files", "-z").split("\0") if path)
     tracked = set(files)
@@ -1397,15 +1398,20 @@ def readsGuardFindings(tree, tools, changed=None, pathSetChanged=None, record=No
             reds.append("`%s` (%s:%d) holds %s: write the glob so both read it alike, since no allow exempts it" %
                         (" ".join(["reads", package, pattern] + ([mode] if mode else [])), where, number, apart))
     deleted = [] if census else [path for path in pathSetChanged if path and path not in tracked]
+    changedSet = set(changed or ())
+    # A change's dead line is one that matched a path it deleted and now matches none, or, when it edits the tree's
+    # executors.txt, any line of the tree's that matches none, since the change may have written it. The tools' lines
+    # are the tools line's, never the change's. A tree line dead on the base is the census's finding already, and the
+    # census is clean, so checking every tree line when the file changes charges the change with nothing it didn't write.
     for where, number, package, pattern, mode in readers:
         if readsAllowed(allowed, package, pattern):
             continue
-        if not census and not any(fnmatch.fnmatchcase(path, pattern) for path in deleted):
+        if not census and not (where == "the tree's executors.txt" and "cloud/fast-gate/executors.txt" in changedSet) \
+                and not any(fnmatch.fnmatchcase(path, pattern) for path in deleted):
             continue
         if not trackedMatches(files, pattern):
             reds.append("`%s` (%s:%d) matches no tracked path: point it at where the file lives now, or delete it" %
                         (" ".join(["reads", package, pattern] + ([mode] if mode else [])), where, number))
-    changedSet = set(changed or ())
     # Performance.jsonc at adamic's root is rewritten by every landing, so the tested tree never holds what the landed
     # one does, and no unit may read it (#hed1mkb, guard 1, #djw6hqf): a content reads line whose glob matches the
     # root's name is refused, a bare * included, and no allow line exempts it; so is a tracked Performance.jsonc anywhere
@@ -1437,13 +1443,16 @@ def readsGuardFindings(tree, tools, changed=None, pathSetChanged=None, record=No
                         "or rename it" % (path, performanceFile))
     # A change can shrink a key without touching the file of the comment it uncovers: a reads line of the tree's
     # executors.txt dropped or narrowed, a generated line's list narrowed, the compiler map, a go.mod or go.work changed
-    # (a closure), or a .go file added or deleted, which can make a directory a package that takes files from its
-    # parent's own, or end one (the guard can't list the base's packages to tell which). Any of them checks every comment,
-    # as the census does, its why and seconds kept in record as reads_comment_census.
+    # (a closure), or any .go file added, deleted or modified. An added or deleted one can make a directory a package
+    # that takes files from its parent's own, or end one; a modified one that drops an import, a //go:embed or a build
+    # constraint narrows the closure of every package that reaches it. The guard can't list the base's packages or
+    # closures to tell which, so any of them checks every comment, as the census does, its why and seconds kept in
+    # record as reads_comment_census. pathSetChanged is read beside changedSet, since with rename detection a rename's
+    # old path is only there.
     generatedLists = {pattern for _, _, _, pattern, mode in readers if mode == "generated"}
     shrinks = [] if census else sorted(
         {path for path in changedSet if path in ("cloud/fast-gate/executors.txt", compilerDependenciesPath, "go.work") or path in generatedLists
-         or path.rsplit("/", 1)[-1] == "go.mod"} | {path for path in pathSetChanged if path.endswith(".go")})
+         or path.rsplit("/", 1)[-1] == "go.mod"} | {path for path in changedSet | set(pathSetChanged) if path.endswith(".go")})
     commentCensus = census or bool(shrinks)
     started = time.monotonic()
     sources = readsCommentFiles(tree) if commentCensus or deleted else []

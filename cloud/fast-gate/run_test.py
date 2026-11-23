@@ -995,9 +995,10 @@ class ReadsGuard(unittest.TestCase):
     string read as a comment; a wildcard comment matching nothing read as naming nothing; a paths line read as covering a
     comment; generated lines skipped by the Performance.jsonc check, an untracked list read, or a list that can't be read
     read as covering; a glob the gate and the planner read apart passed, in a line or a comment; an indirect shrink
-    leaving unchanged files' comments unchecked; a /* */ comment hiding a // Reads: after it; a carriage return read as
-    a line; two keys folding to one field of a generated list read as one, or an integer past Go's int64 read as one;
-    a crashed census exiting as findings do; the root package owning files below it."""
+    leaving unchanged files' comments unchecked, a modified .go file's among them; a dead line a change adds to the
+    tree's executors.txt passed, or a tools' line charged to the change; a /* */ comment hiding a // Reads: after it; a
+    carriage return read as a line; two keys folding to one field of a generated list read as one, or an integer past
+    Go's int64 read as one; a crashed census exiting as findings do; the root package owning files below it."""
 
     executors = "mode guard-reads\nreads a b/data.txt\nreads a b/names/* paths\n"
     uncovered = ("a/a_test.go:%d reads b/lonely.txt, which a's key doesn't hold: add `reads a %s` to the tools line's "
@@ -1196,8 +1197,10 @@ class ReadsGuard(unittest.TestCase):
         os.makedirs(os.path.join(self.tree, "cohere"))
         realRun(["git", "-C", self.tree, "update-index", "--add", "--cacheinfo", "160000,%s,cohere" % self.base], check=True)
         self.write({"a/a_test.go": "package a\n\n// Reads: cohere/*.ts\n"})
+        # A .go file the change touches checks every comment, b's still matching nothing among them.
         self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["a/a_test.go"], []), [
-            "a/a_test.go:3 reads cohere/*.ts, which isn't a tracked path: point the comment at where the file lives now, or delete it"])
+            "a/a_test.go:3 reads cohere/*.ts, which isn't a tracked path: point the comment at where the file lives now, or delete it",
+            "b/b_test.go:3 reads b/fixtures/*.golden, which isn't a tracked path: point the comment at where the file lives now, or delete it"])
 
     def test_a_comment_only_a_paths_line_matches_is_red(self):
         # reads a b/names/* paths keys its matches by name alone, so an edit to b/names/one.txt reruns nothing, and a
@@ -1265,6 +1268,44 @@ class ReadsGuard(unittest.TestCase):
         record = {}
         self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["b/data.txt"], [], record), [])
         self.assertEqual(record, {})
+
+    def test_a_modified_go_file_dropping_an_import_reds_an_unchanged_files_comment(self):
+        # a's test reads b/b.go, which only a's Go closure holds, through a.go's import of b (no compiler a declares). A
+        # change that modifies a.go alone to drop the import shrinks the closure, adding and deleting no path and leaving
+        # the comment's file untouched: every comment is checked, as the census checks them, the record naming a.go. A
+        # change editing only a non-Go file outside executors.txt and the other shrinking paths checks its own Go files'
+        # comments alone, and records no census.
+        self.write({run.compilerDependenciesPath: json.dumps({"version": 1, "packages": {}}),
+                    "a/a.go": "package a\n\nimport _ \"%s/b\"\n" % run.module, "a/a_test.go": "package a\n\n// Reads: b/b.go\n"})
+        self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["a/a_test.go"], []), [])
+        self.write({"a/a.go": "package a\n"})
+        # a's closure as go list answers it without the import: a alone.
+        self.closure = types.SimpleNamespace(returncode=0, stderr="", stdout=json.dumps(
+            {"ImportPath": run.module + "/a", "Dir": os.path.join(self.tree, "a"), "GoFiles": ["a.go"]}) + "\n")
+        record = {}
+        self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["a/a.go"], [], record),
+                         [self.uncovered.replace("b/lonely.txt", "b/b.go") % (3, "b/b.go")])
+        self.assertEqual(record["reads_comment_census"]["paths"], ["a/a.go"])
+        record = {}
+        self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["b/data.txt"], [], record), [])
+        self.assertEqual(record, {})
+
+    def test_a_dead_line_a_change_adds_to_the_trees_executors_is_red_and_one_the_tools_hold_isnt(self):
+        # The gate tools are another checkout, so the tree's executors.txt is the change's: a line it adds matching no
+        # tracked path is red in change mode, though it matched no path the change deleted. The same line held by the
+        # tools' executors.txt is the tools line's, never the change's, and only the census names it.
+        tools = os.path.join(self.directory, "tools")
+        os.makedirs(os.path.join(tools, "cloud/fast-gate"))
+        with open(os.path.join(tools, "cloud/fast-gate/executors.txt"), "w") as handle:
+            handle.write(self.executors)
+        self.write({"cloud/fast-gate/executors.txt": self.executors + "reads a nothing/here.txt\n"})
+        changed = ["cloud/fast-gate/executors.txt"]
+        dead = "`reads a nothing/here.txt` (%s:4) matches no tracked path: point it at where the file lives now, or delete it"
+        self.assertEqual(run.readsGuardFindings(self.tree, tools, changed, []), [dead % "the tree's executors.txt"])
+        with open(os.path.join(tools, "cloud/fast-gate/executors.txt"), "w") as handle:
+            handle.write(self.executors + "reads a nothing/here.txt\n")
+        self.assertEqual(run.readsGuardFindings(self.tree, tools, changed, []), [])
+        self.assertEqual(run.readsGuardFindings(self.tree, tools), [dead % "executors.txt"])
 
     def test_a_reads_comment_is_read_as_repowalk_reads_one(self):
         # repowalk takes every // comment go/scanner finds (repowalk.go readsLines): one after a /* */ comment on its line
