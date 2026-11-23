@@ -116,7 +116,7 @@ const (
 	MaximumBlocksDepth    = 32
 	MaximumBlocksBuilders = 8
 	// MaximumLiveHoleHands is the queue's: the most hands liveHoleHands names (QueueRules.ts maximumLiveHoleHands).
-	MaximumLiveHoleHands  = 8
+	MaximumLiveHoleHands = 8
 )
 
 // SizingRule is a block-size policy: the largest block whose chance of coming back all green, at the red rate of the last
