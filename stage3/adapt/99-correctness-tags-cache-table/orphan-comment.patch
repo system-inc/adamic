@@ -1,0 +1,8 @@
+--- a/src/compiler/types.ts
++++ b/src/compiler/types.ts
+@@ -960,4 +960,5 @@
+ }
+
++/** @internal */
+ export interface LocalsContainer extends Node {
+     _localsContainerBrand: undefined;
