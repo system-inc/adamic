@@ -140,6 +140,22 @@ func (l *lowering) castArrayLike(proven *checker.Type) bool {
 	return false
 }
 
+// castExtendsArray is whether some member of proven, nullish aside, is an interface whose base-type chain, as
+// the checker resolves it (nodeArrayBase), reaches the global Array or ReadonlyArray: tsc's NodeArray<T>,
+// MutableNodeArray<T>, MissingList<T> and SortedArray<T>. IsArrayType doesn't take such an interface, so its
+// number index reads as an index signature, and a cast to or from one would be judged a dictionary view where
+// Node runs it over an array (#2v3xtgm, Compiler's ruling). It's asked only where a cause is chosen, never in
+// arrayLikeType, whose other readers would move. A chain the checker can't read gives nodeArrayBase nil, so
+// the cast keeps the cause it had: it's never read as an array, or as a dictionary, on a guess.
+func (l *lowering) castExtendsArray(proven *checker.Type) bool {
+	for _, member := range castMembers(l.checker.GetNonNullableType(proven)) {
+		if l.nodeArrayBase(member, map[*checker.Type]bool{}) != nil {
+			return true
+		}
+	}
+	return false
+}
+
 // castKeptNullish names what a target keeps beside its objects: undefined, null, or both.
 func (l *lowering) castKeptNullish(target *checker.Type) string {
 	switch undefined, null := l.includesUndefined(target), l.includesNull(target); {
@@ -167,7 +183,10 @@ func castPrimitiveMember(proven *checker.Type) bool {
 func (l *lowering) objectCastCause(source, target *checker.Type) castCause {
 	present := l.checker.GetNonNullableType(target)
 	switch {
-	case l.castArrayLike(source) || l.castArrayLike(present):
+	// An interface extending an array is an array's cast too, before its number index can read as a dictionary
+	// (#2v3xtgm). The mutant: castExtendsArray answers false, and TestCastStopNamesItsCause/missing_list goes red,
+	// a NotYet dictionary view where the array's refusal is wanted.
+	case l.castArrayLike(source) || l.castArrayLike(present) || l.castExtendsArray(source) || l.castExtendsArray(present):
 		return castUnnamed
 	case source.Flags()&checker.TypeFlagsUnknown != 0:
 		return castFromUnknown
@@ -228,8 +247,10 @@ func (l *lowering) distinctTagField(members []*checker.Type) bool {
 // writable field and a refinement are ruled out.
 func (l *lowering) unionCastCause(members []*checker.Type, target *checker.Type) castCause {
 	present := l.checker.GetNonNullableType(target)
+	// As in objectCastCause, an interface extending an array is kept out of castIndexSignature (#2v3xtgm). The
+	// mutant: castExtendsArray answers false, and TestCastStopNamesItsCause/node_or_node_array goes red.
 	for _, member := range append(append([]*checker.Type{}, members...), present) {
-		if l.castArrayLike(member) {
+		if l.castArrayLike(member) || l.castExtendsArray(member) {
 			return castUnnamed
 		}
 	}
