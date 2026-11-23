@@ -35,6 +35,20 @@ var castStopProbes = []struct {
 		"which asserts a call signature; prove the callable body"},
 	{"index signature", "function f(x: object): Record<string, number> { return x as Record<string, number>; }", false,
 		"stage 0 can't lower a checked dictionary view of Record<string, number> over object yet"},
+	// An interface extending ReadonlyArray isn't IsArrayType, so its number index read as an index signature, and
+	// tsc's NodeArray and MissingList casts were dictionary views where Node runs them over arrays (#2v3xtgm,
+	// Compiler's ruling). Its base-type chain makes it an array's cast, main's sentence until arrays have a cause.
+	// Pinned on a source that is no array to the checker either, as tsc's createNodeArray(...) as MissingList<T>
+	// is: a `T[]` source is already an array's cast, and couldn't tell the mutant (castExtendsArray false) apart.
+	{"missing list", "interface NodeArray<T> extends ReadonlyArray<T> { readonly end: number } interface MissingList<T> extends ReadonlyArray<T> { readonly isMissingList: true } function f(x: NodeArray<number>): MissingList<number> { return x as MissingList<number>; }", true,
+		"Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast"},
+	// parser.ts:10072's shape, a union source holding the array interface, through unionCastCause.
+	{"node or node array", "interface Node { readonly kind: number } interface NodeArray<T> extends ReadonlyArray<T> { readonly end: number } function f(x: Node | NodeArray<Node>): NodeArray<Node> { return x as NodeArray<Node>; }", true,
+		"Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast"},
+	// A real dictionary, an interface with no base, keeps the dictionary view: the array test isn't so wide it
+	// takes every index signature.
+	{"map-like dictionary", "interface MapLike<T> { [index: string]: T } function f(x: object): MapLike<unknown> { return x as MapLike<unknown>; }", false,
+		"stage 0 can't lower a checked dictionary view of MapLike<unknown> over object yet"},
 	{"intersection", "interface A { readonly a: number } interface B { readonly b: number } function f(x: A): A & B { return x as A & B; }", false,
 		"stage 0 can't lower a checked view of the intersection A & B over A yet"},
 	{"intersection with a callable", "interface A { readonly a: number } function f(x: A): A & (() => void) { return x as A & (() => void); }", true,
