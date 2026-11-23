@@ -189,5 +189,5 @@ python3 stage3/evidence/99-correctness-axolotl-e/proofs/native.py /workspace/scr
 python3 stage3/evidence/99-correctness-axolotl-e/proofs/verify-oracles.py /workspace/scratch /workspace/scratch/99e-verification > /workspace/scratch/99e-verification.log 2>&1
 ```
 
-The upstream issue is drafted in [LEDGER.md](../../upstream/LEDGER.md).
+The upstream issue is drafted in [LEDGER.md](LEDGER.md).
 Nothing is filed upstream.

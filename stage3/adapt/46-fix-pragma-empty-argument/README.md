@@ -33,7 +33,7 @@ recorded with the final evidence. The oracle runs from the requested
 `a3ef0dc` base with adaptations 00, 10, 45 and 46, excluding adaptation 20.
 Reference baselines are not changed or accepted.
 
-The issue is drafted in [stage3/upstream/LEDGER.md](../../upstream/LEDGER.md).
+The issue is drafted in [LEDGER.md](LEDGER.md).
 Kirk chooses whether and when to file it. Nothing has been sent upstream.
 
 Commands (all test output goes to log files):

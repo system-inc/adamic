@@ -1,0 +1,1 @@
+- **JavaScript-changing, value-identical (#bbssdcy, Adamic, Nov 22, 2026):** 99-getter-callable-views uses local readonly callable views at thirteen getter-backed NodeFactory calls, retaining the original signatures, the single getter read and the receiver. The destructuring site uses an annotated local. No public declaration changes.

@@ -1,0 +1,1 @@
+- **JavaScript-changing, value-identical; #trxxkge: 52 exact-parameter forwarding arrows at 17 original factory scopes, with 189,211 forwarding calls and 1,601,433 arrow creations per complete lane run.** Evidence: typescript/receiver-split-evidence; stage3/adapt/99-correctness-receiver-transformers/PROOF.md.

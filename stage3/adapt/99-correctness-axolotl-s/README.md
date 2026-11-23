@@ -60,7 +60,7 @@ result, including declarations and the import alias. There is one call:
 The import at transformers/ts.ts:183 is not a call. No caller check is added.
 For `[1, "x", 2]` and the number guard, the returned suffix is `["x", 2]`.
 The later number disproves the old Exclude result. The types and runtime
-counterexample, patch, and drafted upstream issue are also in upstream/LEDGER.md.
+counterexample, patch, and drafted upstream issue are also in [LEDGER.md](LEDGER.md).
 
 ## Node splice witnesses
 

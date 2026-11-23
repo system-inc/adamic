@@ -1,0 +1,1 @@
+- **Type-only, family 5 (Compiler's split to Apple, #pncjpqy, Nov 18, 2026):** 99-apple-source-file-contracts: `@internal skipTrivia?` on SourceFile (C07) and `packageJsonScope` in `getModuleSpecifierPreferences`'s Pick (C12b), 3 sites. Evidence: typescript/family5-scout 464502ff. No JavaScript and no published API changes.

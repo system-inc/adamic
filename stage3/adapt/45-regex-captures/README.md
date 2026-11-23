@@ -169,7 +169,7 @@ The public Node counterexample is `/// <reference path='' />`, passed to
 adaptation 45 alone throw `TypeError: Cannot read properties of undefined
 (reading 'length')` at src/compiler/parser.ts:10737, inside extractPragmas.
 `logs/parser-public-before.log` records the real adapted compiler stack.
-Adaptation 46 fixes it; [the upstream ledger](../../upstream/LEDGER.md) contains
+Adaptation 46 fixes it; [the upstream ledger entry](../46-fix-pragma-empty-argument/LEDGER.md) contains
 the issue draft for Kirk. No issue has been filed.
 
 No native tsc or full uncached Adamic integration gate is claimed. The base

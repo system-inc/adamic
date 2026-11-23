@@ -1,0 +1,1 @@
+99z amendment k220r1g: Compiler accepts the established-shape elementAt function declaration under Adamic's delegation (task b5w3ycg, Nov 7 03:20Z); 11 call sites, 1,936 calls, 0 differences, and 0 each of early reads, new, prototype, name or length reads, value uses, reassignments, and ts.elementAt reads.

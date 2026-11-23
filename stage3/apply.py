@@ -266,10 +266,14 @@ def build_product(out):
     adapt(out, adaptations, adaptation_env)
 
 
+def adaptation_directories():
+    return sorted(directory for directory in (stage / 'adapt').iterdir() if directory.is_dir())
+
+
 def adaptation_inputs():
     """The adaptations in order, and the environment they run in: stage3/api's pinned packages on NODE_PATH, checked
     before anything is cloned or adapted."""
-    adaptations = sorted(directory for directory in (stage / 'adapt').iterdir() if directory.is_dir())
+    adaptations = adaptation_directories()
     adaptation_env = dict(os.environ)
     if any(directory.name != '00-setup' for directory in adaptations):
         adaptation_env['NODE_PATH'] = str(pinned_packages(stage / 'api'))

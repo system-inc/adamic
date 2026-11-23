@@ -52,7 +52,7 @@ Current full stage3/apply.sh and replay both pass on b4348906 plus 99j. All 69 a
 
 [CENSUS.md](CENSUS.md), [census-delta.json](census-delta.json), and [prior-proof-results.json](prior-proof-results.json) are historical 99j-2 evidence. No 79-root checker or latent census was rerun on b4348906 plus 99j, and no current-base census count is claimed. The null-path Node measurement below is retained from 99j-2. Raw logs remain in /workspace/scratch with the 99j, 99j2, 99j3 or 99j4 prefix. Only adapt.cjs defines transformation rules.
 
-## Note for stage3/upstream/LEDGER.md: a string parameter receives null
+## Upstream candidate: a string parameter receives null
 
 Do not infer the runtime domain from this helper's string parameter. In the valid javascriptProjectEmit test, outDir is explicitly null. toReusableCompilerOptionValue passes it through the erased cast into relativeToBuildInfoEnsuringAbsolutePath. TypeScript's declared type says string, but null reaches it. Adding an assertion changes this valid run; narrowing away null skips a call tsc makes.
 

@@ -1,0 +1,1 @@
+- **JavaScript-changing, value-identical; #trxxkge: 46 parser callee rewrites call through factory, measured at 18,022,708 added per-use property reads per complete lane run.** Evidence: typescript/receiver-split-evidence; stage3/adapt/99-correctness-receiver-parser/PROOF.md.
