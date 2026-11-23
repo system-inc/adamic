@@ -1,0 +1,30 @@
+# #t2p4wyv round 1: compiles, the family's pins, and the stale-reference mutant. Run with bash after the sealed opening.
+# Never merged.
+set -u
+L="$TMPDIR/t2p"
+mkdir -p "$L"
+failed=0
+step() { echo "$1 $2"; [ "$1" = PASS ] || failed=1; }
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg)"
+bad=$(gofmt -l internal/lower); if [ -z "$bad" ]; then step PASS gofmt; else step FAIL gofmt; echo "$bad"; fi
+if go vet ./internal/lower/ > "$L/vet.log" 2>&1; then step PASS vet; else step FAIL vet; head -30 "$L/vet.log"; fi
+pins='^(TestKindUnionWrite.*|TestKindUnion.*Head2.*|TestCastKindUnion.*)$'
+if go test -count=1 -timeout 30m -v -run "$pins" ./internal/lower/ > "$L/pins.log" 2>&1; then step PASS pins; else step FAIL pins; fi
+grep -E -- '^(--- |ok|FAIL)|^    --- ' "$L/pins.log" | head -60
+grep -E -B2 -A10 -- '--- FAIL' "$L/pins.log" | head -60
+echo "== mutant: the receiver's union trusted on any reference"
+cp internal/lower/cast_kind_union_writes.go "$L/orig.go"
+python3 - internal/lower/cast_kind_union_writes.go <<'PY'
+import sys
+p = sys.argv[1]; t = open(p).read()
+old = "\tif !l.kindUnionReceiverHolds(receiver, held, proof.field) {"
+assert t.count(old) == 1
+open(p, "w").write(t.replace(old, "\tif false && !l.kindUnionReceiverHolds(receiver, held, proof.field) {"))
+PY
+go test -count=1 -timeout 30m -v -run '^TestKindUnionWriteKeepsTheWholeProofWhereTheUnionCanGoStale$' ./internal/lower/ > "$L/mutant.log" 2>&1
+code=$?
+if grep -q -E '\[build failed\]|\[setup failed\]|declared and not used' "$L/mutant.log"; then step FAIL mutant-compiles; else step PASS mutant-compiles; fi
+grep -E -- '--- (PASS|FAIL)|_test.go:[0-9]+' "$L/mutant.log" | head -30
+if [ $code -ne 0 ] && grep -q -- '--- FAIL: TestKindUnionWriteKeepsTheWholeProofWhereTheUnionCanGoStale' "$L/mutant.log"; then step PASS mutant-red; else step FAIL mutant-red; fi
+cp "$L/orig.go" internal/lower/cast_kind_union_writes.go
+if [ $failed -eq 0 ]; then echo "VERDICT PASS"; else echo "VERDICT FAIL"; false; fi
