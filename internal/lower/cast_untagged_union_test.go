@@ -78,6 +78,12 @@ func TestUntaggedUnionCastsKeepTheirStops(t *testing.T) {
 		{"a class instance member", members + "class K { readonly k = 1; } function f(x: A | K): A { return x as A; }", ".ts", false, "whose members no literal tag tells apart"},
 		{"a dictionary member", members + "function f(x: A | Record<string, number>): A { return x as A; }", ".ts", false, ""},
 		{"a sub-union target", members + "interface C { readonly c: boolean } function f(x: A | B | C): A | B { return x as A | B; }", ".ts", false, "a checked view of A | B over the union A | B | C, whose members no literal tag tells apart"},
+		// Runtime's two questions on #axqgdck: a writable field whose type differs by arm is refused at the cast by
+		// castUnionWrites (its union type X | Y fits neither arm's slot), so no X is ever written into a B and no
+		// cycle the finder can't see closes through one. One nested in a readonly field, which castUnionWrites
+		// doesn't walk, is stopped too (overlapViewCast's per-member widening).
+		{"a writable field whose type differs by arm", "interface X { readonly x: number } interface Y { readonly y: string } interface A { note: X } interface B { note: Y } function f(u: A | B): A { return u as A; }", ".ts", true, "whose writable field note some member can't hold every value of"},
+		{"a writable field nested in a readonly one", "interface X { readonly x: number } interface Y { readonly y: string } interface CX { v: X } interface CY { v: Y } interface A { readonly child: CX } interface B { readonly child: CY } function f(u: A | B): A { return u as A; }", ".ts", false, ""},
 		{"a tagged union's refinement", "interface P { readonly kind: 'p'; readonly v: string | number } interface Q { readonly kind: 'q' } interface PN { readonly kind: 'p'; readonly v: number } function f(x: P | Q): PN { return x as PN; }", ".ts", true, "which is narrower than a member of P | Q"},
 		{"in .a", members + "function f(x: A | B): A { return x as A; }", ".a", true, "in .a whose checks no proof erases"},
 	} {
