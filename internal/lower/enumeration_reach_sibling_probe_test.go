@@ -4,11 +4,11 @@ import "testing"
 
 // Temporary probe (#1atvfp5, Language's sibling downcast across two modules): never landed.
 func TestEnumerationReachSiblingProbe(t *testing.T) {
-	const held = "export interface Shared { b: number }\nconst literal = { b: 2, get a(): number { return 1; } };\nexport const shared: Shared = literal;\n"
+	const held = "export type Shared = { b: number };\nconst literal = { b: 2, get a(): number { return 1; } };\nexport const shared: Shared = literal;\n"
 	for _, row := range []struct{ name, main string }{
-		{"values", "import { type Shared, shared } from './held.ts';\ninterface Wanted { b: number; c: number }\nconst wanted = shared as Wanted;\nconsole.log(Object.values(wanted).join(','));\n"},
-		{"entries", "import { type Shared, shared } from './held.ts';\ninterface Wanted { b: number; c: number }\nconst wanted = shared as Wanted;\nfor (const [key, value] of Object.entries(wanted)) console.log(key + '=' + String(value));\n"},
-		{"json", "import { encodeJson } from 'adamic';\nimport { type Shared, shared } from './held.ts';\ninterface Wanted { b: number; c: number }\nconst wanted = shared as Wanted;\nconsole.log(encodeJson<Wanted>(wanted));\n"},
+		{"values", "import { type Shared, shared } from './held.ts';\ntype Wanted = { b: number; c: number };\nconst wanted = shared as Wanted;\nfunction read(view: Wanted): number[] { return Object.values(view); }\nconsole.log(read(wanted).join(','));\n"},
+		{"entries", "import { type Shared, shared } from './held.ts';\ntype Wanted = { b: number; c: number };\nconst wanted = shared as Wanted;\nfor (const [key, value] of Object.entries(wanted)) console.log(key + '=' + String(value));\n"},
+		{"json", "import { encodeJson } from 'adamic';\nimport { type Shared, shared } from './held.ts';\ntype Wanted = { b: number; c: number };\nconst wanted = shared as Wanted;\nconsole.log(encodeJson<Wanted>(wanted));\n"},
 	} {
 		t.Run(row.name, func(t *testing.T) {
 			path, program, err := enumerationReachLower(t, ".ts", held, row.main)
