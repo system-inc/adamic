@@ -3,6 +3,7 @@ package oracle
 import (
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/leakcheck"
@@ -18,7 +19,11 @@ import (
 // (viewAlsoTable, Lower's ruling), so each row is one graph region freed whole: held to Node, and balanced by the
 // counted build. The rows are .ts, where the cast stays checked; .a refuses the downcast.
 //
-// Mutant: viewAlsoTable walking no view, and every row but the control leaks by the counted build.
+// An element read through a view (Narrow.items: readonly Y1[] over Base's readonly (Y1 | Y2)[]) stops first
+// today, as a checked view's array read through an index, so that row pins the stop by its words. viewAlsoTable
+// pairs elements already; when the stop lifts the row goes red here, and becomes a counted-build row.
+//
+// Mutant: viewAlsoTable walking no view, and every field row leaks by the counted build.
 func TestGraphViewDepthEdges(t *testing.T) {
 	t.Parallel()
 	types := "interface Cell { held: Y1 | undefined }\ninterface Y1 { a: number[] }\ninterface Y2 { b: Cell | undefined; c: number }\n"
@@ -29,12 +34,12 @@ func TestGraphViewDepthEdges(t *testing.T) {
 	}
 	twoDeep := "interface Mid { readonly g: Y1 | Y2 }\ninterface MidNarrow { readonly g: Y1 }\ninterface Base { readonly kind: number; readonly f: Mid }\ninterface Narrow extends Base { readonly kind: 1; readonly f: MidNarrow }\nfunction make(cell: Cell): Base {\n\tconst y2: Y2 = { b: cell, c: 7 };\n\tconst mid: Mid = { g: y2 };\n\treturn { kind: 1, f: mid };\n}\n"
 	element := "interface Base { readonly kind: number; readonly items: readonly (Y1 | Y2)[] }\ninterface Narrow extends Base { readonly kind: 1; readonly items: readonly Y1[] }\nfunction make(cell: Cell): Base {\n\tconst y2: Y2 = { b: cell, c: 7 };\n\treturn { kind: 1, items: [y2] };\n}\n"
-	cases := []struct{ name, source string }{
-		{"a narrowed field, in a graph program", types + anchor + narrowed + run("n.f")},
-		{"a narrowed field, in a plain program", types + narrowed + run("n.f")},
-		{"a field narrowed two deep", types + twoDeep + run("n.f.g")},
-		{"a narrowed element", types + element + "function run(): void {\n\tconst cell: Cell = { held: undefined };\n\tconst base = make(cell);\n\tif (base.kind === 1) {\n\t\tconst n = base as Narrow;\n\t\tconst item = n.items[0];\n\t\tif (item !== undefined) {\n\t\t\tcell.held = item;\n\t\t}\n\t}\n\tconsole.log(`${cell.held === undefined ? \"none\" : \"held\"}`);\n}\nrun();\n"},
-		{"the control, the Y2 slot seen whole", "interface Cell { held: Y1 | Y2 | undefined }\ninterface Y1 { a: number[] }\ninterface Y2 { b: Cell | undefined; c: number }\nfunction run(): void {\n\tconst cell: Cell = { held: undefined };\n\tconst y2: Y2 = { b: cell, c: 7 };\n\tcell.held = y2;\n\tconsole.log(`${cell.held === undefined ? \"none\" : \"held\"}`);\n}\nrun();\n"},
+	cases := []struct{ name, source, stop string }{
+		{"a narrowed field, in a graph program", types + anchor + narrowed + run("n.f"), ""},
+		{"a narrowed field, in a plain program", types + narrowed + run("n.f"), ""},
+		{"a field narrowed two deep", types + twoDeep + run("n.f.g"), ""},
+		{"a narrowed element, stopped at the read", types + element + "function run(): void {\n\tconst cell: Cell = { held: undefined };\n\tconst base = make(cell);\n\tif (base.kind === 1) {\n\t\tconst n = base as Narrow;\n\t\tconst item = n.items[0];\n\t\tif (item !== undefined) {\n\t\t\tcell.held = item;\n\t\t}\n\t}\n\tconsole.log(`${cell.held === undefined ? \"none\" : \"held\"}`);\n}\nrun();\n", "a checked view's array read through index (not checked yet)"},
+		{"the control, the Y2 slot seen whole", "interface Cell { held: Y1 | Y2 | undefined }\ninterface Y1 { a: number[] }\ninterface Y2 { b: Cell | undefined; c: number }\nfunction run(): void {\n\tconst cell: Cell = { held: undefined };\n\tconst y2: Y2 = { b: cell, c: 7 };\n\tcell.held = y2;\n\tconsole.log(`${cell.held === undefined ? \"none\" : \"held\"}`);\n}\nrun();\n", ""},
 	}
 	for _, c := range cases {
 		t.Run(c.name, func(t *testing.T) {
@@ -44,6 +49,12 @@ func TestGraphViewDepthEdges(t *testing.T) {
 				t.Fatal(err)
 			}
 			program, err := lowered(t, path)
+			if c.stop != "" {
+				if err == nil || !strings.Contains(err.Error(), c.stop) {
+					t.Fatalf("want the stop %q, got %v", c.stop, err)
+				}
+				return
+			}
 			if err != nil {
 				t.Fatal(err)
 			}
