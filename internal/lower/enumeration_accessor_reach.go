@@ -179,6 +179,9 @@ func (l *lowering) enumerationAccessorOwners(accessor *ast.Node, reach *enumerat
 		return nil, false
 	}
 	if holder.Kind == ast.KindObjectLiteralExpression {
+		if declared, named := l.enumerationLiteralDeclaredOwner(holder); named {
+			return []*checker.Type{declared}, true
+		}
 		owner := regularTypeOfObjectLiteral(l.checker, l.checker.GetTypeAtLocation(holder))
 		if l.eachReached(owner, 0, map[*checker.Type]bool{}, func(reached *checker.Type) bool {
 			return reached.Flags()&checker.TypeFlagsInstantiable != 0
@@ -247,6 +250,51 @@ func (l *lowering) enumerationAccessorOwners(accessor *ast.Node, reach *enumerat
 	// so an enumeration related to that class is refused although a #private getter is never an own
 	// property: that only ever refuses more.
 	return owners, own
+}
+
+// enumerationLiteralDeclaredOwner is the declared type of the variable a literal initializes, when the
+// variable's annotation names no type parameter and no type declared inside type parameters: the literal
+// is reached only through that variable, so every slot holding it relates to the declared type, and the
+// declared type stands as its owner. A literal's own type is no use there: eachReached walks each member
+// signature uninstantiated and stops past depth 16, so tsc's createTransformationContext literal, typed
+// through NodeFactory's generic methods, read as mentioning a type parameter (J-6b476xq on 0b1ae257). A
+// typeof query, a this type or an infer in the annotation, or a name that can't be resolved, leaves it
+// unnamed, and the literal's own type is judged as before.
+func (l *lowering) enumerationLiteralDeclaredOwner(literal *ast.Node) (*checker.Type, bool) {
+	around := literal.Parent
+	for around != nil && around.Kind == ast.KindParenthesizedExpression {
+		around = around.Parent
+	}
+	if around == nil || around.Kind != ast.KindVariableDeclaration {
+		return nil, false
+	}
+	declaration := around.AsVariableDeclaration()
+	if declaration.Type == nil || declaration.Initializer == nil || ast.SkipParentheses(declaration.Initializer) != literal {
+		return nil, false
+	}
+	open := false
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		switch node.Kind {
+		case ast.KindTypeQuery, ast.KindThisType, ast.KindInferType:
+			open = true
+		case ast.KindTypeReference:
+			symbol := l.symbol(node.AsTypeReferenceNode().TypeName)
+			if symbol == nil || symbol.Flags&ast.SymbolFlagsTypeParameter != 0 {
+				open = true
+				break
+			}
+			for _, named := range symbol.Declarations {
+				open = open || enumerationGenericContext(named)
+			}
+		}
+		return open || node.ForEachChild(visit)
+	}
+	visit(declaration.Type)
+	if open {
+		return nil, false
+	}
+	return l.checker.GetTypeAtLocation(around.Name()), true
 }
 
 // enumerationGenericContext reports whether a declaration, or anything it's inside, has type parameters.

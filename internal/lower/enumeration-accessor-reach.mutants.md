@@ -40,6 +40,9 @@ unmutated in enumeration_accessor_reach_test.go and in the whole internal/lower.
 | UnionMembers: a union's members are left unread | `case flags&checker.TypeFlagsUnion != 0:` to `case false && ...` | TestEnumerationReachUnionLowers | 70, `enumeration reach row union was refused` |
 | DeepReach: encodeJson reads only the operand's own type | `if !deep {` to `if true {` | TestEnumerationReachDeepGetterRefused/(field\|element) | 90, `enumeration reach row <row> was admitted` |
 | DiscriminatedUnion: a union is read by its members alone | `types = append(types, next.proven) // the union itself` to `// the union itself is left unread` | TestEnumerationReachReachingGetterRefused/discriminated | 90, `enumeration reach row discriminated was admitted` |
+| GenericLiteral: any enclosing type parameters make a literal's owner unknown | `if holder == nil {` to `if holder == nil \|\| enumerationGenericContext(holder) {` | TestEnumerationReachGenericLiteralLowers | 70, `enumeration reach row generic literal was refused` |
+| LiteralTypeParameter: a literal whose own type mentions T is owned by that type | `if l.eachReached(owner, 0,` to `if false && l.eachReached(owner, 0,` | TestEnumerationReachReachingGetterRefused/held | 90, `enumeration reach row held was admitted` |
+| DeclaredOwner: an annotated literal's declared type is never taken | `if declared, named := ...; named {` to `...; false && named {` | TestEnumerationReachDeclaredLiteralLowers | 70, `enumeration reach row declared literal was refused` |
 | OneWay: an owner reaches only when assignable to a read type, not the other way | `l.checker.IsTypeAssignableTo(owner, read) \|\| l.checker.IsTypeAssignableTo(read, owner)` to `l.checker.IsTypeAssignableTo(owner, read)` | TestEnumerationReachDowncastRefused | 90, `enumeration reach row downcast was admitted` |
 
 UnionMembers fails closed rather than open: a union left unread falls to the
@@ -73,4 +76,13 @@ array of any" before the call is lowered, so those refused rows return the call
 from a function typed number[].
 
 Product order: cloud/fast-gate/enumeration-reach-product-order.py writes the
-five producer rows, each waiting on nothing.
+eight producer rows, each waiting on nothing.
+
+A literal's owner: when the literal initializes a variable whose annotation
+names no type parameter and nothing declared inside type parameters, the
+declared type is its owner, since every slot holding the literal is reached
+through that variable. Otherwise its regular type is, unless that type mentions
+a type parameter (eachReached walks member signatures uninstantiated and stops
+past depth 16, which is why tsc's createTransformationContext literal needed the
+declared road, J-6b476xq). An enclosing generic function alone no longer makes a
+literal's owner unknown; a class's accessor keeps that rule.

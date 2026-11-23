@@ -168,7 +168,7 @@ func TestEnumerationReachReachingGetterRefused(t *testing.T) {
 		{"subclass", "export class Base { get celsius(): number { return 21; } }\nexport class Sub extends Base { count = 1; }\n", "import { Sub } from './held.a';\nfunction read(sub: Sub): number[] { return Object.values(sub); }\nconsole.log(read(new Sub()).join(','));\n"},
 		{"parameter", enumerationReachSensor, "import { type Reading, Sensor } from './held.a';\nfunction read(reading: Reading): number[] { return Object.values(reading); }\nconsole.log(read(new Sensor()).join(','));\n"},
 		{"discriminated", "export class Coded { kind: 1 | 2 = 1; x = 1; get g(): number { return 2; } }\n", "import { Coded } from './held.a';\ntype Tagged = { kind: 1; g: number } | { kind: 2; g: number };\nfunction read(tagged: Tagged): number[] { return Object.values(tagged); }\nconsole.log(read(new Coded()).join(','));\n"},
-		{"held", "export function hold<T>(value: T): T { const box = { get held(): T { return value; } }; return box.held; }\n", "import { hold } from './held.a';\nconst point = { x: 1, y: 2 };\nconsole.log(Object.values(point).join(','));\nconsole.log(String(hold<number>(3)));\n"},
+		{"held", "export interface Holder<T> { readonly held: T }\nexport function hold<T>(value: T): T { const box: Holder<T> = { get held(): T { return value; } }; return box.held; }\n", "import { hold } from './held.a';\nconst point = { x: 1, y: 2 };\nconsole.log(Object.values(point).join(','));\nconsole.log(String(hold<number>(3)));\n"},
 		{"generic", "export class Box<T> { held: T; constructor(held: T) { this.held = held; } get value(): T { return this.held; } }\n", "import { Box } from './held.a';\nconst reading: { readonly value: number } = { value: 1 };\nconsole.log(Object.values(reading).join(','));\nconsole.log(String(new Box<number>(2).value));\n"},
 	} {
 		t.Run(row.name, func(t *testing.T) {
@@ -188,6 +188,19 @@ func TestEnumerationReachGenericLiteralLowers(t *testing.T) {
 	const held = "export function doubled<T>(value: T): number { const box = { count: 4, get twice(): number { return 8; } }; return value === undefined ? box.count : box.twice; }\n"
 	const main = "import { doubled } from './held.a';\nconst point = { x: 1, y: 2 };\nconsole.log(Object.values(point).join(','));\nconsole.log(String(doubled<string>('s')));\n"
 	enumerationReachAgrees(t, "generic literal", held, main, "1,2\n8\n")
+}
+
+// A getter-bearing literal inside a generic function whose own type mentions T, through a field holding
+// the function's value, but which initializes a variable declared as a non-generic interface: the literal
+// is reached only through that variable, so the interface is its owner, and beside Object.values of an
+// unrelated literal it lowers and agrees with Node. That's tsc's createTransformationContext shape (a
+// literal typed TransformationContext inside transformNodes<T>). Mutant DeclaredOwner (the declared type
+// is never taken) turns it red; the held row, whose annotation is Holder<T>, stays refused.
+func TestEnumerationReachDeclaredLiteralLowers(t *testing.T) {
+	t.Parallel()
+	const held = "export interface Counter { count: number; readonly twice: number; tag: unknown }\nexport function doubled<T>(value: T): number { const box: Counter = { count: 4, get twice(): number { return 8; }, tag: value }; return box.twice; }\n"
+	const main = "import { doubled } from './held.a';\nconst point = { x: 1, y: 2 };\nconsole.log(Object.values(point).join(','));\nconsole.log(String(doubled<string>('s')));\n"
+	enumerationReachAgrees(t, "declared literal", held, main, "1,2\n8\n")
 }
 
 // encodeJson reads every field at any depth, so a getter-bearing value under the operand reaches it: a

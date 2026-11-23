@@ -22,6 +22,7 @@ var enumerationReachMutations = []enumerationReachMutation{
 	{"DiscriminatedUnion", "types = append(types, next.proven) // the union itself", "// the union itself is left unread", "TestEnumerationReachReachingGetterRefused/discriminated", []string{"discriminated was admitted"}},
 	{"GenericLiteral", "	if holder == nil {\n		return nil, false\n	}\n	if holder.Kind == ast.KindObjectLiteralExpression {", "	if holder == nil || enumerationGenericContext(holder) {\n		return nil, false\n	}\n	if holder.Kind == ast.KindObjectLiteralExpression {", "TestEnumerationReachGenericLiteralLowers", []string{"generic literal was refused"}},
 	{"LiteralTypeParameter", "		if l.eachReached(owner, 0,", "		if false && l.eachReached(owner, 0,", "TestEnumerationReachReachingGetterRefused/held", []string{"held was admitted"}},
+	{"DeclaredOwner", "		if declared, named := l.enumerationLiteralDeclaredOwner(holder); named {", "		if declared, named := l.enumerationLiteralDeclaredOwner(holder); false && named {", "TestEnumerationReachDeclaredLiteralLowers", []string{"declared literal was refused"}},
 	{"OneWay", "l.checker.IsTypeAssignableTo(owner, read) || l.checker.IsTypeAssignableTo(read, owner)", "l.checker.IsTypeAssignableTo(owner, read)", "TestEnumerationReachDowncastRefused", []string{"downcast was admitted"}},
 }
 
@@ -57,9 +58,14 @@ func TestProduct_EnumerationReachLiteralTypeParameterMutant(t *testing.T) {
 	enumerationReachMutantBinary(t, enumerationReachMutations[5])
 }
 
-func TestProduct_EnumerationReachOneWayMutant(t *testing.T) {
+func TestProduct_EnumerationReachDeclaredOwnerMutant(t *testing.T) {
 	t.Parallel()
 	enumerationReachMutantBinary(t, enumerationReachMutations[6])
+}
+
+func TestProduct_EnumerationReachOneWayMutant(t *testing.T) {
+	t.Parallel()
+	enumerationReachMutantBinary(t, enumerationReachMutations[7])
 }
 
 func TestEnumerationReachMutantsAreCaught(t *testing.T) {
