@@ -1,1 +1,1 @@
-awaits area/library: library's iterator toStringTag families (8f4886ed) make it agree with Node
+awaits #20e4t06: a library object's explicit toString stops at compile time until each iterator answers its own tag (library_own_answer_test.go pins the stop)
