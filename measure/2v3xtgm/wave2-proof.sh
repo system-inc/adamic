@@ -20,12 +20,12 @@ go vet ./internal/lower ./internal/ir ./internal/native ./internal/javascript ./
 PINS='^TestDictionaryViewCasts$|^TestDictionaryViewKeepsAFixedSourceStopped$|^TestDictionaryViewRefusedInAdamic$|^TestCastStopNamesItsCause$|^TestUncheckableCastsStayRefused$'
 go test -count=1 -v -run "$PINS" ./internal/lower > "$T/pins.log" 2>&1; code=$?
 grep -E -- '^\s*--- (PASS|FAIL)' "$T/pins.log"
-[ $code = 0 ] && echo "PASS the lower pins" || { tail -40 "$T/pins.log"; echo "FAIL lower pins"; exit 1; }
+[ $code = 0 ] && echo "PASS the lower pins" || { grep -E '_test.go:[0-9]+:' -A4 "$T/pins.log"; tail -40 "$T/pins.log"; echo "FAIL lower pins"; exit 1; }
 
 ORACLE='^TestDictionaryViewAgreesWithNode$|^TestDictionaryViewStopsAtTheCast$'
 go test -count=1 -v -run "$ORACLE" ./internal/oracle > "$T/oracle.log" 2>&1; code=$?
 grep -E -- '^\s*--- (PASS|FAIL)' "$T/oracle.log"
-[ $code = 0 ] && echo "PASS the oracle pins" || { tail -60 "$T/oracle.log"; echo "FAIL oracle pins"; exit 1; }
+[ $code = 0 ] && echo "PASS the oracle pins" || { grep -E '_test.go:[0-9]+:' -A4 "$T/oracle.log"; tail -60 "$T/oracle.log"; echo "FAIL oracle pins"; exit 1; }
 
 # plant FILE OLD NEW: replaces OLD, found exactly once, with NEW.
 plant() {
