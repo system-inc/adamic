@@ -407,11 +407,11 @@ func (l *lowering) overloadCallableResult(callable *checker.Type) (*checker.Type
 	return l.checker.GetReturnTypeOfSignature(signatures[0]), true
 }
 
-// overloadCertified is whether censusOverload accepted overload by certificate A or B, judged once per
+// overloadCertified is whether censusOverload accepted overload by certificate A, B or D, judged once per
 // overload. A call can be lowered before its set's declaration is, an instance of a generic set among
 // them, so an overload not yet judged is judged here by running the set's census, which records the
-// certificate's acceptance (census_small.go). Only a body with certificate A's or B's shape is asked, so
-// every other set's census runs where it always did.
+// certificate's acceptance (census_small.go). Only a body with certificate A's, B's or D's shape is asked,
+// so every other set's census runs where it always did.
 func (l *lowering) overloadCertified(overload *ast.Node) (bool, error) {
 	if overload == nil || overload.Kind != ast.KindFunctionDeclaration || overload.Body() != nil || overload.Name() == nil {
 		return false, nil
@@ -423,7 +423,8 @@ func (l *lowering) overloadCertified(overload *ast.Node) (bool, error) {
 	if implementation := l.censusImplementation(overload); implementation != nil {
 		_, arrayShaped := l.overloadArrayShapeOf(implementation)
 		_, mapShaped := l.overloadMapShapeOf(implementation)
-		if arrayShaped || mapShaped {
+		_, filterShaped := l.overloadFilterShapeOf(implementation)
+		if arrayShaped || mapShaped || filterShaped {
 			// Its own verdict, never its set's: an unserved sibling stops only the calls that resolve to it
 			// (#4czdn4q). overloadCertificateCall asks overloadCallVerdict first, so a call reaching here with
 			// this overload unserved has already stopped there.
@@ -437,7 +438,7 @@ func (l *lowering) overloadCertified(overload *ast.Node) (bool, error) {
 	return certified, nil
 }
 
-// noteOverloadCertificate records whether census accepted overload by certificate A or B.
+// noteOverloadCertificate records whether census accepted overload by certificate A, B or D.
 func (l *lowering) noteOverloadCertificate(overload *ast.Node, certified bool) {
 	if l.overloadCertificates == nil {
 		l.overloadCertificates = map[*ast.Node]bool{}
@@ -670,6 +671,18 @@ func (l *lowering) overloadCertificateSameHeld(stored, read *checker.Type, keyed
 	readHeld, readKnown := held(read)
 	if !storedKnown || !readKnown || storedHeld != readHeld {
 		return false
+	}
+	if storedHeld.IsReference() {
+		// A reference that may be missing is held as the reference itself, missing as null (ir.Maybe), so
+		// once both sides are held alike, a union of one type with undefined is read through that type:
+		// filter's instance stores readonly string[] | undefined where overload 2's call reads string[]
+		// (certificate D, #4z7y6pq), and each array's element is still compared below.
+		if defined := l.definedMembers(stored); len(defined) == 1 {
+			stored = defined[0]
+		}
+		if defined := l.definedMembers(read); len(defined) == 1 {
+			read = defined[0]
+		}
 	}
 	storedArguments, readArguments := l.typeArguments(stored), l.typeArguments(read)
 	if len(storedArguments) == 0 && len(readArguments) == 0 {
