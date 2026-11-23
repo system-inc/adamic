@@ -2199,7 +2199,9 @@ launchMarker = re.compile(r'"os/exec"|os\.StartProcess|syscall\.Exec')
 # node_modules), never a bare name, and cites the trace job it was read from (Adamic Loom's ruling on #ry3pfc6). An interpreter in the tree launders
 # nothing, since every exec it starts is checked in turn, so go, clang and adamic void wherever they appear.
 launcherTreePlace = re.compile(r"[^\s*?\[\]:]*/[^\s*?\[\]:]*")
-launcherTreeCompilers = {"go", "clang", "clang++", "cc", "gcc", "ld", "lld", "adamic"}
+# A compiler is one of these names, or anything under Go's own tool directory (pkg/tool/, where compile, link, asm,
+# cgo and vet live), whatever its name (Adamic Loom's should on #ry3pfc6).
+launcherTreeCompilers = {"go", "clang", "clang++", "cc", "gcc", "ld", "lld", "adamic", "compile", "link", "asm", "cgo", "vet"}
 
 
 def launcherTreeRefusal(tree):
@@ -2215,7 +2217,7 @@ def launcherTreeRefusal(tree):
         if (not isinstance(place, str) or not launcherTreePlace.fullmatch(place) or place.endswith("/")
                 or os.path.normpath(place) != place or place.startswith("../")):
             return "tree place %r is no exact place: an absolute path or a clean path in the source, never a bare name or a glob" % (place,)
-        if os.path.basename(place) in launcherTreeCompilers or "adamic" in os.path.basename(place):
+        if os.path.basename(place) in launcherTreeCompilers or "adamic" in os.path.basename(place) or "pkg/tool/" in place:
             return "tree place %s is a compiler, which no launcher's tree may exec" % place
         if not isinstance(trace, str) or not launchAllowJob.fullmatch(trace):
             return "tree place %s cites no trace job (J- and seven letters and digits) it was read from" % place

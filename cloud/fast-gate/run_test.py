@@ -4779,6 +4779,9 @@ class CensusLaunchers(unittest.TestCase):
                              ([{"place": "/usr/bin/sh", "trace": "traced"}], "cites no trace job"),
                              ([{"place": "/usr/local/go/bin/go", "trace": "J-5bejz3b"}], "is a compiler"),
                              ([{"place": "/usr/bin/clang", "trace": "J-5bejz3b"}], "is a compiler"),
+                             ([{"place": "/usr/local/go/pkg/tool/linux_amd64/compile", "trace": "J-5bejz3b"}], "is a compiler"),
+                             ([{"place": "/usr/local/go/pkg/tool/linux_amd64/buildid", "trace": "J-5bejz3b"}], "is a compiler"),
+                             ([{"place": "/opt/tools/bin/vet", "trace": "J-5bejz3b"}], "is a compiler"),
                              ([{"place": "/usr/bin/sh", "trace": "J-5bejz3b"}] * 2, "is named twice"),
                              ({"place": "/usr/bin/sh"}, "isn't a list")):
             with self.assertRaises(ValueError, msg=tree) as raised:
