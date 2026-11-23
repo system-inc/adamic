@@ -94,3 +94,33 @@ func TestCheckedPredicateIntersectionTargetSyntheticSymbolsLogged(t *testing.T) 
 		})
 	}
 }
+
+// Language's storage-side roads (#c7w6j0y, on the design): parts whose members a view may not check.
+// Logged on the first run, to pin each beside its twin: each must stop at its own words or agree with
+// Node, never lower raw.
+func TestCheckedPredicateIntersectionTargetStoragePartsLogged(t *testing.T) {
+	const value = "const e: Expr = { kind: 9, pos: 2, operator: { kind: 1 } };\n"
+	const guard = "function isT(n: Expr): n is T { return n.kind === 9; }\n"
+	const showPos = "function show(n: Expr): void { if (isT(n)) console.log(String(n.pos)); else console.log('no'); }\n"
+	for _, probe := range []struct{ name, source string }{
+		{"phantom brand part", intersectionExpr + "type T = Expr & { readonly kind: 9; readonly __tagged: undefined };\n" + guard + showPos + value + "show(e);\n"},
+		{"callable part", intersectionExpr + "type T = Expr & ((x: number) => number);\nfunction isT(n: Expr): n is T { return n.kind === 9; }\n" + showPos + value + "show(e);\n"},
+		{"array part", "interface Expr { readonly kind: number; readonly pos: number }\ntype T = readonly Expr[] & { readonly kind: 9 };\nfunction isT(n: { readonly kind: number }): n is T { return n.kind === 9; }\nfunction show(n: { readonly kind: number }): void { if (isT(n)) console.log(String(n.length)); else console.log('no'); }\nconst e: Expr = { kind: 9, pos: 2 };\nshow(e);\n"},
+		{"record part", intersectionExpr + "type T = Expr & Record<string, unknown> & { readonly kind: 9 };\n" + guard + showPos + value + "show(e);\n"},
+		{"nested getter part", intersectionExpr + "type T = Expr & { readonly kind: 9; readonly operator: { get kind(): 1 } };\n" + guard + "function show(n: Expr): void { if (isT(n)) console.log(String(n.operator.kind)); else console.log('no'); }\n" + value + "show(e);\n"},
+		{"method part", intersectionExpr + "type T = Expr & { readonly kind: 9; describe(): string };\n" + guard + "function show(n: Expr): void { if (isT(n)) console.log(n.describe()); else console.log('no'); }\nconst v = { kind: 9, pos: 2, operator: { kind: 1 }, describe(): string { return 'described'; } };\nshow(v);\nconst w: Expr = { kind: 9, pos: 2, operator: { kind: 1 } };\nshow(w);\n"},
+		{"symbol keyed part", intersectionExpr + "const sym: unique symbol = Symbol('s');\ntype T = Expr & { readonly kind: 9; readonly [sym]: number };\n" + guard + "function show(n: Expr): void { if (isT(n)) console.log(String(n[sym])); else console.log('no'); }\n" + value + "show(e);\n"},
+		{"generic part", intersectionExpr + "function isK<T>(n: Expr): n is Expr & T & { readonly kind: 9 } { return n.kind === 9; }\nfunction show<T>(n: Expr): void { if (isK<T>(n)) console.log(String(n.pos)); else console.log('no'); }\n" + value + "show<{ readonly pos: number }>(e);\nshow<{ readonly kind: 8 }>(e);\n"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			program, err := lowerSourceAs(t, probe.source, ".ts")
+			t.Logf("ROW %s lower: %v", probe.name, err)
+			if err == nil {
+				observed := runAgreementNode(t, writeAgreementSource(t, "main.ts", probe.source))
+				t.Logf("ROW %s node: exit %d stdout %q", probe.name, observed.code, observed.stdout)
+				code, stdout, stderr := brandedNative(t, program)
+				t.Logf("ROW %s native: exit %d stdout %q stderr %q", probe.name, code, stdout, stderr)
+			}
+		})
+	}
+}
