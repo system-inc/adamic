@@ -37,7 +37,7 @@ int main(void) {
 		if mutant {
 			name = "kind_check_removed"
 			const guard = "\tif (object != NULL && object->heap.kind != adamic_kind_object) { view_failure(type, expression, heap_kind_name(object->heap.kind)); }\n"
-			archive = objectSourceMutant(t, compiler, library, flags, guard, "")
+			archive = runtimeSourceMutant(t, compiler, library, flags, "object.c", guard, "")
 		}
 		t.Run(name, func(t *testing.T) {
 			binary := buildHarnessWithLibrary(t, harness, flags, compiler, archive)
