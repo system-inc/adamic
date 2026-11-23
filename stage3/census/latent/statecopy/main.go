@@ -87,6 +87,9 @@ var loweringFieldPolicies = map[string]loweringFieldPolicy{
 	// The enumerations checkEnumerationReachViews holds (#1atvfp5) roll back with the IR that lowered them, and
 	// are never carried into another program's lowering, whose views they don't judge.
 	"enumerationReachSites": speculativeState,
+	// The Array.isArray sites whose arms checkArrayArmViews holds (#9z2ksv7) roll back with the IR that built
+	// them, and are never carried into another program's lowering, whose views they don't judge.
+	"arrayArmSites": speculativeState,
 	// Scoped to one optionalIntrinsic invocation; snapshots preserve its immutable AST identity.
 	// It is not a carried program fact.
 	"optionalReceiverCall": scopedASTIdentity,

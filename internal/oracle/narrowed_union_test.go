@@ -72,7 +72,9 @@ func TestNarrowedUnionMemberCheck(t *testing.T) {
 	}
 }
 
-// Ambiguous object tags need a stronger IR predicate before they can be cast safely.
+// Ambiguous object tags need a stronger IR predicate before they can be cast safely. An object arm with an index
+// signature declares no required property that rules an array out, so the array brand can't decide it either. A Map
+// arm can be, and agrees (TestArrayPredicateArmsAgree).
 func TestNarrowedUnionObjectTagRefusal(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/reland_refused/narrowed_union_object_tag.a"))
@@ -83,7 +85,7 @@ func TestNarrowedUnionObjectTagRefusal(t *testing.T) {
 		t.Fatalf("source Node: %#v", node)
 	}
 	_, err = lowered(t, path)
-	if err == nil || !strings.Contains(err.Error(), "narrowed_union_object_tag.a") || !strings.Contains(err.Error(), "stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet") {
+	if err == nil || !strings.Contains(err.Error(), "narrowed_union_object_tag.a:8:16:") || !strings.Contains(err.Error(), "stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet") {
 		t.Fatalf("want refusal naming the path and fix, got %v", err)
 	}
 }

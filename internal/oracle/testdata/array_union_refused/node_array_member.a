@@ -1,0 +1,8 @@
+class Extension { name = "x"; }
+interface NA<T> extends ReadonlyArray<T> { pos: number; end: number }
+function first(): { pos: number; end: number } | readonly Extension[] { return [new Extension()]; }
+let v: { pos: number; end: number } | readonly Extension[] = first();
+v = [new Extension()];
+if (Array.isArray(v)) {
+    console.log(String(v[0] !== undefined));
+}
