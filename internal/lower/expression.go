@@ -2006,8 +2006,11 @@ func (l *lowering) concatenated(value ir.Expression) ir.Expression {
 // neither null nor undefined and only objects the helper converts (addedObjectsConvert): a union holding a
 // nullable reference may not tell its null from its undefined (logical_and_reference_null.a), and a
 // library object (a Map, a Date, a Buffer) has no conversion the helper knows, so each keeps its NotYet at
-// compile time rather than a stop at run time. Anything else is left as it was, and combine's NotYet
-// names it.
+// compile time rather than a stop at run time. The judgment is the operand's type, and the helper's arms
+// read the object itself, so an object a program interface admits only structurally reaches its own arm:
+// a Map or a Set is refused where it goes to a plain object type (J-6y49hh0), and an object the helper
+// would stop on is kept out by programClassesConvert. Anything else is left as it was, and combine's
+// NotYet names it.
 func (l *lowering) addedUnion(operand *ast.Node, value ir.Expression) ir.Expression {
 	if value.Type() != ir.Union {
 		return value
@@ -2017,10 +2020,82 @@ func (l *lowering) addedUnion(operand *ast.Node, value ir.Expression) ir.Express
 		return ir.UnionToString{Value: value}
 	}
 	nullish := l.includesUndefined(observed) || l.includesNull(observed) || l.typeOfNull(operand) || observed.Flags()&checker.TypeFlagsVoid != 0
-	if dynamicObjectType(observed) || !nullish && l.addedObjectsConvert(observed, map[*checker.Type]bool{}) {
+	if (dynamicObjectType(observed) || !nullish && l.addedObjectsConvert(observed, map[*checker.Type]bool{})) && l.programClassesConvert() {
 		return l.toDefaultHint(value)
 	}
 	return value
+}
+
+// programClassesConvert is whether the helper answers for an object of every class the program writes, under
+// either hint, without the stops classToString makes. The helper dispatches on the object's own class, never
+// the operand's type, so a class seen through an interface that names neither method still reaches its arm
+// (Language's p02 and p17 on #e0cnaa9): a toString or valueOf accessor, an instance field of either name (a
+// constructor's parameter property included), such a method taking a parameter, or any computed member name
+// (Symbol.toPrimitive among them, which Node asks first) keeps combine's NotYet at compile time rather than
+// a stop at run time in words no ruling lists. An object literal with an accessor is lowered as a class of
+// its own, so a literal's toString or valueOf accessor, or one with a computed name, is judged the same way
+// (Lower's question, J-6y49hh0). It reads the program as written, every program file, since lowering hasn't
+// met every class yet when + is lowered; it's the program's, so it's kept once.
+func (l *lowering) programClassesConvert() bool {
+	if l.programClassesKnown {
+		return l.programClassesAnswer
+	}
+	l.programClassesKnown, l.programClassesAnswer = true, true
+	if l.program == nil {
+		l.programClassesAnswer = false
+		return false
+	}
+	converts := func(member *ast.Node) bool {
+		name := member.Name()
+		if name == nil || ast.IsPrivateIdentifier(name) || ast.HasStaticModifier(member) {
+			return true
+		}
+		if name.Kind == ast.KindComputedPropertyName {
+			return false
+		}
+		if text := name.Text(); text != "toString" && text != "valueOf" {
+			return true
+		}
+		switch member.Kind {
+		case ast.KindGetAccessor, ast.KindSetAccessor, ast.KindPropertyDeclaration:
+			return false
+		case ast.KindMethodDeclaration:
+			return len(member.Parameters()) == 0
+		}
+		return true
+	}
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindObjectLiteralExpression {
+			for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
+				if (property.Kind == ast.KindGetAccessor || property.Kind == ast.KindSetAccessor) && !converts(property) {
+					return true
+				}
+			}
+		}
+		if node.Kind == ast.KindClassDeclaration || node.Kind == ast.KindClassExpression {
+			for _, member := range node.Members() {
+				if !converts(member) {
+					return true
+				}
+				if member.Kind == ast.KindConstructor {
+					for _, parameter := range member.Parameters() {
+						if ast.IsParameterPropertyDeclaration(parameter, member) && ast.IsIdentifier(parameter.Name()) && (parameter.Name().Text() == "toString" || parameter.Name().Text() == "valueOf") {
+							return true
+						}
+					}
+				}
+			}
+		}
+		return node.ForEachChild(visit)
+	}
+	for _, file := range l.program.CompilerProgram().GetSourceFiles() {
+		if !file.IsDeclarationFile && file.AsNode().ForEachChild(visit) {
+			l.programClassesAnswer = false
+			break
+		}
+	}
+	return l.programClassesAnswer
 }
 
 // addedObjectsConvert is whether every object a value of type proven can be is one the ToPrimitive helper
