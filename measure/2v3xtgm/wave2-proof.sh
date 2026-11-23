@@ -8,8 +8,6 @@
 # sandboxed_products ./internal/oracle
 set -uo pipefail
 echo "box $(hostname) $(nproc) cpus, load $(cut -d' ' -f1-3 /proc/loadavg), tree $(git rev-parse HEAD)"
-# The rented image's TypeScript checkout reads as dubious ownership to the sealed job's git (J-ntryybp).
-git config --global --add safe.directory /opt/adamic-block/typescript-source
 T="$TMPDIR/wave2"
 mkdir -p "$T"
 VIEW=internal/lower/cast_dictionary_view.go
