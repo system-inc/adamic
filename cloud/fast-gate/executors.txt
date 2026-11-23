@@ -120,6 +120,37 @@ reads cmd/adamic-gate/parallelcensus stage1/cohere/typeaware/volume_test.go
 reads cmd/adamic-test262 internal/native_runtime/c/*.c
 # The same runner's reads: the headers.
 reads cmd/adamic-test262 internal/native_runtime/c/*.h
+# cmd/adamic-admission-delta's TestHeldStopListHoldsItsRows (held_list_test.go:140) reads the held-stop list and, for
+# each row, its program (checkHeldStopRow, :21), its test file (:49) and that package's families tables (holdsFamily,
+# :83, :95), and docs/rulings.md for a language hatch (:37). None is the unit's own file or in its closure, so an edit
+# to one alone moved no key, and a moved hatch line, a renamed test or a duplicated ruling landed green (Judge's day read
+# and Adamic Loom's must on #z0h4bpd). The rows reach these places at fb672853, each line wider than the rows and never
+# narrower; TestHeldStopRowsSitWhereTheKeyReads holds every row to them, so a row anywhere else reds until a line here
+# names its place.
+# TestHeldStopListHoldsItsRows — cmd/adamic-admission-delta/held_list_test.go:140
+reads cmd/adamic-admission-delta cloud/admission-corpus/held-stops.json
+# TestHeldStopListHoldsItsRows — cmd/adamic-admission-delta/held_list_test.go:37
+reads cmd/adamic-admission-delta docs/rulings.md
+# TestHeldStopListHoldsItsRows — cmd/adamic-admission-delta/held_list_test.go:21
+reads cmd/adamic-admission-delta internal/oracle/testdata/*.a
+# TestHeldStopListHoldsItsRows — cmd/adamic-admission-delta/held_list_test.go:21
+reads cmd/adamic-admission-delta internal/oracle/testdata/*.ts
+# TestHeldStopListHoldsItsRows — cmd/adamic-admission-delta/held_list_test.go:21
+reads cmd/adamic-admission-delta internal/lower/testdata/*.a
+# TestHeldStopListHoldsItsRows — cmd/adamic-admission-delta/held_list_test.go:21
+reads cmd/adamic-admission-delta internal/lower/testdata/*.ts
+# TestHeldStopListHoldsItsRows — cmd/adamic-admission-delta/held_list_test.go:21
+reads cmd/adamic-admission-delta stage3/interface-downcasts/*.ts
+# TestHeldStopListHoldsItsRows — cmd/adamic-admission-delta/held_list_test.go:21
+reads cmd/adamic-admission-delta stage3/fixtures/*.a
+# TestHeldStopListHoldsItsRows — cmd/adamic-admission-delta/held_list_test.go:21
+reads cmd/adamic-admission-delta stage1/cohere/markdownblocks/gaps/*.ts
+# TestHeldStopListHoldsItsRows — cmd/adamic-admission-delta/held_list_test.go:49, :83, :95
+reads cmd/adamic-admission-delta internal/oracle/*_test.go
+# TestHeldStopListHoldsItsRows — cmd/adamic-admission-delta/held_list_test.go:49
+reads cmd/adamic-admission-delta internal/lower/*_test.go
+# TestHeldStopListHoldsItsRows — cmd/adamic-admission-delta/held_list_test.go:49
+reads cmd/adamic-admission-delta stage1/cohere/markdownblocks/*_test.go
 # TestEveryFunctionIsInSingleAssignment via programs — internal/flow/flow_test.go:27
 reads internal/flow dedication/dedication.a
 # TestEveryFunctionIsInSingleAssignment via programs — internal/flow/flow_test.go:28
