@@ -250,8 +250,11 @@ func (f *scanCycleFinder) template(proven *checker.Type) bool {
 	if proven.Flags()&checker.TypeFlagsObject == 0 || proven.ObjectFlags()&checker.ObjectFlagsReference == 0 {
 		return false
 	}
-	for _, argument := range f.l.checker.GetTypeArguments(proven) {
+	for index, argument := range f.l.checker.GetTypeArguments(proven) {
 		if argument.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsTypeParameter) != 0 {
+			if argument.Flags()&checker.TypeFlagsAny != 0 && anyByDefault(proven, index) {
+				continue
+			}
 			return true
 		}
 	}
