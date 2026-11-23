@@ -46,3 +46,31 @@ func TestCastUnionMethodsAreNoSlot(t *testing.T) {
 		})
 	}
 }
+
+// A write to the method's name through such a cast stops on its own road (Compiler's probe on #b5w3ycg, J-39z6vc8):
+// the write target reads the method as a value, which unbound-method refuses, written through the cast or through
+// its saved value alike. So the name castUnionUnwritten lets past is no slot a write through the cast reaches. The
+// cast itself, with no write, lowers and agrees with Node (native and JavaScript in the probe, JavaScript here).
+func TestCastUnionMethodWriteStops(t *testing.T) {
+	t.Parallel()
+	const header = "type A = { readonly kind: 'a'; m(): number };\n" +
+		"type B = { readonly kind: 'b'; m(): string };\n" +
+		"function pick(n: number): A | B { return n > 0 ? { kind: 'a', m(): number { return 1; } } : { kind: 'b', m(): string { return 's'; } }; }\n" +
+		"const u = pick(1);\n"
+	for _, row := range []struct{ name, source, stop string }{
+		{"through the cast", header + "(u as A).m = (): number => 2;\nconsole.log(String((u as A).m()));\n", "5:1: Adamic 0.1 refuses a method read as a value"},
+		{"through the cast's value", header + "const a = u as A;\na.m = (): number => 2;\nconsole.log(String(a.m()));\n", "6:1: Adamic 0.1 refuses a method read as a value"},
+	} {
+		t.Run(row.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, row.source, ".ts")
+			if err == nil || !strings.Contains(err.Error(), row.stop) {
+				t.Fatalf("got %v, want the first stop %q", err, row.stop)
+			}
+		})
+	}
+	t.Run("the cast alone", func(t *testing.T) {
+		t.Parallel()
+		lowersAndAgreesWithNodeAs(t, header+"const a = u as A;\nconsole.log(String(a.kind));\n", ".ts")
+	})
+}
