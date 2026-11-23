@@ -178,6 +178,8 @@ var signatureReaders = map[string]string{
 	"libraryCallOnPrimitives":           "the callee's declaration, whether the library or the prelude declares it, to judge a call that can't reach program code",
 	"libraryCallResult":                 "the callee's declaration, whether the library declares it",
 	"objectAssignCall":                  "the callee's declaration, whether it is lib's ObjectConstructor.assign; each source is judged by its own type, never by a parameter's slot",
+	"optionalChainResult":               "the type the last call of a guarded optional chain returns, from its resolved signature, so the chain's own undefined isn't read as the call's (#cdpxjmb); no argument is judged against a parameter's slot",
+	"optionalChainVoid":                 "whether the last call of a guarded optional chain returns void, so the guard makes it a statement (#cdpxjmb); no argument is judged against a parameter's slot",
 	"walkPlaceholderSlots":              "a program parameter's symbol, to carry a placeholder into it; lib's any parameter is never a placeholder",
 	"predicateArguments":                "the callee's declaration and type predicate, to check the predicate's argument",
 	"predicateProducerProven":           "a producer call's result type, to read the claim its returned predicate makes at this call",
