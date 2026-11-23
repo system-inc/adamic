@@ -1189,6 +1189,19 @@ readsClosureFields = ["CFiles", "CXXFiles", "CgoFiles", "Dir", "EmbedFiles", "Fo
                       "IgnoredOtherFiles", "ImportPath", "Module", "SFiles", "Standard", "SysoFiles"]
 
 
+def readsNearestPackage(packageDirectories, path):
+    """The package directory a tree path is nearest, its own directory's or the nearest above it, as adamic-loom
+    planner/ownfiles.go gives a key its own files, or None outside every package. packageDirectories is a set of
+    tree-relative directories, read by directory and never by import path (readsGuardFindings)."""
+    directory = os.path.dirname(path) or "."
+    while True:
+        if directory in packageDirectories:
+            return directory
+        if directory in (".", ""):
+            return None
+        directory = os.path.dirname(directory) or "."
+
+
 def readsClosureCommand(patterns):
     return ["go", "list", "-deps", "-test", "-json=" + ",".join(readsClosureFields)] + list(patterns)
 
@@ -1288,19 +1301,20 @@ def readsGuardFindings(tree, tools, changed=None, pathSetChanged=None):
             for line, glob in readsComments(handle.read()):
                 if census or path in changedSet or any(fnmatch.fnmatchcase(gone, glob) or gone.startswith(glob.rstrip("/") + "/") for gone in deleted):
                     comments.append((path, line, glob))
-    directories = readsPackageDirectories(tree) if comments else {}
-    packageDirectories = {importPath: directory for directory, importPath in directories.items()}
+    # By directory alone, never import path: goPackages files a dependency compiled for another package's test under
+    # that package's path (ForTest), so internal/fresh's directory can map to internal/ir, and an import path read back
+    # names the wrong directory and calls the wrong package's files its own.
+    packageDirectorySet = set(readsPackageDirectories(tree)) if comments else set()
     closures = {}
     for path, line, glob in comments:
-        owner = packageOwner(directories, {}, path)
-        if owner is None:
+        package = readsNearestPackage(packageDirectorySet, path)
+        if package is None:
             continue  # in no package, so in no unit's key
-        package = packageDirectories[owner]
         if readsAllowed(allowed, package, glob):
             continue
         targets = readsTargets(files, tracked, glob)
         missing = [target for target in targets if target not in tracked]
-        uncovered = [target for target in targets if target in tracked and packageOwner(directories, {}, target) != owner
+        uncovered = [target for target in targets if target in tracked and readsNearestPackage(packageDirectorySet, target) != package
                      and not readsLineHolds(tree, readers, package, target)]
         if uncovered and not missing:
             if package not in closures:

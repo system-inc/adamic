@@ -1070,6 +1070,18 @@ class ReadsGuard(unittest.TestCase):
         # One go list of a's closure, its declared compiler b beside it.
         self.assertEqual([command[-2:] for command in self.listed], [["./a", "./b"]])
 
+    def test_a_package_rebuilt_for_anothers_test_never_makes_its_files_the_others_own(self):
+        # go list -test lists b rebuilt for a's test with ForTest a, which goPackages files under a's import path, so b's
+        # directory maps to a there. Read by import path, b's lonely.txt would be a's own file and the comment covered.
+        def withVariant(tree):
+            listed = self.graph(tree)
+            listed.stdout += json.dumps({"ImportPath": run.module + "/b [" + run.module + "/a.test]", "ForTest": run.module + "/a",
+                                         "Dir": os.path.join(self.tree, "b")}) + "\n"
+            return listed
+        self.write({"a/a_test.go": "package a\n\n// Reads: b/lonely.txt\n"})
+        with mock.patch.object(run, "packageGraph", side_effect=withVariant):
+            self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["a/a_test.go"], []), [self.uncovered % (3, "b/lonely.txt")])
+
     def test_a_comment_covered_by_own_files_a_line_a_paths_line_or_the_closure_passes(self):
         for glob in ("a/testdata/own.txt", "b/data.txt", "b/names/*", "b/b.go"):
             with self.subTest(glob=glob):
