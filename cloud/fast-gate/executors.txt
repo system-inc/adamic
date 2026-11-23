@@ -12,6 +12,9 @@ mode enforce
 # for a // Reads: comment naming a path its package's key doesn't hold. A "mode guard-reads" line here turns it on for
 # every change; run.py --reads-census lists its findings over a whole tree either way. Each allow line exempts the one
 # package's line or comment naming the one glob, and says why; an allow without its why is itself red.
+# On since run.py --reads-census read 0 findings at adamic main fb672853 under these tools (J-aefqv4e, Adamic Loom's
+# word on #r2a9vd4).
+mode guard-reads
 # allow: stage1/cohere/css *.[lL][eE][sS][sS]: matches nothing on purpose: askedCases (testdata/cohere_side_test.go:119) walks the whole repository for .less sources, so the first one added must move css's key
 # allow: stage1/cohere/css *.[sS][cC][sS][sS]: matches nothing on purpose: askedCases (testdata/cohere_side_test.go:119) walks the whole repository for .scss sources, so the first one added must move css's key
 # allow: stage1/cohere/markdowninline *.[mM][aA][rR][kK][dD][oO][wW][nN]: matches nothing on purpose: TestMarkdownInline (port_test.go:159) walks the whole repository for .markdown sources, so the first one added must move its key
