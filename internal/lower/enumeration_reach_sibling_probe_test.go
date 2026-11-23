@@ -4,7 +4,7 @@ import "testing"
 
 // Temporary probe (#1atvfp5, Language's sibling downcast across two modules): never landed.
 func TestEnumerationReachSiblingProbe(t *testing.T) {
-	const held = "export interface Shared { b: number }\nexport const shared: Shared = { b: 2, get a(): number { return 1; } };\n"
+	const held = "export interface Shared { b: number }\nconst literal = { b: 2, get a(): number { return 1; } };\nexport const shared: Shared = literal;\n"
 	for _, row := range []struct{ name, main string }{
 		{"values", "import { type Shared, shared } from './held.ts';\ninterface Wanted { b: number; c: number }\nconst wanted = shared as Wanted;\nconsole.log(Object.values(wanted).join(','));\n"},
 		{"entries", "import { type Shared, shared } from './held.ts';\ninterface Wanted { b: number; c: number }\nconst wanted = shared as Wanted;\nfor (const [key, value] of Object.entries(wanted)) console.log(key + '=' + String(value));\n"},
