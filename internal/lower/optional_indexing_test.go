@@ -18,7 +18,8 @@ func TestOptionalIndexingKeepsReadonlyIndexSignaturesNotYet(t *testing.T) {
 func TestOptionalIndexingKeepsUnsupportedStorageNotYet(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, reason string }{
-		{"typed ordinary property continuation", "function pick(values: readonly [Uint8Array] | undefined): number | undefined { return values?.[0].length; }\n", "an optional chain longer than one step"},
+		// Read on under the chain's one guard (#cdpxjmb, optional_chain.go), the tuple's element a plain read.
+		{"typed ordinary property continuation", "function pick(values: readonly [Uint8Array] | undefined): number | undefined { return values?.[0].length; }\n", ""},
 		{"string numeric key", "function pick(values: readonly number[] | undefined): number | undefined { return values?.[\"0\"]; }\n", "an optional index that isn't a number"},
 		{"sparse literal", "const values: (number | undefined)[] = [, 7];\nconsole.log(`${values?.[0]}`);\n", "in an array literal"},
 		{"open record", "function pick(record: Record<string, number> | undefined, key: string): number | undefined { return record?.[key]; }\n", "?.[] on a value"},

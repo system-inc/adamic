@@ -1,0 +1,23 @@
+// m?.size on a Map or a Set that may be missing is number | undefined (#8zcm7g4), each printed as the
+// value itself so 0 and undefined stay apart: undefined, empty and filled, a null Set, tsc's builder.ts
+// !state.emitDiagnosticsPerFile?.size on an optional field, and a Set's add read on, under the chain's
+// guard and under a ?. of its own.
+interface State {
+	emitDiagnosticsPerFile?: Map<string, number> | undefined;
+}
+function sizeOf(values: Map<string, number> | undefined): string {
+	return String(values?.size);
+}
+function setSize(values: Set<string> | null): string {
+	return String(values?.size);
+}
+function pending(state: State): string {
+	return `${!state.emitDiagnosticsPerFile?.size}`;
+}
+function grown(values: Set<string> | undefined): string {
+	return `${String(values?.add('link').size)} ${String(values?.add('more')?.size)}`;
+}
+console.log(`${sizeOf(undefined)} ${sizeOf(new Map<string, number>())} ${sizeOf(new Map<string, number>([['a', 1]]))}`);
+console.log(`${setSize(null)} ${setSize(new Set<string>())}`);
+console.log(`${pending({})} ${pending({ emitDiagnosticsPerFile: new Map<string, number>() })} ${pending({ emitDiagnosticsPerFile: new Map<string, number>([['f', 1]]) })}`);
+console.log(`${grown(undefined)} ${grown(new Set<string>())}`);

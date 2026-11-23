@@ -93,5 +93,5 @@ var representationProbes = []representationProbe{
 	{path: "gaps/12_conditional_empty_array.ts", stdout: "0\n"},
 	{path: "gaps/15_string_or.ts", stdout: "fallback\nx\n"},
 	{path: "gaps/16_array_shift.ts", stdout: "1\n2\n", refusedExact: ":2:16: Adamic 0.1 refuses inherited library member shift read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)"},
-	{path: "gaps/17_long_optional_chain.ts", stdout: "1\n", notYet: "an optional chain longer than one step"},
+	{path: "gaps/17_long_optional_chain.ts", stdout: "1\n"},
 }

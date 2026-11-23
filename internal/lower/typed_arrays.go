@@ -139,7 +139,8 @@ func (l *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, bool, er
 			// A Buffer's other members are its own (library_node_buffer.go).
 			break
 		}
-		if access.QuestionDotToken == nil && node.Flags&ast.NodeFlagsOptionalChain != 0 {
+		// A guarded optional chain's steps read as plain ones (optional_chain.go).
+		if access.QuestionDotToken == nil && l.inOptionalChain(node) {
 			return nil, true, l.notYet(node, "an optional chain longer than one step")
 		}
 		member := access.Name().Text()
@@ -151,22 +152,22 @@ func (l *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, bool, er
 			return nil, true, err
 		}
 		if member == "byteLength" {
-			if access.QuestionDotToken != nil {
+			if l.questionDot(node) {
 				return nil, true, l.notYet(node, "optional typed array byteLength access")
 			}
 			return ir.Binary{Operator: ir.Multiply, Left: ir.Length{Array: array}, Right: ir.NumberConstant{Value: 2}}, true, nil
 		}
-		return ir.Length{Array: array, Optional: access.QuestionDotToken != nil}, true, nil
+		return ir.Length{Array: array, Optional: l.questionDot(node)}, true, nil
 	case ast.KindElementAccessExpression:
 		access := node.AsElementAccessExpression()
 		if l.typedArrayStorage(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))) == 0 {
 			break
 		}
-		if access.QuestionDotToken == nil && node.Flags&ast.NodeFlagsOptionalChain != 0 {
+		if access.QuestionDotToken == nil && l.inOptionalChain(node) {
 			value, err := l.optionalIndexContinuation(node)
 			return value, true, err
 		}
-		if access.QuestionDotToken != nil {
+		if l.questionDot(node) {
 			array, err := l.expression(access.Expression)
 			if err != nil {
 				return nil, true, err

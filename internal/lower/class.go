@@ -339,7 +339,8 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 		return l.call(node)
 	}
 	receiver := callee.AsPropertyAccessExpression().Expression
-	receiverType := l.concrete(l.checker.GetTypeAtLocation(receiver))
+	// In a guarded optional chain the receiver is the object that's there (optional_chain.go).
+	receiverType := l.concrete(l.optionalChainOperandType(receiver))
 	method := l.checker.GetSymbolAtLocation(callee)
 	if isClassInstance(receiverType) {
 		if actual := l.checker.GetPropertyOfType(receiverType, callee.Name().Text()); actual != nil {
@@ -359,7 +360,7 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 	if len(l.definedMembers(receiverType)) > 1 {
 		return nil, l.notYet(receiver, "a method call through a union of class types; narrow with instanceof first")
 	}
-	if callee.AsPropertyAccessExpression().QuestionDotToken != nil {
+	if l.questionDot(callee) {
 		// object?.method(...), the object perhaps undefined: the class is instantiated for what the
 		// object is when it's there, and the call is made through the object's methods, which stops
 		// at undefined as JavaScript's chain does (ir.Property's Method).

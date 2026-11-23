@@ -214,6 +214,14 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 			}
 			return optional.statements(), nil
 		}
+		// An optional chain longer than one step, its value dropped: the guard's own (optional_chain.go).
+		if l.optionalChainEntry(expression) {
+			value, err := l.optionalChain(expression)
+			if err != nil {
+				return nil, err
+			}
+			return []ir.Statement{ir.Evaluate{Value: value}}, nil
+		}
 		if err := l.optionalCall(expression); err != nil {
 			return nil, err
 		}

@@ -53,6 +53,8 @@ Stage 0 knows it: `internal/lower/lower_test.go` pins the same message for a met
 
 **Around it:** `renameReturns` (construct.ts) reads the block's state first and asks it only when there is one.
 
+**Closed** by #cdpxjmb: the chain's steps after its receiver run under one guard, so the program lowers and prints `7 undefined` natively, as on Node. The workaround in `renameReturns` can go.
+
 ## The cycle rule's cost
 
 Not a gap: stage 0 is right by its rule (docs/memory.md, "Cycles"), and what the rule costs this port's shape is worth writing down, since every IR that adopts these passes will meet it.

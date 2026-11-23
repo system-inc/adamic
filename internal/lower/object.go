@@ -481,8 +481,12 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	if _, iterator := l.libraryIteratorElement(access.Expression); iterator && name != "next" {
 		return nil, l.notYet(node, "a collection iterator property other than next")
 	}
-	if access.QuestionDotToken == nil && node.Flags&ast.NodeFlagsOptionalChain != 0 {
-		// The rest of a chain after a ?., which short-circuits with it.
+	// The ?. this read tests its object with, unless a guard around its chain has tested the chain's
+	// receiver already (optional_chain.go).
+	questionDot := l.questionDot(node)
+	if access.QuestionDotToken == nil && l.inOptionalChain(node) {
+		// The rest of a chain after a ?., which short-circuits with it, where optionalChain didn't take the
+		// chain.
 		return nil, l.notYet(node, "an optional chain longer than one step")
 	}
 	if value, known := l.libraryMathNumberProperty(node); known {
@@ -551,14 +555,14 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		l.hostMemberValueRead(node, object)
 	}
 	if object.Type() == ir.Closure && name == "length" && l.boundSource(access.Expression, map[*ast.Symbol]bool{}) {
-		return ir.FunctionLength{Function: object, Optional: access.QuestionDotToken != nil}, nil
+		return ir.FunctionLength{Function: object, Optional: questionDot}, nil
 	}
 	if object.Type() == ir.Object || object.Type() == ir.Array {
 		if value, handled, err := l.factoryFieldRead(node, object, name); handled {
 			return value, err
 		}
 	}
-	if object.Type() == ir.Union && access.QuestionDotToken != nil && l.nullableObjectUnion(l.checker.GetTypeAtLocation(access.Expression)) {
+	if object.Type() == ir.Union && questionDot && l.nullableObjectUnion(l.checker.GetTypeAtLocation(access.Expression)) {
 		object = l.optionalNullableObject(object)
 	}
 	if object.Type() == ir.Union {
@@ -582,7 +586,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		if of != ir.String && of != ir.Object {
 			return nil, l.notYet(node, "a named-group key with an Object-prototype type")
 		}
-		return ir.RegExpGroup{Object: object, Name: name, Of: of, Optional: access.QuestionDotToken != nil}, nil
+		return ir.RegExpGroup{Object: object, Name: name, Of: of, Optional: questionDot}, nil
 	}
 	if object.Type() == ir.Object && name == "done" {
 		proven := l.checker.GetTypeAtLocation(access.Expression)
@@ -600,7 +604,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		}
 	}
 	object = l.privateStaticReceiver(node.Name(), object, false)
-	if access.QuestionDotToken != nil && (object.Type() == ir.Array || object.Type() == ir.String) && name == "length" {
+	if questionDot && (object.Type() == ir.Array || object.Type() == ir.String) && name == "length" {
 		// words?.length and text?.length: undefined where the array or string is, a number | undefined.
 		if object.Type() == ir.Array {
 			return ir.Length{Array: object, Optional: true}, nil
@@ -630,13 +634,17 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 				stored = ir.Number
 			}
 		}
-		result := ir.Expression(ir.RegExpProperty{Array: object, Name: name, Of: stored, Optional: access.QuestionDotToken != nil})
+		result := ir.Expression(ir.RegExpProperty{Array: object, Name: name, Of: stored, Optional: questionDot})
 		if stored == ir.MaybeNumber && of == ir.Number {
 			result = ir.Unwrap{Value: result}
 		}
 		return result, nil
 	}
-	if access.QuestionDotToken != nil && object.Type() != ir.Object {
+	if questionDot && object.Type() == ir.Map && name == "size" {
+		// m?.size on a Map or a Set, undefined where it is (optionalSize).
+		return l.optionalSize(object), nil
+	}
+	if questionDot && object.Type() != ir.Object {
 		return nil, l.notYet(node, "optional chaining to ."+name+" on a "+typeName(object.Type()))
 	}
 	switch {
@@ -656,7 +664,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			if err != nil {
 				return nil, err
 			}
-			property := ir.Property{Object: object, Name: name, Of: stored, Optional: access.QuestionDotToken != nil, Class: l.classOf(node), Unset: true}
+			property := ir.Property{Object: object, Name: name, Of: stored, Optional: questionDot, Class: l.classOf(node), Unset: true}
 			property.Absent = l.symbol(node).Flags&ast.SymbolFlagsOptional != 0
 			if l.placeholderOrigin(node) == "" {
 				present, _ := l.representation(l.checker.GetNonNullableType(l.checker.GetTypeOfSymbol(l.symbol(node))))
@@ -674,7 +682,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
 			if declared, _ := l.representation(l.checker.GetTypeOfSymbol(field)); declared == ir.Weak {
 				// The field keeps a handle, whatever the checker narrowed the read to.
-				return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: ir.Weak, Optional: access.QuestionDotToken != nil}), nil
+				return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: ir.Weak, Optional: questionDot}), nil
 			}
 		}
 		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil && (accessorSymbol(field) || (l.accessorNames[node.Name().Text()] && !isClassInstance(l.checker.GetTypeAtLocation(access.Expression)) && ast.SkipParentheses(access.Expression).Kind != ast.KindThisKeyword)) {
@@ -699,7 +707,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		if err != nil {
 			return nil, err
 		}
-		optional := access.QuestionDotToken != nil
+		optional := questionDot
 		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
 			if l.nullableObjectUnion(l.checker.GetTypeOfSymbol(field)) && (of == ir.Object || of == ir.Union) {
 				read := l.readObjectField(node, ir.Property{Object: object, Name: name, Of: ir.Union, Optional: optional, Class: l.classOf(node)})
@@ -983,18 +991,20 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if l.isLibraryGlobal(receiver, "String") && (name == "fromCharCode" || name == "fromCodePoint") {
 		return l.stringFromCodes(node, name == "fromCodePoint")
 	}
-	if receiverType, _ := l.representation(l.checker.GetTypeAtLocation(receiver)); receiverType == ir.Number && name == "toString" && len(node.AsCallExpression().Arguments.Nodes) == 0 {
+	// A receiver in a guarded optional chain is read where it's there (optional_chain.go), so a number's
+	// method is a number's, not a number | undefined's.
+	if receiverType, _ := l.representation(l.optionalChainOperandType(receiver)); receiverType == ir.Number && name == "toString" && len(node.AsCallExpression().Arguments.Nodes) == 0 {
 		value, err := l.expression(receiver)
 		if err != nil {
 			return nil, true, err
 		}
 		return ir.NumberToString{Value: value}, true, nil
 	}
-	if receiverType, _ := l.representation(l.checker.GetTypeAtLocation(receiver)); receiverType == ir.Number && (name == "toExponential" || name == "toPrecision" || name == "toString") {
+	if receiverType, _ := l.representation(l.optionalChainOperandType(receiver)); receiverType == ir.Number && (name == "toExponential" || name == "toPrecision" || name == "toString") {
 		return l.numberFormat(node, receiver, name)
 	}
 	isMath := l.isLibraryGlobal(receiver, "Math")
-	receiverType, _ := l.representation(l.checker.GetTypeAtLocation(receiver))
+	receiverType, _ := l.representation(l.optionalChainOperandType(receiver))
 	isToFixed := name == "toFixed" && receiverType == ir.Number
 	if receiverType == ir.Array && name == "pop" && len(node.AsCallExpression().Arguments.Nodes) == 0 {
 		element, err := l.elementType(receiver)
@@ -2226,8 +2236,9 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	if l.inheritedLibraryMember(node) && !l.iteratorResultField(access.Expression, l.memberSymbol(node)) && !l.regexRuntimeProperty(access.Expression, index.Text()) {
 		return nil, l.prototypeRead(node, index.Text())
 	}
-	optional := access.QuestionDotToken != nil
-	if !optional && node.Flags&ast.NodeFlagsOptionalChain != 0 {
+	// A guarded chain's root indexes as a plain read: its guard tested the receiver (optional_chain.go).
+	optional := l.questionDot(node)
+	if !optional && l.inOptionalChain(node) {
 		return l.optionalIndexContinuation(node)
 	}
 	object, err := l.expression(access.Expression)
@@ -2286,7 +2297,8 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 			return value, err
 		}
 	}
-	if object.Type() == ir.Object && !optional && !checker.IsTupleType(l.checker.GetTypeAtLocation(access.Expression)) {
+	// A guarded optional chain's receiver is the tuple or object that's there (optional_chain.go).
+	if object.Type() == ir.Object && !optional && !checker.IsTupleType(l.optionalChainOperandType(access.Expression)) {
 		if value, handled, err := l.viewKeyedRead(node, object); handled {
 			return value, err
 		}
@@ -2296,12 +2308,12 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	if optional {
 		return l.optionalTupleElement(node, object, index)
 	}
-	if object.Type() != ir.Object || index.Kind != ast.KindNumericLiteral || !checker.IsTupleType(l.checker.GetTypeAtLocation(access.Expression)) {
+	if object.Type() != ir.Object || index.Kind != ast.KindNumericLiteral || !checker.IsTupleType(l.optionalChainOperandType(access.Expression)) {
 		return nil, l.notYet(node, describe(node))
 	}
 	of, err := l.typeOf(node)
 	stored := of
-	if elements := l.typeArguments(l.checker.GetTypeAtLocation(access.Expression)); err == nil {
+	if elements := l.typeArguments(l.optionalChainOperandType(access.Expression)); err == nil {
 		if position, convertErr := strconv.Atoi(index.Text()); convertErr == nil && position >= 0 && position < len(elements) {
 			if declared, known := l.representation(elements[position]); known && (declared == ir.Weak || declared == ir.Union) {
 				stored = declared
@@ -2315,7 +2327,7 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, "a tuple element of type "+typeName(stored))
 	}
 	property := ir.Property{Object: object, Name: index.Text(), Of: stored}
-	receiver := l.checker.GetTypeAtLocation(access.Expression)
+	receiver := l.optionalChainOperandType(access.Expression)
 	if position, err := strconv.Atoi(index.Text()); err == nil {
 		elements := l.typeArguments(receiver)
 		if position >= 0 && position < len(elements) {
