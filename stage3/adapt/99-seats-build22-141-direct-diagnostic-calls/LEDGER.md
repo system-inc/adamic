@@ -1,0 +1,1 @@
+- **JavaScript-changing, family 141 (#bbssdcy, Adamic's Nov 22 Build ruling):** 99-seats-build22-141-direct-diagnostic-calls replaces the local diagnostic tuple and spread in `getErrorSummaryText` (`watch.ts:294:55`) with five branch-local `createCompilerDiagnostic` calls, preserving message selection, argument order and the formatting tail.
