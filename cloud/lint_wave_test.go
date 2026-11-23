@@ -19,7 +19,9 @@ func TestLintWaveCheck(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := toolchain.Command("python3", "-B", "lint-wave-check-test.py")
+	// -B writes no bytecode, and -X pycache_prefix reads it only under an empty directory of the test's own, never a
+	// __pycache__ in the tree, which no key holds; -s leaves the user site, and a usercustomize there, off sys.path.
+	command := toolchain.Command("python3", "-B", "-s", "-X", "pycache_prefix="+t.TempDir(), "lint-wave-check-test.py")
 	if command.Err == nil {
 		command.Env = toolchain.GitEnv()
 	}
