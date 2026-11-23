@@ -21,14 +21,14 @@ func overloadKindExtractIntersectionSource(t *testing.T) string {
 	return string(source)
 }
 
-// In .ts the overload stops at its declaration as its own gap, not as the covariance refusal, in Adamic's
-// words for it (#0kkpw2e set 2, ruling (c)).
+// In .ts the overload stops as its own gap, not as the covariance refusal, in Adamic's words for it
+// (#0kkpw2e set 2, ruling (c)), at the first call that resolves to it, line 110 (#4czdn4q).
 func TestOverloadKindExtractIntersectionIsNotYet(t *testing.T) {
 	t.Parallel()
 	_, err := lowerSourceAs(t, overloadKindExtractIntersectionSource(t), ".ts")
 	var notYet *NotYet
-	if !errors.As(err, &notYet) || notYet.What != "an overload result Extract over intersection members the implementation's result doesn't serve" || !strings.HasSuffix(notYet.Where, "main.ts:64:1") {
-		t.Fatalf("want the overload at main.ts:64:1 not yet lowered as an Extract over intersection members, got %v", err)
+	if !errors.As(err, &notYet) || notYet.What != "an overload result Extract over intersection members the implementation's result doesn't serve" || !strings.HasSuffix(notYet.Where, "main.ts:110:12") {
+		t.Fatalf("want the call at main.ts:110:12 to the overload not yet lowered as an Extract over intersection members, got %v", err)
 	}
 }
 

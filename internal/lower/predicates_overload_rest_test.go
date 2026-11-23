@@ -160,8 +160,8 @@ func TestOrOverloadNextStop(t *testing.T) {
 	source := overloadRestNodes + overloadRestHonestB + overloadRestOr + overloadRestCalls
 	_, err := lowerSourceAs(t, source, ".ts")
 	var refused *Refused
-	if !errors.As(err, &refused) || !strings.HasSuffix(err.Error(), "main.ts:15:20: Adamic 0.1 refuses overload 1 of or type parameter P cannot satisfy implementation parameter T; make implementation constraints accept every type admitted by the overload") {
-		t.Fatalf("got %v, want a refusal ending %q", err, "main.ts:15:20: Adamic 0.1 refuses overload 1 of or type parameter P cannot satisfy implementation parameter T; make implementation constraints accept every type admitted by the overload")
+	if !errors.As(err, &refused) || !strings.HasSuffix(err.Error(), "main.ts:33:32: Adamic 0.1 refuses overload 1 of or type parameter P cannot satisfy implementation parameter T; make implementation constraints accept every type admitted by the overload") {
+		t.Fatalf("got %v, want a refusal ending %q", err, "main.ts:33:32: Adamic 0.1 refuses overload 1 of or type parameter P cannot satisfy implementation parameter T; make implementation constraints accept every type admitted by the overload")
 	}
 }
 
@@ -197,8 +197,8 @@ console.log(two === undefined ? "none" : String(two.kind));
 `
 	_, err := lowerSourceAs(t, source, ".ts")
 	var refused *Refused
-	if !errors.As(err, &refused) || !strings.HasSuffix(err.Error(), "main.ts:15:1: Adamic 0.1 refuses overload 1 of or result (p: P) => p is R1 | R2 cannot be served by implementation result (p: P) => boolean; make the implementation result covariant with every overload result") {
-		t.Fatalf("got %v, want a refusal ending %q", err, "main.ts:15:1: Adamic 0.1 refuses overload 1 of or result (p: P) => p is R1 | R2 cannot be served by implementation result (p: P) => boolean; make the implementation result covariant with every overload result")
+	if !errors.As(err, &refused) || !strings.HasSuffix(err.Error(), "main.ts:29:32: Adamic 0.1 refuses overload 1 of or result (p: P) => p is R1 | R2 cannot be served by implementation result (p: P) => boolean; make the implementation result covariant with every overload result") {
+		t.Fatalf("got %v, want a refusal ending %q", err, "main.ts:29:32: Adamic 0.1 refuses overload 1 of or result (p: P) => p is R1 | R2 cannot be served by implementation result (p: P) => boolean; make the implementation result covariant with every overload result")
 	}
 }
 
@@ -220,12 +220,14 @@ if (found !== undefined && found.kind !== 1) { console.log(found.b); }
 		t.Fatalf("Node: exit %d, stdout %q; want 0 and the lie read as %q", node.code, node.stdout, "undefined\n")
 	}
 	// Until the census's result check serves a checked predicate result (TestOrByPositionNextStop), the lie
-	// can't reach a run: it stops there, never lowered unchecked. When that lands, this becomes the stop at
-	// the checked call, through overloadRestStops, natively and on JavaScript with the same words.
+	// can't reach a run: it stops there, never lowered unchecked. The stop is said at the call to or that
+	// resolves to the unserved overload (#4czdn4q), and it's still a stop before any run: lowering refuses the
+	// program, so nothing is built to run. When the census's check lands, this becomes the stop at the
+	// checked call, through overloadRestStops, natively and on JavaScript with the same words.
 	_, err := lowerSourceAs(t, source, ".ts")
 	var refused *Refused
-	if !errors.As(err, &refused) || !strings.HasSuffix(err.Error(), "main.ts:15:1: Adamic 0.1 refuses overload 1 of or result (p: P) => p is R1 | R2 cannot be served by implementation result (p: P) => boolean; make the implementation result covariant with every overload result") {
-		t.Fatalf("got %v, want a refusal ending %q", err, "main.ts:15:1: Adamic 0.1 refuses overload 1 of or result (p: P) => p is R1 | R2 cannot be served by implementation result (p: P) => boolean; make the implementation result covariant with every overload result")
+	if !errors.As(err, &refused) || !strings.HasSuffix(err.Error(), "main.ts:28:34: Adamic 0.1 refuses overload 1 of or result (p: P) => p is R1 | R2 cannot be served by implementation result (p: P) => boolean; make the implementation result covariant with every overload result") {
+		t.Fatalf("got %v, want a refusal ending %q", err, "main.ts:28:34: Adamic 0.1 refuses overload 1 of or result (p: P) => p is R1 | R2 cannot be served by implementation result (p: P) => boolean; make the implementation result covariant with every overload result")
 	}
 }
 
