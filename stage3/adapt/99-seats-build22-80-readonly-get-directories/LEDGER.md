@@ -1,0 +1,1 @@
+- **Type-only, family 80 (#bbssdcy, Compiler under the split):** 99-seats-build22-80-readonly-get-directories makes the internal DirectoryStructureHost.getDirectories and readDirectory callable properties readonly for the two method-to-field relations in createWatchProgram. Adamic explicitly allowed the separate test-runner writes to readDirectory on Nov 23.
