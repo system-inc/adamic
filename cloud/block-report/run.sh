@@ -65,9 +65,12 @@ typescriptCommit=$(sed -n 's/^const TypeScriptGoCommit = "\([0-9a-f]\{40\}\)"$/\
 echo "block-report: the tree at $sha, as laid: $([ -e .git ] && echo "a checkout" || echo "an archive with no .git")"
 
 # cohere/TypeScript: go.mod replaces github.com/microsoft/TypeScript/tsc with ./cohere/TypeScript/tsc and go.work uses it,
-# so an empty directory fails every go command at module load. Lay it from root's mirror, read only, or stop here.
-if [ -f cohere/TypeScript/tsc/go.mod ]; then
-	echo "block-report: cohere/TypeScript is laid already"
+# so an empty directory fails every go command at module load. Lay it from root's mirror, read only, or stop here. Its
+# path is the one cohere's own .gitmodules names, read by the preamble's cohere_typescript_path, so it follows cohere when
+# cohere moves it.
+cohereTypeScript="cohere/$(cohere_typescript_path)" || { echo "block-report: cohere's TypeScript submodule has no path to read from cohere/.gitmodules, in its words above, so nothing ran"; exit 64; }
+if [ -f "$cohereTypeScript/tsc/go.mod" ]; then
+	echo "block-report: $cohereTypeScript is laid already"
 else
 	mirror=
 	for name in TypeScript typescript; do
@@ -78,16 +81,16 @@ else
 	done
 	[ -n "$mirror" ] || {
 		echo "block-report: no mirror under $mirrors holds TypeScript $typescriptCommit (or the job can't read it): $(ls -l "$mirrors" 2>&1 | tr '\n' ' ')"
-		echo "block-report: cohere/TypeScript is empty, so no go command can load the module; nothing ran"
+		echo "block-report: $cohereTypeScript is empty, so no go command can load the module; nothing ran"
 		exit 64
 	}
-	[ -d cohere/TypeScript ] && [ -z "$(ls -A cohere/TypeScript)" ] || { echo "block-report: cohere/TypeScript isn't an empty directory, so nothing ran"; exit 64; }
-	git --git-dir="$mirror" archive --format=tar "$typescriptCommit" | tar -x -C cohere/TypeScript || {
-		echo "block-report: laying cohere/TypeScript from $mirror failed, so nothing ran"
+	[ -d "$cohereTypeScript" ] && [ -z "$(ls -A "$cohereTypeScript")" ] || { echo "block-report: $cohereTypeScript isn't an empty directory, so nothing ran"; exit 64; }
+	git --git-dir="$mirror" archive --format=tar "$typescriptCommit" | tar -x -C "$cohereTypeScript" || {
+		echo "block-report: laying $cohereTypeScript from $mirror failed, so nothing ran"
 		exit 64
 	}
-	[ -f cohere/TypeScript/tsc/go.mod ] || { echo "block-report: cohere/TypeScript/tsc/go.mod isn't there after the lay, so nothing ran"; exit 64; }
-	echo "block-report: cohere/TypeScript laid by the job at $typescriptCommit from $mirror"
+	[ -f "$cohereTypeScript/tsc/go.mod" ] || { echo "block-report: $cohereTypeScript/tsc/go.mod isn't there after the lay, so nothing ran"; exit 64; }
+	echo "block-report: $cohereTypeScript laid by the job at $typescriptCommit from $mirror"
 fi
 
 # The image's TypeScript source is root's, and internal/buildcache.PinnedGit reads it with no configuration that could

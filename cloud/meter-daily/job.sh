@@ -51,11 +51,20 @@ done
 [ -z "$missing" ] || { echo "meter-job: missing from the toolchain:$missing"; exit 65; }
 node --version | grep -q '^v24\.' || { echo "meter-job: node is $(node --version), the meter needs Node 24"; exit 65; }
 
-# lay <repository> <submodule> <store name>: the submodule at its gitlink, from a store on this machine. The meter's
-# per-ref worktrees clone cohere from this checkout, so both have to be here whole.
+# lay <repository> <submodule path> <store name>: the submodule at its gitlink, from a store on this machine. The meter's
+# per-ref worktrees clone cohere from this checkout, so both have to be here whole. Its url is set under the name the
+# repository's .gitmodules gives that path, which git reads it by, since a name and its path can differ.
 lay() {
-	local pin store="" candidate
+	local pin store="" candidate key value name=""
 	pin=$(git -C "$1" rev-parse "HEAD:$2") || return 1
+	while IFS=$'\n' read -r -d '' key value; do
+		if [ "$value" = "$2" ]; then
+			[ -z "$name" ] || { echo "meter-job: $1/.gitmodules names more than one submodule at $2"; return 1; }
+			name=${key#submodule.}
+			name=${name%.path}
+		fi
+	done < <(git -C "$1" config --no-includes --file .gitmodules -z --get-regexp '^submodule\..*\.path$')
+	[ -n "$name" ] || { echo "meter-job: $1/.gitmodules names no submodule at $2"; return 1; }
 	for candidate in "$HOME/loom-check/modules/$3.git" "$HOME/scratch/system_loom/modules/$3.git"; do
 		if git --git-dir="$candidate" cat-file -e "$pin^{commit}" 2> /dev/null; then
 			store=$candidate
@@ -63,12 +72,16 @@ lay() {
 		fi
 	done
 	[ -n "$store" ] || { echo "meter-job: no store on this machine holds $2 at $pin"; return 1; }
-	git -C "$1" config "submodule.$2.url" "$store" || return 1
+	git -C "$1" config "submodule.$name.url" "$store" || return 1
 	git -C "$1" -c protocol.file.allow=always submodule update -q --init "$2" || return 1
 	[ "$(git -C "$1/$2" rev-parse HEAD)" = "$pin" ] || { echo "meter-job: $2 isn't at $pin"; return 1; }
 	echo "meter-job: $2 at $pin from $store"
 }
-lay "$PWD" cohere cohere && lay "$PWD/cohere" TypeScript TypeScript || { echo "meter-job: a submodule didn't lay, so nothing ran"; exit 66; }
+# cohere's TypeScript submodule is wherever cohere's own .gitmodules puts it, which can be read once cohere is laid.
+# shellcheck disable=SC1091
+. cloud/cohere-typescript-path.sh || exit 66
+lay "$PWD" cohere cohere && typescriptPath=$(cohere_typescript_path) && lay "$PWD/cohere" "$typescriptPath" TypeScript ||
+	{ echo "meter-job: a submodule didn't lay, so nothing ran"; exit 66; }
 
 # twice-daily.sh runs npm ci. When the toolchain has no npm, it comes from its pin and integrity, as in run.sh.
 if ! command -v npm > /dev/null 2>&1; then
