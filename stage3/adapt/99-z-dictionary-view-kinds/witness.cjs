@@ -240,7 +240,8 @@ if (process.env.WITNESS_COUNT) {
         const config = parse(project), again = parse(project);
         if (!config.fileNames.length) continue;
         const before = {...count};
-        const compilerHost = counted.createCompilerHost(config.options);
+        // An incremental host versions every source file, which a builder program requires (J-prm3zqf's Debug Failure).
+        const compilerHost = counted.createIncrementalCompilerHost(config.options);
         // Two programs from two parses of one tsconfig: the second reuses the first, comparing every option tsc reads
         // there (changesAffectModuleResolution, changesAffectingProgramStructure). Then two builders, the second from
         // the first's state, comparing the options that affect diagnostics, emit and declaration paths.
