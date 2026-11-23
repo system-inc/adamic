@@ -2898,6 +2898,13 @@ class Gate:
             row["wall_seconds"] = round(elapsed, 6)
             row["over_budget"] = elapsed > 30
             row["status"] = "passed" if row["ok"] else "failed"
+            exit = row.get("exit")
+            if row["status"] == "failed" and getattr(self, "cancelled", False) and isinstance(exit, int) and exit < 0:
+                # A unit the gate's own cancel killed (fail's whole-gate branch, killSessions on the first failure) ended
+                # by its signal, not its own failure: it's cancelled, never written failed beside the unit that failed,
+                # and fails nothing (#z89w67t: under load the planted wasi unit's failure killed the good one still in
+                # flight, and its row read failed).
+                row["status"] = "cancelled"
             if row["status"] == "failed":
                 self.fail(phase + "/" + row["name"], json.dumps(row))
         with ThreadPoolExecutor(max_workers=slots) as pool:
