@@ -657,6 +657,7 @@ struct adamic_methods {
 extern const adamic_methods adamic_error_methods;
 extern const adamic_methods adamic_coded_error_methods;
 bool adamic_error_is(const adamic_object *object);
+bool adamic_object_has_own_error_view(const adamic_object *object, const adamic_string *key);
 // Complete error shapes publish their enumerable keys once, in the order Node records them.
 typedef struct adamic_error_json {
  const adamic_shape *shape;

@@ -366,6 +366,11 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	if strings.Contains(code, "adamicDynamicHas(") || strings.Contains(code, "adamicDynamicRead(") || strings.Contains(code, "adamicHostKeys(") || strings.Contains(code, "adamicHostHasOwn(") || strings.Contains(code, "adamicHostCheck(") {
 		code = dynamicHostRuntime(program) + code
 	}
+	if strings.Contains(code, "adamicHasOwnErrorView(") {
+		code = "const adamicHasOwnErrorView = (value, key) => {\n" +
+			"  if (value instanceof Error && key !== 'stack' && key !== 'message' && key !== 'name') panic(" + quote("an Error's own property isn't represented yet") + ");\n" +
+			"  return Object.hasOwn(value, key);\n};\n" + code
+	}
 	if strings.Contains(code, "adamicUnknownKind(") {
 		code = unknownKindRuntime(program) + code
 	}
@@ -1329,6 +1334,9 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 	case ir.ObjectCall:
 		if expression.Checked {
 			return e.checkedObjectEnumeration(expression)
+		}
+		if expression.Method == "hasOwnErrorView" {
+			return "adamicHasOwnErrorView(" + e.values(expression.Arguments) + ")"
 		}
 		if expression.Method == "entries" {
 			return "Object.entries(" + e.values(expression.Arguments) + ").map(adamicTuple)"

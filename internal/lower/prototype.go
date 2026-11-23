@@ -237,12 +237,16 @@ func (l *lowering) objectPrototypeCallArguments(node, receiver *ast.Node, name s
 // in the whole program with one of those hazards. This deliberately errs toward refusal.
 // An empty name tests own descriptors without dispatching an overridable receiver method.
 func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
+	return l.prototypeHazardWithErrorTable(receiver, name, false)
+}
+
+func (l *lowering) prototypeHazardWithErrorTable(receiver *ast.Node, name string, errorTable bool) string {
 	view := l.concrete(l.checker.GetTypeAtLocation(receiver))
 	modules, err := l.moduleOrder(l.program.Files()[0])
 	if err != nil {
 		return "the program's runtime shapes are not known"
 	}
-	if name != "valueOf" && l.errorMayHide(receiver) {
+	if !errorTable && name != "valueOf" && l.errorMayHide(receiver) {
 		return "an Error may be hidden by the view"
 	}
 	reason := ""
@@ -317,13 +321,11 @@ func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 	return reason
 }
 
-// errorMayHide reports whether receiver may hold an Error. Node keeps an Error's message as an own property
-// it doesn't enumerate, and its name on the prototype, where natively both are fields like any other's, so
-// no road that walks or tests own properties tells the truth about one yet. An Error made in the source,
-// by new Error or any other of errorClasses, may hide when its type fits receiver's. One the runtime made, from a failing host call or a brand check,
-// has no such node, so it may hide whenever the library's Error fits receiver's type and the program can
-// take one: a catch that binds what it caught, or a Promise's rejection handler. prototypeHazard decides
-// its own Error case here, so the two can't drift. This deliberately errs toward refusal.
+// errorMayHide reports whether receiver may hold an Error, whose descriptors
+// differ from plain object slots. The detached own-key test uses an Error table;
+// other descriptor operations still refuse when an Error can reach their view.
+// A compatible Error construction can reach the view, as can a runtime Error
+// from a host call if the program catches an exception or a Promise rejection.
 func (l *lowering) errorMayHide(receiver *ast.Node) bool {
 	view := l.concrete(l.checker.GetTypeAtLocation(receiver))
 	modules, err := l.moduleOrder(l.program.Files()[0])
