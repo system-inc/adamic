@@ -77,6 +77,10 @@ func TestUntaggedUnionCastsKeepTheirStops(t *testing.T) {
 		{"a primitive member", members + "function f(x: A | string): A { return x as A; }", ".ts", false, "which holds primitives"},
 		{"a class instance member", members + "class K { readonly k = 1; } function f(x: A | K): A { return x as A; }", ".ts", false, "whose members no literal tag tells apart"},
 		{"a dictionary member", members + "function f(x: A | Record<string, number>): A { return x as A; }", ".ts", false, ""},
+		// binder.ts:1416's shape: a CallExpression, whose kind is a literal, out of a union of nodes whose kind is
+		// open. A view with no test can't prove the literal, so it keeps the untagged stop until its tag road is
+		// built (Diagnostics' must). Mutant: declaresLiteral returning false, and the enum-literal rule refuses it.
+		{"a target with a literal kind", "enum SyntaxKind { Identifier = 80, CallExpression = 213, Block = 241 } interface Expression { readonly kind: SyntaxKind; readonly end: number } interface Statement { readonly kind: SyntaxKind; readonly pos: number } interface CallExpression extends Expression { readonly kind: SyntaxKind.CallExpression; readonly argumentCount: number } function f(x: Expression | Statement): CallExpression { return x as CallExpression; }", ".ts", false, "a checked view of CallExpression over the union Expression | Statement, whose members no literal tag tells apart"},
 		{"a sub-union target", members + "interface C { readonly c: boolean } function f(x: A | B | C): A | B { return x as A | B; }", ".ts", false, "a checked view of A | B over the union A | B | C, whose members no literal tag tells apart"},
 		// Runtime's two questions on #axqgdck: a writable field whose type differs by arm is refused at the cast by
 		// castUnionWrites (its union type X | Y fits neither arm's slot), so no X is ever written into a B and no
