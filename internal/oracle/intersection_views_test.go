@@ -163,10 +163,9 @@ func TestIntersectionViewWidenedReadIsChecked(t *testing.T) {
 	}
 }
 
-// An intersection can't be the entry itself: a cast from Node straight to Node & { ... } is no tagged member
-// of a union, so it's NotYet as a checked view of the intersection (Adamic's Q3 on #b5w3ycg, Nov 22: a check
-// could decide it, and none is built), and a predicate claiming one is NotYet as an overload target. Both fail
-// closed before any view exists, so the roads above enter through a field.
+// A cast from Node straight to Node & { ... } can't be the entry: it's no tagged member of a union, so it's
+// NotYet as a checked view of the intersection (Adamic's Q3 on #b5w3ycg, Nov 22: a check could decide it, and
+// none is built), before any view exists, and the roads above enter through a field.
 func TestIntersectionDirectEntryFailsClosed(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct {
@@ -174,7 +173,6 @@ func TestIntersectionDirectEntryFailsClosed(t *testing.T) {
 		refused                 bool
 	}{
 		{"cast.ts", "interface Node { readonly kind: number; readonly pos: number; }\ntype Lit = Node & { readonly kind: 9; readonly text: string; };\nfunction show(n: Node): void { if (n.kind === 9) { const l = n as Lit; console.log(l.text); } }\nshow({ kind: 9, pos: 1 });\n", "cast.ts:3:62", "stage 0 can't lower a checked view of the intersection Lit over Node yet", false},
-		{"predicate.ts", "interface Node { readonly kind: number; readonly pos: number; }\ntype Lit = Node & { readonly kind: 9; readonly text: string; };\nfunction isLit(n: Node): n is Lit { return n.kind === 9; }\nfunction show(n: Node): void { if (isLit(n)) { console.log(n.text); } }\nshow({ kind: 9, pos: 1 });\n", "predicate.ts:3:1", "checked predicate overload target Lit", false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -194,4 +192,25 @@ func TestIntersectionDirectEntryFailsClosed(t *testing.T) {
 			}
 		})
 	}
+}
+
+// A checked predicate claiming an intersection with one literal kind is an entry (#c7w6j0y's compound-node
+// cause): the call tests the tag, and the view over the intersection checks every field where it's read. A
+// value with the kind and without the added field is a lie the predicate's body doesn't see, and it stops at
+// the read on every backend, where Node prints undefined.
+func TestIntersectionPredicateEntryChecksAtTheRead(t *testing.T) {
+	t.Parallel()
+	path := filepath.Join(t.TempDir(), "predicate.ts")
+	source := "interface Node { readonly kind: number; readonly pos: number; }\ntype Lit = Node & { readonly kind: 9; readonly text: string; };\nfunction isLit(n: Node): n is Lit { return n.kind === 9; }\nfunction show(n: Node): void { if (isLit(n)) { console.log(n.text); } }\nshow({ kind: 9, pos: 1 });\n"
+	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if truth := onNode(t, path); disagreement(run{stdout: []byte("undefined\n")}, truth) != "" {
+		t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatalf("want the predicate lowered with its view, got %v", err)
+	}
+	stopsAtFieldRead(t, program, "", "field read failed: n.text is not initialized; expected string, found missing")
 }
