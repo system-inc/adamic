@@ -43,7 +43,7 @@ func TestDictionaryViewCasts(t *testing.T) {
 		{"compared and walked as equal own properties", "const hasOwnProperty = Object.prototype.hasOwnProperty; function equalOwnProperties(left: MapLike<unknown> | undefined, right: MapLike<unknown> | undefined): boolean { if (left === right) { return true; } if (!left || !right) { return false; } for (const key in left) { if (hasOwnProperty.call(left, key)) { if (!hasOwnProperty.call(right, key) || left[key] !== right[key]) { return false; } } } for (const key in right) { if (hasOwnProperty.call(right, key) && !hasOwnProperty.call(left, key)) { return false; } } return true; } function f(x: object, y: object): boolean { return equalOwnProperties(x as MapLike<unknown>, y as MapLike<unknown>); }", ""},
 		{"undefined dropped", "function f(x: object | undefined): unknown { return (x as MapLike<unknown>)['a']; }",
 			"a checked dictionary view of MapLike<unknown> over object | undefined"},
-		{"number values", "function f(x: object): number { return (x as Record<string, number>)['a']; }",
+		{"number values", "function f(x: object): number | undefined { return (x as Record<string, number>)['a']; }",
 			"a checked dictionary view of Record<string, number> over object"},
 		{"union-held values", "function f(x: object): unknown { return (x as OptionsBase)['a']; }",
 			"a checked dictionary view of OptionsBase over object"},
