@@ -408,6 +408,13 @@ func TestCensusPairPython(t *testing.T) {
 	runPython(t, "stage3/census/pair", "test_pair")
 }
 
+// The census replay's entry reach keeps the entry first, read from its source (#4ft3dyf). The replay's integration
+// suite, test_replay.py, is unwrapped: python_census_test.go says why.
+func TestReplayOrderPython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "stage3/census/latent/replay", "test_replay_order")
+}
+
 // runPython runs modules' unittest suites from directory, with a stage3 cache of the test's own, and fails with
 // unittest's output when any of them fails.
 func runPython(t *testing.T, directory string, modules ...string) {

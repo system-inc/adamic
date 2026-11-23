@@ -241,13 +241,20 @@ nonzero. Production Load and Lower remain disabled; the worker checks both guard
 on every invocation. For repeated work, build the worker with the generated
 `make_overlay.py` overlay and invoke it with the same arguments.
 
-Run the two integration tests with
-`python3 stage3/census/latent/replay/replay_test.py > /tmp/replay-tests.log 2>&1`.
+Run the integration tests with
+`python3 stage3/census/latent/replay/test_replay.py > /tmp/replay-tests.log 2>&1`.
+They build the census products, so no gate runs them yet, and the directory
+cases stop on the directory census's first-sorted-file route (#pn630c6).
 They compare every finding, in order, against an unfiltered full census of a
 nested body whose parent is checker-rejected, including an ancestor capture and
 an imported binding. Selecting the parent's sibling must exit 1 at the signature
 assertion. Run the positive test with `LATENT_REPLAY_MUTANT_PARENT_SIBLING=1` to
 prove that the equality/reproduction check itself fails under that mutant.
+A third replays a nested unit of an entry file that imports a dependency, from
+`-project <entry file>`: the replay's reach keeps the entry first, since lowering
+routes module identities from the first file (#4ft3dyf).
+`test_replay_order.py` reads that order from the source and builds nothing, so
+its gate wrapper, `TestReplayOrderPython`, runs it.
 
 [Replay validation and three real-project timings](replay/REPORT.md) compare the command with the 10,551-attempt full entry census.
 

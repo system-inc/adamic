@@ -22,6 +22,9 @@ var unwrappedPythonSuites = map[string]string{
 	"stage3/census/tsc-closure/test_fixture.py": "the known-answer check of a one-off measurement (rerun-2026-10-09): it takes the census binary " +
 		"and hidden-tools tree that prepare.py builds from f1502d13's tools against main with a full cohere checkout, as " +
 		"arguments, so it has nothing to run on alone",
+	"stage3/census/latent/replay/test_replay.py": "integration replays that build the census products cold (about 100 s, " +
+		"past runPythonCommand's 55 s), and its directory cases stop on the directory census's first-sorted-file route " +
+		"(#pn630c6); proven red and green by hand on J-vqjr7hz and its successor",
 }
 
 func TestEveryStage3PythonSuiteRunsOrSaysWhy(t *testing.T) {
