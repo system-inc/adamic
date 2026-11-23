@@ -380,7 +380,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		}
 	}
 	if err == nil {
-		if value.Type() == ir.Object && l.nullableObjectUnion(l.checker.GetTypeAtLocation(node)) && !nullableObjectLookupTypeOf(node, value) {
+		if l.nullableBareLookup(node, value) && !nullableObjectLookupTypeOf(node, value) {
 			return nil, l.notYet(node, "a nullable object lookup without separate null/undefined tags")
 		}
 		if contextual := l.slotType(node); contextual != nil {
