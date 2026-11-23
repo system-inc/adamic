@@ -314,6 +314,15 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	if l.presentCast(node, source, target) {
 		return castProof{present: true}, nil
 	}
+	return l.castRoad(node, source, target, stop)
+}
+
+// castRoad is the road castProof finds once the cast's operand has had its say: one object's tag, a kind
+// union, a structural view, or a union's tag over its members. It reads only the types it's given and node
+// for the cast's file and place, never node's operand, so a composed cast can run it from types that aren't
+// the operand's own (a cast that keeps nullish, run on its present members, #b5w3ycg). stop words a branch
+// that finds no road, as unionMemberProof's does, with the cast's own source and target.
+func (l *lowering) castRoad(node *ast.Node, source, target *checker.Type, stop func(castCause, string) error) (castProof, error) {
 	if source.Flags()&checker.TypeFlagsUnion == 0 {
 
 		// A proof's view is no view: neither its origin nor its contract's getters outlive it.
