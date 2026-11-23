@@ -166,12 +166,18 @@ func TestArrayUnionClassNarrowingInvalidated(t *testing.T) {
 }
 
 // Assigning an array gives the checker an array view while the declared union
-// still carries the layouts that the narrowed local read must refuse.
+// still carries the layouts that the narrowed local read must refuse: a tuple, and
+// an object arm whose pos and end a program interface extending ReadonlyArray also
+// declares, so no property rules an array out there (#s8gy89r). The object arm
+// whose name no array has now agrees (TestArrayPredicateArmsAgree).
 func TestArrayUnionNarrowingRefused(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"tuple_member", "object_member"} {
-		t.Run(name, func(t *testing.T) {
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/array_union_refused", name+".a"))
+	for _, row := range []struct{ name, where string }{
+		{"tuple_member", ":5:19"},
+		{"node_array_member", ":6:19"},
+	} {
+		t.Run(row.name, func(t *testing.T) {
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/array_union_refused", row.name+".a"))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -181,8 +187,8 @@ func TestArrayUnionNarrowingRefused(t *testing.T) {
 			_, err = lowered(t, path)
 			var refused *lower.NotYet
 			const reason = "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables"
-			if !errors.As(err, &refused) || refused.What != reason || refused.Where != path+":5:19" {
-				t.Fatalf("want narrowing refusal %q, got %v", reason, err)
+			if !errors.As(err, &refused) || refused.What != reason || refused.Where != path+row.where {
+				t.Fatalf("want narrowing refusal %q at %s, got %v", reason, row.where, err)
 			}
 			t.Log(err)
 		})

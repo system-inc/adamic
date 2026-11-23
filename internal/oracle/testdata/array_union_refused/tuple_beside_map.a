@@ -1,0 +1,5 @@
+function first(): [number, number] | Map<string, number> {
+	return [1, 2];
+}
+const v: [number, number] | Map<string, number> = first();
+console.log(String(Array.isArray(v)));

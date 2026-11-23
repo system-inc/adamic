@@ -1,6 +1,8 @@
 package lower
 
 import (
+	"errors"
+	"strconv"
 	_ "unsafe"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -48,7 +50,7 @@ func (l *lowering) arrayIsArray(node *ast.Node) (ir.Expression, bool, error) {
 		return nil, false, nil
 	}
 	argument := node.AsCallExpression().Arguments.Nodes[0]
-	if !l.arrayPredicateDomain(l.checker.GetTypeAtLocation(argument)) && !l.exactObject(argument, 0) {
+	if !l.admitArrayPredicate(argument, l.checker.GetTypeAtLocation(argument)) && !l.exactObject(argument, 0) {
 		return nil, true, l.notYet(argument, "Array.isArray on a tuple or an erased object/any/unknown view")
 	}
 	value, err := l.expression(argument)
@@ -94,11 +96,31 @@ func (l *lowering) arrayPredicateMembers(proven *checker.Type, array bool) *chec
 
 // Tuples currently have an object representation. Erased object views can hide
 // one too, so the native array brand cannot decide their JavaScript arrayness.
+// A plain object arm is in the domain only where a property rules an array out
+// there (arrayExcludedArm).
 func (l *lowering) arrayPredicateDomain(proven *checker.Type) bool {
+	return l.arrayPredicateArms(proven, nil)
+}
+
+// admitArrayPredicate is arrayPredicateDomain for a test lowering builds at node, the array brand's: each
+// arm it admits by arrayExcludedArm is recorded with node, for checkArrayArmViews to hold once lowering is done.
+func (l *lowering) admitArrayPredicate(node *ast.Node, proven *checker.Type) bool {
+	var arms []*checker.Type
+	if !l.arrayPredicateArms(proven, &arms) {
+		return false
+	}
+	if len(arms) > 0 {
+		l.arrayArmSites = append(l.arrayArmSites, arrayArmSite{node: node, arms: arms})
+	}
+	return true
+}
+
+// arrayPredicateArms is arrayPredicateDomain, adding to arms, when it isn't nil, each arm arrayExcludedArm admits.
+func (l *lowering) arrayPredicateArms(proven *checker.Type, arms *[]*checker.Type) bool {
 	proven = l.concrete(proven)
 	if proven.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range proven.Types() {
-			if !l.arrayPredicateDomain(member) {
+			if !l.arrayPredicateArms(member, arms) {
 				return false
 			}
 		}
@@ -116,7 +138,190 @@ func (l *lowering) arrayPredicateDomain(proven *checker.Type) bool {
 	if l.isArrayType(proven) {
 		return true
 	}
-	return proven.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(proven) || l.isLibraryType(proven, "Uint8Array", "Int32Array", "Float64Array")
+	if proven.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(proven) || l.isLibraryType(proven, "Uint8Array", "Int32Array", "Float64Array") {
+		return true
+	}
+	if !l.arrayExcludedArm(proven) {
+		return false
+	}
+	if arms != nil {
+		*arms = append(*arms, proven)
+	}
+	return true
+}
+
+// arrayExcludedArm is whether proven, a plain object type, rules an array out (Adamic's ruling on #s8gy89r): it
+// declares a required property no type stored as an array can have, one that isn't numeric-named, isn't length,
+// and isn't in arrayStoredPropertyNames, which holds lib's Array and ReadonlyArray members and every name a type
+// of the closed world stored as an array declares or inherits. Every value at the arm has that property and no
+// array has it, so none is an array, and a list of array types the program grows can't outgrow the test.
+// Asking whether readonly unknown[] is assignable to the arm was ruled out, since it fails open: a tuple, an
+// element-typed interface and tsc's TextRange each take an array readonly unknown[] doesn't. A class is no arm
+// here, since its instance is in the domain above: `class X extends Array` is NotYet where it's constructed
+// (Language's a01 on #mzc2mmn), so no class instance is an array.
+//
+// "Every value at the arm has the property" holds for the values the program builds. A checked view checks at a
+// read, never at its cast, so a view can put a value behind the arm that lacks the property, unread, and a tuple
+// held as an object behind it reads as no array to the brand where Node calls it one (Lower's probe on #9z2ksv7:
+// `[number, number] | Other` cast as Named, overlapViewCast, printed named natively where Node printed array,
+// J-k8ssmqr). checkArrayArmViews holds every arm admitted here against every checked view the program makes, so
+// none puts a value stored as an array behind it. The other roads a tuple could take to an arm unread stop today,
+// each measured in .ts (J-k8ssmqr) and pinned in TestArrayPredicateArmViewRoadsStop, so a road that opens goes red
+// there and the pass and this domain are judged again:
+//   - from unknown (`hidden as Named`), any (`JSON.parse(...) as Named`), object (`o as Named`), {} (`e as Named`),
+//     and a function's unknown parameter (`value as Named`): castProof's "a cast the runtime can't check";
+//   - a union member cast (`(Named | [number, number]) as Named`): unionMemberProof's same refusal, with no tag;
+//   - a structural view over an interface holding a tuple: "optional property ... absent from structural source
+//     [number, number]" (adamic/no-optional-widening), where the tuple is assigned.
+func (l *lowering) arrayExcludedArm(proven *checker.Type) bool {
+	if l.arrayStored(proven, map[*checker.Type]bool{}) {
+		return false
+	}
+	stored := l.arrayStoredPropertyNames()
+	for _, property := range l.checker.GetPropertiesOfType(proven) {
+		if property.Flags&ast.SymbolFlagsOptional == 0 && property.Name != "length" && !numericPropertyName(property.Name) && !stored[property.Name] {
+			return true
+		}
+	}
+	return false
+}
+
+// numericPropertyName is whether name reads as a number, an index an array may hold an element at: `0`, `"1"`,
+// and, failing closed, any spelling ParseFloat takes (`1.5`, `1e3`, `NaN`, `Infinity`).
+func numericPropertyName(name string) bool {
+	_, err := strconv.ParseFloat(name, 64)
+	return err == nil || errors.Is(err, strconv.ErrRange)
+}
+
+// arrayStored is whether a value of proven is stored as an array: an array or a tuple, a phantom extension of one
+// (phantomExtension, tsc's SortedArray), lib's Array or ReadonlyArray, an interface or class whose base chain
+// reaches one (NodeArray's), or an intersection holding one.
+func (l *lowering) arrayStored(proven *checker.Type, seen map[*checker.Type]bool) bool {
+	if proven == nil || seen[proven] {
+		return false
+	}
+	seen[proven] = true
+	if proven.Flags()&checker.TypeFlagsIntersection != 0 {
+		for _, member := range proven.Types() {
+			if l.arrayStored(member, seen) {
+				return true
+			}
+		}
+		return false
+	}
+	if proven.Flags()&checker.TypeFlagsObject == 0 {
+		return false
+	}
+	if l.isArrayType(proven) || checker.IsTupleType(proven) || l.isLibraryType(proven, "Array", "ReadonlyArray") {
+		return true
+	}
+	if base, _ := l.phantomExtension(proven); base != nil && l.arrayStored(base, seen) {
+		return true
+	}
+	target := proven
+	if proven.ObjectFlags()&checker.ObjectFlagsReference != 0 && proven.Target() != nil {
+		target = proven.Target()
+	}
+	if target.ObjectFlags()&checker.ObjectFlagsClassOrInterface == 0 {
+		return false
+	}
+	for _, base := range l.checker.GetBaseTypes(target) {
+		if l.arrayStored(base, seen) {
+			return true
+		}
+	}
+	return false
+}
+
+// arrayStoredPropertyNames is every property name a type stored as an array can have, found once: lib's Array
+// and ReadonlyArray members, and every name each type of the closed world that arrayStored calls an array declares
+// or inherits. The closed world is each interface, class and type alias every file the program holds declares
+// (the files kindTagCarriersOf walks, never moduleOrder's runnable modules alone, which leave out a module the
+// program only imports types from), each intersection written in one, since `T & { pos: number }` over an array
+// type argument is an array holding pos, and each Object.assign's result. An intersection holding a type parameter
+// counts as one stored as an array, failing closed: its argument may be one. The bundled library and the prelude
+// are walked too, for their interfaces and classes that extend another, such as lib's RegExpExecArray, whose index
+// and input an array the program holds can have.
+func (l *lowering) arrayStoredPropertyNames() map[string]bool {
+	if l.arrayStoredNames != nil {
+		return l.arrayStoredNames
+	}
+	names := map[string]bool{}
+	add := func(proven *checker.Type) {
+		for _, property := range l.checker.GetPropertiesOfType(proven) {
+			names[property.Name] = true
+		}
+	}
+	add(predicateReadonlyArray(l.checker, l.checker.GetUnknownType(), false))
+	add(predicateReadonlyArray(l.checker, l.checker.GetUnknownType(), true))
+	var collect func(*checker.Type)
+	collect = func(proven *checker.Type) {
+		if proven == nil {
+			return
+		}
+		switch {
+		case proven.Flags()&checker.TypeFlagsUnion != 0:
+			for _, member := range proven.Types() {
+				collect(member)
+			}
+		case proven.Flags()&checker.TypeFlagsIntersection != 0:
+			for _, member := range proven.Types() {
+				if member.Flags()&checker.TypeFlagsTypeParameter != 0 || l.arrayStored(member, map[*checker.Type]bool{}) {
+					add(proven)
+					return
+				}
+			}
+		case l.arrayStored(proven, map[*checker.Type]bool{}):
+			add(proven)
+		}
+	}
+	declared := func(node *ast.Node) {
+		if symbol := l.checker.GetSymbolOfDeclaration(node); symbol != nil {
+			collect(l.checker.GetDeclaredTypeOfSymbol(symbol))
+		}
+	}
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		switch node.Kind {
+		case ast.KindInterfaceDeclaration, ast.KindClassDeclaration, ast.KindClassExpression, ast.KindTypeAliasDeclaration:
+			declared(node)
+		case ast.KindIntersectionType:
+			collect(l.checker.GetTypeFromTypeNode(node))
+		case ast.KindCallExpression:
+			// Object.assign builds its target at an intersection no declaration names, an array's with pos and end
+			// when its target is one, as enum_tag_closed_kind.go's build sites count it.
+			callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+			if callee.Kind == ast.KindPropertyAccessExpression && callee.Name().Text() == "assign" && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object") {
+				collect(l.checker.GetTypeAtLocation(node))
+			}
+		}
+		node.ForEachChild(visit)
+		return false
+	}
+	// The library declares thousands of members and no intersection a value is built at, so only its declarations
+	// that extend another are asked, and its bodies are never walked.
+	var visitLibrary ast.Visitor
+	visitLibrary = func(node *ast.Node) bool {
+		switch node.Kind {
+		case ast.KindInterfaceDeclaration, ast.KindClassDeclaration:
+			if ast.GetHeritageClause(node, ast.KindExtendsKeyword) != nil {
+				declared(node)
+			}
+			return false
+		case ast.KindModuleDeclaration, ast.KindModuleBlock:
+			node.ForEachChild(visitLibrary)
+		}
+		return false
+	}
+	for _, file := range l.program.CompilerProgram().GetSourceFiles() {
+		if load.IsLibrary(file) || load.IsPrelude(file) {
+			file.AsNode().ForEachChild(visitLibrary)
+		} else {
+			file.AsNode().ForEachChild(visit)
+		}
+	}
+	l.arrayStoredNames = names
+	return names
 }
 
 // The pinned checker owns construction of the readonly array type, just as it
@@ -124,3 +329,56 @@ func (l *lowering) arrayPredicateDomain(proven *checker.Type) bool {
 //
 //go:linkname predicateReadonlyArray github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).createArrayTypeEx
 func predicateReadonlyArray(receiver *checker.Checker, element *checker.Type, readonly bool) *checker.Type
+
+// arrayArmSite is a test lowering built at node whose array brand decides arms, each admitted by arrayExcludedArm.
+type arrayArmSite struct {
+	node *ast.Node
+	arms []*checker.Type
+}
+
+// checkArrayArmViews holds each arm a lowered Array.isArray, or a narrowed read checked by the array brand, leans on
+// (arrayArmSites) against every checked view the program made, once lowering is done: a view reaching the arm
+// (viewsReaching), over a source that may hold a value stored as an array, puts such a value behind the arm with
+// nothing read, so the brand would call it no array where Node calls it one. That site is NotYet. A source may hold one when it names none, or any member of it is erased (any, unknown, a type
+// parameter, object), an intersection, or an object type other than a class instance (a tuple, an array, an
+// interface an array satisfies, or one a view of its own stands behind), failing closed.
+func (l *lowering) checkArrayArmViews() error {
+	for _, site := range l.arrayArmSites {
+		for _, arm := range site.arms {
+			for _, view := range l.viewsReaching(arm) {
+				if !l.mayHoldArrayStored(view.source) {
+					continue
+				}
+				source, where := "a value of no named type", "an unnamed site"
+				if view.source != nil {
+					source = l.checker.TypeToString(view.source)
+				}
+				if view.node != nil {
+					where = l.program.Where(view.node)
+				}
+				target := "no named type"
+				if view.target != nil {
+					target = l.checker.TypeToString(view.target)
+				}
+				return l.notYet(site.node, "Array.isArray over "+l.checker.TypeToString(arm)+", which the checked view of "+target+" over "+source+" at "+where+" can hold an array behind, unread")
+			}
+		}
+	}
+	return nil
+}
+
+// mayHoldArrayStored is whether a value of source, a checked view's, may be stored as an array (checkArrayArmViews).
+func (l *lowering) mayHoldArrayStored(source *checker.Type) bool {
+	if source == nil {
+		return true
+	}
+	for _, member := range castMembers(source) {
+		switch {
+		case member.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsTypeParameter|checker.TypeFlagsNonPrimitive|checker.TypeFlagsIntersection) != 0:
+			return true
+		case member.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(member):
+			return true
+		}
+	}
+	return false
+}
