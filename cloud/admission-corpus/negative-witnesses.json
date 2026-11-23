@@ -696,6 +696,45 @@
       "exit": 70,
       "stderr": "adamic: panic: cast failed: this A | B | C | undefined is not a A | C\n"
     },
+    "44dc44f4cfcf11d026f6c11f38385d5f3541a6dfca517826d5ae4778a06c50ba": {
+      "form": "cast_failed",
+      "ruling_task": "#b5w3ycg",
+      "ruling": "Adamic, Nov 22, the casts principle (Q1 to Q3), applying rulings.md:9 and :385; Array.isArray at the cast, #9z2ksv7",
+      "declaration": "internal/oracle/testdata/cast_array_arm_object_fails.ts:4",
+      "column": 96,
+      "declared_type": "readonly string[]",
+      "repair_from": "{ buildOrder: ['a'], circularDiagnostics: [] }",
+      "repair_to": "['a']",
+      "type_correct_sha256": "d7c22544461d738b6af80dfb13a5b4af7254047b98052e1d62a39b723a0f8d3d",
+      "exit": 70,
+      "stderr": "adamic: panic: cast failed: this CircularBuildOrder | readonly string[] is not a readonly string[]\n"
+    },
+    "322ad9be9af2ea045e5a0dafd9b6e90c77589ce36de2664c5d6ab084234a5188": {
+      "form": "cast_failed",
+      "ruling_task": "#b5w3ycg",
+      "ruling": "Adamic, Nov 22, the casts principle (Q1 to Q3), applying rulings.md:9 and :385; Array.isArray at the cast, #9z2ksv7",
+      "declaration": "internal/oracle/testdata/cast_array_arm_array_fails.ts:4",
+      "column": 97,
+      "declared_type": "CircularBuildOrder",
+      "repair_from": "['a', 'b']",
+      "repair_to": "{ buildOrder: ['a', 'b'], circularDiagnostics: [] }",
+      "type_correct_sha256": "41770d0ea8d9e6d5afb77760efaf1e025fd27fad21bb13ede147211ecce5bd12",
+      "exit": 70,
+      "stderr": "adamic: panic: cast failed: this CircularBuildOrder | readonly string[] is not a CircularBuildOrder\n"
+    },
+    "469d16eae5febb48db317f8a77834d5b2e94994bb9477049a8ff68fac0eed3c3": {
+      "form": "cast_failed",
+      "ruling_task": "#b5w3ycg",
+      "ruling": "Adamic, Nov 22, the casts principle (Q1 to Q3), applying rulings.md:9 and :385; Array.isArray at the cast, #9z2ksv7",
+      "declaration": "internal/oracle/testdata/cast_array_arm_undefined_fails.ts:5",
+      "column": 116,
+      "declared_type": "readonly string[]",
+      "repair_from": "cast(undefined)",
+      "repair_to": "cast(['main.ts'])",
+      "type_correct_sha256": "c39c9fb2b24afe3134d4a728a64a1405aa148c48257e914d304c6a4fb0cc547f",
+      "exit": 70,
+      "stderr": "adamic: panic: cast failed: this BuilderProgram | Program | readonly string[] | undefined is not a readonly string[]\n"
+    },
     "60f33a7fe3341fbe13eaa2266f9fa67262577091c26196d51e79c148b3e0838d": {
       "form": "checked_boundary",
       "ruling_task": "#b5w3ycg",
