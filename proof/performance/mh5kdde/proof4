@@ -1,0 +1,29 @@
+# #mh5kdde round 4: the overflow-read pin, its two mutants compiling and red, and every count type pin. Run with bash
+# after the sealed opening. Never merged.
+L="$TMPDIR/mh5r4"; mkdir -p "$L"; failed=0
+step() { echo "$1 $2"; [ "$1" = PASS ] || failed=1; }
+F=internal/lower/count_types_classes.go; T=TestCountTypeOverflowedReadsAPlantedMark
+bad=$(gofmt -l internal/lower); if [ -z "$bad" ]; then step PASS gofmt; else step FAIL gofmt; echo "$bad"; fi
+if go vet ./internal/lower/ > "$L/vet.log" 2>&1; then step PASS vet; else step FAIL vet; head -20 "$L/vet.log"; fi
+if go test -count=1 -timeout 20m -v -run '^TestCountType' ./internal/lower/ > "$L/pins.log" 2>&1; then step PASS pins; else step FAIL pins; fi
+grep -E -- '^--- |_test.go:[0-9]+|panic:' "$L/pins.log" | cut -c1-300 | head -20
+cp "$F" "$L/orig.go"
+mutant() {
+	local name=$1 old=$2 new=$3
+	cp "$L/orig.go" "$F"
+	python3 - "$F" "$old" "$new" <<'PY' || { step FAIL "mutant-$name-applies"; return; }
+import sys
+p, old, new = sys.argv[1], sys.argv[2], sys.argv[3]
+t = open(p).read()
+assert t.count(old) == 1, "anchor"
+open(p, "w").write(t.replace(old, new))
+PY
+	go test -count=1 -timeout 20m -v -run "^${T}\$" ./internal/lower/ > "$L/m-$name.log" 2>&1; local code=$?
+	if grep -q -E '\[build failed\]|declared and not used|undefined:' "$L/m-$name.log"; then step FAIL "mutant-$name-compiles"; head -8 "$L/m-$name.log"; else step PASS "mutant-$name-compiles"; fi
+	grep -E -- '--- |_test.go:[0-9]+' "$L/m-$name.log" | cut -c1-300 | head -4
+	if [ $code -ne 0 ] && grep -q -- "--- FAIL: $T" "$L/m-$name.log"; then step PASS "mutant-$name-red"; else step FAIL "mutant-$name-red"; fi
+}
+mutant swapped '	key, _ := assignableRelationKey(source, target, checker.IntersectionStateNone, false, false)' '	key, _ := assignableRelationKey(target, source, checker.IntersectionStateNone, false, false)'
+mutant unregularized '	if source.Flags()&checker.TypeFlagsFreshable != 0 && source.AsLiteralType().FreshType() == source {' '	if false {'
+cp "$L/orig.go" "$F"
+if [ $failed -eq 0 ]; then echo "VERDICT PASS"; else echo "VERDICT FAIL"; false; fi
