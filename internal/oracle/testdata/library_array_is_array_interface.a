@@ -1,0 +1,21 @@
+// An interface arm declaring a required property no array can have rules an array out there (Adamic's ruling on
+// #s8gy89r): Tagged's kind and name are on no type stored as an array, so Array.isArray decides
+// `Tagged | readonly string[]` both ways, each arm read as what it is.
+interface Tagged {
+	kind: 't';
+	name: string;
+}
+function describe(value: Tagged | readonly string[]): string {
+	if (Array.isArray(value)) return `array ${value.length} ${value.join('+')}`;
+	return `tagged ${value.kind} ${value.name}`;
+}
+function isList(value: Tagged | readonly string[]): boolean {
+	return Array.isArray(value);
+}
+console.log(describe({ kind: 't', name: 'x' }));
+console.log(describe(['a', 'b']));
+console.log(describe([]));
+console.log(describe({ kind: 't', name: '' }));
+console.log(String(isList({ kind: 't', name: 'y' })));
+console.log(String(isList(['z'])));
+console.log(String(isList([])));

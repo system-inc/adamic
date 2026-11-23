@@ -1,0 +1,5 @@
+function first(): readonly [number, number] | Map<string, number> {
+	return [1, 2];
+}
+const v: readonly [number, number] | Map<string, number> = first();
+console.log(String(Array.isArray(v)));

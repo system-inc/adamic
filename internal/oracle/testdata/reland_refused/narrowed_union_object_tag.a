@@ -1,7 +1,8 @@
-// typeof cannot tell an array from a map, whose native layouts differ.
-function first(): number[] | Map<string, number> {
+// typeof cannot tell an array from an object, and an index signature declares no required property that rules an
+// array out, so the narrowed read stops.
+function first(): number[] | { [key: string]: number } {
 	return [1];
 }
-let shared: number[] | Map<string, number> = first();
+let shared: number[] | { [key: string]: number } = first();
 shared = [1];
 console.log(`${shared.length}`);
