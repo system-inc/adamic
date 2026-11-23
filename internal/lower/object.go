@@ -58,6 +58,11 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if err != nil {
 				return nil, err
 			}
+			if literal.Spread != nil {
+				if value, err = l.spreadOverwrite(node, property, name, value); err != nil {
+					return nil, err
+				}
+			}
 			literal.Fields = append(literal.Fields, ir.Field{Name: name, Value: value})
 		case ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment:
 			name := property.Name()
@@ -91,6 +96,12 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 					value = ir.Undefined{Of: declared}
 				}
 				value = l.placeholderInitialValue(property.AsPropertyAssignment().Initializer, declared)
+				if literal.Spread != nil {
+					var err error
+					if value, err = l.spreadOverwrite(node, property, fieldName, value); err != nil {
+						return nil, err
+					}
+				}
 				literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value, Uninitialized: true, Unset: true})
 				continue
 			}
@@ -115,13 +126,8 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				value = fit(value, declared)
 			}
 			if literal.Spread != nil {
-				source := node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression
-				if sourceField := l.checker.GetPropertyOfType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(source)), fieldName); sourceField != nil {
-					if held, err := l.typeOfSymbol(source, sourceField); err == nil && held == ir.Union {
-						// Spread keeps its source shape. Overrides must retain that slot's
-						// counted representation rather than write an unboxed scalar into it.
-						value = fit(value, held)
-					}
+				if value, err = l.spreadOverwrite(node, property, fieldName, value); err != nil {
+					return nil, err
 				}
 			}
 			if censusFieldSlotless(value.Type()) {
