@@ -42,6 +42,7 @@ var rangeDispatches = []rangeUnionExample{
 	{ir.CheckedCast{}, "reads the discriminant through the cast's own check"},
 	{ir.DynamicKeyedProperty{}, "a run-time key read, by the allocation's own runtime shape"},
 	{ir.DynamicProperty{}, "a dynamic read switches on the value's kind (union.c's dynamic_property), and JavaScript reads value[key]"},
+	{ir.HasProperty{}, "an in test switches on the value's kind (union.c's has_property answers an array from its index, side record and methods), and JavaScript's in handles an array"},
 	{ir.ErrorToString{}, "taken only where UnknownKind said the value is an Error"},
 	{ir.IsCollectionIterator{}, "reads the runtime object's own heap kind"},
 	{ir.IsGenerator{}, "reads the runtime object's own heap kind"},
@@ -64,7 +65,6 @@ var rangeStops = []rangeUnionExample{
 	{ir.BoundMethod{Object: rangeHeld}, "reads its method through raw dispatch"},
 	{ir.HasAccessor{Object: rangeHeld}, "reads the object's class chain"},
 	{ir.HasOwn{Object: rangeHeld}, "reads the object's own field table"},
-	{ir.HasProperty{Object: rangeHeld}, "`in` reads the object's field table"},
 	{ir.InstanceOf{Value: rangeHeld}, "an exact test reads the object's class word after a null test only (emit_expressions.go)"},
 	{ir.JSONEncode{Value: rangeHeld}, "encodeJson reads every field by its schema, raw"},
 	{ir.ObjectKeys{Object: rangeHeld}, "Object.keys and a for-in read the object's own keys from its layout"},
@@ -376,4 +376,16 @@ func TestRangeUnionNarrowStops(t *testing.T) {
 		t.Errorf("a Node local: got %v, want nil", err)
 	}
 	stops("an untyped local nothing writes", narrowed(nil))
+}
+
+// A NodeArray's in test, with the bit on, lowers because the in test asks the kind, never because its boxed
+// operand is followed: a box of an array still counts as a range value to every raw-layout reader (Lower's
+// condition on #hae423v). node-array-keys.a's 'pos' in nodes is this shape. The program also reads a TextRange,
+// so a type is held as a range Union and checkRangeUnionReads runs; with none it reads nothing. Mutant M5 in
+// scratch-ha1, the in test classed as stopping again, stops it at the in test.
+func TestRangeUnionInTestOfANodeArrayLowers(t *testing.T) {
+	t.Parallel()
+	if _, err := lowerSourceAs(t, rangeTextRange+rangeNodeArray+"export function width(range: TextRange): number { return range.end - range.pos; }\nexport function has(nodes: NodeArray<Node>): boolean { return 'pos' in nodes; }\nconsole.log('ok');\n", ".ts"); err != nil {
+		t.Fatalf("got %v, want a NodeArray's in test lowered", err)
+	}
 }
