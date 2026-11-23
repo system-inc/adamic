@@ -46,6 +46,7 @@ type scanCycleFinder struct {
 	writes []fresh.Write
 
 	libraryIterators []libraryIteratorCapture
+	viewAlso         map[*checker.Type][]*checker.Type
 }
 
 func (l *lowering) scanFindCycles(modules []*ast.SourceFile) error {
@@ -435,6 +436,9 @@ func (f *scanCycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 		}
 		if target.proven != nil && f.related(proven, target.proven) {
 			return true
+		}
+		for _, held := range f.viewAlsoOf(proven) {
+			queue = append(queue, cycleNode{proven: held})
 		}
 		switch {
 		case f.l.isLibraryType(proven, "MapIterator", "SetIterator"):
@@ -861,6 +865,9 @@ func (f *scanCycleFinder) graphLinks(node cycleNode) []cycleNode {
 	if proven.Flags()&checker.TypeFlagsObject == 0 {
 		return nil
 	}
+	for _, held := range f.viewAlsoOf(proven) {
+		links = append(links, cycleNode{proven: held})
+	}
 	switch {
 	case f.l.isLibraryType(proven, "MapIterator", "SetIterator"):
 		links = append(links, f.libraryIteratorCaptures(proven)...)
@@ -907,6 +914,14 @@ func (f *scanCycleFinder) graphLinks(node cycleNode) []cycleNode {
 		}
 	}
 	return links
+}
+
+// viewAlsoOf asks the table lowering's finder builds (viewAlsoTable), with this reference's relation.
+func (f *scanCycleFinder) viewAlsoOf(proven *checker.Type) []*checker.Type {
+	if f.viewAlso == nil {
+		f.viewAlso = viewAlsoTable(f.l, f.related, f.isFunction)
+	}
+	return f.viewAlso[proven]
 }
 
 func (f *scanCycleFinder) graphArguments(proven *checker.Type) []*checker.Type {

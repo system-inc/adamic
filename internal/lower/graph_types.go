@@ -453,6 +453,10 @@ func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 	if proven.Flags()&checker.TypeFlagsObject == 0 {
 		return nil
 	}
+	// A checked view's edges, as reachLinks follows them (viewAlsoTable, #9489gt0).
+	for _, held := range f.viewAlsoOf(proven) {
+		links = append(links, cycleNode{proven: held})
+	}
 	switch {
 	case f.l.isLibraryType(proven, "MapIterator", "SetIterator"):
 		links = append(links, f.libraryIteratorCaptures(proven)...)
@@ -673,6 +677,10 @@ func (f *cycleFinder) viewPairFailure(source, target *checker.Type, seen map[[2]
 	// keep that. Two roads that wouldn't are stopped elsewhere, and this rule leans on both: `in` that
 	// narrows a union of object types is refused (unknown.go), and a write to a property only an `in`
 	// test added is NotYet (#yqbg9vz, in_narrowed_write.go). If either lifts, this pairing has to be looked at again.
+	// Beneath a view's top nothing is tested, so there a source arm can reach a view arm it doesn't relate to
+	// (Base.f: Y1 | Y2 seen as Narrow.f: Y1 hands out a Y2). That arm is an edge the finder walks
+	// (viewAlsoTable, #9489gt0, Lower's ruling), so skipping it here is sound for the same reason, not because
+	// the premise above holds at depth.
 	// fields() of a union gives only the properties every arm shares, so without the arms a field only
 	// one arm declares would go unwalked (Lower's second road), and GetPropertyOfType on a union source
 	// drops one only one arm has (Lower's should).

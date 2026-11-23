@@ -67,6 +67,9 @@ type cycleFinder struct {
 	writes []fresh.Write
 
 	libraryIterators []libraryIteratorCapture
+	// viewAlso is, for each type a checked view lets the program see a value through, the source types the
+	// view can hand out there that the finder doesn't relate to it (viewAlsoTable), built once from every view.
+	viewAlso map[*checker.Type][]*checker.Type
 	// A type's slots and strong links do not change during a walk. Keep their checker
 	// queries and compatible views once, rather than deriving them for every slot.
 	// These caches are sound only while what reachLinks reads stays fixed once the first query
@@ -776,6 +779,11 @@ func (f *cycleFinder) reachLinks(node cycleNode) []cycleNode {
 	if flags&checker.TypeFlagsObject == 0 {
 		return nil
 	}
+	// A value seen as this type through a checked view may be a source type the view's walk met beneath it
+	// that the finder doesn't relate to it (viewAlsoTable, #9489gt0).
+	for _, held := range f.viewAlsoOf(proven) {
+		links = append(links, cycleNode{proven: held})
+	}
 	switch {
 	case f.l.isLibraryType(proven, "MapIterator", "SetIterator"):
 		// A type can't say whether it's a collection's iterator or a generator declared as one. No
@@ -849,6 +857,146 @@ func (f *cycleFinder) deriveRelated(one *checker.Type, other *checker.Type) bool
 		return false
 	}
 	return f.l.checker.IsTypeAssignableTo(one, other) || f.l.checker.IsTypeAssignableTo(other, one)
+}
+
+// viewAlsoOf is the source types a checked view can hand out as proven that the finder doesn't relate to it
+// (viewAlsoTable), for this finder's views.
+func (f *cycleFinder) viewAlsoOf(proven *checker.Type) []*checker.Type {
+	if f.viewAlso == nil {
+		f.viewAlso = viewAlsoTable(f.l, f.deriveRelated, f.isFunction)
+	}
+	return f.viewAlso[proven]
+}
+
+// viewAlsoTable is, for each type a checked view lets the program see a value through, the source types the
+// view can hand out there that related doesn't relate to it (#9489gt0, Lower's ruling). A view tests at most its
+// top: interfaceCast's tag, a member cast's or a kind cast's (view.cast). Beneath that nothing is tested, so a
+// field the target narrows (Base.f: Y1 | Y2 seen as Narrow.f: Y1) hands out a Y2 as a Y1, and a Y1 slot it's
+// stored in holds what a Y2 holds. The finder took two types for one allocation only when they relate, so that
+// cycle went unseen and leaked, in a graph program or a plain one. Each view's source and target are walked in
+// step, through fields, index values, and array, tuple, Map and Set elements, and every source arm beneath an
+// untested position that doesn't relate to a target arm there is an edge from that arm to it: reachLinks and
+// graphLinks follow it, so the cycle is found and held as a graph region rather than stopped.
+//
+// It's keyed by type, so it's program-wide: every Y1 links to Y2, not only the one under Narrow, which finds
+// more, never fewer. A literal at depth rules no arm out, since no read beneath a view checks one; were it to
+// prune an edge, the next read road that skips its check would reopen this. A related arm pairs on, its fields
+// with the target's. An unrelated one pairs on too, since a value read out of it through the target's field is
+// its field's value seen as the target's. The walk is bounded by the pairs it has met, and by typeNesting: where
+// a generic grows deeper on its path, the whole source is linked to the target and the walk stops there, which
+// reachLinks then walks on its own bound.
+func viewAlsoTable(l *lowering, related func(one, other *checker.Type) bool, isFunction func(*checker.Type) bool) map[*checker.Type][]*checker.Type {
+	table := map[*checker.Type][]*checker.Type{}
+	linked := map[[2]*checker.Type]bool{}
+	link := func(viewed, held *checker.Type) {
+		if viewed == held || linked[[2]*checker.Type{viewed, held}] {
+			return
+		}
+		linked[[2]*checker.Type{viewed, held}] = true
+		table[viewed] = append(table[viewed], held)
+	}
+	skip := func(proven *checker.Type) bool {
+		return proven == nil || viewPairScalar(proven) || isFunction(proven)
+	}
+	arms := func(proven *checker.Type, flags checker.TypeFlags) []*checker.Type {
+		if proven.Flags()&flags != 0 {
+			return proven.Types()
+		}
+		return []*checker.Type{proven}
+	}
+	container := func(proven *checker.Type) bool {
+		return l.isArrayType(proven) || checker.IsTupleType(proven) || l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet")
+	}
+	type step struct {
+		source, target *checker.Type
+		tested         bool
+	}
+	walked := map[step]bool{}
+	var nesting typeNesting
+	var pair func(source, target *checker.Type, tested bool)
+	members := func(source, target *checker.Type) {
+		if container(source) && container(target) {
+			sourceArguments, targetArguments := l.checker.GetTypeArguments(source), l.checker.GetTypeArguments(target)
+			for index, targetArgument := range targetArguments {
+				switch {
+				case index < len(sourceArguments) && (checker.IsTupleType(source) == checker.IsTupleType(target) || checker.IsTupleType(target)):
+					pair(sourceArguments[index], targetArgument, false)
+				case len(sourceArguments) == 1 && l.isArrayType(source):
+					pair(sourceArguments[0], targetArgument, false)
+				}
+			}
+			if checker.IsTupleType(source) && l.isArrayType(target) && len(targetArguments) == 1 {
+				for _, sourceArgument := range sourceArguments {
+					pair(sourceArgument, targetArguments[0], false)
+				}
+			}
+		}
+		for _, info := range l.checker.GetIndexInfosOfType(target) {
+			for _, own := range l.checker.GetIndexInfosOfType(source) {
+				if own.KeyType() == info.KeyType() {
+					pair(own.ValueType(), info.ValueType(), false)
+				}
+			}
+		}
+		for _, field := range l.checker.GetPropertiesOfType(target) {
+			held := l.checker.GetPropertyOfType(source, field.Name)
+			if held == nil {
+				// A source with an index signature holds the field among its values.
+				for _, own := range l.checker.GetIndexInfosOfType(source) {
+					pair(own.ValueType(), l.checker.GetTypeOfSymbol(field), false)
+				}
+				continue
+			}
+			pair(l.checker.GetTypeOfSymbol(held), l.checker.GetTypeOfSymbol(field), false)
+		}
+	}
+	pair = func(source, target *checker.Type, tested bool) {
+		source, target = l.concrete(source), l.concrete(target)
+		if skip(source) || skip(target) {
+			return
+		}
+		present, viewed := l.checker.GetNonNullableType(source), l.checker.GetNonNullableType(target)
+		if present == viewed || walked[step{present, viewed, tested}] {
+			return
+		}
+		walked[step{present, viewed, tested}] = true
+		enteredSource, leaveSource := nesting.enter(present)
+		defer leaveSource()
+		enteredTarget, leaveTarget := nesting.enter(viewed)
+		defer leaveTarget()
+		if !enteredSource || !enteredTarget {
+			for _, seen := range arms(viewed, checker.TypeFlagsUnion|checker.TypeFlagsIntersection) {
+				link(seen, present)
+			}
+			return
+		}
+		for _, held := range arms(present, checker.TypeFlagsUnion) {
+			if skip(held) {
+				continue
+			}
+			for _, seen := range arms(viewed, checker.TypeFlagsUnion|checker.TypeFlagsIntersection) {
+				if skip(seen) {
+					continue
+				}
+				if related(held, seen) {
+					members(held, seen)
+					continue
+				}
+				// The cast's tag test told these arms apart at the top.
+				if tested {
+					continue
+				}
+				link(seen, held)
+				members(held, seen)
+			}
+		}
+	}
+	for _, view := range l.viewSources {
+		if view.source != nil {
+			pair(view.source, view.target, view.cast)
+		}
+	}
+	return table
 }
 
 func (f *cycleFinder) shapeCandidates(proven *checker.Type) []*checker.Type {
