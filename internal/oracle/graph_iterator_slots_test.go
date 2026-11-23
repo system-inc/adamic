@@ -16,8 +16,10 @@ import (
 // cycles.go's reachLinks links by assignability (libraryIteratorCaptures), so each is a graph program freed as one
 // region: held to Node, and balanced by the counted build. Before the edge each counted and leaked 906 bytes.
 //
-// Mutant: reachLinks' default arm without libraryIteratorCaptures, and every row but the control leaks by the
-// counted build.
+// Iterator<string> is Iterator<string, any, any> by lib's defaults, which the cycle finder took for a template that
+// holds nothing until an any by default stopped counting (anyByDefault). Mutants: reachLinks' default arm without
+// libraryIteratorCaptures, or deriveTemplate's any test back on every argument, and every row but the control leaks
+// by the counted build.
 func TestGraphIteratorSlotsByAssignability(t *testing.T) {
 	t.Parallel()
 	holder := func(slot, made string) string {
@@ -27,14 +29,10 @@ func TestGraphIteratorSlotsByAssignability(t *testing.T) {
 		{"an Iterator<string> field", holder("Iterator<string>", "map.keys()")},
 		{"an IterableIterator<string> field", holder("IterableIterator<string>", "map.keys()")},
 		{"an Iterable<string> field", holder("Iterable<string>", "map.keys()")},
-		{"a program's Cursor interface", "interface Cursor { next(): IteratorResult<string> }\n" + holder("Cursor", "map.keys()")},
+		{"a program's Cursor interface", "interface Step { readonly done?: boolean; readonly value: string | undefined }\ninterface Cursor { next(): Step }\n" + holder("Cursor", "map.keys()")},
 		{"a type alias", "type Keys = Iterator<string>;\n" + holder("Keys", "map.keys()")},
 		{"a Map's entries", holder("Iterator<[string, Holder]>", "map.entries()")},
 		{"a Set's values", "type Holder = { cursor: Iterator<Holder> | undefined };\nconst set = new Set<Holder>();\nconst holder: Holder = { cursor: undefined };\nset.add(holder);\nholder.cursor = set.values();\nconsole.log(`${set.size}`);\n"},
-		// Probe rows (#66acn2a, J-wb3qk4h): the name the arm on main already links, and both shapes inside a function.
-		{"probe: a MapIterator<string> field", holder("MapIterator<string>", "map.keys()")},
-		{"probe: an Iterator<string> field in a function", "function run(): void {\n" + holder("Iterator<string>", "map.keys()") + "}\nrun();\n"},
-		{"probe: a MapIterator<string> field in a function", "function run(): void {\n" + holder("MapIterator<string>", "map.keys()") + "}\nrun();\n"},
 		{"the control, no iterator", "type Holder = { size: number };\nconst map = new Map<string, Holder>();\nconst holder: Holder = { size: 0 };\nmap.set('a'.repeat(2), holder);\nholder.size = map.size;\nconsole.log(`${map.size}`);\n"},
 	}
 	for _, c := range cases {
