@@ -1,0 +1,61 @@
+package lower
+
+import (
+	"errors"
+	"os/exec"
+	"strings"
+	"testing"
+
+	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
+)
+
+type enumerationReachMutation struct {
+	name, before, after, pin string
+	rows                     []string
+}
+
+var enumerationReachMutations = []enumerationReachMutation{
+	{"WholeGraph", "if reach.unknown {", "if true || reach.unknown {", "TestEnumerationReachUnrelatedGetterLowers", []string{"unrelated was refused"}},
+	{"UnionMembers", "case flags&checker.TypeFlagsUnion != 0:", "case false && flags&checker.TypeFlagsUnion != 0:", "TestEnumerationReachUnionLowers", []string{"union was refused"}},
+	{"DeepReach", "if !deep {", "if true {", "TestEnumerationReachDeepGetterRefused/(field|element)", []string{"field was admitted", "element was admitted"}},
+}
+
+func enumerationReachMutantBinary(t *testing.T, m enumerationReachMutation) string {
+	t.Helper()
+	return buildcache.GoTestMutated(t, "", "enumeration-reach-"+m.name+".test", "./internal/lower", nil, []buildcache.Mutation{{File: "internal/lower/enumeration_accessor_reach.go", Before: m.before, After: m.after}})
+}
+func TestProduct_EnumerationReachWholeGraphMutant(t *testing.T) {
+	t.Parallel()
+	enumerationReachMutantBinary(t, enumerationReachMutations[0])
+}
+func TestProduct_EnumerationReachUnionMembersMutant(t *testing.T) {
+	t.Parallel()
+	enumerationReachMutantBinary(t, enumerationReachMutations[1])
+}
+func TestProduct_EnumerationReachDeepReachMutant(t *testing.T) {
+	t.Parallel()
+	enumerationReachMutantBinary(t, enumerationReachMutations[2])
+}
+
+func TestEnumerationReachMutantsAreCaught(t *testing.T) {
+	t.Parallel()
+	for _, m := range enumerationReachMutations {
+		t.Run(m.name, func(t *testing.T) {
+			t.Parallel()
+			binary := enumerationReachMutantBinary(t, m)
+			command := exec.CommandContext(t.Context(), binary, "-test.run", "^"+strings.ReplaceAll(m.pin, "/", "$/^")+"$", "-test.count=1", "-test.v")
+			stdout, stderr, err := childguard.Capture(t.Context(), command)
+			var exit *exec.ExitError
+			if !errors.As(err, &exit) || exit.ExitCode() != 1 {
+				t.Fatalf("%s enumeration reach mutant missed %s: %v\n%s\n%s", m.name, m.pin, err, stdout, stderr)
+			}
+			for _, row := range m.rows {
+				if !strings.Contains(string(stdout), "enumeration reach row "+row) {
+					t.Fatalf("%s enumeration reach mutant missed %s:\n%s", m.name, row, stdout)
+				}
+			}
+			t.Logf("%s enumeration reach mutant caught by %s:\n%s", m.name, m.pin, stdout)
+		})
+	}
+}

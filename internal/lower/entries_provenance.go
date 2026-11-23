@@ -102,15 +102,18 @@ func (l *lowering) enumerationBindingWritten(symbol *ast.Symbol) bool {
 
 // Native reflection currently represents own data descriptors only. Do not let an
 // erased accessor origin become a slot read; accessor and symbol layouts are refused.
-func (l *lowering) enumerationDescriptors(where *ast.Node, checked bool) error {
+// An accessor is refused only where its object can reach operand, the value enumerated,
+// and deep says the enumeration reads under it too (enumeration_accessor_reach.go).
+func (l *lowering) enumerationDescriptors(where, operand *ast.Node, deep, checked bool) error {
 	modules, err := l.moduleOrder(l.program.Files()[0])
 	if err != nil {
 		return err
 	}
+	reach := enumerationAccessorReach{operand: operand, deep: deep, modules: modules}
 	var failure error
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
-		if node.Kind == ast.KindGetAccessor || node.Kind == ast.KindSetAccessor {
+		if (node.Kind == ast.KindGetAccessor || node.Kind == ast.KindSetAccessor) && l.enumerationAccessorReaches(node, &reach) {
 			failure = &Refused{Where: l.program.Where(where), What: "Object enumeration with getter or accessor descriptors", Fix: "use own data properties for this first reflection implementation"}
 		}
 		if node.Kind == ast.KindObjectLiteralExpression {

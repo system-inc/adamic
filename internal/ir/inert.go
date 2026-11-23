@@ -89,10 +89,13 @@ var inertExpressions = func() map[string]bool {
 		"JSONStringify",
 		// ObjectCall: assign's setters and getters, and entries' getters. Natively every method reads or
 		// writes slots and calls no accessor (runtime/library_object.c: adamic_object_values at :123,
-		// adamic_object_assign at :156). Lowering refuses keys, values and entries in a program that
-		// writes any getter or setter, "Object enumeration with getter or accessor descriptors"
-		// (lower/entries_provenance.go:113), and stops every other method, assign among them, "on a
-		// shape not proven by a plain literal or its const binding" (lower/library_object.go:97).
+		// adamic_object_assign at :156). Lowering refuses keys, values and entries wherever a getter or
+		// setter can reach the operand, "Object enumeration with getter or accessor descriptors"
+		// (lower/entries_provenance.go:117): one whose object is assignable to the operand's type or a
+		// union member of it, and every one where that type can't be classified
+		// (lower/enumeration_accessor_reach.go). A value at a typed slot is assignable to its type, so
+		// no accessor is on an operand that passes. Every other method, assign among them, stops "on a
+		// shape not proven by a plain literal or its const binding" (lower/library_object.go:105).
 		"ObjectCall",
 	} {
 		result[name] = true
