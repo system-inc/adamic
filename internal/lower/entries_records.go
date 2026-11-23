@@ -609,9 +609,9 @@ func (l *lowering) recordReachedField(receiverTypeID int, name string) bool {
 // by the check every record read takes (recordReadDeclared), so a string under a field of 1 | 2 stops
 // there, named, and is never read as a number. Any other heap (a class instance, an Error, an array, a
 // Map, a function) stops loudly by name and never reaches the slot read. A nullish receiver under ?.
-// reads undefined, as the slot read does. Where the check can't hold the field's type (an object or
-// an array member) or makes none (a field held as a Union), the read stays NotYet. The storage test and the value check are each a checked
-// site in the report --explain-checks prints.
+// reads undefined, as the slot read does. A field held as a Union takes a membership check on
+// the record branch. Where a member has no tag that proves it, as with arrays and fixed objects,
+// the read stays NotYet. The storage and value checks are counted separately by --explain-checks.
 func (l *lowering) weakFieldRead(node *ast.Node, object ir.Expression, name string, of ir.Type, optional bool) (ir.Expression, error) {
 	b := l.libraryArrayBuilder([]ir.Expression{object})
 	// The helper's index is reserved now, so a helper the record's check makes takes the next one, as
@@ -641,15 +641,20 @@ func (l *lowering) weakFieldRead(node *ast.Node, object ir.Expression, name stri
 		return nil, l.notYet(node, "a union or optional field read in a program with record storage")
 	}
 	stored := ir.RecordCall{Method: "get", Arguments: []ir.Expression{receiver, ir.StringConstant{Index: l.constant(name)}}, Element: ir.Union, Returns: ir.Union}
-	record, err := l.recordReadDeclared(node, stored, l.checker.GetTypeAtLocation(node))
+	here := l.checker.GetTypeAtLocation(node)
+	record, err := l.recordReadDeclared(node, stored, here)
 	if err != nil {
 		return nil, err
 	}
-	// recordReadDeclared gives the read back unchecked where it builds no check: a field held as a Union,
-	// whose tag it trusts. Through a weak type a record's values may be of any type, so a number would be
-	// read as object | string; that read waits for a value check of its own, as tsc's two
-	// packageJsonContent.exports reads (exports?: object) do.
-	if _, unchecked := record.(ir.RecordCall); unchecked || record.Type() != slot.Type() {
+	// For a boxed field recordReadDeclared leaves the get unchecked. Hold its value to the
+	// union at this read: a write through a record's index signature may have stored any tag.
+	if _, unchecked := record.(ir.RecordCall); unchecked {
+		record = nil
+		if slot.Type() == ir.Union {
+			record = l.weakUnionRecordRead(node, stored, here)
+		}
+	}
+	if record == nil || record.Type() != slot.Type() {
 		return nil, l.notYet(node, "a union or optional field read in a program with record storage")
 	}
 	// What the receiver turned out to be, named, for the stop.
@@ -685,4 +690,61 @@ func (l *lowering) weakFieldRead(node *ast.Node, object ir.Expression, name stri
 	l.result.PlaceholderChecks = append(l.result.PlaceholderChecks, ir.PlaceholderCheck{Origin: "record storage", Use: "weak field read storage", Path: sourceExpression(node), Where: l.program.Where(node), Status: "checked"})
 	l.result.PlaceholderChecks = append(l.result.PlaceholderChecks, ir.PlaceholderCheck{Origin: "record storage", Use: "weak field read record value", Path: sourceExpression(node), Where: l.program.Where(node), Status: "checked"})
 	return ir.Call{Function: b.function, Arguments: b.arguments, Returns: slot.Type()}, nil
+}
+
+// weakUnionRecordRead returns nil if any member lacks a runtime membership test.
+func (l *lowering) weakUnionRecordRead(node *ast.Node, stored ir.Expression, here *checker.Type) ir.Expression {
+	here = l.concrete(here)
+	field := l.checker.GetSymbolAtLocation(node.Name())
+	if field == nil || here.Flags()&checker.TypeFlagsUnion == 0 {
+		return nil
+	}
+	declared := l.concrete(l.checker.GetTypeOfSymbol(field))
+	b := l.libraryArrayBuilder([]ir.Expression{stored})
+	value := b.read(b.parameters[0])
+	tag := b.local("tag", ir.String)
+	b.body = append(b.body, ir.Declare{Local: tag, Value: ir.TypeOf{Value: value}})
+	matches := ir.Expression(ir.BooleanConstant{Value: false})
+	openNumber := l.tagHoldsAnyNumber(here)
+	for _, member := range here.Types() {
+		var test ir.Expression
+		flags := member.Flags()
+		switch {
+		case flags&checker.TypeFlagsNull != 0:
+			test = ir.IsNull{Value: value}
+		case flags&checker.TypeFlagsUndefined != 0:
+			// A ?. may add undefined for the receiver. That alone doesn't admit a missing key.
+			if !l.includesUndefined(declared) {
+				continue
+			}
+			test = ir.IsUndefined{Value: value}
+		default:
+			var name string
+			switch {
+			case flags&(checker.TypeFlagsString|checker.TypeFlagsStringLiteral) != 0:
+				name = "string"
+			case flags&(checker.TypeFlagsNumber|checker.TypeFlagsNumberLiteral) != 0:
+				name = "number"
+			case flags&(checker.TypeFlagsBoolean|checker.TypeFlagsBooleanLiteral) != 0:
+				name = "boolean"
+			default:
+				return nil
+			}
+			test = ir.Binary{Operator: ir.Equal, Left: b.read(tag), Right: ir.StringConstant{Index: l.constant(name)}}
+			if literal, of, known := l.literalConstant(member); known && (of != ir.Number || !openNumber) {
+				equal := ir.Binary{Operator: ir.Equal, Left: ir.Narrow{Value: value, To: of}, Right: literal}
+				test = ir.Binary{Operator: ir.And, Left: test, Right: equal}
+			}
+		}
+		matches = ir.Binary{Operator: ir.Or, Left: matches, Right: test}
+	}
+	named := l.checker.TypeToString(declared)
+	found := ir.Conditional{Condition: ir.IsNull{Value: value}, WhenTrue: ir.StringConstant{Index: l.constant("null")}, WhenNot: b.read(tag), Of: ir.String}
+	message := ir.Concat{Parts: []ir.Expression{
+		ir.StringConstant{Index: l.constant("field read failed: " + recordReadExpression(node) + " is not a " + named + "; expected " + named + ", found ")},
+		found,
+		ir.StringConstant{Index: l.constant(", which a computed-key or index-signature write may have stored")},
+	}}
+	b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: message}}})
+	return b.finish("weak_union_record_member", value)
 }
