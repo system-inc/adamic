@@ -344,7 +344,9 @@ func (l *lowering) enumerationLiteralContextualOwners(literal *ast.Node) []*chec
 	for around != nil && around.Kind == ast.KindParenthesizedExpression {
 		around = around.Parent
 	}
-	if around != nil && around.Kind == ast.KindSatisfiesExpression {
+	// A type assertion's operand is neither: its slot type is the asserted type, which the literal's own type
+	// may relate to neither way, so the literal keeps its own type, as under satisfies (Lower's should).
+	if around != nil && (around.Kind == ast.KindSatisfiesExpression || around.Kind == ast.KindAsExpression || around.Kind == ast.KindTypeAssertionExpression) {
 		return nil
 	}
 	// The slot the literal goes into, read the way every refusal rule reads it: a slot a caller set, or the

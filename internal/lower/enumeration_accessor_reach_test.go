@@ -336,6 +336,17 @@ const enumerationReachShared = "type Shared = { b: number };\nconst lit = { b: 2
 // Middle to Other, where neither Middle nor Other relates to the literal and only the second step of
 // the widening reaches Shared. The control with no cast in the program is the unrelated row, which
 // lowers and agrees with Node. Mutant ViewPass (the post-pass returns at its top) turns the sibling red.
+// A getter-bearing literal written under as keeps its own type as owner, never the asserted type, which
+// its own type can relate to neither way (Lower's should on 5eacc825): enumerated through the asserted
+// type in another module, it stays refused. Mutant AssertedLiteral (an asserted literal owned by its
+// slot type, the asserted type) turns it red.
+func TestEnumerationReachAssertedLiteralRefused(t *testing.T) {
+	t.Parallel()
+	const held = "export type View = { b: number; d: 4; e?: number };\nexport const asserted = { b: 1, d: 4, get a(): number { return 1; } } as View;\n"
+	const main = "import { type View, asserted } from './held';\nfunction read(view: View): number[] { return Object.values(view); }\nconsole.log(read(asserted).join(','));\n"
+	enumerationReachRefusedAs(t, "asserted literal", ".ts", held, main)
+}
+
 func TestEnumerationReachViewRefused(t *testing.T) {
 	t.Parallel()
 	const read = "function read(view: Other): number[] { return Object.values(view); }\nconsole.log(read(other).join(','));\n"

@@ -6,7 +6,7 @@ from pathlib import Path
 path = Path(__file__).resolve().parent / 'product-order.json'
 order = json.loads(path.read_text())
 assert order['version'] == 1
-for name in ['WholeGraph', 'UnionMembers', 'DeepReach', 'DiscriminatedUnion', 'GenericLiteral', 'LiteralTypeParameter', 'DeclaredOwner', 'GenericClass', 'AnyInstance', 'Contextual', 'ContextualScope', 'OneWay', 'ViewPass']:
+for name in ['WholeGraph', 'UnionMembers', 'DeepReach', 'DiscriminatedUnion', 'GenericLiteral', 'LiteralTypeParameter', 'DeclaredOwner', 'GenericClass', 'AnyInstance', 'Contextual', 'ContextualScope', 'AssertedLiteral', 'OneWay', 'ViewPass']:
     order['waits']['internal/lower TestProduct_EnumerationReach' + name + 'Mutant'] = []
 if '--check' in sys.argv:
     if json.loads(path.read_text()) != order:
