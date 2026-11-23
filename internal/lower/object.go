@@ -558,6 +558,14 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	if object.Type() == ir.Closure && name == "length" && l.boundSource(access.Expression, map[*ast.Symbol]bool{}) {
 		return ir.FunctionLength{Function: object, Optional: access.QuestionDotToken != nil}, nil
 	}
+	return l.propertyRead(node, object, name)
+}
+
+// propertyRead is property's read of a field once its receiver is lowered, object: whatever the receiver is held
+// as, each road below. A range type's dispatch lowers its object arm through it again, with the receiver narrowed
+// to an object, so that arm is the read an object-held receiver of its type gets (range_fields.go).
+func (l *lowering) propertyRead(node *ast.Node, object ir.Expression, name string) (ir.Expression, error) {
+	access := node.AsPropertyAccessExpression()
 	if object.Type() == ir.Object || object.Type() == ir.Array {
 		if value, handled, err := l.factoryFieldRead(node, object, name); handled {
 			return value, err
@@ -566,8 +574,11 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	if object.Type() == ir.Union && l.rangeReceiver(access.Expression) {
 		// A closed range type's field, through the Union it's held as where a NodeArray may stand for it
 		// (range_types.go). dynamicProperty would stop on any getter of the name in the program, and tsc has a
-		// get pos(), so the read asks the kind on its own road, which #hae423v's next wave builds; until then
-		// it stops here, as range_unions.go classes a Property.
+		// get pos(), so pos and end are read by kind on their own road; any other read through a range type
+		// stops, as range_unions.go classes a Property.
+		if access.QuestionDotToken == nil && l.rangeReceiverOnly(access.Expression) && (name == "pos" || name == "end") {
+			return l.rangeFieldRead(node, object, name)
+		}
 		return nil, l.notYet(node, "a read of field "+name+" through a range type held as a union, where a NodeArray may stand for it")
 	}
 	if object.Type() == ir.Union && access.QuestionDotToken != nil && l.nullableObjectUnion(l.checker.GetTypeAtLocation(access.Expression)) {

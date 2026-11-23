@@ -68,7 +68,7 @@ var rangeStops = []rangeUnionExample{
 	{ir.InstanceOf{Value: rangeHeld}, "an exact test reads the object's class word after a null test only (emit_expressions.go)"},
 	{ir.JSONEncode{Value: rangeHeld}, "encodeJson reads every field by its schema, raw"},
 	{ir.ObjectKeys{Object: rangeHeld}, "Object.keys and a for-in read the object's own keys from its layout"},
-	{ir.Property{Object: rangeHeld, Name: "pos"}, "a field read through the object's layout; #hae423v's next wave reads it by kind"},
+	{ir.Property{Object: rangeHeld, Name: "pos"}, "a field read through the object's layout; a read of pos or end through a range type is a dispatch whose arms take checked narrows (range_fields.go)"},
 	{ir.RecordStorage{Value: rangeHeld}, "reads an object's storage word"},
 }
 
@@ -294,18 +294,56 @@ func TestRangeTypeHeldAsUnionWithNodeArrayLayout(t *testing.T) {
 	}
 }
 
-// A field read through a range type held as a Union stops in this wave, which #hae423v's next wave lifts with a
-// read by kind; the same program with no NodeArray interface lowers as it did, its reads plain object reads.
-func TestRangeUnionFieldReadStops(t *testing.T) {
+// A field read of pos or end through a range type held as a Union is a dispatch (range_fields.go): a helper that
+// asks ArrayIsArray and reads each arm through a checked narrow to its kind, with no unchecked narrow to an
+// object or an array left anywhere in the program. An optional chain through one still stops. The same program
+// with no NodeArray interface lowers as it did, its reads plain object reads and no helper made.
+func TestRangeUnionFieldReadDispatches(t *testing.T) {
 	t.Parallel()
 	width := "export function width(range: TextRange): number { return range.end - range.pos; }\nconsole.log('ok');\n"
-	_, err := lowerSourceAs(t, rangeTextRange+rangeNodeArray+width, ".ts")
-	var notYet *NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(notYet.Where, "main.ts:4:") || !strings.Contains(notYet.What, "a read of field end through a range type held as a union") {
-		t.Errorf("with a NodeArray: got %v, want the range field read's stop at main.ts:4", err)
+	helpers := func(program *ir.Program) (made int, unasked int) {
+		inspect := func(node any) bool {
+			if narrow, isNarrow := node.(ir.Narrow); isNarrow && !narrow.Checked && (narrow.To == ir.Object || narrow.To == ir.Array) {
+				unasked++
+			}
+			return true
+		}
+		for _, function := range program.Functions {
+			if function.Name == "range_field_read" {
+				made++
+				asks := false
+				walk(function.Body, func(node any) bool {
+					_, isTest := node.(ir.ArrayIsArray)
+					asks = asks || isTest
+					return true
+				})
+				if !asks {
+					t.Errorf("a range_field_read helper never asks ArrayIsArray")
+				}
+			}
+			walk(function.Body, inspect)
+		}
+		walk(program.Main, inspect)
+		return made, unasked
 	}
-	if _, err := lowerSourceAs(t, rangeTextRange+width, ".ts"); err != nil {
-		t.Errorf("without a NodeArray: got %v, want it lowered", err)
+	program, err := lowerSourceAs(t, rangeTextRange+rangeNodeArray+width, ".ts")
+	if err != nil {
+		t.Fatalf("with a NodeArray: got %v, want it lowered", err)
+	}
+	if made, unasked := helpers(program); made != 2 || unasked != 0 {
+		t.Errorf("with a NodeArray: %d range_field_read helpers and %d unchecked narrows to an object or an array, want 2 and 0", made, unasked)
+	}
+	_, err = lowerSourceAs(t, rangeTextRange+rangeNodeArray+"export function start(range: TextRange | undefined): number { return range?.pos ?? -1; }\nconsole.log('ok');\n", ".ts")
+	var notYet *NotYet
+	if !errors.As(err, &notYet) || !strings.Contains(notYet.Where, "main.ts:4:") || !strings.Contains(notYet.What, "a read of field pos through a range type held as a union") {
+		t.Errorf("an optional chain: got %v, want the range field read's stop at main.ts:4", err)
+	}
+	plain, err := lowerSourceAs(t, rangeTextRange+width, ".ts")
+	if err != nil {
+		t.Fatalf("without a NodeArray: got %v, want it lowered", err)
+	}
+	if made, _ := helpers(plain); made != 0 {
+		t.Errorf("without a NodeArray: %d range_field_read helpers, want none", made)
 	}
 }
 
