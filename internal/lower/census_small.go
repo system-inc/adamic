@@ -327,8 +327,14 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 		if (l.hasPhantom(from) || l.hasPhantom(to)) && l.phantomCast(from, to) && l.phantomAssignable(from, to) && l.phantomAssignable(to, from) {
 			return nil
 		}
-		if l.overloadPhantomResult(implementation, produced, promised) {
-			return nil // Only phantom brands differ, below the top level too (rulings.md:34 with :32, #z5d0jye step 3).
+		served, err := l.overloadPhantomResult(implementation, overload, label, produced, promised)
+		if err != nil {
+			return err // An overload mint in .a, refused at each call that resolves to it (#z1qkw7d).
+		}
+		if served {
+			// Only phantom brands differ: a primitive brand erased, or an extension at the top minted and listed
+			// (rulings.md:34 with :32, #z5d0jye step 3, #z1qkw7d).
+			return nil
 		}
 		if l.censusNullableOverloadResult(produced, promised) {
 			return nil // Each resolved call proves the result or checks its presence.

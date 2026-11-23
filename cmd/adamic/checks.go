@@ -67,6 +67,10 @@ func explainPredicateChecks(output io.Writer, program *ir.Program) {
 		mints := append([]ir.BrandMint(nil), program.BrandMints...)
 		sort.SliceStable(mints, func(i, j int) bool { return mints[i].Where < mints[j].Where })
 		for _, mint := range mints {
+			if mint.Overload != "" {
+				fmt.Fprintf(output, "%s: brand mint %s adds %s as the result of %s: erased, unchecked\n", relative(mint.Where), mint.Target, strings.Join(mint.Members, ", "), mint.Overload)
+				continue
+			}
 			fmt.Fprintf(output, "%s: brand mint %s adds %s: erased, unchecked\n", relative(mint.Where), mint.Target, strings.Join(mint.Members, ", "))
 		}
 		fmt.Fprintf(output, "adamic: brand mints: %d\n", len(mints))

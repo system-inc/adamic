@@ -25,8 +25,8 @@ type Program struct {
 	PlaceholderSources SortedMap[string, string]
 	PlaceholderViews   SortedMap[string, string]
 	PlaceholderChecks  []PlaceholderCheck
-	// BrandMints lists every erased cast that adds only phantom brand members, for the checked report
-	// (rulings.md:29, #yth65gz).
+	// BrandMints lists every erased cast, and every overload's promised result, that adds only phantom brand
+	// members, for the checked report (rulings.md:29, #yth65gz, #z1qkw7d).
 	BrandMints []BrandMint
 
 	// argumentFacts caches PackedCountNeeded's whole-program derivation (argument_slots.go).
@@ -129,10 +129,14 @@ type Program struct {
 // PlaceholderCheck records one readiness or storage-arm boundary in the checked-sites report.
 type PlaceholderCheck struct{ Origin, Use, Path, Where, Status string }
 
-// BrandMint is one cast that mints a brand: where, the branded target, and the phantom members it adds.
+// BrandMint is one mint of a brand: where, the branded target, and the phantom members it adds. A cast
+// mints at its own site. An overload whose promised result adds only phantom members to its
+// implementation's mints at its declaration, for every call resolving to it, and Overload names it
+// ("overload 1 of sorted"); it's empty for a cast (#z1qkw7d).
 type BrandMint struct {
 	Where, Target string
 	Members       []string
+	Overload      string
 }
 
 type PlaceholderUse struct {
