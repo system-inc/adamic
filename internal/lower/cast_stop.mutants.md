@@ -11,3 +11,9 @@ Expected: `TestCastStopNamesItsCause` goes red on every .ts probe (each want nam
 `castStop` answers `castUntaggedUnion` with a refusal in the NotYet's words, so the kind moves and the words don't.
 
 Expected: `TestCastStopNamesItsCause/untagged_union` goes red on the kind (want refused=false), the words alone wouldn't catch it.
+
+## M3: every array cast unnamed again (#53amvnn)
+
+`arrayCastCause` answers castUnnamed for every array cast, as main did before #53amvnn.
+
+Expected: `TestCastStopNamesItsCause` goes red on array_elements, mutable_array, tuple_from_array, tuple_from_tuples and array_arm (each names its cause), and stays green on the rest.
