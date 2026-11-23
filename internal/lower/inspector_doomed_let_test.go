@@ -136,7 +136,8 @@ func TestInspectorLetHatchesCheckBeforeTrap(t *testing.T) {
 			source = strings.Replace(source, "return disable();", hatch+".post('Profiler.stop'); return 'unreachable';", 1)
 			p, err := lowerSourceAs(t, source, ".ts")
 			if err != nil {
-				if name == "cast" && strings.Contains(err.Error(), "cast the runtime can't check") {
+				// The cast removes undefined, a presence test nobody has built for this shape (castDropsNullish).
+				if name == "cast" && strings.Contains(err.Error(), "a checked cast from Session | undefined to Session, which removes undefined") {
 					t.Log(err)
 					return
 				}

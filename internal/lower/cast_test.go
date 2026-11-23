@@ -33,14 +33,22 @@ func TestUncheckableCastsStayRefused(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			// The fix names the forms each file kind accepts: .a narrows by the tag, since a member cast is
-			// refused there too (#m8dvvmf), and .ts casts to a member, which stays checked.
-			for extension, accepted := range map[string]string{".a": "narrow a discriminated union by its tag", ".ts": "enum tags"} {
-				_, err := lowerSourceAs(t, probe.source, extension)
-				var refused *Refused
-				if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/no-unchecked-cast") || !strings.Contains(err.Error(), accepted) || !strings.Contains(err.Error(), "nominal class ancestry") {
-					t.Fatalf("%s: want unchecked-cast refusal and accepted forms, got %v", extension, err)
-				}
+			// In .a the fix names the forms .a accepts: it narrows by the tag, since a member cast is refused
+			// there too (#m8dvvmf). In .ts each refusal names its own cause and that cause's fix (castStop,
+			// pinned by TestCastStopNamesItsCause), and every one stays a refusal.
+			_, err := lowerSourceAs(t, probe.source, ".a")
+			var refused *Refused
+			if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/no-unchecked-cast") || !strings.Contains(err.Error(), "narrow a discriminated union by its tag") || !strings.Contains(err.Error(), "nominal class ancestry") {
+				t.Fatalf(".a: want unchecked-cast refusal and accepted forms, got %v", err)
+			}
+			// Two class casts are NotYet in .ts, since instanceof decides each at run time (Adamic's principle
+			// on #b5w3ycg, Nov 22); TestCastStopNamesItsCause pins their words.
+			if probe.name == "unrelated class" || probe.name == "structural class" {
+				return
+			}
+			_, err = lowerSourceAs(t, probe.source, ".ts")
+			if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/no-unchecked-cast") {
+				t.Fatalf(".ts: want an unchecked-cast refusal, got %v", err)
 			}
 		})
 	}

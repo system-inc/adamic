@@ -49,6 +49,15 @@
     "retiring_task": "#xjdce2d"
   },
   {
+    "path": "internal/lower/cast_stop.go",
+    "kind": "rule",
+    "rule_id": "adamic/no-unchecked-cast",
+    "counterpart": "cohere/internal/lint/rules/adamic/no_unchecked_cast.go",
+    "decision": "delete",
+    "reason": "The words of castProof's stops, split by cause from cast_proof.go (#b5w3ycg). Retires with cast_proof.go's judgment when cohere owns it by reference.",
+    "retiring_task": "#xjdce2d"
+  },
+  {
     "path": "internal/lower/class_generic_calls.go",
     "kind": "rule",
     "rule_id": "adamic/nominal-class",
