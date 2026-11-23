@@ -400,7 +400,7 @@ func (f *cycleFinder) jsonReach(proven *checker.Type) (string, []*checker.Type) 
 		next = append(next, l.checker.GetTypeOfSymbol(field))
 	}
 	for _, shape := range f.shapeCandidates(proven) {
-		if shape != proven && l.checker.IsTypeAssignableTo(shape, proven) {
+		if shape != proven && l.checker.IsTypeAssignableTo(l.relatedShape(shape), proven) {
 			next = append(next, shape)
 		}
 	}
