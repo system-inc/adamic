@@ -14,8 +14,10 @@ import (
 // NodeArray going where one is held is served: pos and end are read, written, written when optional and
 // destructured through it by a kind dispatch, and agree with Node natively, sanitized and on JavaScript. The
 // programs in testdata/range_unions send a NodeArray and an object through the same function (a Node alone in
-// node_through_range.a), write through tsc's upcast in setTextRangeEnd (upcast_write.a), and read a class with
-// get pos() through the dispatch's object arm, which runs the getter (getter_through_range.a, Lower's Must 3).
+// node_through_range.a), write through tsc's upcast in setTextRangeEnd (upcast_write.a), read a class with get
+// pos() through the dispatch's object arm, which runs the getter (getter_through_range.a, Lower's Must 3),
+// compare one value held as an object in one slot and as a range type's union in another (equality.a), and read
+// a literal built as an object back through the dispatch (object_literal.a).
 //
 // Mutants (scratch-ha1/): the object arm built as a dynamic read finishAccessors never sees, which turns
 // getter_through_range.a red; the array arm's narrow made unchecked, which checkRangeUnionReads stops at
@@ -38,8 +40,8 @@ func TestRangeUnionsAgreeWithNode(t *testing.T) {
 			loomViewsDAgrees(t, directory+"/"+entry.Name())
 		})
 	}
-	if programs != 6 {
-		t.Fatalf("%d programs in %s, want 6: a program added or removed needs this count changed with it", programs, directory)
+	if programs != 8 {
+		t.Fatalf("%d programs in %s, want 8: a program added or removed needs this count changed with it", programs, directory)
 	}
 }
 
