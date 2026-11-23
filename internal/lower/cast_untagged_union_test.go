@@ -10,24 +10,31 @@ import (
 
 // A cast from a union of plain objects no literal tag tells apart, to one member or narrower (#axqgdck,
 // untaggedUnionArm), lowers in .ts to a checked view of the target with no test at the cast (rulings.md:18):
-// no CheckedCast, and its view marked untagged. A source holding undefined beside two or more such members
-// takes absentArm's presence check first, whose message is the only cast message. tsc's shapes: a member of
+// no CheckedCast, and its view marked untagged. A target that holds a literal tag the members share takes the tag
+// test at the cast, the ledger's tagged interface downcast: one CheckedCast on that field (taggedViewCast). A
+// source holding undefined beside two or more such members takes absentArm's presence check first, whose message
+// is the only cast message of a view with no tag. tsc's shapes: a member of
 // PackageJsonInfo | MissingPackageJsonInfo, Node out of FileReference | Node, and an Identifier out of
-// Declaration | Expression, whose kind is open on both. Mutant: untaggedUnionArm returning false reds every row.
+// Declaration | Expression, whose kind is open on both. Mutants: untaggedUnionArm returning false reds every row;
+// untaggedUnionView skipping taggedViewCast reds "a target with a literal tag".
 func TestUntaggedUnionCastLowers(t *testing.T) {
 	t.Parallel()
 	members := "interface A { readonly a: number; readonly shared: string } interface B { readonly b: string; readonly shared: string } "
 	for _, probe := range []struct {
 		name, source string
 		absent       bool
+		tag          string
 	}{
-		{"a member", members + "function f(x: A | B): A { return x as A; } console.log(String(f({ a: 1, shared: 's' }).a));", false},
-		{"a member out of three", members + "interface C { readonly c: boolean } function f(x: A | B | C): B { return x as B; } console.log(f({ b: 'b', shared: 's' }).b);", false},
-		{"narrower than a member", "interface Declaration { readonly kind: number; readonly pos: number } interface Expression { readonly kind: number; readonly end: number } interface Identifier extends Expression { readonly text: string } function f(x: Declaration | Expression): Identifier { return x as Identifier; } console.log(f({ kind: 80, end: 1, text: 't' } as Identifier).text);", false},
-		{"a member beside undefined", members + "function f(x: A | B | undefined): A { return x as A; } console.log(String(f({ a: 1, shared: 's' }).a));", true},
+		{"a member", members + "function f(x: A | B): A { return x as A; } console.log(String(f({ a: 1, shared: 's' }).a));", false, ""},
+		{"a member out of three", members + "interface C { readonly c: boolean } function f(x: A | B | C): B { return x as B; } console.log(f({ b: 'b', shared: 's' }).b);", false, ""},
+		{"narrower than a member", "interface Declaration { readonly kind: number; readonly pos: number } interface Expression { readonly kind: number; readonly end: number } interface Identifier extends Expression { readonly text: string } function f(x: Declaration | Expression): Identifier { return x as Identifier; } console.log(f({ kind: 80, end: 1, text: 't' } as Identifier).text);", false, ""},
+		{"a member beside undefined", members + "function f(x: A | B | undefined): A { return x as A; } console.log(String(f({ a: 1, shared: 's' }).a));", true, ""},
 		// An optional literal field is no tag (fieldLiteral answers nil for kind?: 'a'), so the union takes this arm,
 		// held by the checked reads; recorded here so a ruling either way moves this row (Lower's should).
-		{"an optional literal field", "interface A { readonly kind?: 'a'; readonly a: number } interface B { readonly kind?: 'b'; readonly b: string } function f(x: A | B): A { return x as A; } console.log(String(f({ kind: 'a', a: 1 }).a));", false},
+		{"an optional literal field", "interface A { readonly kind?: 'a'; readonly a: number } interface B { readonly kind?: 'b'; readonly b: string } function f(x: A | B): A { return x as A; } console.log(String(f({ kind: 'a', a: 1 }).a));", false, ""},
+		// binder.ts:1416's shape: a CallExpression out of a union of open-kind nodes, its kind a literal. Without the
+		// tag test the enum-literal rule refused it (J-d4ce8r4).
+		{"a target with a literal tag", "enum SyntaxKind { Identifier = 80, CallExpression = 213, Block = 241 } interface Expression { readonly kind: SyntaxKind; readonly end: number } interface Statement { readonly kind: SyntaxKind; readonly pos: number } interface CallExpression extends Expression { readonly kind: SyntaxKind.CallExpression; readonly argumentCount: number } function f(x: Expression | Statement): CallExpression { return x as CallExpression; }", false, "kind"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -35,13 +42,23 @@ func TestUntaggedUnionCastLowers(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
+			tags := []string{}
 			for _, function := range lowered.Functions {
 				walk(function.Body, func(node any) bool {
 					if cast, ok := node.(ir.CheckedCast); ok {
-						t.Fatalf("a CheckedCast on %s: an untagged union's cast is a view with no test at the cast", cast.Field)
+						tags = append(tags, cast.Field)
 					}
 					return true
 				})
+			}
+			if probe.tag != "" {
+				if len(tags) != 1 || tags[0] != probe.tag {
+					t.Fatalf("CheckedCasts on %v, want one on %s: a target with a literal tag takes the tag test", tags, probe.tag)
+				}
+				return
+			}
+			if len(tags) != 0 {
+				t.Fatalf("CheckedCasts on %v: an untagged union's cast to a target with no tag is a view with no test", tags)
 			}
 			messages := 0
 			for _, text := range lowered.Strings {

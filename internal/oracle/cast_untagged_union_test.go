@@ -51,6 +51,7 @@ func init() {
 		{"cast_untagged_union.ts", false},
 		{"cast_untagged_union_writes.ts", false},
 		{"cast_untagged_union_cycle.ts", false},
+		{"cast_untagged_union_tagged.ts", false},
 		{"cast_untagged_union_lie.ts", true},
 		{"cast_untagged_union_callee_lie.ts", true},
 		{"cast_untagged_union_missing_write.ts", true},

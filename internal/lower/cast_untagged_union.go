@@ -69,11 +69,34 @@ func (l *lowering) unionHoldsLiterals(members []*checker.Type) bool {
 // lowering made is marked, not one picked by its place in the list: each is this cast's, and marking one more
 // untagged only makes the guard pair more, so no reorder inside view() can leave this cast's view unmarked
 // (Lower's should).
+//
+// A target that holds a literal tag every member shares (an Identifier's kind out of Declaration | Expression) takes
+// the tag test at the cast first, the ledger's tagged interface downcast (taggedViewCast): its open kind proves the
+// kind and not the layout, so its reads stay checked, and the tag proves what its literal slot holds, which a view
+// with no test leaves unproven for the enum-literal rule to refuse (head 2's census, J-d4ce8r4). The per-member
+// write judgment runs first either way.
 func (l *lowering) untaggedUnionCast(node *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {
 	views := len(l.viewSources)
-	checked, err := l.overlapViewCast(node, value, source, target)
+	checked, err := l.untaggedUnionView(node, value, source, target)
 	for index := views; index < len(l.viewSources); index++ {
 		l.viewSources[index].untagged = true
 	}
 	return checked, err
+}
+
+// untaggedUnionView is untaggedUnionCast's lowering before its views are marked: overlapViewCast's judgments of the
+// held value and of each member's writes, then the tag test where the target has one, else the view alone.
+func (l *lowering) untaggedUnionView(node *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {
+	if value.Type() != ir.Object || len(l.checker.GetIndexInfosOfType(target)) != 0 {
+		return l.overlapViewCast(node, value, source, target)
+	}
+	for _, member := range castMembers(source) {
+		if l.widened(member, target, map[[2]*checker.Type]bool{}) != nil {
+			return l.overlapViewCast(node, value, source, target)
+		}
+	}
+	if checked, err := l.taggedViewCast(node, value, source, target); checked != nil || err != nil {
+		return checked, err
+	}
+	return l.overlapViewCast(node, value, source, target)
 }

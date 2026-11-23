@@ -13,7 +13,18 @@ import (
 // target from the source: a test every source value passes proves nothing, so .a takes the first test
 // a source value can fail and refuses the cast when there is none. .ts keeps the first tag, checked.
 func (l *lowering) interfaceCast(node *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {
-	if source.Flags()&checker.TypeFlagsObject == 0 || target.Flags()&checker.TypeFlagsObject == 0 || value.Type() != ir.Object || isClassInstance(target) {
+	if source.Flags()&checker.TypeFlagsObject == 0 {
+		return nil, nil
+	}
+	return l.taggedViewCast(node, value, source, target)
+}
+
+// taggedViewCast is interfaceCast's tag test and view over any source whose properties hold the target's tag: one
+// object, or an untagged union whose members share the field (untaggedUnionCast, #axqgdck), where a target's literal
+// tag is the ledger's tagged interface downcast, checked at the cast with every read checked after. Nil when the
+// target declares no literal tag the source holds.
+func (l *lowering) taggedViewCast(node *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {
+	if target.Flags()&checker.TypeFlagsObject == 0 || value.Type() != ir.Object || isClassInstance(target) {
 		return nil, nil
 	}
 	var vacuous *Refused
