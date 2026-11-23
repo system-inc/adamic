@@ -4603,7 +4603,7 @@ class CensusLaunchers(unittest.TestCase):
     # Every other road a launch takes, its packages imported as a launcher would.
     roadsLauncher = 'package launch\n\nimport (\n\t"os"\n\t"os/exec"\n\t"syscall"\n\n\t"golang.org/x/sys/unix"\n)\n\nfunc run() error {\n\t%s\n\treturn nil\n}\n'
 
-    def census(self, source, launchers, files=None, executors="", changed=None):
+    def census(self, source, launchers, files=None, executors="", changed=None, packages=None):
         """The census over a tree holding source as tool/launch/launch_test.go and files, {path: source}, with the gate
         tools' map declaring launchers and executors.txt holding executors, changed the change's paths."""
         with tempfile.TemporaryDirectory() as root:
@@ -4617,7 +4617,7 @@ class CensusLaunchers(unittest.TestCase):
                 with open(os.path.join(tree, path), "w") as handle:
                     handle.write(text)
             with open(os.path.join(tools, "cloud/fast-gate/compiler-dependencies.json"), "w") as handle:
-                json.dump({"version": 1, "packages": {}, "drivers": {}, "launchers": launchers}, handle)
+                json.dump({"version": 1, "packages": packages or {}, "drivers": {}, "launchers": launchers}, handle)
             with open(os.path.join(tools, "cloud/fast-gate/executors.txt"), "w") as handle:
                 handle.write(executors)
             realRun(["git", "init", "-q", tree], check=True)
@@ -4734,6 +4734,19 @@ class CensusLaunchers(unittest.TestCase):
                 self.census(self.houseLauncher % ("", "helper", "helper.Build()"), self.declared, self.helper, line)
             self.assertNotIsInstance(raised.exception, run.ChangeRefusal)
             self.assertIn("allow-launch line", str(raised.exception), line)
+
+    def test_a_packages_entry_naming_no_compiler_leaves_the_launches_read(self):
+        # Lane keeps a packages entry naming only the adapted tree, whose product it holds, so that entry must never
+        # answer the census for what lane launches. Mutant: any packages entry exempting its package (the computed launch
+        # passes, and so does the undeclared one).
+        computed = self.launcher % "exec.Command(compilerPath())"
+        self.census(computed, self.declared, self.helper, packages={"tool/launch": ["internal/load"]})
+        with self.assertRaises(run.ChangeRefusal) as raised:
+            self.census(computed, self.declared, self.helper, packages={"tool/launch": ["internal/quiet"]})
+        self.assertIn("refused at line 6: launches a computed executable, exec.Command(compilerPath())", str(raised.exception))
+        with self.assertRaises(run.ChangeRefusal) as raised:
+            self.census(self.launcher % 'exec.Command("node")', {}, self.helper, packages={"tool/launch": ["internal/quiet"]})
+        self.assertIn("undeclared compiler consumers: tool/launch/launch_test.go", str(raised.exception))
 
     def test_the_gate_tools_own_allows_read(self):
         # The tools' own lines parse as one launcher, package and function each, so a bad one never reaches a gate.

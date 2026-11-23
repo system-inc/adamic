@@ -2151,6 +2151,9 @@ def launcherRefusal(source, runs, house=None, launcher=None, references=None):
 # a newline (Adamic Loom's ruling and her must on #r2a9vd4). Comments are still read: a cgo preamble and //go:generate run.
 compilerMarker = re.compile(r"github\.com/system-inc/adamic/internal/(?:load|lower|native|javascript|ir|flow)|cmd/adamic(?![A-Za-z0-9_-]|'s\b)|oracle/adamic|ADAMIC_(?:BIN|BINARY)|\"adamic\"")
 launchMarker = re.compile(r'"os/exec"|os\.StartProcess|syscall\.Exec')
+# compilerPackages are the compiler's own packages, which compilerMarker names: a packages entry naming one of them is a
+# compiler declaration.
+compilerPackages = ("internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic")
 
 # The package whose MemoryLimit reads the unit's cgroup limit, the share a test sizes itself from (the memory floor census).
 testguardImport = "github.com/system-inc/adamic/internal/testguard"
@@ -3419,7 +3422,10 @@ class Gate:
                 elif marked(source):
                     self.result.setdefault("compiler_consumers_without_test_package", []).append(path)
                 continue
-            if package in packages:
+            # A packages entry answers the census only when it names the compiler: one naming other packages alone (lane's,
+            # the adapted tree whose product it holds) declares no compiler, so its launches are still read, as a
+            # declared launcher's or as an undeclared consumer's.
+            if package in packages and any(dependency in compilerPackages for dependency in packages[package]):
                 continue
             if package in launchers:
                 # Every file of a declared launcher is read, marked or not: one launching through internal/toolchain or
