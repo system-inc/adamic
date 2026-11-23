@@ -45,7 +45,7 @@ int main(void) {
 		archive := library
 		if mutant {
 			name = "kind_check_removed"
-			const guard = "\t\tconst adamic_heap *reference = slot->reference;\n\t\tif (reference->kind == adamic_kind_closure) { return slot->reference; }"
+			const guard = "\t\tconst adamic_heap *reference = references ? slot->reference : NULL;\n\t\tif (reference != NULL && reference->kind == adamic_kind_closure) { return slot->reference; }"
 			archive = objectSourceMutant(t, compiler, library, flags, guard, "\t\treturn slot->reference;")
 		}
 		t.Run(name, func(t *testing.T) {
@@ -64,6 +64,59 @@ int main(void) {
 				t.Fatalf("kind-check mutant must compile and fail under the sanitizer, got %v\nstdout %q\nstderr %s", err, stdout, stderr)
 			}
 			t.Logf("kind-check mutant compiled; exit-70 TypeError pin rejected it: %s", report)
+		})
+	}
+}
+
+// A record of numbers keeps them unboxed in its slots, so a call through one of its keys answers not
+// callable in the reference record's words, before anything reads the slot as a pointer (#3tjjcjs).
+// Mutant: the record's kind no longer asked, so the packed number is read as a pointer and the
+// sanitizer stops it.
+func TestBoundMethodRecordScalar(t *testing.T) {
+	t.Parallel()
+	const harness = `#include "adamic.h"
+#include <string.h>
+
+int main(void) {
+	adamic_record *record = adamic_record_new(adamic_field_number);
+	adamic_string *key = adamic_string_allocate(1);
+	memcpy((char *)key->bytes, "m", 1);
+	adamic_record_define(record, key, (adamic_value){.number = adamic_maybe_number_pack((adamic_maybe_number){.present = true, .number = 41})});
+	adamic_slot_cache cache = {0};
+	adamic_method_entry method = NULL;
+	adamic_closure *callee = adamic_object_callee(record, "m", &cache, &method);
+	(void)adamic_closure_call(callee, NULL, 0);
+	adamic_release(record);
+	adamic_heap_end();
+	return 0;
+}
+`
+	flags := native_runtime.Flags(native_runtime.Options{Sanitize: true})
+	compiler, library := runtimeWithFlags(t, flags)
+	root := filepath.Dir(library)
+	flags = append(flags, "-I", root)
+	for _, mutant := range []bool{false, true} {
+		name := "kind_asked"
+		archive := library
+		if mutant {
+			name = "kind_not_asked"
+			archive = objectSourceMutant(t, compiler, library, flags, "\t\tbool references = adamic_record_values(object) == adamic_field_reference;", "\t\tbool references = true;")
+		}
+		t.Run(name, func(t *testing.T) {
+			binary := buildHarnessWithLibrary(t, harness, flags, compiler, archive)
+			stdout, stderr, err := recordRun(binary)
+			exit, exited := err.(*exec.ExitError)
+			matches := exited && exit.ExitCode() == 70 && stdout == "" && stderr == "adamic: panic: TypeError: record key 'm' is not a function\n"
+			if !mutant {
+				if !matches {
+					t.Fatalf("want exit 70 naming key m, got %v\nstdout %q\nstderr %s", err, stdout, stderr)
+				}
+				return
+			}
+			if matches || err == nil {
+				t.Fatalf("kind mutant must fail other than the TypeError, got %v\nstdout %q\nstderr %s", err, stdout, stderr)
+			}
+			t.Logf("kind mutant failed: %s", firstSanitizerLine(stderr))
 		})
 	}
 }

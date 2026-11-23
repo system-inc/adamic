@@ -32,3 +32,16 @@ function unknownKind(o: unknown): string {
 console.log(kind(nums) + ' ' + kind(strs) + ' ' + kind(fixed) + ' ' + kind(absent) + ' ' + kind(flags));
 console.log(text(nums) + ' ' + text(strs) + ' ' + text(fixed) + ' ' + text(absent) + ' ' + text(flags));
 console.log(unknownKind(nums) + ' ' + unknownKind(flags) + ' ' + unknownKind(absent));
+
+// Checked Object.values and entries over a boolean record (library_object.c's
+// adamic_object_values_checked): a literal given an indexed write is held as a record.
+const marks: { value: boolean; [key: string]: boolean } = { value: true };
+marks['other'] = false;
+function markValues(source: { readonly value: boolean }): boolean[] {
+  return Object.values(source);
+}
+function markEntries(source: { readonly value: boolean }): [string, boolean][] {
+  return Object.entries(source);
+}
+console.log(markValues(marks).map((v) => String(v)).join(','));
+console.log(markEntries(marks).map(([k, v]) => k + '=' + String(v)).join(','));
