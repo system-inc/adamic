@@ -135,5 +135,11 @@ func (l *lowering) enumerationDescriptors(where, operand *ast.Node, deep, checke
 	for _, module := range modules {
 		module.AsNode().ForEachChild(visit)
 	}
+	// A checked view made anywhere in the program can put a getter-bearing object at a type this read,
+	// so an admission beside an accessor is asked again once every view is made
+	// (checkEnumerationReachViews). A program with no accessor has none to ask.
+	if failure == nil && reach.read {
+		l.enumerationReachSites = append(l.enumerationReachSites, enumerationReachSite{where: where, reach: reach, checked: checked})
+	}
 	return failure
 }

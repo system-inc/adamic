@@ -322,3 +322,31 @@ func TestEnumerationReachDowncastRefused(t *testing.T) {
 	t.Parallel()
 	enumerationReachRefusedAs(t, "downcast", ".ts", "export class Meter { a = 1; get g(): number { return 2; } }\n", "import { Meter } from './held';\nconst narrow: { a: number } = new Meter();\nconst wide = narrow as { a: number; readonly g: number; c: number };\nconsole.log(Object.values(wide).join(','));\n")
 }
+
+// enumerationReachShared is a getter-bearing literal held as Shared, a type it's assignable to, which
+// main.ts casts down to a view related to the literal neither way.
+const enumerationReachShared = "type Shared = { b: number };\nconst lit = { b: 2, d: 4, get a(): number { return 1; } };\nexport const shared: Shared = lit;\n"
+
+// A checked view checks at a read, never at its cast, so a .ts downcast puts the literal, getter and
+// all, at a view whose type relates to the literal's neither way, where the guard admits Object.values
+// of it: Node printed 2,1,4 and native exited 70 on a field the checker proved there (J-m9g0n72).
+// checkEnumerationReachViews widens the read types by each view's source once lowering is done, so each
+// row stops in the guard's words: the sibling (Other declares d: 4 where the literal's d is a number),
+// Language's sibling (Other declares a field c the literal lacks), and a chain of two casts, Shared to
+// Middle to Other, where neither Middle nor Other relates to the literal and only the second step of
+// the widening reaches Shared. The control with no cast in the program is the unrelated row, which
+// lowers and agrees with Node. Mutant ViewPass (the post-pass returns at its top) turns the sibling red.
+func TestEnumerationReachViewRefused(t *testing.T) {
+	t.Parallel()
+	const read = "function read(view: Other): number[] { return Object.values(view); }\nconsole.log(read(other).join(','));\n"
+	for _, row := range []struct{ name, main string }{
+		{"sibling", "import { shared } from './held';\ntype Other = { b: number; d: 4 };\nconst other = shared as Other;\n" + read},
+		{"absent field", "import { shared } from './held';\ntype Other = { b: number; c: number };\nconst other = shared as Other;\n" + read},
+		{"chain", "import { shared } from './held';\ntype Middle = { b: number; m: number };\ntype Other = { b: number; m: number; c: number };\nconst middle = shared as Middle;\nconst other = middle as Other;\n" + read},
+	} {
+		t.Run(row.name, func(t *testing.T) {
+			t.Parallel()
+			enumerationReachRefusedAs(t, row.name, ".ts", enumerationReachShared, row.main)
+		})
+	}
+}

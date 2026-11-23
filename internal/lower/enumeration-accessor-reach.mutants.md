@@ -48,6 +48,7 @@ unmutated in enumeration_accessor_reach_test.go and in the whole internal/lower.
 | Contextual: a literal's contextual type is never taken | `if contextual := ...; contextual != nil {` to `...; false && contextual != nil {` | TestEnumerationReachContextualLiteralLowers | 70, `enumeration reach row contextual literal was refused` |
 | ContextualScope: a contextual type naming an enclosing type parameter is taken | `if len(enclosing) != 0 && l.eachReached(contextual,` to `if false && ...` | TestEnumerationReachReachingGetterRefused/held | 90, `enumeration reach row held was admitted` |
 | OneWay: an owner reaches only when assignable to a read type, not the other way | `l.checker.IsTypeAssignableTo(owner, read) \|\| l.checker.IsTypeAssignableTo(read, owner)` to `l.checker.IsTypeAssignableTo(owner, read)` | TestEnumerationReachDowncastRefused | 90, `enumeration reach row downcast was admitted` |
+| ViewPass: no admitted enumeration is held against the checked views | `func (l *lowering) checkEnumerationReachViews() error {` to the same line and `return nil` | TestEnumerationReachViewRefused/sibling | 90, `enumeration reach row sibling was admitted` |
 
 UnionMembers fails closed rather than open: a union left unread falls to the
 classifier's last case, a type that isn't an object type, and makes reach
@@ -69,6 +70,24 @@ main.ts as a narrower shape and cast down to a wider one the class is not
 assignable to; under the mutant the guard admits it, and the pin fails with its
 witness whatever stops the program after.
 
+ViewPass: a checked view checks at a read, never at its cast, so a .ts
+downcast keeps a getter-bearing object at a view whose type relates to the
+object's neither way, and the guard alone admits Object.values of it (Lower's
+probe J-m9g0n72: Node printed 2,1,4, native exited 70 on a field the checker
+proved there). Each enumeration the guard admits beside an accessor is recorded
+(enumerationReachSites, snapshot-owned in statecopy), and
+checkEnumerationReachViews, after checkSlotWrites (pass ledger row, scanning
+reference), widens its read types by the source of every view that can put a
+value at one (viewsReaching, view_reach.go, shared with #9z2ksv7), classified as
+an operand is and walked as deep, until nothing new is added, so a chain of casts
+is followed link by link. A view with no source, or a source that can't be
+classified, makes the site unknown. Every accessor is then asked again against
+the widened types, and one that reaches, or an unknown site, stops in the guard's
+words. TestEnumerationReachViewRefused pins the sibling ({ b; d: 4 }), Language's
+sibling ({ b; c }) and a chain of two casts; the control with no cast is the
+unrelated row. Under the mutant the post-pass returns at its top and the sibling
+row is admitted.
+
 Every pin reaches the guard through Object.values, Object.entries or encodeJson,
 and Object.keys only in the unrelated pin's shape with an optional field:
 objectKeys (class_features.go) lowers a class instance, a static side and a
@@ -80,7 +99,7 @@ array of any" before the call is lowered, so those refused rows return the call
 from a function typed number[].
 
 Product order: cloud/fast-gate/enumeration-reach-product-order.py writes the
-twelve producer rows, each waiting on nothing.
+thirteen producer rows, each waiting on nothing.
 
 A literal with no annotated variable is owned by its contextual type (and each
 member of a union one) when the checker gives one that names no type parameter

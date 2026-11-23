@@ -74,7 +74,12 @@ func (l *lowering) enumerationReadTypes(operand *ast.Node, deep bool) (bool, []*
 	if operand == nil {
 		return true, nil
 	}
-	proven := l.concrete(l.checker.GetTypeAtLocation(operand))
+	return l.enumerationReadTypesOf(l.concrete(l.checker.GetTypeAtLocation(operand)), deep)
+}
+
+// enumerationReadTypesOf is enumerationReadTypes from a type rather than an operand, so a checked view's
+// source is classified as an operand is (checkEnumerationReachViews).
+func (l *lowering) enumerationReadTypesOf(proven *checker.Type, deep bool) (bool, []*checker.Type) {
 	// A type that mentions a type parameter anywhere it holds relates by assignability for no
 	// instantiation in particular, so what can reach it can't be told.
 	if l.eachReached(proven, 0, map[*checker.Type]bool{}, func(reached *checker.Type) bool {
@@ -384,4 +389,84 @@ func enumerationGenericContext(node *ast.Node) bool {
 		}
 	}
 	return false
+}
+
+// enumerationReachSite is an enumeration the guard admitted beside an accessor (enumerationDescriptors):
+// where it's lowered, the question it asked every accessor with the read types it answered, and whether
+// it's the checked call, which asks the guard a second time.
+type enumerationReachSite struct {
+	where   *ast.Node
+	reach   enumerationAccessorReach
+	checked bool
+}
+
+// checkEnumerationReachViews holds each enumeration the guard admitted against every checked view the
+// program made, once lowering is done (Lower's ruling on J-m9g0n72). A checked view checks at a read,
+// never at its cast, so a .ts downcast keeps a getter-bearing object at a slot related to neither its
+// owner nor the read type: { b, d, get a } held as { b } and cast to { b; d: 4 } is enumerated there,
+// Node answering 2,1,4 where native stopped on a field the checker proved there. So each site's read
+// types are widened by the sources of the views that can put a value at them, and every accessor in
+// the program is asked again against the widened types. One that reaches now, or a site whose
+// widening can't be told, stops in the guard's own words.
+func (l *lowering) checkEnumerationReachViews() error {
+	for _, site := range l.enumerationReachSites {
+		reach := site.reach
+		reach.unknown, reach.types = l.enumerationViewedReadTypes(site.reach.types, site.reach.deep)
+		reached := false
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			if (node.Kind == ast.KindGetAccessor || node.Kind == ast.KindSetAccessor) && l.enumerationAccessorReaches(node, &reach) {
+				reached = true
+			}
+			return reached || node.ForEachChild(visit)
+		}
+		for _, module := range reach.modules {
+			if module.AsNode().ForEachChild(visit) {
+				break
+			}
+		}
+		if reached {
+			return &Refused{Where: l.program.Where(site.where), What: "Object enumeration with getter or accessor descriptors", Fix: "use own data properties for this first reflection implementation"}
+		}
+	}
+	return nil
+}
+
+// enumerationViewedReadTypes is a site's read types widened by the checked views, or unknown. Each view
+// that can put a value at a read type (viewsReaching) adds the types its source is read as, classified
+// as an operand is and walked as deep as the site reads, and the widened types are asked the same until
+// none adds one. Each cast of a chain is a view of its own, so the walk follows a chain back to the
+// slot the object was held at. A view with no source to name, or a source the classifier can't read,
+// makes the site unknown, failing closed.
+func (l *lowering) enumerationViewedReadTypes(read []*checker.Type, deep bool) (bool, []*checker.Type) {
+	types := slices.Clone(read)
+	held := map[*checker.Type]bool{}
+	for _, proven := range types {
+		held[proven] = true
+	}
+	// A source is classified once: it reads as the same types whichever read type its view reached.
+	classified := map[*checker.Type]bool{}
+	// types grows as it's walked, so its length is asked again each turn.
+	for index := 0; index < len(types); index++ {
+		for _, view := range l.viewsReaching(types[index]) {
+			if view.source == nil {
+				return true, nil
+			}
+			if classified[view.source] {
+				continue
+			}
+			classified[view.source] = true
+			unknown, sourced := l.enumerationReadTypesOf(view.source, deep)
+			if unknown {
+				return true, nil
+			}
+			for _, proven := range sourced {
+				if !held[proven] {
+					held[proven] = true
+					types = append(types, proven)
+				}
+			}
+		}
+	}
+	return false, types
 }

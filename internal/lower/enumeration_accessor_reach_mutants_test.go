@@ -28,6 +28,7 @@ var enumerationReachMutations = []enumerationReachMutation{
 	{"Contextual", "		if contextual := l.enumerationLiteralContextualOwners(holder); contextual != nil {", "		if contextual := l.enumerationLiteralContextualOwners(holder); false && contextual != nil {", "TestEnumerationReachContextualLiteralLowers", []string{"contextual literal was refused"}},
 	{"ContextualScope", "	if len(enclosing) != 0 && l.eachReached(contextual,", "	if false && len(enclosing) != 0 && l.eachReached(contextual,", "TestEnumerationReachReachingGetterRefused/held", []string{"held was admitted"}},
 	{"OneWay", "l.checker.IsTypeAssignableTo(owner, read) || l.checker.IsTypeAssignableTo(read, owner)", "l.checker.IsTypeAssignableTo(owner, read)", "TestEnumerationReachDowncastRefused", []string{"downcast was admitted"}},
+	{"ViewPass", "func (l *lowering) checkEnumerationReachViews() error {", "func (l *lowering) checkEnumerationReachViews() error {\n\treturn nil // mutant: no admitted enumeration is held against the checked views", "TestEnumerationReachViewRefused/sibling", []string{"sibling was admitted"}},
 }
 
 func enumerationReachMutantBinary(t *testing.T, m enumerationReachMutation) string {
@@ -90,6 +91,11 @@ func TestProduct_EnumerationReachContextualScopeMutant(t *testing.T) {
 func TestProduct_EnumerationReachOneWayMutant(t *testing.T) {
 	t.Parallel()
 	enumerationReachMutantBinary(t, enumerationReachMutations[11])
+}
+
+func TestProduct_EnumerationReachViewPassMutant(t *testing.T) {
+	t.Parallel()
+	enumerationReachMutantBinary(t, enumerationReachMutations[12])
 }
 
 func TestEnumerationReachMutantsAreCaught(t *testing.T) {

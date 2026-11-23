@@ -1811,6 +1811,11 @@ func scanLowerWithElementKey(key *viewElementKey, program *load.Program, typeChe
 	if err := lowering.checkSlotWrites(); err != nil {
 		return nil, err
 	}
+	// As lowerWithElementKey does: an enumeration the accessor guard admitted is held against every checked view
+	// once the program is lowered, and refuses alike in both modes (#1atvfp5).
+	if err := lowering.checkEnumerationReachViews(); err != nil {
+		return nil, err
+	}
 	// As lowerWithElementKey does: an allocator getter's road to a function constructor's new is judged by its
 	// seal, its uses and its reach once the program is lowered, and refuses alike in both modes (#837zjkt).
 	if err := lowering.checkFunctionConstructorRoads(); err != nil {
