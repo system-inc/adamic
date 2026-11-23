@@ -24,6 +24,13 @@ While no fixing branch exists yet, the sidecar may name the task instead: `await
 (cloud/review-census.py on the gate tools) pages integration once that task is Done and the sidecar
 is still there.
 
+A refused program may pin its refusal's words in a `<name>.refusal` sidecar, one line: the diagnostic
+with the program's path and its colon taken off, `<line>:<column>: <message>`. `TestReviewProgramsRefuse`
+then holds the refusal to it, so a refusal that moves or changes its reason shows as a change, never a
+pass. A refused program without one is held only to refusing at its own location. A program that is
+refused today and was meant to agree belongs in `refused/` with its words pinned, not in `agree/` behind
+a sidecar: the day it compiles, the lane fails, and it moves back to `agree/` to be held to Node.
+
 A ruled difference from Node (an intended departure, such as step 24's loud stack guard where Node
 throws a catchable RangeError) is an `<name>.intended` sidecar, one line
 `intended: <ruling>: <what differs>`, with the pinned output in `<name>.expected.json`

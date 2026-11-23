@@ -776,18 +776,6 @@
       "test": "internal/oracle/relation_views_test.go: TestRelationViewsPanicAtTheRead"
     },
     {
-      "path": "internal/oracle/testdata/review/agree/fxspptb_57f2d04_find_last_shrinks.a",
-      "stderr": "adamic: panic: findLastIndex: index 2 is undefined; element type string does not admit undefined\n",
-      "hatch": "library-claim (lib.d.ts types the callback item string, Node passes undefined once the splice shrinks the array), line 2: const at = list.findLastIndex((item: string, index: number): boolean => {",
-      "test": "internal/oracle/review_test.go: TestReviewProgramsAgreeWithNode"
-    },
-    {
-      "path": "internal/oracle/testdata/review/agree/fxspptb_57f2d04_find_last_shrinks2.a",
-      "stderr": "adamic: panic: findLast: index 2 is undefined; element type string does not admit undefined\n",
-      "hatch": "library-claim (lib.d.ts types the callback item string, Node passes undefined once the splice shrinks the array), line 2: const found = list.findLast((item: string, index: number): boolean => {",
-      "test": "internal/oracle/review_test.go: TestReviewProgramsAgreeWithNode"
-    },
-    {
       "path": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p72_tuple_count_mismatch.ts",
       "stderr": "adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found array\n",
       "hatch": "cast, line 6: const viewed = base as View;",
