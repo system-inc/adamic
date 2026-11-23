@@ -119,7 +119,7 @@ func TestApplyPythonGroupsCoverEveryTestOnce(t *testing.T) {
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	command := boundedCommand(ctx, filepath.Join(root, "stage3"), "python3", "-E", "-S", "-B", "-c", `
+	command := boundedPython(ctx, filepath.Join(root, "stage3"), "-E", "-S", "-B", "-c", `
 import json, unittest, test_apply
 def names(suite):
     for test in suite:
@@ -307,7 +307,7 @@ func TestLaneGenerateApiPythonGroupsCoverEveryTestOnce(t *testing.T) {
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	command := boundedCommand(ctx, filepath.Join(repositoryRoot(t), "stage3/lane"), "python3", "-E", "-S", "-B", "-c", `
+	command := boundedPython(ctx, filepath.Join(repositoryRoot(t), "stage3/lane"), "-E", "-S", "-B", "-c", `
 import json, unittest, test_generate_api
 def names(suite):
     for test in suite:
@@ -437,7 +437,7 @@ func runPythonCommand(t *testing.T, directory string, environment []string, argu
 	ctx, cancel := context.WithTimeout(context.Background(), 55*time.Second)
 	defer cancel()
 	// -E and -S keep python off the box's PYTHON* settings and site directories, as the adapted tree's build runs it.
-	command := boundedCommand(ctx, filepath.Join(root, directory), "python3", append([]string{"-E", "-S", "-B"}, arguments...)...)
+	command := boundedPython(ctx, filepath.Join(root, directory), append([]string{"-E", "-S", "-B"}, arguments...)...)
 	// -B is this python's; the suites' own python children read PYTHONDONTWRITEBYTECODE, so none writes a
 	// __pycache__ into the tree (stage3/oracle's, on Cloud, before).
 	command.Env = append(command.Env, "STAGE3_CACHE="+t.TempDir(), "PYTHONDONTWRITEBYTECODE=1")

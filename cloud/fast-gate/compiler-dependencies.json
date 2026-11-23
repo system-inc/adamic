@@ -112,6 +112,6 @@
   },
   "launchers": {
     "stage3/lane/adaptedtree": {"runs": ["python3", "node", "git"], "why": "builds the adapted TypeScript tree: stage3/apply.py adapts the pinned checkout, node runs hereby's tasks in it, and git packs it; none of it runs the compiler"},
-    "stage3/lane": {"runs": ["python3", "node", "git"], "why": "runs the TypeScript test shards over the adapted tree: shard.py under python3, mocha under node, and git to read the pinned upstream; none of it runs the compiler, which stage3/lane/adaptedtree's product, the tree, was built without (#9vrgnd1, traced by Reads)"}
+    "stage3/lane": {"runs": ["python3", "git"], "why": "runs the TypeScript test shards over the adapted tree, each a stage3 script under python3, and git to read the pinned upstream; none of it runs the compiler, which the tree, stage3/lane/adaptedtree's product, was built without (#9vrgnd1: Reads traced lane's shards, J-5bejz3b and the reruns, and the adapted tree's build, J-crks9vh)"}
   }
 }
