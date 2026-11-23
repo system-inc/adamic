@@ -72,8 +72,7 @@ The actual built results use names ending scoped-built.json; older guard
 results retained for comparison are superseded, including guard-named files
 copied into scoped-final/.
 The adapter directory contains only adapt.cjs, verify.cjs, sites.json and README.md.
-F and G both append at the same 95a ledger endpoint; whoever merges second must
-resolve the append conflict. The existing G ledger entry is not renumbered.
+The numbered upstream issue draft is in [LEDGER.md](LEDGER.md).
 
 ### Readers of the newly absent result
 

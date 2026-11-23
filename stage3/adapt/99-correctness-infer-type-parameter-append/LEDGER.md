@@ -1,0 +1,1 @@
+- **JavaScript-changing, value-identical (#dt55mtb):** 99-correctness-infer-type-parameter-append calls getDeclaredTypeOfTypeParameter directly under the TypeParameter flag guard. The whole oracle counted 9,810 calls and zero unequal return values. Evidence: typescript/type-parameter-appends-evidence.

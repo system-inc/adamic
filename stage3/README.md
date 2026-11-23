@@ -35,6 +35,9 @@ never runs npm, and refuses an install that isn't that lockfile's, or whose byte
 aren't the ones `api/node_modules.sha256` pins (a lockfile change regenerates it
 with `stage3/apply.sh --packages-digest > stage3/api/node_modules.sha256`);
 adapters can require("typescript").
+Record upstream findings in the adaptation's own `LEDGER.md`. See the
+[upstream ledger instructions](upstream/README.md) for the required file and
+how to generate the combined ledger.
 Never weaken Adamic's checker options to improve the census.
 
 The oracle does npm ci, npm run build, and npm test with --light=false,

@@ -1,0 +1,1 @@
+- **Type-only, #dt55mtb (Adamic's ruling):** 99-readonly-inferred-bindings gives five checker paths their actual type argument views, including the published readonly array type of `ConditionalRoot.aliasTypeArguments`. No JavaScript changes. Evidence: typescript/type-parameter-appends-evidence.

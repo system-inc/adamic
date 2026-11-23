@@ -79,10 +79,9 @@ logs live only on branch `typescript/axolotl-checker-f-evidence`, under
 `stage3/evidence/95-checker-axolotl-f/`. They are not apply inputs. The adapter
 directory contains only adapt.cjs, verify.cjs, sites.json and this README.
 
-The upstream issue draft is appended to stage3/upstream/LEDGER.md. F and G
-both start from 95a and append at its end; G now ships the scoped third-arm
-index-symbol fix under Correctness's final ruling.
-Whoever merges second must resolve the append conflict. No issue has been sent upstream.
+The upstream issue draft is in [LEDGER.md](LEDGER.md). F and G use their own
+ledger files. G ships the scoped third-arm index-symbol fix under Correctness's
+final ruling. No issue has been sent upstream.
 
 Pinned evidence commit: `c136950ba70522ca7211de5a10e01c99806b5e6a`.
 [Browse all proof artifacts](https://github.com/system-inc/adamic/tree/c136950ba70522ca7211de5a10e01c99806b5e6a/stage3/evidence/95-checker-axolotl-f/).

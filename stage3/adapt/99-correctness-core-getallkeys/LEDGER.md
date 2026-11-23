@@ -1,0 +1,1 @@
+Adamic's ruling (b), task b5w3ycg, Nov 7 11:06Z: getAllKeys moved to its only user, the fourslash harness, retaining Object.getPrototypeOf, which Adamic refuses (rulings.md:83). The harness runs on Node and is never lowered; if stage 3 ever needs it native, it goes back to Adamic. Measured: 6,566 calls, all from fourslashImpl.ts:461, 0 namespace reads.
