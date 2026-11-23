@@ -43,6 +43,15 @@ func (l *lowering) castValue(node *ast.Node) (ir.Expression, error) {
 		l.keepSlot(operand, l.checker.GetTypeAtLocation(node))
 		return l.expression(operand)
 	}
+	if proof.present {
+		// The claim is presence alone, so the cast is the check `!` makes, with the value and type `!` gives:
+		// one presence check for both spellings, not a second one here.
+		value, err := l.expression(as.Expression)
+		if err != nil {
+			return nil, err
+		}
+		return l.nonNullValue(node, value)
+	}
 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
 	target := l.concrete(l.checker.GetTypeAtLocation(node))
 	// The message names the source as written, undefined included; everything after the absent check
