@@ -702,9 +702,40 @@ func (f *cycleFinder) deriveTemplate(proven *checker.Type) bool {
 	if proven.Flags()&checker.TypeFlagsObject == 0 || proven.ObjectFlags()&checker.ObjectFlagsReference == 0 {
 		return false
 	}
-	for _, argument := range f.l.checker.GetTypeArguments(proven) {
+	for index, argument := range f.l.checker.GetTypeArguments(proven) {
 		if argument.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsTypeParameter) != 0 {
+			// An any where the type parameter's own default is any is the lib's, never written: Iterator<string>
+			// is Iterator<string, any, any> by its TReturn and TNext. Treating it as a template made every slot
+			// typed Iterator, Iterable or IterableIterator hold nothing for cycle finding, selection and the
+			// region, so a Map's iterator stored in one leaked its Map (#66acn2a, Lower's find).
+			if argument.Flags()&checker.TypeFlagsAny != 0 && anyByDefault(proven, index) {
+				continue
+			}
 			return true
+		}
+	}
+	return false
+}
+
+// anyByDefault is whether a reference's type parameter at index declares any as its default, as lib's TReturn
+// and TNext do. It reads the declaration, since the checker gives the default no name the shim exports. A
+// reference can't tell an any written in that place from the default's: Iterator<string, any> is the type
+// Iterator<string> is, so both hold what their other arguments hold. That only finds more, never fewer, since an
+// any argument is still a template where a walk meets it. The frozen scanning reference asks this too.
+func anyByDefault(reference *checker.Type, index int) bool {
+	target := reference.Target()
+	if target == nil || target.AsInterfaceType() == nil {
+		return false
+	}
+	parameters := target.AsInterfaceType().TypeParameters()
+	if index >= len(parameters) || parameters[index].Symbol() == nil {
+		return false
+	}
+	for _, declaration := range parameters[index].Symbol().Declarations {
+		if declaration.Kind == ast.KindTypeParameter {
+			if fallback := declaration.AsTypeParameterDeclaration().DefaultType; fallback != nil && fallback.Kind == ast.KindAnyKeyword {
+				return true
+			}
 		}
 	}
 	return false
