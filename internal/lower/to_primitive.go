@@ -19,16 +19,41 @@ import (
 // reach a union, and one helper serves both. The day one can, the two forms need two arms here.
 
 // toStringHint is String(value) for a union that may hold an object: a call to the program's one
-// to_string_hint helper.
+// to_string_hint helper, with the string hint.
 func (l *lowering) toStringHint(value ir.Expression) ir.Expression {
+	return l.toPrimitiveCall(value, false)
+}
+
+// toDefaultHint is value as string addition writes it, "" + value: ToPrimitive with addition's default
+// hint, then ToString (#e0cnaa9, rulings.md:200). Only an object's order differs from the string hint's:
+// valueOf before toString. A primitive is itself under either hint.
+func (l *lowering) toDefaultHint(value ir.Expression) ir.Expression {
+	return l.toPrimitiveCall(value, true)
+}
+
+// toPrimitiveCall calls the program's one helper, to_string_hint, whose second parameter says whether
+// the hint is addition's default (true) or the string hint (false).
+func (l *lowering) toPrimitiveCall(value ir.Expression, defaultHint bool) ir.Expression {
 	if l.toPrimitive == 0 {
 		index := len(l.result.Functions)
 		parameter := len(l.result.Locals)
-		l.result.Locals = append(l.result.Locals, ir.Local{Name: "value", Type: ir.Union, Function: index})
-		l.result.Functions = append(l.result.Functions, ir.Function{Name: "to_string_hint", Parameters: []int{parameter}, Returns: ir.String})
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "value", Type: ir.Union, Function: index}, ir.Local{Name: "default_hint", Type: ir.Boolean, Function: index})
+		l.result.Functions = append(l.result.Functions, ir.Function{Name: "to_string_hint", Parameters: []int{parameter, parameter + 1}, Returns: ir.String})
 		l.toPrimitive = index + 1
 	}
-	return ir.Call{Function: l.toPrimitive - 1, Arguments: []ir.Expression{value}, Returns: ir.String}
+	return ir.Call{Function: l.toPrimitive - 1, Arguments: []ir.Expression{value, ir.BooleanConstant{Value: defaultHint}}, Returns: ir.String}
+}
+
+// stringHintCall is the helper called again from inside itself, on an element of an array or a method's
+// primitive result: Array.prototype.join writes each element with ToString, and a primitive is itself
+// under either hint, so it's always the string hint.
+func (l *lowering) stringHintCall(helper int, value ir.Expression) ir.Expression {
+	return ir.Call{Function: helper, Arguments: []ir.Expression{value, ir.BooleanConstant{Value: false}}, Returns: ir.String}
+}
+
+// defaultHintRead is the helper's own hint parameter, true for addition's default hint.
+func (l *lowering) defaultHintRead(helper int) ir.Expression {
+	return ir.Read{Local: l.result.Functions[helper].Parameters[1], Of: ir.Boolean}
 }
 
 // toPrimitiveStop is what the helper says where it doesn't answer yet: exit 70, naming the kind of
@@ -145,23 +170,33 @@ func (l *lowering) classToString(helper, class int, object ir.Expression) []ir.S
 		}
 		return l.primitiveResult(helper, ir.Call{Function: function, Arguments: []ir.Expression{object}, Returns: l.result.Functions[function].Returns})
 	}
-	toString := method("toString")
-	if toString < 0 {
-		return []ir.Statement{ir.Return{Value: ir.StringConstant{Index: l.constant("[object Object]")}}}
-	}
-	body, goesOn := call(toString)
-	if !goesOn {
-		return body
-	}
-	if valueOf := method("valueOf"); valueOf >= 0 {
-		next, goesOn := call(valueOf)
-		body = append(body, next...)
-		if !goesOn {
-			return body
+	toString, valueOf := method("toString"), method("valueOf")
+	// The string hint asks toString, then valueOf; addition's default hint asks valueOf first. A method
+	// the class doesn't declare is Object.prototype's: its toString gives "[object Object]", a primitive,
+	// and its valueOf gives the object itself, which isn't one, so the next is asked.
+	ordered := func(first, second int, firstIsToString bool) []ir.Statement {
+		body := []ir.Statement{}
+		for step, function := range []int{first, second} {
+			isToString := firstIsToString == (step == 0)
+			if function < 0 {
+				if isToString {
+					return append(body, ir.Return{Value: ir.StringConstant{Index: l.constant("[object Object]")}})
+				}
+				continue
+			}
+			next, goesOn := call(function)
+			body = append(body, next...)
+			if !goesOn {
+				return body
+			}
 		}
+		return append(body, l.toPrimitiveTypeError())
 	}
-	// Object.prototype.valueOf gives the object itself, which isn't a primitive.
-	return append(body, l.toPrimitiveTypeError())
+	return []ir.Statement{ir.If{
+		Condition: l.defaultHintRead(helper),
+		Then:      ordered(valueOf, toString, false),
+		Else:      ordered(toString, valueOf, true),
+	}}
 }
 
 // arrayToString is Array.prototype.join's "," for an array, each element through the helper again, as
@@ -195,7 +230,7 @@ func (l *lowering) arrayToString(helper int, value ir.Expression) []ir.Statement
 		ir.If{Condition: ir.Binary{Operator: ir.Greater, Left: readIndex, Right: ir.NumberConstant{Value: 0}}, Then: []ir.Statement{add(text(","))}},
 		ir.If{Condition: ir.Binary{Operator: ir.Less, Left: readIndex, Right: ir.Length{Array: array}}, Then: []ir.Statement{
 			ir.Declare{Local: element, Value: ir.ArrayIndex{Array: array, Index: readIndex, Element: ir.Union}},
-			ir.If{Condition: present, Then: []ir.Statement{add(ir.Call{Function: helper, Arguments: []ir.Expression{readElement}, Returns: ir.String})}},
+			ir.If{Condition: present, Then: []ir.Statement{add(l.stringHintCall(helper, readElement))}},
 		}},
 	}
 	loop := ir.Loop{
@@ -246,7 +281,7 @@ func (l *lowering) primitiveResult(helper int, call ir.Expression) ([]ir.Stateme
 		primitive := ir.Binary{Operator: ir.LessOrEqual, Left: ir.UnknownKind{Value: read}, Right: ir.NumberConstant{Value: ir.UnknownString}}
 		return []ir.Statement{
 			ir.Declare{Local: result, Value: call},
-			ir.If{Condition: primitive, Then: []ir.Statement{ir.Return{Value: ir.Call{Function: helper, Arguments: []ir.Expression{read}, Returns: ir.String}}}},
+			ir.If{Condition: primitive, Then: []ir.Statement{ir.Return{Value: l.stringHintCall(helper, read)}}},
 		}, true
 	default:
 		if !of.IsReference() {
@@ -303,14 +338,24 @@ func (l *lowering) plainToString(helper int, object ir.Expression) []ir.Statemen
 		return body
 	}
 	key := func(name string) ir.Expression { return ir.StringConstant{Index: l.constant(name)} }
-	return []ir.Statement{
-		ir.If{Condition: ir.OwnFunction{Object: object, Name: "toString"}, Then: step("toString"), Else: []ir.Statement{
+	// An own toString function is called; with no own toString at all, Object.prototype.toString's
+	// "[object Object]" is the answer; an own one holding anything else is skipped.
+	// Each order is built fresh, so no statement and no local it declares is in two places.
+	toString := func() ir.Statement {
+		return ir.If{Condition: ir.OwnFunction{Object: object, Name: "toString"}, Then: step("toString"), Else: []ir.Statement{
 			ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: ir.HasOwn{Object: object, Key: key("toString")}}, Then: []ir.Statement{ir.Return{Value: key("[object Object]")}}},
-		}},
-		ir.If{Condition: ir.OwnFunction{Object: object, Name: "valueOf"}, Then: step("valueOf")},
-		// Object.prototype.valueOf gives the object itself, which isn't a primitive.
-		l.toPrimitiveTypeError(),
+		}}
 	}
+	// Object.prototype.valueOf gives the object itself, which isn't a primitive, so only an own one answers.
+	valueOf := func() ir.Statement {
+		return ir.If{Condition: ir.OwnFunction{Object: object, Name: "valueOf"}, Then: step("valueOf")}
+	}
+	// The string hint asks toString, then valueOf; addition's default hint asks valueOf first.
+	return []ir.Statement{ir.If{
+		Condition: l.defaultHintRead(helper),
+		Then:      []ir.Statement{valueOf(), toString(), l.toPrimitiveTypeError()},
+		Else:      []ir.Statement{toString(), valueOf(), l.toPrimitiveTypeError()},
+	}}
 }
 
 // plainMethods is the closed world of the functions an object's own toString or valueOf can hold: every
