@@ -148,7 +148,7 @@ func (l *lowering) representationReason(proven *checker.Type) (ir.Type, bool, st
 		return ir.String, true, ""
 	case flags&checker.TypeFlagsBooleanLike != 0:
 		return ir.Boolean, true, ""
-	case flags&checker.TypeFlagsObject != 0 && (l.isArrayType(proven) || l.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray")):
+	case flags&checker.TypeFlagsObject != 0 && (l.isArrayType(proven) || l.pickedArray(proven) != nil || l.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray")):
 		return ir.Array, true, ""
 	case flags&checker.TypeFlagsObject != 0 && l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
 		// A Set is held as a Map whose values aren't used (set.go).
