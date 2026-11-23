@@ -51,9 +51,12 @@ func (l *lowering) enumerationAccessorReaches(accessor *ast.Node, reach *enumera
 	if !known {
 		return true
 	}
+	// Related either way: an owner assignable to a read type is an upcast, and a read type assignable to
+	// the owner is a checked downcast in .ts, which keeps the same object, getter and all, at a slot its
+	// owner isn't assignable to ({ a, get g } seen as { a, g, c }).
 	for _, owner := range owners {
 		for _, read := range reach.types {
-			if l.checker.IsTypeAssignableTo(owner, read) {
+			if l.checker.IsTypeAssignableTo(owner, read) || l.checker.IsTypeAssignableTo(read, owner) {
 				return true
 			}
 		}

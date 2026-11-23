@@ -179,3 +179,16 @@ func TestEnumerationReachUnknownKeepsProgramScan(t *testing.T) {
 		})
 	}
 }
+
+// A checked downcast in .ts keeps the same object at a slot its owner type isn't assignable to: a
+// literal with a getter seen as a wider shape. The read type is assignable to the owner, so the accessor
+// reaches, and Object.keys stays refused at the guard. Mutant OneWay (owner to read only) turns it red.
+func TestEnumerationReachDowncastRefused(t *testing.T) {
+	t.Parallel()
+	const source = "const literal = { a: 1, get g(): number { return 2; } };\nconst wide = literal as { a: number; readonly g: number; c: number };\nconsole.log(Object.keys(wide).join(','));\n"
+	_, err := lowerSourceAs(t, source, ".ts")
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.Contains(err.Error(), enumerationReachRefusal) {
+		t.Fatalf("enumeration reach row downcast was admitted, want %q, got %v", enumerationReachRefusal, err)
+	}
+}

@@ -39,3 +39,8 @@ TestEnumerationReachDeepUnionGetterRefused pins unmutated.
 
 Product order: cloud/fast-gate/enumeration-reach-product-order.py writes the
 three producer rows, each waiting on nothing.
+
+| OneWay: an owner reaches only when assignable to a read type, not the other way | TestEnumerationReachDowncastRefused | `downcast was admitted` |
+
+A checked downcast in .ts keeps the same object at a slot its owner type is not
+assignable to, so reach is judged both ways (the hand's soundness doubt on 6ac68068).

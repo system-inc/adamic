@@ -19,6 +19,7 @@ var enumerationReachMutations = []enumerationReachMutation{
 	{"WholeGraph", "if reach.unknown {", "if true || reach.unknown {", "TestEnumerationReachUnrelatedGetterLowers", []string{"unrelated was refused"}},
 	{"UnionMembers", "case flags&checker.TypeFlagsUnion != 0:", "case false && flags&checker.TypeFlagsUnion != 0:", "TestEnumerationReachUnionLowers", []string{"union was refused"}},
 	{"DeepReach", "if !deep {", "if true {", "TestEnumerationReachDeepGetterRefused/(field|element)", []string{"field was admitted", "element was admitted"}},
+	{"OneWay", "l.checker.IsTypeAssignableTo(owner, read) || l.checker.IsTypeAssignableTo(read, owner)", "l.checker.IsTypeAssignableTo(owner, read)", "TestEnumerationReachDowncastRefused", []string{"downcast was admitted"}},
 }
 
 func enumerationReachMutantBinary(t *testing.T, m enumerationReachMutation) string {
@@ -36,6 +37,11 @@ func TestProduct_EnumerationReachUnionMembersMutant(t *testing.T) {
 func TestProduct_EnumerationReachDeepReachMutant(t *testing.T) {
 	t.Parallel()
 	enumerationReachMutantBinary(t, enumerationReachMutations[2])
+}
+
+func TestProduct_EnumerationReachOneWayMutant(t *testing.T) {
+	t.Parallel()
+	enumerationReachMutantBinary(t, enumerationReachMutations[3])
 }
 
 func TestEnumerationReachMutantsAreCaught(t *testing.T) {
