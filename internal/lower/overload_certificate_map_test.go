@@ -129,7 +129,9 @@ function bad(values: readonly string[], makeKey: (value: string) => string | und
 // second set no proof judged (map-wrong-set), a getter read in the set's argument, a mapper the overload
 // lets the caller pass as undefined over an identity default, whose element isn't the promised value
 // (map-default-undefined), a default other than the identity, an identity that's a rebindable variable,
-// and the mapper parameter written.
+// and the mapper parameter written. Since #4czdn4q bad's body lowers before any call to it, and in some rows
+// another rule stops there first, so each row reads the census's verdict on overload 1 (overloadVerdictOf),
+// and the program still stops.
 func TestOverloadCertificateMapNegativesStayRefused(t *testing.T) {
 	t.Parallel()
 	const observe = "console.log(`expected string, got ${typeof actual}`);\n"
@@ -207,11 +209,7 @@ const actual = bad([0], v => "a", undefined).get("a");
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			_, err := lowerSourceAs(t, probe.source, ".ts")
-			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(refused.What, "overload 1 of bad result Map<string, string> ") || !strings.Contains(refused.What, "cannot be served by implementation result Map<string, string | number>") {
-				t.Fatalf("want overload 1 of bad refused at its declaration for its result, got %v", err)
-			}
+			overloadVerdictRefused(t, probe.source, ".ts", "bad", 1, "overload 1 of bad result Map<string, string> ", "cannot be served by implementation result Map<string, string | number>")
 		})
 	}
 }

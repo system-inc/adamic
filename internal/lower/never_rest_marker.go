@@ -17,8 +17,9 @@ import (
 // only ever goes into never-rest slots is lowered as an identity marker (#avqasqt): one closure per
 // function, held by a global made before anything runs, whose body never runs the declaration. No
 // forwarder or generic instance is made for it, which is what let assertEachIsDefined, a generic
-// overload set, past functionValue's overload stop and an instance whose T nothing can read. Every
-// other function value keeps its lowering.
+// overload set, past functionValue's overload stop and an instance whose T nothing can read. A marker is
+// still the set as a value, so a set with an unserved overload stops where the marker is read, in its
+// whole set's words (overloadSetStop, #4czdn4q). Every other function value keeps its lowering.
 
 // neverRestMarkerCalled is what a marker's body says if a call ever reaches it, which the proof and
 // callClosure's never-rest stop keep from happening. Each marker stands for one function, so it names the

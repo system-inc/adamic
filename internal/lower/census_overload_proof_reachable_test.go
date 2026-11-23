@@ -41,7 +41,8 @@ console.log(String(supported(undefined, [{ extension: ".vue" }]).length));
 // refuse it; the return reads no property (which the proof counts as a possible getter), so with that rule
 // dropped the body proves. The promise is an
 // array, which no call-site check serves. Mutant: the reached-statement cast test dropped, and the
-// declaration is accepted.
+// declaration is accepted. Since #4czdn4q the body lowers before the call and another rule stops there
+// first, so this reads the census's verdict (overloadVerdictOf), and the program still stops.
 func TestOverloadProofRefusesACastAPathReaches(t *testing.T) {
 	t.Parallel()
 	source := `function numbers(xs: readonly (string | number)[]): readonly number[];
@@ -49,11 +50,7 @@ function numbers(xs: readonly (string | number)[]): readonly (string | number)[]
 function numbers(xs: readonly (string | number)[]): readonly (string | number)[] { const ys = xs as readonly (string | number)[]; return [ys === xs ? 0 : 1]; }
 console.log(String(numbers([1]).length));
 `
-	_, err := lowerSourceAs(t, source, ".ts")
-	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(refused.What, "overload 1 of numbers result") {
-		t.Fatalf("want overload 1 of numbers refused, got %v", err)
-	}
+	overloadVerdictRefused(t, source, ".ts", "numbers", 1, "overload 1 of numbers result")
 }
 
 // The unreached judgment on its own, with no cast (Lower's should on 91d05030): a loop, a statement kind

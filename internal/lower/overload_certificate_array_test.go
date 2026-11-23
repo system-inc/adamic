@@ -106,6 +106,8 @@ func TestOverloadCertificateArrayInstanceStorage(t *testing.T) {
 // certificates B and C's, not this one's. Compiler's two shorthand rows alias the local through
 // { out }, whose name the checker reads as the property, once bare and once inside a spread, and the
 // destructuring row writes the mapper parameter through ({ map } = other), the same name read the same way.
+// Since #4czdn4q bad's body lowers before any call to it, and in some rows another rule stops there first,
+// so each row reads the census's verdict on overload 1 (overloadVerdictOf), and the program still stops.
 func TestOverloadCertificateArrayNegativesStayRefused(t *testing.T) {
 	t.Parallel()
 	const observe = "console.log(`expected string, got ${typeof actual}`);\n"
@@ -244,11 +246,7 @@ const actual = bad()[0];
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			_, err := lowerSourceAs(t, probe.source, ".ts")
-			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(refused.What, "overload 1 of bad result string[] ") || !strings.Contains(refused.What, "cannot be served by implementation result (string | number)[]") {
-				t.Fatalf("want overload 1 of bad refused at its declaration for its result, got %v", err)
-			}
+			overloadVerdictRefused(t, probe.source, ".ts", "bad", 1, "overload 1 of bad result string[] ", "cannot be served by implementation result (string | number)[]")
 		})
 	}
 }
