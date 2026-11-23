@@ -20,9 +20,10 @@ func (l *lowering) nonNull(node *ast.Node) (ir.Expression, error) {
 	return l.nonNullValue(node, value)
 }
 
-// nonNullValue also checks an already-held assignment target read.
+// nonNullValue also checks an already-held assignment target read, and a cast that only removes undefined or
+// null (presentCast), whose node is the cast: its operand is the cast's, read the same way.
 func (l *lowering) nonNullValue(node *ast.Node, value ir.Expression) (ir.Expression, error) {
-	operand := node.AsNonNullExpression().Expression
+	operand := node.Expression()
 	var err error
 	for {
 		switch narrowed := value.(type) {
@@ -93,7 +94,12 @@ stored:
 	}
 	file := ast.GetSourceFileOfNode(node)
 	text := file.Text()[scanner.GetTokenPosOfNode(node, file, false):node.End()]
-	message := ir.StringConstant{Index: l.constant("non-null assertion failed at " + l.program.Where(node) + ": " + text + " is null or undefined")}
+	// A cast is named as the cast it's written as, so its failure doesn't point at a ! the program never wrote.
+	failed := "non-null assertion failed at "
+	if node.Kind == ast.KindAsExpression {
+		failed = "cast failed at "
+	}
+	message := ir.StringConstant{Index: l.constant(failed + l.program.Where(node) + ": " + text + " is null or undefined")}
 	result := ir.Expression(ir.Coalesce{Value: value, Panic: message, Of: value.Type().Present()})
 	if result.Type() == ir.Union && of != ir.Union {
 		result = ir.Narrow{Value: result, To: of}

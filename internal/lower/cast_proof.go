@@ -31,6 +31,9 @@ type castProof struct {
 	// field contract" (Language's v03 on #ha4hbqt), so the absent test and the tag test can't disagree through
 	// one.
 	absent bool
+	// present is a .ts cast that only removes undefined or null (presentCast): the presence check a non-null
+	// assertion makes, and nothing after it.
+	present bool
 	// overlap is a cast from a represented union to one object type that only overlaps it (overlapTarget): a
 	// checked view of the target with no test at the cast (overlapViewCast).
 	overlap bool
@@ -315,6 +318,9 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 		proof.absent = err == nil
 		return proof, err
 	}
+	if l.presentCast(node, source, target) {
+		return castProof{present: true}, nil
+	}
 	if source.Flags()&checker.TypeFlagsUnion == 0 {
 
 		// A proof's view is no view: neither its origin nor its contract's getters outlive it.
@@ -380,6 +386,29 @@ func (l *lowering) absentArm(source, target *checker.Type) *checker.Type {
 		return nil
 	}
 	return present
+}
+
+// presentCast is whether a cast in .ts claims presence and nothing else: its source holds plain undefined, plain
+// null or both beside its other members, its target is by the checker's identity the source's non-nullable
+// type, and castStop would word it as removing them (castDropsNullish), so it is no primitive, array,
+// intersection or dictionary the ledger rules apart (`args[0] as Expression` of an `Expression | undefined`, tsc's
+// four sites, #b5w3ycg). Such a cast is `args[0]!` spelled as a cast, so it lowers as the check `!` makes
+// (nonNullValue). A target keeping either one, a void or a phantom undefined, and any cast in .a, where `!` is
+// refused too (checkedAssertionSource), stay as castProof judges them.
+func (l *lowering) presentCast(node *ast.Node, source, target *checker.Type) bool {
+	if !l.checkedAssertionSource(node) || source.Flags()&checker.TypeFlagsUnion == 0 {
+		return false
+	}
+	nullish := false
+	for _, member := range source.Types() {
+		switch {
+		case member.Flags() == checker.TypeFlagsUndefined || member.Flags() == checker.TypeFlagsNull:
+			nullish = true
+		case member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsVoid|checker.TypeFlagsNull) != 0 || l.phantomUndefined(member):
+			return false
+		}
+	}
+	return nullish && checker.Checker_isTypeIdenticalTo(l.checker, l.checker.GetNonNullableType(source), target) && l.unionCastCause(source.Types(), target) == castDropsNullish
 }
 
 // overlapTarget is a cast from a represented union to one object type that no member is and some member upcasts
