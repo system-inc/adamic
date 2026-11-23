@@ -40,7 +40,9 @@ var castStopProbes = []struct {
 	// Compiler's ruling). Its base-type chain makes it an array's cast, main's sentence until arrays have a cause.
 	// Pinned on a source that is no array to the checker either, as tsc's createNodeArray(...) as MissingList<T>
 	// is: a `T[]` source is already an array's cast, and couldn't tell the mutant (castExtendsArray false) apart.
-	{"missing list", "interface NodeArray<T> extends ReadonlyArray<T> { readonly end: number } interface MissingList<T> extends ReadonlyArray<T> { readonly isMissingList: true } function f(x: NodeArray<number>): MissingList<number> { return x as MissingList<number>; }", true,
+	// MissingList extends NodeArray, as tsc's types.ts declares it, so the checker takes the cast as a downcast
+	// instead of refusing it with TS2352 before the classifier is reached.
+	{"missing list", "interface NodeArray<T> extends ReadonlyArray<T> { readonly end: number } interface MissingList<T> extends NodeArray<T> { readonly isMissingList: true } function f(x: NodeArray<number>): MissingList<number> { return x as MissingList<number>; }", true,
 		"Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast"},
 	// parser.ts:10072's shape, a union source holding the array interface, through unionCastCause.
 	{"node or node array", "interface Node { readonly kind: number } interface NodeArray<T> extends ReadonlyArray<T> { readonly end: number } function f(x: Node | NodeArray<Node>): NodeArray<Node> { return x as NodeArray<Node>; }", true,
