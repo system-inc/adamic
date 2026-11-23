@@ -121,6 +121,18 @@ func (l *lowering) countTypeTargets(types map[int]*checker.Type) {
 // classes, and panics where a target's row isn't the one its class gave it, or where a record's relation to a target
 // overflowed and its classes' didn't, or the other way: a shared answer an overflow made would be read as a fact for
 // a pair that never overflowed (#mh5kdde).
+//
+// Asking fewer pairs moves where overflows fall, which the comparison can't see. checkTypeRelatedToEx sets a question's
+// budget from its relation's size, (16,000,000 less the relation's cache) / 8 (relater.go's relationCount), so with
+// fewer pairs asked the assignable cache is smaller and every later question's budget larger, and a pair that
+// overflowed on main may not overflow here. That's the safe direction: where main read the false an overflow gave, this
+// reads the real answer, and a program whose checker held that overflow was NotYet on main anyway
+// (load.RelationOverflow). So a meter's TS2859s falling after this change aren't a regression (#mh5kdde).
+//
+// The key has a cost of its own: countTypeShape works out the type of every property of every type it classes through
+// GetTypeOfSymbol, the count targets' object types among them, and main never asked for some of those. tsc's census
+// digest doesn't change for it, but where a program ever shows a checker diagnostic or a circularity it didn't on main,
+// the key is the first place to look (#mh5kdde).
 func (l *lowering) countTypeTargetsCompared(ids []int, targets []*checker.Type, targetClassOf, sourceClassOf []int, overflows [][]bool) {
 	for index, id := range ids {
 		target := targets[index]
