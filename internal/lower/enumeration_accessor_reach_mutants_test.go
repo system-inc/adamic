@@ -98,11 +98,13 @@ func TestProduct_EnumerationReachViewPassMutant(t *testing.T) {
 	enumerationReachMutantBinary(t, enumerationReachMutations[12])
 }
 
+// The mutants run one at a time: five of their pins build and run programs natively and under Node, and
+// thirteen mutant binaries doing so at once starved this package's own agreement rows past their Node
+// deadline on an eight-core box (TestEnumerationReachUnrelatedGetterLowers, three checks on Golem and Pupa).
 func TestEnumerationReachMutantsAreCaught(t *testing.T) {
 	t.Parallel()
 	for _, m := range enumerationReachMutations {
 		t.Run(m.name, func(t *testing.T) {
-			t.Parallel()
 			binary := enumerationReachMutantBinary(t, m)
 			command := exec.CommandContext(t.Context(), binary, "-test.run", "^"+strings.ReplaceAll(m.pin, "/", "$/^")+"$", "-test.count=1", "-test.v")
 			stdout, stderr, err := childguard.Capture(t.Context(), command)
