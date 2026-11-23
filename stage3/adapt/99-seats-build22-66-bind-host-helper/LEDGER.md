@@ -1,0 +1,1 @@
+- **JavaScript-changing, family 66 (#bbssdcy, Adamic’s Nov 22 21:49Z ruling, row 120):** 99-seats-build22-66-bind-host-helper gives the three lazy builder writeFile fallbacks one private helper with a plain, never-assigned receiver parameter. The helper reads and binds the optional callback when needed.
