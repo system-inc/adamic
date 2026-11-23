@@ -165,9 +165,19 @@ func (l *lowering) brandMintRefusal(node *ast.Node, target *checker.Type, mint *
 
 // recordBrandMint lists a lowered mint once per site and target, for the checked report.
 func (l *lowering) recordBrandMint(node *ast.Node, target *checker.Type, mint *brandMint) {
-	record := ir.BrandMint{Where: l.program.Where(node), Target: l.checker.TypeToString(target), Members: mint.members}
+	l.listBrandMint(ir.BrandMint{Where: l.program.Where(node), Target: l.checker.TypeToString(target), Members: mint.members})
+}
+
+// recordOverloadMint lists an overload mint (overloadPhantomResult) once, at the overload whose promised
+// result makes it and named by censusOverload's label, so the report tells it from a cast's (#z1qkw7d).
+func (l *lowering) recordOverloadMint(overload *ast.Node, label string, promised *checker.Type, mint *brandMint) {
+	l.listBrandMint(ir.BrandMint{Where: l.program.Where(overload), Target: l.checker.TypeToString(promised), Members: mint.members, Overload: label})
+}
+
+// listBrandMint adds record to the checked report unless the report already holds it.
+func (l *lowering) listBrandMint(record ir.BrandMint) {
 	for _, existing := range l.result.BrandMints {
-		if existing.Where == record.Where && existing.Target == record.Target {
+		if existing.Where == record.Where && existing.Target == record.Target && existing.Overload == record.Overload {
 			return
 		}
 	}
