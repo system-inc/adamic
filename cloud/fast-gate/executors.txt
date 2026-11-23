@@ -1595,6 +1595,36 @@ reads stage3/lane/adaptedtree *.go
 # narrows this.
 # TestAGoProductsBuildReadsNoStateButItsInitializers via leancensus linknames: internal/leancensus/leancensus.go:765
 reads internal/buildcache *.go
+# TestNoTrackedIncludeNamesAFileAPackageListingLeavesOut (internal/buildcache/listing_sources_test.go:35) walks every
+# tracked file from the root, submodules included, and reads each whose extension is in includingExtensions (:24): .go,
+# which the line above keys, and the C family .c, .h, .hh, .hpp, .hxx, .cc, .cpp and .cxx. *.[ch] keys .c and .h (236
+# files at 6d1817fb); *.[ch][chpx]* keys the other six, none tracked in adamic today, so the next one added is keyed,
+# wider than the read and never narrower. cohere's files are its gitlink's. Moving the guard into a package of its own
+# with no products narrows this (#0m5429b).
+# TestNoTrackedIncludeNamesAFileAPackageListingLeavesOut — internal/buildcache/listing_sources_test.go:53
+reads internal/buildcache *.[ch]
+# TestNoTrackedIncludeNamesAFileAPackageListingLeavesOut — internal/buildcache/listing_sources_test.go:53
+reads internal/buildcache *.[ch][chpx]*
+# TestNoTrackedIncludeNamesAFileAPackageListingLeavesOut — internal/buildcache/listing_sources_test.go:39 (cohere's own files)
+reads internal/buildcache cohere
+# TestGoModReplacementsAreGosForEveryTrackedGoMod (internal/buildcache/gomod_test.go:88) walks every tracked go.mod from
+# the root and parses each (:118), 4 at 6d1817fb, two outside the closure.
+# TestGoModReplacementsAreGosForEveryTrackedGoMod — internal/buildcache/gomod_test.go:118
+reads internal/buildcache go.mod
+# TestGoModReplacementsAreGosForEveryTrackedGoMod — internal/buildcache/gomod_test.go:118
+reads internal/buildcache */go.mod
+# TestEveryCallNamedInTheReaderIsPinned reads the nested command's syscall table, which is its package's own file, never
+# buildcache's.
+# TestEveryCallNamedInTheReaderIsPinned — internal/buildcache/settle_calls_test.go:184
+reads internal/buildcache internal/buildcache/cmd/traced/testdata/strace-6.8-x86_64.txt
+# TestTheWorkspaceSumsAreWholeSoGoWritesNoneBesideTheWork (internal/buildcache/gomod_test.go:201) runs go list over
+# every package of the workspace, which resolves each one's //go:embed patterns, so a missing embedded file fails the
+# list while its bytes don't matter: two lie outside the closure (internal/hostconfiguration/configuration.go:17,
+# loom/rules.go:16), keyed by name alone.
+# TestTheWorkspaceSumsAreWholeSoGoWritesNoneBesideTheWork — internal/buildcache/gomod_test.go:201
+reads internal/buildcache internal/hostconfiguration/configurations.json paths
+# TestTheWorkspaceSumsAreWholeSoGoWritesNoneBesideTheWork — internal/buildcache/gomod_test.go:201
+reads internal/buildcache loom/rules.json paths
 # TestALibraryOraclesBuildReadsNoStateButItsInitializers (stage1/cohere/tsprinter/oracles/census_test.go:48) runs the
 # same census from the checkout's root (Repository), so the same walk reads every .go file
 # (internal/leancensus/leancensus.go:457, :749-781). Moving the census into its own package, as compilercensus does,

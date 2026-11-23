@@ -4593,6 +4593,15 @@ class CensusLaunchers(unittest.TestCase):
             self.assertIsNotNone(run.compilerMarker.search(reference), reference)
         self.refused(self.launcher % 'exec.Command("go", "run", "./cmd/adamic", "c", "x.ts")', "references the compiler (cmd/adamic)")
 
+    def test_another_command_or_a_possessive_is_no_reference_to_the_compiler(self):
+        # Seats' tables on #8v9f77x and #mgvwehq: parallel.go:5 names cmd/adamic-gate/parallelcensus and repowalk.go:6
+        # says cmd/adamic's, and the bound at a word character took both for the compiler. Mutant: the old bound
+        # (?![A-Za-z0-9_]) back, both refused.
+        for text in ("// cmd/adamic-gate/parallelcensus reads this\n", "// cmd/adamic's walk\n", '"cmd/adamic-gate"'):
+            self.assertIsNone(run.compilerMarker.search(text), text)
+        for reference in ("// go run ./cmd/adamic\n", "cmd/adamic", '"./cmd/adamic"', "x := `./cmd/adamic`"):
+            self.assertIsNotNone(run.compilerMarker.search(reference), reference)
+
     def test_a_launcher_that_runs_the_compiler_is_refused(self):
         self.refused(self.launcher % 'exec.Command("adamic", "c", "x.a")', 'references the compiler ("adamic")')
         self.refused(self.launcher % 'exec.Command(os.Getenv("ADAMIC_BIN"))', "references the compiler (ADAMIC_BIN)")

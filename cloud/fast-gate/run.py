@@ -1919,8 +1919,11 @@ def launcherRefusal(source, runs):
 # A reference to the compiler itself, one kind of the census's evidence; launching a process is the other. cmd/adamic is
 # bounded at its name, so cohere's own harness commands (cmd/adamic_path and its siblings, which markdownblocks' oracles
 # run) are no reference to it, while `./cmd/adamic`, `cmd/adamic/...` and `go run ./cmd/adamic c x.ts` still are
-# (Cohere's finding on #1byp10f, Loom's ruling).
-compilerMarker = re.compile(r'github\.com/system-inc/adamic/internal/(?:load|lower|native|javascript|ir|flow)|cmd/adamic(?![A-Za-z0-9_])|oracle/adamic|ADAMIC_(?:BIN|BINARY)|"adamic"')
+# (Cohere's finding on #1byp10f, Loom's ruling). It names the compiler only as a whole path, followed by a quote, a
+# backtick, a slash, whitespace or the end, so cmd/adamic-gate and cmd/adamic's, another command and a possessive, are
+# no reference to it; that loosens nothing that could launch, since a path a process runs ends at one of those (Adamic
+# Loom's ruling on #ry3pfc6). Comments are still read: a cgo preamble and //go:generate run.
+compilerMarker = re.compile(r'github\.com/system-inc/adamic/internal/(?:load|lower|native|javascript|ir|flow)|cmd/adamic(?=["`/\s]|$)|oracle/adamic|ADAMIC_(?:BIN|BINARY)|"adamic"')
 launchMarker = re.compile(r'"os/exec"|os\.StartProcess|syscall\.Exec')
 
 # The package whose MemoryLimit reads the unit's cgroup limit, the share a test sizes itself from (the memory floor census).
