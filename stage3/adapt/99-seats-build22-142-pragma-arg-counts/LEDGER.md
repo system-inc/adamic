@@ -1,0 +1,1 @@
+- **JavaScript-changing, family 142 (#bbssdcy, Adamic's Nov 22 ruling):** 99-seats-build22-142-pragma-arg-counts stores each internal pragma tuple's arity at its table entry and uses that count after the absent-args guard in getNamedPragmaArguments. The concrete type checks the literal count against the tuple's length.
