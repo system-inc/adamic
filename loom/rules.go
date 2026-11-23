@@ -103,6 +103,10 @@ type BlocksRule struct {
 	// lanes' landings only where every prefix cleared over them. Optional, and never null; absent reads as off (#sera6j6,
 	// #6jrhgp7).
 	Lanes *bool `json:"lanes"`
+	// LiveHoleHands: the hands whose first list may be marked live-hole (`POST /rules/first` with liveHole {task}), so a
+	// fix it marks takes the place of the lowest block in flight no box ever leased while the tower is full. Hand names,
+	// each once, 1 to MaximumLiveHoleHands. Optional, and never null; absent reads as no hand marks one (#rgwwnrr).
+	LiveHoleHands []string `json:"liveHoleHands"`
 }
 
 // DefaultBlocksDepth and MaximumBlocksDepth are the queue's: one standing block and one on it, and the deepest tower;
@@ -111,6 +115,8 @@ const (
 	DefaultBlocksDepth    = 2
 	MaximumBlocksDepth    = 32
 	MaximumBlocksBuilders = 8
+	// MaximumLiveHoleHands is the queue's: the most hands liveHoleHands names (QueueRules.ts maximumLiveHoleHands).
+	MaximumLiveHoleHands  = 8
 )
 
 // SizingRule is a block-size policy: the largest block whose chance of coming back all green, at the red rate of the last
@@ -135,7 +141,7 @@ func ReadRules() (Rules, error) {
 }
 
 // ParseRules reads a rules file strictly: a rule the queue doesn't know, a field a rule doesn't take, a missing field,
-// a budget that isn't a whole number of 1 or more, a sizing, a depth, builders, a tipFirst, a stacked, a lanes, a door or a witness
+// a budget that isn't a whole number of 1 or more, a sizing, a depth, builders, a tipFirst, a stacked, a lanes, liveHoleHands, a door or a witness
 // the lander would refuse, or anything after the object is refused, so a typo can't land as a rule nobody meant.
 func ParseRules(data []byte) (Rules, error) {
 	decoder := json.NewDecoder(bytes.NewReader(data))
@@ -201,6 +207,18 @@ func ParseRules(data []byte) (Rules, error) {
 	}
 	if lanes, present := raw.Blocks["lanes"]; present && (bytes.Equal(bytes.TrimSpace(lanes), []byte("null")) || rules.Blocks.Lanes == nil) {
 		return Rules{}, fmt.Errorf("rules.json: blocks' lanes is %s, and it's true or false", lanes)
+	}
+	if hands, present := raw.Blocks["liveHoleHands"]; present {
+		if bytes.Equal(bytes.TrimSpace(hands), []byte("null")) || len(rules.Blocks.LiveHoleHands) == 0 || len(rules.Blocks.LiveHoleHands) > MaximumLiveHoleHands {
+			return Rules{}, fmt.Errorf("rules.json: blocks' liveHoleHands is %s, and it's a list of 1 to %d hand names", hands, MaximumLiveHoleHands)
+		}
+		seen := map[string]bool{}
+		for _, hand := range rules.Blocks.LiveHoleHands {
+			if !handPattern.MatchString(hand) || seen[hand] {
+				return Rules{}, fmt.Errorf("rules.json: blocks' liveHoleHands names hand names, each once, not %q", hand)
+			}
+			seen[hand] = true
+		}
 	}
 	if raw.Door != nil {
 		var bounds map[string]json.RawMessage
@@ -298,3 +316,6 @@ var changeIDPattern = regexp.MustCompile(`^chg_[0-9a-hjkmnp-tv-z]{26}$`)
 // builderPattern is a box name as a coordinator token's box claim carries it, the Loom Worker's Token.ts BoxPattern and
 // the lander's own (Node on #kqsehcq), so a rules name no token can carry is refused rather than never leased.
 var builderPattern = regexp.MustCompile(`^[A-Za-z][A-Za-z0-9-]{0,31}$`)
+
+// handPattern is the queue's hand name (Token.ts HandPattern): what a minted hand's claim carries.
+var handPattern = regexp.MustCompile(`^[a-z][a-z0-9_]{0,63}$`)

@@ -84,6 +84,12 @@ func TestRulesRefuseMistakes(t *testing.T) {
 		{"lanes null", `{"blocks": {"on": true, "budget": 2, "lanes": null}, "restack": {"on": false}}`, "true or false"},
 		{"lanes a string", `{"blocks": {"on": true, "budget": 2, "lanes": "true"}, "restack": {"on": false}}`, "cannot unmarshal string"},
 		{"lanes a number", `{"blocks": {"on": true, "budget": 2, "lanes": 1}, "restack": {"on": false}}`, "cannot unmarshal number"},
+		{"liveHoleHands null", `{"blocks": {"on": true, "budget": 2, "liveHoleHands": null}, "restack": {"on": false}}`, "a list of 1 to 8 hand names"},
+		{"liveHoleHands empty", `{"blocks": {"on": true, "budget": 2, "liveHoleHands": []}, "restack": {"on": false}}`, "a list of 1 to 8 hand names"},
+		{"liveHoleHands past the queue's", `{"blocks": {"on": true, "budget": 2, "liveHoleHands": ["a", "b", "c", "d", "e", "f", "g", "h", "i"]}, "restack": {"on": false}}`, "a list of 1 to 8 hand names"},
+		{"liveHoleHands a capital", `{"blocks": {"on": true, "budget": 2, "liveHoleHands": ["Adamic"]}, "restack": {"on": false}}`, `not "Adamic"`},
+		{"liveHoleHands twice", `{"blocks": {"on": true, "budget": 2, "liveHoleHands": ["adamic", "adamic"]}, "restack": {"on": false}}`, `each once, not "adamic"`},
+		{"liveHoleHands a string", `{"blocks": {"on": true, "budget": 2, "liveHoleHands": "adamic"}, "restack": {"on": false}}`, "cannot unmarshal string"},
 		{"witness null", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": null}`, "an object {every, hours, machines}"},
 		{"witness empty", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {}}`, "whole number from 1 to"},
 		{"witness unknown field", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Home-f3279c"], "on": true}}`, `unknown field "on"`},
@@ -243,6 +249,21 @@ func TestRulesTakeALanes(t *testing.T) {
 	}
 	rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
 	if err != nil || rules.Blocks.Lanes != nil {
+		t.Fatalf("%+v, %v", rules.Blocks, err)
+	}
+}
+
+// A liveHoleHands the queue takes reads here too (#rgwwnrr), before any rules.json names it: hand names, each once, and
+// absent as absent, which marks no fix. Mutant: the hand pattern dropped (TestRulesRefuseMistakes' "liveHoleHands a
+// capital").
+func TestRulesTakeLiveHoleHands(t *testing.T) {
+	t.Parallel()
+	rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "liveHoleHands": ["system_adamic_loom", "system_adamic"]}, "restack": {"on": false}}`))
+	if err != nil || len(rules.Blocks.LiveHoleHands) != 2 || rules.Blocks.LiveHoleHands[0] != "system_adamic_loom" {
+		t.Fatalf("%+v, %v", rules.Blocks, err)
+	}
+	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
+	if err != nil || rules.Blocks.LiveHoleHands != nil {
 		t.Fatalf("%+v, %v", rules.Blocks, err)
 	}
 }
