@@ -84,6 +84,9 @@ var loweringFieldPolicies = map[string]loweringFieldPolicy{
 	// The calls the gate let through, which checkOverloadVerdictCalls reads after lowering. They roll back
 	// with the IR a lowering built, so a rolled-back call is judged again where it's lowered again.
 	"overloadVerdictCalls": speculativeState,
+	// The Array.isArray sites whose arms checkArrayArmViews holds (#9z2ksv7) roll back with the IR that built
+	// them, and are never carried into another program's lowering, whose views they don't judge.
+	"arrayArmSites": speculativeState,
 	// Scoped to one optionalIntrinsic invocation; snapshots preserve its immutable AST identity.
 	// It is not a carried program fact.
 	"optionalReceiverCall": scopedASTIdentity,
