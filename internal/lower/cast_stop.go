@@ -24,11 +24,10 @@ const (
 	castAmbiguousTag                    // a union whose every member holds a literal in a field, but no two apart
 	castCallable                        // a cast whose target or source has a call signature
 	castWidenedMember                   // a union target whose member widens a writable field the source holds
-	// Refused, #53amvnn: no check at the cast can hold the claim once another alias writes the value.
+	// Refused, #53amvnn: no check can hold the claim once another alias writes the value, or a ruling refuses it.
 	castWidenedTarget  // an object downcast to a target that widens a writable field the source holds
-	castArrayElements  // a downcast of a readonly array's elements, which another alias can still write
-	castMutableArray   // a downcast to a mutable array, which a write through the source can break
-	castTupleFromArray // an array cast to a tuple, whose length another alias of the array can still change
+	castMutableArray   // a downcast to a mutable array, which a write through the source can break (invariant-mutable)
+	castTupleFromArray // a mutable array cast to a tuple, whose length another alias of the array can still change
 	// Adamic's three rulings (Q1 to Q3 on #b5w3ycg, Nov 22), under one principle: in .ts a cast's stop is
 	// NotYet when a run-time check could decide the claim and nobody has built it, and Refused only when no
 	// check ever could.
@@ -54,6 +53,9 @@ const (
 	castArrayArm            // a union of arrays and other members, cast to one side: Array.isArray decides
 	castTuple               // an array cast to a tuple: a length check, and a tuple's own representation
 	castFromEmpty           // a source typed {}, which holds any value but null and undefined
+	// NotYet by Compiler's ruling on #53amvnn (Nov 23): views v3's per-read element check decides a readonly
+	// array's claim at each read, so a write through another alias is caught where it's read.
+	castArrayElements // a downcast of a readonly array's elements
 	// No branch above fits: the sentence main spoke before the split, so nothing is lost.
 	castUnnamed
 )
@@ -98,8 +100,6 @@ func (l *lowering) castStop(node *ast.Node, cause castCause, source, target *che
 		return refused("a cast from "+from+" to "+to+", whose member "+field, "declare the field readonly in both, or cast to a member whose fields "+from+" holds as written"+rule)
 	case castWidenedTarget:
 		return refused("a cast from "+from+" to "+to+", "+field, "declare the field readonly in both, or build the value as a "+to+rule)
-	case castArrayElements:
-		return refused("a cast from "+from+" to "+to+", whose elements a check at the cast can't hold, since another alias of the array can still write it", "check each element where it's read (a type predicate over the element), or build a new array of the checked elements"+rule)
 	case castMutableArray:
 		return refused("a cast from "+from+" to the mutable array "+to+", which a write through "+from+" could break later", "cast to a readonly array, or build a new "+to+" of the checked elements (adamic/invariant-mutable)")
 	case castTupleFromArray:
@@ -148,6 +148,8 @@ func (l *lowering) castStop(node *ast.Node, cause castCause, source, target *che
 		return l.notYet(node, "a checked cast from "+from+" to "+to+", which needs Array.isArray to tell "+from+"'s arrays from its other members")
 	case castTuple:
 		return l.notYet(node, "a checked cast from "+from+" to the tuple "+to+", which needs its length checked")
+	case castArrayElements:
+		return l.notYet(node, "a checked view of the readonly array "+to+"'s elements over "+from)
 	case castFromEmpty:
 		return l.notYet(node, "a checked view of "+to+" over a value typed {}, which holds anything but null and undefined")
 	case castClassAncestry, castClassTarget:
@@ -176,8 +178,10 @@ func (l *lowering) arrayCastCause(members []*checker.Type, present *checker.Type
 	targetArray := l.castArrayLike(present)
 	switch {
 	case targetArray && checker.IsTupleType(present) && len(arrays) > 0:
+		// A tuple or readonly array source is decided by a length and element check at each read; a mutable
+		// array's length can still change through another alias, so it's refused.
 		for _, member := range arrays {
-			if !checker.IsTupleType(member) {
+			if !checker.IsTupleType(member) && !l.isLibraryType(member, "ReadonlyArray") {
 				return castTupleFromArray
 			}
 		}
