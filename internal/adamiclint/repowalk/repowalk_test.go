@@ -1,12 +1,23 @@
 package repowalk_test
 
 import (
+	"os"
 	"testing"
 
 	"golang.org/x/tools/go/analysis/analysistest"
 
 	"github.com/system-inc/adamic/internal/adamiclint/repowalk"
 )
+
+// TestMain sets GOPACKAGESDRIVER off before any test loads, so go/packages loads the fixtures with go list alone,
+// as this unit's key holds them. A driver named in the environment answers in its place, no key holds which, and
+// one that answers with other packages can pass a fixture whose want nothing found.
+func TestMain(m *testing.M) {
+	if err := os.Setenv("GOPACKAGESDRIVER", "off"); err != nil {
+		panic(err)
+	}
+	os.Exit(m.Run())
+}
 
 // The fixtures under testdata/src carry a // want on every line the rule must flag, and analysistest fails on a
 // finding no want expects as much as on a want nothing found, so the allowed shapes prove the rule stays quiet.
