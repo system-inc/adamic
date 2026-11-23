@@ -27,7 +27,7 @@ func TestOptionalChainsAgreeWithNode(t *testing.T) {
 		{"chain.a", "false: undefined undefined undefined undefined undefined undefined undefined reads=9 argued=0\nnote void\ntrue: hello 4 L4! undefined leaf3 leaf4 2 reads=9 argued=6\nundefined first 1 second 1\nundefined talk 2 retalk 2\n"},
 		{"union_method.a", "undefined undefined /cache undefined calls=1 reads=4\n"},
 		{"size.a", "undefined 0 1\nundefined 0\ntrue true false\nundefined undefined 1 2\n"},
-		{"fields.a", "undefined undefined\nundefined undefined\n0 false\n3 true\n"},
+		{"fields.a", "undefined undefined\nundefined undefined\n0 false\n3 true\ntrue true\ntrue true\nfalse false\n"},
 		{"grouped_call.a", "ada\n"},
 	} {
 		t.Run(program.name, func(t *testing.T) {
