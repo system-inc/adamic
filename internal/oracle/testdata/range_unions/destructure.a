@@ -1,0 +1,19 @@
+// #hae423v wave 2: const { pos, end } = range of a TextRange held as a union, each name read by kind, from a
+// NodeArray's side record and from a plain object's fields.
+interface TextRange { pos: number; end: number; }
+interface Node { kind: number; }
+interface NodeArray<T extends Node> extends Array<T>, TextRange {
+    hasTrailingComma: boolean;
+    transformFlags: number;
+}
+function spell(range: TextRange): string {
+    const { pos, end } = range;
+    return `${pos}..${end}`;
+}
+const nodes = [{ kind: 1 }, { kind: 2 }] as NodeArray<Node>;
+nodes.pos = 3;
+nodes.end = 11;
+nodes.hasTrailingComma = true;
+nodes.transformFlags = 0;
+console.log(spell(nodes));
+console.log(spell({ pos: 1, end: 2 }));
