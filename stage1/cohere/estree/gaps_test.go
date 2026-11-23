@@ -13,7 +13,11 @@ import (
 	"time"
 )
 
-func TestPostfixValueGap(t *testing.T) {
+// The postfix value gap is closed (#f3n0gyp): values[index++] reads the old index and writes it back before
+// anything after it, so the program lowers. Its output is held to Node on every backend by
+// internal/oracle/postfix_value_test.go; this pins that lowering takes it, where it once stopped as
+// "a PostfixUnaryExpression".
+func TestPostfixValueLowers(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs("gaps/postfixValue.ts")
 	if err != nil {
@@ -27,11 +31,9 @@ func TestPostfixValueGap(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = lower.Lower(context.Background(), program)
-	if err == nil || !strings.Contains(err.Error(), "a PostfixUnaryExpression") {
-		t.Fatalf("postfix value gap changed: %v", err)
+	if _, err := lower.Lower(context.Background(), program); err != nil {
+		t.Fatalf("the postfix value gap opened again: %v", err)
 	}
-	t.Logf("Node 7, 1; lowering: %v", err)
 }
 
 func TestMethodReplacementGap(t *testing.T) {
