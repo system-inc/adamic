@@ -387,6 +387,10 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		// A Weak<Node[]> narrowed to present is the array.
 		arrayType = target
 	}
+	if picked := l.pickedArray(arrayType); picked != nil {
+		// A Pick of an array's methods is held as that array (unbranded.go's pickedArray).
+		arrayType = picked
+	}
 	if _, element, known := l.nodeArrayLayoutOf(arrayType); known {
 		held, _ := l.representation(element)
 		return held, nil
