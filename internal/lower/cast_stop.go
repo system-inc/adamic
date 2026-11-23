@@ -194,10 +194,17 @@ func (l *lowering) arrayCastCause(members []*checker.Type, present *checker.Type
 	if !targetArray || len(arrays) == 0 {
 		return castUnnamed
 	}
-	if l.checker.IsArrayType(present) {
+	// The checker's array question answers for ReadonlyArray too, so readonly is asked by name.
+	if l.isArrayType(present) && !l.isLibraryType(present, "ReadonlyArray") {
 		return castMutableArray
 	}
 	return castArrayElements
+}
+
+// castSignatures is whether proven has a call or construct signature: a function type holds no properties, so
+// the {} source cause must ask before calling one empty.
+func (l *lowering) castSignatures(proven *checker.Type) bool {
+	return len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) != 0
 }
 
 // castArrayLike is whether some member of proven, nullish aside, is an array or a tuple. A cast between
@@ -246,7 +253,7 @@ func (l *lowering) objectCastCause(source, target *checker.Type) castCause {
 		return castTargetTypeParameter
 	case l.castArrayLike(source) || l.castArrayLike(present):
 		return l.arrayCastCause(castMembers(source), present)
-	case source.Flags()&checker.TypeFlagsObject != 0 && len(l.checker.GetPropertiesOfType(source)) == 0 && present.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(present):
+	case source.Flags()&checker.TypeFlagsObject != 0 && len(l.checker.GetPropertiesOfType(source)) == 0 && !l.castSignatures(source) && present.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(present) && !l.castSignatures(present):
 		return castFromEmpty
 	case source.Flags()&checker.TypeFlagsUnknown != 0:
 		return castFromUnknown
