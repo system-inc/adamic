@@ -4753,6 +4753,7 @@ class CensusLaunchers(unittest.TestCase):
         tools = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(run.__file__))))
         allows = run.launchAllows(tools)
         self.assertEqual(sorted(allows.get(("stage3/lane/adaptedtree", "internal/buildcache"), {})), ["LeanProductOf", "PinnedGit", "Tool"])
+        self.assertEqual(sorted(allows.get(("stage3/lane", "stage3/lane/adaptedtree"), {})), ["Product"])
 
     def test_a_dead_allow_is_the_changes_when_it_touches_the_launcher(self):
         # An allow naming a package the launcher doesn't import, a function it doesn't call, or a launcher the map doesn't
