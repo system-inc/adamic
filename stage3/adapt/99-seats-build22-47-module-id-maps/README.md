@@ -1,0 +1,8 @@
+# System module ID maps
+
+Adamic’s Nov 22, 2026 21:49Z ruling on #bbssdcy approves this JavaScript-changing adaptation for families 47 and 160. The base sites are in `src/compiler/transformers/module/system.ts`.
+
+- **47, 204:22**, “an assignment value to a member”. Rulings rows 161 and 320 apply. `collectExternalModuleInfo(context, node)` runs once, and its value is stored under `id` and then assigned to `moduleInfo`. The sparse array’s indexed store could grow the array. The `Map<number, ExternalModuleInfo>` uses `set(id, value)` and the sole lookup at 1771 uses `get(id)`. An ID never set reads `undefined` from either representation. The lookup uses only the key and cannot observe length, holes, or order.
+- **160, 1777:17**, “delete”. Rulings rows 87 and 307 apply. `Map<number, boolean[]>` retains the private captured cache, the guarded write at 259, the lookup at 1773, and the guarded deletion at its original mutation point. The stored boolean array is the same object. An ID never set or already deleted reads `undefined` from either representation. The sole lookup uses only the key and cannot observe length, holes, or order. This site rides with family 47 in `transformSystemModule`.
+
+The Nov 22 meter counted four sites for family 47. The drop from four to one stands on the two traced candidates. `getLineStarts` reaches the scoped tail without a finding, and `performIncrementalCompilation` now stops on “a cast the runtime can't check” at `watchPublic.ts:150:38`. The third candidate, possibly `factory/emitNode.ts:156:68`, is **unconfirmed** and is excluded from the cleared count.
