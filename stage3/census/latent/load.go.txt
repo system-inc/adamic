@@ -86,11 +86,16 @@ func (p *Program) LatentOwnDiagnosticsIn(body *ast.Node) []string {
 	return result
 }
 
-// Entry replay uses the same resolved graph as the entry census.
+// Entry replay uses the same resolved graph as the entry census, in the same order: the entry
+// first, then the rest in the checker's order (stage3/meter/entry_overlay.py's LatentEntryReach).
+// GetSourceFiles puts dependencies before the entry, and lowering reads Files()[0] as the entry,
+// so with a dependency first every module it doesn't import panics "source module has no
+// import-declaration route" (internal/lower/source_identity.go).
 func (p *Program) LatentReplayEntryReach() {
-	p.files = nil
+	entry := p.files[0]
+	p.files = []*ast.SourceFile{entry}
 	for _, source := range p.compiler.GetSourceFiles() {
-		if !source.IsDeclarationFile && !IsLibrary(source) {
+		if source != entry && !source.IsDeclarationFile && !IsLibrary(source) {
 			p.files = append(p.files, source)
 		}
 	}
