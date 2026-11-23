@@ -92,7 +92,7 @@ func (l *lowering) pickedArray(t *checker.Type) *checker.Type {
 		return nil
 	}
 	array, keys := pick.TypeArguments()[0], pick.TypeArguments()[1]
-	if !l.checker.IsArrayType(l.unbranded(array)) {
+	if !l.isArrayType(array) {
 		return nil
 	}
 	names := []*checker.Type{keys}
