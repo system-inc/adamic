@@ -3,6 +3,7 @@ package lower
 import (
 	"slices"
 
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 )
 
@@ -28,6 +29,9 @@ import (
 //   - A brand with a member typed void: such a program fails closed under the void-container rule
 //     (rulings.md, Oct 29), so it doesn't gain its base's layout here. The cast is erased all the same.
 func (l *lowering) unbranded(t *checker.Type) *checker.Type {
+	if picked := l.pickedArray(t); picked != nil {
+		return l.unbranded(picked)
+	}
 	base := t
 	for {
 		next, members := l.phantomExtension(base)
@@ -69,4 +73,38 @@ func (l *lowering) isArrayType(t *checker.Type) bool {
 // elementTypeOfArray is the checker's element type of t held as its base.
 func (l *lowering) elementTypeOfArray(t *checker.Type) *checker.Type {
 	return l.checker.GetElementTypeOfArrayType(l.unbranded(t))
+}
+
+// pickedArray is the array behind `Pick<A[], K>` when every key in K is one of the methods Array declares,
+// or nil. tsc's JSON helpers take their errors as `Pick<DiagnosticWithLocation[], "push">`, adaptation 71's
+// narrowing, and every caller hands the array itself, so the Pick is held as that array and its methods are
+// the array's own (#kr1v0tn A, Lower's ruling). A Pick is structural, so an object or a class instance with a
+// push method fits its type too; each stops where it goes into the slot held as an array, as any object
+// handed to an array does, which TestPickedArrayEntryStops pins. Any key that isn't an Array method (length,
+// an index, a key of something else), and a Pick of anything but an array, keeps the Pick a mapped object,
+// held as today.
+func (l *lowering) pickedArray(t *checker.Type) *checker.Type {
+	pick := t.Alias()
+	if pick == nil || pick.Symbol().Name != "Pick" || !l.librarySymbol(pick.Symbol()) || len(pick.TypeArguments()) != 2 {
+		return nil
+	}
+	array, keys := pick.TypeArguments()[0], pick.TypeArguments()[1]
+	if !l.checker.IsArrayType(l.unbranded(array)) {
+		return nil
+	}
+	names := []*checker.Type{keys}
+	if keys.Flags()&checker.TypeFlagsUnion != 0 {
+		names = keys.Types()
+	}
+	for _, name := range names {
+		text, isText := name.AsLiteralType().Value().(string)
+		if name.Flags()&checker.TypeFlagsStringLiteral == 0 || !isText {
+			return nil
+		}
+		property := l.checker.GetPropertyOfType(array, text)
+		if property == nil || property.Flags&ast.SymbolFlagsMethod == 0 || !l.librarySymbol(property) {
+			return nil
+		}
+	}
+	return array
 }
