@@ -1,0 +1,25 @@
+// #hae423v wave 2, Lower's Must 3: a class whose pos is a getter goes where a TextRange is held, and the read of
+// pos through the TextRange's dispatch runs the getter, since its object arm is the field read finishAccessors
+// turns into its accessor dispatcher. A NodeArray goes through the same function.
+interface TextRange { pos: number; end: number; }
+interface Node { kind: number; }
+interface NodeArray<T extends Node> extends Array<T>, TextRange {
+    hasTrailingComma: boolean;
+    transformFlags: number;
+}
+class Span {
+    end = 10;
+    get pos(): number {
+        return 4;
+    }
+}
+function width(range: TextRange): number {
+    return range.end - range.pos;
+}
+const nodes = [{ kind: 1 }] as NodeArray<Node>;
+nodes.pos = 1;
+nodes.end = 3;
+nodes.hasTrailingComma = false;
+nodes.transformFlags = 0;
+console.log(String(width(new Span())));
+console.log(String(width(nodes)));
