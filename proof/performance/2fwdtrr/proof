@@ -1,0 +1,9 @@
+# #2fwdtrr: cmd/adamic-performance's gofmt, vet and tests at the rename. Source it after the sealed opening. Never merged.
+L="$TMPDIR/pk"; mkdir -p "$L"; failed=0
+step() { echo "$1 $2"; [ "$1" = PASS ] || failed=1; }
+bad=$(gofmt -l cmd/adamic-performance); if [ -z "$bad" ]; then step PASS gofmt; else step FAIL gofmt; echo "$bad"; fi
+if go vet ./cmd/adamic-performance/... > "$L/vet.log" 2>&1; then step PASS vet; else step FAIL vet; head -20 "$L/vet.log"; fi
+if go test -count=1 -timeout 30m ./cmd/adamic-performance/... > "$L/test.log" 2>&1; then step PASS tests; else step FAIL tests; fi
+grep -E '^(ok|FAIL|--- FAIL)|_test.go:[0-9]+' "$L/test.log" | cut -c1-300 | head -20
+if grep -rn '"min"\|"max"\|\.Min\b\|\.Max\b' cmd/adamic-performance; then step FAIL no-abbreviated-ends; else step PASS no-abbreviated-ends; fi
+if [ $failed -eq 0 ]; then echo "VERDICT PASS"; else echo "VERDICT FAIL"; fi
