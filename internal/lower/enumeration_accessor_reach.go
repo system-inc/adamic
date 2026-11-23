@@ -163,7 +163,11 @@ func (l *lowering) enumerationPrimitive(proven *checker.Type) bool {
 }
 
 // enumerationAccessorOwners is every type an object carrying the accessor is, or not known. An object
-// literal's accessor is on that literal, of its regular type. An interface's or type literal's accessor
+// literal's accessor is on that literal, of its regular type, known unless that type mentions a type
+// parameter: a literal built inside a generic function but typed without one, like tsc's
+// createTransformationContext literal inside transformNodes<T>, has one owner for every instantiation
+// (J-f3dgc1m found that literal alone kept all twelve of family 17's sites on the program-wide scan).
+// An interface's or type literal's accessor
 // declares no getter at run time, but its declared type stands as an owner, failing closed. A class's
 // accessor is on every instance of the class and of each class extending it, or on the class itself and
 // each class extending it for a static one: every class in the program whose own side's property by the
@@ -171,12 +175,22 @@ func (l *lowering) enumerationPrimitive(proven *checker.Type) bool {
 // particular, and an accessor held anywhere else has no owner to name: both are not known.
 func (l *lowering) enumerationAccessorOwners(accessor *ast.Node, reach *enumerationAccessorReach) ([]*checker.Type, bool) {
 	holder := accessor.Parent
-	if holder == nil || enumerationGenericContext(holder) {
+	if holder == nil {
+		return nil, false
+	}
+	if holder.Kind == ast.KindObjectLiteralExpression {
+		owner := regularTypeOfObjectLiteral(l.checker, l.checker.GetTypeAtLocation(holder))
+		if l.eachReached(owner, 0, map[*checker.Type]bool{}, func(reached *checker.Type) bool {
+			return reached.Flags()&checker.TypeFlagsInstantiable != 0
+		}) {
+			return nil, false
+		}
+		return []*checker.Type{owner}, true
+	}
+	if enumerationGenericContext(holder) {
 		return nil, false
 	}
 	switch holder.Kind {
-	case ast.KindObjectLiteralExpression:
-		return []*checker.Type{regularTypeOfObjectLiteral(l.checker, l.checker.GetTypeAtLocation(holder))}, true
 	case ast.KindInterfaceDeclaration:
 		symbol := l.checker.GetSymbolOfDeclaration(holder)
 		if symbol == nil {
