@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"reflect"
 	"slices"
 	"testing"
 
@@ -71,6 +72,13 @@ const abstractMaker: abstract new () => Box = Box;
 const otherAbstractMaker: abstract new () => Box = Box;
 const maker: new () => Box = Box;
 console.log(String(new maker().size));
+`
+
+// countTypeClassesOverflowSource has a number literal, whose fresh type the checker made when it checked it, and an
+// interface nothing in it relates the literal's type to (#mh5kdde).
+const countTypeClassesOverflowSource = `interface Box { readonly size: number; }
+const box: Box = { size: 7 };
+console.log(String(box.size));
 `
 
 // countTypeTargets asks the checker once per pair of classes. In countTypeClassesSource increment, decrement and
@@ -295,6 +303,83 @@ func TestCountTypeClassesKeepAbstractConstructorsApart(t *testing.T) {
 	}
 	if classOf, representatives := countTypeClasses(check, []*checker.Type{abstractMaker, maker}); len(representatives) != 2 {
 		t.Errorf("an abstract constructor type and a concrete one made %d classes %v, not two", len(representatives), classOf)
+	}
+}
+
+// countTypeOverflowed reads the checker's own overflow mark: a pair the checker was asked and cached, its entry then
+// marked as overflowed as checkTypeRelatedToEx marks one (relater.go), reads true, and a pair never asked reads false.
+// The mark is planted on the entries the ask itself wrote, not under a key this file works out, so a key worked out
+// wrong or a relation renamed can't agree with itself here as it can in the comparison, which would read false on every
+// pair and find nothing (Compiler's condition on #mh5kdde). The source is a fresh literal, which isTypeRelatedTo relates
+// as its regular type, and the target an interface, so the pair reads apart from its reverse. Mutants, in
+// countTypeOverflowed: (a) source and target swapped in the key,
+// `key, _ := assignableRelationKey(source, target, checker.IntersectionStateNone, false, false)` to
+// `key, _ := assignableRelationKey(target, source, checker.IntersectionStateNone, false, false)`, and the asked pair
+// reads false while its reverse, never asked, reads true; (b) the fresh literal's regularization dropped,
+// `if source.Flags()&checker.TypeFlagsFreshable != 0 && source.AsLiteralType().FreshType() == source {` to
+// `if false {`, and the read looks under the fresh type's id, which the checker never caches a pair under, so the
+// asked pair reads false.
+func TestCountTypeOverflowedReadsAPlantedMark(t *testing.T) {
+	t.Parallel()
+	program, check, _ := viewedElementsProgram(t, writeAgreementSource(t, "main.ts", countTypeClassesOverflowSource))
+	entry := program.Files()[0]
+	declaration := countTypeClassesFind(entry, func(node *ast.Node) bool {
+		return node.Kind == ast.KindInterfaceDeclaration && node.Name().Text() == "Box"
+	})
+	numberLiteral := countTypeClassesNode(entry, ast.KindNumericLiteral)
+	if declaration == nil || numberLiteral == nil {
+		t.Fatal("the fixture declares no interface Box or has no number literal")
+	}
+	box := check.GetDeclaredTypeOfSymbol(check.GetSymbolAtLocation(declaration.Name()))
+	// The checker hands an expression its regular literal type; the fresh one is the type it checked the literal as.
+	regularNumber := check.GetTypeAtLocation(numberLiteral)
+	if regularNumber.Flags()&checker.TypeFlagsFreshable == 0 {
+		t.Fatalf("the number literal's type %s isn't a literal type", check.TypeToString(regularNumber))
+	}
+	freshNumber := regularNumber.AsLiteralType().FreshType()
+	// A fresh type apart from its regular one is what the regularization reads past, so without it mutant (b) is
+	// the code as it stands.
+	if freshNumber == nil || freshNumber == regularNumber || !countTypeFresh(freshNumber) {
+		t.Fatalf("the number literal %s has no fresh type apart from its regular one", check.TypeToString(regularNumber))
+	}
+	relation := reflect.ValueOf(check).Elem().FieldByName("assignableRelation")
+	if !relation.IsValid() || relation.Kind() != reflect.Pointer || relation.IsNil() {
+		t.Fatal("the checker's assignable relation isn't where countTypeOverflowed reads it")
+	}
+	field := relation.Elem().FieldByName("results")
+	if !field.IsValid() || field.Kind() != reflect.Map {
+		t.Fatal("the assignable relation's results aren't where countTypeOverflowed reads them")
+	}
+	results := reflect.NewAt(field.Type(), field.Addr().UnsafePointer()).Elem()
+	before := reflect.MakeMap(field.Type())
+	for iterator := results.MapRange(); iterator.Next(); {
+		before.SetMapIndex(iterator.Key(), iterator.Value())
+	}
+	if check.IsTypeAssignableTo(freshNumber, box) {
+		t.Fatalf("%s is assignable to %s, so the relater never went to its cache", check.TypeToString(freshNumber), check.TypeToString(box))
+	}
+	if countTypeOverflowed(check, freshNumber, box) {
+		t.Fatalf("%s against %s reads overflowed before any mark was planted", check.TypeToString(freshNumber), check.TypeToString(box))
+	}
+	var asked []reflect.Value
+	for iterator := results.MapRange(); iterator.Next(); {
+		if !before.MapIndex(iterator.Key()).IsValid() {
+			asked = append(asked, iterator.Key())
+		}
+	}
+	if len(asked) == 0 {
+		t.Fatalf("asking whether %s is assignable to %s cached nothing, so there's no entry of the checker's own to mark", check.TypeToString(freshNumber), check.TypeToString(box))
+	}
+	for _, key := range asked {
+		mark := reflect.New(field.Type().Elem()).Elem()
+		mark.SetUint(results.MapIndex(key).Uint() | uint64(checker.RelationComparisonResultComplexityOverflow))
+		results.SetMapIndex(key, mark)
+	}
+	if !countTypeOverflowed(check, freshNumber, box) {
+		t.Errorf("%s against %s, marked as overflowed where the checker cached it, reads not overflowed", check.TypeToString(freshNumber), check.TypeToString(box))
+	}
+	if countTypeOverflowed(check, box, regularNumber) {
+		t.Errorf("%s against %s, never asked, reads overflowed", check.TypeToString(box), check.TypeToString(regularNumber))
 	}
 }
 
