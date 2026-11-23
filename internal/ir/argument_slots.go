@@ -1,7 +1,8 @@
 package ir
 
 import (
-	"fmt"
+	"encoding/binary"
+	"math/bits"
 	"slices"
 )
 
@@ -143,14 +144,15 @@ func (p *Program) deriveArgumentFacts() (*argumentFacts, int) {
 	}
 	visits := 0
 	read := map[string]bool{}
+	var words []uint64
+	var key []byte
 	for _, targets := range p.FunctionTypeTargets {
-		members := distinctTargets(targets)
-		key := fmt.Sprint(members)
-		if read[key] {
+		words, key = targetSetKey(targets, words, key)
+		if read[string(key)] {
 			continue
 		}
-		read[key] = true
-		visits += p.packedPeers(members, facts.packed)
+		read[string(key)] = true
+		visits += p.packedPeers(setMembers(words), facts.packed)
 	}
 	for _, packed := range facts.packed {
 		facts.convention = facts.convention || packed
@@ -163,12 +165,39 @@ func (p *Program) PackedCountNeeded(function int) bool {
 	return p.argumentFactsOf().packed[function]
 }
 
-// distinctTargets is a target set's functions, each once and in order, so two sets of the same functions
-// are read as one.
-func distinctTargets(targets []int) []int {
-	members := slices.Clone(targets)
-	slices.Sort(members)
-	return slices.Compact(members)
+// targetSetKey writes a target set's functions into words as a bitset, one bit per function index, and into key as
+// the bitset's bytes. Two sets of the same functions give one key in any order and with any repeats, so a set held
+// under many function types costs one pass over each copy, never a copy sorted or formatted for its key (#bqwjdep:
+// at a tsc-shaped program of 22,861 lines, 3,178 lists of about 2,350 members held 5 distinct sets). words and key
+// are reused from the last call.
+func targetSetKey(targets []int, words []uint64, key []byte) ([]uint64, []byte) {
+	highest := -1
+	for _, target := range targets {
+		highest = max(highest, target)
+	}
+	count := highest/64 + 1
+	words = slices.Grow(words[:0], count)[:count]
+	clear(words)
+	for _, target := range targets {
+		words[target/64] |= uint64(1) << (target % 64)
+	}
+	key = key[:0]
+	for _, word := range words {
+		key = binary.LittleEndian.AppendUint64(key, word)
+	}
+	return words, key
+}
+
+// setMembers is a bitset's functions, each once and in order, so two sets of the same functions are read as one.
+func setMembers(words []uint64) []int {
+	var members []int
+	for index, word := range words {
+		for word != 0 {
+			members = append(members, index*64+bits.TrailingZeros64(word))
+			word &= word - 1
+		}
+	}
+	return members
 }
 
 // absentMasks are, for each parameter index, the absent representations (absentRepresentation, one bit
