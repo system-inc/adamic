@@ -111,7 +111,7 @@
     "stage3/ledger/checker-259/rerun-2026-10-08": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"]
   },
   "launchers": {
-    "stage3/lane/adaptedtree": {"runs": ["python3", "node", "git"], "why": "builds the adapted TypeScript tree: stage3/apply.py adapts the pinned checkout, node runs hereby's tasks in it, and git packs it; none of it runs the compiler"},
-    "stage3/lane": {"runs": ["python3", "git"], "why": "runs the TypeScript test shards over the adapted tree, each a stage3 script under python3, and git to read the pinned upstream; none of it runs the compiler, which the tree, stage3/lane/adaptedtree's product, was built without (#9vrgnd1: Reads traced lane's shards, J-5bejz3b and the reruns, and the adapted tree's build, J-crks9vh)"}
+    "stage3/lane/adaptedtree": {"heldCompilers": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"], "runs": ["python3", "node", "git"], "why": "builds the adapted TypeScript tree: stage3/apply.py adapts the pinned checkout, node runs hereby's tasks in it, and git packs it; none of it runs the compiler"},
+    "stage3/lane": {"heldCompilers": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"], "runs": ["python3", "git"], "why": "runs the TypeScript test shards over the adapted tree, each a stage3 script under python3, and git to read the pinned upstream; none of it runs the compiler, which the tree, stage3/lane/adaptedtree's product, was built without (#9vrgnd1: Reads traced lane's shards, J-5bejz3b and the reruns, and the adapted tree's build, J-crks9vh)"}
   }
 }
