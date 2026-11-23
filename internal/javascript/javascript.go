@@ -1238,8 +1238,9 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 			}
 		}
 		if expression.Record {
-			// An entries record is a record natively (entries_records.go), so it carries the mark (recordRuntime).
-			object = "adamicRecord(" + object + ")"
+			// An entries record is a record natively (entries_records.go), so it carries the mark (recordRuntime), of
+			// references, as native always makes one.
+			object = "adamicRecord(" + object + ", \"reference\")"
 		}
 		return object
 	case ir.PhantomMember:
@@ -1399,7 +1400,12 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 		return e.value(expression.Value)
 	case ir.Narrow:
 		if expression.Checked {
-			return fmt.Sprintf("adamicPlaceholderNarrow(%s, %d, %s)", e.value(expression.Value), expression.To.Present(), quote(expression.Message))
+			narrowed := fmt.Sprintf("adamicPlaceholderNarrow(%s, %d, %s)", e.value(expression.Value), expression.To.Present(), quote(expression.Message))
+			if expression.ReferencesMessage != "" {
+				// The record's kind, as its mark names it (recordRuntime), where native reads its shape's.
+				return fmt.Sprintf("adamicRecordReferences(%s, %s)", narrowed, quote(expression.ReferencesMessage))
+			}
+			return narrowed
 		}
 		return e.value(expression.Value)
 	case ir.ArrayIsArray:
