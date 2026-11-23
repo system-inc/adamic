@@ -141,14 +141,14 @@ func (l *lowering) phantomMember(node *ast.Node) (ir.Expression, bool, error) {
 	switch node.Kind {
 	case ast.KindPropertyAccessExpression:
 		access := node.AsPropertyAccessExpression()
-		receiver, name, optional = access.Expression, access.Name().Text(), access.QuestionDotToken != nil
+		receiver, name, optional = access.Expression, access.Name().Text(), l.questionDot(node)
 	case ast.KindElementAccessExpression:
 		access := node.AsElementAccessExpression()
 		key := ast.SkipParentheses(access.ArgumentExpression)
 		if key.Kind != ast.KindStringLiteral {
 			return nil, false, nil
 		}
-		receiver, name, optional = access.Expression, key.Text(), access.QuestionDotToken != nil
+		receiver, name, optional = access.Expression, key.Text(), l.questionDot(node)
 	default:
 		return nil, false, nil
 	}

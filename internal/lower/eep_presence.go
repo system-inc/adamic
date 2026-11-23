@@ -11,7 +11,7 @@ func (l *lowering) eepPropertyPresence(node *ast.Node) error {
 	access := node.AsPropertyAccessExpression()
 	name := node.Name().Text()
 	receiver := l.concrete(l.checker.GetTypeAtLocation(access.Expression))
-	if name == "length" && (access.QuestionDotToken != nil || !checker.IsTupleType(receiver)) {
+	if name == "length" && (l.questionDot(node) || !checker.IsTupleType(receiver)) {
 		members := []*checker.Type{receiver}
 		if receiver.Flags()&checker.TypeFlagsUnion != 0 {
 			members = receiver.Types()

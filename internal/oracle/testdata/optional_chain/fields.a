@@ -1,0 +1,18 @@
+// A guarded chain's last step is a field as it's declared (#cdpxjmb, Lower's must): one declared n?: number
+// or flag?: boolean is still number | undefined and boolean | undefined under the guard, held as its maybe,
+// so a present object without the field reads undefined, and one with it reads its value, 0 and false
+// included; only the undefined the chain adds is the guard's.
+interface Inner {
+	readonly n?: number;
+	readonly flag?: boolean;
+}
+interface Outer {
+	readonly inner: Inner;
+}
+function fields(outer: Outer | undefined): string {
+	return `${String(outer?.inner.n)} ${String(outer?.inner.flag)}`;
+}
+console.log(fields(undefined));
+console.log(fields({ inner: {} }));
+console.log(fields({ inner: { n: 0, flag: false } }));
+console.log(fields({ inner: { n: 3, flag: true } }));

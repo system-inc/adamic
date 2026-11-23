@@ -38,19 +38,11 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 	if ast.IsIdentifier(node) && l.exactPlainObject(node) {
 		return ir.Object, nil
 	}
-	if l.optionalChainGuarded(node) {
-		// A step of a chain optionalChain guards is lowered in the chain's present arm, where neither the
-		// chain's undefined nor tsc's optional marker is: an inner step is its own type without the
-		// marker, and the last, a field, is the field as it's declared, as a field narrowed to undefined
-		// is below.
-		if !ast.IsOutermostOptionalChain(node) {
-			if valueType, isKnown := l.representation(l.checker.GetNonOptionalType(l.checker.GetTypeAtLocation(node))); isKnown {
-				return valueType, nil
-			}
-		} else if node.Kind == ast.KindPropertyAccessExpression {
-			if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
-				return l.typeOfSymbol(node, field)
-			}
+	if stepType := l.optionalChainStepType(node); stepType != nil {
+		// A step of a chain optionalChain guards is lowered in the chain's present arm, where only the
+		// undefined the chain adds is gone: a field declared optional is still one.
+		if valueType, isKnown := l.representation(stepType); isKnown {
+			return valueType, nil
 		}
 	}
 	if node.Kind == ast.KindPropertyAccessExpression && l.checker.GetTypeAtLocation(node).Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 {
