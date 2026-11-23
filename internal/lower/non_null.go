@@ -94,12 +94,16 @@ stored:
 	}
 	file := ast.GetSourceFileOfNode(node)
 	text := file.Text()[scanner.GetTokenPosOfNode(node, file, false):node.End()]
-	// A cast is named as the cast it's written as, so its failure doesn't point at a ! the program never wrote.
-	failed := "non-null assertion failed at "
+	words := "non-null assertion failed at " + l.program.Where(node) + ": " + text + " is null or undefined"
 	if node.Kind == ast.KindAsExpression {
-		failed = "cast failed at "
+		// A cast fails in every cast's words, naming the source and the type it claimed, never a ! the program
+		// didn't write (Adamic, #b5w3ycg: every cast's failure reads one way, and a negative witness's column
+		// carries where).
+		source := l.concrete(l.checker.GetTypeAtLocation(node.Expression()))
+		target := l.concrete(l.checker.GetTypeAtLocation(node))
+		words = "cast failed: this " + l.checker.TypeToString(source) + " is not a " + l.checker.TypeToString(target)
 	}
-	message := ir.StringConstant{Index: l.constant(failed + l.program.Where(node) + ": " + text + " is null or undefined")}
+	message := ir.StringConstant{Index: l.constant(words)}
 	result := ir.Expression(ir.Coalesce{Value: value, Panic: message, Of: value.Type().Present()})
 	if result.Type() == ir.Union && of != ir.Union {
 		result = ir.Narrow{Value: result, To: of}
