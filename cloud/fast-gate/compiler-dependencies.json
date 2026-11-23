@@ -19,10 +19,8 @@
     "stage3/census/latent": ["internal/load", "internal/lower", "internal/ir", "internal/flow"],
     "internal/acheck": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "internal/compilerinputs": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
-    "internal/compilerinputs/generate": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "internal/lower/cycleledger": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "cmd/adamic-gocacheprog": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
-    "internal/adamiclint/parallel": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "internal/adamiclint/repowalk": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "cmd/adamic/treewalk": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "cmd/adamic-gate/parallelcensus": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
@@ -32,7 +30,6 @@
     "internal/buildcache/goplan": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "internal/conformance": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "internal/native/runtimeproducts": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
-    "internal/native_runtime/source_paths": ["internal/load", "internal/lower", "internal/native", "internal/native_runtime", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "internal/native_runtime/compiler_free": ["internal/load", "internal/lower", "internal/native", "internal/native_runtime", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "internal/native/agreementproducts": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "internal/programsource": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
@@ -40,8 +37,7 @@
     "internal/toolchain": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "stage1/cohere/parse": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "stage1/cohere/executable": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
-    "stage3/lane/adaptedtree": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
-    "stage3/lane": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic", "stage3/lane/adaptedtree"],
+    "stage3/lane": ["stage3/lane/adaptedtree"],
     "bench": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "bench/regex": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "bridge/tsgo": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
@@ -115,6 +111,7 @@
     "stage3/ledger/checker-259/rerun-2026-10-08": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"]
   },
   "launchers": {
-    "stage3/lane/adaptedtree": {"runs": ["python3", "node", "git"], "why": "builds the adapted TypeScript tree: stage3/apply.py adapts the pinned checkout, node runs hereby's tasks in it, and git packs it; none of it runs the compiler"}
+    "stage3/lane/adaptedtree": {"runs": ["python3", "node", "git"], "why": "builds the adapted TypeScript tree: stage3/apply.py adapts the pinned checkout, node runs hereby's tasks in it, and git packs it; none of it runs the compiler"},
+    "stage3/lane": {"runs": ["python3", "node", "git"], "why": "runs the TypeScript test shards over the adapted tree: shard.py under python3, mocha under node, and git to read the pinned upstream; none of it runs the compiler, which stage3/lane/adaptedtree's product, the tree, was built without (#9vrgnd1, traced by Reads)"}
   }
 }
