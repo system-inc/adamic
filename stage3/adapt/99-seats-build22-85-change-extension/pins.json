@@ -1,0 +1,150 @@
+{
+  "slug": "change-extension",
+  "old": "changeExtension",
+  "twin": "changeExtensionString",
+  "owner": "src/compiler/utilities.ts",
+  "match": "T is exactly string",
+  "helper": [
+    "/** @internal */",
+    "export function changeExtensionString(path: string, newExtension: string): string {",
+    "    return changeAnyExtension(path, newExtension, extensionsToRemove, /*ignoreCase*/ false);",
+    "}"
+  ],
+  "declarations": [
+    "export function changeExtension<T extends string | Path>(path: T, newExtension: string): T {\r\n    return changeAnyExtension(path, newExtension, extensionsToRemove, /*ignoreCase*/ false) as T;\r\n}"
+  ],
+  "files": [
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "calls": [
+        {
+          "text": "changeExtension(file, ext)",
+          "expression": "changeExtension",
+          "count": 2
+        }
+      ],
+      "import": {
+        "text": "changeExtension",
+        "module": "./_namespaces/ts.js",
+        "keep": false
+      }
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "calls": [
+        {
+          "text": "changeExtension(\r\n        getOutputPathWithoutChangingExt(inputFileName, ignoreCase, options.declarationDir || options.outDir, getCommonSourceDirectory),\r\n        getDeclarationEmitExtensionForPath(inputFileName),\r\n    )",
+          "expression": "changeExtension",
+          "count": 1
+        },
+        {
+          "text": "changeExtension(\r\n        getOutputPathWithoutChangingExt(inputFileName, ignoreCase, options.outDir, getCommonSourceDirectory),\r\n        getOutputExtension(inputFileName, options),\r\n    )",
+          "expression": "changeExtension",
+          "count": 1
+        }
+      ],
+      "import": {
+        "text": "changeExtension",
+        "module": "./_namespaces/ts.js",
+        "keep": false
+      }
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "calls": [
+        {
+          "text": "changeExtension(out, \".d.ts\")",
+          "expression": "changeExtension",
+          "count": 1
+        },
+        {
+          "text": "changeExtension(commandLine.options.outFile, Extension.Dts)",
+          "expression": "changeExtension",
+          "count": 1
+        }
+      ],
+      "import": {
+        "text": "changeExtension",
+        "module": "./_namespaces/ts.js",
+        "keep": false
+      }
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "calls": [
+        {
+          "text": "changeExtension(node.text, getOutputExtension(node.text, compilerOptions))",
+          "expression": "changeExtension",
+          "count": 1
+        }
+      ],
+      "import": {
+        "text": "changeExtension",
+        "module": "../_namespaces/ts.js",
+        "keep": false
+      }
+    },
+    {
+      "file": "src/harness/fourslashImpl.ts",
+      "calls": [
+        {
+          "text": "ts.changeExtension(fileName, \".js\")",
+          "expression": "ts.changeExtension",
+          "count": 1
+        }
+      ],
+      "import": null
+    },
+    {
+      "file": "src/server/project.ts",
+      "calls": [
+        {
+          "text": "changeExtension(ref.commandLine.options.outFile, \".d.ts\")",
+          "expression": "changeExtension",
+          "count": 1
+        }
+      ],
+      "import": {
+        "text": "changeExtension",
+        "module": "./_namespaces/ts.js",
+        "keep": false
+      }
+    },
+    {
+      "file": "src/services/stringCompletions.ts",
+      "calls": [
+        {
+          "text": "changeExtension(name, outputExtension)",
+          "expression": "changeExtension",
+          "count": 2
+        },
+        {
+          "text": "changeExtension(normalizedSuffix, declarationExtension)",
+          "expression": "changeExtension",
+          "count": 1
+        },
+        {
+          "text": "changeExtension(normalizedSuffix, ext)",
+          "expression": "changeExtension",
+          "count": 1
+        }
+      ],
+      "import": {
+        "text": "changeExtension",
+        "module": "./_namespaces/ts.js",
+        "keep": false
+      }
+    },
+    {
+      "file": "src/testRunner/transpileRunner.ts",
+      "calls": [
+        {
+          "text": "ts.changeExtension(unit.name, kind === TranspileKind.Module ? this.getJsOutputExtension(unit.name) : ts.getDeclarationEmitExtensionForPath(unit.name))",
+          "expression": "ts.changeExtension",
+          "count": 2
+        }
+      ],
+      "import": null
+    }
+  ]
+}
