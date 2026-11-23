@@ -33,7 +33,7 @@ func TestGraphViewDepthEdges(t *testing.T) {
 		{"a narrowed field, in a graph program", types + anchor + narrowed + run("n.f")},
 		{"a narrowed field, in a plain program", types + narrowed + run("n.f")},
 		{"a field narrowed two deep", types + twoDeep + run("n.f.g")},
-		{"a narrowed element", types + element + run("n.items[0]")},
+		{"a narrowed element", types + element + "function run(): void {\n\tconst cell: Cell = { held: undefined };\n\tconst base = make(cell);\n\tif (base.kind === 1) {\n\t\tconst n = base as Narrow;\n\t\tconst item = n.items[0];\n\t\tif (item !== undefined) {\n\t\t\tcell.held = item;\n\t\t}\n\t}\n\tconsole.log(`${cell.held === undefined ? \"none\" : \"held\"}`);\n}\nrun();\n"},
 		{"the control, the Y2 slot seen whole", "interface Cell { held: Y1 | Y2 | undefined }\ninterface Y1 { a: number[] }\ninterface Y2 { b: Cell | undefined; c: number }\nfunction run(): void {\n\tconst cell: Cell = { held: undefined };\n\tconst y2: Y2 = { b: cell, c: 7 };\n\tcell.held = y2;\n\tconsole.log(`${cell.held === undefined ? \"none\" : \"held\"}`);\n}\nrun();\n"},
 	}
 	for _, c := range cases {
