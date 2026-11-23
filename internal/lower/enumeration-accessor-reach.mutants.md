@@ -47,7 +47,6 @@ unmutated in enumeration_accessor_reach_test.go and in the whole internal/lower.
 | AnyInstance: a generic class is read uninstantiated | `owners = append(owners, l.enumerationAnyInstance(side, static))` to `owners = append(owners, side)` | TestEnumerationReachReachingGetterRefused/generic | 90, `enumeration reach row generic was admitted` |
 | Contextual: a literal's contextual type is never taken | `if contextual := ...; contextual != nil {` to `...; false && contextual != nil {` | TestEnumerationReachContextualLiteralLowers | 70, `enumeration reach row contextual literal was refused` |
 | ContextualScope: a contextual type naming an enclosing type parameter is taken | `if len(enclosing) != 0 && l.eachReached(contextual,` to `if false && ...` | TestEnumerationReachReachingGetterRefused/held | 90, `enumeration reach row held was admitted` |
-| AssertedLiteral: an asserted literal is owned by its slot type, the asserted type | `around.Kind == ast.KindSatisfiesExpression \|\| around.Kind == ast.KindAsExpression \|\| around.Kind == ast.KindTypeAssertionExpression` to `around.Kind == ast.KindSatisfiesExpression` | TestEnumerationReachAssertedLiteralRefused | 90, `enumeration reach row asserted literal was admitted` |
 | OneWay: an owner reaches only when assignable to a read type, not the other way | `l.checker.IsTypeAssignableTo(owner, read) \|\| l.checker.IsTypeAssignableTo(read, owner)` to `l.checker.IsTypeAssignableTo(owner, read)` | TestEnumerationReachDowncastRefused | 90, `enumeration reach row downcast was admitted` |
 | ViewPass: no admitted enumeration is held against the checked views | `func (l *lowering) checkEnumerationReachViews() error {` to the same line and `return nil` | TestEnumerationReachViewRefused/sibling | 90, `enumeration reach row sibling was admitted` |
 
@@ -100,13 +99,15 @@ array of any" before the call is lowered, so those refused rows return the call
 from a function typed number[].
 
 Product order: cloud/fast-gate/enumeration-reach-product-order.py writes the
-fourteen producer rows, each waiting on nothing.
+thirteen producer rows, each waiting on nothing.
 
 A literal with no annotated variable is owned by its contextual type (and each
 member of a union one) when the checker gives one that names no type parameter
 of a declaration around it: a declared return, a parameter, a declared object's
-property. satisfies and a type assertion give none, since the literal keeps its own type there
-(Lower's should on 5eacc825: an asserted type can relate to the literal's own type neither way).
+property, or an asserted type, which tsc requires to be comparable to the literal. satisfies gives
+none, since the literal keeps its own type there. TestEnumerationReachAssertedLiteralRefused pins an
+asserted literal refused; no mutant of the owner choice can turn it red, since the post-pass refuses it
+through the assertion's view either way (J-rr89gsv).
 
 A class's own type parameters are taken at any (enumerationAnyInstance), so its
 instance side relates to a read type whenever some instantiation could, since

@@ -336,10 +336,12 @@ const enumerationReachShared = "type Shared = { b: number };\nconst lit = { b: 2
 // Middle to Other, where neither Middle nor Other relates to the literal and only the second step of
 // the widening reaches Shared. The control with no cast in the program is the unrelated row, which
 // lowers and agrees with Node. Mutant ViewPass (the post-pass returns at its top) turns the sibling red.
-// A getter-bearing literal written under as keeps its own type as owner, never the asserted type, which
-// its own type can relate to neither way (Lower's should on 5eacc825): enumerated through the asserted
-// type in another module, it stays refused. Mutant AssertedLiteral (an asserted literal owned by its
-// slot type, the asserted type) turns it red.
+// A getter-bearing literal written under as, owned by the asserted type it's reached through (Lower's
+// should on 5eacc825 asked whether that owner can miss): enumerated through the asserted type in another
+// module, it stays refused. It's refused by the asserted owner directly and, were the literal's own type
+// the owner instead, by the post-pass following the assertion's view, so no mutant of the owner choice can
+// turn it red (J-rr89gsv); it pins the behavior, and an asserted downcast to an incomparable type is
+// TS2352, never a program (J-8w9vc55).
 func TestEnumerationReachAssertedLiteralRefused(t *testing.T) {
 	t.Parallel()
 	const held = "export type View = { b: number; d: 4; e?: number };\nexport const asserted = { b: 1, d: 4, get a(): number { return 1; } } as View;\n"

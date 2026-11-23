@@ -344,9 +344,10 @@ func (l *lowering) enumerationLiteralContextualOwners(literal *ast.Node) []*chec
 	for around != nil && around.Kind == ast.KindParenthesizedExpression {
 		around = around.Parent
 	}
-	// A type assertion's operand is neither: its slot type is the asserted type, which the literal's own type
-	// may relate to neither way, so the literal keeps its own type, as under satisfies (Lower's should).
-	if around != nil && (around.Kind == ast.KindSatisfiesExpression || around.Kind == ast.KindAsExpression || around.Kind == ast.KindTypeAssertionExpression) {
+	// A type assertion's operand keeps its slot type, the asserted type, as owner: tsc requires the two to be
+	// comparable (TS2352 otherwise), the fresh literal is reached only through the assertion, at that type, so
+	// every read of it relates to the asserted type or is a view the post-pass follows back to it.
+	if around != nil && around.Kind == ast.KindSatisfiesExpression {
 		return nil
 	}
 	// The slot the literal goes into, read the way every refusal rule reads it: a slot a caller set, or the

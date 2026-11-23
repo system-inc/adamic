@@ -27,7 +27,6 @@ var enumerationReachMutations = []enumerationReachMutation{
 	{"AnyInstance", "		owners = append(owners, l.enumerationAnyInstance(side, static))", "		owners = append(owners, side)", "TestEnumerationReachReachingGetterRefused/generic", []string{"generic was admitted"}},
 	{"Contextual", "		if contextual := l.enumerationLiteralContextualOwners(holder); contextual != nil {", "		if contextual := l.enumerationLiteralContextualOwners(holder); false && contextual != nil {", "TestEnumerationReachContextualLiteralLowers", []string{"contextual literal was refused"}},
 	{"ContextualScope", "	if len(enclosing) != 0 && l.eachReached(contextual,", "	if false && len(enclosing) != 0 && l.eachReached(contextual,", "TestEnumerationReachReachingGetterRefused/held", []string{"held was admitted"}},
-	{"AssertedLiteral", "around.Kind == ast.KindSatisfiesExpression || around.Kind == ast.KindAsExpression || around.Kind == ast.KindTypeAssertionExpression", "around.Kind == ast.KindSatisfiesExpression", "TestEnumerationReachAssertedLiteralRefused", []string{"asserted literal was admitted"}},
 	{"OneWay", "l.checker.IsTypeAssignableTo(owner, read) || l.checker.IsTypeAssignableTo(read, owner)", "l.checker.IsTypeAssignableTo(owner, read)", "TestEnumerationReachDowncastRefused", []string{"downcast was admitted"}},
 	{"ViewPass", "func (l *lowering) checkEnumerationReachViews() error {", "func (l *lowering) checkEnumerationReachViews() error {\n\treturn nil // mutant: no admitted enumeration is held against the checked views", "TestEnumerationReachViewRefused/sibling", []string{"sibling was admitted"}},
 }
@@ -89,19 +88,14 @@ func TestProduct_EnumerationReachContextualScopeMutant(t *testing.T) {
 	enumerationReachMutantBinary(t, enumerationReachMutations[10])
 }
 
-func TestProduct_EnumerationReachAssertedLiteralMutant(t *testing.T) {
+func TestProduct_EnumerationReachOneWayMutant(t *testing.T) {
 	t.Parallel()
 	enumerationReachMutantBinary(t, enumerationReachMutations[11])
 }
 
-func TestProduct_EnumerationReachOneWayMutant(t *testing.T) {
-	t.Parallel()
-	enumerationReachMutantBinary(t, enumerationReachMutations[12])
-}
-
 func TestProduct_EnumerationReachViewPassMutant(t *testing.T) {
 	t.Parallel()
-	enumerationReachMutantBinary(t, enumerationReachMutations[13])
+	enumerationReachMutantBinary(t, enumerationReachMutations[12])
 }
 
 func TestEnumerationReachMutantsAreCaught(t *testing.T) {
