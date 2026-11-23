@@ -4319,5 +4319,245 @@ class CensusMemoryFloors(unittest.TestCase):
             self.assertNotIsInstance(raised.exception, run.ChangeRefusal)
 
 
+class FastCheck(unittest.TestCase):
+    """run.py --list-units --fast-check, the census door's submit-time check (#bwnptrb, Adamic Loom's ruling): the units
+    as without the flag, then coverage and tools judged on the listing's own Gate and darwin-vet's need from its inputs,
+    the verdict file written whatever the exit. A red is exit 3, "refused: " and one line a phase; a check that fails is
+    exit 2, "fast check couldn't run: ", the units still printed; the listing's own refusal still wins. These run git and
+    go for real, in a module of their own. Mutants, each red here: the darwin leg asked under --fast-check (a leg's
+    record can't exist at submit, so every Apple change would be refused); the uncovered check dropped."""
+
+    def setUp(self):
+        scratch = tempfile.TemporaryDirectory()
+        self.addCleanup(scratch.cleanup)
+        self.scratch = scratch.name
+        self.tree = os.path.join(scratch.name, "tree")
+        self.verdictPath = os.path.join(scratch.name, "verdict.json")
+        sources = {
+            "go.mod": "module " + run.module + "\n\ngo 1.24\n",
+            "a/a.go": "package a\n",
+            "README.md": "# probe\n",
+            "internal/apple/apple.go": "package apple\n",
+            # A declared launcher, so the tools literal it gains passes the compiler census and reaches the tools check.
+            "probe/probe.go": "package probe\n",
+            run.compilerDependenciesPath: json.dumps({"version": 1, "packages": {}, "launchers": {
+                "probe": {"runs": ["go", "wasmtime"], "why": "the fast check's tools probe, never adamic"}}}),
+            "cloud/fast-gate/unit-needs.json": '{"version":1,"units":[]}',
+            "cloud/fast-gate/executors.txt": "mode enforce\ndarwin internal/apple/*\nbuild go.*\ninert *.md\ninert cloud/*\n",
+            "cloud/fast-gate/tools.txt": "# declared tools\ngo\tall\tcommand -v go\n",
+        }
+        for name, source in sources.items():
+            self.write(name, source)
+        realRun(["git", "-C", self.tree, "init", "-q"], check=True)
+        self.base = self.commit("base")
+
+    def write(self, name, source):
+        path = os.path.join(self.tree, name)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w") as handle:
+            handle.write(source)
+
+    def commit(self, message):
+        realRun(["git", "-C", self.tree, "add", "-A"], check=True)
+        realRun(["git", "-C", self.tree, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", message], check=True)
+        return run.git(self.tree, "rev-parse", "HEAD")
+
+    def change(self, files):
+        """A commit on the base writing files, the tree left checked out at it."""
+        realRun(["git", "-C", self.tree, "checkout", "-q", "--detach", self.base], check=True)
+        for name, source in files.items():
+            self.write(name, source)
+        return self.commit("change")
+
+    def checked(self, sha):
+        """main() as the census runs it on base..sha: its exit, its stdout and stderr, and the verdict file it wrote."""
+        if os.path.exists(self.verdictPath):
+            os.remove(self.verdictPath)
+        argv = ["run.py", "--list-units", "--tree", self.tree, "--base", self.base, "--sha", sha, "--tools", self.tree, "--fast-check", self.verdictPath]
+        stdout, stderr, code = io.StringIO(), io.StringIO(), 0
+        try:
+            with mock.patch.object(sys, "argv", argv), contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr), \
+                    mock.patch.object(run.Gate, "npmCli", side_effect=AssertionError("the fast check installs nothing")), \
+                    mock.patch.object(run.Gate, "npmPackages", side_effect=AssertionError("the fast check installs nothing")):
+                run.main()
+        except SystemExit as exit:
+            code = exit.code
+        finally:
+            run.listedGoLists = None
+        verdict = None
+        if os.path.exists(self.verdictPath):
+            with open(self.verdictPath) as handle:
+                verdict = json.load(handle)
+        # Nothing it ran wrote in the tree.
+        self.assertEqual(run.git(self.tree, "status", "--porcelain", "--untracked-files=all"), "")
+        return code, stdout.getvalue(), stderr.getvalue(), verdict
+
+    def units(self, *extra):
+        return "\n".join(run.fastBasePhases + list(extra)) + "\n"
+
+    def test_an_uncovered_path_is_refused_naming_it_and_the_units_still_list(self):
+        strays = {"stray/%02d.txt" % number: "stray\n" for number in range(22)}
+        sha = self.change(strays)
+        with mock.patch.object(run, "fastCheck", wraps=run.fastCheck) as fastCheck:
+            code, stdout, stderr, verdict = self.checked(sha)
+        self.assertEqual(code, run.RefusalExit, stderr)
+        self.assertEqual(stdout, self.units())
+        self.assertEqual(stderr, "refused: coverage: no gate covers 22 changed paths: %s, ...\n" % ", ".join(sorted(strays)[:20]))
+        self.assertEqual(verdict["version"], 1)
+        self.assertEqual(verdict["darwinVet"], "unneeded")
+        self.assertEqual(sorted(verdict["seconds"]), ["coverage", "darwinVetInputs", "tools"])
+        self.assertTrue(all(isinstance(value, (int, float)) and value >= 0 for value in verdict["seconds"].values()), verdict)
+        # The check ran on the listing's own Gate, whose out directory is gone once it ends.
+        gate = fastCheck.call_args[0][0]
+        self.assertTrue(gate.arguments.out)
+        self.assertFalse(os.path.exists(gate.arguments.out))
+
+    def test_an_undeclared_tool_literal_is_refused_naming_its_line_beside_coverage(self):
+        sha = self.change({"probe/probe.go": 'package probe\n\nimport "os/exec"\n\nvar a = exec.Command("go", "version")\nvar b = exec.Command("wasmtime")\n',
+                           "stray/unruled.txt": "stray\n"})
+        code, stdout, stderr, verdict = self.checked(sha)
+        self.assertEqual(code, run.RefusalExit, stderr)
+        self.assertEqual(stdout, self.units())
+        self.assertEqual(stderr, "refused: coverage: no gate covers 1 changed path: stray/unruled.txt\n"
+                                 "tools: probe/probe.go:6 runs wasmtime, which cloud/fast-gate/tools.txt doesn't declare\n")
+        self.assertEqual(verdict["darwinVet"], "unneeded")
+
+    def test_an_apple_change_with_no_leg_record_is_never_refused_and_asks_for_the_vet(self):
+        # No darwin-legs record exists, and none can at submit: the miss is the line's darwinRecordMissing park (#ycqnr4b).
+        sha = self.change({"internal/apple/apple.go": "package apple\n\n// Edited is the change.\nconst Edited = 1\n"})
+        with mock.patch.object(run, "darwinLegVerdict", wraps=run.darwinLegVerdict) as verdictRead, \
+                mock.patch.object(run, "darwinPathsDigest", wraps=run.darwinPathsDigest) as digest:
+            code, stdout, stderr, verdict = self.checked(sha)
+        self.assertEqual((code, stderr), (0, ""))
+        # The darwin executor is still listed for the line, where its leg is judged.
+        self.assertEqual(stdout, self.units("darwin"))
+        verdictRead.assert_not_called()
+        digest.assert_not_called()
+        self.assertEqual(verdict["darwinVet"], "needed")
+
+    def test_a_change_meeting_nothing_passes_and_needs_no_vet(self):
+        for name, files in (("a readme", {"README.md": "# probe, edited\n"}),
+                            ("a package outside the darwin closure", {"a/a.go": "package a\n\nvar A = 1\n"})):
+            with self.subTest(name):
+                code, stdout, stderr, verdict = self.checked(self.change(files))
+                self.assertEqual((code, stderr), (0, ""))
+                self.assertEqual(stdout, self.units())
+                self.assertEqual(verdict["darwinVet"], "unneeded")
+
+    def test_a_root_module_file_or_a_listing_that_can_t_be_computed_needs_the_vet(self):
+        self.assertTrue(run.darwinVetMeets({"paths": [":(literal)internal/apple"], "names": []}, ["go.sum"]))
+        self.assertTrue(run.darwinVetMeets({"paths": ["."], "names": []}, ["README.md"]))
+        self.assertTrue(run.darwinVetMeets({"paths": [":(literal)internal/apple"], "names": ["x/y_darwin.go"]}, ["x/y_darwin.go"]))
+        self.assertFalse(run.darwinVetMeets({"paths": [":(literal)internal/apple"], "names": []}, ["internal/applesauce/x.go"]))
+        code, stdout, stderr, verdict = self.checked(self.change({"go.mod": "module " + run.module + "\n\ngo 1.24\n\n// edited\n"}))
+        self.assertEqual((code, stderr), (0, ""))
+        self.assertEqual(verdict["darwinVet"], "needed")
+
+    def test_an_exception_in_the_check_can_t_run_and_the_units_still_list(self):
+        sha = self.change({"stray/unruled.txt": "stray\n"})
+        with mock.patch.object(run, "darwinVetInputs", side_effect=RuntimeError("planted\nsecond line")):
+            code, stdout, stderr, verdict = self.checked(sha)
+        self.assertEqual(code, run.FastCheckCantRunExit)
+        self.assertEqual(stdout, self.units())
+        self.assertEqual(stderr, "fast check couldn't run: RuntimeError: planted; second line\n")
+        # Written whatever the exit, and a check that never finished asks for the vet.
+        self.assertEqual(verdict["darwinVet"], "needed")
+
+    def test_the_listing_s_own_refusal_wins_and_no_check_runs(self):
+        # An undeclared compiler consumer the change adds: the compiler census refuses it in the listing, before any check.
+        sha = self.change({"a/run_test.go": 'package a\n\nimport (\n\t"os/exec"\n\t"testing"\n)\n\nfunc TestRun(t *testing.T) { _ = exec.Command }\n',
+                           "stray/unruled.txt": "stray\n"})
+        with mock.patch.object(run, "fastCheck", wraps=run.fastCheck) as fastCheck:
+            code, stdout, stderr, verdict = self.checked(sha)
+        self.assertEqual(code, run.RefusalExit)
+        self.assertTrue(stderr.startswith("refused: compiler dependency census: undeclared compiler consumers: a/run_test.go"), stderr)
+        self.assertEqual(stderr.count("\n"), 1)
+        self.assertNotIn("coverage:", stderr)
+        fastCheck.assert_not_called()
+        self.assertEqual(verdict["darwinVet"], "needed")
+
+    def test_without_the_flag_the_listing_is_as_it_was(self):
+        sha = self.change({"stray/unruled.txt": "stray\n"})
+        argv = ["run.py", "--list-units", "--tree", self.tree, "--base", self.base, "--sha", sha, "--tools", self.tree]
+        stdout = io.StringIO()
+        try:
+            with mock.patch.object(sys, "argv", argv), contextlib.redirect_stdout(stdout), \
+                    mock.patch.object(run, "fastCheck", side_effect=AssertionError("no check without the flag")):
+                run.main()
+        finally:
+            run.listedGoLists = None
+        self.assertEqual(stdout.getvalue(), self.units())
+        self.assertFalse(os.path.exists(self.verdictPath))
+
+
+class FastCheckDarwinVet(unittest.TestCase):
+    """run.py --fast-check-darwin-vet, the darwin vet the census runs in the background for a change whose fast check
+    needs it (#bwnptrb, Adamic Loom's call 2): darwin-vet's own step on the tree, its seconds one JSON line on stdout,
+    exit 0 green, 3 with "refused: darwin-vet: " and the vet's last lines red, 2 with "fast check couldn't run: " when it
+    can't start. DarwinVet's module, with go run for real."""
+
+    setUp, write, commit = DarwinVet.setUp, DarwinVet.write, DarwinVet.commit
+
+    def vetted(self, sha=None):
+        sha = sha or run.git(self.tree, "rev-parse", "HEAD")
+        argv = ["run.py", "--fast-check-darwin-vet", "--tree", self.tree, "--sha", sha, "--tools", self.tree]
+        stdout, stderr, code = io.StringIO(), io.StringIO(), 0
+        with mock.patch.object(sys, "argv", argv), contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr), \
+                mock.patch.object(run.Gate, "npmCli", side_effect=AssertionError("the vet installs nothing")), \
+                mock.patch.object(run.Gate, "npmPackages", side_effect=AssertionError("the vet installs nothing")):
+            try:
+                run.main()
+            except SystemExit as exit:
+                code = exit.code
+        lines = stdout.getvalue().splitlines()
+        self.assertEqual(len(lines), 1, stdout.getvalue())
+        seconds = json.loads(lines[0])
+        self.assertEqual(list(seconds), ["seconds"])
+        self.assertGreaterEqual(seconds["seconds"], 0)
+        return code, stderr.getvalue()
+
+    def test_green_exits_zero(self):
+        self.assertEqual(self.vetted(), (0, ""))
+
+    def test_a_darwin_only_file_that_doesn_t_compile_is_refused_with_the_vet_s_last_lines(self):
+        self.write("internal/apple/witness_test.go", self.sources["internal/apple/witness_test.go"].replace("Resolve()", "native.ResolveTarget()"))
+        self.commit("the witness calls a moved function")
+        code, stderr = self.vetted()
+        self.assertEqual(code, run.RefusalExit, stderr)
+        self.assertTrue(stderr.startswith("refused: darwin-vet: "), stderr)
+        self.assertIn("undefined: native", stderr)
+        self.assertLessEqual(len(stderr.encode()), len("refused: darwin-vet: \n") + 1500)
+
+    def test_a_listing_that_can_t_be_computed_is_refused_as_the_phase_reds_it(self):
+        os.remove(os.path.join(self.tree, run.compilerDependenciesPath))
+        self.commit("no compiler map")
+        code, stderr = self.vetted()
+        self.assertEqual(code, run.RefusalExit)
+        self.assertTrue(stderr.startswith("refused: darwin-vet: the darwin vet's packages can't be listed: "), stderr)
+
+    def test_a_vet_that_can_t_start_can_t_run(self):
+        # A tree at another commit than the sha asked.
+        parent = run.git(self.tree, "rev-parse", "HEAD")
+        self.write("internal/plain/more.go", "package plain\n")
+        self.commit("one more")
+        code, stderr = self.vetted(parent)
+        self.assertEqual(code, run.FastCheckCantRunExit)
+        self.assertTrue(stderr.startswith("fast check couldn't run: ValueError: %s is checked out at " % self.tree), stderr)
+        # No go on PATH, git still there.
+        bare = os.path.join(self.directory, "bin")
+        os.makedirs(bare)
+        os.symlink(shutil.which("git"), os.path.join(bare, "git"))
+        with mock.patch.dict(os.environ, {"PATH": bare}):
+            code, stderr = self.vetted()
+        self.assertEqual(code, run.FastCheckCantRunExit)
+        self.assertTrue(stderr.startswith("fast check couldn't run: FileNotFoundError: "), stderr)
+        self.assertIn("'go'", stderr)
+
+    def test_the_last_lines_fit_their_bound_whole(self):
+        self.assertEqual(run.lastLines("a\nb\n", 1500), "a\nb")
+        self.assertEqual(run.lastLines("first line\n" + "x" * 10 + "\nlast", 12), "last")
+        self.assertEqual(run.lastLines("y" * 20, 5), "yyyyy")
+
+
 if __name__ == "__main__":
     unittest.main()

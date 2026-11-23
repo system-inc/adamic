@@ -22,6 +22,9 @@ coverage's inputs also carry names, the changed paths it judges (coverageReduced
 --darwin-paths-digest --tree <checkout at the tip> --sha <tip> --tools <tools checkout> prints the darwinPaths a darwin
 leg's record at that tip holds (cloud/fast-gate/darwin-legs/README.md), and --darwin-a-paths with the same arguments the
 .a files its aCheck must cover, one a line.
+--fast-check <verdict> with --list-units, --base, --sha and --tools runs the census door's submit-time fast check after the
+units (fastCheck), and --fast-check-darwin-vet --tree <checkout at the sha> --sha <sha> --tools <tools checkout> the
+darwin vet it asks for (fastCheckDarwinVet).
 Merged logs, Git history/branch state, toolchain and external spool identity still belong
 in the pool's verdict key: repository content alone cannot identify those inputs.
 
@@ -38,9 +41,11 @@ import math
 import tempfile
 import argparse
 import base64
+import contextlib
 import fnmatch
 import glob
 import hashlib
+import io
 import shlex
 import json
 import re
@@ -52,6 +57,7 @@ import subprocess
 import sys
 import threading
 import time
+import types
 import datetime
 import traceback
 
@@ -218,6 +224,26 @@ toolsSourcePathspec = ["*.go", ":!cohere", ":!stage3/upstream"]
 # run on Pupa, Oct 29, opened 9 and probed 304): an attribute that makes a .go file binary turns its matches into "Binary
 # file ... matches", so the phase's answer moves with them, and so must its key.
 toolsAttributesPathspec = [":(glob)**/.gitattributes"]
+
+
+def undeclaredTools(tree, tools, command):
+    """The tools phase's rule (Gate.toolsDeclared), one reading for the phase and the submit-time fast check (fastCheck):
+    each command tree's Go code runs by literal name (toolLiteral, over toolsSourcePathspec) that tools'
+    cloud/fast-gate/tools.txt doesn't declare, as "<path>:<line> runs <name>, which cloud/fast-gate/tools.txt doesn't
+    declare", in git grep's order. command runs the grep, the caller's Gate.command, so the gate's environment and its
+    process bookkeeping hold. A grep that fails raises RuntimeError, never reads as nothing undeclared."""
+    with open(os.path.join(tools, "cloud/fast-gate/tools.txt")) as handle:
+        declared = {line.split("\t")[0] for line in handle if line.strip() and not line.startswith("#")}
+    found = command(["git", "-C", tree, "grep", "-nE", toolLiteralSearch, "--"] + toolsSourcePathspec, capture_output=True, text=True)
+    if found.returncode not in (0, 1):
+        raise RuntimeError("git grep for tool literals failed: %s" % found.stderr)
+    undeclared = []
+    for line in found.stdout.splitlines():
+        path, number, text = line.split(":", 2)
+        for name in toolLiteral.findall(text):
+            if name not in declared:
+                undeclared.append("%s:%s runs %s, which cloud/fast-gate/tools.txt doesn't declare" % (path, number, name))
+    return undeclared
 
 
 def treeInputs(note):
@@ -1116,22 +1142,176 @@ def listUnits():
     lister.add_argument("--base", help="include conditional fast phases selected by this base diff")
     lister.add_argument("--sha")
     lister.add_argument("--tools")
+    lister.add_argument("--fast-check", metavar="VERDICT", help="after the units, the submit-time fast check of this change (fastCheck), its verdict written here")
     arguments = lister.parse_args()
     global listedGoLists
     listedGoLists = {}
-    units = wholeUnits(arguments.tree) if arguments.full else fastUnits(arguments.tree, arguments.base, arguments.sha, arguments.tools)
-    if arguments.with_inputs:
-        products = productInputSources(arguments.tree) if arguments.full else None
-        # The change a provider may classify: a fast gate's --base against --sha (HEAD without it, as fastUnits), a whole
-        # gate's --sha against its first parent. None without them.
-        change = None
-        if (arguments.sha if arguments.full else arguments.base) is not None:
-            change = {"base": arguments.base, "sha": arguments.sha or git(arguments.tree, "rev-parse", "HEAD"),
-                      "tools": arguments.tools or arguments.tree}
-        for unit in units:
-            print(json.dumps(phaseInputs(arguments.tree, unit, arguments.full, products, change)))
-    else:
-        print("\n".join(units))
+    # A --fast-check's verdict, written whatever the exit, its darwin vet needed until the check says otherwise, so a
+    # verdict of a check that never finished asks for the vet, never waives it.
+    verdict = None
+    if arguments.fast_check is not None:
+        verdict = {"version": 1, "darwinVet": "needed", "seconds": {"coverage": 0.0, "tools": 0.0, "darwinVetInputs": 0.0}}
+    try:
+        with contextlib.nullcontext() if arguments.full else fastListing(arguments.tree, arguments.base, arguments.sha, arguments.tools) as listing:
+            units = wholeUnits(arguments.tree) if arguments.full else listing.units
+            if arguments.with_inputs:
+                products = productInputSources(arguments.tree) if arguments.full else None
+                # The change a provider may classify: a fast gate's --base against --sha (HEAD without it, as fastUnits), a
+                # whole gate's --sha against its first parent. None without them.
+                change = None
+                if (arguments.sha if arguments.full else arguments.base) is not None:
+                    change = {"base": arguments.base, "sha": arguments.sha or git(arguments.tree, "rev-parse", "HEAD"),
+                              "tools": arguments.tools or arguments.tree}
+                for unit in units:
+                    print(json.dumps(phaseInputs(arguments.tree, unit, arguments.full, products, change)))
+            else:
+                print("\n".join(units))
+            if verdict is None:
+                return
+            sys.stdout.flush()
+            # The check runs inside the listing, on its Gate, while its out directory lives (fastListing). A listing that
+            # failed never reaches here: it exits as it always has, and a ChangeRefusal wins with its own line (main).
+            try:
+                if listing is None or listing.gate is None:
+                    raise ValueError("--fast-check checks a change against its base, so it needs --base and never --full")
+                reasons = fastCheck(listing.gate, listing.changed, listing.seconds, verdict)
+                writeFastCheckVerdict(arguments.fast_check, verdict)
+            except (Exception, SystemExit) as error:
+                print("fast check couldn't run: " + errorWords(error), file=sys.stderr)
+                sys.exit(FastCheckCantRunExit)
+            if reasons:
+                print("refused: " + "\n".join(reasons), file=sys.stderr)
+                sys.exit(RefusalExit)
+    finally:
+        if verdict is not None:
+            # Every other exit writes it here: a refusal of the listing's own, a listing that failed, a check that couldn't
+            # run. A verdict that can't be written then leaves that exit as it was, which already says what happened.
+            try:
+                writeFastCheckVerdict(arguments.fast_check, verdict)
+            except OSError:
+                pass
+
+
+def writeFastCheckVerdict(path, verdict):
+    """The fast check's verdict, one JSON object on a line of its own, at path."""
+    with open(path, "w") as handle:
+        json.dump(verdict, handle)
+        handle.write("\n")
+
+
+def fastCheck(gate, changed, seconds, verdict):
+    """The submit-time fast check of a change at the census door (#bwnptrb, Adamic Loom's ruling): its reds, one line each
+    opening with its phase, none when it passes, with verdict's darwinVet and seconds filled in. gate is the Gate its
+    listing classified the change with (fastListing), changed its paths and seconds what the classification took, so the
+    check reads that one classification and never makes a second.
+
+    coverage is red for the paths no rule covers (uncovered_files) while the map enforces (coverage_enforced), as cover()
+    decided them with record=False, so it never runs darwinLeg and never looks for a darwin leg's record: a record can't
+    exist at submit, and its absence is the line's darwinRecordMissing park (#ycqnr4b), never a refusal. tools is
+    toolsDeclared's rule (undeclaredTools), every undeclared literal on its line. darwin-vet runs nothing here: verdict
+    says whether a changed path meets its inputs (darwinVetMeets), and the census vets in the background when it does
+    (--fast-check-darwin-vet). It installs nothing (no npmCli, no npmPackages, which a phase runs first) and writes
+    nothing in the tree. An exception in it is the caller's can't-run, never a red."""
+    verdict["seconds"]["coverage"] = round(seconds, 3)
+    reasons = []
+    uncovered = gate.result["uncovered_files"]
+    if uncovered and gate.result["coverage_enforced"]:
+        reasons.append("coverage: no gate covers %d changed path%s: %s%s" % (
+            len(uncovered), "" if len(uncovered) == 1 else "s", ", ".join(uncovered[:20]), ", ..." if len(uncovered) > 20 else ""))
+    started = time.monotonic()
+    undeclared = undeclaredTools(gate.arguments.tree, gate.arguments.tools, gate.command)
+    verdict["seconds"]["tools"] = round(time.monotonic() - started, 3)
+    if undeclared:
+        reasons.append("tools: " + "; ".join(undeclared))
+    started = time.monotonic()
+    inputs = darwinVetInputs(gate.arguments.tree, "", False, {"base": gate.arguments.base, "sha": gate.arguments.sha, "tools": gate.arguments.tools})
+    verdict["darwinVet"] = "needed" if darwinVetMeets(inputs, changed) else "unneeded"
+    verdict["seconds"]["darwinVetInputs"] = round(time.monotonic() - started, 3)
+    return reasons
+
+
+def darwinVetMeets(inputs, changed):
+    """Whether a change's paths meet darwin-vet's declared inputs (darwinVetInputs' answer), so the phase's key can move:
+    a path at or below a directory they name, a darwin-only file they name, or a root module file (darwinModuleFiles),
+    there or deleted. Inputs on the whole tree, a darwin listing that can't be computed, meet every change, as the phase
+    keys on the whole tree then and is red."""
+    if "." in inputs["paths"]:
+        return True
+    roots = [path[len(":(literal)"):] if path.startswith(":(literal)") else path for path in inputs["paths"]]
+    names = set(inputs.get("names", []))
+    return any(path in names or path in darwinModuleFiles or any(root == "." or path == root or path.startswith(root + "/") for root in roots)
+               for path in changed)
+
+
+def fastCheckDarwinVet():
+    """run.py --fast-check-darwin-vet --tree <checkout at the sha> --sha <sha> --tools <gate tools>: darwin-vet's own step
+    (Gate.darwinVet, go vet of the darwin build over darwinVetPatterns) on the tree as the phase runs it, which the census
+    runs in the background for a change whose fast check says the vet is needed (#bwnptrb, Adamic Loom's call 2). It
+    prints its seconds on stdout as one JSON line, {"seconds": n}, whatever the exit. Exit 0 green; RefusalExit red, with
+    "refused: darwin-vet: " and the vet's last lines (darwinVetRefusal), a darwin listing that can't be computed among
+    them as the phase reds it; FastCheckCantRunExit, with "fast check couldn't run: <why>", when the vet can't start: a
+    tree not at the sha, no go on PATH, any exception."""
+    lister = argparse.ArgumentParser()
+    lister.add_argument("--fast-check-darwin-vet", action="store_true")
+    lister.add_argument("--tree", required=True)
+    lister.add_argument("--sha", required=True)
+    lister.add_argument("--tools", required=True)
+    arguments = lister.parse_args()
+    started, failed, refusal = time.monotonic(), None, None
+    try:
+        refusal = darwinVetRefusal(arguments.tree, arguments.sha, arguments.tools)
+    except (Exception, SystemExit) as error:
+        failed = error
+    print(json.dumps({"seconds": round(time.monotonic() - started, 1)}), flush=True)
+    if failed is not None:
+        print("fast check couldn't run: " + errorWords(failed), file=sys.stderr)
+        sys.exit(FastCheckCantRunExit)
+    if refusal is not None:
+        print("refused: darwin-vet: " + refusal, file=sys.stderr)
+        sys.exit(RefusalExit)
+
+
+def darwinVetRefusal(tree, sha, tools):
+    """Gate.darwinVet run on tree, which must be checked out at sha since go vet reads the checkout's files: None when it's
+    green, or its red as the vet's last lines, at most 1500 bytes (lastLines), the phase's own why when no vet ran (a
+    listing that can't be computed). Its Gate is a listing's, which installs nothing and makes no build store, and its
+    out directory, where the vet's log goes, is a temporary one removed before this returns. Raises for a vet that can't
+    start, a tree at another commit among it."""
+    with tempfile.TemporaryDirectory() as out:
+        gate = Gate(argparse.Namespace(tree=tree, base=None, sha=sha, tools=tools, out=out, full=False, branch="", branch_source="",
+                                       session="", session_source="", listing=True))
+        head, wanted = gate.git(tree, "rev-parse", "HEAD"), gate.git(tree, "rev-parse", "--verify", sha + "^{commit}")
+        if head != wanted:
+            raise ValueError("%s is checked out at %s, not at %s, and go vet reads the checkout's files" % (tree, head, wanted))
+        # Gate.fail says a first failure on stdout, which holds the seconds alone here: the failure is read from the Gate.
+        with contextlib.redirect_stdout(io.StringIO()):
+            gate.darwinVet()
+        if gate.failure is None:
+            return None
+        log = os.path.join(out, "darwin-vet.log")
+        text = ""
+        if os.path.exists(log):
+            with open(log, errors="replace") as handle:
+                text = handle.read()
+        return lastLines(text if text.strip() else gate.failure["detail"], 1500)
+
+
+def lastLines(text, limit):
+    """text's last whole lines that fit in limit bytes of UTF-8, stripped, for a refusal held to a size; the last line's
+    own last bytes when even it doesn't fit."""
+    text = text.strip()
+    data = text.encode()
+    if len(data) <= limit:
+        return text
+    tail = data[-limit:].decode(errors="ignore")
+    cut = tail.find("\n")
+    return tail[cut + 1:] if cut >= 0 else tail
+
+
+def errorWords(error):
+    """An exception as one line for a can't-run: its type, then its first lines (firstLinesOf)."""
+    said = str(error)
+    return type(error).__name__ + (": " + firstLinesOf(said) if said.strip() else "")
 
 
 def goCode(source, strings=True):
@@ -1322,6 +1502,11 @@ RefusalExit = 3
 # exit 4 never reaches a phase's.
 DarwinLegMissingExit = 4
 
+# The exit status of a submit-time fast check that couldn't run (--list-units --fast-check, --fast-check-darwin-vet), with
+# one line on stderr, "fast check couldn't run: <why>": the check's own failure, never the change's red, which the census
+# passes as its listing decided and says so (#bwnptrb, Adamic Loom's call 1), since every phase runs again in the block.
+FastCheckCantRunExit = 2
+
 
 def main():
     if "--phase-unread" in sys.argv:
@@ -1329,6 +1514,9 @@ def main():
         return
     if "--darwin-paths-digest" in sys.argv or "--darwin-a-paths" in sys.argv:
         darwinMain()
+        return
+    if "--fast-check-darwin-vet" in sys.argv:
+        fastCheckDarwinVet()
         return
     if "--list-units" in sys.argv:
         try:
@@ -2611,18 +2799,7 @@ class Gate:
         A change that reaches for a new tool without declaring it is red here, naming the file and line,
         instead of red on every box that lacks it (library's stock tsc, Oct 8 11:2xZ)."""
         started = time.monotonic()
-        with open(os.path.join(self.arguments.tools, "cloud/fast-gate/tools.txt")) as handle:
-            declared = {line.split("\t")[0] for line in handle if line.strip() and not line.startswith("#")}
-        found = self.command(["git", "-C", self.arguments.tree, "grep", "-nE", toolLiteralSearch, "--"] + toolsSourcePathspec,
-                               capture_output=True, text=True)
-        if found.returncode not in (0, 1):
-            raise RuntimeError("git grep for tool literals failed: %s" % found.stderr)
-        undeclared = []
-        for line in found.stdout.splitlines():
-            path, number, text = line.split(":", 2)
-            for name in toolLiteral.findall(text):
-                if name not in declared:
-                    undeclared.append("%s:%s runs %s, which cloud/fast-gate/tools.txt doesn't declare" % (path, number, name))
+        undeclared = undeclaredTools(self.arguments.tree, self.arguments.tools, self.command)
         self.steps["tools"] = round(time.monotonic() - started, 1)
         self.result["undeclared_tools"] = undeclared
         self.exits["tools"] = 1 if undeclared else 0
@@ -3707,14 +3884,27 @@ def fastUnits(tree, base=None, sha=None, tools=None):
     The planner supplies the same base, sha and tools as --select to enumerate the exact stage set.
     Enumeration reads the gate's executor map and catalog; it installs nothing and runs no stages.
     """
+    with fastListing(tree, base, sha, tools) as listing:
+        return listing.units
+
+
+@contextlib.contextmanager
+def fastListing(tree, base=None, sha=None, tools=None):
+    """fastUnits' listing held open, as a namespace: its units, the Gate that classified the change, the change's paths,
+    and the seconds the classification (fastPhaseInputs) took; without base the base phases alone, no Gate and nothing
+    changed. The Gate lives for the with block and its out directory goes when the block ends, so the submit-time fast
+    check (fastCheck) reads the very classification the units came from, never a second one."""
     units = list(fastBasePhases)
     if base is None:
-        return units
+        yield types.SimpleNamespace(units=units, gate=None, changed=[], seconds=0.0)
+        return
     with tempfile.TemporaryDirectory() as out:
         gate = Gate(argparse.Namespace(tree=tree, base=base, sha=sha or git(tree, "rev-parse", "HEAD"),
                                        tools=tools or tree, out=out, full=False, branch="", branch_source="",
                                        session="", session_source="", listing=True))
+        started = time.monotonic()
         changed, executors = gate.fastPhaseInputs()
+        seconds = time.monotonic() - started
         if executors & {"workers", "bench-workers"}:
             units.append("workers")
         if "a-check" in executors and gate.result.get("unchecked_a_files"):
@@ -3725,7 +3915,7 @@ def fastUnits(tree, base=None, sha=None, tools=None):
             units.append("catalog")
         if "darwin" in executors:
             units.append("darwin")
-    return units
+        yield types.SimpleNamespace(units=units, gate=gate, changed=changed, seconds=seconds)
 
 
 def productDeclarations(directories, packages=None):
