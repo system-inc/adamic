@@ -57,6 +57,9 @@ func (l *lowering) castValue(node *ast.Node) (ir.Expression, error) {
 	// The message names the source as written, undefined included; everything after the absent check
 	// reads the present members (absentArm).
 	message := "cast failed: this " + l.checker.TypeToString(source) + " is not a " + l.checker.TypeToString(target)
+	if proof.keepsNullish {
+		return l.keepsNullishValue(node, proof, source, target, message)
+	}
 	if proof.absent {
 		source = l.absentArm(source, target)
 	}
@@ -77,6 +80,51 @@ func (l *lowering) castValue(node *ast.Node) (ir.Expression, error) {
 		value = ir.Coalesce{Value: value, Panic: ir.StringConstant{Index: l.constant(message)}, Of: ir.Object}
 	}
 	return l.castRoadValue(node, proof, value, source, target, message)
+}
+
+// keepsNullishValue lowers a cast that keeps its source's undefined or null (keepsNullishCast): the operand
+// once, into a local, and then a nullish value is itself, and a present one takes the road castRoad found
+// between the present types, with the cast's own message. The road's test reads the tag, so it sits only in
+// the present arm. A present pair with no test at all (an upcast) is the value itself. The test is the one
+// optionalIndex makes, IsNull beside IsUndefined where the source holds null, since the JavaScript backend
+// holds an object's null as null and IsUndefined there is === undefined.
+func (l *lowering) keepsNullishValue(node *ast.Node, proof castProof, source, target *checker.Type, message string) (ir.Expression, error) {
+	present, wanted := l.checker.GetNonNullableType(source), l.checker.GetNonNullableType(target)
+	// castValue's check, made on the pair the road runs on: castRoadValue doesn't make it.
+	if !l.sameKeeping(present, wanted, map[[2]*checker.Type]bool{}) {
+		return nil, l.notYet(node, "a cast that changes the runtime representation or ownership of a reference")
+	}
+	value, err := l.expression(node.AsAsExpression().Expression)
+	if err != nil {
+		return nil, err
+	}
+	if !proof.interfaceView && !proof.structuralView && !proof.overlap && proof.kindUnion == nil && len(proof.allowed) == 0 {
+		return value, nil
+	}
+	// An object that may be undefined or null is held as an Object whose nullish value is a null reference,
+	// and the result is one too. A value held otherwise, a Union, would need its own tests: it keeps the stop.
+	held, known := l.representation(target)
+	if value.Type() != ir.Object || !known || held != ir.Object {
+		return nil, l.castStop(node, castKeepsNullish, source, target, "")
+	}
+	function := -1
+	if l.function != nil {
+		function = l.functionIndex
+	}
+	local := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "cast_operand", Type: ir.Object, Function: function, ExpressionAssigned: true})
+	read := ir.Read{Local: local, Of: ir.Object}
+	cast, err := l.castRoadValue(node, proof, read, present, wanted, message)
+	if err != nil {
+		return nil, err
+	}
+	nullish := ir.Expression(ir.IsUndefined{Value: read})
+	if l.includesNull(source) {
+		nullish = ir.Binary{Operator: ir.Or, Left: nullish, Right: ir.IsNull{Value: read}}
+	}
+	return ir.Effects{Body: []ir.Statement{ir.Declare{Local: local, Value: value}}, Result: ir.Conditional{
+		Condition: nullish, WhenTrue: read, WhenNot: cast, Of: ir.Object,
+	}}, nil
 }
 
 // castRoadValue lowers the road a proof found over a value already lowered: the view, the tag test or the
