@@ -21,6 +21,8 @@ set -uo pipefail
 
 root=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 cd "$root" || exit 2
+# shellcheck disable=SC1091
+. "$root/cloud/cohere-typescript-path.sh" || exit 2
 
 probes="" against="" logs="" check=false
 while [ $# -gt 0 ]; do
@@ -47,10 +49,15 @@ mkdir -p "${GOTMPDIR:-/tmp/adamic-gate}"
 # build checks out the submodules if they're missing and builds the compiler at a checkout. Missing means
 # the module go.mod's replace reads from cohere's TypeScript submodule (./cohere/TypeScript/tsc) isn't
 # there. A sealed job's tree is laid with its submodules and has no git to update them by, so asking git
-# when they're already present would fail there for nothing.
+# when they're already present would fail there for nothing. That submodule's path is the one cohere's own
+# .gitmodules names, so it can be read only once cohere is laid: a cohere with no .gitmodules (an --against
+# worktree's, before its submodules are checked out) is missing too.
 build() {
-	local checkout=$1 binary=$2
-	if [ ! -e "$checkout/cohere/TypeScript/tsc/go.mod" ]; then
+	local checkout=$1 binary=$2 typescriptPath=""
+	if [ -f "$checkout/cohere/.gitmodules" ]; then
+		typescriptPath=$(cohere_typescript_path "$checkout") || return 1
+	fi
+	if [ -z "$typescriptPath" ] || [ ! -e "$checkout/cohere/$typescriptPath/tsc/go.mod" ]; then
 		git -C "$checkout" -c protocol.file.allow=always submodule update --init --recursive --depth 1 >"$logs/submodules.log" 2>&1 || return 1
 	fi
 	(cd "$checkout" && go build -o "$binary" ./cmd/adamic) >"$logs/build-$(basename "$binary").log" 2>&1
