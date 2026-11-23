@@ -19,7 +19,9 @@ func TestAgreementDailyDiff(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := toolchain.Command("python3", "-B", "-m", "unittest", "-v", "diff_test")
+	// -B writes no bytecode, and -X pycache_prefix reads it only under an empty directory of the test's own, never a
+	// __pycache__ in the tree, which no key holds; -s leaves the user site, and a usercustomize there, off sys.path.
+	command := toolchain.Command("python3", "-B", "-s", "-X", "pycache_prefix="+t.TempDir(), "-m", "unittest", "-v", "diff_test")
 	command.Dir = "agreement-daily"
 	command.Stdout = output
 	command.Stderr = output
