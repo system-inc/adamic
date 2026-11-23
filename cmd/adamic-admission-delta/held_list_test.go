@@ -148,6 +148,69 @@ func TestHeldStopListHoldsItsRows(t *testing.T) {
 	}
 }
 
+// heldStopReads are the places the tools line's executors.txt keys cmd/adamic-admission-delta on for what
+// TestHeldStopListHoldsItsRows reads, each a prefix and a suffix as the reads line's glob reads it (its * crossing
+// slashes): a row's program, a row's test file and that package's families tables. A row outside them would be read
+// by the test and held by no key, so an edit to it alone would reuse the unit's pass (Adamic Loom's must on #z0h4bpd).
+var heldStopReads = []struct{ prefix, suffix string }{
+	// Reads: internal/oracle/testdata/*.a
+	{"internal/oracle/testdata/", ".a"},
+	// Reads: internal/oracle/testdata/*.ts
+	{"internal/oracle/testdata/", ".ts"},
+	// Reads: internal/lower/testdata/*.a
+	{"internal/lower/testdata/", ".a"},
+	// Reads: internal/lower/testdata/*.ts
+	{"internal/lower/testdata/", ".ts"},
+	// Reads: stage3/interface-downcasts/*.ts
+	{"stage3/interface-downcasts/", ".ts"},
+	// Reads: stage3/fixtures/*.a
+	{"stage3/fixtures/", ".a"},
+	// Reads: stage1/cohere/markdownblocks/gaps/*.ts
+	{"stage1/cohere/markdownblocks/gaps/", ".ts"},
+	// Reads: internal/oracle/*_test.go
+	{"internal/oracle/", "_test.go"},
+	// Reads: internal/lower/*_test.go
+	{"internal/lower/", "_test.go"},
+	// Reads: stage1/cohere/markdownblocks/*_test.go
+	{"stage1/cohere/markdownblocks/", "_test.go"},
+}
+
+// heldStopKeyed says file sits in one of heldStopReads' places.
+func heldStopKeyed(file string) bool {
+	for _, place := range heldStopReads {
+		if strings.HasPrefix(file, place.prefix) && strings.HasSuffix(file, place.suffix) {
+			return true
+		}
+	}
+	return false
+}
+
+// Every row's program and test file, and so its package's families tables, sit where the unit's key reads, so an edit to
+// any of them moves the key. The list and docs/rulings.md are read whole, keyed by name. A row elsewhere reds here until
+// the tools line names its place and heldStopReads mirrors it. Mutant: a row's program outside every place, red.
+func TestHeldStopRowsSitWhereTheKeyReads(t *testing.T) {
+	t.Parallel()
+	// Reads: cloud/admission-corpus/held-stops.json
+	list, err := readHeldStops(filepath.Join("..", "..", "cloud/admission-corpus/held-stops.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	// Reads: docs/rulings.md
+	for _, stop := range list.Stops {
+		if !heldStopKeyed(stop.Path) {
+			t.Errorf("%s: its program sits outside every place cmd/adamic-admission-delta's key reads (heldStopReads): add its place to the tools line's executors.txt and here", stop.Path)
+		}
+		test := heldStopTest.FindStringSubmatch(stop.Test)
+		if test == nil {
+			t.Errorf("%s: test %q isn't <repository path>_test.go: <TestName>", stop.Path, stop.Test)
+			continue
+		}
+		if !heldStopKeyed(test[1]) {
+			t.Errorf("%s: its test %s sits outside every place cmd/adamic-admission-delta's key reads (heldStopReads): add its place to the tools line's executors.txt and here", stop.Path, test[1])
+		}
+	}
+}
+
 // The guard refuses a row whose hatch line isn't the program's, whose ruling words aren't said once, whose test file
 // lacks its func and holds no family of that name whose runner it defines, or names neither the program nor its
 // directory, and one whose program is gone. It reads a row whose test names the program, one whose test walks its
