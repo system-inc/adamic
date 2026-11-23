@@ -32,8 +32,10 @@ const (
 	// as its own kind, which a range type's Union never is without a narrow this table classes.
 	rangeUnionMoves
 	// rangeUnionStops reads its object operand's layout raw, so it's NotYet where that operand is held as a
-	// range type's Union (checkRangeUnionReads). A field read and a field write are #hae423v's next wave's to
-	// turn into dispatches; until then they stop with the rest.
+	// range type's Union (checkRangeUnionReads). A read or a write of pos or end through a range type never
+	// hands a Property or a SetProperty the Union: lowering makes it a dispatch (range_fields.go), whose arms
+	// read and write through checked narrows to an object and to an array, so the field read and write roads
+	// dispatch while the IR's Property and SetProperty, handed such a Union by any other road, still stop.
 	rangeUnionStops
 )
 

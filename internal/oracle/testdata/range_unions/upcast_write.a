@@ -1,0 +1,23 @@
+// #hae423v wave 2: tsc's setTextRangeEnd writes (range as TextRange).end with range a T extends TextRange. An
+// upcast hands back its operand unchanged, so where T is a NodeArray the write is the array's side record's, and
+// where T is a plain range it's the range type's write by kind.
+interface TextRange { pos: number; end: number; }
+interface Node { kind: number; }
+interface NodeArray<T extends Node> extends Array<T>, TextRange {
+    hasTrailingComma: boolean;
+    transformFlags: number;
+}
+function setTextRangeEnd<T extends TextRange>(range: T, end: number): T {
+    (range as TextRange).end = end;
+    return range;
+}
+const nodes = [{ kind: 1 }] as NodeArray<Node>;
+nodes.pos = 1;
+nodes.end = 2;
+nodes.hasTrailingComma = false;
+nodes.transformFlags = 0;
+setTextRangeEnd(nodes, 9);
+console.log(`${nodes.pos}|${nodes.end}|${nodes.length}`);
+const plain: TextRange = { pos: 3, end: 4 };
+setTextRangeEnd(plain, 12);
+console.log(`${plain.pos}|${plain.end}`);
