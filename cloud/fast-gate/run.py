@@ -2899,7 +2899,7 @@ class Gate:
             row["over_budget"] = elapsed > 30
             row["status"] = "passed" if row["ok"] else "failed"
             exit = row.get("exit")
-            caused = (self.failure or {}).get("step") == phase + "/" + row["name"]
+            caused = (getattr(self, "failure", None) or {}).get("step") == phase + "/" + row["name"]
             if row["status"] == "failed" and getattr(self, "cancelled", False) and isinstance(exit, int) and exit < 0 and not caused:
                 # A unit the gate's own cancel killed (fail's whole-gate branch, killSessions on the first failure) ended
                 # by its signal, not its own failure: it's cancelled, never written failed beside the unit that failed,
