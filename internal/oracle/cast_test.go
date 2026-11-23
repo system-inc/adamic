@@ -38,6 +38,11 @@ var checkedCastFixtures = []struct {
 	// An open-kind interface cast to a union of kinded interfaces (#b5w3ycg slice 4): a value whose kind is
 	// outside the target's kinds fails the cast's kind test.
 	{"cast_kind_union_fails.ts", "Node", "ElementAccessExpression | PropertyAccessExpression"},
+	// A union of arrays and other members cast to one side (#9z2ksv7): Array.isArray at the cast fails a value of the
+	// other side, and an undefined the target doesn't hold.
+	{"cast_array_arm_object_fails.ts", "CircularBuildOrder | readonly string[]", "readonly string[]"},
+	{"cast_array_arm_array_fails.ts", "CircularBuildOrder | readonly string[]", "CircularBuildOrder"},
+	{"cast_array_arm_undefined_fails.ts", "BuilderProgram | Program | readonly string[] | undefined", "readonly string[]"},
 }
 
 func TestCheckedCastFlushesOutput(t *testing.T) {
@@ -114,7 +119,7 @@ func TestCheckedCastRunsNoCatchOrFinally(t *testing.T) {
 }
 
 func init() {
-	for _, file := range []string{"cast_enum_numeric.ts", "cast_enum_string.ts", "cast_enum_const.ts", "cast_class.a", "cast_operand_once.ts", "cast_absent_arm.ts", "cast_union_interface.ts", "cast_kind_union.ts"} {
+	for _, file := range []string{"cast_enum_numeric.ts", "cast_enum_string.ts", "cast_enum_const.ts", "cast_class.a", "cast_operand_once.ts", "cast_absent_arm.ts", "cast_union_interface.ts", "cast_kind_union.ts", "cast_array_arm.ts"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool

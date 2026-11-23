@@ -37,6 +37,9 @@ type castProof struct {
 	// kindUnion is a cast from an open-kind interface to a union of kinded interfaces (kindUnionCast): a tag
 	// test over the members' literals, then each member's checked view.
 	kindUnion *kindUnion
+	// arrayArm is a cast from a union of arrays and other members to one side of it (arrayArmCast): Array.isArray
+	// at the cast tells the sides apart (cast_array_side.go).
+	arrayArm *arrayArm
 }
 
 // castRepair is the fix a refused cast names, by file kind. In .a a cast to a union member is refused too
@@ -187,7 +190,7 @@ func (l *lowering) castRefusal(node *ast.Node) error {
 		if err != nil {
 			return err
 		}
-		if proof.interfaceView || len(proof.allowed) > 0 || len(proof.classes) > 0 || proof.kindUnion != nil {
+		if proof.interfaceView || len(proof.allowed) > 0 || len(proof.classes) > 0 || proof.kindUnion != nil || proof.arrayArm != nil {
 			if l.refusal.checkedCasts == nil {
 				l.refusal.checkedCasts = map[*ast.Node]bool{}
 			}
@@ -302,6 +305,10 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 			}
 		}
 		return castProof{classes: targets}, nil
+	}
+	// Where the stop below would be castArrayArm, Array.isArray at the cast may decide it.
+	if arm := l.arrayArmCast(source, target); arm != nil {
+		return castProof{arrayArm: arm}, nil
 	}
 	if present := l.absentArm(source, target); present != nil {
 		proof, err := l.unionMemberProof(present, target, stop)
