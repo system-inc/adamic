@@ -10,11 +10,11 @@ import (
 func (l *lowering) optionalMapGet(node *ast.Node) (ir.Expression, bool, error) {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
-	if call.QuestionDotToken != nil || callee.Kind != ast.KindPropertyAccessExpression {
+	if l.questionDot(node) || callee.Kind != ast.KindPropertyAccessExpression {
 		return nil, false, nil
 	}
 	access := callee.AsPropertyAccessExpression()
-	if access.QuestionDotToken == nil || access.Name().Text() != "get" || !l.libraryMember(callee) {
+	if !l.questionDot(callee) || access.Name().Text() != "get" || !l.libraryMember(callee) {
 		return nil, false, nil
 	}
 	proven := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))

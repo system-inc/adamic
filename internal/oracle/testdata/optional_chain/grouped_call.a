@@ -1,0 +1,14 @@
+// Parentheses end an optional chain (#cdpxjmb, Lower's must): (greeter?.greet)() is a call of what the
+// chain gives, outside it, and no guard takes it. Node keeps the object as the call's this through the
+// parentheses, as it does for (greeter.greet)(), so the method reads its name.
+interface Greeter {
+	readonly name: string;
+	greet(): string;
+}
+const greeter: Greeter = {
+	name: 'ada',
+	greet(): string {
+		return this.name;
+	},
+};
+console.log((greeter?.greet)());
