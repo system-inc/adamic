@@ -209,6 +209,11 @@ func (f *scanCycleFinder) use(proven *checker.Type, where *ast.Node) {
 		// of its own, the variable's type is the literal's regular type, which is used where it's
 		// declared. It's still what a value may really be.
 		f.shape(proven, where)
+		// A literal cast to a narrower type ({ name, back } as Named) has no variable to carry its regular
+		// type, and its fresh type never relates to the narrower one, since the relation judges a fresh type
+		// for excess properties. So its regular widened type is used here too, as a variable's would be, and
+		// a value seen as Named may be it, back and all (#sbvnh96).
+		f.use(f.l.relatedShape(proven), where)
 		return
 	}
 	f.seen = append(f.seen, proven)
@@ -894,7 +899,7 @@ func (f *scanCycleFinder) graphLinks(node cycleNode) []cycleNode {
 			links = append(links, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)})
 		}
 		for _, shape := range f.shapes {
-			if shape != proven && f.l.checker.IsTypeAssignableTo(shape, proven) {
+			if shape != proven && f.l.checker.IsTypeAssignableTo(f.l.relatedShape(shape), proven) {
 				links = append(links, cycleNode{proven: shape})
 			}
 		}
