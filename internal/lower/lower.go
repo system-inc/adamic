@@ -526,8 +526,9 @@ type lowering struct {
 	narrowOverloads map[*ast.Node]bool
 	overloadCalls   map[*ast.Node]bool
 	// overloadCertificates holds, for each overload judged, whether censusOverload accepted it by
-	// certificate A or B, whose calls overloadCertificateCall holds to a direct entry
-	// (overload_certificate_array.go, overload_certificate_map.go, #5fws6q8).
+	// certificate A, B or D, whose calls overloadCertificateCall holds to a direct entry
+	// (overload_certificate_array.go, overload_certificate_map.go, #5fws6q8, and
+	// overload_certificate_filter.go, #4z7y6pq).
 	overloadCertificates map[*ast.Node]bool
 	// overloadNodeTests holds, for each overload judged, whether censusOverload accepted it by the
 	// node-test proof, whose direct calls overloadNodeTestCall judges one by one
