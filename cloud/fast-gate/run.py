@@ -22,6 +22,8 @@ coverage's inputs also carry names, the changed paths it judges (coverageReduced
 --darwin-paths-digest --tree <checkout at the tip> --sha <tip> --tools <tools checkout> prints the darwinPaths a darwin
 leg's record at that tip holds (cloud/fast-gate/darwin-legs/README.md), and --darwin-a-paths with the same arguments the
 .a files its aCheck must cover, one a line.
+--compiler-packages prints the compiler's own packages, compilerPackages, as one JSON object, {"version": 1,
+"compilerPackages": [...]}: the planner keys a held launcher's units with exactly these (#ry3pfc6).
 --reads-census --tree <checkout> --tools <tools checkout> prints every finding of the reads guard over the whole tree
 (readsGuardFindings), one a line, and exits 0 when there are none, 1 when there are, and 2 when it crashed.
 --fast-check <verdict> with --list-units, --base, --sha and --tools runs the census door's submit-time fast check after the
@@ -2275,7 +2277,18 @@ DarwinLegMissingExit = 4
 FastCheckCantRunExit = 2
 
 
+def compilerPackagesMain():
+    """run.py --compiler-packages: compilerPackages as one JSON object, {"version": 1, "compilerPackages": [...]}, in its
+    order. The planner keys every unit of a launcher the Queue holds for an exec its runs don't name with exactly these,
+    read at the plan's own tools commit, so a held launcher can never key narrower than the compiler (Adamic Loom's ruling
+    on #ry3pfc6). It reads no tree."""
+    print(json.dumps({"version": 1, "compilerPackages": list(compilerPackages)}))
+
+
 def main():
+    if "--compiler-packages" in sys.argv:
+        compilerPackagesMain()
+        return
     if "--phase-unread" in sys.argv:
         phaseUnreadMain()
         return

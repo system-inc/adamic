@@ -4587,6 +4587,17 @@ class ListUnitsRefusal(unittest.TestCase):
             self.listed(ValueError("a gate-tool bug"))
 
 
+class CompilerPackagesPrinted(unittest.TestCase):
+    """run.py --compiler-packages prints the compiler's packages the planner keys a held launcher with (#ry3pfc6), the
+    very tuple the census reads. Mutant: the mode printing an empty list, red."""
+
+    def test_it_prints_the_census_compiler_packages(self):
+        output = realRun([sys.executable, run.__file__, "--compiler-packages"], capture_output=True, text=True, check=True).stdout
+        self.assertEqual(json.loads(output), {"version": 1, "compilerPackages": list(run.compilerPackages)})
+        self.assertIn("internal/lower", json.loads(output)["compilerPackages"])
+        self.assertIn("cmd/adamic", json.loads(output)["compilerPackages"])
+
+
 class CensusLaunchers(unittest.TestCase):
     """A launcher declaration (#9qqvs57, system_adamic's ruling of Oct 14) lets a package that launches processes, and
     never the compiler, through the census honestly: it names what it runs and why. It never covers a file that
