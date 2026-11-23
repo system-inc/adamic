@@ -1,0 +1,10 @@
+# #hwjx7gw family 46: internal/dry, internal/lower and stage3/fixtures whole, products settled first. Source it in the
+# job's shell after the sealed opening. Never merged.
+L="$TMPDIR/hww"; mkdir -p "$L"; failed=0
+step() { echo "$1 $2"; [ "$1" = PASS ] || failed=1; }
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg)"
+if go test -count=1 -timeout 20m ./internal/dry/ > "$L/dry.log" 2>&1; then step PASS dry; else step FAIL dry; grep -E '^(--- FAIL|FAIL)|_test.go:[0-9]+' "$L/dry.log" | head -10; fi
+if sandboxed_products ./internal/lower ./stage3/fixtures > "$L/products.log" 2>&1; then step PASS products; else step FAIL products; tail -5 "$L/products.log"; fi
+if go test -count=1 -timeout 75m ./internal/lower/ ./stage3/fixtures/ > "$L/whole.log" 2>&1; then step PASS whole; else step FAIL whole; fi
+grep -E '^(ok|FAIL|--- FAIL)|panic:' "$L/whole.log" | head -40
+if [ $failed -eq 0 ]; then echo "VERDICT PASS"; else echo "VERDICT FAIL"; fi
