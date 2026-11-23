@@ -8,5 +8,5 @@ record_string_of, unknown_param, generic_param), each lowering where it must sto
 record_string_of, unknown_param and generic_param carry an ASan fault in their failure; record_string and
 record_absent lower and agree.
 
-Must stay green: `TestInRecordReadNeighborsAgree` (keyed_read, fixed_control, fixed_in_record_program) and
-`TestInRecordReadFromEntriesStops`, which stops before any read.
+Must stay green: `TestInRecordReadNeighborsAgree` (fixed_control, fixed_in_record_program) and
+`TestInRecordReadEarlierStops` (from_entries, keyed_read), which stop before this rule.

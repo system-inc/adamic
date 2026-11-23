@@ -63,36 +63,42 @@ func TestInRecordReadStops(t *testing.T) {
 	}
 }
 
-// A record made with no type node naming it, Object.fromEntries' { [k: string]: number }, stops at compile
-// time before any read can misread it (Compiler's must on #859ksab: the stop can't count on type nodes).
-func TestInRecordReadFromEntriesStops(t *testing.T) {
+// Two roads stop at compile time before any read can misread a record, each at a stop of its own: a record
+// made with no type node naming it, Object.fromEntries' { [k: string]: number } (Compiler's must on
+// #859ksab: the stop can't count on type nodes), and a literal key read o['k'] after the in test, which
+// lowering doesn't take yet. Each is pinned, so a change that lets either through meets this file.
+func TestInRecordReadEarlierStops(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/in_record_read", "from_entries.ts"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	truth := onNode(t, path)
-	if disagreement(run{stdout: []byte("number\n")}, truth) != "" {
-		t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
-	}
-	program, err := lowered(t, path)
-	if err == nil {
-		native, _ := natively(t, program)
-		t.Fatalf("lowered; want a compile-time stop. Sanitized native: exit %d, stdout %q, stderr %q", native.exitCode, native.stdout, native.stderr)
-	}
-	var refused *lower.Refused
-	var notYet *lower.NotYet
-	if !errors.As(err, &refused) && !errors.As(err, &notYet) {
-		t.Fatalf("want a compile-time stop, got %v", err)
+	for _, file := range []string{"from_entries.ts", "keyed_read.ts"} {
+		t.Run(file, func(t *testing.T) {
+			t.Parallel()
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/in_record_read", file))
+			if err != nil {
+				t.Fatal(err)
+			}
+			truth := onNode(t, path)
+			if disagreement(run{stdout: []byte("number\n")}, truth) != "" {
+				t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
+			}
+			program, err := lowered(t, path)
+			if err == nil {
+				native, _ := natively(t, program)
+				t.Fatalf("lowered; want a compile-time stop. Sanitized native: exit %d, stdout %q, stderr %q", native.exitCode, native.stdout, native.stderr)
+			}
+			var refused *lower.Refused
+			var notYet *lower.NotYet
+			if !errors.As(err, &refused) && !errors.As(err, &notYet) {
+				t.Fatalf("want a compile-time stop, got %v", err)
+			}
+		})
 	}
 }
 
-// The neighbors still lower and agree: a run-time key read, which boxes a record's value by its kind, and a
-// receiver declared as a program object type, which no record reaches, alone and beside a number record.
+// The neighbors still lower and agree: a receiver declared as a program object type, which no record
+// reaches, alone and beside a number record.
 func TestInRecordReadNeighborsAgree(t *testing.T) {
 	t.Parallel()
 	for file, node := range map[string]string{
-		"keyed_read.ts":              "number\n",
 		"fixed_control.ts":           "number absent\n",
 		"fixed_in_record_program.ts": "number absent 1\n",
 	} {
