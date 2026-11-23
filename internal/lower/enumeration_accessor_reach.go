@@ -225,8 +225,10 @@ func (l *lowering) enumerationAccessorOwners(accessor *ast.Node, reach *enumerat
 		owners = append(owners, side)
 		own = own || class == holder
 	}
-	// The accessor's own class must be found among them, or its name doesn't lead back to it (a private or
-	// computed name), and its owners aren't known.
+	// The accessor's own class must be found among them, or its name doesn't lead back to it, and its
+	// owners aren't known. A #private name does lead back (J-t8pj70p's probe found Secret owning #hidden),
+	// so an enumeration related to that class is refused although a #private getter is never an own
+	// property: that only ever refuses more.
 	return owners, own
 }
 
