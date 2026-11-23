@@ -23,14 +23,15 @@ func (l *lowering) nullableObjectUnion(proven *checker.Type) bool {
 // lookup: a Map's get, an element read past an array's end, a pop. A bare pointer has one empty value, so a
 // missing key and a stored null are the same pointer, and one of them reads wrong (#92cnfpf: Map<string,
 // RegExpExecArray | null>'s get of a missing key and an array read past its end, on both backends). An
-// object is nullableObjectUnion's, as it was; every other bare reference kind is judged here the same way.
+// object is nullableObjectUnion's, as it was; every other bare reference kind, a string, a record and a weak
+// handle included, is judged here the same way.
 func (l *lowering) nullableBareLookup(node *ast.Node, value ir.Expression) bool {
 	if value.Type() == ir.Object {
 		return l.nullableObjectUnion(l.checker.GetTypeAtLocation(node))
 	}
-	switch value.Type() {
-	case ir.Array, ir.Map, ir.Closure, ir.Promise, ir.Uint8Array, ir.Int32Array, ir.Float64Array, ir.Uint16Array, ir.Generator:
-	default:
+	// Every bare reference kind is judged, never a list of them, so a kind added later fails closed (Compiler's
+	// must on #92cnfpf): a Union is never bare, and an object is nullableObjectUnion's above.
+	if !value.Type().IsReference() || value.Type() == ir.Union {
 		return false
 	}
 	proven := l.concrete(l.checker.GetTypeAtLocation(node))
