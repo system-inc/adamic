@@ -25,6 +25,7 @@ mode enforce
 # allow: stage1/cohere/css/oracles *.[lL][eE][sS][sS]: oracles.go:366 is a helper whose glob matches nothing on purpose: stage1/cohere/css's whole-repository walk (askedCases) would read the first .less added, and stage1/cohere/css's own line, allowed above, keys it
 # allow: stage1/cohere/css/oracles *.[sS][cC][sS][sS]: oracles.go:367 is a helper whose glob matches nothing on purpose: stage1/cohere/css's whole-repository walk (askedCases) would read the first .scss added, and stage1/cohere/css's own line, allowed above, keys it
 # allow: internal/native/runtimeproducts internal/native_runtime: runtime_files_test.go:20 reads names alone, walking each runtimeFiles entry for a _test.go, which runtimeproducts' paths line keys by name; the files' bytes come through its Go closure
+# allow: stage1/typescript/scanner internal/*.gitignore: matches nothing on purpose: TestProfileArtifacts (profile_test.go:70) asks, in a source with no .git, which unrecorded files under internal/native_runtime/c git ignores, reading every .gitignore above them (internal/tracked/tracked.go:231), so the first one added under internal must move its key
 #
 # executor  glob
 # Darwin only: the Apple package and its examples, tested by a darwin leg on a pool Mac (Shackler). A gate
@@ -708,6 +709,17 @@ reads stage1/cohere/lint stage1/typescript/scanner/scanner.ts
 # TestNestedConstructorGap — stage1/cohere/lint/gaps_test.go:26 (imported input) (imported input) (imported input)
 # TestCompilerAndStage1Agree — stage1/cohere/lint/lint_test.go:396 (imported input) (imported input) (imported input) (imported input)
 reads stage1/cohere/lint stage1/typescript/scanner/tokens.ts
+# The compiler agreement's inputs list the whole tree with tracked.Recursive (compiler_stage1_split_test.go:190). With
+# .git that is git ls-files --recurse-submodules (internal/tracked/tracked.go:115), which parses .gitmodules and exits
+# 128 on a malformed one. With no .git it refuses a file the manifest leaves out and no .gitignore ignores
+# (tracked.go:143), asking git check-ignore (tracked.go:287), which reads the .gitignore in each directory above every
+# unrecorded path. compilerStage1Sources (corpus_sources_test.go:22) asks the same under stage1, which these hold.
+# TestProduct_CompilerAgreementSanitizedNative and the agreement shards via compilerAgreementInputs: compiler_stage1_split_test.go:190
+reads stage1/cohere/lint .gitmodules
+# TestProduct_CompilerAgreementSanitizedNative and the agreement shards via compilerAgreementInputs: compiler_stage1_split_test.go:190
+reads stage1/cohere/lint .gitignore
+# TestProduct_CompilerAgreementSanitizedNative and the agreement shards via compilerAgreementInputs: compiler_stage1_split_test.go:190
+reads stage1/cohere/lint */.gitignore
 # TestHelpersMatchCohere, TestHelperMutants, TestMessageRefusalsMatchGo, TestKnownGapsAreExplicit via oracle — stage1/cohere/lint/helpers/helpers_test.go:48
 reads stage1/cohere/lint/helpers cohere
 # TestHelpersMatchCohere — stage1/cohere/lint/helpers/helpers_test.go:96
@@ -1151,6 +1163,15 @@ reads stage1/cohere/markdownblocks stage1/cohere/markdowninline/classes.ts
 # TestMarkdownListLayout, TestMarkdownQuoteLayout, TestMarkdownTableLayout, TestMarkdownCodeBlockLayout, TestMarkdownHTMLBlockLayout, TestMarkdownWhitespaceLayout, TestMarkdownLeafComposition, TestMarkdownRootLayout, TestMarkdownStructureLayout via testBlockLayout — stage1/cohere/markdownblocks/lists_test.go:406
 # TestArrayGrowthWitness — stage1/cohere/markdownblocks/array_growth_gap_test.go:18
 reads stage1/cohere/markdownblocks stage1/cohere/markdowninline/inline.ts
+# The audit corpus (oracles/oracles.go:1326) is corpusfiles.Repository under stage1/cohere/markdownblocks. In a source
+# with no .git it asks git check-ignore which unrecorded files there the tree's .gitignore files ignore (internal/
+# corpusfiles/files.go:276, internal/tracked/tracked.go:287), reading the .gitignore in each directory from the root
+# down. stage1/*.gitignore holds stage1/.gitignore and stage1/cohere/.gitignore when added, and today matches only
+# stage1/cohere/lint/helpers/.gitignore, which the walk never reads: wider than the read, never narrower.
+# blockCorpus (lists_test.go:63) and TestProduct_MarkdownblocksFindsTokenizerEventsAnswers via oracles/oracles.go:1326
+reads stage1/cohere/markdownblocks .gitignore
+# blockCorpus (lists_test.go:63) and TestProduct_MarkdownblocksFindsTokenizerEventsAnswers via oracles/oracles.go:1326
+reads stage1/cohere/markdownblocks stage1/*.gitignore
 # TestMarkdownInline — stage1/cohere/markdowninline/port_test.go:159
 reads stage1/cohere/markdowninline *.[mM][aA][rR][kK][dD][oO][wW][nN]
 # TestMarkdownInline — stage1/cohere/markdowninline/port_test.go:159
@@ -1170,6 +1191,17 @@ reads stage1/cohere/markdowninline oracle/adamic.mjs
 # TestMarkdownInline via onNode — stage1/cohere/markdowninline/port_test.go:83
 # TestMarkdownInline — stage1/cohere/markdowninline/port_test.go:344
 reads stage1/cohere/markdowninline oracle/node.mjs
+# TestMarkdownInline's corpus (port_test.go:151) is corpusfiles.Repository over the whole tree. In a checkout with .git
+# its worktree check is git diff -- ':(top)**' (internal/corpusfiles/files.go:155), which parses .gitmodules for the
+# cohere gitlink and exits 128 on a malformed one. In a source with no .git it asks git check-ignore which unrecorded
+# files the tree's .gitignore files ignore (files.go:276, internal/tracked/tracked.go:231, :287), reading the
+# .gitignore in each directory above every unrecorded path, and an unignored Markdown one is red.
+# TestMarkdownInline via collectInlineCorpus: internal/corpusfiles/files.go:155 parses it (git diff over the cohere gitlink)
+reads stage1/cohere/markdowninline .gitmodules
+# TestMarkdownInline via collectInlineCorpus: internal/tracked/tracked.go:287 reads the root's ignore rules
+reads stage1/cohere/markdowninline .gitignore
+# TestMarkdownInline via collectInlineCorpus: internal/tracked/tracked.go:287 reads each nested one above an unrecorded path
+reads stage1/cohere/markdowninline */.gitignore
 # TestThePortParsesAsGoCohereDoes via cohereSide — stage1/cohere/mediaquery/mediaquery_test.go:273
 # TestThePortParsesAsGoCohereDoes via cohereSide — stage1/cohere/mediaquery/mediaquery_test.go:277
 # TestThePortParsesAsGoCohereDoes via cohereSide — stage1/cohere/mediaquery/mediaquery_test.go:281
@@ -1252,6 +1284,45 @@ reads stage1/cohere/tsprinter stage1/typescript/scanner/scanner.ts
 # TestClassInterfaceMethodGap — stage1/cohere/tsprinter/class_interface_gap_test.go:29 (imported input) (imported input)
 # TestClassInterfaceMethodGap — stage1/cohere/tsprinter/class_interface_gap_test.go:29 (imported input) (imported input) (imported input)
 reads stage1/cohere/tsprinter stage1/typescript/scanner/tokens.ts
+# The TSC corpus is TrackedRootFiles under stage3/drivers/tsc/corpus (oracles/oracles.go:1138, :2100). In a source with
+# no .git it refuses a .ts the manifest leaves out and no .gitignore ignores (oracles.go:177), asking git check-ignore
+# (internal/tracked/tracked.go:287), which reads the .gitignore in each directory from the root down: the root's,
+# stage3's, stage3/drivers', stage3/drivers/tsc's and any under the corpus. stage3/*.gitignore holds them all and
+# matches fourteen others the walk never reads: wider than the read, never narrower.
+# tscAgreementLoad (tsc_corpus_split_test.go:84) and TestProduct_TSPrinterFindsTSCManifest via oracles/oracles.go:2100
+reads stage1/cohere/tsprinter .gitignore
+# tscAgreementLoad (tsc_corpus_split_test.go:84) and TestProduct_TSPrinterFindsTSCManifest via oracles/oracles.go:2100
+reads stage1/cohere/tsprinter stage3/*.gitignore
+# TestProduct_TSPrinterTSCExpressionsCorpus, TestProduct_TSPrinterTSCStatementsCorpus and TestProduct_TSPrinterTSCManifest via oracles.go:1138, :2100
+reads stage1/cohere/tsprinter/oracles .gitignore
+# TestProduct_TSPrinterTSCExpressionsCorpus, TestProduct_TSPrinterTSCStatementsCorpus and TestProduct_TSPrinterTSCManifest via oracles.go:1138, :2100
+reads stage1/cohere/tsprinter/oracles stage3/*.gitignore
+# The TSC corpus products key the corpus by content in the test's own process. TSCAgreementPrepare's key names the
+# directory stage3/drivers/tsc/corpus (oracles/oracles.go:2086), and buildcache.Product hashes every tracked file under
+# it (internal/buildcache/buildcache.go:518, :722-783): the 300 .ts and their expected and golden .exit, .stderr,
+# .stdout and .txt. printerGateTSCCorpus's and tscCorpus's oracle outputs key each corpus .ts (oracles.go:364) and
+# hand them to the Go oracle (:366). Both key and pass the gaps file, testdata/notyet.json from stage1/cohere/tsprinter,
+# where TestMain runs them (owner_test.go:11; oracles.go:1142, :2144, :2086). tsprinter's *.ts line holds the .ts for
+# tsprinter but not the rest of the directory.
+# TestProduct_TSPrinterTSCManifest via TSCAgreementPrepare: oracles.go:2086; TestProduct_TSPrinterTSC{Expressions,Statements}Corpus via oracles.go:364
+reads stage1/cohere/tsprinter/oracles stage3/drivers/tsc/corpus/*
+# TestProduct_TSPrinterTSC{Expressions,Statements}Corpus and TestProduct_TSPrinterTSCManifest: oracles.go:1142, :2144, :2086
+reads stage1/cohere/tsprinter/oracles stage1/cohere/tsprinter/testdata/notyet.json
+# tscAgreementLoad (tsc_corpus_split_test.go:84) and TestProduct_TSPrinterFindsTSCManifest via TSCAgreementPrepare: oracles.go:2086
+reads stage1/cohere/tsprinter stage3/drivers/tsc/corpus/*
+# The mutation oracles' product key names the directory internal/childguard (MutantOracleCorpusInputs,
+# oracles/oracles.go:1034), and buildcache hashes every tracked file under it as MutantOracleProduct keys the product
+# (:990, :815, :820). The closure holds childguard's three non-test .go files, never a dependency's tests or its
+# reaped-kill.mutants.md (closure.go's addListedFiles), so the line keys the four it misses and the three it holds.
+# TestProduct_TSPrinterMutantOracle_000 to _028 (products_test.go:21-77) via MutantOracleProduct: oracles.go:1034
+reads stage1/cohere/tsprinter/oracles internal/childguard/*
+# TestProduct_TSPrinterFindsMutantOracle_000 onward (oracle_finders_test.go:20) and testMutant (mutant_grain_test.go:21) via MutantOracleProduct: oracles.go:1034
+reads stage1/cohere/tsprinter internal/childguard/*
+# The 160 Statements and Expressions NPM and Embedded product tests (products_test.go) via StatementGateShardsOnce and
+# ExpressionGateUnitsOnce read UpstreamOutcomes' pin, which tsprinter owns, from where TestMain runs them
+# (oracles.go:533, :1658, :2189; owner_test.go:11), once a TypeScript source is set (:639-641, :1403-1405).
+# TestProduct_TSPrinter{Statements,Expressions}{NPM,Embedded} shards via UpstreamOutcomes: oracles.go:2189
+reads stage1/cohere/tsprinter/oracles stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json
 # TestSixRuleAgreementAndMutants — stage1/cohere/typeaware/suite_test.go:275
 # TestSixRuleAgreementAndMutants — stage1/cohere/typeaware/suite_test.go:281
 # TestSixRuleAgreementAndMutants — stage1/cohere/typeaware/suite_test.go:295
@@ -1452,6 +1523,16 @@ reads stage1/typescript/scanner oracle/node.mjs
 reads stage1/typescript/scanner stage1/*.ts
 # TestScannerAgreesWithTypescriptGo, TestPerformance via askedCorpus — stage1/typescript/scanner/scanner_test.go:218 (imported input)
 reads stage1/typescript/scanner stage1/cohere/lint/suggestions.a
+# sourceFiles is corpusfiles.Repository under stage1 (scanner_agreement_shards_test.go:149) and, for the opt-in
+# TestProfileArtifacts, under internal/native_runtime/c (profile_test.go:70). In a source with no .git each asks git
+# check-ignore which unrecorded files there the tree's .gitignore files ignore (internal/corpusfiles/files.go:276,
+# internal/tracked/tracked.go:287), reading the .gitignore in each directory from the root down.
+# TestScannerAgreesWithTypescriptGo, TestPerformance via askedCorpus and sourceFiles: scanner_agreement_shards_test.go:149
+reads stage1/typescript/scanner .gitignore
+# TestScannerAgreesWithTypescriptGo, TestPerformance via askedCorpus and sourceFiles: scanner_agreement_shards_test.go:149
+reads stage1/typescript/scanner stage1/*.gitignore
+# TestProfileArtifacts: stage1/typescript/scanner/profile_test.go:70
+reads stage1/typescript/scanner internal/*.gitignore
 # TestFixtures, TestFixturePaths via transformedNodeRunner — stage3/fixtures/fixtures_test.go:121
 # TestFixtures — stage3/fixtures/fixtures_test.go:264
 # TestTransformedNodeRunnerGuardHook — stage3/fixtures/runner_guard_test.go:21
@@ -1487,6 +1568,25 @@ reads stage3/lane/adaptedtree .gitattributes
 # pins and holds the adapted product's performanceCore.ts to their bytes.
 reads stage3/lane/adaptedtree internal/lower/testdata/host_binding/performance_core_adapted.txt
 reads stage3/lane/adaptedtree internal/lower/testdata/host_binding/performance_core_hooks.txt
+# TestTheAdaptedTreeBuildReachesOnlyItsDeclaredFile's census (census_test.go:64) reads every .go file under the root for
+# a //go:linkname naming a reached package (internal/leancensus/leancensus.go:457, :749-781), skipping cohere and any
+# testdata, node_modules or hidden directory. A glob can't skip those, so *.go keys them too (118 files at 96a1291b),
+# and a file list would miss the next one added, which the census reads. Moving the census into its own package, as
+# compilercensus does, narrows this.
+# TestTheAdaptedTreeBuildReachesOnlyItsDeclaredFile via leancensus linknames: internal/leancensus/leancensus.go:765
+reads stage3/lane/adaptedtree *.go
+# TestAGoProductsBuildReadsNoStateButItsInitializers (internal/buildcache/makecensus_test.go:207) runs the same census
+# from the checkout's root (repositoryRootForTest, make_relative.go:492), so the same walk reads every .go file
+# (internal/leancensus/leancensus.go:457, :749-781). Moving the census into its own package, as compilercensus does,
+# narrows this.
+# TestAGoProductsBuildReadsNoStateButItsInitializers via leancensus linknames: internal/leancensus/leancensus.go:765
+reads internal/buildcache *.go
+# TestALibraryOraclesBuildReadsNoStateButItsInitializers (stage1/cohere/tsprinter/oracles/census_test.go:48) runs the
+# same census from the checkout's root (Repository), so the same walk reads every .go file
+# (internal/leancensus/leancensus.go:457, :749-781). Moving the census into its own package, as compilercensus does,
+# narrows this.
+# TestALibraryOraclesBuildReadsNoStateButItsInitializers via leancensus linknames: internal/leancensus/leancensus.go:765
+reads stage1/cohere/tsprinter/oracles *.go
 # TestFixtures, TestFixturePaths via transformedNodeRunner — stage3/fixtures/fixtures_test.go:121
 # TestFixtures — stage3/fixtures/fixtures_test.go:264
 # TestTransformedNodeRunnerGuardHook — stage3/fixtures/runner_guard_test.go:21
