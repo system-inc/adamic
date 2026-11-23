@@ -59,7 +59,7 @@ var compilerSites = map[string]string{
 	"internal/lower/agree_test.go:TestNativeAgreementLeanBuildIsBuildsBytes":                          "finds the clang native.Build runs, to hand native.BuildLean that one by its path and prove the lean binary is Build's bytes; compiles through native alone",
 	"internal/fuzz/run.go:tryFile":                                                                    "the fuzzer compiles each case into its own scratch directory, never a product",
 	"internal/oracle/runtimes_test.go:TestARuntimeProductKeyIsTheSameThroughEitherLink":               "finds clang to reach it through two links and key a runtime; compiles nothing",
-	"internal/oracle/counts_test.go:countMeasurementInputs":                                           "resolves clang to key a count product by its version report; compiles nothing",
+	"internal/oracle/counts_test.go:countKeptMeasurements":                                            "resolves clang to key the kept count product by its version report; compiles nothing",
 	"internal/oracle/jobserver_test.go:TestTheJobserverNeverReachesTheEmittedCOrClang":                "finds the real clang its runs' wrappers hand on to; compiles nothing itself",
 	"internal/oracle/jobserver_test.go:jobserverRun":                                                  "puts a recording wrapper named clang before the real one in a run's own tools directory, so the jobserver proof sees every command native.Build runs; compiles nothing itself",
 	"internal/oracle/wasi_test.go:TestWASIRunnerCatchesMutants":                                       "the WASI SDK's clang, into a t.TempDir(), never a product",
