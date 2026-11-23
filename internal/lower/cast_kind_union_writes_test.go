@@ -340,3 +340,438 @@ func TestKindUnionWriteReachesALiteralWithoutTheField(t *testing.T) {
 		{"built at Node", "const odd: Node = { kind: SyntaxKind.ElementAccessExpression, pos: 0 };\nmark(odd);\n", kindUnionReachBuiltAs + "Node without flags"},
 	})
 }
+
+// kindUnionOwnModel is Language's probes' shape (#ghrtbaz, J-5q149x3 and J-0keaqa0, attached for #t2p4wyv): A and B
+// declare f as a number and C as a string, so the declared index refuses any write of f judged by all three kinds.
+// kindUnionOwnMake is the probes' make, which builds an A or a C; kindUnionOwnHonest builds an A or a B, so
+// only the index can stop a write its objects reach.
+const kindUnionOwnModel = `interface Base { readonly kind: string }
+interface A { readonly kind: "a"; f: number }
+interface B { readonly kind: "b"; f: number }
+interface C { readonly kind: "c"; f: string }
+`
+
+const kindUnionOwnMake = `function make(which: number): Base {
+  const a: A = { kind: "a", f: 1 };
+  const c: C = { kind: "c", f: "text" };
+  return which === 0 ? a : c;
+}
+`
+
+const kindUnionOwnHonest = `function make(which: number): Base {
+  const a: A = { kind: "a", f: 1 };
+  const b: B = { kind: "b", f: 2 };
+  return which === 0 ? a : b;
+}
+`
+
+// kindUnionOwnWhole is the declared index's refusal when a write of f is judged by every literal of the cast proof
+// A | B | C, as on main before #t2p4wyv.
+const kindUnionOwnWhole = `a write of f through a kind-checked cast's union, where A carries kind "a" and C "c", but they declare f as number and string`
+
+// Family 146 (#t2p4wyv, Adamic's ruling of Nov 22): a write is judged by the literals of its receiver's own union
+// where that union can't be stale, a const or a never-assigned parameter narrowed by a tag test or holding a
+// kind-checked cast's own result. Each row stopped on main at the index, by a kind the receiver's union excludes, and
+// lowers and agrees with Node now. The first is binder.ts:2884's form, the meter's row: a write of flowNode through
+// `const expr = node as PropertyAccessExpression | ElementAccessExpression`, beside another cast's proof that holds
+// AsExpression, whose layout holds no flowNode. The others narrow a const or a parameter by its kind, in an if or a
+// switch. Mutant: kindUnionWriteLiterals returns proof.literals at once, and every row is NotYet at the index.
+func TestKindUnionWriteJudgesTheReceiversOwnUnion(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, source string }{
+		{"binder.ts:2884's form", `enum SyntaxKind { PropertyAccessExpression = 1, ElementAccessExpression = 2, AsExpression = 3, Identifier = 4 }
+interface Expr { readonly kind: SyntaxKind; readonly pos: number }
+interface PropertyAccessExpression extends Expr { readonly kind: SyntaxKind.PropertyAccessExpression; readonly expression: Expr; flowNode: number }
+interface ElementAccessExpression extends Expr { readonly kind: SyntaxKind.ElementAccessExpression; readonly expression: Expr; flowNode: number }
+interface AsExpression extends Expr { readonly kind: SyntaxKind.AsExpression; readonly expression: Expr }
+function getLeftmostExpression(node: Expr): Expr {
+  return (node as PropertyAccessExpression | ElementAccessExpression | AsExpression).expression;
+}
+function bindAccess(node: Expr): void {
+  const expr = node as PropertyAccessExpression | ElementAccessExpression;
+  expr.flowNode = 5;
+}
+const leaf: Expr = { kind: SyntaxKind.Identifier, pos: 3 };
+const access: PropertyAccessExpression = { kind: SyntaxKind.PropertyAccessExpression, pos: 0, expression: leaf, flowNode: 0 };
+console.log(String(getLeftmostExpression(access).pos));
+bindAccess(access);
+console.log(String(access.flowNode));
+`},
+		{"a const tested by its kind", kindUnionOwnModel + kindUnionOwnHonest + `const n = make(0) as A | B | C;
+if (n.kind !== "c") {
+  n.f = 5;
+  console.log(String(n.f));
+}
+`},
+		{"a const switched on its kind", kindUnionOwnModel + kindUnionOwnHonest + `const n = make(1) as A | B | C;
+switch (n.kind) {
+  case "a":
+  case "b":
+    n.f = 6;
+    console.log(String(n.f));
+}
+`},
+		{"a parameter never assigned", kindUnionOwnModel + kindUnionOwnHonest + `function work(n: A | B | C): void {
+  if (n.kind !== "c") {
+    n.f = 7;
+    console.log(String(n.f));
+  }
+}
+work(make(0) as A | B | C);
+`},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			lowersAndAgreesWithNodeAs(t, probe.source, ".ts")
+		})
+	}
+}
+
+// Language's attack on the wider premise (#t2p4wyv): a receiver's narrowed union can be stale at the write, since the
+// reference behind it can be repointed between the test and the write, k06 a const holder's field rewritten by a
+// call, k07 a parameter's field, k08 the holder's field written through an alias with no call, and a predicate
+// can lie, k04b's `x.kind.length === 1`; and k10 to k14, Language's second attack, a const or a never-assigned
+// parameter whose declared type itself came from a stale path or a lying predicate (a const taken after the swap, a
+// function's result, a parameter handed the stale path, an annotated const, a const inside a predicate's true side),
+// with no cast. Node writes the number into C's string slot in each. They're judged by the
+// whole proof, so each stops at the index in its words, never reach's. The rest pin each condition of the ruling
+// with objects reach admits, so only the index stops them: a let, a parameter assigned in its function, an honest
+// predicate's narrowing, a tag test followed by a predicate that narrows nothing further (the ruling's "no predicate
+// between", kept as written: the union at the write is still A | B, so the write is judged here, never on the
+// one-member road kindUnionWrites leaves to main), and a parameter declared at the union and never tested.
+// Mutant: kindUnionWriteLiterals trusts the receiver's union on any reference (its kindUnionReceiverHolds gate
+// dropped), and k06 turns red, stopping at reach's words instead, as the honest rows lower.
+func TestKindUnionWriteKeepsTheWholeProofWhereTheUnionCanGoStale(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, source string }{
+		{"k06 field stale", kindUnionOwnModel + kindUnionOwnMake + `const holder: { n: A | B | C } = { n: make(0) as A | B | C };
+function swap(): void {
+  holder.n = make(1) as A | B | C;
+}
+if (holder.n.kind !== "c") {
+  swap();
+  holder.n.f = 5;
+  console.log(String(holder.n.f + 1));
+}
+`},
+		{"k07 parameter field stale", kindUnionOwnModel + kindUnionOwnMake + `interface Holder { n: A | B | C }
+function swap(h: Holder): void {
+  h.n = make(1) as A | B | C;
+}
+function work(h: Holder): void {
+  if (h.n.kind !== "c") {
+    swap(h);
+    h.n.f = 5;
+    console.log(String(h.n.f + 1));
+  }
+}
+work({ n: make(0) as A | B | C });
+`},
+		{"k10 const from a stale path", kindUnionOwnModel + kindUnionOwnMake + `const holder: { n: A | B | C } = { n: make(0) as A | B | C };
+function swap(): void {
+  holder.n = make(1) as A | B | C;
+}
+if (holder.n.kind !== "c") {
+  swap();
+  const e = holder.n;
+  e.f = 5;
+  console.log(String(e.f + 1));
+}
+`},
+		{"k11 const from a return", kindUnionOwnModel + kindUnionOwnMake + `const holder: { n: A | B | C } = { n: make(0) as A | B | C };
+function swap(): void {
+  holder.n = make(1) as A | B | C;
+}
+function pick(): A | B {
+  if (holder.n.kind !== "c") {
+    swap();
+    return holder.n;
+  }
+  return { kind: "a", f: 0 };
+}
+const e = pick();
+e.f = 5;
+console.log(String(e.f + 1));
+`},
+		{"k12 parameter handed a stale path", kindUnionOwnModel + kindUnionOwnMake + `const holder: { n: A | B | C } = { n: make(0) as A | B | C };
+function swap(): void {
+  holder.n = make(1) as A | B | C;
+}
+function write(e: A | B): void {
+  e.f = 5;
+  console.log(String(e.f + 1));
+}
+if (holder.n.kind !== "c") {
+  swap();
+  write(holder.n);
+}
+`},
+		{"k13 const annotated", kindUnionOwnModel + kindUnionOwnMake + `const holder: { n: A | B | C } = { n: make(0) as A | B | C };
+function swap(): void {
+  holder.n = make(1) as A | B | C;
+}
+if (holder.n.kind !== "c") {
+  swap();
+  const e: A | B = holder.n;
+  e.f = 5;
+  console.log(String(e.f + 1));
+}
+`},
+		{"k14 const from a predicate narrowed", kindUnionOwnModel + kindUnionOwnMake + `function isAB(x: A | B | C): x is A | B {
+  return x.kind.length === 1;
+}
+const n = make(1) as A | B | C;
+if (isAB(n)) {
+  const e = n;
+  e.f = 5;
+  console.log(String(e.f + 1));
+}
+`},
+		{"k08 field stale through an alias", kindUnionOwnModel + kindUnionOwnMake + `const holder: { n: A | B | C } = { n: make(0) as A | B | C };
+const alias = holder;
+if (holder.n.kind !== "c") {
+  alias.n = make(1) as A | B | C;
+  holder.n.f = 5;
+  console.log(String(holder.n.f + 1));
+}
+`},
+		{"k04b predicate lie", kindUnionOwnModel + kindUnionOwnMake + `function isAB(x: A | B | C): x is A | B {
+  return x.kind.length === 1;
+}
+const n = make(1) as A | B | C;
+if (isAB(n)) {
+  n.f = 5;
+  console.log(String(n.f + 1));
+}
+`},
+		{"a let", kindUnionOwnModel + kindUnionOwnHonest + `let n = make(0) as A | B | C;
+if (n.kind !== "c") {
+  n.f = 5;
+}
+console.log(String(n.f));
+`},
+		{"a parameter assigned", kindUnionOwnModel + kindUnionOwnHonest + `function work(n: A | B | C): void {
+  if (n.kind !== "c") {
+    n.f = 5;
+  }
+  n = make(1) as A | B | C;
+  console.log(n.kind);
+}
+work(make(0) as A | B | C);
+`},
+		{"an honest predicate", kindUnionOwnModel + kindUnionOwnHonest + `function isAB(x: A | B | C): x is A | B {
+  return x.kind !== "c";
+}
+const n = make(0) as A | B | C;
+if (isAB(n)) {
+  n.f = 5;
+  console.log(String(n.f));
+}
+`},
+		{"a predicate after a tag test", kindUnionOwnModel + kindUnionOwnHonest + `function isAB(x: A | B | C): x is A | B {
+  return x.kind !== "c";
+}
+const n = make(0) as A | B | C;
+if (n.kind !== "c" && isAB(n)) {
+  n.f = 5;
+  console.log(String(n.f));
+}
+`},
+		{"a parameter declared at the union", kindUnionOwnModel + kindUnionOwnHonest + `function bump(n: A | B): void {
+  n.f = 5;
+}
+const n = make(0) as A | B | C;
+if (n.kind !== "c") {
+  bump(n);
+  console.log(String(n.f));
+}
+`},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, probe.source, ".ts")
+			var notYet *NotYet
+			if !errors.As(err, &notYet) {
+				t.Fatalf("want NotYet at the write, got %v", err)
+			}
+			if notYet.What != kindUnionOwnWhole {
+				t.Fatalf("want NotYet %q, got %q", kindUnionOwnWhole, notYet.What)
+			}
+		})
+	}
+}
+
+// k04, Language's first predicate lie (`return x.f !== 0`, true for a C), never lowers. Its stop isn't pinned to the
+// write, since its words on main weren't measured and another rule may meet the predicate first; where the write is
+// its stop, the words are the whole proof's.
+func TestKindUnionWritePredicateLieNeverLowers(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSourceAs(t, kindUnionOwnModel+kindUnionOwnMake+`function isAB(x: A | B | C): x is A | B {
+  return x.f !== 0;
+}
+const n = make(1) as A | B | C;
+if (isAB(n)) {
+  n.f = 5;
+  console.log(String(n.f + 1));
+}
+`, ".ts")
+	if err == nil {
+		t.Fatal("k04 lowered: a lying predicate's narrowing was trusted")
+	}
+	var notYet *NotYet
+	if errors.As(err, &notYet) && strings.HasPrefix(notYet.What, "a write of f ") && notYet.What != kindUnionOwnWhole {
+		t.Fatalf("want the write judged by the whole proof, %q, got %q", kindUnionOwnWhole, notYet.What)
+	}
+}
+
+// Language's k01, k05 and k09 pass the index now: a const cast and tested by its kind, a const read out of a holder
+// before a call repoints the holder, and a const read out of an array before a call rewrites the element. The
+// receiver's own union is A | B, and both declare f as a number. But make builds a C too, and reach is asked after
+// the index, untouched by #t2p4wyv, so a C reaching the write's receiver stops it there. The pin is that each stops
+// past the index, never in its words.
+func TestKindUnionWriteOwnUnionStillMeetsReach(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, source string }{
+		{"k01 honest", kindUnionOwnModel + kindUnionOwnMake + `const n = make(0) as A | B | C;
+if (n.kind !== "c") {
+  n.f = 5;
+  console.log(String(n.f));
+}
+`},
+		{"k05 parameter stale", kindUnionOwnModel + kindUnionOwnMake + `const holder: { n: A | B | C } = { n: make(0) as A | B | C };
+function swap(): void {
+  holder.n = make(1) as A | B | C;
+}
+const seen = holder.n;
+if (seen.kind !== "c") {
+  swap();
+  const again = holder.n;
+  if (again.kind !== "c") {
+    again.f = 5;
+  }
+  seen.f = 6;
+  console.log(String(seen.f + 1));
+}
+`},
+		{"k09 element stale", kindUnionOwnModel + kindUnionOwnMake + `const list: (A | B | C)[] = [make(0) as A | B | C];
+function swap(): void {
+  list[0] = make(1) as A | B | C;
+}
+const at = list[0];
+if (at !== undefined && at.kind !== "c") {
+  swap();
+  at.f = 5;
+  console.log(String(at.f + 1));
+}
+`},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, probe.source, ".ts")
+			var notYet *NotYet
+			if !errors.As(err, &notYet) {
+				t.Fatalf("want NotYet at the write, got %v", err)
+			}
+			if !strings.HasPrefix(notYet.What, "a write of f through a kind-checked cast's union, where ") || strings.Contains(notYet.What, "but they declare f as") {
+				t.Fatalf("want NotYet past the index, at reach, got %q", notYet.What)
+			}
+		})
+	}
+}
+
+// WebAssembly's k15, and Lower's k16 and k17 (#t2p4wyv): the narrowing above trusts that a const's tag can't move
+// between its test and the write, which the whole proof never had to. A tag rewritten to another of the proof's
+// could be written through a type whose kind is writable and wider than the member's literal, and seeing
+// A | B | C (or what's left of it after a test) as { kind: string } is refused as widening, before, between, or
+// through an alias with no call (k15). Or it could be written with no view at all: Object.assign stops on a shape
+// no plain literal proves (k16), and Object.defineProperty is refused (k17), between the test and the write and
+// before the test. So each row stops at the rewrite, never at the write. Each is pinned by its position and a
+// short fragment of its stop, so a rewording of another rule's words doesn't turn this guard red.
+func TestKindUnionWriteTagRewriteStops(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, source, at, words string }{
+		{"retag before the test", kindUnionOwnModel + kindUnionOwnMake + `function retag(w: { kind: string }): void { w.kind = "a"; }
+const n = make(1) as A | B | C;
+retag(n);
+if (n.kind !== "c") {
+  n.f = 5;
+  console.log(String(n.f));
+}
+`, "main.ts:12:7: ", "becomes writable"},
+		{"retag between test and write", kindUnionOwnModel + kindUnionOwnMake + `function retag(w: { kind: string }): void { w.kind = "a"; }
+const n = make(1) as A | B | C;
+if (n.kind !== "a") {
+  retag(n);
+  n.f = 5;
+  console.log(String(n.f));
+}
+`, "main.ts:13:9: ", "becomes writable"},
+		{"retag through an alias, no call", kindUnionOwnModel + kindUnionOwnMake + `const n = make(1) as A | B | C;
+const w: { kind: string } = n;
+if (n.kind !== "a") {
+  w.kind = "a";
+  n.f = 5;
+  console.log(String(n.f));
+}
+`, "main.ts:11:29: ", "becomes writable"},
+		{"k16 assign between", kindUnionOwnModel + kindUnionOwnMake + `const n = make(0) as A | B | C;
+if (n.kind !== "c") {
+  Object.assign(n, { kind: "c" });
+  n.f = 5;
+  console.log(String(n.f));
+}
+`, "main.ts:12:17: ", "Object.assign"},
+		{"k16 assign before", kindUnionOwnModel + kindUnionOwnMake + `const n = make(1) as A | B | C;
+Object.assign(n, { kind: "a" });
+if (n.kind !== "c") {
+  n.f = 5;
+  console.log(String(n.f));
+}
+`, "main.ts:11:15: ", "Object.assign"},
+		{"k17 define between", kindUnionOwnModel + kindUnionOwnMake + `const n = make(0) as A | B | C;
+if (n.kind !== "c") {
+  Object.defineProperty(n, "kind", { value: "c" });
+  n.f = 5;
+  console.log(String(n.f));
+}
+`, "main.ts:12:3: ", "defineProperty"},
+		{"k17 define before", kindUnionOwnModel + kindUnionOwnMake + `const n = make(1) as A | B | C;
+Object.defineProperty(n, "kind", { value: "a" });
+if (n.kind !== "c") {
+  n.f = 5;
+  console.log(String(n.f));
+}
+`, "main.ts:11:1: ", "defineProperty"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, probe.source, ".ts")
+			if err == nil {
+				t.Fatalf("lowered, want the rewrite stopped at %s", probe.at)
+			}
+			if message := err.Error(); !strings.Contains(message, probe.at) || !strings.Contains(message, probe.words) {
+				t.Fatalf("want %q at %s, got %v", probe.words, probe.at, err)
+			}
+		})
+	}
+}
+
+// Compiler's read of #t2p4wyv: a var redeclaring a parameter would assign it without naming it as a target, so
+// kindUnionFixedBinding counts that declaration by its symbol. The shape never reaches the write's judgment,
+// though: Adamic refuses var outright, which this pins, so the count is a guard the program can't exercise.
+func TestKindUnionWriteVarRedeclarationIsRefused(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSourceAs(t, kindUnionOwnModel+kindUnionOwnMake+`function bump(p: A | B | C): void {
+  var p = make(1) as A | B | C;
+  if (p.kind !== "c") {
+    p.f = 5;
+    console.log(String(p.f));
+  }
+}
+bump(make(0) as A | B | C);
+`, ".ts")
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "main.ts:11:3: ") || !strings.Contains(err.Error(), "refuses var") {
+		t.Fatalf("want var refused at 11:3, got %v", err)
+	}
+}
