@@ -71,6 +71,8 @@ causes = [
     ('castIntersectionMember', 8, re.compile(r"^a checked view of the union .+ over .+, whose member .+ is an intersection$", re.S)),
     ('castKeepsNullish', 21, re.compile(r"^a checked cast from .+ to .+, which keeps " + nullish + "$", re.S)),
     ('castDropsNullish', 4, re.compile(r"^a checked cast from .+ to .+, which removes " + nullish + "$", re.S)),
+    # castIndexSignature, casts Q1 (#2v3xtgm): a cast to a target with an index signature
+    ('castIndexSignature', 33, re.compile(r"^a checked dictionary view of .+ over .+$", re.S)),
 ]
 
 def cause_of(finding):
