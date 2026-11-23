@@ -150,7 +150,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/12_decorator_descriptor.a:13:21: stage 0 can't lower writing a possibly absent optional own field, where a value reaching it is built as MemberInfo without memberDescriptorName yet"}
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/12_decorator_descriptor.a:59:52: stage 0 can't lower the field relatedInformation written after a spread whose source may lack it yet"}
   },
   {
     "file": "14_comment_pending.a",
