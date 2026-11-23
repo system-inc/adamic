@@ -16,7 +16,7 @@ import (
 // stop's words if it doesn't, whether native agrees with Node, and the counted build's balance.
 func TestNestedArmProbe(t *testing.T) {
 	t.Parallel()
-	types := "interface Cell { held: Y1 | undefined }\ninterface Y1 { a: number[] }\ninterface Y2 { b: Cell | undefined; c: number }\ninterface Base { kind: number; f: Y1 | Y2 }\ninterface Narrow extends Base { kind: 1; f: Y1 }\n"
+	types := "interface Cell { held: Y1 | undefined }\ninterface Y1 { a: number[] }\ninterface Y2 { b: Cell | undefined; c: number }\ninterface Base { readonly kind: number; readonly f: Y1 | Y2 }\ninterface Narrow extends Base { readonly kind: 1; readonly f: Y1 }\n"
 	anchor := "interface G { g: G | undefined }\nconst anchor: G = { g: undefined };\nanchor.g = anchor;\n"
 	lie := "function make(cell: Cell): Base {\n\tconst y2: Y2 = { b: cell, c: 7 };\n\treturn { kind: 1, f: y2 };\n}\n"
 	store := "function run(): void {\n\tconst cell: Cell = { held: undefined };\n\tconst base = make(cell);\n\tif (base.kind === 1) {\n\t\tconst n = base as Narrow;\n\t\tconst y1: Y1 = n.f;\n\t\tcell.held = y1;\n\t}\n\tconsole.log(`${cell.held === undefined ? \"none\" : \"held\"}`);\n}\nrun();\n"
@@ -30,6 +30,7 @@ func TestNestedArmProbe(t *testing.T) {
 		{"class: a parent method writes the narrowed field, stored, graph program", class + anchor + classStore},
 		{"class: a parent method writes the narrowed field, stored, no anchor", class + classStore},
 		{"ts class: a parent method writes the narrowed field, stored, graph program", class + anchor + classStore},
+		{"ts: lie read, no anchor", types + lie + read},
 		{"lie stored, graph program", types + anchor + lie + store},
 		{"lie stored, no anchor", types + lie + store},
 		{"lie read, graph program", types + anchor + lie + read},
