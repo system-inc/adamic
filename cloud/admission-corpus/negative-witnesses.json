@@ -1429,6 +1429,19 @@
       "type_correct_sha256": "336b9a468745381ff0d9a2480592cb4734c477028d057bfba095ea1cd77ce657",
       "exit": 70,
       "stderr": "adamic: panic: cast failed: this Expression | undefined is not a Expression\n"
+    },
+    "4198f1fa464632cd5d06c3fd7ad6ed2b7c0668bc8734ea1b917e91635c4e5339": {
+      "form": "cast_failed",
+      "ruling_task": "#b5w3ycg",
+      "ruling": "rulings.md:9 and :385 (an unprovable cast is an inserted check), and Adamic's Nov 22 casts principle on #b5w3ycg (NotYet where a run-time check decides the claim). The keeps-nullish composition is applied by Compiler's accept on #b5w3ycg, Nov 23.",
+      "declaration": "internal/oracle/testdata/cast_keeps_nullish/lie.ts:9",
+      "column": 23,
+      "declared_type": "Literal",
+      "repair_from": "find(0)",
+      "repair_to": "find(1)",
+      "type_correct_sha256": "9d48872822242830c34f2b201a46d25e728eb0912cfb2e0ddae38ced43d65453",
+      "exit": 70,
+      "stderr": "adamic: panic: cast failed: this Expression is not a Literal\n"
     }
   }
 }

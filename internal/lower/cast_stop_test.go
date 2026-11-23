@@ -47,8 +47,10 @@ var castStopProbes = []struct {
 		"stage 0 can't lower a checked view of A over the union A | B, whose members no literal tag tells apart yet"},
 	{"union target", "interface Base { readonly flags: number } interface A extends Base { readonly a: number } interface B extends Base { readonly b: string } function f(x: Base): A | B { return x as A | B; }", false,
 		"stage 0 can't lower a checked view of the union A | B over Base, whose members no literal tag tells apart yet"},
-	{"keeps undefined", "interface Base { readonly n: number } interface Sub extends Base { readonly m: number } function f(x: Base | undefined): Sub | undefined { return x as Sub | undefined; }", false,
-		"stage 0 can't lower a checked cast from Base | undefined to Sub | undefined, which keeps undefined yet"},
+	// A cast that keeps the source's own undefined lowers through its present road (cast_keeps_nullish_test.go);
+	// a source's null kept as undefined is past it, and still stops with this cause.
+	{"keeps undefined", "interface Base { readonly n: number } interface Sub extends Base { readonly m: number } function f(x: Base | null): Sub | undefined { return x as Sub | undefined; }", false,
+		"stage 0 can't lower a checked cast from Base | null to Sub | undefined, which keeps undefined yet"},
 	{"from object", "interface B { readonly b: number } function f(x: object): B { return x as B; }", false,
 		"stage 0 can't lower a checked view of B over a value typed object, which names no fields yet"},
 	// A cast to exactly the source without plain undefined or null is presentCast's road and lowers
