@@ -984,6 +984,217 @@ class Coverage(FailClosed):
         self.assertEqual(result["executors"], {"stage3": 2})
 
 
+class ReadsGuard(unittest.TestCase):
+    """The reads guard (#r2a9vd4): a reads line a change's delete leaves matching no tracked path, and a // Reads: comment
+    naming a path its package's key doesn't hold (its own files, its reads lines, its Go closure), are red, each naming
+    its fix; a line dead on the base isn't the change's. go list is stubbed at its two seams, run.packageGraph (the
+    package directories, a, b and d) and run.readsClosureListing (the closure: a and b, whatever it's asked, recorded in
+    self.listed), so no test here needs go. Mutants, each red here: the guard always passing; the allow list read as
+    allowing everything; a bare allow accepted; go list's failure read as covered, or as the change's red; the closure
+    ignored; a line dead on the base blamed on the change; a comment naming a deleted path unchecked; a string read as a
+    comment."""
+
+    executors = "mode guard-reads\nreads a b/data.txt\nreads a b/names/* paths\n"
+    uncovered = ("a/a_test.go:%d reads b/lonely.txt, which a's key doesn't hold: add `reads a %s` to the tools line's "
+                 "cloud/fast-gate/executors.txt (Keys or Judge adds it there; it isn't the change's to add)")
+
+    def setUp(self):
+        self.directory = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, self.directory)
+        self.tree = os.path.join(self.directory, "tree")
+        os.makedirs(self.tree)
+        realRun(["git", "-C", self.tree, "init", "-q"], check=True)
+        self.packages = ["a", "b", "d"]
+        self.listed = []
+        self.closure = types.SimpleNamespace(returncode=0, stderr="", stdout="".join(json.dumps(record) + "\n" for record in (
+            {"ImportPath": "fmt", "Standard": True, "Dir": "/usr/lib/go/src/fmt", "GoFiles": ["print.go"]},
+            {"ImportPath": run.module + "/b", "Dir": os.path.join(self.tree, "b"), "GoFiles": ["b.go"]},
+            {"ImportPath": run.module + "/a", "Dir": os.path.join(self.tree, "a"), "GoFiles": ["a.go"]})))
+        for name, replacement in (("packageGraph", self.graph), ("readsClosureListing", self.listing)):
+            patcher = mock.patch.object(run, name, side_effect=replacement)
+            patcher.start()
+            self.addCleanup(patcher.stop)
+        # a declares b as a compiler it builds, so its closure is listed with b's.
+        self.base = self.write({"a/a.go": "package a\n", "a/testdata/own.txt": "own\n", "b/b.go": "package b\n", "b/data.txt": "data\n",
+                                "b/names/one.txt": "one\n", "b/lonely.txt": "lonely\n", "b/old.txt": "old\n", "d/d.go": "package d\n",
+                                run.compilerDependenciesPath: json.dumps({"version": 1, "packages": {"a": ["b"]}}),
+                                "cloud/fast-gate/executors.txt": self.executors})
+
+    def graph(self, tree):
+        return types.SimpleNamespace(returncode=0, stderr="", stdout="".join(
+            json.dumps({"ImportPath": run.module + "/" + package, "Dir": os.path.join(self.tree, package)}) + "\n" for package in self.packages))
+
+    def listing(self, tree, command):
+        self.listed.append(command)
+        return self.closure
+
+    def write(self, files=None, removed=()):
+        """files written and removed paths deleted, as one commit of the tree: its sha."""
+        for name, text in (files or {}).items():
+            os.makedirs(os.path.dirname(os.path.join(self.tree, name)), exist_ok=True)
+            with open(os.path.join(self.tree, name), "w") as handle:
+                handle.write(text)
+        for name in removed:
+            realRun(["git", "-C", self.tree, "rm", "-q", name], check=True)
+        for command in (["add", "-A"], ["-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "t"]):
+            realRun(["git", "-C", self.tree] + command, check=True)
+        return run.git(self.tree, "rev-parse", "HEAD")
+
+    def gate(self, base):
+        """A fast Gate of the tree's HEAD against base, its tools the tree."""
+        return run.Gate(types.SimpleNamespace(tree=self.tree, sha=run.git(self.tree, "rev-parse", "HEAD"), base=base, tools=self.tree,
+                                              out=tempfile.mkdtemp(dir=self.directory), full=False, branch="", branch_source="",
+                                              session="", session_source=""))
+
+    def census(self):
+        """run.py --reads-census over the tree, its tools the tree: (exit code, stdout)."""
+        printed = io.StringIO()
+        with mock.patch.object(sys, "argv", ["run.py", "--reads-census", "--tree", self.tree, "--tools", self.tree]), \
+                contextlib.redirect_stdout(printed), self.assertRaises(SystemExit) as exited:
+            run.main()
+        return exited.exception.code, printed.getvalue()
+
+    def test_a_dead_line_made_by_the_changes_delete_is_red_and_one_dead_at_the_base_isnt(self):
+        self.write({"cloud/fast-gate/executors.txt": self.executors + "reads a b/old.txt\nreads a b/never.txt\n"})
+        self.write(removed=["b/old.txt"])
+        self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["b/old.txt"], ["b/old.txt"]),
+                         ["`reads a b/old.txt` (executors.txt:4) matches no tracked path: point it at where the file lives now, or delete it"])
+        # The census, which isn't a change's, names the line dead all along too.
+        self.assertIn("`reads a b/never.txt` (executors.txt:5) matches no tracked path: point it at where the file lives now, or delete it",
+                      run.readsGuardFindings(self.tree, self.tree))
+
+    def test_an_uncovered_comment_in_a_changed_file_is_red_naming_the_line_to_add(self):
+        self.write({"a/a_test.go": "package a\n\n// Reads: a/testdata/own.txt\n// Reads: b/data.txt\n// Reads: b/names/*\n// Reads: b/b.go\n"
+                                   "var quoted = \"// Reads: b/lonely.txt\"\n// Reads: b/lonely.txt\n"})
+        self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["a/a_test.go"], []), [self.uncovered % (8, "b/lonely.txt")])
+        # One go list of a's closure, its declared compiler b beside it.
+        self.assertEqual([command[-2:] for command in self.listed], [["./a", "./b"]])
+
+    def test_a_comment_covered_by_own_files_a_line_a_paths_line_or_the_closure_passes(self):
+        for glob in ("a/testdata/own.txt", "b/data.txt", "b/names/*", "b/b.go"):
+            with self.subTest(glob=glob):
+                self.write({"a/a_test.go": "package a\n\n// Reads: %s\n" % glob})
+                self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["a/a_test.go"], []), [])
+        # Only the comment that own files and lines don't cover lists the closure.
+        self.assertEqual(len(self.listed), 1)
+
+    def test_the_fast_gate_is_red_at_reads_naming_the_finding(self):
+        self.write({"a/a_test.go": "package a\n\n// Reads: b/lonely.txt\n"})
+        gate = self.gate(self.base)
+        with mock.patch("builtins.print"):
+            self.assertFalse(gate.readsGuard())
+        self.assertEqual((gate.failure["step"], gate.exits["reads"], gate.planned[-1]), ("reads", 1, "reads"))
+        self.assertFalse(gate.failure.get("tool_crash"))
+        self.assertIn(self.uncovered % (3, "b/lonely.txt"), gate.failure["detail"])
+        self.assertEqual(gate.result["reads_guard"], [self.uncovered % (3, "b/lonely.txt")])
+
+    def test_a_comment_naming_a_path_the_change_deletes_is_red(self):
+        self.write({"a/a_test.go": "package a\n\n// Reads: b/data.txt\n", "d/d_test.go": "package d\n\n// Reads: b/lonely.txt\n"})
+        self.write(removed=["b/data.txt"])
+        # d's uncovered comment sits in a file the change doesn't touch and names nothing it deletes: the census's, never this change's.
+        self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["b/data.txt"], ["b/data.txt"]), [
+            "`reads a b/data.txt` (executors.txt:2) matches no tracked path: point it at where the file lives now, or delete it",
+            "a/a_test.go:3 reads b/data.txt, which isn't a tracked path: point the comment at where the file lives now, or delete it"])
+
+    def test_go_list_failing_is_the_gates_error_not_the_changes_red(self):
+        self.write({"a/a_test.go": "package a\n\n// Reads: b/lonely.txt\n"})
+        self.closure = types.SimpleNamespace(returncode=1, stdout="", stderr="go: cannot load the module")
+        with self.assertRaises(ValueError):
+            run.readsGuardFindings(self.tree, self.tree, ["a/a_test.go"], [])
+        gate = self.gate(self.base)
+        with mock.patch("builtins.print"):
+            self.assertFalse(gate.readsGuard())
+        # Charged as a stage that couldn't start: its traceback is the failure, the gate tool's crash, never a finding.
+        self.assertEqual(gate.failure["step"], "reads")
+        self.assertTrue(gate.failure.get("tool_crash"), gate.failure)
+        self.assertIn("go: cannot load the module", gate.failure["detail"])
+        self.assertNotIn("reads_guard", gate.result)
+        self.assertNotIn("reads", gate.exits)
+
+    def test_an_allow_exempts_exactly_its_package_and_glob_and_a_bare_allow_is_red(self):
+        self.write({"cloud/fast-gate/executors.txt": self.executors +
+                    "# allow: a b/lonely.txt: a's test reads it through a helper its key holds\n# allow: a b/gone.txt: dead on purpose\n"
+                    "reads a b/gone.txt\nreads d b/gone.txt\n# allow: a b/x.txt:\n# allow: a: no glob\n",
+                    "a/a_test.go": "package a\n\n// Reads: b/lonely.txt\n// Reads: b/lonely*\n", "d/d_test.go": "package d\n\n// Reads: b/lonely.txt\n"})
+        self.assertEqual(run.readsGuardFindings(self.tree, self.tree), [
+            "executors.txt:8 is an allow without a package, a glob and why: write it `# allow: <package> <glob>: <why>`, or delete it",
+            "executors.txt:9 is an allow without a package, a glob and why: write it `# allow: <package> <glob>: <why>`, or delete it",
+            "`reads d b/gone.txt` (executors.txt:7) matches no tracked path: point it at where the file lives now, or delete it",
+            self.uncovered % (4, "b/lonely*"),
+            "d/d_test.go:3 reads b/lonely.txt, which d's key doesn't hold: add `reads d b/lonely.txt` to the tools line's "
+            "cloud/fast-gate/executors.txt (Keys or Judge adds it there; it isn't the change's to add)"])
+
+    def test_off_the_guard_does_nothing_and_plans_nothing(self):
+        self.write({"cloud/fast-gate/executors.txt": self.executors.replace("mode guard-reads\n", ""),
+                    "a/a_test.go": "package a\n\n// Reads: b/lonely.txt\n"})
+        gate = self.gate(self.base)
+        with mock.patch.object(run, "readsGuardFindings", side_effect=AssertionError("the guard is off")):
+            self.assertTrue(gate.readsGuard())
+        self.assertNotIn("reads", gate.planned)
+        self.assertIsNone(gate.failure)
+
+    def test_the_census_names_every_finding_over_the_tree_and_exits_0_on_none(self):
+        # Off in the tools, the census runs all the same: it's what turns the guard on.
+        self.write({"cloud/fast-gate/executors.txt": "reads a b/data.txt\nreads a b/never.txt\n", "a/a_test.go": "package a\n\n// Reads: b/lonely.txt\n"})
+        self.assertEqual(self.census(), (1, "`reads a b/never.txt` (executors.txt:2) matches no tracked path: point it at where the file lives now, "
+                                            "or delete it\n" + self.uncovered % (3, "b/lonely.txt") + "\n"))
+        self.write({"cloud/fast-gate/executors.txt": "reads a b/data.txt\nreads a b/lonely.txt\n"})
+        self.assertEqual(self.census(), (0, ""))
+
+
+class ReadsGuardInTheGate(unittest.TestCase):
+    """The reads guard in a whole fast gate run, after cover() and before any test: off by default, the gate runs exactly
+    as before it, the guard never asked; on ("mode guard-reads" in the tools' executors.txt), a change with an uncovered
+    comment is red at reads. Mutant, red here: the switch read as on by default."""
+    gate = FailClosed.gate
+
+    def setUp(self):
+        FailClosed.setUp(self)
+        self.addCleanup(shutil.rmtree, self.directory)
+
+    def change(self, executors):
+        """The tools' map as executors on the base, then a change adding a's test with a comment no line covers: the base."""
+        files = {"cloud/fast-gate/executors.txt": executors, "a/a.go": "package a\n", "b/lonely.txt": "lonely\n",
+                 run.compilerDependenciesPath: json.dumps({"version": 1, "packages": {}})}
+        shas = []
+        for batch in (files, {"a/a_test.go": "package a\n\n// Reads: b/lonely.txt\n"}):
+            for name, text in batch.items():
+                os.makedirs(os.path.dirname(os.path.join(self.tree, name)), exist_ok=True)
+                with open(os.path.join(self.tree, name), "w") as handle:
+                    handle.write(text)
+            for command in (["add"] + list(batch), ["-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "t"]):
+                realRun(["git", "-C", self.tree] + command, check=True)
+            shas.append(run.git(self.tree, "rev-parse", "HEAD"))
+        self.sha = shas[1]
+        return shas[0]
+
+    def stubbed(self):
+        """go list stubbed at the guard's two seams: the package graph (a and b) and a's closure (a alone)."""
+        graph = types.SimpleNamespace(returncode=0, stderr="", stdout="".join(
+            json.dumps({"ImportPath": run.module + "/" + package, "Dir": os.path.join(self.tree, package)}) + "\n" for package in ("a", "b")))
+        closure = types.SimpleNamespace(returncode=0, stderr="", stdout=json.dumps({"ImportPath": run.module + "/a", "Dir": os.path.join(self.tree, "a"), "GoFiles": ["a.go"]}))
+        return mock.patch.object(run, "packageGraph", return_value=graph), mock.patch.object(run, "readsClosureListing", return_value=closure)
+
+    def test_off_by_default_the_fast_gate_runs_no_guard(self):
+        base = self.change("inert *.md\nstage3 stage3/*\n")
+        graph, closure = self.stubbed()
+        with graph, closure, mock.patch.object(run, "readsGuardFindings", side_effect=AssertionError("the guard is off")):
+            gate, status, result = self.gate(base=base)
+        self.assertTrue(status.startswith("green:"), status)
+        self.assertNotIn("reads", result["planned_stages"])
+        self.assertNotIn("reads_guard", result)
+
+    def test_on_a_change_with_an_uncovered_comment_is_red_at_reads(self):
+        base = self.change("mode guard-reads\ninert *.md\nstage3 stage3/*\n")
+        graph, closure = self.stubbed()
+        with graph, closure:
+            gate, status, result = self.gate(base=base)
+        self.assertIn("first failure at reads", status)
+        self.assertEqual(result["reads_guard"], ["a/a_test.go:3 reads b/lonely.txt, which a's key doesn't hold: add `reads a b/lonely.txt` to the "
+                                                 "tools line's cloud/fast-gate/executors.txt (Keys or Judge adds it there; it isn't the change's to add)"])
+        self.assertEqual(result["stages_exit"]["reads"], 1)
+
+
 class DarwinLegs(unittest.TestCase):
     """The darwin executor passes on a pool Mac's recorded leg, cloud/fast-gate/darwin-legs/<tip>.json in the tools
     checkout, whose darwinPaths digests the candidate's leg inputs, and is red without one, naming the pool Mac and the

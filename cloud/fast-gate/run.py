@@ -22,6 +22,8 @@ coverage's inputs also carry names, the changed paths it judges (coverageReduced
 --darwin-paths-digest --tree <checkout at the tip> --sha <tip> --tools <tools checkout> prints the darwinPaths a darwin
 leg's record at that tip holds (cloud/fast-gate/darwin-legs/README.md), and --darwin-a-paths with the same arguments the
 .a files its aCheck must cover, one a line.
+--reads-census --tree <checkout> --tools <tools checkout> prints every finding of the reads guard over the whole tree
+(readsGuardFindings), one a line, and exits 0 when there are none.
 Merged logs, Git history/branch state, toolchain and external spool identity still belong
 in the pool's verdict key: repository content alone cannot identify those inputs.
 
@@ -38,6 +40,7 @@ import math
 import tempfile
 import argparse
 import base64
+import bisect
 import fnmatch
 import glob
 import hashlib
@@ -321,14 +324,23 @@ def catalogInputs(tree, unit, full, change):
 
 
 def executorMap(tools):
-    """The tools checkout's cloud/fast-gate/executors.txt, read once for cover() and coverageReduced(): its executor rules
-    in file order, its reads lines, whether it enforces, and the a-check exemption globs (never executors, so never rules)."""
-    rules, readers, enforce = [], [], True
+    """The tools checkout's cloud/fast-gate/executors.txt, read once for cover(), coverageReduced() and the reads guard
+    (readsGuardFindings): its executor rules in file order, its reads lines, whether it enforces, the a-check exemption
+    globs (never executors, so never rules), its allow lines as (number, package, glob, why), each part "" when the line
+    doesn't give it, and whether the reads guard is on."""
+    rules, readers, enforce, allows, guardReads = [], [], True, [], False
     with open(os.path.join(tools, "cloud/fast-gate/executors.txt")) as handle:
         for number, line in enumerate(handle, 1):
             fields = line.split()
             if fields[:2] == ["mode", "report"]:
                 enforce = False  # record uncovered paths without failing, until the rulings are in
+            elif fields[:2] == ["mode", "guard-reads"]:
+                guardReads = True  # the reads guard reds a change (Gate.readsGuard); without the line it's off (#r2a9vd4)
+            elif readsAllowLine.match(line):
+                # "# allow: <package> <glob>: <why>", a comment to every other reader of the map: the reads guard's
+                # exemption of that package's dead line or comment naming that glob.
+                parts = readsAllowFields.fullmatch(readsAllowLine.match(line).group(1).strip())
+                allows.append((number,) + (tuple(part.strip() for part in parts.groups()) if parts else ("", "", "")))
             elif fields and fields[0] == "reads":
                 # "reads <package> <glob> paths": the test reads which paths exist, not what they hold
                 # (gitignore walks the whole tree), so only an added or deleted path changes its input.
@@ -341,7 +353,13 @@ def executorMap(tools):
                 rules.append((fields[0], fields[1]))
     # "a-check-exempt <glob>" lines aren't executors: they name .a files that aren't Adamic programs.
     exempt = [glob for name, glob in rules if name == "a-check-exempt"]
-    return [rule for rule in rules if rule[0] != "a-check-exempt"], readers, enforce, exempt
+    return [rule for rule in rules if rule[0] != "a-check-exempt"], readers, enforce, exempt, allows, guardReads
+
+
+# readsAllowLine is an allow line of executors.txt, "# allow: <package> <glob>: <why>", and readsAllowFields its words
+# after "allow:": a package and a glob, neither with a space in it, then a colon and the why, never empty.
+readsAllowLine = re.compile(r"\s*#\s*allow:(.*)")
+readsAllowFields = re.compile(r"(\S+)\s+(\S+):\s+(\S.*)")
 
 
 def firstExecutor(rules, path):
@@ -632,7 +650,7 @@ def darwinAPaths(tree, commit, tools):
     """The .a files a darwin leg's record must carry adamic c's result for (its aCheck), sorted: every darwin blob of
     commit's tree ending .a that no a-check-exempt glob in tools' executors.txt names. That's every darwin .a a-check
     could be handed, a package's own among them (only go list tells those apart), so the Mac runs a superset, never less."""
-    rules, _, _, exempt = executorMap(tools)
+    rules, _, _, exempt = executorMap(tools)[:4]
     return sorted(path for _, kind, _, path in darwinEntries(commitEntries(tree, commit), rules)
                   if kind == "blob" and path.endswith(".a") and not any(fnmatch.fnmatchcase(path, glob) for glob in exempt))
 
@@ -1071,6 +1089,248 @@ def coverageInputs(tree, unit, full, change):
             "note": "coverage reads the tree's Go, module, driver and census state, and the changed paths it judges"}
 
 
+# The reads guard (#r2a9vd4, Planning's ruling): a test unit's key holds its package's own files, its reads lines'
+# matches and its Go closure, so a test that reads a file outside them reruns on nothing when that file alone changes, a
+# silent green. Two kinds of drift let one through: a // Reads: comment naming a file no line of its package covers, and
+# a reads line whose file moved, so it matches nothing. Keys fixed 26 comments and 82 lines by hand (heads 1 and 2);
+# the guard makes the next one red at the change that causes it. It's on when the gate tools' executors.txt says
+# "mode guard-reads" (executorMap), and --reads-census runs it over a whole tree either way.
+
+# readsComment is a // Reads: comment's whole text as internal/adamiclint/repowalk reads one (its readsLines): the
+# prefix, one space, and one glob with no space in it, written as in the reads line. Anything else declares nothing.
+readsComment = re.compile(r"// Reads: (\S+)")
+
+
+def readsComments(source):
+    """Each // Reads: comment of a Go file's source, as (line, glob): a // comment whose text is readsComment's whole,
+    so the words inside a string, or quoted in a comment after other words, are no comment. A line's comment starts
+    where goCode, which blanks comments and keeps strings, first differs from the line."""
+    if "// Reads: " not in source:
+        return []
+    found = []
+    for number, (text, code) in enumerate(zip(source.split("\n"), goCode(source).split("\n")), 1):
+        start = next((index for index, (character, kept) in enumerate(zip(text, code)) if character != kept), None)
+        comment = readsComment.fullmatch(text[start:].rstrip("\r")) if start is not None else None
+        if comment:
+            found.append((number, comment.group(1)))
+    return found
+
+
+def readsCommentFiles(tree):
+    """The tracked Go files of tree whose text holds a // Reads: comment's prefix, sorted, for readsComments to read.
+    Raises when git grep fails, never reads as no comments."""
+    found = subprocess.run(["git", "-C", tree, "-c", "core.quotePath=false", "grep", "-l", "-F", "// Reads: ", "--", "*.go"],
+                           capture_output=True, text=True)
+    if found.returncode not in (0, 1):
+        raise ValueError("git grep for // Reads: comments failed in %s: %s" % (tree, firstLinesOf(found.stderr)))
+    return sorted(path for path in found.stdout.split("\n") if path)
+
+
+def trackedMatches(files, pattern):
+    """The paths of files, sorted, that pattern matches as an executors.txt glob does (fnmatch, * spanning /), each a
+    path a reads line's key holds. Only the paths starting with the pattern's literal head are tried, as loom's planner
+    matches one (planner/reads.go MatchTracked), never every path against every line, millions of matches over adamic."""
+    head = re.split(r"[*?[]", pattern, maxsplit=1)[0]
+    matched = []
+    for index in range(bisect.bisect_left(files, head), len(files)):
+        if not files[index].startswith(head):
+            break
+        if fnmatch.fnmatchcase(files[index], pattern):
+            matched.append(files[index])
+    return matched
+
+
+def readsTargets(files, tracked, glob):
+    """The paths a // Reads: comment names: every tracked path its glob matches (trackedMatches), or for a plain path,
+    the path itself, the tracked files under it when it names a directory (a walk of it, as runtimeproducts' names
+    internal/native_runtime), or the path alone when nothing tracked answers it, which no key can hold."""
+    if any(character in glob for character in "*?["):
+        return trackedMatches(files, glob)
+    if glob in tracked:
+        return [glob]
+    return trackedMatches(files, glob.rstrip("/") + "/*") or [glob]
+
+
+def readsAllowed(allowed, package, glob):
+    """Whether an allow line exempts package's reads line or comment naming glob: one naming that package and that
+    glob, and nothing else. allowed holds the well-formed allows' (package, glob)."""
+    return (package, glob) in allowed
+
+
+def readsLineHolds(tree, readers, package, path):
+    """Whether one of package's reads lines (readers, as readsGuardFindings gathers them) holds the tracked path in its
+    key, as cover() reads each line: its glob's match, for its content or, with paths, its name; or what a generated
+    line's list bounds (generatedReach), the whole tree when the list can't be read, as the planner keys it."""
+    for _, _, reader, pattern, mode in readers:
+        if reader != package:
+            continue
+        if mode == "generated":
+            reach = generatedReach(tree, pattern)
+            if reach is None or path in reach[0] or path.startswith(reach[1]):
+                return True
+        elif fnmatch.fnmatchcase(path, pattern):
+            return True
+    return False
+
+
+def readsPackageDirectories(tree):
+    """Each module package's directory, tree-relative, to its import path, from the package graph touched() and coverage
+    read (packageGraph, goPackages): the package a file is nearest (packageOwner), as adamic-loom planner/ownfiles.go
+    gives a key its own files. Raises when go list fails."""
+    listing = packageGraph(tree)
+    if listing.returncode != 0:
+        raise ValueError("go list of %s's packages failed: %s" % (tree, firstLinesOf(listing.stderr or "")))
+    return goPackages(tree, listing.stdout)[0]
+
+
+# readsClosureFields are what readsClosureFiles reads of a go list record: the files adamic-loom's planner keys a
+# unit's closure on (planner/closure.go addListedFiles), and where they sit.
+readsClosureFields = ["CFiles", "CXXFiles", "CgoFiles", "Dir", "EmbedFiles", "ForTest", "GoFiles", "HFiles", "IgnoredGoFiles",
+                      "IgnoredOtherFiles", "ImportPath", "Module", "SFiles", "Standard", "SysoFiles"]
+
+
+def readsClosureCommand(patterns):
+    return ["go", "list", "-deps", "-test", "-json=" + ",".join(readsClosureFields)] + list(patterns)
+
+
+def readsClosureListing(tree, command):
+    """command's answer in tree, in the environment the gate lists its package graph in: the one place the reads guard
+    lists a closure, so a test stubs it here and needs no go."""
+    return listedGoList(tree, command, 300, dict(os.environ, **gateEnvironment))
+
+
+def readsClosureFiles(tree, tools, package):
+    """The tracked files of package's Go closure, tree-relative, as its unit's key holds them: one go list -deps -test of
+    the package and the compilers compilerDeclarations declares for it, and of each listed package outside the standard
+    library and the test mains, its Go, cgo, C, assembly, syso and embedded files, its ignored files (an ignored test
+    file only for a test variant of the package itself), and its module's go.mod and go.sum, beside the workspace files.
+    A dependency's own tests are no part of it, as the planner keys none (planner/closure.go addListedFiles). Raises
+    when the compiler map can't be read, when go list fails, or when its answer doesn't parse: never an empty closure
+    and never a whole one, so a listing that can't be made is the gate's own error."""
+    compilers = compilerDeclarations(tools, tree)[0]["packages"].get(package, [])
+    if not isinstance(compilers, list) or not all(isinstance(directory, str) and directory for directory in compilers):
+        raise ValueError("the compiler dependency map's %s isn't a list of directories: %r" % (package, compilers))
+    command = readsClosureCommand(["./" + directory if directory != "." else "." for directory in [package] + sorted(compilers)])
+    listed = readsClosureListing(tree, command)
+    if listed.returncode != 0:
+        raise ValueError("%s failed in %s, exit %d: %s" % (" ".join(command), tree, listed.returncode, firstLinesOf(listed.stderr or "")))
+    root = os.path.realpath(tree)
+    paths = [os.path.join(root, name) for name in ("go.work", "go.work.sum")]
+    for record in goListRecords(listed.stdout):
+        owner = record.get("ImportPath", "").split(" ", 1)[0]
+        if record.get("Standard") or not record.get("Dir") or owner.endswith(".test"):
+            continue
+        ownTests = bool(record.get("ForTest")) and owner in (record["ForTest"], record["ForTest"] + "_test")
+        names = [name for field in ("GoFiles", "CgoFiles", "CFiles", "CXXFiles", "HFiles", "SFiles", "SysoFiles", "EmbedFiles", "IgnoredOtherFiles")
+                 for name in record.get(field) or []]
+        names += [name for name in record.get("IgnoredGoFiles") or [] if ownTests or not name.endswith("_test.go")]
+        paths += [os.path.join(record["Dir"], name) for name in names]
+        goMod = (record.get("Module") or {}).get("GoMod")
+        if goMod:
+            paths += [goMod, os.path.join(os.path.dirname(goMod), "go.sum")]
+    files = set()
+    for path in paths:
+        relative = os.path.relpath(os.path.realpath(path), root)
+        if relative != ".." and not relative.startswith(".." + os.sep):
+            files.add(relative.replace(os.sep, "/"))
+    return files
+
+
+def readsGuardFindings(tree, tools, changed=None, pathSetChanged=None):
+    """The reads guard's findings, each one line that names its fix:
+    - a dead reads line: one in the gate tools' executors.txt, or the tree's (the planner keys both, the tools' first,
+      planner/reads.go), whose glob, or a generated line's list, matches no tracked path of the tree (git ls-files, a
+      gitlink among them) by trackedMatches;
+    - an uncovered // Reads: comment (readsComments) in a Go file outside testdata, of the package P it's nearest
+      (packageOwner): each path it names (readsTargets) must be tracked and held by P's key, as P's own file, a path one
+      of P's reads lines holds (readsLineHolds) or a file of P's Go closure (readsClosureFiles, listed only for a
+      comment the first two don't cover);
+    - an allow line of the gate tools' executors.txt without a package, a glob and why.
+    A well-formed allow exempts a dead line or a comment of its package naming its glob (readsAllowed). The tree's own
+    allow lines exempt nothing: a change can't exempt itself.
+    With changed (and pathSetChanged, the paths it adds or deletes, as cover() gets them), the findings are the
+    change's: a line that matched a path the change deleted and now matches none (one dead on the base was never this
+    change's to fix, and is the census's), the comments of its changed Go files, and any comment naming a path it
+    deleted. Without, they're the whole tree's (--reads-census). A listing that can't be made raises, never reads as
+    covered."""
+    census = changed is None
+    files = sorted(path for path in git(tree, "ls-files", "-z").split("\0") if path)
+    tracked = set(files)
+    _, toolsReaders, _, _, allows, _ = executorMap(tools)
+    readers = [("executors.txt", number, package, pattern, mode) for number, package, pattern, mode in toolsReaders]
+    if os.path.realpath(tree) != os.path.realpath(tools) and os.path.exists(os.path.join(tree, "cloud/fast-gate/executors.txt")):
+        # Each line once: one the tools' map holds is the tools'.
+        held = {(package, pattern, mode) for _, _, package, pattern, mode in readers}
+        readers += [("the tree's executors.txt", number, package, pattern, mode) for number, package, pattern, mode in executorMap(tree)[1]
+                    if (package, pattern, mode) not in held]
+    reds = []
+    for number, package, glob, why in allows:
+        if not (package and glob and why):
+            reds.append("executors.txt:%d is an allow without a package, a glob and why: write it `# allow: <package> <glob>: <why>`, or delete it" % number)
+    allowed = {(package, glob) for _, package, glob, why in allows if package and glob and why}
+    deleted = [] if census else [path for path in pathSetChanged if path and path not in tracked]
+    for where, number, package, pattern, mode in readers:
+        if readsAllowed(allowed, package, pattern):
+            continue
+        if not census and not any(fnmatch.fnmatchcase(path, pattern) for path in deleted):
+            continue
+        if not trackedMatches(files, pattern):
+            reds.append("`%s` (%s:%d) matches no tracked path: point it at where the file lives now, or delete it" %
+                        (" ".join(["reads", package, pattern] + ([mode] if mode else [])), where, number))
+    changedSet = set(changed or ())
+    sources = readsCommentFiles(tree) if census or deleted else []
+    sources = sorted(set(sources) | {path for path in changedSet if path.endswith(".go") and path in tracked})
+    comments = []
+    for path in sources:
+        if "testdata" in path.split("/"):
+            continue  # a fixture (repowalk's analyzer cases), never a Go file of its package
+        with open(os.path.join(tree, path), errors="replace") as handle:
+            for line, glob in readsComments(handle.read()):
+                if census or path in changedSet or any(fnmatch.fnmatchcase(gone, glob) or gone.startswith(glob.rstrip("/") + "/") for gone in deleted):
+                    comments.append((path, line, glob))
+    directories = readsPackageDirectories(tree) if comments else {}
+    packageDirectories = {importPath: directory for directory, importPath in directories.items()}
+    closures = {}
+    for path, line, glob in comments:
+        owner = packageOwner(directories, {}, path)
+        if owner is None:
+            continue  # in no package, so in no unit's key
+        package = packageDirectories[owner]
+        if readsAllowed(allowed, package, glob):
+            continue
+        targets = readsTargets(files, tracked, glob)
+        missing = [target for target in targets if target not in tracked]
+        uncovered = [target for target in targets if target in tracked and packageOwner(directories, {}, target) != owner
+                     and not readsLineHolds(tree, readers, package, target)]
+        if uncovered and not missing:
+            if package not in closures:
+                closures[package] = readsClosureFiles(tree, tools, package)
+            uncovered = [target for target in uncovered if target not in closures[package]]
+        if missing:
+            reds.append("%s:%d reads %s, which isn't a tracked path: point the comment at where the file lives now, or delete it" % (path, line, missing[0]))
+        elif uncovered:
+            reds.append("%s:%d reads %s%s, which %s's key doesn't hold: add `reads %s %s` to the tools line's cloud/fast-gate/executors.txt "
+                        "(Keys or Judge adds it there; it isn't the change's to add)" %
+                        (path, line, uncovered[0], " and %d more" % (len(uncovered) - 1) if len(uncovered) > 1 else "", package, package, glob))
+    return reds
+
+
+def readsCensusMain():
+    """run.py --reads-census --tree <checkout> --tools <gate tools>: the reads guard over the whole tree (readsGuardFindings
+    with no change), each finding a line on stdout, exit 0 when there are none and 1 when there are. It runs whether or
+    not the tools turn the guard on, since it's what turns it on: Keys runs it at main's tip with the tools line, and
+    the guard goes on only when it's clean. A census that can't list raises, its traceback on stderr, nothing on stdout."""
+    lister = argparse.ArgumentParser()
+    lister.add_argument("--reads-census", action="store_true")
+    lister.add_argument("--tree", required=True)
+    lister.add_argument("--tools", required=True)
+    arguments = lister.parse_args()
+    reds = readsGuardFindings(arguments.tree, arguments.tools)
+    for red in reds:
+        print(red)
+    sys.exit(1 if reds else 0)
+
+
 def catalogPatchTargets(tree):
     """Each bug catalog undo patch's name, in order, and the files it edits (its +++ b/ lines): catalog-apply runs for a
     change to one of them (Gate.catalogEntriesTouched), so no phase-unread file is one (phaseSelectsNone)."""
@@ -1330,6 +1590,9 @@ def main():
     if "--darwin-paths-digest" in sys.argv or "--darwin-a-paths" in sys.argv:
         darwinMain()
         return
+    if "--reads-census" in sys.argv:
+        readsCensusMain()
+        return
     if "--list-units" in sys.argv:
         try:
             listUnits()
@@ -1541,6 +1804,8 @@ class Gate:
                 json.dump(selection, handle, indent=2)
                 handle.write("\n")
             return
+        if not self.readsGuard():
+            return
         self.result.update({
             "changed_files": changed,
             "packages": packages,
@@ -1691,6 +1956,8 @@ class Gate:
                 self.runRequested()
                 self.checkCensus()
                 self.requestedRan()
+                # The pool's census, never planned, so never kept: it runs at every candidate, as the guard must.
+                self.readsGuard()
         elif phase in ("workers", "a-check", "catalog-apply"):
             changed, executors = self.fastPhaseInputs()
             if phase == "workers":
@@ -1828,7 +2095,7 @@ class Gate:
         tools checkout, since what counts as inert is a ruling, not the candidate's to change). Any path
         with none turns the gate red before anything runs. Reads rules independently add tests for
         matching changed paths, including package-owned paths. Returns executors, or None."""
-        rules, readers, enforce, exempt = executorMap(self.arguments.tools)
+        rules, readers, enforce, exempt = executorMap(self.arguments.tools)[:4]
         executors, covered, unchecked = set(), {}, []
         self.result["reads"] = []
         readerPackages = set()
@@ -1898,6 +2165,33 @@ class Gate:
             if not self.darwinLeg(self.result.get("needs_darwin", [])):
                 return None
         return executors
+
+    def readsGuard(self):
+        """The reads guard over this change (readsGuardFindings), once the gate tools' executors.txt turns it on with
+        "mode guard-reads"; off, it does nothing and plans nothing. Run by the fast gate after cover(), before any test,
+        and by the pool's census phase. Its findings are the change's red at reads, each naming its fix, and kept in the
+        record as reads_guard. A listing it can't make (go list, git grep) is the gate's own error, never the change's
+        red and never covered: it's charged as guarded() charges a stage that couldn't start, its traceback the failure,
+        which fail() marks as the gate tool's crash. Returns whether the gate goes on."""
+        if not executorMap(self.arguments.tools)[5]:
+            return True
+        started = time.monotonic()
+        self.planned.append("reads")
+        revision = "%s...%s" % (self.arguments.base, self.arguments.sha)
+        try:
+            changed = self.git(self.arguments.tree, "-c", "core.quotePath=false", "diff", "--name-only", revision).split("\n")
+            pathSetChanged = self.git(self.arguments.tree, "-c", "core.quotePath=false", "diff", "--name-only", "--no-renames", "--diff-filter=AD", revision).split("\n")
+            reds = readsGuardFindings(self.arguments.tree, self.arguments.tools, [path for path in changed if path], [path for path in pathSetChanged if path])
+        except BaseException:
+            self.fail("reads", traceback.format_exc())
+            return False
+        self.steps["reads"] = round(time.monotonic() - started, 1)
+        self.result["reads_guard"] = reds
+        self.exits["reads"] = 1 if reds else 0
+        if reds:
+            self.fail("reads", "a test reads what its unit's key doesn't hold, so an edit there alone would rerun nothing:\n" + "\n".join(reds))
+            return False
+        return True
 
     def darwinLeg(self, paths):
         """The darwin executor's verdict for paths: green on the recorded leg whose darwinPaths matches the candidate's

@@ -8,6 +8,21 @@
 # "mode report" records uncovered paths in fast.json without failing; "mode enforce" makes them red.
 mode enforce
 #
+# The reads guard (run.py's readsGuardFindings, #r2a9vd4) is red for a reads line below that matches no tracked path, and
+# for a // Reads: comment naming a path its package's key doesn't hold. A "mode guard-reads" line here turns it on for
+# every change; run.py --reads-census lists its findings over a whole tree either way. Each allow line exempts the one
+# package's line or comment naming the one glob, and says why; an allow without its why is itself red.
+# allow: stage1/cohere/css *.[lL][eE][sS][sS]: matches nothing on purpose: askedCases (testdata/cohere_side_test.go:119) walks the whole repository for .less sources, so the first one added must move css's key
+# allow: stage1/cohere/css *.[sS][cC][sS][sS]: matches nothing on purpose: askedCases (testdata/cohere_side_test.go:119) walks the whole repository for .scss sources, so the first one added must move css's key
+# allow: stage1/cohere/markdowninline *.[mM][aA][rR][kK][dD][oO][wW][nN]: matches nothing on purpose: TestMarkdownInline (port_test.go:159) walks the whole repository for .markdown sources, so the first one added must move its key
+# allow: stage1/cohere/markdowninline *.[mM][dD][oO][wW][nN]: matches nothing on purpose: TestMarkdownInline (port_test.go:159) walks the whole repository for .mdown sources, so the first one added must move its key
+# allow: stage1/cohere/markdowninline *.[mM][kK][dD]: matches nothing on purpose: TestMarkdownInline (port_test.go:159) walks the whole repository for .mkd sources, so the first one added must move its key
+# allow: cloud *: generated_test.go:155's comment is wider than the read: checkGenerated reads only what cloud/fast-gate/generated.json names, which cloud's generated line bounds
+# allow: internal/lower internal/oracle/testdata/*: placeholder_cache_test.go:184 and view_sites_test.go:161 are wider than the read: their walk keeps the .a and .ts programs, which internal/lower's internal/oracle/testdata/*.a and *.ts lines hold
+# allow: internal/oracle oracle/*.mjs: uncaught_exit_mutant_test.go:41 is wider than the read: it reads adamic, node, json_encode and json_decode .mjs, each on a line of its own
+# allow: stage1/cohere/css/oracles *.[cC][sS][sS]: oracles.go:365 is a helper, never a test: its only importers are stage1/cohere/css's tests, whose key holds this glob's line and the one .css file it matches
+# allow: stage1/cohere/css/oracles cohere: oracles.go:368 is a helper, never a test: its only importers are stage1/cohere/css's tests, whose key holds the cohere line
+#
 # executor  glob
 # Darwin only: the Apple package and its examples, tested by a darwin leg on a pool Mac (Shackler). A gate
 # passes darwin on the leg's record in cloud/fast-gate/darwin-legs/ whose darwinPaths matches the candidate's,
