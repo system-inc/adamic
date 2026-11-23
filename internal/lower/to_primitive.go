@@ -133,28 +133,36 @@ func (l *lowering) instanceToString(helper int, object ir.Expression) []ir.State
 	return append(body, ir.Panic{Message: ir.StringConstant{Index: l.constant("compiler bug: a class instance without a ToPrimitive arm")}})
 }
 
-// classToString is ToPrimitive with the string hint for an object of one class: its toString, which
-// its method table holds through the base chain, and then its valueOf. A class that declares neither
-// inherits Object.prototype.toString, whose "[object Object]" is a primitive, so valueOf isn't asked.
+// classToString is ToPrimitive for an object of one class, under the hint the helper is handed: its
+// toString, which its method table holds through the base chain, then its valueOf, or valueOf first under
+// addition's default hint. A class that declares no toString inherits Object.prototype.toString, whose
+// "[object Object]" is a primitive, so nothing after it is asked.
 func (l *lowering) classToString(helper, class int, object ir.Expression) []ir.Statement {
-	stop := func(why string) []ir.Statement {
-		return []ir.Statement{l.toPrimitiveStop("an object whose class " + why)}
-	}
-	for at := class; at != 0; at = l.result.Classes[at-1].Base {
-		for _, accessor := range l.result.Classes[at-1].Accessors {
-			if accessor.Name == "toString" || accessor.Name == "valueOf" {
-				return stop("has a toString or valueOf accessor")
-			}
-		}
+	stop := func(why string) ir.Statement {
+		return l.toPrimitiveStop("an object whose class " + why)
 	}
 	metadata := l.result.Classes[class-1]
-	for _, fields := range [][]ir.Field{metadata.Fields, metadata.PublicFields} {
-		for _, field := range fields {
-			if !field.Private && (field.Name == "toString" || field.Name == "valueOf") {
-				// An own field, a function or not, is what Node reads first.
-				return stop("has a toString or valueOf field")
+	// unanswered is why the helper can't read name on this class, or "": an own field of that name, a
+	// function or not, is what Node reads first; an accessor of that name anywhere on the chain, or a method
+	// of that name taking a parameter, is read but not yet answered. Each stops only where the hint's order
+	// reaches it (Language's p18 on #e0cnaa9, #1rxjj3m): under the string hint a class with a valueOf getter
+	// and no toString answers Object.prototype.toString's "[object Object]" and never reads the getter, as Node.
+	unanswered := func(name string) string {
+		for _, fields := range [][]ir.Field{metadata.Fields, metadata.PublicFields} {
+			for _, field := range fields {
+				if !field.Private && field.Name == name {
+					return "has a toString or valueOf field"
+				}
 			}
 		}
+		for at := class; at != 0; at = l.result.Classes[at-1].Base {
+			for _, accessor := range l.result.Classes[at-1].Accessors {
+				if accessor.Name == name {
+					return "has a toString or valueOf accessor"
+				}
+			}
+		}
+		return ""
 	}
 	method := func(name string) int {
 		for _, function := range metadata.Methods {
@@ -164,27 +172,26 @@ func (l *lowering) classToString(helper, class int, object ir.Expression) []ir.S
 		}
 		return -1
 	}
-	call := func(function int) ([]ir.Statement, bool) {
-		if len(l.result.Functions[function].Parameters) != 1 || l.result.Functions[function].RestElement != 0 {
-			return stop("has a toString or valueOf taking parameters"), false
-		}
-		return l.primitiveResult(helper, ir.Call{Function: function, Arguments: []ir.Expression{object}, Returns: l.result.Functions[function].Returns})
-	}
-	toString, valueOf := method("toString"), method("valueOf")
 	// The string hint asks toString, then valueOf; addition's default hint asks valueOf first. A method
 	// the class doesn't declare is Object.prototype's: its toString gives "[object Object]", a primitive,
 	// and its valueOf gives the object itself, which isn't one, so the next is asked.
-	ordered := func(first, second int, firstIsToString bool) []ir.Statement {
+	ordered := func(names [2]string) []ir.Statement {
 		body := []ir.Statement{}
-		for step, function := range []int{first, second} {
-			isToString := firstIsToString == (step == 0)
+		for _, name := range names {
+			if why := unanswered(name); why != "" {
+				return append(body, stop(why))
+			}
+			function := method(name)
 			if function < 0 {
-				if isToString {
+				if name == "toString" {
 					return append(body, ir.Return{Value: ir.StringConstant{Index: l.constant("[object Object]")}})
 				}
 				continue
 			}
-			next, goesOn := call(function)
+			if len(l.result.Functions[function].Parameters) != 1 || l.result.Functions[function].RestElement != 0 {
+				return append(body, stop("has a toString or valueOf taking parameters"))
+			}
+			next, goesOn := l.primitiveResult(helper, ir.Call{Function: function, Arguments: []ir.Expression{object}, Returns: l.result.Functions[function].Returns})
 			body = append(body, next...)
 			if !goesOn {
 				return body
@@ -194,8 +201,8 @@ func (l *lowering) classToString(helper, class int, object ir.Expression) []ir.S
 	}
 	return []ir.Statement{ir.If{
 		Condition: l.defaultHintRead(helper),
-		Then:      ordered(valueOf, toString, false),
-		Else:      ordered(toString, valueOf, true),
+		Then:      ordered([2]string{"valueOf", "toString"}),
+		Else:      ordered([2]string{"toString", "valueOf"}),
 	}}
 }
 
