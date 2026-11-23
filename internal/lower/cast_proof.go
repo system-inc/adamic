@@ -456,7 +456,7 @@ func (l *lowering) unionMemberProof(source, target *checker.Type, stop func(cast
 	if l.overlapTarget(members, targets) {
 		return castProof{overlap: true}, nil
 	}
-	if l.untaggedUnionArm(members, targets) {
+	if l.untaggedUnionArm(source, members, targets) {
 		return castProof{untagged: true}, nil
 	}
 	// Checking kind cannot prove a refinement of a member's payload or callback signature.
