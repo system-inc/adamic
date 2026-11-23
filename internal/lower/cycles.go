@@ -894,7 +894,7 @@ func (f *cycleFinder) deriveRelated(one *checker.Type, other *checker.Type) bool
 // (viewAlsoTable), for this finder's views.
 func (f *cycleFinder) viewAlsoOf(proven *checker.Type) []*checker.Type {
 	if f.viewAlso == nil {
-		f.viewAlso = viewAlsoTable(f.l, f.deriveRelated, f.isFunction)
+		f.viewAlso = viewAlsoTable(f.l, f.related, f.isFunction, f.shapes)
 	}
 	return f.viewAlso[proven]
 }
@@ -916,7 +916,13 @@ func (f *cycleFinder) viewAlsoOf(proven *checker.Type) []*checker.Type {
 // its field's value seen as the target's. The walk is bounded by the pairs it has met, and by typeNesting: where
 // a generic grows deeper on its path, the whole source is linked to the target and the walk stops there, which
 // reachLinks then walks on its own bound.
-func viewAlsoTable(l *lowering, related func(one, other *checker.Type) bool, isFunction func(*checker.Type) bool) map[*checker.Type][]*checker.Type {
+//
+// A view with no source names no type its value was. A function constructor's new is one of its candidates, each
+// laid by the writes through its declared this (functionConstructor.thisType), so each this type is the source.
+// The other road that records none today, a speculative result, admits only scalar fields, so nothing beneath it
+// can be handed out. Any view with no source and no candidates whose target holds a field that isn't a plain
+// scalar or a function links the target to every shape the program has, failing closed (Lower's should 2).
+func viewAlsoTable(l *lowering, related func(one, other *checker.Type) bool, isFunction func(*checker.Type) bool, shapes []*checker.Type) map[*checker.Type][]*checker.Type {
 	table := map[*checker.Type][]*checker.Type{}
 	linked := map[[2]*checker.Type]bool{}
 	link := func(viewed, held *checker.Type) {
@@ -1025,6 +1031,37 @@ func viewAlsoTable(l *lowering, related func(one, other *checker.Type) bool, isF
 	for _, view := range l.viewSources {
 		if view.source != nil {
 			pair(view.source, view.target, view.cast)
+			continue
+		}
+		candidates, sourced := 0, 0
+		if roads := l.functionConstructorScan; roads != nil {
+			for _, made := range l.functionConstructorNews {
+				if made.node != view.node {
+					continue
+				}
+				for _, index := range made.candidates {
+					candidates++
+					if index >= 0 && index < len(roads.ordered) && roads.ordered[index].thisType != nil {
+						pair(roads.ordered[index].thisType, view.target, false)
+						sourced++
+					}
+				}
+			}
+		}
+		if candidates != 0 && sourced == candidates {
+			continue
+		}
+		target := l.checker.GetNonNullableType(l.concrete(view.target))
+		for _, field := range l.checker.GetPropertiesOfType(target) {
+			if held := l.checker.GetTypeOfSymbol(field); skip(held) {
+				continue
+			}
+			for _, seen := range arms(target, checker.TypeFlagsUnion|checker.TypeFlagsIntersection) {
+				for _, shape := range shapes {
+					link(seen, shape)
+				}
+			}
+			break
 		}
 	}
 	return table
