@@ -919,7 +919,7 @@ func (f *scanCycleFinder) graphLinks(node cycleNode) []cycleNode {
 // viewAlsoOf asks the table lowering's finder builds (viewAlsoTable), with this reference's relation.
 func (f *scanCycleFinder) viewAlsoOf(proven *checker.Type) []*checker.Type {
 	if f.viewAlso == nil {
-		f.viewAlso = viewAlsoTable(f.l, f.related, f.isFunction)
+		f.viewAlso = viewAlsoTable(f.l, f.related, f.isFunction, f.shapes)
 	}
 	return f.viewAlso[proven]
 }
