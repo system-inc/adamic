@@ -281,6 +281,17 @@ func (l *lowering) optionalChainOperandType(node *ast.Node) *checker.Type {
 // marker, and the last step, a field, the field's own declared type, so a field declared n?: number is still
 // number | undefined there, as the plain road reads it. A step's real undefined is never stripped, so a ! on
 // it keeps its check. It's nil for a node no guard is around, or a last step that isn't a field.
+//
+// The type is what holds an absent optional field right, and it holds it because the checker keeps two
+// undefineds apart. GetTypeOfSymbol gives n?: number as number | missing, the missing type tsc adds to an
+// optional property under exactOptionalPropertyTypes (cohere/TypeScript/tsc/internal/checker/checker.go:17081
+// through getOptionalType, :19049, and :1014). GetNonOptionalType takes out only tsc's optional marker, the undefined
+// it adds inside a chain (removeOptionalTypeMarker, :29609), a different intrinsic from missing (:1013 and
+// :1015). So the field stays number | undefined, representation makes it a MaybeNumber, and fixedFieldRead
+// reads it as one (object.go's of.IsMaybe() arm), with readObjectField marking the read Absent so a shape
+// without the field reads undefined. A step type built any other way (GetNonNullableType, or
+// removeMissingType) drops missing too, and readObjectField then unwraps the field's maybe as a number:
+// scratch-oc's every-step-stripped mutant, red on fields.a.
 func (l *lowering) optionalChainStepType(node *ast.Node) *checker.Type {
 	if !l.optionalChainGuarded(node) {
 		return nil
