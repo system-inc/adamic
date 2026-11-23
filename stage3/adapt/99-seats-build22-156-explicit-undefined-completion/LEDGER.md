@@ -1,0 +1,1 @@
+- **Type-only, family 156 (#bbssdcy, Adamic’s Nov 22 ruling):** 99-seats-build22-156-explicit-undefined-completion gives the source-map decoder’s completion a declared undefined value and keeps the own enumerable value key.
