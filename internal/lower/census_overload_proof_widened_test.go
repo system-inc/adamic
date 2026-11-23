@@ -74,6 +74,12 @@ func overloadProofRefused(t *testing.T, source, extension, what string) {
 	}
 }
 
+// overloadProofCalls is where a TestOverloadProofKeepsRefusing row's refusal is said, at the call that
+// resolves to its overload (#4czdn4q), by row. measured: TODO.
+var overloadProofCalls = map[string]string{
+	"concatenate's undefined first array": "main.ts:13:22",
+}
+
 // Each promise here is one neither the call-site check (rulings.md:127, a literal, a tag or a brand) nor
 // the presence check serves, so only the body proof could accept it.
 func TestOverloadProofKeepsRefusing(t *testing.T) {
@@ -81,7 +87,8 @@ func TestOverloadProofKeepsRefusing(t *testing.T) {
 	for _, probe := range []struct{ name, source, extension, what string }{
 		// tsc's concatenate overload 4: concat(undefined, []) returns undefined where it promises T[]. b's
 		// test narrows nothing but b, so a stays possibly undefined at `return a`.
-		{"concatenate's undefined first array", strings.Replace(overloadConcatenateShape, "LIE", "function concat<T>(a: T[] | undefined, b: T[]): T[];", 1), ".ts", "overload 2 of concat result T[] cannot be served"},
+		// Since #4czdn4q it's refused at a call resolving to it, so the program calls it with undefined.
+		{"concatenate's undefined first array", strings.Replace(overloadConcatenateShape, "LIE", "function concat<T>(a: T[] | undefined, b: T[]): T[];", 1) + "const zs: number[] = concat(undefined, [5]);\nconsole.log(String(zs.length));\n", ".ts", "overload 2 of concat result T[] cannot be served"},
 		// A call in the test stops the proof, a predicate's included, though this one is proven. In .a, where
 		// a number taken out of string | number has no call-site check. Mutant: censusTrustedTest trusting
 		// any leaf, and the declaration is accepted.
@@ -138,6 +145,20 @@ name(1);
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
+			// Since #4czdn4q one's body lowers before its call, and the increment stops there first, so that
+			// row reads the census's verdict (overloadVerdictOf), and the program still stops.
+			if probe.name == "an increment in the test" {
+				overloadVerdictRefused(t, probe.source, probe.extension, "one", 1, probe.what)
+				return
+			}
+			if where := overloadProofCalls[probe.name]; where != "" {
+				_, err := lowerSourceAs(t, probe.source, probe.extension)
+				var refused *Refused
+				if !errors.As(err, &refused) || !strings.Contains(refused.What, probe.what) || !strings.HasSuffix(refused.Where, where) {
+					t.Fatalf("want %q refused at %s, got %v", probe.what, where, err)
+				}
+				return
+			}
 			overloadProofRefused(t, probe.source, probe.extension, probe.what)
 		})
 	}

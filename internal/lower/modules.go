@@ -198,9 +198,9 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 			if l.functionConstructorRoads().constructors[l.closedKindFunctionSymbol(statement)] != nil {
 				continue
 			}
-			if err := l.censusOverloads(statement); err != nil {
-				return err
-			}
+			// The set's verdicts are recorded here, before any body lowers, and an unserved overload stops
+			// each call that resolves to it, never its declaration (#4czdn4q).
+			l.censusOverloads(statement)
 			symbol := l.symbol(statement.Name())
 			if len(statement.TypeParameters()) > 0 {
 				// A generic function is lowered once per instantiation, where it's called (generic.go).
@@ -239,8 +239,10 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 }
 
 // recordExports preserves the entry's public names after module flattening. Aliases and
-// reexports resolve through the checker, never by matching a function's spelling.
-func (l *lowering) recordExports(entry *ast.SourceFile) {
+// reexports resolve through the checker, never by matching a function's spelling. An exported overload
+// set is called by its host with no call the checker resolved, so it's the set as a value: a set with an
+// unserved overload stops in its whole set's words, where that overload is declared (#4czdn4q).
+func (l *lowering) recordExports(entry *ast.SourceFile) error {
 	exports := l.checker.GetExportsOfModule(entry.AsNode().Symbol())
 	sort.Slice(exports, func(left, right int) bool { return exports[left].Name < exports[right].Name })
 	for _, exported := range exports {
@@ -253,11 +255,17 @@ func (l *lowering) recordExports(entry *ast.SourceFile) {
 		}
 		target = l.checker.GetExportSymbolOfSymbol(target)
 		if function, ok := l.functions[target]; ok {
+			if implementation := l.overloadSetImplementation(target); implementation != nil {
+				if err := l.overloadSetVerdict(implementation); err != nil {
+					return err
+				}
+			}
 			l.result.Exports = append(l.result.Exports, ir.Export{Name: exported.Name, Function: function})
 		} else if local, ok := l.locals[target]; ok && l.result.Locals[local].Type == ir.Closure {
 			l.result.Exports = append(l.result.Exports, ir.Export{Name: exported.Name, Function: -1, Local: local})
 		}
 	}
+	return nil
 }
 
 // Explicit type imports and exports have no ESM evaluation edge. With verbatimModuleSyntax,

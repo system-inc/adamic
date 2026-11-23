@@ -92,7 +92,8 @@ func TestPredicateOverloadLocalWrittenAfterTheCall(t *testing.T) {
 	}
 }
 
-// An overload promising U | undefined over a boolean callback has no claim to narrow by: refused as before.
+// An overload promising U | undefined over a boolean callback has no claim to narrow by: refused as before,
+// at run's call, the one that resolves to it (#4czdn4q). measured: TODO, the place.
 func TestPredicateOverloadWithoutPredicate(t *testing.T) {
 	t.Parallel()
 	source := `function pick<T, U extends T>(array: readonly T[], predicate: (element: T) => boolean): U | undefined;
@@ -104,12 +105,13 @@ function pick<T>(array: readonly T[], predicate: (element: T) => boolean): T | u
     }
     return undefined;
 }
+function run(array: readonly number[]): number | undefined { return pick(array, (element) => element > 0); }
 console.log("never");
 `
 	_, err := lowerSourceAs(t, source, ".ts")
 	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(refused.What, "cannot be served by implementation result") || strings.Contains(refused.What, "isn't the value its predicate checked") {
-		t.Fatalf("want the result check's refusal unchanged, got %v", err)
+	if !errors.As(err, &refused) || !strings.Contains(refused.What, "cannot be served by implementation result") || strings.Contains(refused.What, "isn't the value its predicate checked") || !strings.HasSuffix(refused.Where, "main.ts:10:69") {
+		t.Fatalf("want the result check's refusal unchanged, at run's call, got %v", err)
 	}
 }
 
