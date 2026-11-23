@@ -1,6 +1,8 @@
 package lower
 
 import (
+	"strings"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/load"
@@ -422,7 +424,10 @@ func (l *lowering) overloadCertified(overload *ast.Node) (bool, error) {
 		_, arrayShaped := l.overloadArrayShapeOf(implementation)
 		_, mapShaped := l.overloadMapShapeOf(implementation)
 		if arrayShaped || mapShaped {
-			if err := l.censusOverloads(implementation); err != nil {
+			// Its own verdict, never its set's: an unserved sibling stops only the calls that resolve to it
+			// (#4czdn4q). overloadCertificateCall asks overloadCallVerdict first, so a call reaching here with
+			// this overload unserved has already stopped there.
+			if err := l.overloadVerdict(overload); err != nil {
 				return false, err
 			}
 			certified = l.overloadCertificates[overload]
@@ -469,8 +474,9 @@ func (l *lowering) overloadCertificateEntry(node *ast.Node, overload *ast.Node) 
 // (overloadCertificateEntry), or enters it directly and is stopped there: a certificate's call whose
 // instance stores its result otherwise than the call reads it (overloadCertificateStorage), or a node-test
 // call overloadNodeTestCall refuses. An array or Map result can't be checked at the call, and the node-test
-// proof's premise is the caller's arguments, so a non-direct entry is NotYet, naming why. Each road a call
-// enters lowering by asks it beside noteOverloadCall, before the callee or an argument is lowered.
+// proof's premise is the caller's arguments, so a non-direct entry is NotYet, naming why. Before any of
+// that, the call is judged by its overload's census verdict, or its set's (overloadCallVerdict). Each road
+// a call enters lowering by asks it beside noteOverloadCall, before the callee or an argument is lowered.
 func (l *lowering) overloadCertificateCall(node *ast.Node) error {
 	if node.Kind != ast.KindCallExpression && node.Kind != ast.KindNewExpression && node.Kind != ast.KindTaggedTemplateExpression {
 		return nil
@@ -480,6 +486,9 @@ func (l *lowering) overloadCertificateCall(node *ast.Node) error {
 		return nil
 	}
 	overload := resolved.Declaration()
+	if err := l.overloadCallVerdict(node, overload); err != nil {
+		return err
+	}
 	certified, err := l.overloadCertified(overload)
 	if err != nil {
 		return err
@@ -512,6 +521,102 @@ func (l *lowering) overloadCertificateCall(node *ast.Node) error {
 		form = "a comma expression callee"
 	}
 	return l.notYet(node, "an overload certified by its body, entered other than by a direct call: "+form)
+}
+
+// overloadCallVerdict judges node, a call, a new or a tagged template resolved to overload, by Adamic's
+// amendment of rulings.md:131 (#4czdn4q). A direct call (overloadCertificateEntry) is judged by overload
+// alone, so a call to a served overload lowers whatever its siblings' verdicts, and a call to an unserved
+// one stops here in that overload's own words. Any other entry, a spread, a callee other than the set's
+// own name, a new or a tagged template, can't say which overload's premise holds, so it's judged by the
+// whole set (overloadSetVerdict). Either stop is said at node. Only a function declaration's set is judged
+// (censusImplementation), never a method's, whose neighbors stay "an overloaded override" and "a function
+// without a body" (censusOverloads). A call it lets through is recorded in overloadVerdictCalls, which
+// checkOverloadVerdictCalls holds every call in the program to once lowering is done, so a road that
+// misses this gate, or a caller that drops its stop and lowers the call another way, can't lower a call
+// to an unserved overload silently.
+func (l *lowering) overloadCallVerdict(node, overload *ast.Node) error {
+	judged, err := l.overloadCallJudgment(node, overload)
+	if err != nil || !judged {
+		return err
+	}
+	if l.overloadVerdictCalls == nil {
+		l.overloadVerdictCalls = map[*ast.Node]bool{}
+	}
+	l.overloadVerdictCalls[node] = true
+	return nil
+}
+
+// overloadCallJudgment is overloadCallVerdict's answer for node, recording nothing: whether overload is
+// an overload of a function declaration's set, by which the call is judged, and its stop when it's stopped.
+func (l *lowering) overloadCallJudgment(node, overload *ast.Node) (bool, error) {
+	if overload == nil || overload.Kind != ast.KindFunctionDeclaration || overload.Body() != nil {
+		return false, nil
+	}
+	implementation := l.censusImplementation(overload)
+	if implementation == nil {
+		return false, nil
+	}
+	if l.overloadCertificateEntry(node, overload) {
+		return true, overloadVerdictAt(l.overloadVerdict(overload), l.program.Where(node))
+	}
+	return true, overloadVerdictAt(l.overloadSetVerdict(implementation), l.program.Where(node))
+}
+
+// checkOverloadVerdictCalls holds every call, new and tagged template in modules to overloadCallVerdict's
+// judgment, once lowering is done: one the checker resolved to an overload of a function declaration's set,
+// whose judgment is a stop, and which the gate never let through (overloadVerdictCalls), is a road that
+// missed the gate, or a stop a caller dropped, and stops here in the gate's own words, the first in module
+// order. It fails closed: it walks every module whole, not walkLoweredRegions, since a call in a region no
+// note records (a generic class's initializer) would otherwise go unjudged, and the only calls it skips are
+// those inside the body of a generic function declaration no instance was lowered from, which no code is
+// built for (overloadVerdictUninstantiated). A call it stops in a region lowering never built, a method of
+// a class never constructed among them, is a call to a set with an unserved overload: a module-level set's
+// declaration stopped that program before #4czdn4q anyway, and a set nested in an unbuilt body, which was
+// never judged before, is the one stop this adds, erring closed.
+func (l *lowering) checkOverloadVerdictCalls(modules []*ast.SourceFile) error {
+	var stop error
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if stop != nil || ast.IsPartOfTypeNode(node) {
+			return stop != nil
+		}
+		if node.Kind == ast.KindCallExpression || node.Kind == ast.KindNewExpression || node.Kind == ast.KindTaggedTemplateExpression {
+			if resolved := l.checker.GetResolvedSignature(node); resolved != nil && !l.overloadVerdictCalls[node] {
+				if judged, err := l.overloadCallJudgment(node, resolved.Declaration()); judged && err != nil && !l.overloadVerdictUninstantiated(node) {
+					stop = err
+					return true
+				}
+			}
+		}
+		return node.ForEachChild(visit)
+	}
+	for _, module := range modules {
+		if module.AsNode().ForEachChild(visit) {
+			break
+		}
+	}
+	return stop
+}
+
+// overloadVerdictUninstantiated is whether node lies inside the body of a generic function declaration
+// no instance was lowered from: instantiateFunctionSignature keys each instance in genericInstances by the
+// declaration's Where, alone or followed by a comma and what the instance is of, and a declaration with no
+// such key was never lowered, so nothing in it was built.
+func (l *lowering) overloadVerdictUninstantiated(node *ast.Node) bool {
+	for enclosing := node.Parent; enclosing != nil; enclosing = enclosing.Parent {
+		if enclosing.Kind != ast.KindFunctionDeclaration || enclosing.Body() == nil || len(enclosing.TypeParameters()) == 0 {
+			continue
+		}
+		where := l.program.Where(enclosing)
+		instantiated := false
+		for key := range l.genericInstances {
+			instantiated = instantiated || key == where || strings.HasPrefix(key, where+",")
+		}
+		if !instantiated {
+			return true
+		}
+	}
+	return false
 }
 
 // overloadCertificateStorage is nil when the implementation's instance a direct call to overload lowers

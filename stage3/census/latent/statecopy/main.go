@@ -76,6 +76,14 @@ var loweringFieldPolicies = map[string]loweringFieldPolicy{
 	// never made.
 	"sourceSlotPending": speculativeState,
 	"loweredStatements": speculativeState,
+	// The census's verdict on each overload of a function declaration's set, a memo of the program alone
+	// (censusOverloads, #4czdn4q). A snapshot owns its copy, which the typed copier makes like any map of
+	// declarations, its errors shared values nothing writes, as viewSiteJudged's are. A rolled-back lowering
+	// that judged a set leaves it to be judged again, the same way.
+	"overloadVerdicts": speculativeState,
+	// The calls the gate let through, which checkOverloadVerdictCalls reads after lowering. They roll back
+	// with the IR a lowering built, so a rolled-back call is judged again where it's lowered again.
+	"overloadVerdictCalls": speculativeState,
 	// Scoped to one optionalIntrinsic invocation; snapshots preserve its immutable AST identity.
 	// It is not a carried program fact.
 	"optionalReceiverCall": scopedASTIdentity,

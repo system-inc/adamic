@@ -112,13 +112,27 @@ func (l *lowering) censusRelated(from, to *checker.Type) bool {
 	return l.classAssignable(from, to) && l.widened(from, to, map[[2]*checker.Type]bool{}) == nil
 }
 
-func (l *lowering) censusOverloads(implementation *ast.Node) error {
+// censusOverloads judges every overload of implementation's set, once per implementation, and records
+// each one's verdict in overloadVerdicts: censusOverload's Refused or NotYet, or nil when it's served. An
+// unserved overload no longer stops its set where it's declared. A direct call is judged by the overload
+// it resolves to, any other entry and any use of the set as a value by the whole set (overloadCallVerdict,
+// overloadSetStop, Adamic's amendment of rulings.md:131 on #4czdn4q). Only a function declaration's set is
+// judged so: a method's overloads can dispatch to another class's implementation, which two neighbors of
+// this rule keep stopped, "an overloaded override" (class_inheritance.go) and "a function without a body"
+// (functions.go), so a method set is never judged per call (Language's must on #4czdn4q).
+func (l *lowering) censusOverloads(implementation *ast.Node) {
 	if implementation.Kind != ast.KindFunctionDeclaration || implementation.Body() == nil {
-		return nil
+		return
 	}
 	symbol := l.symbol(implementation.Name())
 	if symbol == nil {
-		return nil
+		return
+	}
+	if _, judged := l.overloadVerdicts[implementation]; judged {
+		return
+	}
+	if l.overloadVerdicts == nil {
+		l.overloadVerdicts = map[*ast.Node]error{}
 	}
 	ordinal := 0
 	for _, overload := range symbol.Declarations {
@@ -126,11 +140,86 @@ func (l *lowering) censusOverloads(implementation *ast.Node) error {
 			continue
 		}
 		ordinal++
-		if err := l.censusOverload(implementation, overload, ordinal); err != nil {
+		l.overloadVerdicts[overload] = l.censusOverload(implementation, overload, ordinal)
+	}
+	// The implementation's own key, always nil, says its set is judged.
+	l.overloadVerdicts[implementation] = nil
+}
+
+// overloadVerdict is overload's own verdict from its set's census, which it runs if it hasn't run: nil
+// when overload is served or isn't a bodyless function declaration of a set with an implementation.
+func (l *lowering) overloadVerdict(overload *ast.Node) error {
+	if overload == nil || overload.Kind != ast.KindFunctionDeclaration || overload.Body() != nil {
+		return nil
+	}
+	implementation := l.censusImplementation(overload)
+	if implementation == nil {
+		return nil
+	}
+	l.censusOverloads(implementation)
+	return l.overloadVerdicts[overload]
+}
+
+// overloadSetVerdict is the whole set's verdict, the first of its overloads' errors in declaration order,
+// or nil when every overload is served. It runs implementation's census if it hasn't run.
+func (l *lowering) overloadSetVerdict(implementation *ast.Node) error {
+	l.censusOverloads(implementation)
+	symbol := l.symbol(implementation.Name())
+	if symbol == nil {
+		return nil
+	}
+	for _, overload := range symbol.Declarations {
+		if overload.Kind != ast.KindFunctionDeclaration || overload.Body() != nil {
+			continue
+		}
+		if err := l.overloadVerdicts[overload]; err != nil {
 			return err
 		}
 	}
 	return nil
+}
+
+// overloadSetImplementation is the implementation of the overloaded function declaration symbol names,
+// or nil when symbol isn't one.
+func (l *lowering) overloadSetImplementation(symbol *ast.Symbol) *ast.Node {
+	if symbol == nil {
+		return nil
+	}
+	for _, declaration := range symbol.Declarations {
+		if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil {
+			if implementation := l.censusImplementation(declaration); implementation != nil {
+				return implementation
+			}
+		}
+	}
+	return nil
+}
+
+// overloadSetStop is the whole set's verdict said at node, a use of symbol's overload set other than a
+// direct call: a value, an identity marker, a comparator taken by name. nil when symbol isn't an
+// overloaded function declaration or every overload is served.
+func (l *lowering) overloadSetStop(node *ast.Node, symbol *ast.Symbol) error {
+	implementation := l.overloadSetImplementation(symbol)
+	if implementation == nil {
+		return nil
+	}
+	return overloadVerdictAt(l.overloadSetVerdict(implementation), l.program.Where(node))
+}
+
+// overloadVerdictAt is verdict, censusOverload's Refused or NotYet, said at where: the same kind, What
+// and Fix, only Where moved to the call or use it stops.
+func overloadVerdictAt(verdict error, where string) error {
+	switch stopped := verdict.(type) {
+	case *Refused:
+		moved := *stopped
+		moved.Where = where
+		return &moved
+	case *NotYet:
+		moved := *stopped
+		moved.Where = where
+		return &moved
+	}
+	return verdict
 }
 
 // Compare generic signatures under the same rigid type parameters, never under one

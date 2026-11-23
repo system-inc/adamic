@@ -101,9 +101,9 @@ func (l *lowering) overloadNodeTest(implementation, overload *ast.Node) (predica
 //	    nothing the test could run writes, so the value is x only where the test said yes;
 //	(c) undefined, as is falling off the end, which the result must hold.
 //
-// Anything else fails, and the overload stays refused at its declaration. A default would replace an
-// argument the caller passed, so any parameter with one fails, as does a body reading arguments, through
-// which sloppy code writes a parameter by its position.
+// Anything else fails, and the overload stays refused, at each call that resolves to it (#4czdn4q). A
+// default would replace an argument the caller passed, so any parameter with one fails, as does a body
+// reading arguments, through which sloppy code writes a parameter by its position.
 func (l *lowering) overloadNodeTestProof(implementation, overload *ast.Node) bool {
 	if implementation == nil || implementation.Kind != ast.KindFunctionDeclaration || implementation.Body() == nil || len(implementation.TypeParameters()) != 0 || ast.HasSyntacticModifier(implementation, ast.ModifierFlagsAsync) || generatorDeclaration(implementation) {
 		return false
@@ -262,7 +262,8 @@ func (l *lowering) overloadNodeTestCertified(overload *ast.Node) (bool, error) {
 	}
 	certified := false
 	if implementation := l.censusImplementation(overload); implementation != nil && l.overloadNodeTestProof(implementation, overload) {
-		if err := l.censusOverloads(implementation); err != nil {
+		// Its own verdict, never its set's, as overloadCertified reads it (#4czdn4q).
+		if err := l.overloadVerdict(overload); err != nil {
 			return false, err
 		}
 		certified = l.overloadNodeTests[overload]
