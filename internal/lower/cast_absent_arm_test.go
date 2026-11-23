@@ -50,16 +50,15 @@ func TestAbsentArmCastsLower(t *testing.T) {
 	}
 }
 
-// What absentArm leaves as it was: a null beside the members, a single member beside undefined, a target that
-// keeps undefined (CheckedCast can't pass an absent value through yet), a writable tag, and a tag the checker's
-// duplicates can't tell apart.
+// What absentArm leaves as it was: a null beside the members, a target that keeps undefined (CheckedCast can't
+// pass an absent value through yet), a writable tag, and a tag the checker's duplicates can't tell apart. A single
+// member beside undefined, cast to that member, is presentCast's road (cast_drops_nullish_test.go).
 func TestAbsentArmCastsStayRefused(t *testing.T) {
 	t.Parallel()
 	members := "enum K { A = 1, B = 2 } type A = { readonly kind: K.A }; type B = { readonly kind: K.B }; "
 	for _, probe := range []struct{ name, source, extension string }{
 		{"null beside", members + "function f(x: A | B | null): A { return x as A; }", ".ts"},
 		{"null and undefined beside", members + "function f(x: A | B | null | undefined): A { return x as A; }", ".ts"},
-		{"single member", members + "function f(x: A | undefined): A { return x as A; }", ".ts"},
 		{"target keeps undefined", members + "function f(x: A | B | undefined): A | undefined { return x as A | undefined; }", ".ts"},
 		{"writable tag", "enum K { A = 1, B = 2 } type A = { kind: K.A }; type B = { kind: K.B }; function f(x: A | B | undefined): A { return x as A; }", ".ts"},
 		{"duplicate tags", "enum K { A = 1, B = 1 } type A = { readonly kind: K.A; readonly n: number }; type B = { readonly kind: K.B; readonly s: string }; function f(x: A | B | undefined): A { return x as A; }", ".ts"},
