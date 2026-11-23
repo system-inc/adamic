@@ -1,0 +1,10 @@
+# #hwjx7gw family 46: the one pinned stop the head moves, record_declared_keys_stops/r13p_direct_write.ts, run alone
+# with its whole message, then held to Node at base and head through the probe. Source it after the sealed opening and
+# sandboxed_npm stage3/api. Never merged.
+L="$TMPDIR/hwr"; mkdir -p "$L"
+sandboxed_products ./internal/oracle > "$L/products.log" 2>&1 && echo "PASS products" || { echo "FAIL products"; tail -5 "$L/products.log"; }
+go test -count=1 -timeout 20m -v -run '^TestRecordDeclaredKeyStopsArePinned$' ./internal/oracle/ > "$L/pin.log" 2>&1; echo "pin exit $?"
+grep -E -- '--- FAIL|record_declared_keys_test.go:[0-9]+' "$L/pin.log" | cut -c1-500 | head -12
+mkdir -p proof/performance/hwjx7gw/probes-r13p && cp internal/oracle/testdata/record_declared_keys_stops/r13p_direct_write.ts proof/performance/hwjx7gw/probes-r13p/
+sed -e 's#proof/performance/hwjx7gw/probes/\*.ts internal/oracle/testdata/weak_field_union_membership/\*.ts#proof/performance/hwjx7gw/probes-r13p/*.ts#' proof/performance/hwjx7gw/probe > "$L/probe-r13p"
+source "$L/probe-r13p"
