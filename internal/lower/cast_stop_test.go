@@ -43,8 +43,10 @@ var castStopProbes = []struct {
 		"stage 0 can't lower a checked view of A & T over the type parameter T, constrained to { readonly n: number; } yet"},
 	{"unconstrained type parameter", "interface A { readonly a: number } function f<T>(x: T): A & T { return x as A & T; }", true,
 		"a cast the runtime can't check: a cast from the type parameter T to A & T, which nothing at run time can test, since T may be any type; constrain T to an object type"},
-	{"untagged union", "interface A { readonly a: number } interface B { readonly b: string } function f(x: A | B): A { return x as A; }", false,
-		"stage 0 can't lower a checked view of A over the union A | B, whose members no literal tag tells apart yet"},
+	// To one member, an untagged union's cast lowers as a checked view (#axqgdck, untaggedUnionArm); to a sub-union of
+	// its members it keeps this stop.
+	{"untagged union", "interface A { readonly a: number } interface B { readonly b: string } interface C { readonly c: boolean } function f(x: A | B | C): A | B { return x as A | B; }", false,
+		"stage 0 can't lower a checked view of A | B over the union A | B | C, whose members no literal tag tells apart yet"},
 	{"union target", "interface Base { readonly flags: number } interface A extends Base { readonly a: number } interface B extends Base { readonly b: string } function f(x: Base): A | B { return x as A | B; }", false,
 		"stage 0 can't lower a checked view of the union A | B over Base, whose members no literal tag tells apart yet"},
 	// A cast that keeps the source's own undefined lowers through its present road (cast_keeps_nullish_test.go);
