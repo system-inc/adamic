@@ -1082,14 +1082,15 @@ class ReadsGuard(unittest.TestCase):
         with mock.patch.object(run, "packageGraph", side_effect=withVariant):
             self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["a/a_test.go"], []), [self.uncovered % (3, "b/lonely.txt")])
 
-    def test_a_reads_line_matching_the_root_performance_file_is_red_whatever_its_mode(self):
-        # Performance.jsonc at the root is rewritten by every landing (#hed1mkb), so a glob that matches its name is red,
-        # a bare * among them, and an allow line doesn't exempt it; a glob under a directory, as docs/*.jsonc, isn't.
-        lines = "reads a Performance*\nreads a * paths\nreads a docs/*.jsonc\n# allow: a Performance*: no allow exempts it\n"
+    def test_a_content_reads_line_matching_the_root_performance_file_is_red_and_a_paths_line_isnt(self):
+        # Performance.jsonc at the root is rewritten by every landing (#hed1mkb), so a content line whose glob matches its
+        # name is red, a bare * among them, and an allow line doesn't exempt it. The same * as a paths line passes, as
+        # gitignore's does, since names alone move only at the seed; a glob under a directory, as docs/*.jsonc, passes.
+        lines = "reads a Performance*\nreads a *\nreads a * paths\nreads a docs/*.jsonc\n# allow: a Performance*: no allow exempts it\n"
         self.write({"cloud/fast-gate/executors.txt": self.executors + lines, "Performance.jsonc": "{}\n", "docs/x.jsonc": "{}\n"})
         expected = ["`reads a Performance*` (executors.txt:4) matches Performance.jsonc, which every landing rewrites at adamic's root, "
                     "so no unit may read it (#hed1mkb): narrow the glob so it can't match the root's Performance.jsonc",
-                    "`reads a * paths` (executors.txt:5) matches Performance.jsonc, which every landing rewrites at adamic's root, "
+                    "`reads a *` (executors.txt:5) matches Performance.jsonc, which every landing rewrites at adamic's root, "
                     "so no unit may read it (#hed1mkb): narrow the glob so it can't match the root's Performance.jsonc"]
         self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["docs/x.jsonc"], []), expected)
         self.assertEqual(self.census(), (1, "\n".join(expected) + "\n"))

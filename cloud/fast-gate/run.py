@@ -1297,12 +1297,15 @@ def readsGuardFindings(tree, tools, changed=None, pathSetChanged=None):
                         (" ".join(["reads", package, pattern] + ([mode] if mode else [])), where, number))
     changedSet = set(changed or ())
     # Performance.jsonc at adamic's root is rewritten by every landing, so the tested tree never holds what the landed
-    # one does, and no unit may read it (#hed1mkb, guard 1, #djw6hqf): a reads line whose glob matches the root's name
-    # is refused, a bare * included, whatever its mode, and no allow line exempts it; so is a tracked Performance.jsonc
-    # anywhere but the root, its own case. Every line is checked, since the tools' are the census's and a change can add
-    # one to the tree's; a copy outside the root only where the change adds or moves it, the census the whole tree's.
+    # one does, and no unit may read it (#hed1mkb, guard 1, #djw6hqf): a content reads line whose glob matches the
+    # root's name is refused, a bare * included, and no allow line exempts it; so is a tracked Performance.jsonc anywhere
+    # but the root, its own case. A paths line passes by rule, never by an allow (Planning's ruling on #r2a9vd4): it keys
+    # names alone, and after the landing that seeds the file every tested tree holds the name too, inherited from main,
+    # so its key moves once, at the seed, never on a landing after. A generated line names its list, never a glob. Every
+    # line is checked, since the tools' are the census's and a change can add one to the tree's; a copy outside the root
+    # only where the change adds or moves it, the census the whole tree's.
     for where, number, package, pattern, mode in readers:
-        if fnmatch.fnmatchcase(performanceFile, pattern):
+        if mode not in ("paths", "generated") and fnmatch.fnmatchcase(performanceFile, pattern):
             reds.append("`%s` (%s:%d) matches %s, which every landing rewrites at adamic's root, so no unit may read it "
                         "(#hed1mkb): narrow the glob so it can't match the root's %s" %
                         (" ".join(["reads", package, pattern] + ([mode] if mode else [])), where, number, performanceFile, performanceFile))
