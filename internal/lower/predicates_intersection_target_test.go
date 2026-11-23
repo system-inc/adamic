@@ -36,9 +36,12 @@ func TestCheckedPredicateIntersectionTargetAgrees(t *testing.T) {
 // view's registration skipped for an intersection, and these read the lie.
 func TestCheckedPredicateIntersectionTargetNestedLiesStop(t *testing.T) {
 	t.Parallel()
-	for _, probe := range []struct{ name, source string }{
-		{"nested value", intersectionExpr + "type Comma = Expr & { readonly kind: 9; readonly operator: { readonly kind: 1 } };\nfunction isComma(n: Expr): n is Comma { return n.kind === 9; }\nfunction show(n: Expr): void { if (isComma(n)) console.log(String(n.operator.kind)); }\nconst e: Expr = { kind: 9, pos: 0, operator: { kind: 2 } };\nshow(e);\n"},
-		{"nested layout", "interface Op { readonly kind: number }\ninterface Wide extends Op { readonly kind: 1; readonly text: string }\ninterface Expr { readonly kind: number; readonly operator: Op }\ntype Comma = Expr & { readonly kind: 9; readonly operator: Wide };\nfunction isComma(n: Expr): n is Comma { return n.kind === 9; }\nfunction show(n: Expr): void { if (isComma(n)) console.log(n.operator.text); }\nconst e: Expr = { kind: 9, operator: { kind: 1 } };\nshow(e);\n"},
+	for _, probe := range []struct{ name, source, stderr string }{
+		{"nested value", intersectionExpr + "type Comma = Expr & { readonly kind: 9; readonly operator: { readonly kind: 1 } };\nfunction isComma(n: Expr): n is Comma { return n.kind === 9; }\nfunction show(n: Expr): void { if (isComma(n)) console.log(String(n.operator.kind)); }\nconst e: Expr = { kind: 9, pos: 0, operator: { kind: 2 } };\nshow(e);\n", "adamic: panic: field read failed: n.operator.kind expected 1, found number 2"},
+		{"nested layout", "interface Op { readonly kind: number }\ninterface Wide extends Op { readonly kind: 1; readonly text: string }\ninterface Expr { readonly kind: number; readonly operator: Op }\ntype Comma = Expr & { readonly kind: 9; readonly operator: Wide };\nfunction isComma(n: Expr): n is Comma { return n.kind === 9; }\nfunction show(n: Expr): void { if (isComma(n)) console.log(n.operator.text); }\nconst e: Expr = { kind: 9, operator: { kind: 1 } };\nshow(e);\n", "adamic: panic: field read failed: n.operator.text is not initialized; expected string, found missing"},
+		// Lower's optional-beside-required road: the merged pos is required, so a value without it is a lie
+		// the view stops at the read (J-cyvtd2k, where Node printed "9 undefined").
+		{"optional and required parts", "type Nine = { readonly kind: 9; readonly pos?: number } & { readonly pos: number };\nfunction isNine(n: { readonly kind: number }): n is Nine { return n.kind === 9; }\nfunction show(n: { readonly kind: number }): void { if (isNine(n)) console.log(String(n.kind) + ' ' + String(n.pos)); }\nconst bare: { readonly kind: number } = { kind: 9 };\nshow(bare);\n", "adamic: panic: field read failed: n.pos is not initialized; expected number, found missing"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -46,7 +49,7 @@ func TestCheckedPredicateIntersectionTargetNestedLiesStop(t *testing.T) {
 			if err != nil {
 				t.Fatalf("want it lowered, got %v", err)
 			}
-			brandedStopsProgram(t, program, "field read failed")
+			brandedStopsProgram(t, program, probe.stderr)
 		})
 	}
 }
@@ -75,10 +78,9 @@ func TestCheckedPredicateIntersectionTargetOutsideStays(t *testing.T) {
 func TestCheckedPredicateIntersectionTargetSyntheticSymbolsLogged(t *testing.T) {
 	const tail = "function show(n: { readonly kind: number }): void { if (isNine(n)) console.log(String(n.kind) + ' ' + String(n.pos)); else console.log('no'); }\n"
 	for _, probe := range []struct{ name, source string }{
-		{"getter part", "interface Token { readonly kind: number; readonly pos: number }\ntype Nine = Token & { get kind(): 9 };\nfunction isNine(n: { readonly kind: number }): n is Nine { return n.kind === 9; }\n" + tail + "class Getter { get kind(): 9 { return 9; } readonly pos: number = 3; }\nshow(new Getter());\nshow({ kind: 9, pos: 4 });\n"},
-		{"field and getter parts", "type Nine = { readonly kind: 9; readonly pos: number } & { get kind(): 9 };\nfunction isNine(n: { readonly kind: number }): n is Nine { return n.kind === 9; }\n" + tail + "show({ kind: 9, pos: 4 });\n"},
-		{"method and field parts", "type Nine = { readonly kind: 9; readonly pos: number; run(): number } & { readonly run: () => number };\nfunction isNine(n: { readonly kind: number }): n is Nine { return n.kind === 9; }\nfunction show(n: { readonly kind: number }): void { if (isNine(n)) console.log(String(n.run())); }\nshow({ kind: 9, pos: 1, run(): number { return 5; } });\n"},
-		{"optional and required parts", "type Nine = { readonly kind: 9; readonly pos?: number } & { readonly pos: number };\nfunction isNine(n: { readonly kind: number }): n is Nine { return n.kind === 9; }\n" + tail + "const bare: { readonly kind: number } = { kind: 9 };\nshow(bare);\n"},
+		{"getter part", "interface Token { readonly kind: number; readonly pos: number }\ntype Nine = Token & { get kind(): 9 };\nfunction isNine(n: { readonly kind: number }): n is Nine { return n.kind === 9; }\n" + tail + "class Getter { get kind(): 9 { return 9; } readonly pos: number = 3; }\nshow(new Getter());\nconst plain = { kind: 9, pos: 4 };\nshow(plain);\n"},
+		{"field and getter parts", "type Nine = { readonly kind: 9; readonly pos: number } & { get kind(): 9 };\nfunction isNine(n: { readonly kind: number }): n is Nine { return n.kind === 9; }\n" + tail + "const plain = { kind: 9, pos: 4 };\nshow(plain);\n"},
+		{"method and field parts", "type Nine = { readonly kind: 9; readonly pos: number; run(): number } & { readonly run: () => number };\nfunction isNine(n: { readonly kind: number }): n is Nine { return n.kind === 9; }\nfunction show(n: { readonly kind: number }): void { if (isNine(n)) console.log(String(n.run())); }\nconst plain = { kind: 9, pos: 1, run(): number { return 5; } };\nshow(plain);\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			program, err := lowerSourceAs(t, probe.source, ".ts")
