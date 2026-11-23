@@ -15,8 +15,22 @@ func TestDateISOStringOtherMethodStopsByName(t *testing.T) {
 	t.Parallel()
 	_, err := lowerSourceAs(t, `console.log(new Date(0).toUTCString());`, ".ts")
 	var missing *NotYet
-	if !errors.As(err, &missing) || missing.What != "toUTCString: Date methods other than getTime/valueOf in the fs file host" {
+	if !errors.As(err, &missing) || missing.What != "toUTCString: Date methods other than getTime, valueOf and toISOString in the fs file host" {
 		t.Fatalf("Date method boundary must retain named NotYet: %v", err)
+	}
+}
+
+// A locale or local-timezone Date form is refused by ruling, naming the forms to write instead (#32e763w,
+// Adamic on #bbssdcy, Nov 22: tsc's watch.ts:178 toLocaleTimeString). A UTC form stays NotYet above.
+func TestDateLocaleFormIsRefused(t *testing.T) {
+	t.Parallel()
+	for _, method := range []string{"toLocaleTimeString", "toLocaleDateString", "getHours", "getTimezoneOffset", "toString"} {
+		_, err := lowerSourceAs(t, "const date = new Date(0);\nconsole.log(date."+method+"());\n", ".ts")
+		var refused *Refused
+		want := "Adamic 0.1 refuses " + method + ", a locale or local-timezone Date form; Adamic keeps time in UTC and ISO forms: read getTime(), valueOf() or toISOString() and build the text from those"
+		if !errors.As(err, &refused) || !strings.HasSuffix(err.Error(), want) {
+			t.Fatalf("%s: want the refusal ending %q, got %v", method, want, err)
+		}
 	}
 }
 

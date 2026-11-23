@@ -24,7 +24,12 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 		receiver := callee.AsPropertyAccessExpression().Expression
 		if l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver)), "Date") {
 			if symbol.Name != "getTime" && symbol.Name != "valueOf" && symbol.Name != "toISOString" {
-				return nil, true, l.notYet(node, memberName+": "+"Date methods other than getTime/valueOf in the fs file host")
+				// A locale or local-timezone form is refused by ruling (docs/rulings.md's host specifics: only UTC and
+				// ISO Date forms), so it names what to write instead; any other Date method is unbuilt (#32e763w).
+				if localeDateForm(symbol.Name) {
+					return nil, true, &Refused{Where: l.program.Where(node), What: memberName + ", a locale or local-timezone Date form", Fix: "Adamic keeps time in UTC and ISO forms: read getTime(), valueOf() or toISOString() and build the text from those"}
+				}
+				return nil, true, l.notYet(node, memberName+": "+"Date methods other than getTime, valueOf and toISOString in the fs file host")
 			}
 			if symbol.Name == "toISOString" {
 				if len(call.Arguments.Nodes) != 0 {
@@ -622,4 +627,20 @@ func (l *lowering) nodeStatsFieldUseRefusal(node *ast.Node) (bool, error) {
 func init() {
 	RegisterNodeLibraryMembers("node:fs.mkdtempSync", "node:fs.rmSync", "node:fs.readSync", "node:fs.readFileSync", "node:fs.openSync", "node:fs.writeSync", "node:fs.closeSync", "node:fs.writeFileSync", "node:fs.existsSync", "node:fs.statSync", "node:fs.mkdirSync", "node:fs.unlinkSync", "node:fs.utimesSync", "node:fs.StatsBase.isFile", "node:fs.StatsBase.isDirectory", "node:fs.StatsBase.isSymbolicLink", "node:globals.ErrnoException.code")
 	RegisterNodeLibraryMembers("node:fs.StatsBase.dev", "node:fs.StatsBase.nlink", "node:fs.StatsBase.ino", "node:fs.StatsBase.size", "node:fs.StatsBase.atimeMs", "node:fs.StatsBase.mtimeMs", "node:fs.StatsBase.ctimeMs", "node:fs.StatsBase.atime", "node:fs.StatsBase.mtime", "node:fs.StatsBase.ctime")
+}
+
+// localeDateForm is whether a Date method reads or writes the host's locale or its local time zone, the
+// forms docs/rulings.md's host specifics refuse: the toLocale family, the local-time text forms, and every
+// getter and setter that isn't its UTC twin.
+func localeDateForm(name string) bool {
+	if strings.HasPrefix(name, "toLocale") {
+		return true
+	}
+	switch name {
+	case "toString", "toDateString", "toTimeString", "getTimezoneOffset",
+		"getFullYear", "getMonth", "getDate", "getDay", "getHours", "getMinutes", "getSeconds", "getMilliseconds", "getYear",
+		"setFullYear", "setMonth", "setDate", "setHours", "setMinutes", "setSeconds", "setMilliseconds", "setYear":
+		return true
+	}
+	return false
 }
