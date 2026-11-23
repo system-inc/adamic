@@ -1,0 +1,1 @@
+- **Type-only fixed dependency keys (#bbssdcy, family 97):** 99-seats-build22-97-fixed-dependency-keys bounds the computed compiler option table in utilities.ts to its named keys. Each dependency list still determines the inputs of its compute callback. Ruling 137’s binding check applies to the fixed constraint.
