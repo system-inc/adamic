@@ -1362,9 +1362,10 @@ def vetDiagnostics(text, tree):
     to load at an import's position (a go.sum entry missing, a module cache it can't write under GOPROXY=off, a syntax
     error in the import block), a build cache it can't open, a pattern naming no directory, an import cycle. Plain go vet
     prints an analyzer's finding as <file>:<line>:<col>: too, the shape a load failure takes, so the census vets with
-    -json, which prints findings apart and exits 0 with them."""
+    -json, which prints findings apart and exits 0 with them. Every position is said tree-relative (treePosition), since go
+    replays a cached vet's output with the paths of the run that made it, another checkout's on a box whose build cache
+    is shared (J-wxqxnre on Golem: lh-QR91's tree in lh-JKB3's run)."""
     diagnostics, errors, decoder, position = [], [], json.JSONDecoder(), 0
-    roots = {os.path.abspath(tree) + os.sep, os.path.realpath(tree) + os.sep}
     while position < len(text):
         end = text.find("\n", position)
         end = len(text) if end < 0 else end
@@ -1379,13 +1380,32 @@ def vetDiagnostics(text, tree):
                     if isinstance(findings, dict) and "error" in findings:
                         errors.append("%s %s: %s" % (package, analyzer, findings["error"]))
                     for finding in findings if isinstance(findings, list) else ():
-                        where = str(finding.get("posn", "")) if isinstance(finding, dict) else ""
-                        where = next((where[len(root):] for root in roots if where.startswith(root)), where)
+                        where = treePosition(str(finding.get("posn", "")) if isinstance(finding, dict) else "", tree)
                         diagnostics.append("%s: %s (%s)" % (where, finding.get("message", "") if isinstance(finding, dict) else finding, analyzer))
         elif vetPositioned.match(line):
-            diagnostics.append(line)
+            where, said = line[len("vet: "):].split(": ", 1) if ": " in line[len("vet: "):] else (line[len("vet: "):], "")
+            diagnostics.append("vet: " + treePosition(where, tree) + (": " + said if said else ""))
         position = end + 1
     return diagnostics, errors
+
+
+def treePosition(position, tree):
+    """A position go printed, "<file>:<line>:<col>", with its file said relative to tree: under tree by either spelling of
+    it, or else by its longest tail that names a file of tree, since a cached vet's output names the file where the run
+    that made it found it, another checkout of the same bytes. A file that's neither, or a relative one, is kept as go
+    said it."""
+    file, colon, rest = position.partition(":")
+    if not os.path.isabs(file):
+        return position
+    for root in (os.path.abspath(tree) + os.sep, os.path.realpath(tree) + os.sep):
+        if file.startswith(root):
+            return file[len(root):] + colon + rest
+    parts = file.split("/")
+    for start in range(1, len(parts)):
+        tail = "/".join(parts[start:])
+        if tail and os.path.isfile(os.path.join(tree, tail)):
+            return tail + colon + rest
+    return position
 
 
 def lastLines(text, limit):

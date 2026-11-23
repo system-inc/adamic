@@ -4712,6 +4712,22 @@ class FastCheckDarwinVet(unittest.TestCase):
         self.assertEqual(run.lastLines("first line\n" + "x" * 10 + "\nlast", 12), "last")
         self.assertEqual(run.lastLines("y" * 20, 5), "yyyyy")
 
+    def test_a_finding_replayed_from_another_checkout_is_said_tree_relative(self):
+        # Go replays a cached vet's output with the paths of the run that made it: on a box whose build cache is shared,
+        # another checkout's (J-wxqxnre on Golem). The file is named by its tail in this tree. Mutant: the tail search
+        # dropped, so the other checkout's absolute path is refused.
+        self.write("internal/apple/say.go", 'package apple\n\nfunc Say() {}\n')
+        elsewhere = "/srv/loom-keeper/ahra/lh-other/tmp.x/tree/internal/apple/say.go"
+        replayed = '{\n\t"example.com/fixture/internal/apple": {\n\t\t"printf": [\n\t\t\t{\n\t\t\t\t"posn": "%s:5:26",\n' \
+                   '\t\t\t\t"message": "fmt.Printf format %%d has arg \\"s\\" of wrong type string"\n\t\t\t}\n\t\t]\n\t}\n}\n' % elsewhere
+        diagnostics, errors = run.vetDiagnostics(replayed + "vet: %s:3:1: undefined: x\n" % elsewhere, self.tree)
+        self.assertEqual(errors, [])
+        self.assertEqual(diagnostics, ['internal/apple/say.go:5:26: fmt.Printf format %d has arg "s" of wrong type string (printf)',
+                                       "vet: internal/apple/say.go:3:1: undefined: x"])
+        # A file no tail of which is in the tree stays as go said it, and a relative one is kept.
+        self.assertEqual(run.treePosition("/nowhere/at/all.go:1:2", self.tree), "/nowhere/at/all.go:1:2")
+        self.assertEqual(run.treePosition("internal/apple/say.go:1:2", self.tree), "internal/apple/say.go:1:2")
+
 
 class VetDiagnostics(unittest.TestCase):
     """vetDiagnostics over go vet's output as Loom's box printed it on go 1.27.1 (J-2vtq883 and J-5v7y2cj, recorded
