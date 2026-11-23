@@ -193,7 +193,11 @@ func (l *lowering) castRefusal(node *ast.Node) error {
 		if err != nil {
 			return err
 		}
-		if proof.interfaceView || len(proof.allowed) > 0 || len(proof.classes) > 0 || proof.kindUnion != nil {
+		// An untagged union's cast is checked as an interface view's is (#axqgdck): every read through its view is
+		// checked, a literal field's value included, and each member's writes are judged before the view is made
+		// (untaggedUnionCast), so the cast's own relation isn't judged again as an unchecked widening (Diagnostics'
+		// must on the census, J-4488dtq: the enum-literal rule refused tsc's kind-checked casts there).
+		if proof.interfaceView || len(proof.allowed) > 0 || len(proof.classes) > 0 || proof.kindUnion != nil || proof.untagged {
 			if l.refusal.checkedCasts == nil {
 				l.refusal.checkedCasts = map[*ast.Node]bool{}
 			}
