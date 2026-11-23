@@ -25,9 +25,10 @@ unmutated in enumeration_accessor_reach_test.go and in the whole internal/lower.
 
 | Mutant | Mutation | Catching test | Catch line in enumeration_accessor_reach_test.go |
 | --- | --- | --- | --- |
-| WholeGraph: every accessor reaches, the scan of before | `if reach.unknown {` to `if true \|\| reach.unknown {` | TestEnumerationReachUnrelatedGetterLowers | 53, `enumeration reach row unrelated was refused` |
-| UnionMembers: a union's members are left unread | `case flags&checker.TypeFlagsUnion != 0:` to `case false && ...` | TestEnumerationReachUnionLowers | 53, `enumeration reach row union was refused` |
-| DeepReach: encodeJson reads only the operand's own type | `if !deep {` to `if true {` | TestEnumerationReachDeepGetterRefused/(field\|element) | 67, `enumeration reach row <row> was admitted` |
+| WholeGraph: every accessor reaches, the scan of before | `if reach.unknown {` to `if true \|\| reach.unknown {` | TestEnumerationReachUnrelatedGetterLowers | 70, `enumeration reach row unrelated was refused` |
+| UnionMembers: a union's members are left unread | `case flags&checker.TypeFlagsUnion != 0:` to `case false && ...` | TestEnumerationReachUnionLowers | 70, `enumeration reach row union was refused` |
+| DeepReach: encodeJson reads only the operand's own type | `if !deep {` to `if true {` | TestEnumerationReachDeepGetterRefused/(field\|element) | 90, `enumeration reach row <row> was admitted` |
+| OneWay: an owner reaches only when assignable to a read type, not the other way | `l.checker.IsTypeAssignableTo(owner, read) \|\| l.checker.IsTypeAssignableTo(read, owner)` to `l.checker.IsTypeAssignableTo(owner, read)` | TestEnumerationReachDowncastRefused | 90, `enumeration reach row downcast was admitted` |
 
 UnionMembers fails closed rather than open: a union left unread falls to the
 classifier's last case, a type that isn't an object type, and makes reach
@@ -37,10 +38,18 @@ since an owner is assignable to a union when it is to a member; only encodeJson'
 deep read needs the members, for a field one member alone declares, which
 TestEnumerationReachDeepUnionGetterRefused pins unmutated.
 
+OneWay: a checked downcast in .ts keeps the same object at a slot its owner
+type is not assignable to, so reach is judged both ways (the hand's soundness
+doubt on 6ac68068). The pin's class with a getter sits in held.ts, seen in
+main.ts as a narrower shape and cast down to a wider one the class is not
+assignable to; under the mutant the guard admits it, and the pin fails with its
+witness whatever stops the program after.
+
+Every pin reaches the guard through Object.values, Object.entries or encodeJson,
+never Object.keys: objectKeys (class_features.go) lowers a class instance, a
+static side and a plain view straight to ir.ObjectKeys, and calls objectCall,
+and so the guard, only for a node array, a RegExp, a possibly undefined operand
+or a shape with an optional field.
+
 Product order: cloud/fast-gate/enumeration-reach-product-order.py writes the
-three producer rows, each waiting on nothing.
-
-| OneWay: an owner reaches only when assignable to a read type, not the other way | TestEnumerationReachDowncastRefused | `downcast was admitted` |
-
-A checked downcast in .ts keeps the same object at a slot its owner type is not
-assignable to, so reach is judged both ways (the hand's soundness doubt on 6ac68068).
+four producer rows, each waiting on nothing.
