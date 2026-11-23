@@ -114,6 +114,15 @@ func (l *lowering) rangeFieldDispatch(node *ast.Node, object ir.Expression, name
 	if err != nil {
 		return nil, err
 	}
+	// A use that observes an unset field (a template, typeof, String(), a comparison with undefined, an untyped
+	// save: unsetObserved) gets the side record's read as the tagged union itself, with no check, as every caller
+	// of nodeArrayProperty does there, since an unset record field reads as undefined on Node and that use
+	// shows it. The object arm is boxed to match, so the use reads one union either way and neither arm is
+	// narrowed to a kind its value may not have: a checked narrow to number would stop where Node prints
+	// undefined.
+	if arrayArm.Type() == ir.Union && objectArm.Type() != ir.Union {
+		objectArm = fit(objectArm, ir.Union)
+	}
 	// An optional slot gives unsetSpecialization's arm number | undefined where the field's own read is number.
 	if arrayArm.Type() != objectArm.Type() && arrayArm.Type().IsMaybe() && arrayArm.Type().Present() == objectArm.Type() {
 		objectArm = fit(objectArm, arrayArm.Type())
