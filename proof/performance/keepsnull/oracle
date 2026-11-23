@@ -1,0 +1,8 @@
+# #b5w3ycg keeps-nullish: internal/oracle's products settled, then the new fixture test held to Node on every backend.
+# Source it in the job's shell after the sealed opening. Never merged.
+L="$TMPDIR/kno"; mkdir -p "$L"
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg)"
+if sandboxed_products ./internal/oracle > "$L/products.log" 2>&1; then echo "PASS products"; else echo "FAIL products"; tail -5 "$L/products.log"; echo "VERDICT FAIL"; return 1 2>/dev/null || exit 1; fi
+if go test -count=1 -timeout 30m -v -run '^TestKeepsNullishCast[A-Za-z]*$' ./internal/oracle/ > "$L/o.log" 2>&1; then echo "PASS oracle"; v=PASS; else echo "FAIL oracle"; v=FAIL; fi
+grep -E -- '--- |_test.go:[0-9]+|panic:' "$L/o.log" | cut -c1-300 | head -20
+echo "VERDICT $v"
