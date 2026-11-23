@@ -39,7 +39,7 @@ func TestDropsNullishCastLowersAsPresenceCheck(t *testing.T) {
 					if present.Fallback != nil {
 						t.Fatalf("the check is %#v, want a Coalesce that panics", present)
 					}
-					if text := program.Strings[present.Panic.(ir.StringConstant).Index]; !strings.HasPrefix(text, "cast failed at ") || !strings.HasSuffix(text, " as S is null or undefined") {
+					if text := program.Strings[present.Panic.(ir.StringConstant).Index]; !strings.HasPrefix(text, "cast failed: this ") || !strings.HasSuffix(text, " is not a S") {
 						t.Fatalf("message %q, want the cast named as written", text)
 					}
 					return true

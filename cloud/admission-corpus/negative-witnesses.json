@@ -1416,6 +1416,19 @@
       "type_correct_sha256": "3b2bd3056dfca6d741c881e2bacf9d6abe55187700915a8a8c191fecc435ef54",
       "exit": 70,
       "stderr": "adamic: panic: field read failed: target.label matches no member of string | undefined; expected string | undefined, found number\n"
+    },
+    "fde79e38b9a1b25b8a827390bbc2ce345b40e62aa6da1b23fa7cbc1922af74cf": {
+      "form": "cast_failed",
+      "ruling_task": "#b5w3ycg",
+      "ruling": "Adamic, Nov 23: a cast that only removes undefined is the presence check, in every cast's words (rulings.md:9 and :385)",
+      "declaration": "internal/oracle/testdata/cast_drops_nullish/lie.ts:7",
+      "column": 29,
+      "declared_type": "Expression",
+      "repair_from": "argument(1)",
+      "repair_to": "argument(0)",
+      "type_correct_sha256": "336b9a468745381ff0d9a2480592cb4734c477028d057bfba095ea1cd77ce657",
+      "exit": 70,
+      "stderr": "adamic: panic: cast failed: this Expression | undefined is not a Expression\n"
     }
   }
 }
