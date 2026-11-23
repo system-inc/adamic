@@ -4763,6 +4763,29 @@ class CensusLaunchers(unittest.TestCase):
             self.census(self.launcher % 'exec.Command("node")', {}, self.helper, packages={"tool/launch": ["internal/quiet"]})
         self.assertIn("undeclared compiler consumers: tool/launch/launch_test.go", str(raised.exception))
 
+    def test_a_launchers_tree_is_exact_places_each_citing_its_trace(self):
+        # Adamic Loom's ruling on #ry3pfc6: tree lists what the process tree may exec beyond runs, each an exact place
+        # citing its trace, never a bare name, a glob or a compiler. Mutants: the place unchecked (a bare name passes),
+        # the citation unchecked, and the compiler names unread (go passes).
+        source = self.launcher % 'exec.Command("node")'
+        good = [{"place": "/usr/lib/git-core/git-upload-pack", "trace": "J-5bejz3b"},
+                {"place": "stage3/typescript/node_modules/@esbuild/linux-x64/bin/esbuild", "trace": "J-crks9vh"}]
+        self.census(source, {"tool/launch": dict(self.declared["tool/launch"], tree=good)}, self.helper)
+        for tree, reason in ((["sh"], "is {\"place\", \"trace\"}"), ([{"place": "sh", "trace": "J-5bejz3b"}], "is no exact place"),
+                             ([{"place": "/usr/bin/*", "trace": "J-5bejz3b"}], "is no exact place"),
+                             ([{"place": "keyed:stage3/x/bin/esbuild", "trace": "J-crks9vh"}], "is no exact place"),
+                             ([{"place": "../stage3/x/bin/esbuild", "trace": "J-crks9vh"}], "is no exact place"),
+                             ([{"place": "stage3/./x/esbuild", "trace": "J-crks9vh"}], "is no exact place"),
+                             ([{"place": "/usr/bin/sh", "trace": "traced"}], "cites no trace job"),
+                             ([{"place": "/usr/local/go/bin/go", "trace": "J-5bejz3b"}], "is a compiler"),
+                             ([{"place": "/usr/bin/clang", "trace": "J-5bejz3b"}], "is a compiler"),
+                             ([{"place": "/usr/bin/sh", "trace": "J-5bejz3b"}] * 2, "is named twice"),
+                             ({"place": "/usr/bin/sh"}, "isn't a list")):
+            with self.assertRaises(ValueError, msg=tree) as raised:
+                self.census(source, {"tool/launch": dict(self.declared["tool/launch"], tree=tree)}, self.helper)
+            self.assertNotIsInstance(raised.exception, run.ChangeRefusal)
+            self.assertIn(reason, str(raised.exception), tree)
+
     def test_the_gate_tools_own_allows_read(self):
         # The tools' own lines parse as one launcher, package and function each, so a bad one never reaches a gate.
         tools = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(run.__file__))))

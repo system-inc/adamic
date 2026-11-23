@@ -2191,6 +2191,40 @@ def launcherRefusal(source, runs, house=None, launcher=None, references=None):
 # a newline (Adamic Loom's ruling and her must on #r2a9vd4). Comments are still read: a cgo preamble and //go:generate run.
 compilerMarker = re.compile(r"github\.com/system-inc/adamic/internal/(?:load|lower|native|javascript|ir|flow)|cmd/adamic(?![A-Za-z0-9_-]|'s\b)|oracle/adamic|ADAMIC_(?:BIN|BINARY)|\"adamic\"")
 launchMarker = re.compile(r'"os/exec"|os\.StartProcess|syscall\.Exec')
+# A launcher's tree lists what its process tree may exec beyond what it launches itself (runs): sh under python3, git's
+# own helpers, a bundler under node. The exec check (Reads', on every traced run of a declared launcher's unit) holds
+# every exec of the process tree to runs and tree together, and nothing else may exec; this census reads runs alone.
+# Each entry is an exact place the runner resolves before the run, as the job field launchRuns carries it (agreed with
+# Reads): an absolute path, or a clean path in the source for a laid install (esbuild under stage3/typescript's
+# node_modules), never a bare name, and cites the trace job it was read from (Adamic Loom's ruling on #ry3pfc6). An interpreter in the tree launders
+# nothing, since every exec it starts is checked in turn, so go, clang and adamic void wherever they appear.
+launcherTreePlace = re.compile(r"[^\s*?\[\]:]*/[^\s*?\[\]:]*")
+launcherTreeCompilers = {"go", "clang", "clang++", "cc", "gcc", "ld", "lld", "adamic"}
+
+
+def launcherTreeRefusal(tree):
+    """Why a launcher declaration's tree can't be read, or "" when it can: a list of {"place", "trace"}, each place an
+    exact place (launcherTreePlace) that's no compiler and named once, each trace the J- job it was read from."""
+    if not isinstance(tree, list):
+        return "its tree isn't a list"
+    seen = set()
+    for entry in tree:
+        if not isinstance(entry, dict) or set(entry) != {"place", "trace"}:
+            return "a tree entry is {\"place\", \"trace\"} and nothing else: %r" % (entry,)
+        place, trace = entry["place"], entry["trace"]
+        if (not isinstance(place, str) or not launcherTreePlace.fullmatch(place) or place.endswith("/")
+                or os.path.normpath(place) != place or place.startswith("../")):
+            return "tree place %r is no exact place: an absolute path or a clean path in the source, never a bare name or a glob" % (place,)
+        if os.path.basename(place) in launcherTreeCompilers or "adamic" in os.path.basename(place):
+            return "tree place %s is a compiler, which no launcher's tree may exec" % place
+        if not isinstance(trace, str) or not launchAllowJob.fullmatch(trace):
+            return "tree place %s cites no trace job (J- and seven letters and digits) it was read from" % place
+        if place in seen:
+            return "tree place %s is named twice" % place
+        seen.add(place)
+    return ""
+
+
 # compilerPackages are the compiler's own packages, which compilerMarker names: a packages entry naming one of them is a
 # compiler declaration.
 compilerPackages = ("internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic")
@@ -3435,6 +3469,9 @@ class Gate:
             if (package not in directories or not isinstance(runs, list) or not runs or any(not isinstance(name, str) or not name or "adamic" in name for name in runs)
                     or not isinstance(declaration.get("why"), str) or not declaration["why"].strip()):
                 raise ValueError("invalid launcher declaration for " + package + ": a package that names what it runs, none of it adamic, and why")
+            refusal = launcherTreeRefusal(declaration.get("tree", []))
+            if refusal:
+                raise ValueError("invalid launcher declaration for " + package + ": " + refusal)
 
         def marked(source):
             return compilerMarker.search(source) or launchMarker.search(source)
