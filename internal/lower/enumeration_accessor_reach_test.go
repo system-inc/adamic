@@ -191,14 +191,14 @@ func TestEnumerationReachGenericLiteralLowers(t *testing.T) {
 }
 
 // A getter-bearing literal inside a generic function whose own type mentions T, through a field holding
-// the function's value, but which initializes a variable declared as a non-generic interface: the literal
+// the function's value (T extends string, so the field has a native slot), but which initializes a variable declared as a non-generic interface: the literal
 // is reached only through that variable, so the interface is its owner, and beside Object.values of an
 // unrelated literal it lowers and agrees with Node. That's tsc's createTransformationContext shape (a
 // literal typed TransformationContext inside transformNodes<T>). Mutant DeclaredOwner (the declared type
 // is never taken) turns it red; the held row, whose annotation is Holder<T>, stays refused.
 func TestEnumerationReachDeclaredLiteralLowers(t *testing.T) {
 	t.Parallel()
-	const held = "export interface Counter { count: number; readonly twice: number; tag: unknown }\nexport function doubled<T>(value: T): number { const box: Counter = { count: 4, get twice(): number { return 8; }, tag: value }; return box.twice; }\n"
+	const held = "export interface Counter { count: number; readonly twice: number; tag: string }\nexport function doubled<T extends string>(value: T): number { const box: Counter = { count: 4, get twice(): number { return 8; }, tag: value }; return box.twice; }\n"
 	const main = "import { doubled } from './held.a';\nconst point = { x: 1, y: 2 };\nconsole.log(Object.values(point).join(','));\nconsole.log(String(doubled<string>('s')));\n"
 	enumerationReachAgrees(t, "declared literal", held, main, "1,2\n8\n")
 }
