@@ -19,6 +19,9 @@ import (
 // enumerationReachDepth bounds encodeJson's walk under its operand; a type past it makes reach unknown.
 const enumerationReachDepth = 16
 
+// enumerationReachWhy is a scratch diagnostic (#1atvfp5): why the last accessor reached. Never lands.
+var enumerationReachWhy string
+
 // enumerationAccessorReach is one enumeration's question to every accessor in the program: the operand,
 // whether the enumeration reads under it (encodeJson does, at any depth; Object.keys, values and entries
 // read the operand's own properties), and what's worked out from them on the first accessor met.
@@ -49,6 +52,7 @@ func (l *lowering) enumerationAccessorReaches(accessor *ast.Node, reach *enumera
 	}
 	owners, known := l.enumerationAccessorOwners(accessor, reach)
 	if !known {
+		enumerationReachWhy = "owner unknown for accessor at " + l.program.Where(accessor)
 		return true
 	}
 	// Related either way: an owner assignable to a read type is an upcast, and a read type assignable to
@@ -57,6 +61,7 @@ func (l *lowering) enumerationAccessorReaches(accessor *ast.Node, reach *enumera
 	for _, owner := range owners {
 		for _, read := range reach.types {
 			if l.checker.IsTypeAssignableTo(owner, read) || l.checker.IsTypeAssignableTo(read, owner) {
+				enumerationReachWhy = "related: accessor at " + l.program.Where(accessor) + " owner " + l.checker.TypeToString(owner) + " read " + l.checker.TypeToString(read)
 				return true
 			}
 		}
@@ -72,6 +77,7 @@ func (l *lowering) enumerationAccessorReaches(accessor *ast.Node, reach *enumera
 // type, a union or intersection of them, or a primitive, make it unknown.
 func (l *lowering) enumerationReadTypes(operand *ast.Node, deep bool) (bool, []*checker.Type) {
 	if operand == nil {
+		enumerationReachWhy = "unknown: no operand"
 		return true, nil
 	}
 	proven := l.concrete(l.checker.GetTypeAtLocation(operand))
@@ -80,6 +86,7 @@ func (l *lowering) enumerationReadTypes(operand *ast.Node, deep bool) (bool, []*
 	if l.eachReached(proven, 0, map[*checker.Type]bool{}, func(reached *checker.Type) bool {
 		return reached.Flags()&checker.TypeFlagsInstantiable != 0
 	}) {
+		enumerationReachWhy = "unknown: instantiable in " + l.checker.TypeToString(proven)
 		return true, nil
 	}
 	type step struct {
@@ -97,11 +104,13 @@ func (l *lowering) enumerationReadTypes(operand *ast.Node, deep bool) (bool, []*
 		}
 		seen[next.proven] = true
 		if next.depth > enumerationReachDepth {
+			enumerationReachWhy = "unknown: depth at " + l.checker.TypeToString(next.proven)
 			return true, nil
 		}
 		flags := next.proven.Flags()
 		switch {
 		case flags&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive|checker.TypeFlagsInstantiable) != 0:
+			enumerationReachWhy = "unknown: any, unknown, object or instantiable " + l.checker.TypeToString(next.proven)
 			return true, nil
 		case flags&checker.TypeFlagsUnion != 0:
 			// A union member is the type the value is, so it's read at the union's own depth. The union is
@@ -124,16 +133,19 @@ func (l *lowering) enumerationReadTypes(operand *ast.Node, deep bool) (bool, []*
 			// A primitive holds no accessor.
 			continue
 		case flags&checker.TypeFlagsObject == 0:
+			enumerationReachWhy = "unknown: not an object type " + l.checker.TypeToString(next.proven)
 			return true, nil
 		}
 		properties := l.checker.GetPropertiesOfType(next.proven)
 		indexes := l.checker.GetIndexInfosOfType(next.proven)
 		// {} and an empty interface are any object at all.
 		if len(properties) == 0 && len(indexes) == 0 && len(l.checker.GetSignaturesOfType(next.proven, checker.SignatureKindCall)) == 0 && len(l.checker.GetSignaturesOfType(next.proven, checker.SignatureKindConstruct)) == 0 {
+			enumerationReachWhy = "unknown: empty object type " + l.checker.TypeToString(next.proven)
 			return true, nil
 		}
 		for _, index := range indexes {
 			if !l.enumerationPrimitive(index.ValueType()) {
+				enumerationReachWhy = "unknown: object-valued index in " + l.checker.TypeToString(next.proven)
 				return true, nil
 			}
 		}
