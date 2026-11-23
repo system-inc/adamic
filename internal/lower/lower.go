@@ -266,6 +266,11 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 	if err := lowering.checkSlotWrites(); err != nil {
 		return nil, err
 	}
+	// Once every checked view is made: no view puts a value stored as an array behind an arm Array.isArray's brand
+	// decides, unread (#9z2ksv7).
+	if err := lowering.checkArrayArmViews(); err != nil {
+		return nil, err
+	}
 	// Each admitted allocator getter road, by the seal, the uses and the reach of every new it feeds (#837zjkt).
 	if err := lowering.checkFunctionConstructorRoads(); err != nil {
 		return nil, err
@@ -723,6 +728,12 @@ type lowering struct {
 	// runtime value, and kindTagFields the fields it holds (cast_kind_union_writes.go, #b5w3ycg head 2).
 	kindTagCarriers map[string][]*checker.Type
 	kindTagFields   map[string]bool
+	// arrayStoredNames is every property name a type stored as an array can have, found once, the first time
+	// Array.isArray meets a plain object arm (library_array_predicate.go, #s8gy89r).
+	arrayStoredNames map[string]bool
+	// arrayArmSites are the tests lowering built whose array brand decides an arm arrayExcludedArm admitted, which
+	// checkArrayArmViews holds against every checked view once lowering is done (library_array_predicate.go).
+	arrayArmSites []arrayArmSite
 	// slotWrites is each write admitted only where every allocation reaching it holds a slot for its field,
 	// judged once lowering is done (checkSlotWrites), slotWritesKept each kept, by its fields but its proof
 	// (recordSlotWrite), and builtTypes the type each object literal is built at, by the id of its own type, its

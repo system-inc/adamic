@@ -21,6 +21,11 @@ func init() {
 		lowers  bool
 		checked bool
 	}{"internal/oracle/testdata/library_array_is_array_union.a", true, false})
+	fixtures = append(fixtures, struct {
+		path    string
+		lowers  bool
+		checked bool
+	}{"internal/oracle/testdata/library_array_is_array_interface.a", true, false})
 }
 
 // The prelude's isArray overload narrows unknown to readonly unknown[], so reading the narrowed value as a
