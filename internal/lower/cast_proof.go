@@ -40,6 +40,9 @@ type castProof struct {
 	// kindUnion is a cast from an open-kind interface to a union of kinded interfaces (kindUnionCast): a tag
 	// test over the members' literals, then each member's checked view.
 	kindUnion *kindUnion
+	// untagged is a cast from a union no literal tag tells apart to one plain object, a member or narrower
+	// (untaggedUnionArm): a checked view of the target with no test at the cast (untaggedUnionCast).
+	untagged bool
 }
 
 // castRepair is the fix a refused cast names, by file kind. In .a a cast to a union member is refused too
@@ -452,6 +455,9 @@ func (l *lowering) unionMemberProof(source, target *checker.Type, stop func(cast
 	}
 	if l.overlapTarget(members, targets) {
 		return castProof{overlap: true}, nil
+	}
+	if l.untaggedUnionArm(members, targets) {
+		return castProof{untagged: true}, nil
 	}
 	// Checking kind cannot prove a refinement of a member's payload or callback signature.
 	for _, wanted := range targets {
