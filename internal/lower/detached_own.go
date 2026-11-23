@@ -177,6 +177,9 @@ func (l *lowering) detachedOwnCall(node *ast.Node) (ir.Expression, bool, error) 
 		if reason := l.prototypeHazard(args[0], ""); reason != "" {
 			return nil, true, l.notYet(args[0], "detached hasOwnProperty through an object view ("+reason+")")
 		}
+		if reason := l.privateKeyHazard(args[0], args[1]); reason != "" {
+			return nil, true, l.notYet(args[1], "an own-property test when "+reason)
+		}
 	}
 	target, err := l.expression(args[0])
 	if err != nil {
