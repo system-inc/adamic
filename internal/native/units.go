@@ -744,7 +744,7 @@ func buildUnitsWithLibrary(source, output string, options native_runtime.Options
 	}
 	arguments = append(arguments, compilerLink...)
 	arguments = append(arguments, objectPrefixFlags()...)
-	arguments = append(arguments, "-lm")
+	arguments = append(arguments, native_runtime.MathLinkFlags(options)...)
 	link := native_runtime.ClangIn(directory, compiler, arguments...)
 	var linked []byte
 	var linking time.Duration
