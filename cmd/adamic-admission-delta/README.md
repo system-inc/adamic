@@ -386,10 +386,10 @@ a native segfault where Node prints a value, is invisible to every head's gate.
 
 ```sh
 go run ./cmd/adamic-admission-delta --agreement --head HEAD \
-  --manifest /tmp/manifest.json --shard 1/4 --json
+  --manifest /tmp/manifest.json --open-tasks /tmp/open-tasks --shard 1/4 --json
 ```
 
-It takes `--head` and `--manifest`, both required, refuses `--base`, and
+It takes `--head`, `--manifest` and `--open-tasks`, all three required, refuses `--base`, and
 refuses every flag it wouldn't read (`--base-binary`, `--corpus`,
 `--corpus-filter`, `--budget`, `--seed` and the generator's two). Head's
 compiler is built or supplied as the delta's is. Each program of the manifest is
@@ -429,8 +429,14 @@ disagrees. Two more judgments then count apart what would otherwise disagree:
   plus `.pending`, whose message is `awaits #<task>: <reason>`. The sidecar
   excuses the program only while that task is open, and the run is sealed and
   can't ask, so the entry carries the task in `task`, a `pending <path>: awaits
-  #<task>` line names it on stderr, and the reader of the run checks it. A
-  pending program that times out is pending, never void. A sidecar naming a
+  #<task>` line names it on stderr. The run can't ask the task store, so
+  `--open-tasks` names the tasks open when it was asked, one id a line without
+  its `#`, an empty file holding none open and a line of any other form refused.
+  A sidecar naming a task the list doesn't hold excuses nothing: its program is
+  judged as if it had none, a `closed sidecar <path>: names #<task>, which isn't
+  open, so it excuses nothing` line names it, and `closed_sidecars` lists it.
+  That is how two live wrong answers hid for three weeks (#92cnfpf). A pending
+  program that times out is pending, never void. A sidecar naming a
   branch, `awaits <branch>: <reason>`, names no task, so its program disagrees.
   An agreeing program with a sidecar is agreeing.
 
@@ -461,7 +467,7 @@ agreement: compared N, agreeing A, ruled R, checked stops C, pending P, disagree
 a void program is in none of them. `--json` prints the report: those counts
 (`checked_stops` and `pending` among them), `disagreements` (each with its
 path, Node's, JavaScript's and native's observations, both compiles and
-`memory_unsafe`), `compiler_failures`, `stale_runtime_stops`, every program
+`memory_unsafe`), `compiler_failures`, `stale_runtime_stops`, `closed_sidecars`, every program
 with its judgment, and `verdict`. A program judged by what it did carries
 `outcome_hash`: hex SHA-256 over Node's, then JavaScript's, then native's exit,
 stdout and stderr, each field written as its length, a colon and its bytes,

@@ -3,7 +3,11 @@
 # "Agreement mode") as a sealed Loom job, so the run that judges every program head accepts runs every day and
 # diff.py can hold it against the day before (#wfnmhe9). Four jobs make the day, shards 1/4 to 4/4:
 #
-#   source /opt/adamic-block/environment.sh && source cloud/sandboxed-job.sh && bash cloud/agreement-daily/job.sh 2/4
+#   source /opt/adamic-block/environment.sh && source cloud/sandboxed-job.sh && AGREEMENT_OPEN_TASKS="<ids>" bash cloud/agreement-daily/job.sh 2/4
+#
+# AGREEMENT_OPEN_TASKS is every task a pending sidecar at head names that is open when the run is asked, ids without
+# their #, separated by spaces. The sealed run can't ask the task store, so the asker reads it. A sidecar naming any
+# other task excuses nothing (#92cnfpf). The variable is required: unset, nothing runs; set and empty, no task is open.
 #
 # It prints, in order: the compact report, diff.py compact's JSON gzipped and base64'd on one line, between
 # `AGREEMENT_REPORT_BEGIN` and `AGREEMENT_REPORT_END`, which `diff.py extract` reads back out of the job's log; the
@@ -11,13 +15,17 @@
 # run-time stop line, and its summary); and last one line `AGREEMENT_DAILY shard=<k/n> head=<sha> exit=<the tool's exit>`.
 #
 # Exit: the tool's own, 0 for a pass or a partial shard, 1 for red, 3 for void. Before the tool, 64 is a shard that
-# isn't k/n, 65 a preamble step that failed (the tree's commit, its submodules as repositories, npm) and 66 the tool's
+# isn't k/n or AGREEMENT_OPEN_TASKS unset, 65 a preamble step that failed (the tree's commit, its submodules as repositories, npm) and 66 the tool's
 # build or the manifest; after it, 67 is a report.json that didn't parse, so no report is printed.
 set -u -o pipefail
 
 shard=${1:-}
 if ! [[ $shard =~ ^([1-9][0-9]{0,5})/([1-9][0-9]{0,5})$ ]] || ((10#${BASH_REMATCH[1]} > 10#${BASH_REMATCH[2]})); then
 	echo "agreement-daily: the shard is '$shard', not k/n with 1 <= k <= n, so nothing ran"
+	exit 64
+fi
+if [ -z "${AGREEMENT_OPEN_TASKS+set}" ]; then
+	echo "agreement-daily: AGREEMENT_OPEN_TASKS is unset, so a sidecar naming a closed task would excuse its program; nothing ran"
 	exit 64
 fi
 
@@ -44,7 +52,8 @@ echo "agreement-daily: shard $shard at $head on $workers workers of $threads thr
 
 # Plain files only. A `2> >(tee ...)` once wrote stderr lines into the JSON.
 toolExit=0
-"$TMPDIR/agreement-tool" --agreement --head "$head" --manifest "$TMPDIR/manifest.json" --shard "$shard" --workers "$workers" \
+printf '%s\n' $AGREEMENT_OPEN_TASKS > "$TMPDIR/open-tasks"
+"$TMPDIR/agreement-tool" --agreement --head "$head" --manifest "$TMPDIR/manifest.json" --open-tasks "$TMPDIR/open-tasks" --shard "$shard" --workers "$workers" \
 	--json > "$TMPDIR/report.json" 2> "$TMPDIR/report.err" || toolExit=$?
 
 # The report goes first and the tool's lines last, since a job's ending quotes its log's last 40 lines: they read as

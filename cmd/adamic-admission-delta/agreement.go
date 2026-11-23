@@ -32,6 +32,9 @@ type agreementRun struct {
 	runtimeStops                                                 runtimeNotYetStopList
 	divergences                                                  ruledBackendDivergenceList
 	heldStops                                                    heldStopList
+	// openTasks is --open-tasks: the tasks open when the run was asked. A pending sidecar naming any other excuses
+	// nothing, since a closed task's sidecar hid two live wrong answers for three weeks (#92cnfpf).
+	openTasks map[string]bool
 	// jsonTypesBinary is --json-types: head's JSON types tool, built from head when it's empty.
 	jsonTypesBinary string
 }
@@ -94,7 +97,10 @@ type agreementReport struct {
 	Disagreements     []agreementDisagreement    `json:"disagreements"`
 	CompilerFailures  []agreementCompilerFailure `json:"compiler_failures"`
 	StaleRuntimeStops []string                   `json:"stale_runtime_stops"`
-	Programs          []agreementProgram         `json:"programs"`
+	// ClosedSidecars is every program that would disagree whose pending sidecar names a task --open-tasks doesn't
+	// hold, so it excused nothing and the program was judged as if it had none.
+	ClosedSidecars []string           `json:"closed_sidecars"`
+	Programs       []agreementProgram `json:"programs"`
 	Verdict           string                     `json:"verdict"`
 	Void              bool                       `json:"void"`
 	VoidReason        string                     `json:"void_reason,omitempty"`
@@ -125,8 +131,14 @@ func agreementUsage(given map[string]bool, manifestPath, shard string) error {
 	if manifestPath == "" {
 		return fmt.Errorf("--agreement requires --manifest")
 	}
-	_, _, err := parseShard(shard)
-	return err
+	if _, _, err := parseShard(shard); err != nil {
+		return err
+	}
+	// A sidecar excuses a program only while its task is open, and the sealed run can't ask, so the asker says.
+	if !given["open-tasks"] {
+		return fmt.Errorf("--agreement requires --open-tasks: a pending sidecar excuses a program only while its task is open, and the run can't ask")
+	}
+	return nil
 }
 
 // runAgreement builds head's compiler, classifies every program of the manifest's shard by head alone, and runs every
@@ -135,7 +147,7 @@ func agreementUsage(given map[string]bool, manifestPath, shard string) error {
 // A disagreement, a compiler failure or a stale run-time stop exits 1, as the delta's red
 // does; a run that proved nothing for a timeout or a missing clang exits 3, as the delta's void does.
 func runAgreement(agreement agreementRun) error {
-	result := agreementReport{Shard: agreement.shard, Verdict: "pass", Disagreements: []agreementDisagreement{}, CompilerFailures: []agreementCompilerFailure{}, StaleRuntimeStops: []string{}, Programs: []agreementProgram{}}
+	result := agreementReport{Shard: agreement.shard, Verdict: "pass", Disagreements: []agreementDisagreement{}, CompilerFailures: []agreementCompilerFailure{}, StaleRuntimeStops: []string{}, ClosedSidecars: []string{}, Programs: []agreementProgram{}}
 	// progress says on stderr where a run is, with its seconds so far, as it goes: a whole corpus takes a box many
 	// minutes, and a run its job's ceiling stops would otherwise end with nothing said about where its time went.
 	started := time.Now()
@@ -306,6 +318,12 @@ func runAgreement(agreement agreementRun) error {
 				if err != nil {
 					return err
 				}
+				// A sidecar naming a task that isn't open excuses nothing: the program is judged as if it had none.
+				if judged.Task != "" && !agreement.openTasks[judged.Task] {
+					result.ClosedSidecars = append(result.ClosedSidecars, record.Path)
+					lines = append(lines, fmt.Sprintf("closed sidecar %s: names #%s, which isn't open, so it excuses nothing", record.Path, judged.Task))
+					judged.Task = ""
+				}
 			}
 			switch {
 			case *record.Agree:
@@ -404,6 +422,31 @@ func pendingTask(headTree, path string) (string, error) {
 		return "", nil
 	}
 	return strings.TrimPrefix(match[1], "#"), nil
+}
+
+// openTaskID is a task's id as --open-tasks writes it: the form a pending sidecar names, without its #.
+var openTaskID = regexp.MustCompile(`^[0-9a-z]{6,9}$`)
+
+// readOpenTasks reads --open-tasks: one task id a line, without its #, blank lines skipped. An empty file is a run at
+// which no task is open, so no sidecar excuses anything. A line that isn't an id is refused, so a list written in the
+// wrong form, which would otherwise read as every task closed or open, stops the run before it starts.
+func readOpenTasks(path string) (map[string]bool, error) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return nil, fmt.Errorf("reading --open-tasks: %w", err)
+	}
+	open := map[string]bool{}
+	for number, line := range strings.Split(string(data), "\n") {
+		id := strings.TrimSpace(line)
+		if id == "" {
+			continue
+		}
+		if !openTaskID.MatchString(id) {
+			return nil, fmt.Errorf("--open-tasks %s:%d: %q is no task id (one a line, without its #)", path, number+1, id)
+		}
+		open[id] = true
+	}
+	return open, nil
 }
 
 // outcomeHash is hex SHA-256 over Node's, then JavaScript's, then native's exit, stdout and stderr, in that order.
