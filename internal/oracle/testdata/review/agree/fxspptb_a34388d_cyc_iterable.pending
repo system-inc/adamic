@@ -1,1 +1,1 @@
-awaits #7g4qv2b: the Map, holder and iterator cycle leaks under LeakSanitizer until cycles are decided
+awaits #66acn2a: agrees with Node but leaks 906 bytes at exit, a Map-held cycle from module initialization (J-afb401h)
