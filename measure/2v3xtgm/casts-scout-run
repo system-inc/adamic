@@ -32,6 +32,7 @@ step() {
 	exit 1
 }
 
+export ADAMIC_DICTIONARY_VIEW_TRACE="$work/dictionary-view-trace.tsv"
 echo "casts-scout: tree $root, scratch $work, ADAMIC_TYPESCRIPT_SOURCE=${ADAMIC_TYPESCRIPT_SOURCE:-unset}"
 
 step apply "$work/apply.log" bash stage3/apply.sh "$adapted"
@@ -174,3 +175,8 @@ step scout "$work/scout.log" scout
 grep -E '^(SCOUT|CAUSE|EXPECTED) ' "$work/scout.log"
 grep -E '^(ROWSGZ|ROWS) ' "$work/scout.log"
 echo "VERDICT OK"
+echo "TRACE lines $(wc -l < "$ADAMIC_DICTIONARY_VIEW_TRACE" 2>/dev/null || echo 0)"
+if [ -s "$ADAMIC_DICTIONARY_VIEW_TRACE" ]; then
+	cut -f1 "$ADAMIC_DICTIONARY_VIEW_TRACE" | sort | uniq -c | sed 's/^/TRACEKIND /'
+	sort "$ADAMIC_DICTIONARY_VIEW_TRACE" | uniq -c | sort -rn | awk 'NR<=80' | sed 's/^/TRACE /'
+fi

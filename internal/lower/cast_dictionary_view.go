@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"os"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -79,9 +80,25 @@ func (l *lowering) dictionaryView(node *ast.Node, source, target *checker.Type) 
 // a receiver typed any, and a dictionary whose type mentions a type parameter each answer yes, since an instantiation
 // may make it one present is assignable to.
 func (l *lowering) dictionaryViewWritten(present *checker.Type) bool {
+	// Measure only, never lands: ADAMIC_DICTIONARY_VIEW_TRACE names a file every tripping write is appended to.
+	trace, found := os.Getenv("ADAMIC_DICTIONARY_VIEW_TRACE"), false
+	note := func(reason string, node *ast.Node) {
+		found = true
+		if trace == "" {
+			return
+		}
+		where := "?"
+		if node != nil {
+			where = l.program.Where(node) + "\t" + l.checker.TypeToString(l.checker.GetTypeAtLocation(node))
+		}
+		if file, err := os.OpenFile(trace, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0o644); err == nil {
+			_, _ = file.WriteString(reason + "\t" + where + "\n")
+			_ = file.Close()
+		}
+	}
 	writes := l.propertyWritesOf()
 	if writes.libraryWhole {
-		return true
+		note("libraryWhole", nil)
 	}
 	for _, target := range writes.targets {
 		var receiver *ast.Node
@@ -91,19 +108,20 @@ func (l *lowering) dictionaryViewWritten(present *checker.Type) bool {
 			receiver = target.AsElementAccessExpression().Expression
 		}
 		if l.dictionaryViewReceiver(receiver, present) {
-			return true
+			note("write", receiver)
 		}
 	}
 	for _, member := range writes.libraryWrites {
 		call := member.Parent
 		if call == nil || call.Kind != ast.KindCallExpression || call.AsCallExpression().Expression != member || len(call.AsCallExpression().Arguments.Nodes) == 0 {
-			return true
+			note("libraryUncalled", member)
+			continue
 		}
 		if l.dictionaryViewReceiver(call.AsCallExpression().Arguments.Nodes[0], present) {
-			return true
+			note("libraryWrite", call.AsCallExpression().Arguments.Nodes[0])
 		}
 	}
-	return false
+	return found
 }
 
 // dictionaryViewReceiver is whether a write's receiver may be a dictionary present is assignable to: some member,
