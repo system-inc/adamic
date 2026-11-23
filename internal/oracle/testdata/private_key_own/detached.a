@@ -1,0 +1,11 @@
+class Base {
+	#secret: number = 1;
+	read(): number { return this.#secret; }
+}
+class Derived extends Base {
+	value: number = 2;
+}
+const derived = new Derived();
+const suffix = `${derived.read()}`;
+const own = Object.prototype.hasOwnProperty;
+console.log(`${own.call(derived, '#secret@' + suffix)}`);

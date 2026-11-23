@@ -32,6 +32,9 @@ func (l *lowering) inProperty(node *ast.Node) (ir.Expression, error) {
 	if strings.ContainsRune(key.Text(), 0) {
 		return nil, l.notYet(key, "in with a NUL key (native shape names)")
 	}
+	if reason := l.privateKeyHazard(binary.Right, key); reason != "" {
+		return nil, l.notYet(key, "in when "+reason)
+	}
 	// "key" in value narrows a union of object types to the members that declare the key, and any
 	// object carrying that key passes, so the narrowed member's fields would be read on trust. The
 	// sound use is presence on an unknown or single object type, where reads stay dynamic.

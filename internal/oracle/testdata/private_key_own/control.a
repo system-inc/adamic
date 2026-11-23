@@ -1,0 +1,12 @@
+class Base {
+	#secret: number = 1;
+	read(): number { return this.#secret; }
+}
+class Derived extends Base {
+	value: number = 2;
+}
+const derived = new Derived();
+const suffix = `${derived.read()}`;
+const plain = { a: 1 };
+const name = `${plain.a > 0 ? 'a' : 'b'}`;
+console.log(`${suffix} ${derived.hasOwnProperty('#secret')} ${derived.hasOwnProperty('value')} ${derived.propertyIsEnumerable('value')} ${'#secret' in derived} ${plain.hasOwnProperty(name)}`);
