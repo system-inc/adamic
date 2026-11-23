@@ -63,6 +63,11 @@ var latentPostLoweringSteps = []latent.PassStep{
 	// none and the pass is recorded as not run.
 	{Name: "checkRelationViewsTaken"},
 	{Name: "checkViewWidenedReads"},
+	// checkRangeUnionReads stops every IR expression that reads an object operand's layout raw where that operand
+	// may be a range type's Union a NodeArray stands for (#hae423v, range_unions.go), asked of the whole
+	// program's flow graph and of the field names every file declares: it reads the IR and rewrites nothing, so a
+	// body lowered on its own is recorded as not run, as checkViewWidenedReads is.
+	{Name: "checkRangeUnionReads"},
 	{Name: "checkHostMemberWrites", Scoped: true},
 	{Name: "asyncPayloadFailures", Scoped: true, Production: "if len(lowering.asyncPayloadFailures) > 0 [calls:]"},
 	{Name: "checkPromiseConsumption"},
