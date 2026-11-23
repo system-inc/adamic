@@ -4597,36 +4597,162 @@ class CensusLaunchers(unittest.TestCase):
     computed executable read as no launch (exec.Command(compilerPath()) passes)."""
 
     launcher = 'package launch\n\nimport "os/exec"\n\nfunc run() error {\n\treturn %s.Run()\n}\n'
+    # The same launcher launching through internal/toolchain alone, as the house's code does: no os/exec import, so a
+    # file the census read only when marked was never read (Keys' finding on #ry3pfc6).
+    toolchainLauncher = 'package launch\n\nimport "github.com/system-inc/adamic/internal/toolchain"\n\nfunc run() error {\n\treturn %s.Run()\n}\n'
+    # Every other road a launch takes, its packages imported as a launcher would.
+    roadsLauncher = 'package launch\n\nimport (\n\t"os"\n\t"os/exec"\n\t"syscall"\n\n\t"golang.org/x/sys/unix"\n)\n\nfunc run() error {\n\t%s\n\treturn nil\n}\n'
 
-    def census(self, source, launchers):
+    def census(self, source, launchers, files=None, executors="", changed=None):
+        """The census over a tree holding source as tool/launch/launch_test.go and files, {path: source}, with the gate
+        tools' map declaring launchers and executors.txt holding executors, changed the change's paths."""
         with tempfile.TemporaryDirectory() as root:
             tree, tools = os.path.join(root, "tree"), os.path.join(root, "tools")
             os.makedirs(os.path.join(tree, "tool/launch"))
             os.makedirs(os.path.join(tools, "cloud/fast-gate"))
             with open(os.path.join(tree, "tool/launch/launch_test.go"), "w") as handle:
                 handle.write(source)
+            for path, text in (files or {}).items():
+                os.makedirs(os.path.dirname(os.path.join(tree, path)), exist_ok=True)
+                with open(os.path.join(tree, path), "w") as handle:
+                    handle.write(text)
             with open(os.path.join(tools, "cloud/fast-gate/compiler-dependencies.json"), "w") as handle:
                 json.dump({"version": 1, "packages": {}, "drivers": {}, "launchers": launchers}, handle)
+            with open(os.path.join(tools, "cloud/fast-gate/executors.txt"), "w") as handle:
+                handle.write(executors)
             realRun(["git", "init", "-q", tree], check=True)
             realRun(["git", "-C", tree, "add", "."], check=True)
             gate = types.SimpleNamespace(arguments=types.SimpleNamespace(tree=tree, tools=tools), result={},
                                          git=lambda directory, *arguments: realRun(["git", "-C", directory] + list(arguments), capture_output=True, text=True, check=True).stdout.strip())
-            return run.Gate.compilerDependencies(gate, {"tool/launch", "internal/load"}, ["tool/launch/launch_test.go"])
+            directories = {"tool/launch", "internal/load"} | {os.path.dirname(path) for path in (files or {})}
+            run.Gate.compilerDependencies(gate, directories, ["tool/launch/launch_test.go"] if changed is None else changed)
+            return gate.result
 
     declared = {"tool/launch": {"runs": ["go", "node"], "why": "launches go test -c and Node, never adamic"}}
 
+    def test_a_declared_launcher_passes(self):
+        for call in ('exec.Command("node", "x.js")', 'exec.CommandContext(context.Background(), "go", "test", "-c")',
+                     'exec.CommandContext(ctx, `node`)', 'exec.Command("/usr/bin/node")'):
+            self.census(self.launcher % call, self.declared)
+        for call in ('toolchain.CommandIn(directory, "go", arguments...)', 'toolchain.Command("node", "x.js")',
+                     'toolchain.CommandContextIn(ctx, directory, "node", arguments...)'):
+            self.census(self.toolchainLauncher % call, self.declared)
+
+    def test_every_road_internal_toolchain_launches_by_is_read(self):
+        # The hole: toolchain.Command and CommandContextIn were never read, and a file importing only toolchain wasn't
+        # read at all. Mutants: toolchain's launchers dropped from launchRoads (each computed one passes); the marked gate
+        # put back for a declared launcher (the unmarked file passes).
+        for call in ("toolchain.CommandContextIn(ctx, root, program, arguments...)", "toolchain.Command(name)",
+                     "toolchain.CommandIn(directory, tool)"):
+            self.refused(self.toolchainLauncher % call, "launches a computed executable, " + call.split("(")[0])
+        self.refused(self.toolchainLauncher % 'toolchain.CommandContextIn(ctx, root, "python3", "x.py")',
+                     "launches python3, which its declaration's runs don't name")
+        # git's two launchers run git whatever their arguments.
+        self.refused(self.toolchainLauncher % 'toolchain.GitCommandIn(directory, "status")', "launches git, which its declaration's runs don't name")
+        self.census(self.toolchainLauncher % 'toolchain.GitCommand(arguments...)', {"tool/launch": {"runs": ["git"], "why": "x"}})
+        # Read by the name its file imports the package as, never its text.
+        aliased = self.toolchainLauncher.replace("import ", "import chain ")
+        self.refused(aliased % "chain.Command(name)", "launches a computed executable, chain.Command(name)")
+
+    def test_every_other_road_needs_a_literal_executable(self):
+        # Adamic Loom's rule on #ry3pfc6: os.StartProcess, syscall's and x/sys/unix's exec calls each name a literal
+        # executable, or refuse. Mutant: os's StartProcess dropped from launchRoads (the computed one passes).
+        for call in ("os.StartProcess(path, nil, nil)", "syscall.Exec(path, nil, nil)", "syscall.ForkExec(path, nil, nil)",
+                     "syscall.StartProcess(path, nil, nil)", "unix.Exec(path, nil, nil)"):
+            self.refused(self.roadsLauncher % call, "launches a computed executable, " + call.split("(")[0] + "(path)")
+        for call in ('os.StartProcess("/usr/bin/node", nil, nil)', 'syscall.Exec("/usr/bin/go", nil, nil)'):
+            self.census(self.roadsLauncher % call, self.declared)
+
+    def test_what_cant_be_read_refuses(self):
+        # Unknown refuses: a launcher named as a value, a call whose executable argument isn't there (half-parsed), a
+        # command's Path set by hand, a raw system call, cgo, and a file whose imports can't be read. Mutants: the value
+        # check (a func value of exec.Command passes), the argument count (exec.CommandContext("node") read as naming
+        # node, half-parsed), the Path, the raw call and cgo each unread.
+        for call, reason in (("run := exec.Command", "names exec.Command without calling it"),
+                             ("exec.CommandContext(ctx)", "launches by exec.CommandContext with arguments it can't read"),
+                             ('exec.CommandContext("node")', "launches by exec.CommandContext with arguments it can't read"),
+                             ('command := exec.Command("node"); command.Path = compilerPath()', "sets a command's Path by hand"),
+                             ("syscall.RawSyscall(59, 0, 0, 0)", "makes a raw system call, syscall.RawSyscall"),
+                             ("unix.Syscall(59, 0, 0, 0)", "makes a raw system call, unix.Syscall")):
+            self.refused(self.roadsLauncher % call, reason)
+        self.refused(self.launcher.replace('import "os/exec"', 'import (\n\t"C"\n\t"os/exec"\n)') % 'exec.Command("node")', "uses cgo")
+        self.refused(self.launcher.replace('import "os/exec"', 'import (\n\t"os/exec"; "os"\n)') % 'exec.Command("node")', "imports that can't be read")
+        # A blank import of a package that launches runs its init unread.
+        self.refused(self.launcher.replace('import "os/exec"', 'import (\n\t"os/exec"\n\t_ "syscall"\n)') % 'exec.Command("node")', "imports syscall as _")
+
+    # A house package that launches (an os/exec import), one that only imports it, and one that launches nothing.
+    helper = {"internal/helper/helper.go": 'package helper\n\nimport "os/exec"\n\ntype Plain struct{ Name string }\n\ntype Runner struct{}\n\nfunc (r *Runner) Run() {}\n\nconst Limit = 1\n\nvar Hook = Build\n\nfunc Build() error {\n\treturn exec.Command("go", "build").Run()\n}\n\nfunc Exports() {}\n',
+              "internal/helper/helper_test.go": 'package helper\n',
+              "internal/wrapper/wrapper.go": 'package wrapper\n\nimport "github.com/system-inc/adamic/internal/helper"\n\nfunc Wrap() error {\n\treturn helper.Build()\n}\n',
+              "internal/quiet/quiet.go": 'package quiet\n\nimport "os"\n\nfunc Read() {\n\tos.ReadFile("x")\n}\n'}
+    houseLauncher = 'package launch\n\nimport (\n\t"os/exec"\n\n\t%s"github.com/system-inc/adamic/internal/%s"\n)\n\nfunc run() error {\n\t%s\n\treturn exec.Command("node").Run()\n}\n'
+
+    def allowLine(self, function, launcher="tool/launch", package="internal/helper", why="its runs traced on J-abc1234"):
+        return "# allow-launch: %s %s.%s: %s\n" % (launcher, package, function, why)
+
+    def test_a_house_package_that_launches_is_refused_without_its_allow(self):
+        # Mutants: the house import read as no launch (the helper passes), and the launch read only directly (the wrapper,
+        # which launches through helper, passes).
+        self.refused(self.houseLauncher % ("", "helper", "helper.Build()"), "imports internal/helper, which launches (internal/helper/helper.go imports os/exec)")
+        self.refused(self.houseLauncher % ("", "wrapper", "wrapper.Wrap()"), "imports internal/wrapper, which launches (internal/wrapper/wrapper.go imports internal/helper, where internal/helper/helper.go imports os/exec)")
+        # One that launches nothing is no launch, and neither are its test files.
+        self.census(self.houseLauncher % ("", "quiet", "quiet.Read()"), self.declared, self.helper)
+        self.refused(self.houseLauncher % ("", "absent", "absent.Read()"), "imports internal/absent, which launches (internal/absent isn't in this tree)")
+
+    def refusedWith(self, source, reason, executors, files=None, changed=None):
+        with self.assertRaises(run.ChangeRefusal, msg=source) as raised:
+            self.census(source, self.declared, self.helper if files is None else files, executors, changed)
+        self.assertIn(reason, str(raised.exception), source)
+
     def refused(self, source, reason):
         with self.assertRaises(run.ChangeRefusal, msg=source) as raised:
-            self.census(source, self.declared)
+            self.census(source, self.declared, self.helper)
         self.assertIn("tool/launch is a declared launcher, refused at line ", str(raised.exception), source)
         self.assertIn(reason, str(raised.exception), source)
         return str(raised.exception)
 
-    def test_a_declared_launcher_passes(self):
-        for call in ('exec.Command("node", "x.js")', 'exec.CommandContext(context.Background(), "go", "test", "-c")',
-                     'exec.CommandContext(ctx, `node`)', 'toolchain.CommandIn(directory, "go", arguments...)',
-                     'exec.Command("/usr/bin/node")'):
-            self.census(self.launcher % call, self.declared)
+    def test_an_allowed_house_package_is_read_as_its_allowed_functions(self):
+        # Adamic Loom's narrowing on #ry3pfc6: the allow names each function, so another one, a variable or a type with
+        # methods refuses, read by the name the package is imported as. Mutants: the allowed set unread (Exports passes,
+        # adaptedtree calling buildcache.GoExports), and a type's methods unread (Runner passes).
+        allows = self.allowLine("Build")
+        self.census(self.houseLauncher % ("", "helper", "_ = helper.Plain{Name: \"x\"}; _ = helper.Limit; helper.Build()"), self.declared, self.helper, allows)
+        self.census(self.houseLauncher % ("built ", "helper", "built.Build()"), self.declared, self.helper, allows)
+        for call, named in (("helper.Exports()", "internal/helper.Exports"), ("_ = helper.Hook", "internal/helper.Hook"),
+                            ("_ = &helper.Runner{}", "internal/helper.Runner"), ("other := helper.Exports; other()", "internal/helper.Exports")):
+            self.refusedWith(self.houseLauncher % ("", "helper", call), "names %s, and no allow-launch line names it for tool/launch" % named, allows)
+        self.refusedWith(self.houseLauncher % ("bc ", "helper", "bc.Exports()"), "names internal/helper.Exports", allows)
+        self.refusedWith(self.houseLauncher % ("", "helper", "helper.Missing()"), "names helper.Missing, which internal/helper doesn't declare", allows)
+        self.refusedWith(self.houseLauncher % (". ", "helper", "Build()"), "imports github.com/system-inc/adamic/internal/helper as .", allows)
+
+    def test_an_allow_is_one_function_with_its_trace_or_the_tools_are_bad(self):
+        # A glob, a package alone, or a why naming no trace job raises, never read loosely. Mutant: the job check dropped.
+        for line in (self.allowLine("*"), "# allow-launch: tool/launch internal/*.Build: J-abc1234\n",
+                     "# allow-launch: tool/launch internal/helper: J-abc1234\n", self.allowLine("Build", why="traced"),
+                     self.allowLine("Build") + self.allowLine("Build")):
+            with self.assertRaises(ValueError, msg=line) as raised:
+                self.census(self.houseLauncher % ("", "helper", "helper.Build()"), self.declared, self.helper, line)
+            self.assertNotIsInstance(raised.exception, run.ChangeRefusal)
+            self.assertIn("allow-launch line", str(raised.exception), line)
+
+    def test_the_gate_tools_own_allows_read(self):
+        # The tools' own lines parse as one launcher, package and function each, so a bad one never reaches a gate.
+        tools = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(run.__file__))))
+        allows = run.launchAllows(tools)
+        self.assertEqual(sorted(allows.get(("stage3/lane/adaptedtree", "internal/buildcache"), {})), ["LeanProductOf", "PinnedGit", "Tool"])
+
+    def test_a_dead_allow_is_the_changes_when_it_touches_the_launcher(self):
+        # An allow naming a package the launcher doesn't import, a function it doesn't call, or a launcher the map doesn't
+        # declare is dead: the change's red when it touched the launcher's files or the map, else named on the base.
+        # Mutant: references never gathered (every allow reads dead).
+        allows = self.allowLine("Build") + self.allowLine("Exports") + self.allowLine("Build", package="internal/quiet") + self.allowLine("Build", launcher="tool/other")
+        source = self.houseLauncher % ("", "helper", "helper.Build()")
+        self.refusedWith(source, "dead allow-launch lines: executors.txt:2, allow-launch tool/launch internal/helper.Exports: no file of tool/launch names it", allows)
+        result = self.census(source, self.declared, self.helper, allows, changed=["internal/quiet/quiet.go"])
+        self.assertEqual(result.get("launch_allows_dead_on_base"), [
+            "executors.txt:2, allow-launch tool/launch internal/helper.Exports: no file of tool/launch names it",
+            "executors.txt:3, allow-launch tool/launch internal/quiet.Build: no file of tool/launch names it",
+            "executors.txt:4, allow-launch tool/other internal/helper.Build: tool/other isn't a declared launcher"])
 
     def test_a_comment_or_a_definition_is_no_launch(self):
         source = self.launcher % 'exec.Command("node")' + '\n// exec.Command(name) is what it would be\n/* exec.Command(other) */\nfunc CommandIn(directory, name string) {}\nfunc command() *exec.Cmd {\n\treturn nil\n}\nvar text = "exec.Command(name)"\n'
@@ -4665,15 +4791,11 @@ class CensusLaunchers(unittest.TestCase):
         self.assertIn("refused at line 6: launches a computed executable, exec.Command(compilerPath())",
                       self.refused(self.launcher % "exec.Command(compilerPath())", "computed executable"))
         for call in ("exec.CommandContext(ctx, name, arguments...)", 'exec.Command(name, "x")', "exec.Command(names[0])",
-                     'exec.Command("no" + "de")', "toolchain.CommandIn(directory, tool)", "exec.CommandContext(context.WithTimeout(ctx, limit), path)"):
+                     'exec.Command("no" + "de")', "exec.CommandContext(context.WithTimeout(ctx, limit), path)"):
             self.refused(self.launcher % call, "computed executable")
 
-    def test_a_launch_whose_path_is_always_computed_is_refused(self):
-        for call, reason in (("os.StartProcess(path, nil, nil)", "computed path (os.StartProcess)"),
-                             ("syscall.Exec(path, nil, nil)", "computed path (syscall.Exec)"),
-                             ("syscall.ForkExec(path, nil, nil)", "computed path (syscall.ForkExec)"),
-                             ("(&exec.Cmd{Path: path})", "builds an exec.Cmd by hand")):
-            self.refused(self.launcher % call, reason)
+    def test_a_hand_built_command_is_refused(self):
+        self.refused(self.launcher % "(&exec.Cmd{Path: path})", "builds an exec.Cmd by hand")
 
     def test_an_aliased_os_exec_is_read_and_a_dot_import_refused(self):
         aliased = self.launcher.replace('import "os/exec"', 'import run "os/exec"')

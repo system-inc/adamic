@@ -1890,52 +1890,255 @@ def goArguments(code, index, count):
     return arguments
 
 
-# A declared launcher's file is read for what it launches, and a launch it can't read refuses the file, naming its
+# A declared launcher's files are read for what they launch, and a launch one can't read refuses the file, naming its
 # line: the compiler-reference rule is per file, so a launcher that computed its executable could run the compiler
-# from a path built elsewhere and pass (system_adamic's review of #9qqvs57). So every exec.Command, exec.CommandContext
-# and CommandIn (internal/toolchain's) names its executable as a literal, and os.StartProcess, syscall.Exec,
-# syscall.ForkExec and a hand-built exec.Cmd, whose path is always computed, refuse. A file that hands a computed path
-# to a helper in another package isn't a launcher at all; the helper package is what gets declared.
-launchCall = re.compile(r'(?<![\w.])(?:(?P<package>\w+)\.)?(?P<function>CommandContext|Command|CommandIn)\(')
-computedLaunch = re.compile(r'\bos\.StartProcess\b|\bsyscall\.(?:Exec|ForkExec)\b')
+# from a path built elsewhere and pass (system_adamic's review of #9qqvs57). Every road a launch can take is read, each
+# call resolved by the name its file imports the package as, never by its text alone (Adamic Loom's rule on #ry3pfc6):
+# os/exec's and internal/toolchain's launchers, os.StartProcess, and syscall's and x/sys/unix's exec calls each name
+# their executable as a literal its declaration's runs list, or refuse. What can't be read refuses: a computed
+# executable, a spread where the executable sits, a launcher named without being called, a hand-built exec.Cmd or a
+# command's Path set by hand, a raw system call, cgo, and a dot or blank import of a package that launches.
+#
+# A launch can also run through another house package. A declared launcher that imports one that launches, read
+# transitively through the house packages it imports, is refused unless an allow-launch line of the gate tools'
+# executors.txt names the launcher, that package and each function the launcher calls in it, with the trace of that
+# call's own run (`# allow-launch: <launcher> <package>.<Function>: <why, naming its J- job>`). Then the launcher's
+# every other reference to a function, a variable or a type with methods of that package refuses, as an unallowed
+# import does. The backstop: what a traced run reads outside its key still voids at the live read check, so an allowed
+# function that later starts running the compiler is caught at the run, never trusted. What isn't read: a method called
+# on a value an allowed function returns, whose type the launcher never names.
 literalName = re.compile(r'"((?:[^"\\\n]|\\.)*)"|`([^`]*)`')
+# houseModule is adamic's module; an import under it is a house package, read from the tree.
+houseModule = "github.com/system-inc/adamic/"
+toolchainImport = houseModule + "internal/toolchain"
+# launchRoads are the functions that launch, by the package they're called through: the leading argument (from 1)
+# naming the executable, or the one executable the function always runs.
+launchRoads = {
+    "os/exec": {"Command": 1, "CommandContext": 2},
+    toolchainImport: {"Command": 1, "CommandIn": 2, "CommandContextIn": 3, "GitCommand": "git", "GitCommandIn": "git"},
+    "os": {"StartProcess": 1},
+    "syscall": {"Exec": 1, "ForkExec": 1, "StartProcess": 1},
+    "golang.org/x/sys/unix": {"Exec": 1},
+}
+# unreadRoads are calls whose launch, if any, can't be read from their arguments: raw system calls.
+unreadRoads = {
+    "syscall": {"Syscall", "Syscall6", "Syscall9", "RawSyscall", "RawSyscall6"},
+    "golang.org/x/sys/unix": {"Syscall", "Syscall6", "RawSyscall", "RawSyscall6", "RawSyscallNoError", "ForkExec"},
+}
+# launchAllowLine is an allow-launch line of the gate tools' executors.txt and launchAllowFields its words after
+# "allow-launch:": a launcher, a package and one function, no glob among them, then a colon and the why.
+launchAllowLine = re.compile(r"\s*#\s*allow-launch:(.*)")
+launchAllowFields = re.compile(r"([\w./-]+)\s+([\w./-]+)\.([A-Z]\w*):\s+(\S.*)")
+launchAllowJob = re.compile(r"\bJ-[0-9a-z]{7}\b")
 
 
-def launcherRefusal(source, runs):
-    """Why a declared launcher's Go file, running only runs, can't pass, as "line N: why", or None when it can."""
+def launchAllows(tools):
+    """The gate tools' allow-launch lines as {(launcher, package): {function: line number}}, from executors.txt. A line
+    that isn't one launcher, one package and one exported function with a why naming the trace job of that function's
+    run, or that names one twice, raises ValueError: a gate tools' allow is never read loosely."""
+    allows, name = {}, os.path.join(tools, "cloud/fast-gate/executors.txt")
+    if not os.path.exists(name):
+        return allows  # No allow, so every launching house package a launcher imports refuses.
+    with open(name) as handle:
+        for number, text in enumerate(handle, 1):
+            line = launchAllowLine.match(text)
+            if not line:
+                continue
+            fields = launchAllowFields.fullmatch(line.group(1).strip())
+            if not fields or not launchAllowJob.search(fields.group(4)):
+                raise ValueError("invalid allow-launch line %d: write it `# allow-launch: <launcher> <package>.<Function>: "
+                                 "<why, naming the trace job of that call's run>`, one launcher, package and function, no glob" % number)
+            launcher, package, function = fields.group(1), fields.group(2), fields.group(3)
+            named = allows.setdefault((launcher, package), {})
+            if function in named:
+                raise ValueError("invalid allow-launch line %d: %s.%s for %s is named again (line %d)" % (number, package, function, launcher, named[function]))
+            named[function] = number
+    return allows
+
+
+# importClause finds an import declaration in a Go file's code with its strings blanked, so an import spelled inside a
+# string (a fixture's source) is never read; importSpec reads one import from the same span with its strings kept.
+importClause = re.compile(r"(?m)^[ \t]*import\b[ \t]*(?:\((?P<group>[^)]*)\)|(?P<single>[^\n]*))")
+importSpec = re.compile(r'\s*(?:(?P<name>[\w.]+)\s+)?"(?P<path>[^"\\\n]+)"\s*;?\s*')
+
+
+def goImports(source):
+    """Each import of a Go file as (name, path, offset), name its alias or "" when it has none, or None when an import
+    can't be read: an import it can't read could be a launching package under any name."""
+    code, calls = goCode(source), goCode(source, strings=False)
+    imports = []
+    for clause in importClause.finditer(calls):
+        group = "group" if clause.group("group") is not None else "single"
+        offset = clause.start(group)
+        for line in code[clause.start(group):clause.end(group)].split("\n"):
+            spec = importSpec.fullmatch(line)
+            if spec:
+                imports.append((spec.group("name") or "", spec.group("path"), offset + line.index('"')))
+            elif line.strip():
+                return None
+            offset += len(line) + 1
+    return imports
+
+
+class LaunchHouse:
+    """The house packages of a tree a declared launcher can import, read from their Go files: whether each launches,
+    the name it's imported by, and what it declares. files maps a package directory to its tracked Go files."""
+
+    def __init__(self, tree, files, allows):
+        self.tree, self.files, self.allows = tree, files, allows
+        self.launchesMemo, self.sources = {}, {}
+
+    def source(self, path):
+        if path not in self.sources:
+            with open(os.path.join(self.tree, path)) as handle:
+                self.sources[path] = handle.read()
+        return self.sources[path]
+
+    def built(self, package):
+        """package's Go files an importer builds: its own directory's, its tests left out."""
+        return [path for path in self.files.get(package, ()) if not path.endswith("_test.go")]
+
+    def packageName(self, package):
+        for path in self.built(package):
+            clause = re.search(r"(?m)^package[ \t]+(\w+)", goCode(self.source(path), strings=False))
+            if clause:
+                return clause.group(1)
+        return None
+
+    def launches(self, package, visiting=()):
+        """Where package launches, as "<file> <why>", read through the house packages its built files import, or ""
+        when none launches. A house package the tree doesn't hold, or a file whose imports can't be read, launches,
+        since what it runs can't be read."""
+        if package in self.launchesMemo:
+            return self.launchesMemo[package]
+        where, files = "", self.built(package)
+        if not files:
+            where = package + " isn't in this tree"
+        for path in files:
+            source = self.source(path)
+            imports = goImports(source)
+            if imports is None:
+                where = path + " has imports that can't be read"
+                break
+            calls = goCode(source, strings=False)
+            for name, imported, _ in imports:
+                local = name or imported.rsplit("/", 1)[-1]
+                if imported in ("os/exec", "C"):
+                    where = "%s imports %s" % (path, imported)
+                elif imported in launchRoads or imported in unreadRoads:
+                    members = set(launchRoads.get(imported, ())) | unreadRoads.get(imported, set())
+                    found = name in (".", "_") or re.search(r"(?<![\w.])" + re.escape(local) + r"\s*\.\s*(?:" + "|".join(sorted(members)) + r")\b", calls)
+                    where = "%s calls %s's launchers" % (path, imported) if found else ""
+                elif imported.startswith(houseModule) and imported[len(houseModule):] not in visiting:
+                    inner = self.launches(imported[len(houseModule):], visiting + (package,))
+                    where = "%s imports %s, where %s" % (path, imported[len(houseModule):], inner) if inner else ""
+                if where:
+                    break
+            if where:
+                break
+        self.launchesMemo[package] = where
+        return where
+
+    def declared(self, package, member):
+        """What package's built files declare member as: "func", "var", "const", "type", "methods" (a type with methods
+        declared on it), or None when none declares it."""
+        kinds = set()
+        for path in self.built(package):
+            calls = goCode(self.source(path), strings=False)
+            if re.search(r"(?m)^func[ \t]+" + re.escape(member) + r"\b", calls):
+                kinds.add("func")
+            if re.search(r"(?m)^func[ \t]*\((?:[^)\n]*?[ \t*])?" + re.escape(member) + r"\b[^)\n]*\)", calls):
+                kinds.add("methods")
+            for keyword in ("var", "const", "type"):
+                single = r"(?m)^" + keyword + r"[ \t]+(?:\w+[ \t]*,[ \t]*)*" + re.escape(member) + r"\b"
+                block = r"(?ms)^" + keyword + r"[ \t]*\((?:(?!^\)).)*?^[ \t]+(?:\w+[ \t]*,[ \t]*)*" + re.escape(member) + r"\b"
+                if re.search(single, calls) or re.search(block, calls):
+                    kinds.add(keyword)
+        if "func" in kinds:
+            return "func"
+        if "type" in kinds:
+            return "methods" if "methods" in kinds else "type"
+        return next((kind for kind in ("var", "const") if kind in kinds), None)
+
+
+def launcherRefusal(source, runs, house=None, launcher=None, references=None):
+    """Why a declared launcher's Go file, running only runs, can't pass, as "line N: why", or None when it can. house
+    (a LaunchHouse) reads the house packages it imports, and with none any house package it imports that isn't
+    internal/toolchain refuses. references, a dict, gathers {(package, member)} of each allowed house package the file
+    names, for the census's dead allows."""
     code, calls = goCode(source), goCode(source, strings=False)
     line = lambda index: "line %d" % (code.count("\n", 0, index) + 1)
     found = compilerMarker.search(source)
     if found:
         return "%s: references the compiler (%s)" % (line(found.start()), found.group(0))
-    execNames = {"exec"}
-    for alias in re.finditer(r'(?:^|[\s(])([\w.]+)\s+"os/exec"', code):
-        if alias.group(1) in (".", "_"):
-            return "%s: imports os/exec as %s, so its launches can't be read" % (line(alias.start(1)), alias.group(1))
-        execNames.add(alias.group(1))
-    found = computedLaunch.search(calls)
-    if found:
-        return "%s: launches by a computed path (%s)" % (line(found.start()), found.group(0))
-    for name in execNames:
-        # A composite literal as gofmt writes it, never a func's *exec.Cmd result before its body.
-        found = re.search(r'(?<![\w.*])' + re.escape(name) + r'\.Cmd\{', calls)
-        if found:
-            return "%s: builds an %s.Cmd by hand, a computed path" % (line(found.start()), name)
-    for call in launchCall.finditer(calls):
-        package, function = call.group("package"), call.group("function")
-        if function == "CommandIn" or package in execNames:
-            if re.search(r'\bfunc\s*(?:\([^)]*\)\s*)?$', calls[calls.rfind("\n", 0, call.start()) + 1:call.start()]):
-                continue  # A definition, not a launch.
-        else:
+    imports = goImports(source)
+    if imports is None:
+        return "line 1: has imports that can't be read, so its launches can't be read"
+    names = {}
+    for name, path, offset in imports:
+        housePackage = path[len(houseModule):] if path.startswith(houseModule) and path != toolchainImport else None
+        if path == "C":
+            return "%s: uses cgo, so its launches can't be read" % line(offset)
+        if housePackage is not None:
+            where = house.launches(housePackage) if house else housePackage + " isn't read without its tree"
+            if not where:
+                continue
+        elif path not in launchRoads and path not in unreadRoads:
             continue
-        arguments = goArguments(code, call.end(), 1 if function == "Command" else 2)
-        executable = arguments[-1] if len(arguments) == (1 if function == "Command" else 2) else ""
-        literal = literalName.fullmatch(executable)
-        if not literal:
-            return "%s: launches a computed executable, %s(%s)" % (line(call.start()), call.group(0)[:-1], executable or "...")
-        launched = literal.group(1) if literal.group(1) is not None else literal.group(2)
+        if name in (".", "_"):
+            return "%s: imports %s as %s, so its launches can't be read" % (line(offset), path, name)
+        if housePackage is not None and not (house and house.allows.get((launcher, housePackage))):
+            return "%s: imports %s, which launches (%s), and no allow-launch line names it for %s" % (line(offset), housePackage, where, launcher)
+        local = name or (house.packageName(housePackage) if housePackage is not None else path.rsplit("/", 1)[-1])
+        if not local:
+            return "%s: imports %s, whose package name can't be read" % (line(offset), housePackage)
+        names[local] = (path, housePackage)
+    for local, (path, housePackage) in names.items():
+        if path == "os/exec":
+            # A composite literal as gofmt writes it, never a func's *exec.Cmd result before its body.
+            found = re.search(r"(?<![\w.*])" + re.escape(local) + r"\.Cmd\{", calls)
+            if found:
+                return "%s: builds an %s.Cmd by hand, a computed path" % (line(found.start()), local)
+    if any(path in ("os/exec", toolchainImport) for path, _ in names.values()):
+        found = re.search(r"\.\s*Path\s*=(?!=)", calls)
+        if found:
+            return "%s: sets a command's Path by hand, a computed path" % line(found.start())
+    for selector in re.finditer(r"(?<![\w.])(?P<local>\w+)\s*\.\s*(?P<member>\w+)", calls):
+        if selector.group("local") not in names:
+            continue
+        path, housePackage = names[selector.group("local")]
+        local, member, at = selector.group("local"), selector.group("member"), line(selector.start())
+        if housePackage is not None:
+            kind = house.declared(housePackage, member)
+            if kind is None:
+                return "%s: names %s.%s, which %s doesn't declare, so it can't be read" % (at, local, member, housePackage)
+            if kind in ("func", "var", "methods"):
+                if member not in house.allows[(launcher, housePackage)]:
+                    return "%s: names %s.%s, and no allow-launch line names it for %s" % (at, housePackage, member, launcher)
+                if references is not None:
+                    references.setdefault((launcher, housePackage), set()).add(member)
+            continue
+        if member in unreadRoads.get(path, ()):
+            return "%s: makes a raw system call, %s.%s, so its launches can't be read" % (at, local, member)
+        argument = launchRoads.get(path, {}).get(member)
+        if argument is None:
+            continue
+        opening = re.compile(r"\s*\(").match(calls, selector.end())
+        if not opening:
+            return "%s: names %s.%s without calling it, so what it launches can't be read" % (at, local, member)
+        if isinstance(argument, str):
+            launched = argument
+        else:
+            arguments = goArguments(code, opening.end(), argument)
+            executable = arguments[-1] if len(arguments) == argument else ""
+            if len(arguments) < argument or any(not value or value.endswith("...") for value in arguments):
+                return "%s: launches by %s.%s with arguments it can't read" % (at, local, member)
+            literal = literalName.fullmatch(executable)
+            if not literal:
+                return "%s: launches a computed executable, %s.%s(%s)" % (at, local, member, executable)
+            launched = literal.group(1) if literal.group(1) is not None else literal.group(2)
         if os.path.basename(launched) not in runs:
-            return "%s: launches %s, which its declaration's runs don't name" % (line(call.start()), launched)
+            return "%s: launches %s, which its declaration's runs don't name" % (at, launched)
     return None
 
 
@@ -3189,7 +3392,14 @@ class Gate:
             if not driver.startswith("stage3/drivers/") or not isinstance(inputs, list) or not inputs or any(value not in directories for value in inputs):
                 raise ValueError("invalid compiler driver dependencies for " + driver)
         missing, touchedFiles = [], set(changed)
-        for path in self.git(self.arguments.tree, "ls-files").splitlines():
+        listed = self.git(self.arguments.tree, "ls-files").splitlines()
+        goFiles = {}
+        for path in listed:
+            if path.endswith(".go"):
+                goFiles.setdefault(os.path.dirname(path), []).append(path)
+        allows = launchAllows(self.arguments.tools)
+        house, references, launcherFiles = LaunchHouse(self.arguments.tree, goFiles, allows), {}, {}
+        for path in listed:
             if path.startswith("stage3/drivers/") and path.endswith((".py", ".sh", ".cjs", ".mjs")):
                 with open(os.path.join(self.arguments.tree, path)) as handle:
                     source = handle.read()
@@ -3209,23 +3419,45 @@ class Gate:
                 elif marked(source):
                     self.result.setdefault("compiler_consumers_without_test_package", []).append(path)
                 continue
-            if not marked(source) or package in packages:
+            if package in packages:
                 continue
             if package in launchers:
-                refusal = launcherRefusal(source, launchers[package]["runs"])
+                # Every file of a declared launcher is read, marked or not: one launching through internal/toolchain or
+                # another house package carries no os/exec import (Keys' finding on #ry3pfc6).
+                launcherFiles.setdefault(package, []).append(path)
+                refusal = launcherRefusal(source, launchers[package]["runs"], house, package, references)
                 if not refusal:
                     continue  # A declared launcher: it runs only what it names, and nothing here references the compiler.
                 missing.append((path, path + " (" + package + " is a declared launcher, refused at " + refusal + ")"))
                 continue
+            if not marked(source):
+                continue
             missing.append((path, path))
+        # An allow-launch line no declared launcher's files use is dead: the launcher isn't declared, or none of its files
+        # names that function of that package. It's the change's when the change touched the launcher's files or the map,
+        # and named on the base otherwise, as a consumer is.
+        dead = []
+        for (launcher, imported), functions in sorted(allows.items()):
+            for function, number in sorted(functions.items()):
+                if function in references.get((launcher, imported), ()):
+                    continue
+                named = "executors.txt:%d, allow-launch %s %s.%s: %s" % (number, launcher, imported, function,
+                         "%s isn't a declared launcher" % launcher if launcher not in launchers else "no file of %s names it" % launcher)
+                touched = [path for path in [compilerDependenciesPath] + launcherFiles.get(launcher, []) if path in touchedFiles]
+                dead.append((touched[0] if touched else None, named))
+        if any(path is None for path, _ in dead):
+            self.result["launch_allows_dead_on_base"] = [named for path, named in dead if path is None]
+        dead = [named for path, named in dead if path is not None]
         # Only consumers this change adds or edits can turn its gate red; any already on the base are named, so one
         # undeclared package never reds every worker's gate.
         onBase = [named for path, named in missing if path not in touchedFiles]
         if onBase:
             self.result["compiler_consumers_undeclared_on_base"] = onBase
         missing = [named for path, named in missing if path in touchedFiles]
-        if missing:
-            raise ChangeRefusal("compiler dependency census: undeclared compiler consumers: " + ", ".join(missing))
+        if missing or dead:
+            raise ChangeRefusal("compiler dependency census: " + "; ".join(
+                (["undeclared compiler consumers: " + ", ".join(missing)] if missing else []) +
+                (["dead allow-launch lines: " + ", ".join(dead)] if dead else [])))
         self.result["compiler_dependency_map"] = {"root": root, "path": compilerDependenciesPath}
         return packages
 

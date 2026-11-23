@@ -1628,6 +1628,12 @@ reads stage3/lane/adaptedtree *.go
 # kept until main's move lands, so the walk is keyed on both sides of the landing; then adaptedtree's line goes.
 # TestTheAdaptedTreeBuildReachesOnlyItsDeclaredFile via leancensus linknames: internal/leancensus/leancensus.go:765
 reads stage3/lane/adaptedtree/census *.go
+# The adapted tree is a declared launcher whose build goes through internal/buildcache, a house package that launches,
+# so the launcher census reads it only as these three functions, each traced running no compiler (run.py's
+# launcherRefusal, Adamic Loom's rule on #ry3pfc6). Any other function of buildcache it calls is refused.
+# allow-launch: stage3/lane/adaptedtree internal/buildcache.LeanProductOf: builds the adapted tree in its own process over the handed paths; J-crks9vh traced TestProduct_Stage3AdaptedTree building whole (a 588 s miss), its every exec git, node, python3 or esbuild, none of go, clang or adamic
+# allow-launch: stage3/lane/adaptedtree internal/buildcache.PinnedGit: runs git alone, rev-list and pack-objects over the pinned TypeScript source, inside the build J-crks9vh traced
+# allow-launch: stage3/lane/adaptedtree internal/buildcache.Tool: runs git, node and python3 with --version for the key, inside the build J-crks9vh traced
 # TestAGoProductsBuildReadsNoStateButItsInitializers (internal/buildcache/makecensus_test.go:207) runs the same census
 # from the checkout's root (repositoryRootForTest, make_relative.go:492), so the same walk reads every .go file
 # (internal/leancensus/leancensus.go:457, :749-781). Moving the census into its own package, as compilercensus does,
