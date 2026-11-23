@@ -1,0 +1,1 @@
+6:14: Adamic 0.1 refuses a downcast to Receiver whose tag test is vacuous: every { readonly kind: "Receiver"; } has kind "Receiver"; give Receiver a tag of its own in a discriminated union, or build the value as a Receiver so the compiler can prove it
