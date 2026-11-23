@@ -1,0 +1,89 @@
+# #hwjx7gw family 46: the census both ways on one box, base (main's entries_records.go) then the head, each side's
+# entry pass (src/tsc/tsc.ts) and files pass (src/compiler) over one adapted tree, compared by stage3/census/pair/pair.py.
+# Also prints the adapted decoder, every weak-read site per side, and unit builder.ts:2252:1's findings in order.
+# Run with bash after the sealed opening (sandboxed_repositories, sandboxed_npm stage3/api stage3/typescript,
+# sandboxed_typescript_source). Never merged.
+set -uo pipefail
+root=$PWD; K=proof/performance/hwjx7gw; R=$TMPDIR/c46; mkdir -p "$R"
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg), ADAMIC_TYPESCRIPT_SOURCE=${ADAMIC_TYPESCRIPT_SOURCE:-unset}"
+step() { local name=$1 log=$2 begun=$SECONDS; shift 2; "$@" > "$log" 2>&1; local s=$?; if [ $s -eq 0 ]; then echo "PASS $name ($((SECONDS - begun)) s)"; return 0; fi; echo "FAIL $name (exit $s)"; tail -30 "$log"; echo "VERDICT FAIL $name"; exit 1; }
+ts=$root/stage3/api/node_modules/typescript
+[ -f "$ts/lib/typescript.js" ] && echo "PASS stock typescript $(node -p "require('$ts/package.json').version")" || { echo "FAIL stock typescript: no $ts/lib/typescript.js"; echo "VERDICT FAIL"; exit 1; }
+step apply "$R/apply.log" bash stage3/apply.sh "$R/adapted"
+echo "== the adapted decoder (src/compiler/builder.ts)"
+grep -n "export function toBuilderStateFileInfoForMultiEmit" "$R/adapted/src/compiler/builder.ts"
+line=$(grep -n "export function toBuilderStateFileInfoForMultiEmit" "$R/adapted/src/compiler/builder.ts" | cut -d: -f1)
+[ -n "$line" ] && sed -n "$((line - 1)),$((line + 7))p" "$R/adapted/src/compiler/builder.ts" | cat -n | sed "s/^ *\([0-9]*\)/\1+$((line - 2))/"
+grep -n -A9 "export type IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo\b" "$R/adapted/src/compiler/builder.ts" | cut -c1-200
+grep -n "export type IncrementalMultiFileEmitBuildInfoFileInfo\b" "$R/adapted/src/compiler/builder.ts" | cut -c1-200
+grep -n -A6 "export interface FileInfo {" "$R/adapted/src/compiler/builderState.ts" | cut -c1-200
+grep -n "export type ResolutionMode\b" "$R/adapted/src/compiler/types.ts" | cut -c1-200
+echo "== the five lines family 46 leaves"
+grep -n "exports?: \|imports?: " "$R/adapted/src/compiler/moduleNameResolver.ts" | head -6 | cut -c1-200
+for at in moduleNameResolver.ts:2256 moduleNameResolver.ts:2584 moduleNameResolver.ts:2620 moduleNameResolver.ts:2671 builder.ts:330; do f=${at%%:*}; n=${at##*:}; echo "$at: $(sed -n "${n}p" "$R/adapted/src/compiler/$f" | cut -c1-200)"; done
+side() {
+	local side=$1 out=$R/$1
+	mkdir -p "$out"
+	python3 stage3/census/latent/make_overlay.py "$root" "$out/latent-overlay" && gofmt -w "$out"/latent-overlay/*.go &&
+	python3 stage3/meter/entry_overlay.py "$out/latent-overlay" "$out/entry-overlay" && gofmt -w "$out"/entry-overlay/*.go &&
+	go build -buildvcs=false -overlay="$out/entry-overlay/overlay.json" -o "$out/entry-census" ./stage3/census/latent/tool &&
+	go build -buildvcs=false -overlay="$out/latent-overlay/overlay.json" -o "$out/latent-census" ./stage3/census/latent/tool &&
+	sha256sum internal/lower/entries_records.go "$out/entry-census" "$out/latent-census"
+}
+run() {
+	local out=$R/$1
+	export LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 LATENT_TAIL=1 CENSUS_MODULE_FORMAT=CommonJSBundle
+	"$out/entry-census" "$R/adapted/src/tsc/tsc.ts" "$out/entry.jsonl" && "$out/latent-census" "$R/adapted/src/compiler" "$out/compiler.jsonl"
+}
+F=internal/lower/entries_records.go; cp "$F" "$R/head.go"
+cp "$K/base.go.txt" "$F"
+step build-base "$R/build-base.log" side base; grep -E '^[0-9a-f]{64} ' "$R/build-base.log" | cut -c1-90
+cp "$R/head.go" "$F"
+step build-head "$R/build-head.log" side head; grep -E '^[0-9a-f]{64} ' "$R/build-head.log" | cut -c1-90
+step census-base "$R/census-base.log" run base
+step census-head "$R/census-head.log" run head
+for s in base head; do echo "$s: entry $(wc -l < "$R/$s/entry.jsonl") rows, compiler $(wc -l < "$R/$s/compiler.jsonl") rows"; done
+cat > "$R/extra.py" << 'PYTHON'
+import sys
+sys.path.insert(0, 'stage3/census/pair')
+import pair
+weak = 'a union or optional field read in a program with record storage'
+for side in ('base', 'head'):
+    for passname in ('entry', 'compiler'):
+        rows = pair.load(f'{sys.argv[1]}/{side}/{passname}.jsonl')
+        sites, unit = set(), []
+        for row in rows[1:]:
+            for f in row.get('findings') or []:
+                where = f.get('where', '').split('/src/', 1)[-1]
+                u = (f.get('unit') or '').split('/src/', 1)[-1]
+                if f.get('reason') == weak:
+                    sites.add((where, u, f.get('phase')))
+                if u == 'compiler/builder.ts:2252:1':
+                    unit.append(f"{f.get('phase')} {f.get('kind')} {where}: {f.get('reason')}"[:260])
+        kinds = {}
+        panics = []
+        for row in rows[1:]:
+            for f in row.get('findings') or []:
+                kinds[f.get('kind')] = kinds.get(f.get('kind'), 0) + 1
+                if f.get('kind') == 'panic':
+                    panics.append(f"{f.get('where', '').split('/src/', 1)[-1]}: {f.get('reason')}"[:240])
+        print(f'== {side} {passname}: findings by kind {dict(sorted(kinds.items(), key=lambda kv: str(kv[0])))}, {len(panics)} panics')
+        for line in panics[:20]:
+            print('  panic', line)
+        print(f'== {side} {passname}: {len(sites)} weak-read sites')
+        for s in sorted(sites):
+            print('  weak', *s)
+        print(f'== {side} {passname}: unit builder.ts:2252:1, {len(unit)} findings in order')
+        for line in unit[:12]:
+            print('  ', line)
+PYTHON
+python3 -I "$R/extra.py" "$R"
+for pass in entry compiler; do
+	if python3 -I stage3/census/pair/pair.py "$R/base/$pass.jsonl" "$R/head/$pass.jsonl" "$R/adapted" --typescript "$ts" --json "$R/pair-$pass.json" --report "$R/pair-$pass.md" > "$R/pair-$pass.log" 2>&1; then echo "PASS pair-$pass"; else echo "FAIL pair-$pass"; tail -12 "$R/pair-$pass.log"; continue; fi
+	echo "== pair $pass"
+	sed -n '1,14p' "$R/pair-$pass.md" | cut -c1-300
+	echo "-- every section past the reason table, whole:"
+	awk '/^## /{p=1} p' "$R/pair-$pass.md" | grep -v '^$' | cut -c1-300
+	python3 -I -c 'import json,sys; d=json.load(open(sys.argv[1])); [print(n, side, len(d[n]["panics"][side])) for n in ("raw_findings","distinct_reads") for side in ("before","after")]' "$R/pair-$pass.json"
+done
+echo "VERDICT OK (read the pair tables and the decoder rows)"
