@@ -306,7 +306,9 @@ func (l *lowering) enumerationLiteralDeclaredOwner(literal *ast.Node) (*checker.
 // IdentifierNameMap<V> (transformers/utilities.ts) is the case: its size getter kept family 17's sites
 // unknown until the class was read at V = any (J-x8teca6).
 func (l *lowering) enumerationAnyInstance(side *checker.Type, static bool) *checker.Type {
-	if static || side.ObjectFlags()&checker.ObjectFlagsInterface == 0 || side.AsInterfaceType() == nil {
+	// A class's declared type carries ObjectFlagsClass, not ObjectFlagsInterface (J-w9vdbtp read Box<T>
+	// uninstantiated when only the interface bit was asked).
+	if static || side.ObjectFlags()&checker.ObjectFlagsClassOrInterface == 0 || side.AsInterfaceType() == nil {
 		return side
 	}
 	parameters := side.AsInterfaceType().TypeParameters()
