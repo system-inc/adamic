@@ -114,7 +114,7 @@ func (l *lowering) enumerationDescriptors(where, operand *ast.Node, deep, checke
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		if (node.Kind == ast.KindGetAccessor || node.Kind == ast.KindSetAccessor) && l.enumerationAccessorReaches(node, &reach) {
-			failure = &Refused{Where: l.program.Where(where), What: "Object enumeration with getter or accessor descriptors", Fix: "use own data properties for this first reflection implementation"}
+			failure = &Refused{Where: l.program.Where(where), What: "Object enumeration with getter or accessor descriptors", Fix: "use own data properties for this first reflection implementation [reach: " + enumerationReachWhy + "]"}
 		}
 		if node.Kind == ast.KindObjectLiteralExpression {
 			for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
