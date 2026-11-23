@@ -4628,7 +4628,7 @@ class CensusLaunchers(unittest.TestCase):
             run.Gate.compilerDependencies(gate, directories, ["tool/launch/launch_test.go"] if changed is None else changed)
             return gate.result
 
-    declared = {"tool/launch": {"runs": ["go", "node"], "why": "launches go test -c and Node, never adamic"}}
+    declared = {"tool/launch": {"runs": ["go", "node"], "why": "launches go test -c and Node, never adamic", "heldCompilers": ["internal/load"]}}
 
     def test_a_declared_launcher_passes(self):
         for call in ('exec.Command("node", "x.js")', 'exec.CommandContext(context.Background(), "go", "test", "-c")',
@@ -4649,7 +4649,7 @@ class CensusLaunchers(unittest.TestCase):
                      "launches python3, which its declaration's runs don't name")
         # git's two launchers run git whatever their arguments.
         self.refused(self.toolchainLauncher % 'toolchain.GitCommandIn(directory, "status")', "launches git, which its declaration's runs don't name")
-        self.census(self.toolchainLauncher % 'toolchain.GitCommand(arguments...)', {"tool/launch": {"runs": ["git"], "why": "x"}})
+        self.census(self.toolchainLauncher % 'toolchain.GitCommand(arguments...)', {"tool/launch": {"runs": ["git"], "why": "x", "heldCompilers": ["internal/load"]}})
         # Read by the name its file imports the package as, never its text.
         aliased = self.toolchainLauncher.replace("import ", "import chain ")
         self.refused(aliased % "chain.Command(name)", "launches a computed executable, chain.Command(name)")
@@ -4751,6 +4751,22 @@ class CensusLaunchers(unittest.TestCase):
         with self.assertRaises(run.ChangeRefusal) as raised:
             self.census(self.launcher % 'exec.Command("node")', {}, self.helper, packages={"tool/launch": ["internal/quiet"]})
         self.assertIn("undeclared compiler consumers: tool/launch/launch_test.go", str(raised.exception))
+
+    def test_a_launcher_names_what_comes_back_while_held(self):
+        # Adamic Loom's ruling: heldCompilers, at least one compiler package, every one a package. A map the change
+        # touched refuses without it; one on the base is named. Mutants: the check dropped, and a non-compiler list taken.
+        source = self.launcher % 'exec.Command("node")'
+        changed = ["tool/launch/launch_test.go", "cloud/fast-gate/compiler-dependencies.json"]
+        for held in (None, [], ["internal/quiet"], ["internal/absent"]):
+            declaration = {"runs": ["node"], "why": "x"}
+            if held is not None:
+                declaration["heldCompilers"] = held
+            with self.assertRaises(run.ChangeRefusal, msg=held) as raised:
+                self.census(source, {"tool/launch": declaration}, self.helper, changed=changed)
+            self.assertIn("tool/launch is a declared launcher naming no heldCompilers", str(raised.exception))
+            result = self.census(source, {"tool/launch": declaration}, self.helper)
+            self.assertEqual(len(result["launchers_unheld_on_base"]), 1, held)
+        self.census(source, self.declared, self.helper, changed=changed)
 
     def test_the_gate_tools_own_allows_read(self):
         # The tools' own lines parse as one launcher, package and function each, so a bad one never reaches a gate.

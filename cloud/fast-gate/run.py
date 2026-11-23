@@ -3422,6 +3422,20 @@ class Gate:
             if (package not in directories or not isinstance(runs, list) or not runs or any(not isinstance(name, str) or not name or "adamic" in name for name in runs)
                     or not isinstance(declaration.get("why"), str) or not declaration["why"].strip()):
                 raise ValueError("invalid launcher declaration for " + package + ": a package that names what it runs, none of it adamic, and why")
+        # A launcher names what it gives up, heldCompilers, the compiler packages its units key with again while the
+        # Queue holds the package for an exec its runs don't name (Adamic Loom's ruling on #ry3pfc6): a declaration can't
+        # drop closures without saying what comes back. One without them is the change's red when the change touched
+        # the map, and named on the base otherwise, so a map already on main never stops every plan.
+        unheld = []
+        for package, declaration in launchers.items():
+            held = declaration.get("heldCompilers")
+            if (not isinstance(held, list) or not held or any(not isinstance(value, str) or value not in directories for value in held)
+                    or not any(value in compilerPackages for value in held)):
+                unheld.append(package + " is a declared launcher naming no heldCompilers, the compiler packages it keys with while held")
+        if unheld and compilerDependenciesPath in changed:
+            raise ChangeRefusal("compiler dependency census: " + "; ".join(unheld))
+        if unheld:
+            self.result["launchers_unheld_on_base"] = unheld
 
         def marked(source):
             return compilerMarker.search(source) or launchMarker.search(source)
