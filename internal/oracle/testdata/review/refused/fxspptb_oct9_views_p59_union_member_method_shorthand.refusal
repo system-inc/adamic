@@ -1,0 +1,1 @@
+8:16: Adamic 0.1 refuses a downcast to Holder whose tag test is vacuous: every { readonly kind: "Holder"; } has kind "Holder"; give Holder a tag of its own in a discriminated union, or build the value as a Holder so the compiler can prove it

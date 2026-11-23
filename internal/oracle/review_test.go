@@ -170,7 +170,31 @@ func reviewRefusal(t *testing.T, path string) error {
 	_, err := lowered(t, path)
 	// reviewEach passes an absolute path to load.Load without a display mapper.
 	// Program.Where restores an .a program's extension and prints that full path unchanged, as it prints a .ts program's.
-	return reviewRefusalDiagnostic(path, err)
+	if bad := reviewRefusalDiagnostic(path, err); bad != nil {
+		return bad
+	}
+	return reviewRefusalWords(path, err)
+}
+
+// reviewRefusalWords holds a refused program to its <name>.refusal sidecar when it has one: one line, the refusal's
+// diagnostic with the program's path and its colon taken off, `<line>:<column>: <message>`. A refusal that moves or
+// changes its reason is then a change the lane shows, never a pass. A program without the sidecar is held only to
+// refusing at its own location (#92cnfpf: the 37 programs moved here from agree/ each pin theirs).
+func reviewRefusalWords(path string, err error) error {
+	pin := strings.TrimSuffix(path, filepath.Ext(path)) + ".refusal"
+	data, readErr := os.ReadFile(pin)
+	if errors.Is(readErr, os.ErrNotExist) {
+		return nil
+	}
+	if readErr != nil {
+		return readErr
+	}
+	want := strings.TrimSuffix(string(data), "\n")
+	got := strings.TrimPrefix(strings.TrimSpace(err.Error()), filepath.ToSlash(path)+":")
+	if got != want {
+		return fmt.Errorf("refusal %q, want %q pinned in %s", got, want, filepath.Base(pin))
+	}
+	return nil
 }
 
 func reviewRefusalDiagnostic(path string, err error) error {
@@ -352,6 +376,30 @@ func TestReviewProgramsSelfTest(t *testing.T) {
 				if reviewRefusalDiagnostic(path, err) == nil {
 					t.Errorf("invalid location passed: %q", where)
 				}
+			}
+		}
+	})
+	t.Run("refusal_words", func(t *testing.T) {
+		path := filepath.Join(t.TempDir(), "pinned.a")
+		err := &lower.NotYet{Where: path + ":3:4", What: "a pinned construct"}
+		if got := reviewRefusalWords(path, err); got != nil {
+			t.Errorf("a refusal with no .refusal sidecar was held to one: %v", got)
+		}
+		pin := strings.TrimSuffix(path, ".a") + ".refusal"
+		for _, c := range []struct {
+			pinned string
+			holds  bool
+		}{
+			{"3:4: stage 0 can't lower a pinned construct yet\n", true},
+			{"3:4: stage 0 can't lower another construct yet\n", false},
+			{"3:5: stage 0 can't lower a pinned construct yet\n", false},
+			{"stage 0 can't lower a pinned construct yet\n", false},
+		} {
+			if err := os.WriteFile(pin, []byte(c.pinned), 0644); err != nil {
+				t.Fatal(err)
+			}
+			if got := reviewRefusalWords(path, err); (got == nil) != c.holds {
+				t.Errorf("pinned %q: held %v, want %v (%v)", c.pinned, got == nil, c.holds, got)
 			}
 		}
 	})
