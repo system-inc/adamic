@@ -144,6 +144,11 @@ func (l *lowering) objectPrototypeCallArguments(node, receiver *ast.Node, name s
 	if name != "valueOf" && l.isLibraryType(l.checker.GetTypeAtLocation(receiver), errorClasses...) {
 		return nil, true, l.notYet(node, name+" on Error (its prototype and non-enumerable own descriptors differ from plain objects)")
 	}
+	if name == "toString" || name == "toLocaleString" || name == "valueOf" {
+		if library := l.libraryObjectOwnAnswer(receiver); library != "" {
+			return nil, true, l.notYet(node, name+" on "+library+", whose own answer isn't Object.prototype's")
+		}
+	}
 	of, _ := l.representation(l.checker.GetTypeAtLocation(receiver))
 	if l.exactPlainObject(receiver) {
 		of = ir.Object
@@ -230,6 +235,47 @@ func (l *lowering) objectPrototypeCallArguments(node, receiver *ast.Node, name s
 		return ir.Conditional{Condition: ir.IsUndefined{Value: value}, WhenTrue: text, WhenNot: text}, true, nil
 	}
 	return nil, true, l.notYet(node, name+" on a "+typeName(of)+" (function source text and mixed value dispatch are not represented)")
+}
+
+// libraryObjectOwnAnswer names a receiver whose toString, toLocaleString or valueOf answers other than a plain
+// object's on Node, where lowering knows no answer of its own, or is empty. The constant tag below is
+// Object.prototype's, and #20e4t06 and #shqn1d0 found it printed for objects that aren't plain: a Map or Set
+// iterator, whose tag is Map Iterator or Set Iterator, and a RegExp match's groups, which have a null prototype,
+// so Node throws a TypeError at the call. Every member of the receiver's type is asked, failing closed: a named
+// library interface (an iterator, a Promise, an Intl object) unless it's Object itself or an iterator result,
+// which next makes as a plain object; and an anonymous library type declared inside a RegExp result interface,
+// which is its groups. A Map or Set, an array or a string is held as its own kind and keeps its own answer
+// below, and a program's own object or class keeps Object.prototype's. Each object's own tag and groups'
+// missing prototype are the real fix, owed with Runtime Library (Compiler, on #20e4t06).
+func (l *lowering) libraryObjectOwnAnswer(receiver *ast.Node) string {
+	proven := l.concrete(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver)))
+	members := []*checker.Type{proven}
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		members = proven.Types()
+	}
+	for _, member := range members {
+		if member.Flags()&checker.TypeFlagsObject == 0 {
+			continue
+		}
+		symbol := l.unbranded(member).Symbol()
+		if symbol == nil || len(symbol.Declarations) == 0 || !load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
+			continue
+		}
+		declaration := symbol.Declarations[0]
+		if declaration.Kind == ast.KindInterfaceDeclaration || declaration.Kind == ast.KindClassDeclaration {
+			switch symbol.Name {
+			case "Object", "IteratorYieldResult", "IteratorReturnResult", "Map", "ReadonlyMap", "Set", "ReadonlySet", "Array", "ReadonlyArray", "String", "Number", "Boolean":
+				continue
+			}
+			return "a library " + symbol.Name
+		}
+		for owner := declaration.Parent; owner != nil; owner = owner.Parent {
+			if owner.Kind == ast.KindInterfaceDeclaration && strings.HasPrefix(owner.Name().Text(), "RegExp") {
+				return "a RegExp match's groups"
+			}
+		}
+	}
+	return ""
 }
 
 // Structural object views can hide an override, an Error, or an artificial absent-spread slot.
