@@ -2899,11 +2899,13 @@ class Gate:
             row["over_budget"] = elapsed > 30
             row["status"] = "passed" if row["ok"] else "failed"
             exit = row.get("exit")
-            if row["status"] == "failed" and getattr(self, "cancelled", False) and isinstance(exit, int) and exit < 0:
+            caused = (self.failure or {}).get("step") == phase + "/" + row["name"]
+            if row["status"] == "failed" and getattr(self, "cancelled", False) and isinstance(exit, int) and exit < 0 and not caused:
                 # A unit the gate's own cancel killed (fail's whole-gate branch, killSessions on the first failure) ended
                 # by its signal, not its own failure: it's cancelled, never written failed beside the unit that failed,
                 # and fails nothing (#z89w67t: under load the planted wasi unit's failure killed the good one still in
-                # flight, and its row read failed).
+                # flight, and its row read failed). The unit whose own failure was the first, which stream fails from
+                # its failing event while its process still runs, is killed by the same cancel and stays failed.
                 row["status"] = "cancelled"
             if row["status"] == "failed":
                 self.fail(phase + "/" + row["name"], json.dumps(row))

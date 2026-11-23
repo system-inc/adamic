@@ -3529,15 +3529,21 @@ class PhaseUnitTests(unittest.TestCase):
             gate.arguments = types.SimpleNamespace(out=out, parallel=1)
             gate.result, gate.steps, gate.exits = {}, {}, {}
             failures = []
+            gate.failure = None
             def fail(name, detail):
                 failures.append(name)
+                gate.failure = gate.failure or {"step": name}
                 gate.cancelled = True
             gate.fail = fail
-            exits = {"planted": 1, "killed": -9, "own": 2}
-            gate.phaseUnits("wasi", ["planted", "killed", "own"], [["x"]] * 3,
-                            lambda name, command, scratch: {"ok": False, "exit": exits[name]})
+            # The planted unit's failing event fails the gate from inside its stream, as stream does, and the cancel then
+            # kills its own process too, so it ends at -9 like its sibling; it caused the cancel, so it stays failed.
+            def execute(name, command, scratch):
+                if name == "planted":
+                    gate.fail("wasi/planted", "TestWASI/planted failed")
+                return {"ok": False, "exit": {"planted": -9, "killed": -9, "own": 2}[name]}
+            gate.phaseUnits("wasi", ["planted", "killed", "own"], [["x"]] * 3, execute)
             self.assertEqual([row["status"] for row in gate.result["wasi_units"]], ["failed", "cancelled", "failed"])
-            self.assertEqual(failures, ["wasi/planted", "wasi/own"])
+            self.assertEqual(failures, ["wasi/planted", "wasi/planted", "wasi/own"])
             self.assertEqual(gate.exits["wasi"], 1)
 
 class CacheDrains(unittest.TestCase):
