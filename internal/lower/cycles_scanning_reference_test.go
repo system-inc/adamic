@@ -1731,6 +1731,8 @@ func scanLowerWithElementKey(key *viewElementKey, program *load.Program, typeChe
 
 	// The base name only, so the same program emits the same C on every machine.
 	lowering.result.Source = filepath.Base(program.FileName(entry))
+	// As lowerWithElementKey does: the program bit range types are held by, before any representation.
+	lowering.rangeArraysPresent()
 	modules, err := lowering.moduleOrder(entry)
 	if err != nil {
 		return nil, err
@@ -1868,6 +1870,9 @@ func scanLowerWithElementKey(key *viewElementKey, program *load.Program, typeChe
 		return nil, err
 	}
 	if err := lowering.checkViewWidenedReads(); err != nil {
+		return nil, err
+	}
+	if err := lowering.checkRangeUnionReads(); err != nil {
 		return nil, err
 	}
 	// As lowerWithElementKey does: it numbers the program's allocation sites when a host member write
