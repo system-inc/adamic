@@ -334,8 +334,11 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 		}
 
 		cause, detail := l.objectCastCause(source, target), ""
-		if cause == castUnionTarget || cause == castWidenedMember || cause == castIntersectionMember {
+		switch cause {
+		case castUnionTarget, castWidenedMember, castIntersectionMember:
 			cause, detail = l.unionTargetCause(source, l.checker.GetNonNullableType(target))
+		case castWidenedTarget:
+			detail = l.widenedWords(l.checker.GetNonNullableType(target), source)
 		}
 		return castProof{}, stop(cause, detail)
 	}

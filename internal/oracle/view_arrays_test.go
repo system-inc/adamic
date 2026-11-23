@@ -26,10 +26,10 @@ func TestViewArrays(t *testing.T) {
 			program, err := lowered(t, path)
 			// A narrowing cast of a viewed array is no road to an unchecked Identifier read. To a
 			// mutable array it's the writable cast NotYet (cast-object and its twins), and to a
-			// readonly one no run-time check can prove it, so it's refused.
+			// readonly one no run-time check can prove it, so it's refused, in its own words (#53amvnn).
 			if name == "narrowing-cast" {
 				var refused *lower.Refused
-				if !errors.As(err, &refused) || refused.What != "a cast the runtime can't check" {
+				if !errors.As(err, &refused) || !strings.HasPrefix(refused.What, "a cast the runtime can't check: a cast from readonly Node[] to readonly Identifier[], whose elements a check at the cast can't hold") {
 					t.Fatalf("want the uncheckable cast refusal, got %v", err)
 				}
 				return

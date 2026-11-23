@@ -24,6 +24,11 @@ const (
 	castAmbiguousTag                    // a union whose every member holds a literal in a field, but no two apart
 	castCallable                        // a cast whose target or source has a call signature
 	castWidenedMember                   // a union target whose member widens a writable field the source holds
+	// Refused, #53amvnn: no check at the cast can hold the claim once another alias writes the value.
+	castWidenedTarget  // an object downcast to a target that widens a writable field the source holds
+	castArrayElements  // a downcast of a readonly array's elements, which another alias can still write
+	castMutableArray   // a downcast to a mutable array, which a write through the source can break
+	castTupleFromArray // an array cast to a tuple, whose length another alias of the array can still change
 	// Adamic's three rulings (Q1 to Q3 on #b5w3ycg, Nov 22), under one principle: in .ts a cast's stop is
 	// NotYet when a run-time check could decide the claim and nobody has built it, and Refused only when no
 	// check ever could.
@@ -44,6 +49,11 @@ const (
 	castFromObject         // a source typed object, which names no fields to read
 	castDropsNullish       // a union source cast to its own members without undefined or null: a presence test
 	castIntersectionMember // a union target one of whose members is an intersection
+	// NotYet in .ts, #53amvnn, by the same principle: a check could decide each.
+	castTargetTypeParameter // a type parameter target: NotYet under an object constraint, Refused unconstrained
+	castArrayArm            // a union of arrays and other members, cast to one side: Array.isArray decides
+	castTuple               // an array cast to a tuple: a length check, and a tuple's own representation
+	castFromEmpty           // a source typed {}, which holds any value but null and undefined
 	// No branch above fits: the sentence main spoke before the split, so nothing is lost.
 	castUnnamed
 )
@@ -86,6 +96,14 @@ func (l *lowering) castStop(node *ast.Node, cause castCause, source, target *che
 		return refused("a cast from "+from+" to "+to+", which asserts a call signature", "prove the callable body rather than asserting its signature"+rule)
 	case castWidenedMember:
 		return refused("a cast from "+from+" to "+to+", whose member "+field, "declare the field readonly in both, or cast to a member whose fields "+from+" holds as written"+rule)
+	case castWidenedTarget:
+		return refused("a cast from "+from+" to "+to+", "+field, "declare the field readonly in both, or build the value as a "+to+rule)
+	case castArrayElements:
+		return refused("a cast from "+from+" to "+to+", whose elements a check at the cast can't hold, since another alias of the array can still write it", "check each element where it's read (a type predicate over the element), or build a new array of the checked elements"+rule)
+	case castMutableArray:
+		return refused("a cast from "+from+" to the mutable array "+to+", which a write through "+from+" could break later", "cast to a readonly array, or build a new "+to+" of the checked elements (adamic/invariant-mutable)")
+	case castTupleFromArray:
+		return refused("a cast from "+from+" to the tuple "+to+", whose length a check at the cast can't hold, since another alias of the array can still change it", "build the tuple from the checked elements ([first, ...rest]), or keep the array and check its length where it's read"+rule)
 	case castIndexSignature:
 		return l.notYet(node, "a checked dictionary view of "+to+" over "+from)
 	case castTypeParameter:
@@ -119,12 +137,67 @@ func (l *lowering) castStop(node *ast.Node, cause castCause, source, target *che
 		return l.notYet(node, "a checked view of "+to+" over "+from+", which "+to+" doesn't extend")
 	case castFromObject:
 		return l.notYet(node, "a checked view of "+to+" over a value typed "+from+", which names no fields")
+	case castTargetTypeParameter:
+		present := l.checker.GetNonNullableType(target)
+		constraint := l.checker.GetBaseConstraintOfType(present)
+		if constraint == nil || constraint == present || constraint.Flags()&(checker.TypeFlagsUnknown|checker.TypeFlagsAny) != 0 || castPrimitiveMember(constraint) {
+			return refused("a cast from "+from+" to the type parameter "+to+", which nothing at run time can test, since "+to+" may be any type", "constrain "+to+" to an object type, or return the value at its own type"+rule)
+		}
+		return l.notYet(node, "a checked view of the type parameter "+to+", constrained to "+l.checker.TypeToString(constraint)+", over "+from)
+	case castArrayArm:
+		return l.notYet(node, "a checked cast from "+from+" to "+to+", which needs Array.isArray to tell "+from+"'s arrays from its other members")
+	case castTuple:
+		return l.notYet(node, "a checked cast from "+from+" to the tuple "+to+", which needs its length checked")
+	case castFromEmpty:
+		return l.notYet(node, "a checked view of "+to+" over a value typed {}, which holds anything but null and undefined")
 	case castClassAncestry, castClassTarget:
 		return l.notYet(node, "a checked class cast from "+from+" to "+to+" by instanceof")
 	case castMixedSource:
 		return l.notYet(node, "a checked cast from "+from+", which holds primitives, to "+to+", which needs a typeof test before its view")
 	}
 	return &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: l.castRepair(node)}
+}
+
+// arrayCastCause is why a cast with an array on either side found no road (#53amvnn), source given by its
+// members and target without its nullish members. A union of arrays and other members cast to one side is told
+// by Array.isArray, when the side it picks holds no element downcast; a cast to a tuple needs its length; a
+// downcast of elements is refused, readonly or mutable, since another alias can still write the array.
+func (l *lowering) arrayCastCause(members []*checker.Type, present *checker.Type) castCause {
+	arrays, others := []*checker.Type{}, 0
+	for _, member := range members {
+		switch {
+		case member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull|checker.TypeFlagsVoid) != 0:
+		case l.castArrayLike(member):
+			arrays = append(arrays, member)
+		default:
+			others++
+		}
+	}
+	targetArray := l.castArrayLike(present)
+	switch {
+	case targetArray && checker.IsTupleType(present) && len(arrays) > 0:
+		for _, member := range arrays {
+			if !checker.IsTupleType(member) {
+				return castTupleFromArray
+			}
+		}
+		return castTuple
+	case !targetArray && len(arrays) > 0 && others > 0:
+		return castArrayArm
+	case targetArray && others > 0:
+		for _, member := range arrays {
+			if l.castAssignable(member, present) && l.castAssignable(present, member) {
+				return castArrayArm
+			}
+		}
+	}
+	if !targetArray || len(arrays) == 0 {
+		return castUnnamed
+	}
+	if l.checker.IsArrayType(present) {
+		return castMutableArray
+	}
+	return castArrayElements
 }
 
 // castArrayLike is whether some member of proven, nullish aside, is an array or a tuple. A cast between
@@ -167,8 +240,14 @@ func castPrimitiveMember(proven *checker.Type) bool {
 func (l *lowering) objectCastCause(source, target *checker.Type) castCause {
 	present := l.checker.GetNonNullableType(target)
 	switch {
+	case castPrimitiveMember(present):
+		return castPrimitive
+	case present.Flags()&checker.TypeFlagsTypeParameter != 0:
+		return castTargetTypeParameter
 	case l.castArrayLike(source) || l.castArrayLike(present):
-		return castUnnamed
+		return l.arrayCastCause(castMembers(source), present)
+	case source.Flags()&checker.TypeFlagsObject != 0 && len(l.checker.GetPropertiesOfType(source)) == 0 && present.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(present):
+		return castFromEmpty
 	case source.Flags()&checker.TypeFlagsUnknown != 0:
 		return castFromUnknown
 	case castPrimitiveMember(present) || castPrimitiveMember(source):
@@ -190,6 +269,8 @@ func (l *lowering) objectCastCause(source, target *checker.Type) castCause {
 	case present.Flags()&checker.TypeFlagsUnion != 0:
 		cause, _ := l.unionTargetCause(source, present)
 		return cause
+	case present.Flags()&checker.TypeFlagsObject != 0 && l.checker.IsTypeAssignableTo(present, source) && l.widened(present, source, map[[2]*checker.Type]bool{}) != nil:
+		return castWidenedTarget
 	case present.Flags()&checker.TypeFlagsObject != 0 && !l.checker.IsTypeAssignableTo(present, source):
 		return castSideways
 	}
@@ -228,9 +309,15 @@ func (l *lowering) distinctTagField(members []*checker.Type) bool {
 // writable field and a refinement are ruled out.
 func (l *lowering) unionCastCause(members []*checker.Type, target *checker.Type) castCause {
 	present := l.checker.GetNonNullableType(target)
+	if castPrimitiveMember(present) {
+		return castPrimitive
+	}
+	if present.Flags()&checker.TypeFlagsTypeParameter != 0 {
+		return castTargetTypeParameter
+	}
 	for _, member := range append(append([]*checker.Type{}, members...), present) {
 		if l.castArrayLike(member) {
-			return castUnnamed
+			return l.arrayCastCause(members, present)
 		}
 	}
 	primitive := false
@@ -267,6 +354,19 @@ func (l *lowering) unionCastCause(members []*checker.Type, target *checker.Type)
 		}
 	}
 	return castUntaggedUnion
+}
+
+// widenedWords says how a target seen as the source widens a writable field, for castWidenedTarget and
+// castWidenedMember alike.
+func (l *lowering) widenedWords(member, source *checker.Type) string {
+	found := l.widened(member, source, map[[2]*checker.Type]bool{})
+	if found == nil {
+		return "which " + l.checker.TypeToString(source) + " can write wider"
+	}
+	if found.readonlyField != "" {
+		return "whose field " + found.readonlyField + " " + l.checker.TypeToString(member) + " keeps readonly and " + l.checker.TypeToString(source) + " can write"
+	}
+	return "which " + l.checker.TypeToString(source) + " can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read"
 }
 
 // unionTargetCause is why kindUnionCast took no cast from an object source to the union target present,

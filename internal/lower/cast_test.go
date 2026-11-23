@@ -42,8 +42,9 @@ func TestUncheckableCastsStayRefused(t *testing.T) {
 				t.Fatalf(".a: want unchecked-cast refusal and accepted forms, got %v", err)
 			}
 			// Two class casts are NotYet in .ts, since instanceof decides each at run time (Adamic's principle
-			// on #b5w3ycg, Nov 22); TestCastStopNamesItsCause pins their words.
-			if probe.name == "unrelated class" || probe.name == "structural class" {
+			// on #b5w3ycg, Nov 22), and so is a union of tuples cast to one by its length (#53amvnn);
+			// TestCastStopNamesItsCause pins their words.
+			if probe.name == "unrelated class" || probe.name == "structural class" || probe.name == "tuple length" {
 				return
 			}
 			_, err = lowerSourceAs(t, probe.source, ".ts")

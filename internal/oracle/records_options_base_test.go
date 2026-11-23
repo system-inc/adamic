@@ -355,7 +355,9 @@ func TestOptionsBaseArrayFieldLiesStop(t *testing.T) {
 func TestOptionsBaseArrayMemberRoadsStop(t *testing.T) {
 	t.Parallel()
 	const elementStop = "adamic: panic: element read failed: lib[1] is not a string; expected string, found number\n"
-	const castRefused = "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+	// The mutable-array cause's words (#53amvnn); the source union prints in the checker's order, so the row
+	// holds the cause and the location, not the whole sentence.
+	const castRefused = "to the mutable array string[], which a write through"
 	for road, stop := range map[string]struct{ node, notYet, refused, at, stderr string }{
 		"literal_key":           {stderr: elementStop},
 		"spread":                {stderr: elementStop},
@@ -389,7 +391,7 @@ func TestOptionsBaseArrayMemberRoadsStop(t *testing.T) {
 				return
 			case stop.refused != "":
 				var refused *lower.Refused
-				if !errors.As(err, &refused) || err.Error() != path+stop.at+": "+stop.refused {
+				if !errors.As(err, &refused) || !strings.HasPrefix(err.Error(), path+stop.at+": Adamic 0.1 refuses a cast the runtime can't check: ") || !strings.Contains(err.Error(), stop.refused) {
 					t.Fatalf("want refused %q at %s, got %v", stop.refused, stop.at, err)
 				}
 				return
