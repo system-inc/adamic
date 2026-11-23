@@ -15,7 +15,9 @@ import (
 // which isn't the one called; union_method.a is tsc's moduleNameResolver.ts shape, an optional method of a
 // union of two host types; size.a prints each size itself, so 0 and undefined stay apart; fields.a reads a
 // field declared optional as the last step, still number | undefined under the guard (Lower's must); and
-// grouped_call.a is (greeter?.greet)(), which parentheses end, called with its object as Node calls it. Node's own
+// grouped_call.a is (greeter?.greet)(), which parentheses end, called with its object as Node calls it; and
+// bang_inside.ts is a ! inside the chain, a?.b!.c, a?.run!() and a?.b!.d.e, which tsc keeps as one chain, so a
+// missing receiver gives undefined and never meets the assertion (Language's o01, o04 and o08). Node's own
 // output is pinned too, so a fixture that stopped exercising its rows shows here before it shows as an
 // agreement. Mutants (scratch-oc): the steps run on the missing receiver, the receiver as the missing
 // chain's value, the receiver evaluated again by the steps, the steps evaluated before the guard, the
@@ -29,6 +31,7 @@ func TestOptionalChainsAgreeWithNode(t *testing.T) {
 		{"size.a", "undefined 0 1\nundefined 0\ntrue true false\nundefined undefined 1 2\n"},
 		{"fields.a", "undefined undefined\nundefined undefined\n0 false\n3 true\ntrue true\ntrue true\nfalse false\n"},
 		{"grouped_call.a", "ada\n"},
+		{"bang_inside.ts", "undefined\n7\nundefined\n5\nundefined\ndeep\n"},
 	} {
 		t.Run(program.name, func(t *testing.T) {
 			t.Parallel()
