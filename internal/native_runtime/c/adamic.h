@@ -1209,6 +1209,10 @@ adamic_record *adamic_record_new_capacity(adamic_field_kind values, size_t keys)
 adamic_record *adamic_record_new_graph(adamic_field_kind values);
 bool adamic_record_is(const adamic_object *object);
 adamic_field_kind adamic_record_values(const adamic_record *record);
+// adamic_record_value_union is a record's own value, own being its slot, as a union, owned: a reference
+// retained, a number or a boolean boxed by the kind the record holds, undefined when packed absent
+// (union.c).
+adamic_heap *adamic_record_value_union(const adamic_record *record, const adamic_value *own);
 adamic_value adamic_record_view(const adamic_record *, const char *, unsigned char, const char *, const char *);
 // Own lookup returns a borrowed slot, NULL for absence (including an inherited name).
 adamic_value *adamic_record_get_own(const adamic_record *record, const adamic_string *key);
