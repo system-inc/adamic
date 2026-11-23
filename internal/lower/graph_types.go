@@ -488,6 +488,9 @@ func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 		for _, field := range f.fields(proven) {
 			links = append(links, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)})
 		}
+		// A collection's iterator holds its collection under any slot type it's assignable to, as cycles.go's
+		// reachLinks links it (#66acn2a): this walk keeps the same edge, or a cycle found there is never selected.
+		links = append(links, f.libraryIteratorCaptures(proven)...)
 		for _, shape := range f.shapes {
 			if shape != proven && f.l.checker.IsTypeAssignableTo(shape, proven) {
 				links = append(links, cycleNode{proven: shape})
