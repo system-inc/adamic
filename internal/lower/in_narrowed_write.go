@@ -19,7 +19,8 @@ import (
 // slot type to be held to. So it's not yet (Adamic's ruling, Nov 11), not refused: the program is valid,
 // Node's answer is right, and a dynamic keyed write could lift it. Every write form counts, as
 // GetAssignmentTarget finds them: =, a compound or logical assignment, ++ and --, a destructuring target
-// and a for-in or for-of head, through a name or a literal key. A read stays admitted.
+// and a for-in or for-of head, through a name or a literal key. A read stays admitted, except from a receiver
+// that may hold a record (inNarrowedMayBeRecord).
 //
 // The property is judged by where the type gives it, not by the syntax around it: the receiver's
 // narrowed type holds it through the library's Record<K, unknown>, the member tsc's narrowTypeByInKeyword
@@ -38,9 +39,7 @@ func (l *lowering) inNarrowedWriteGap(node *ast.Node) error {
 	default:
 		return nil
 	}
-	if !ast.IsAssignmentTarget(node) {
-		return nil
-	}
+	write := ast.IsAssignmentTarget(node)
 	narrowed := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver))
 	declared := l.inNarrowedDeclaredType(receiver)
 	for _, name := range names {
@@ -50,9 +49,44 @@ func (l *lowering) inNarrowedWriteGap(node *ast.Node) error {
 		if declared != nil && l.checker.GetPropertyOfType(declared, name) != nil {
 			continue
 		}
-		return l.notYet(node, "a write to '"+name+"', which only an `in` test added to the type")
+		if write {
+			return l.notYet(node, "a write to '"+name+"', which only an `in` test added to the type")
+		}
+		if l.inNarrowedMayBeRecord(declared) {
+			return l.notYet(node, "a read of '"+name+"', which only an `in` test added to the type, from a receiver that may hold a record, whose keys are read otherwise than a fixed object's slots")
+		}
 	}
 	return nil
+}
+
+// inNarrowedMayBeRecord reports whether a receiver declared as declared may hold a record at run time
+// (#859ksab). A read of a key an in test added goes by the fixed-object road, which over a record's storage
+// read the wrong memory: `const nums: Record<string, number> = { k: 41 }` passed to read(o: object), then
+// `'k' in o` and `typeof o.k`, printed number on Node and JavaScript and faulted natively under ASan. A
+// record reaches any type whose storage sameRecordStorage can't pin: object, unknown, any, a type parameter,
+// or a record itself, through any part of a union or an intersection. A program object type pins fixed
+// storage, so a record never reaches it (sameRecordStorage answers false for a record seen as one). An
+// unknown declared type counts as a record, failing closed.
+func (l *lowering) inNarrowedMayBeRecord(declared *checker.Type) bool {
+	if declared == nil {
+		return true
+	}
+	declared = l.concrete(declared)
+	if declared.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		for _, part := range declared.Types() {
+			if part.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) == 0 && l.inNarrowedMayBeRecord(part) {
+				return true
+			}
+		}
+		return false
+	}
+	if declared.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive|checker.TypeFlagsTypeParameter) != 0 {
+		return true
+	}
+	if declared.Flags()&checker.TypeFlagsObject == 0 {
+		return false
+	}
+	return l.recordElement(declared) != nil
 }
 
 func init() {
