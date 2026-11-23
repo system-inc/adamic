@@ -1,6 +1,6 @@
-// Writes through an untagged union's view (#axqgdck), from Language's y05 and y18 on #03e5ke4, held to Node. A write
-// in a callee taking a plain A lands in the B's own note slot, as Node writes it. A link stored through the view into
-// a B makes a cycle the program never reads back; the counted build frees it whole, held in graph regions.
+// A write through an untagged union's view (#axqgdck), from Language's y05 on #03e5ke4, held to Node: a write in a
+// callee taking a plain A lands in the B's own note slot, as Node writes it. It has no cycle: in a graph program the
+// view of A | B as A stops NotYet, since B's child (Y) and A's (X) don't relate (Memory's item 4, J-1ycny47).
 interface X { readonly a: number; readonly b: string }
 interface Y { readonly b: number; readonly a: string }
 interface A { note: string; readonly child: X; readonly items: readonly X[]; readonly f: number }
@@ -18,19 +18,3 @@ mark(u as A, 'written');
 mark(make(0) as A, 'honest');
 const back = u as B;
 console.log(back.note + ' ' + back.g + ' ' + String(back.f));
-
-interface P { owner: Holder | undefined }
-interface Holder { readonly id: number; link: P }
-interface Named { readonly name: string; link: P }
-function made(which: number): Holder | Named {
-    const holder: Holder = { id: 1, link: { owner: undefined } };
-    const named: Named = { name: 'b', link: { owner: undefined } };
-    return which === 0 ? holder : named;
-}
-function tie(holder: Holder): void {
-    holder.link = { owner: holder };
-}
-tie(made(0) as Holder);
-const tied = made(1);
-tie(tied as Holder);
-console.log((tied as Named).name);
