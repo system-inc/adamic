@@ -1,0 +1,14 @@
+# #hwjx7gw family 46, the standing gates for a head that changes what lowering admits: internal/oracle whole,
+# internal/native whole with ADAMIC_TEST_WASI=1, internal/compilercensus and cmd/adamic-gate/parallelcensus, each
+# after its products settle. Source it in the job's shell after the sealed opening. Never merged.
+L="$TMPDIR/hwg"; mkdir -p "$L"; failed=0
+step() { echo "$1 $2"; [ "$1" = PASS ] || failed=1; }
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg)"
+if sandboxed_products ./internal/oracle ./internal/native ./internal/compilercensus ./cmd/adamic-gate/parallelcensus > "$L/products.log" 2>&1; then step PASS products; else step FAIL products; tail -8 "$L/products.log"; fi
+if go test -count=1 -timeout 90m ./internal/oracle/ > "$L/oracle.log" 2>&1; then step PASS oracle; else step FAIL oracle; fi
+grep -E '^(ok|FAIL|--- FAIL)|panic:' "$L/oracle.log" | head -20
+if ADAMIC_TEST_WASI=1 go test -count=1 -timeout 60m ./internal/native/ > "$L/native.log" 2>&1; then step PASS native; else step FAIL native; fi
+grep -E '^(ok|FAIL|--- FAIL)|panic:' "$L/native.log" | head -20
+if go test -count=1 -timeout 30m ./internal/compilercensus/ ./cmd/adamic-gate/parallelcensus/ > "$L/census.log" 2>&1; then step PASS census-packages; else step FAIL census-packages; fi
+grep -E '^(ok|FAIL|--- FAIL)|panic:' "$L/census.log" | head -10
+if [ $failed -eq 0 ]; then echo "VERDICT PASS"; else echo "VERDICT FAIL"; fi
