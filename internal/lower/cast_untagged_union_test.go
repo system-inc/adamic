@@ -25,6 +25,9 @@ func TestUntaggedUnionCastLowers(t *testing.T) {
 		{"a member out of three", members + "interface C { readonly c: boolean } function f(x: A | B | C): B { return x as B; } console.log(f({ b: 'b', shared: 's' }).b);", false},
 		{"narrower than a member", "interface Declaration { readonly kind: number; readonly pos: number } interface Expression { readonly kind: number; readonly end: number } interface Identifier extends Expression { readonly text: string } function f(x: Declaration | Expression): Identifier { return x as Identifier; } console.log(f({ kind: 80, end: 1, text: 't' } as Identifier).text);", false},
 		{"a member beside undefined", members + "function f(x: A | B | undefined): A { return x as A; } console.log(String(f({ a: 1, shared: 's' }).a));", true},
+		// tsc's utilitiesPublic.ts:960: Declaration and Expression add only a brand to Node, so each is a phantom
+		// extension, held as its base (#axqgdck head 2). Mutant: plainViewObject refusing a phantom extension again.
+		{"members that add only a brand", "interface NodeBase { readonly kind: number; readonly pos: number } interface Declaration extends NodeBase { readonly _declarationBrand: undefined } interface Expression extends NodeBase { readonly _expressionBrand: undefined } interface Identifier extends Expression { readonly escapedText: string } function f(x: Declaration | Expression): Identifier { return x as Identifier; }", false},
 		// An optional literal field is no tag (fieldLiteral answers nil for kind?: 'a'), so the union takes this arm,
 		// held by the checked reads; recorded here so a ruling either way moves this row (Lower's should).
 		// binder.ts:1416's shape: a CallExpression out of a union of nodes whose kind is open, the target's a literal.
