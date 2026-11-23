@@ -73,3 +73,42 @@ func TestAddedUnionUnknownArmsStayNotYet(t *testing.T) {
 		}
 	}
 }
+
+// A class the helper would stop on keeps combine's NotYet at compile time (Language's must on #e0cnaa9, p02
+// and p17): a valueOf getter, a valueOf field holding an arrow, a toString parameter property, a valueOf
+// taking a parameter, and an object literal's valueOf or toString getter, which lowers as a class of its own
+// (J-6y49hh0). The helper dispatches on the object's own class, so any such class in the program
+// keeps every union road, an honest class's included: that's the price, and it fails closed. Mutant:
+// programClassesConvert answering yes, and each lowers to the helper's run-time stop.
+func TestAddedUnionStoppingClassesStayNotYet(t *testing.T) {
+	t.Parallel()
+	const tail = "function pick(flag: boolean): Late | string { return flag ? new Late() : 's'; }\nconsole.log(pick(true) + '!');\n"
+	for _, probe := range []struct{ name, source string }{
+		{"valueOf getter", "class Late { get valueOf(): () => number { return (): number => 7; } }\n" + tail},
+		{"valueOf field", "class Late { readonly valueOf = (): number => 9; }\n" + tail},
+		{"toString parameter property", "class Late { constructor(readonly toString: () => string = (): string => 'p') {} }\n" + tail},
+		{"valueOf taking a parameter", "class Late { valueOf(base?: number): number { return (base ?? 0) + 1; } }\n" + tail},
+		{"literal valueOf getter", "interface Late { readonly valueOf: () => number }\nfunction make(): Late { return { get valueOf(): () => number { return (): number => 5; } }; }\nfunction pick(flag: boolean): Late | string { return flag ? make() : 's'; }\nconsole.log(pick(true) + '!');\n"},
+		{"literal toString getter", "interface Late { readonly toString: () => string }\nfunction make(): Late { return { get toString(): () => string { return (): string => 'g'; } }; }\nfunction pick(flag: boolean): Late | string { return flag ? make() : 's'; }\nconsole.log(pick(true) + '!');\n"},
+		{"an honest class beside one", "class Late { valueOf(): number { return 5; } }\nclass Other { get toString(): () => string { return (): string => 'o'; } }\nconsole.log(String(new Other() instanceof Other));\n" + tail},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, probe.source, ".ts")
+			if err == nil || !strings.Contains(err.Error(), "a BinaryExpression with a union of differently held members and a string") {
+				t.Fatalf("want combine's NotYet, got %v", err)
+			}
+		})
+	}
+}
+
+// s += u doesn't take +'s union road: combine matches only a BinaryExpression whose token is +, so it keeps its
+// NotYet (Lower's should). A later widening has to name it here.
+func TestAddedUnionPlusAssignStaysNotYet(t *testing.T) {
+	t.Parallel()
+	const source = "class Money { valueOf(): number { return 5; } }\nfunction pick(flag: boolean): Money | string { return flag ? new Money() : 's'; }\nlet s = '';\ns += pick(true);\nconsole.log(s);\n"
+	_, err := lowerSourceAs(t, source, ".ts")
+	if err == nil || !strings.Contains(err.Error(), "a BinaryExpression with a string and a union of differently held members") {
+		t.Fatalf("want combine's NotYet, got %v", err)
+	}
+}
