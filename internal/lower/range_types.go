@@ -174,6 +174,11 @@ func (l *lowering) rangeWhereObjectGoes(node *ast.Node, value ir.Expression, slo
 	if proven == nil || proven.Flags()&checker.TypeFlagsTypeParameter != 0 || !l.holdsRangeUnion(proven) {
 		return ""
 	}
+	if parent := node.Parent; parent != nil && parent.Kind == ast.KindVariableDeclaration && parent.Name().Kind == ast.KindObjectBindingPattern && parent.AsVariableDeclaration().Initializer != nil && ast.SkipParentheses(parent.AsVariableDeclaration().Initializer) == node && l.rangeOnly(proven) {
+		// const { pos, end } = range: the slot is the pattern's own type, at which nothing is held, and
+		// destructureFrom reads each field of a range type's Union by kind (rangeDestructure), or stops.
+		return ""
+	}
 	held, known := l.representation(slot)
 	if !known || held != ir.Object && held != ir.Array {
 		return ""
