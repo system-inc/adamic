@@ -1,0 +1,21 @@
+# #mh5kdde round 3 at its final head: the parameter-member pin and its mutant (the parameter type ids dropped from the
+# key). Run with bash after the sealed opening. Never merged.
+L="$TMPDIR/mh5p"; mkdir -p "$L"; failed=0
+step() { echo "$1 $2"; [ "$1" = PASS ] || failed=1; }
+F=internal/lower/count_types_classes.go; T=TestCountTypeClassesKeepParameterMembersApart
+if go test -count=1 -timeout 20m -v -run "^${T}\$" ./internal/lower/ > "$L/pin.log" 2>&1; then step PASS pin; else step FAIL pin; fi
+grep -E -- '--- |_test.go:[0-9]+|panic:' "$L/pin.log" | cut -c1-300 | head -8
+cp "$F" "$L/orig.go"
+python3 - "$F" <<'PY' || step FAIL mutant-applies
+import sys
+p = sys.argv[1]; t = open(p).read()
+old = "\t\t\tfor _, parameter := range signature.Parameters() {\n\t\t\t\tkey.typeID(typeChecker.GetTypeOfSymbol(parameter))\n\t\t\t}\n"
+assert t.count(old) == 1
+open(p, "w").write(t.replace(old, ""))
+PY
+go test -count=1 -timeout 20m -v -run "^${T}\$" ./internal/lower/ > "$L/m.log" 2>&1; code=$?
+if grep -q -E '\[build failed\]|declared and not used|undefined:' "$L/m.log"; then step FAIL mutant-compiles; head -8 "$L/m.log"; else step PASS mutant-compiles; fi
+grep -E -- '--- |_test.go:[0-9]+' "$L/m.log" | cut -c1-300 | head -6
+if [ $code -ne 0 ] && grep -q -- "--- FAIL: $T" "$L/m.log"; then step PASS mutant-red; else step FAIL mutant-red; fi
+cp "$L/orig.go" "$F"
+if [ $failed -eq 0 ]; then echo "VERDICT PASS"; else echo "VERDICT FAIL"; false; fi
