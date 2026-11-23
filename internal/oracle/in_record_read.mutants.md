@@ -3,9 +3,10 @@
 **R1, the stop dropped.** `dynamicRecordReadGap` (internal/lower/dynamic_record_read.go) answers nil, so a named
 dynamic read lowers whatever record may reach its receiver.
 
-Must turn red: every subtest of `TestInRecordReadStops` (record_number, record_absent, record_string_of,
-unknown_param, generic_param), each lowering where it must stop. record_number, record_string_of,
-unknown_param and generic_param carry an ASan fault in their failure, and record_absent lowers and agrees.
+Must turn red: every subtest of `TestInRecordReadStops` (record_number, record_string, record_absent,
+record_string_of, unknown_param, generic_param), each lowering where it must stop. record_number,
+record_string_of, unknown_param and generic_param carry an ASan fault in their failure; record_string and
+record_absent lower and agree.
 
-Must stay green: `TestInRecordReadNeighborsAgree` (record_string, keyed_read, fixed_control,
-fixed_in_record_program).
+Must stay green: `TestInRecordReadNeighborsAgree` (keyed_read, fixed_control, fixed_in_record_program) and
+`TestInRecordReadFromEntriesStops`, which stops before any read.

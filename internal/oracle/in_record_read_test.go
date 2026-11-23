@@ -15,16 +15,18 @@ import (
 // (union.c:332 to :337), so `'k' in o` then `typeof o.k`, with o a Record<string, number> passed as object,
 // printed number on Node and the JavaScript backend and faulted natively under ASan (#859ksab, Language's
 // probes J-t5mxr1v and J-dwhn493 on main 0c9b1201). Until Library's #3tjjcjs boxes the slot by its kind, the
-// read stops at compile time when the program writes a record of numbers or booleans and the receiver may be
-// a record: object, unknown, a type parameter, or a record. Each pin names its program, Node's answer, and the
+// read stops at compile time when the receiver may be a record: object, unknown, a type parameter, or a
+// record. A record of strings reads right today but stops too, since which records a program makes can't be
+// read from its types (from_entries.ts makes one with no type node, and stops as Object.fromEntries does). Each pin names its program, Node's answer, and the
 // read it stops at. If a stop goes missing, the program is run natively under the sanitizers and its run is
 // part of the failure.
 func TestInRecordReadStops(t *testing.T) {
 	t.Parallel()
 	for _, pin := range []struct{ file, node, at string }{
 		{"record_number.ts", "number\n", "o.k"},
-		// The key is absent, so the read never runs and main agrees, but its program holds a number record
-		// and the stop can't tell which records reach o.
+		{"record_string.ts", "string\n", "o.k"},
+		// The key is absent, so the read never runs and main agrees, but the stop can't tell which records
+		// reach o.
 		{"record_absent.ts", "absent\n", "o.k"},
 		{"record_string_of.ts", "41\n", "o.k"},
 		{"unknown_param.ts", "number\n", "o.k"},
@@ -53,7 +55,7 @@ func TestInRecordReadStops(t *testing.T) {
 			if !errors.As(err, &notYet) {
 				t.Fatalf("want a NotYet, got %v", err)
 			}
-			const words = "a read of 'k' through a value that may be a record of numbers or booleans"
+			const words = "a read of 'k' through a value that may be a record, whose numbers and booleans a named dynamic read doesn't box yet"
 			if notYet.Where != want || !strings.Contains(err.Error(), words) {
 				t.Fatalf("got %q at %s; want %q at %s", err.Error(), notYet.Where, words, want)
 			}
@@ -61,13 +63,35 @@ func TestInRecordReadStops(t *testing.T) {
 	}
 }
 
-// The neighbors still lower and agree: a record of strings, whose slots are references, read the same way;
-// a run-time key read, which boxes a record's value by its kind; and a receiver declared as a program object
-// type, which no record reaches, alone and beside a number record in the same program.
+// A record made with no type node naming it, Object.fromEntries' { [k: string]: number }, stops at compile
+// time before any read can misread it (Compiler's must on #859ksab: the stop can't count on type nodes).
+func TestInRecordReadFromEntriesStops(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/in_record_read", "from_entries.ts"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	if disagreement(run{stdout: []byte("number\n")}, truth) != "" {
+		t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
+	}
+	program, err := lowered(t, path)
+	if err == nil {
+		native, _ := natively(t, program)
+		t.Fatalf("lowered; want a compile-time stop. Sanitized native: exit %d, stdout %q, stderr %q", native.exitCode, native.stdout, native.stderr)
+	}
+	var refused *lower.Refused
+	var notYet *lower.NotYet
+	if !errors.As(err, &refused) && !errors.As(err, &notYet) {
+		t.Fatalf("want a compile-time stop, got %v", err)
+	}
+}
+
+// The neighbors still lower and agree: a run-time key read, which boxes a record's value by its kind, and a
+// receiver declared as a program object type, which no record reaches, alone and beside a number record.
 func TestInRecordReadNeighborsAgree(t *testing.T) {
 	t.Parallel()
 	for file, node := range map[string]string{
-		"record_string.ts":           "string\n",
 		"keyed_read.ts":              "number\n",
 		"fixed_control.ts":           "number absent\n",
 		"fixed_in_record_program.ts": "number absent 1\n",

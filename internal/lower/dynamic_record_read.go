@@ -3,16 +3,17 @@ package lower
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
-	"github.com/system-inc/adamic/internal/ir"
 )
 
 // dynamicRecordReadGap stops a named dynamic read (ir.DynamicProperty, adamic_dynamic_property) of a value
-// that may be a record holding numbers or booleans (#859ksab). The runtime's record branch returns
+// that may be a record (#859ksab). The runtime's record branch returns
 // adamic_retain(slot->reference) whatever the record's value storage (union.c:332 to :337), so a number's
 // unboxed bits were retained as a pointer: `'k' in o` then `typeof o.k`, with o a Record<string, number>
 // passed as object, faulted natively under ASan where Node and the JavaScript backend print number
-// (Language's J-t5mxr1v and J-dwhn493 on main 0c9b1201). A record of references reads right, so a program
-// with no scalar record keeps lowering. A read whose receiver can't be found fails closed. A run-time key read (adamic_dynamic_property_keyed) boxes a record's
+// (Language's J-t5mxr1v and J-dwhn493 on main 0c9b1201). Which records a program makes can't be read from its
+// types alone (Object.fromEntries, a library result, an inferred literal make one with no type node naming it,
+// Compiler's must), so every such read stops, a record of references among them, and a read whose receiver
+// can't be found fails closed. A run-time key read (adamic_dynamic_property_keyed) boxes a record's
 // value by its kind (record.c), so it isn't this road. Library's #3tjjcjs fixes the branch, which lifts this.
 func (l *lowering) dynamicRecordReadGap(node *ast.Node, name string) error {
 	var receiver *ast.Node
@@ -22,13 +23,10 @@ func (l *lowering) dynamicRecordReadGap(node *ast.Node, name string) error {
 	case ast.KindElementAccessExpression:
 		receiver = node.AsElementAccessExpression().Expression
 	}
-	if !l.scalarRecordsInProgram() {
-		return nil
-	}
 	if receiver != nil && !l.viewMayHoldRecord(l.checker.GetTypeAtLocation(receiver), 0) {
 		return nil
 	}
-	return l.notYet(node, "a read of '"+name+"' through a value that may be a record of numbers or booleans, which a named dynamic read doesn't box yet")
+	return l.notYet(node, "a read of '"+name+"' through a value that may be a record, whose numbers and booleans a named dynamic read doesn't box yet")
 }
 
 // viewMayHoldRecord reports whether a value seen as proven may be a record at run time: proven is object,
@@ -58,42 +56,4 @@ func (l *lowering) viewMayHoldRecord(proven *checker.Type, depth int) bool {
 		return false
 	}
 	return l.recordElement(proven) != nil
-}
-
-// scalarRecordsInProgram reports whether any type the program writes is a record whose values are held as
-// numbers or booleans, the storage the named dynamic read misreads. It reads every type node of the
-// program's modules once. When the modules can't be read, it answers true.
-func (l *lowering) scalarRecordsInProgram() bool {
-	if l.scalarRecordsKnown {
-		return l.scalarRecords
-	}
-	l.scalarRecordsKnown = true
-	modules, err := l.moduleOrder(l.program.Files()[0])
-	if err != nil {
-		l.scalarRecords = true
-		return true
-	}
-	var visit ast.Visitor
-	visit = func(node *ast.Node) bool {
-		if l.scalarRecords {
-			return true
-		}
-		if ast.IsTypeNodeKind(node.Kind) {
-			if element := l.recordElement(l.checker.GetTypeFromTypeNode(node)); element != nil {
-				if held, known := l.representation(l.checker.GetNonNullableType(element)); !known || !held.IsReference() && held != ir.Union {
-					l.scalarRecords = true
-					return true
-				}
-			}
-		}
-		node.ForEachChild(visit)
-		return false
-	}
-	for _, module := range modules {
-		module.AsNode().ForEachChild(visit)
-		if l.scalarRecords {
-			break
-		}
-	}
-	return l.scalarRecords
 }
