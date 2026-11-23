@@ -4632,7 +4632,7 @@ class CensusLaunchers(unittest.TestCase):
 
     def test_a_declared_launcher_passes(self):
         for call in ('exec.Command("node", "x.js")', 'exec.CommandContext(context.Background(), "go", "test", "-c")',
-                     'exec.CommandContext(ctx, `node`)', 'exec.Command("/usr/bin/node")'):
+                     'exec.CommandContext(ctx, `node`)'):
             self.census(self.launcher % call, self.declared)
         for call in ('toolchain.CommandIn(directory, "go", arguments...)', 'toolchain.Command("node", "x.js")',
                      'toolchain.CommandContextIn(ctx, directory, "node", arguments...)'):
@@ -4660,7 +4660,7 @@ class CensusLaunchers(unittest.TestCase):
         for call in ("os.StartProcess(path, nil, nil)", "syscall.Exec(path, nil, nil)", "syscall.ForkExec(path, nil, nil)",
                      "syscall.StartProcess(path, nil, nil)", "unix.Exec(path, nil, nil)"):
             self.refused(self.roadsLauncher % call, "launches a computed executable, " + call.split("(")[0] + "(path)")
-        for call in ('os.StartProcess("/usr/bin/node", nil, nil)', 'syscall.Exec("/usr/bin/go", nil, nil)'):
+        for call in ('os.StartProcess("node", nil, nil)', 'syscall.Exec("go", nil, nil)'):
             self.census(self.roadsLauncher % call, self.declared)
 
     def test_what_cant_be_read_refuses(self):
@@ -4671,7 +4671,7 @@ class CensusLaunchers(unittest.TestCase):
         for call, reason in (("run := exec.Command", "names exec.Command without calling it"),
                              ("exec.CommandContext(ctx)", "launches by exec.CommandContext with arguments it can't read"),
                              ('exec.CommandContext("node")', "launches by exec.CommandContext with arguments it can't read"),
-                             ('command := exec.Command("node"); command.Path = compilerPath()', "sets a command's Path by hand"),
+                             ('command := exec.Command("node"); command.Path = compilerPath()', "writes a Path field by hand"),
                              ("syscall.RawSyscall(59, 0, 0, 0)", "makes a raw system call, syscall.RawSyscall"),
                              ("unix.Syscall(59, 0, 0, 0)", "makes a raw system call, unix.Syscall")):
             self.refused(self.roadsLauncher % call, reason)
@@ -4808,7 +4808,29 @@ class CensusLaunchers(unittest.TestCase):
             self.refused(self.launcher % call, "computed executable")
 
     def test_a_hand_built_command_is_refused(self):
-        self.refused(self.launcher % "(&exec.Cmd{Path: path})", "builds an exec.Cmd by hand")
+        self.refused(self.launcher % "(&exec.Cmd{Path: path})", "names exec.Cmd other than as a pointer another call made")
+
+    def test_the_reviews_three_cheap_fixes_and_the_exact_name(self):
+        # Adamic Loom's review on #ry3pfc6. Mutants: the package line's imports skipped (the old line anchor), a Path
+        # target unread, a Cmd composite read only as exec.Cmd{, and the runs matched by basename; each passes its case.
+        # (1) A Path written in any form, in a file importing neither os/exec nor toolchain (a sibling's write reaches a
+        # Cmd another file made); a Path read is no write.
+        plain = 'package launch\n\nfunc set(c *thing, row record) {\n\t%s\n}\n'
+        for statement in ('c.Path, c.Dir = compilerPath(), ""', "c.Path += suffix", "p := &c.Path", "c.Path++"):
+            self.refused(plain % statement, "writes a Path field by hand")
+        for statement in ('if row.Path[0] != "x" || len(row.Path) == 2 {', 'name := strings.Join(row.Path, ".")', "for _, part := range row.Path {"):
+            self.census(plain % statement, self.declared, self.helper)
+        # (2) A Cmd value in any spelling; a pointer another call made, as a parameter, result or variable, is no build.
+        for statement in ("commands := []*exec.Cmd{{Path: path}}", "type command = exec.Cmd", "c := new(exec.Cmd)", "c := &exec.Cmd {Path: path}",
+                          "var commands [2]exec.Cmd"):
+            self.refused(self.roadsLauncher % statement, "names exec.Cmd other than as a pointer another call made")
+        self.census(self.roadsLauncher % "var c *exec.Cmd" + "\nfunc wrap(c *exec.Cmd) *exec.Cmd {\n\treturn c\n}\n", self.declared, self.helper)
+        # (3) Imports read as Go places them, the package line and two on one line included.
+        self.refused('package launch; import "os/exec"\n\nfunc run() error {\n\treturn exec.Command(compilerPath()).Run()\n}\n', "launches a computed executable")
+        self.refused('package launch\n\nimport "fmt"; import "os/exec"\n\nfunc run() error {\n\treturn exec.Command(compilerPath()).Run()\n}\n', "launches a computed executable")
+        # The runs, by exact name: a path ending in a named program is no program the runs name.
+        for executable in ("/usr/bin/node", "./node", "/tmp/built/go"):
+            self.refused(self.launcher % ('exec.Command("%s")' % executable), "launches %s, which its declaration's runs don't name" % executable)
 
     def test_an_aliased_os_exec_is_read_and_a_dot_import_refused(self):
         aliased = self.launcher.replace('import "os/exec"', 'import run "os/exec"')

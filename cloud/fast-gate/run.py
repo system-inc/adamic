@@ -1897,7 +1897,8 @@ def goArguments(code, index, count):
 # os/exec's and internal/toolchain's launchers, os.StartProcess, and syscall's and x/sys/unix's exec calls each name
 # their executable as a literal its declaration's runs list, or refuse. What can't be read refuses: a computed
 # executable, a spread where the executable sits, a launcher named without being called, a hand-built exec.Cmd or a
-# command's Path set by hand, a raw system call, cgo, and a dot or blank import of a package that launches.
+# command's Path set by hand, a raw system call, cgo, and a dot or blank import of a package that launches. An executable
+# matches its runs by its exact name, never its basename.
 #
 # A launch can also run through another house package. A declared launcher that imports one that launches, read
 # transitively through the house packages it imports, is refused unless an allow-launch line of the gate tools'
@@ -1905,8 +1906,14 @@ def goArguments(code, index, count):
 # call's own run (`# allow-launch: <launcher> <package>.<Function>: <why, naming its J- job>`). Then the launcher's
 # every other reference to a function, a variable or a type with methods of that package refuses, as an unallowed
 # import does. The backstop: what a traced run reads outside its key still voids at the live read check, so an allowed
-# function that later starts running the compiler is caught at the run, never trusted. What isn't read: a method called
-# on a value an allowed function returns, whose type the launcher never names.
+# function that later starts running the compiler is caught at the run, never trusted.
+#
+# A regex over Go text can't prove a launcher never runs the compiler (Adamic Loom's ruling on #ry3pfc6), so this census
+# is a cheap early refusal, and the proof is the trace: every traced run of a declared launcher's unit holds its every
+# exec to its runs, or voids and keys wide (the exec check). What this census doesn't read, and the exec check catches:
+# a //go:linkname to a launching function, a launch through a package outside the house (golang.org/x/tools/go/packages
+# with NeedExportFile, go/build, net/http/cgi), a method reached through a type, alias or constant of an allowed
+# package, or on a value an allowed function returns, reflect or unsafe, and assembly.
 literalName = re.compile(r'"((?:[^"\\\n]|\\.)*)"|`([^`]*)`')
 # houseModule is adamic's module; an import under it is a house package, read from the tree.
 houseModule = "github.com/system-inc/adamic/"
@@ -1956,28 +1963,49 @@ def launchAllows(tools):
     return allows
 
 
-# importClause finds an import declaration in a Go file's code with its strings blanked, so an import spelled inside a
-# string (a fixture's source) is never read; importSpec reads one import from the same span with its strings kept.
-importClause = re.compile(r"(?m)^[ \t]*import\b[ \t]*(?:\((?P<group>[^)]*)\)|(?P<single>[^\n]*))")
-importSpec = re.compile(r'\s*(?:(?P<name>[\w.]+)\s+)?"(?P<path>[^"\\\n]+)"\s*;?\s*')
+# A Go file's imports are read where Go's grammar puts them, in its code with strings and comments blanked: after the
+# package clause (goPackageClause) and before its first top-level declaration (goDeclaration), each import declaration
+# a group or one spec, ended by a newline or a semicolon. importSpec reads one spec from the same span, strings kept.
+goPackageClause = re.compile(r"\bpackage[ \t]+\w+")
+goDeclaration = re.compile(r"(?m)^[ \t]*(?:func|var|const|type)\b")
+importSpec = re.compile(r'\s*(?:(?P<name>[\w.]+)\s+)?"(?P<path>[^"\\\n]+)"\s*')
 
 
 def goImports(source):
-    """Each import of a Go file as (name, path, offset), name its alias or "" when it has none, or None when an import
-    can't be read: an import it can't read could be a launching package under any name."""
+    """Each import of a Go file as (name, path, offset), name its alias or "" when it has none, or None when its imports
+    can't be read: an import it can't read could be a launching package under any name. `package p; import "os/exec"`
+    and two imports on one line are read; anything between the package clause and the first declaration that isn't an
+    import refuses."""
     code, calls = goCode(source), goCode(source, strings=False)
-    imports = []
-    for clause in importClause.finditer(calls):
-        group = "group" if clause.group("group") is not None else "single"
-        offset = clause.start(group)
-        for line in code[clause.start(group):clause.end(group)].split("\n"):
-            spec = importSpec.fullmatch(line)
-            if spec:
-                imports.append((spec.group("name") or "", spec.group("path"), offset + line.index('"')))
-            elif line.strip():
+    clause = goPackageClause.search(calls)
+    if not clause:
+        return None
+    declaration = goDeclaration.search(calls, clause.end())
+    end = declaration.start() if declaration else len(calls)
+    imports, position = [], clause.end()
+    while True:
+        position = re.compile(r"[\s;]*").match(calls, position).end()
+        if position >= end:
+            return imports
+        if not re.compile(r"import\b").match(calls, position):
+            return None
+        position = re.compile(r"import[ \t]*").match(calls, position).end()
+        if calls.startswith("(", position):
+            close = calls.find(")", position)
+            if close < 0 or close > end:
                 return None
-            offset += len(line) + 1
-    return imports
+            start, stop, position = position + 1, close, close + 1
+        else:
+            stop = re.compile(r"[;\n]").search(calls, position)
+            start = position
+            stop = position = stop.start() if stop and stop.start() < end else end
+        for spec in re.finditer(r"[^;\n]+", code[start:stop]):
+            if not spec.group(0).strip():
+                continue
+            read = importSpec.fullmatch(spec.group(0))
+            if not read:
+                return None
+            imports.append((read.group("name") or "", read.group("path"), start + spec.start() + spec.group(0).index('"')))
 
 
 class LaunchHouse:
@@ -2094,15 +2122,24 @@ def launcherRefusal(source, runs, house=None, launcher=None, references=None):
             return "%s: imports %s, whose package name can't be read" % (line(offset), housePackage)
         names[local] = (path, housePackage)
     for local, (path, housePackage) in names.items():
-        if path == "os/exec":
-            # A composite literal as gofmt writes it, never a func's *exec.Cmd result before its body.
-            found = re.search(r"(?<![\w.*])" + re.escape(local) + r"\.Cmd\{", calls)
-            if found:
-                return "%s: builds an %s.Cmd by hand, a computed path" % (line(found.start()), local)
-    if any(path in ("os/exec", toolchainImport) for path, _ in names.values()):
-        found = re.search(r"\.\s*Path\s*=(?!=)", calls)
-        if found:
-            return "%s: sets a command's Path by hand, a computed path" % line(found.start())
+        if path != "os/exec":
+            continue
+        # A Cmd is named only as a pointer another call made: *exec.Cmd as a parameter's, a result's or a variable's
+        # type. Any other spelling builds or names a Cmd value whose Path is set by hand: a composite literal in any form
+        # ([]*exec.Cmd{{...}}, &exec.Cmd {), new, a slice or array of Cmd, an alias of the type, a type assertion.
+        for found in re.finditer(r"(?<![\w.])" + re.escape(local) + r"\s*\.\s*Cmd\b", calls):
+            opening = calls.rfind("\n", 0, found.start()) + 1
+            signature = calls[opening:found.start()].lstrip().startswith("func") and re.match(r"[ \t]*\{[ \t]*(?:\n|$)", calls[found.end():])
+            if not calls[:found.start()].rstrip().endswith("*") or (re.match(r"\s*\{", calls[found.end():]) and not signature):
+                return "%s: names %s.Cmd other than as a pointer another call made, so its Path can't be read" % (line(found.start()), local)
+    # A Path written by hand, in any file of a declared launcher whatever it imports (a sibling's write reaches a Cmd
+    # this file made): a Path field as an assignment's target in any form, incremented, or its address taken.
+    for statement in re.finditer(r"[^;\n]+", calls):
+        text = statement.group(0)
+        assignment = re.search(r"(?<![=!<>:])(?::=|<<=|>>=|&\^=|[-+*/%&|^]?=)(?!=)", text)
+        if ((assignment and re.search(r"\.\s*Path\b", text[:assignment.start()])) or re.search(r"\.\s*Path\b\s*(?:\+\+|--)", text)
+                or re.search(r"&\s*[\w.\[\]()*]*\.\s*Path\b", text)):
+            return "%s: writes a Path field by hand, so what it launches can't be read" % line(statement.start())
     for selector in re.finditer(r"(?<![\w.])(?P<local>\w+)\s*\.\s*(?P<member>\w+)", calls):
         if selector.group("local") not in names:
             continue
@@ -2137,7 +2174,8 @@ def launcherRefusal(source, runs, house=None, launcher=None, references=None):
             if not literal:
                 return "%s: launches a computed executable, %s.%s(%s)" % (at, local, member, executable)
             launched = literal.group(1) if literal.group(1) is not None else literal.group(2)
-        if os.path.basename(launched) not in runs:
+        if launched not in runs:
+            # By its exact name, never its basename: /tmp/built/git or ./node is no git or node the runs name.
             return "%s: launches %s, which its declaration's runs don't name" % (at, launched)
     return None
 
