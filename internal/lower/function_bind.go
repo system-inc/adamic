@@ -623,7 +623,7 @@ func (l *lowering) bindReceiverRule(node *ast.Node) error {
 		return nil
 	}
 	if !l.stableBindReceiver(receiver) {
-		return l.notYet(node, "method bind with an assigned receiver identifier")
+		return l.notYet(node, "method bind whose receiver "+sourceExpression(receiver)+" isn't a const or a parameter the function never assigns ("+l.bindReceiverKind(receiver)+")")
 	}
 	if target.AsPropertyAccessExpression().QuestionDotToken != nil || call.QuestionDotToken != nil {
 		return l.notYet(node, "bind outside the direct method optional-chain head")
@@ -658,6 +658,28 @@ func (l *lowering) stableBindReceiver(node *ast.Node) bool {
 		return !l.assignedSymbol(symbol)
 	}
 	return declaration.Kind == ast.KindVariableDeclaration && declaration.Parent != nil && declaration.Parent.Flags&ast.NodeFlagsConst != 0
+}
+
+// bindReceiverKind says what a receiver stableBindReceiver turns down is, for its stop's words: the old
+// words said "assigned" of every one, a destructured binding never assigned included (#d6jncyx, family 66).
+func (l *lowering) bindReceiverKind(node *ast.Node) string {
+	symbol := l.symbol(node)
+	switch {
+	case symbol == nil || len(symbol.Declarations) == 0:
+		return "a name with no declaration"
+	case len(symbol.Declarations) != 1:
+		return "a name declared more than once"
+	}
+	declaration := symbol.Declarations[0]
+	switch {
+	case declaration.Kind == ast.KindParameter:
+		return "a parameter the function assigns"
+	case declaration.Kind == ast.KindBindingElement:
+		return "a destructured binding"
+	case declaration.Kind == ast.KindVariableDeclaration:
+		return "a let or var"
+	}
+	return describe(declaration)
 }
 
 func (l *lowering) directBindMethodRead(node *ast.Node) bool {
