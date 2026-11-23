@@ -994,11 +994,12 @@ def packageGraph(tree):
 goListSourceError = re.compile(r"^\s*(\S+\.go):\d+(?::\d+)?: ")
 
 # goListModuleFetch is what a positioned go list error says when the line it's at only names where go met a module it
-# couldn't fetch: a module version and the fetch that failed, as "internal/a/a.go:3:8: example.com/m@v1.0.0: module
-# lookup disabled by GOPROXY=off", or reading or verifying one in the module cache. That's the box's gap, a module the
+# couldn't fetch: a lookup the proxy setting disabled, as go 1.27.1 says it, "a/a.go:3:8: module lookup disabled by
+# GOPROXY=off" after a "go: downloading example.com/m v1.0.0" line (J-qrz9fam), or a module version read or verified in
+# the module cache, or a dial. That's the box's gap, a module the
 # sealed image doesn't hold yet, never the change's source (Planning's question on aa71cbb9). A go.sum the change didn't
 # update ("missing go.sum entry") stays the tree's: go.sum is its own file, and the change fixes it there.
-goListModuleFetch = re.compile(r"@v\S*: (?:.*module lookup disabled|.*GOPROXY=off|reading |verifying |.*dial tcp|.*no such host)")
+goListModuleFetch = re.compile(r"module lookup disabled|GOPROXY=off|@v\S*: (?:reading|verifying) |dial tcp|no such host")
 
 
 def goListFailure(tree, stderr, what, otherwise):
