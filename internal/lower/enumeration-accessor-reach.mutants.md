@@ -6,14 +6,25 @@ accessor existed anywhere in the program. enumerationDescriptors now asks
 enumerationAccessorReaches of each accessor (enumeration_accessor_reach.go):
 it refuses only when the accessor's owner (an object literal's regular type, a
 class's instance or static side and every class inheriting the accessor, an
-interface's or type literal's declared type) is assignable to a type the
-enumeration reads. Those are the operand's type and its union members, and for
-encodeJson, which reads every field at any depth, recursively their property
-types, type arguments and element types. A read type that can't be classified
-(any, unknown, object, {}, a type parameter, an index signature whose values can
-be objects, a type nested past depth 16) keeps the program-wide scan, and an
-owner inside type parameters, or one whose name doesn't lead back to its
-accessor, counts as reaching.
+interface's or type literal's declared type) and a type the enumeration reads
+are related by assignability, either way. Those are the operand's type and its
+union members, and for encodeJson, which reads every field at any depth,
+recursively their property types, type arguments and element types. A read
+type that can't be classified (any, unknown, object, {}, a type parameter, an
+index signature whose values can be objects, a type nested past depth 16) keeps
+the program-wide scan, and an owner inside type parameters, or one whose name
+doesn't lead back to its accessor, counts as reaching.
+
+TestEnumerationReachUnknownKeepsProgramScan pins the unknown causes an
+enumeration reaches: object, {}, a readonly string index whose values are
+objects (by Object.values), an empty interface and a chain past depth 16 (by
+encodeJson). The rest are fail-closed and unreachable today, each stopped first
+elsewhere: any is refused as "a value of type any" (refuseAnyValue); a type
+parameter is mapped to its instantiation by l.concrete before the guard reads
+it, since a generic body is lowered per instantiation; encodeJson's schema
+(jsonDecodeSchema) refuses every non-array index signature; and a mutable
+string index is taken by recordObjectCallArguments as a record call without
+asking the guard, as at main.
 
 Each producer is a top-level TestProduct_EnumerationReach<Name>Mutant:
 t.Parallel(), one buildcache.GoTestMutated build of
@@ -46,10 +57,14 @@ assignable to; under the mutant the guard admits it, and the pin fails with its
 witness whatever stops the program after.
 
 Every pin reaches the guard through Object.values, Object.entries or encodeJson,
-never Object.keys: objectKeys (class_features.go) lowers a class instance, a
-static side and a plain view straight to ir.ObjectKeys, and calls objectCall,
-and so the guard, only for a node array, a RegExp, a possibly undefined operand
-or a shape with an optional field.
+and Object.keys only in the unrelated pin's shape with an optional field:
+objectKeys (class_features.go) lowers a class instance, a static side and a
+plain view straight to ir.ObjectKeys, and calls objectCall, and so the guard,
+only for a node array, a RegExp, a possibly undefined operand or a shape with an
+optional field. Object.values of a class instance, a constructor or a union with
+an interface member is any[] to tsc, and read as join's receiver it stops at "an
+array of any" before the call is lowered, so those refused rows return the call
+from a function typed number[].
 
 Product order: cloud/fast-gate/enumeration-reach-product-order.py writes the
 four producer rows, each waiting on nothing.

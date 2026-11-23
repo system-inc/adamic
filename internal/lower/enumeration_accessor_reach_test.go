@@ -25,7 +25,7 @@ import (
 // it once its schema is proven (library_json_encode.go:39). Object.keys mostly doesn't: objectKeys
 // (class_features.go) lowers a class instance, a static side and a plain view straight to ir.ObjectKeys
 // and reaches objectCall only for a node array, a RegExp, a possibly undefined operand or a shape with
-// an optional field, so no row here enumerates with it.
+// an optional field, so only the unrelated row's optional field enumerates with it.
 
 // enumerationReachRefusal is the words an accessor that reaches the operand stops with, as before.
 const enumerationReachRefusal = "Object enumeration with getter or accessor descriptors; use own data properties for this first reflection implementation"
@@ -92,9 +92,10 @@ func enumerationReachRefusedAs(t *testing.T, name, extension, held, main string)
 }
 
 // Object.values and Object.entries of a const literal, Object.values of a parameter (the checked
-// enumeration, which asks the rule a second time) and encodeJson, beside a class whose getter no
+// enumeration, which asks the rule a second time), encodeJson, and Object.keys of a shape with an
+// optional field (the fallback road objectKeys hands to objectCall), beside a class whose getter no
 // enumerated value can hold: each lowers and agrees with Node, where the program-wide scan refused all
-// four. Mutant WholeGraph (every accessor reaches) turns it red.
+// five. Mutant WholeGraph (every accessor reaches) turns it red.
 func TestEnumerationReachUnrelatedGetterLowers(t *testing.T) {
 	t.Parallel()
 	const main = `import { encodeJson } from 'adamic';
@@ -113,9 +114,11 @@ for (const [key, value] of Object.entries(point)) console.log(` + "`${key}:${val
 console.log(String(total(point)));
 const reading: Point = { x: 3, y: 4 };
 console.log(encodeJson<Point>(reading));
+const partial: { x: number; y?: number } = { x: 5 };
+console.log(Object.keys(partial).join(','));
 console.log(String(new Temperature().celsius));
 `
-	enumerationReachAgrees(t, "unrelated", enumerationReachTemperature, main, "1,2\nx:1\ny:2\n3\n{\"x\":3,\"y\":4}\n27\n")
+	enumerationReachAgrees(t, "unrelated", enumerationReachTemperature, main, "1,2\nx:1\ny:2\n3\n{\"x\":3,\"y\":4}\nx\n27\n")
 }
 
 // Object.values of a parameter typed as a union of two object shapes with number values, beside the
@@ -137,20 +140,29 @@ console.log(String(new Temperature().celsius));
 }
 
 // Each row's operand can hold a getter-bearing value, so each stays refused in today's words: an object
-// literal's getter seen through a type it's assignable to, a class instance, the interface a getter's
-// class implements (by Object.entries), a parameter typed as a union holding that interface, a class's
-// static side, whose static getter is on the constructor Object.values reads, a getter a subclass
-// inherits (the base isn't assignable to the subclass, its instances are), a parameter typed as the
-// interface, and a getter of a generic class, whose owner relates for no instantiation in particular.
+// literal's getter seen through a type it's assignable to, a class instance (the owner found is
+// Sensor's instance side), the interface a getter's class implements (by Object.entries), a parameter
+// typed as a union holding that interface, a class's static side (the operand is the constructor
+// itself, and the owner found is typeof Sensor, whose static getter Object.values reads), a getter a
+// subclass inherits (the owners found are Base and Sub, whose property is Base's getter; the base isn't
+// assignable to the subclass, its instances are), a parameter typed as the interface, and a getter of a
+// generic class, whose owner relates for no instantiation in particular.
+//
+// tsc types Object.values of a class instance, a constructor or a union with an interface member as
+// any[], since only a type literal has an implicit index signature, and the call read as join's
+// receiver stops at "an array of any" (elementType, object.go) before it's lowered. Those rows return
+// the call from a function typed number[] instead, as the parameter row does, so the call is lowered
+// with a contextual array type and asks the guard at library_object.go:100, the operand still typed as
+// the class, the constructor or the union.
 func TestEnumerationReachReachingGetterRefused(t *testing.T) {
 	t.Parallel()
 	for _, row := range []struct{ name, held, main string }{
 		{"literal", "export const literal = { get celsius(): number { return 21; } };\n", "import { literal } from './held.a';\nconst reading: { readonly celsius: number } = literal;\nconsole.log(Object.values(reading).join(','));\n"},
-		{"class", enumerationReachSensor, "import { Sensor } from './held.a';\nconst sensor = new Sensor();\nconsole.log(Object.values(sensor).join(','));\n"},
+		{"class", enumerationReachSensor, "import { Sensor } from './held.a';\nfunction read(sensor: Sensor): number[] { return Object.values(sensor); }\nconsole.log(read(new Sensor()).join(','));\n"},
 		{"interface", enumerationReachSensor, "import { type Reading, Sensor } from './held.a';\nconst reading: Reading = new Sensor();\nconsole.log(String(Object.entries(reading).length));\n"},
-		{"union", enumerationReachSensor, "import { type Reading, Sensor } from './held.a';\ntype Either = { label: string } | Reading;\nfunction read(either: Either): string { return Object.values(either).join(','); }\nconsole.log(read(new Sensor()));\n"},
-		{"static", "export class Sensor { static get celsius(): number { return 21; } }\n", "import { Sensor } from './held.a';\nconsole.log(Object.values(Sensor).join(','));\n"},
-		{"subclass", "export class Base { get celsius(): number { return 21; } }\nexport class Sub extends Base { label = 's'; }\n", "import { Sub } from './held.a';\nconst sub = new Sub();\nconsole.log(Object.values(sub).join(','));\n"},
+		{"union", enumerationReachSensor, "import { type Reading, Sensor } from './held.a';\ntype Either = { readonly label: number } | Reading;\nfunction read(either: Either): number[] { return Object.values(either); }\nconsole.log(read(new Sensor()).join(','));\n"},
+		{"static", "export class Sensor { static get celsius(): number { return 21; } }\n", "import { Sensor } from './held.a';\nfunction read(): number[] { return Object.values(Sensor); }\nconsole.log(read().join(','));\n"},
+		{"subclass", "export class Base { get celsius(): number { return 21; } }\nexport class Sub extends Base { count = 1; }\n", "import { Sub } from './held.a';\nfunction read(sub: Sub): number[] { return Object.values(sub); }\nconsole.log(read(new Sub()).join(','));\n"},
 		{"parameter", enumerationReachSensor, "import { type Reading, Sensor } from './held.a';\nfunction read(reading: Reading): number[] { return Object.values(reading); }\nconsole.log(read(new Sensor()).join(','));\n"},
 		{"generic", "export class Box<T> { held: T; constructor(held: T) { this.held = held; } get value(): T { return this.held; } }\n", "import { Box } from './held.a';\nconst reading: { readonly value: number } = { value: 1 };\nconsole.log(Object.values(reading).join(','));\nconsole.log(String(new Box<number>(2).value));\n"},
 	} {
@@ -205,13 +217,26 @@ func enumerationReachChain() string {
 
 // An operand whose reach can't be told keeps the program-wide scan of before, so the unrelated getter
 // still refuses it: a parameter typed object (a non-primitive type), one typed {} (any object at all),
-// both by Object.values, which asks the guard before its value type is checked; encodeJson of an empty
-// interface's literal; and encodeJson of a chain nested past enumerationReachDepth.
+// one typed as a readonly string index whose values are objects (the program doesn't hold it as a
+// record, so recordElement is nil and the call isn't taken by the record road), each by Object.values,
+// which asks the guard before its value type is checked; encodeJson of an empty interface's literal;
+// and encodeJson of a chain nested past enumerationReachDepth.
+//
+// The other causes enumerationReadTypes names are fail-closed and unreachable today, each stopped
+// first elsewhere. Any: a parameter typed any is refused as "a value of type any" (refuseAnyValue,
+// never_refused.go). A type parameter: the guard is asked, but a generic body is lowered per
+// instantiation and l.concrete maps T to its type argument first, so a T extends object operand reads
+// as { a: number } and the call stops at Object.values' homogeneity check (library_object.go:168). An
+// index signature under encodeJson: jsonDecodeSchema refuses every index signature but an array's or a
+// tuple's as "cannot prove ... is JSON data" before the guard. A mutable string index under
+// Object.values or Object.entries: recordElement is its value type, so recordObjectCallArguments
+// (library_object.go:24) lowers it as a record call without asking the guard, as at main.
 func TestEnumerationReachUnknownKeepsProgramScan(t *testing.T) {
 	t.Parallel()
 	for _, row := range []struct{ name, main string }{
 		{"object", "import { Temperature } from './held.a';\nfunction count(value: object): number { return Object.values(value).length; }\nconsole.log(String(count({ a: 1 })));\nconsole.log(String(new Temperature().celsius));\n"},
 		{"empty", "import { Temperature } from './held.a';\nfunction count(value: {}): number { return Object.values(value).length; }\nconsole.log(String(count({ a: 1 })));\nconsole.log(String(new Temperature().celsius));\n"},
+		{"index", "import { Temperature } from './held.a';\nfunction count(bag: { readonly [key: string]: { label: string } }): number { return Object.values(bag).length; }\nconsole.log(String(count({ a: { label: 'x' } })));\nconsole.log(String(new Temperature().celsius));\n"},
 		{"empty interface", "import { encodeJson } from 'adamic';\nimport { Temperature } from './held.a';\ninterface Empty {}\nconsole.log(encodeJson<Empty>({}));\nconsole.log(String(new Temperature().celsius));\n"},
 		{"depth", enumerationReachChain()},
 	} {
@@ -231,24 +256,4 @@ func TestEnumerationReachUnknownKeepsProgramScan(t *testing.T) {
 func TestEnumerationReachDowncastRefused(t *testing.T) {
 	t.Parallel()
 	enumerationReachRefusedAs(t, "downcast", ".ts", "export class Meter { a = 1; get g(): number { return 2; } }\n", "import { Meter } from './held';\nconst narrow: { a: number } = new Meter();\nconst wide = narrow as { a: number; readonly g: number; c: number };\nconsole.log(Object.values(wide).join(','));\n")
-}
-
-// TestEnumerationReachProbe is temporary: it logs what each candidate program lowers to, to find which
-// further unknown causes and fallback roads reach the guard. It never fails, and is dropped once read.
-func TestEnumerationReachProbe(t *testing.T) {
-	t.Parallel()
-	for _, row := range []struct{ name, held, main string }{
-		{"keys optional field", enumerationReachTemperature, "import { Temperature } from './held.a';\nconst partial: { x: number; y?: number } = { x: 5 };\nconsole.log(Object.keys(partial).join(','));\nconsole.log(String(new Temperature().celsius));\n"},
-		{"any", enumerationReachTemperature, "import { Temperature } from './held.a';\nfunction count(value: any): number { return Object.values(value).length; }\nconsole.log(String(count({ a: 1 })));\nconsole.log(String(new Temperature().celsius));\n"},
-		{"type parameter", enumerationReachTemperature, "import { Temperature } from './held.a';\nfunction count<T extends object>(value: T): number { return Object.values(value).length; }\nconsole.log(String(count({ a: 1 })));\nconsole.log(String(new Temperature().celsius));\n"},
-		{"readonly index", enumerationReachTemperature, "import { Temperature } from './held.a';\nfunction count(bag: { readonly [key: string]: { label: string } }): number { return Object.values(bag).length; }\nconsole.log(String(count({ a: { label: 'x' } })));\nconsole.log(String(new Temperature().celsius));\n"},
-		{"index entries", enumerationReachTemperature, "import { Temperature } from './held.a';\nfunction count(bag: { [key: string]: { label: string } }): number { return Object.entries(bag).length; }\nconsole.log(String(count({ a: { label: 'x' } })));\nconsole.log(String(new Temperature().celsius));\n"},
-		{"private accessor", "export class Secret { kelvin = 1; get #hidden(): number { return this.kelvin; } read(): number { return this.#hidden; } }\n", "import { Secret } from './held.a';\nconst point = { x: 1, y: 2 };\nconsole.log(Object.values(point).join(','));\nconsole.log(String(new Secret().read()));\n"},
-	} {
-		t.Run(row.name, func(t *testing.T) {
-			t.Parallel()
-			_, _, err := enumerationReachLower(t, ".a", row.held, row.main)
-			t.Logf("enumeration reach probe %s: %v", row.name, err)
-		})
-	}
 }
