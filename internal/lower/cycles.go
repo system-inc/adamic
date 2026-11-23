@@ -830,6 +830,12 @@ func (f *cycleFinder) reachLinks(node cycleNode) []cycleNode {
 				links = append(links, cycleNode{objc: class})
 			}
 		}
+		// A collection's iterator holds its collection, whatever slot type it's stored as: Iterator,
+		// IterableIterator, Iterable, a program's own Cursor, an alias or a union of one. Each iterator the
+		// program makes links its collection to every type it's assignable to (libraryIteratorCaptures),
+		// so the map, the holder and map.keys() stored in the holder are seen as one cycle (#66acn2a,
+		// Lower's rule: keyed by assignability, never by the iterator's name).
+		links = append(links, f.libraryIteratorCaptures(proven)...)
 		// A value seen as this type may be any object type the program has that can be seen as
 		// it, with fields this type doesn't show.
 		for _, shape := range f.shapeCandidates(proven) {
