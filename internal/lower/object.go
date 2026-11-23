@@ -854,6 +854,9 @@ func (l *lowering) hasOwnPropertyArguments(node *ast.Node, receiver *ast.Node, a
 	if keyType, _ := l.representation(l.checker.GetTypeAtLocation(arguments[0])); keyType != ir.String {
 		return nil, true, l.notYet(node, "hasOwnProperty with a key that isn't a string")
 	}
+	if reason := l.privateKeyHazard(receiver, arguments[0]); reason != "" {
+		return nil, true, l.notYet(arguments[0], "an own-property test when "+reason)
+	}
 	// JavaScript's order: the object, then the key.
 	object, err := l.expression(receiver)
 	if err != nil {
