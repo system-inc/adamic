@@ -481,6 +481,11 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 	if heldAs == ir.String && !tuple {
 		return l.destructureString(pattern, held)
 	}
+	if heldAs == ir.Union && !tuple && l.rangeOnly(destructured) {
+		// A closed range type held as a Union a NodeArray may stand for: each field is read by kind
+		// (range_fields.go).
+		return l.rangeDestructure(pattern, destructured, held)
+	}
 	if heldAs != ir.Object {
 		return nil, l.notYet(pattern, "destructuring a "+typeName(heldAs))
 	}

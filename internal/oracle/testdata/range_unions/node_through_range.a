@@ -1,0 +1,19 @@
+// #hae423v wave 2: a Node, an object, goes where a TextRange is held in a program that has the NodeArray layout,
+// and its pos and end are read and written through the TextRange's dispatch, its object arm, the Node's own
+// fields, which its kind beside them keeps.
+interface TextRange { pos: number; end: number; }
+interface Node extends TextRange { kind: number; }
+interface NodeArray<T extends Node> extends Array<T>, TextRange {
+    hasTrailingComma: boolean;
+    transformFlags: number;
+}
+function moveRange(range: TextRange, by: number): void {
+    range.pos = range.pos + by;
+    range.end = range.end + by;
+}
+function width(range: TextRange): number {
+    return range.end - range.pos;
+}
+const node: Node = { kind: 7, pos: 2, end: 9 };
+moveRange(node, 3);
+console.log(`${width(node)}|${node.kind}|${node.pos}|${node.end}`);
