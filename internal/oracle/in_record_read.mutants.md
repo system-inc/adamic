@@ -1,10 +1,11 @@
-# Mutant for #859ksab's in-read stop
+# Mutant for #859ksab's dynamic record read stop
 
-**R1, the stop dropped.** `inNarrowedMayBeRecord` (internal/lower/in_narrowed_write.go) answers false, so a read
-of a key only an `in` test added lowers on any receiver, a record seen as object among them.
+**R1, the stop dropped.** `dynamicRecordReadGap` (internal/lower/dynamic_record_read.go) answers nil, so a named
+dynamic read lowers whatever record may reach its receiver.
 
-Must turn red: every subtest of `TestInRecordReadStops` (record_number, record_string, record_absent,
-record_string_of, unknown_param, keyed_read, generic_param), each lowering where it must stop, its failure
-carrying the sanitized native run.
+Must turn red: every subtest of `TestInRecordReadStops` (record_number, record_absent, record_string_of,
+unknown_param, generic_param), each lowering where it must stop. record_number, record_string_of,
+unknown_param and generic_param carry an ASan fault in their failure, and record_absent lowers and agrees.
 
-Must stay green: `TestInRecordReadFixedAgrees`, and #yqbg9vz's write pins (the write arm is untouched).
+Must stay green: `TestInRecordReadNeighborsAgree` (record_string, keyed_read, fixed_control,
+fixed_in_record_program).
