@@ -147,9 +147,11 @@ func TestOverloadCertificateFilterPredicateOverloadsStayRefused(t *testing.T) {
 // Bodies that hand back something other than their argument or a fresh array of its elements, each
 // still refused for its result. m1 returns an alias it didn't build: a module's readonly array through a
 // const, and the second parameter. m2 writes the parameter before returning it. Each hands the caller a
-// readonly array as a mutable one. Mutants (overload_certificate_filter.mutants.md): m3, the freshness
-// test dropped so every const that doesn't hold an element counts as fresh, reds "m1 outer alias"; m4,
-// overloadFilterParameterRead answering true, reds "m2 written parameter".
+// readonly array as a mutable one. Mutants (overload_certificate_filter.mutants.md, J-5fnqd1q): m3, the
+// freshness test dropped so every const that doesn't hold an element counts as fresh, reds "m1 outer alias"
+// and, since filter's own len then counts as fresh, the pins; m3name, a const initialized to a name counted
+// fresh, reds "m1 outer alias" alone; m4, overloadFilterParameterRead answering true, reds "m2 written
+// parameter" alone.
 func TestOverloadCertificateFilterNegativesStayRefused(t *testing.T) {
 	t.Parallel()
 	const observe = "const given: string[] = [\"given\"];\nbad(given, x => true).push(\"pushed\");\nconsole.log(String(frozen.length));\n"
