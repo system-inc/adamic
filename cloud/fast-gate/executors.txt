@@ -1172,6 +1172,20 @@ reads stage1/cohere/markdownblocks stage1/cohere/markdowninline/inline.ts
 reads stage1/cohere/markdownblocks .gitignore
 # blockCorpus (lists_test.go:63) and TestProduct_MarkdownblocksFindsTokenizerEventsAnswers via oracles/oracles.go:1326
 reads stage1/cohere/markdownblocks stage1/*.gitignore
+# The oracles package's own product tests reach the same corpus in their own process: products_test.go:10 chdirs to
+# markdownblocks and AuditCorpus (oracles/oracles.go:419) calls auditCorpusFiles (:1319), corpusfiles.Repository under
+# stage1/cohere/markdownblocks (:1326), so the oracles unit reads the same ignore rules, and a reads line names its
+# package exactly (planner/reads.go:207-212), so markdownblocks' two lines above don't reach it.
+# TestProduct_Markdownblocks* via AuditCorpus — stage1/cohere/markdownblocks/oracles/oracles.go:1326
+reads stage1/cohere/markdownblocks/oracles .gitignore
+# TestProduct_Markdownblocks* via AuditCorpus — stage1/cohere/markdownblocks/oracles/oracles.go:1326
+reads stage1/cohere/markdownblocks/oracles stage1/*.gitignore
+# And the corpus's content: every *.md, *.markdown, *.mdown and *.mkd under markdownblocks, matched without case
+# (internal/corpusfiles/files.go:94), and gaps/embedded_jsonc.md and gaps/embedded_flow.md read by name (:419). The
+# oracles unit's own files are only its own directory, and no read set keys these. One glob, wider than the four
+# patterns (its m then a, d or k), since a pattern matching no tracked file today would be a dead line.
+# TestProduct_Markdownblocks* via AuditCorpus — stage1/cohere/markdownblocks/oracles/oracles.go:419, :1326
+reads stage1/cohere/markdownblocks/oracles stage1/cohere/markdownblocks/*.[mM][aAdDkK]*
 # TestMarkdownInline — stage1/cohere/markdowninline/port_test.go:159
 reads stage1/cohere/markdowninline *.[mM][aA][rR][kK][dD][oO][wW][nN]
 # TestMarkdownInline — stage1/cohere/markdowninline/port_test.go:159
