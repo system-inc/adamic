@@ -325,8 +325,8 @@ func (l *lowering) enumerationAnyInstance(side *checker.Type, static bool) *chec
 	return instantiateType(l.checker, side, newTypeMapper(parameters, anys))
 }
 
-// enumerationLiteralContextualOwners is a literal's contextual type, and each member when it's a union,
-// when the checker gives one that mentions no type parameter of a declaration around the literal: the
+// enumerationLiteralContextualOwners is a literal's slot type (slotType), and each member when it's a union,
+// when there is one that mentions no type parameter of a declaration around the literal: the
 // literal goes into a slot of that type (an annotated variable, a declared return, a parameter, a
 // declared object's property), so every slot that holds it relates to the type or to the member it's
 // narrowed to. A literal under satisfies has none, since satisfies checks against the type and leaves
@@ -342,7 +342,9 @@ func (l *lowering) enumerationLiteralContextualOwners(literal *ast.Node) []*chec
 	if around != nil && around.Kind == ast.KindSatisfiesExpression {
 		return nil
 	}
-	contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone)
+	// The slot the literal goes into, read the way every refusal rule reads it: a slot a caller set, or the
+	// checker's contextual type (TestRefusalRulesReadTheirSlotThroughSlotType).
+	contextual := l.slotType(literal)
 	if contextual == nil {
 		return nil
 	}
