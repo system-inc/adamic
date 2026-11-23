@@ -1,4 +1,9 @@
-package adaptedtree
+// Package census holds the census of stage3/lane/adaptedtree's build,
+// TestTheAdaptedTreeBuildReachesOnlyItsDeclaredFile, in a package of its own. It builds export data of adaptedtree's
+// whole closure, the compiler's included, and its walk reads every Go file of the checkout, so in adaptedtree its
+// unit's key held both, and lane, which holds adaptedtree's product key, reran all 51 units on every Go edit and every
+// compiler edit. Here no package holds it as a product (#4ps0v4x).
+package census
 
 import (
 	"path/filepath"
@@ -20,7 +25,7 @@ var buildcacheSlice = []string{
 	leancensus.ModulePath + "/internal/toolchain",
 }
 
-// censusExports is the export data of this package and every package it and its tests import, built ahead
+// censusExports is the export data of stage3/lane/adaptedtree and every package it and its tests import, built ahead
 // (TestProduct_AdaptedTreeCensusExports), so the build's census type-checks with real types and runs no go.
 func censusExports(t testing.TB) string {
 	t.Helper()
@@ -32,15 +37,16 @@ func TestProduct_AdaptedTreeCensusExports(t *testing.T) {
 	censusExports(t)
 }
 
-// The adapted tree's build, a LeanProductOf build of what it's handed, reaches nothing but this package's file, which
-// its recipe keys, and buildcache's slice, and reads no package variable written outside its initializer: what its key
+// The adapted tree's build, a LeanProductOf build of what it's handed, reaches nothing but adaptedtree.go, which its
+// recipe keys, and buildcache's slice, and reads no package variable written outside its initializer: what its key
 // doesn't hold can't change what it builds. The census sees Go alone; what apply.py and node read as it runs is the
-// window's, keyed under the trace (buildcache's TestAHandedBuildsUndeclaredReadIsKeyedByItsWindow). Mutant that fails
-// it: a package variable the build reads, written by Product.
+// window's, keyed under the trace (buildcache's TestAHandedBuildsUndeclaredReadIsKeyedByItsWindow). It lives here, in
+// a package of its own, so adaptedtree's key holds neither the compiler's closures it builds export data for nor every
+// Go file its walk reads (#4ps0v4x). Mutant that fails it: a package variable the build reads, written by Product.
 func TestTheAdaptedTreeBuildReachesOnlyItsDeclaredFile(t *testing.T) {
 	t.Parallel()
-	// TestMain runs the package's tests from stage3/lane, where repositoryFromLane is the checkout.
-	root, err := filepath.Abs(repositoryFromLane)
+	// go test runs the package's tests from stage3/lane/adaptedtree/census, four directories below the checkout.
+	root, err := filepath.Abs(filepath.Join("..", "..", "..", ".."))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -51,7 +57,7 @@ func TestTheAdaptedTreeBuildReachesOnlyItsDeclaredFile(t *testing.T) {
 	// A slice package that isn't listed is one buildcache no longer links, or renamed: the slice is out of date.
 	for _, pkg := range buildcacheSlice {
 		if !slices.Contains(tree, pkg) {
-			t.Fatalf("buildcache's slice names %s, which this package's listing doesn't hold: %v", pkg, tree)
+			t.Fatalf("buildcache's slice names %s, which adaptedtree's listing doesn't hold: %v", pkg, tree)
 		}
 	}
 	census := leancensus.Census{
