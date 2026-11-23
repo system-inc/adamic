@@ -1979,8 +1979,8 @@ func (l *lowering) addedUnion(operand *ast.Node, value ir.Expression) ir.Express
 // addedObjectsConvert is whether every object a value of type proven can be is one the ToPrimitive helper
 // converts as Node does: an object the program declares, a class instance or an interface or type literal,
 // with no call or construct signature. A function, a class object, an array (whose join stops on one of only
-// numbers or booleans, arrayToString) and an object of a library or prelude type (a Map, a Set, a Date,
-// node:buffer's Buffer, a typed array) aren't, since the helper stops on each at run time.
+// numbers or booleans, arrayToString) and an object of a type a declaration file declares (a Map, a Set, a
+// Date, node:buffer's Buffer, a typed array) aren't, since the helper stops on each at run time.
 func (l *lowering) addedObjectsConvert(proven *checker.Type, visited map[*checker.Type]bool) bool {
 	proven = l.concrete(proven)
 	if visited[proven] {
@@ -2009,8 +2009,10 @@ func (l *lowering) addedObjectsConvert(proven *checker.Type, visited map[*checke
 		return false
 	}
 	for _, declaration := range symbol.Declarations {
-		// A prelude's type, node:buffer's Buffer among them, is a host object as a library's is.
-		if file := ast.GetSourceFileOfNode(declaration); load.IsLibrary(file) || load.IsPrelude(file) {
+		// A type any declaration file declares is a host's object, never one the program builds: lib's, the
+		// prelude's, @types/node's (node:buffer's Buffer) and a program's own .d.ts alike, and Apple's
+		// bindings too.
+		if file := ast.GetSourceFileOfNode(declaration); file == nil || file.IsDeclarationFile || load.IsApple(file) {
 			return false
 		}
 	}
