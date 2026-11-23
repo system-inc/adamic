@@ -1441,6 +1441,30 @@
       "type_correct_sha256": "7a0d9aab9de590c554a949d7d1031d8f9d699575157db6d83ab253253b69d945",
       "exit": 70,
       "stderr": "adamic: panic: field read failed: info({ packageDirectory: '/missing', directoryExists: false }).version is not initialized; expected string, found missing\n"
+    },
+    "3be6ce4293b21dff36e4e045c7461bbed690dc8a0fb1a634a88337a5eefe3599": {
+      "form": "checked_boundary",
+      "ruling_task": "#axqgdck",
+      "ruling": "rulings.md:18: an untagged union's view keeps its checks in a callee compiled for its target, the lie stopped at the read there (Language's y04)",
+      "declaration": "internal/oracle/testdata/cast_untagged_union_callee_lie.ts:1",
+      "declared_type": "string",
+      "repair_from": "readChild(make(1) as A)",
+      "repair_to": "readChild(make(0) as A)",
+      "type_correct_sha256": "be109e9faa63075522c57285485ce48c9a8d9b25542577a851a18be36312d67e",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: a.child.b is not a string; expected string, found number\n"
+    },
+    "a674c900c556e011762a9eadcf67f0faaf541cfb23415844aee9f4c19ac9cc8a": {
+      "form": "checked_boundary",
+      "ruling_task": "#axqgdck",
+      "ruling": "rulings.md:18: a write through an untagged union's view to a field the value lacks stops at the view's own check (Language's y13)",
+      "declaration": "internal/oracle/testdata/cast_untagged_union_missing_write.ts:1",
+      "declared_type": "string",
+      "repair_from": "make(1)",
+      "repair_to": "make(0)",
+      "type_correct_sha256": "4dc7360b0696271ab2b0fce3a93a8ac5488deafbac51f2b6e8ae6581c3553ed4",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: <write>.extra is not initialized; expected string, found missing\n"
     }
   }
 }
