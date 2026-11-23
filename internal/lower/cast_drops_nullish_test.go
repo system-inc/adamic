@@ -67,6 +67,16 @@ func TestDropsNullishCastOutsideItsShapeStops(t *testing.T) {
 			"to S | undefined, which keeps undefined yet"},
 		{"in .a", "interface S { readonly n: number } function f(x: S | undefined): S { return x as S; }", ".a",
 			"Adamic 0.1 refuses a cast the runtime can't check; "},
+		// Language's attack (#b5w3ycg, J-azebj6x): a generic `x as T` from `T | undefined`, with T instantiated to
+		// hold undefined, would stop a valid program if "the source without undefined" were judged before the
+		// instance. It stops at compile time as the view over T, the honest instance too, which fails closed; the
+		// day that view lowers, the check must be judged per instance, and these rows say so.
+		{"a generic instantiated to hold undefined", "function first<T>(x: T | undefined): T { return x as T; } const got = first<string | undefined>(undefined); console.log(String(got === undefined));", ".ts",
+			"a checked view of the intersection T over T | undefined"},
+		{"a generic, honest", "function first<T>(x: T | undefined): T { return x as T; } console.log(first<string>('a'));", ".ts",
+			"a checked view of the intersection T over T | undefined"},
+		{"a generic class's getter", "class Box<T> { constructor(readonly value: T | undefined) {} get(): T { return this.value as T; } } const box = new Box<number | undefined>(undefined); console.log(String(box.get()));", ".ts",
+			"a checked view of the intersection T over T | undefined"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
