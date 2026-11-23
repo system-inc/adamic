@@ -1,0 +1,343 @@
+package lower
+
+import (
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+)
+
+// An optional chain's work after its nullish receiver runs under one guard (#cdpxjmb, docs/rulings.md
+// row 207): a?.b.c.d, a?.b.c(), a?.b().c and comment?.map(f).join(''), as tsc's own source writes them.
+// The receiver is evaluated once into a local. Where it's undefined or null the whole chain is
+// undefined and nothing after it runs, no step and no argument. Otherwise every step runs on the held
+// receiver as the plain read or call it is: a method's function is read before its arguments and
+// called with its object as this, and a call's result is read on. A later ?. ends this chain and starts
+// its own (tsc's IsOutermostOptionalChain), whose receiver is this chain's value, so a?.b.c?.d.e is two
+// guards, the second around what the first gives.
+//
+// It is optionalIntrinsic's form over a whole chain: an ir.Effects declares the receiver, and an
+// ir.Conditional on it holds the steps in its present arm and undefined in the other, so neither
+// emitter has anything new to emit. The chain is entered at its outermost node (enumNeverValue, and a
+// call as a statement), the receiver bound for its one read (optionalChainReceiver), and the root's ?.
+// read as a plain . on the way down (questionDot, inOptionalChain). In the present arm a step has the
+// type it has there (optionalChainOperandType, optionalChainResult, typeOf): an inner step's without
+// tsc's optional marker, and the receiver's without null and undefined, as tsc's own
+// getOptionalExpressionType reads them.
+//
+// A chain of one step keeps the road it has: a?.b, a?.[i], o?.m(...), o.m?.(...), f?.(...), and
+// a?.f[i] (optionalIndexContinuation). So does what isn't built yet, in the words it stops with today
+// (optionalChainNotYet): a chain whose root is an optional call of anything but a named function value
+// (o?.m?.().x, whose method may be missing where its object is there), whose receiver is a method read as
+// a value (o.m?.bind(o)), whose last step indexes something other than an array or a string, or that
+// reaches a Node host member, whose own lowering judges a call through ?. (optionalHostCall). An await
+// or a yield inside a chain stops it, since the JavaScript backend writes the chain's Effects as an
+// arrow function, where neither can stand.
+
+// optionalChainBinding is one chain optionalChain guards while it lowers the chain's steps: the root
+// (the step carrying the ?.), the receiver before it, the read of the held receiver the steps take in
+// its place, and how many times they took it.
+type optionalChainBinding struct {
+	root, receiver *ast.Node
+	read           ir.Expression
+	uses           int
+}
+
+// optionalChainRoot is the step of node's chain that carries its ?. (tsc's IsOptionalChainRoot), found
+// down through the chain's own steps, or nil where node is in no chain. Parentheses end a chain.
+func optionalChainRoot(node *ast.Node) *ast.Node {
+	for ast.IsOptionalChain(node) {
+		if ast.IsOptionalChainRoot(node) {
+			return node
+		}
+		node = node.Expression()
+	}
+	return nil
+}
+
+// optionalChainGuarded reports whether node is a step of a chain optionalChain is guarding now.
+func (l *lowering) optionalChainGuarded(node *ast.Node) bool {
+	if len(l.optionalChains) == 0 {
+		return false
+	}
+	root := optionalChainRoot(node)
+	if root == nil {
+		return false
+	}
+	for _, chain := range l.optionalChains {
+		if chain.root == root {
+			return true
+		}
+	}
+	return false
+}
+
+// questionDot reports whether node, a property access, an element access or a call, tests its own
+// receiver with a ?.: written with one, and not the root of a chain whose guard has tested it already.
+func (l *lowering) questionDot(node *ast.Node) bool {
+	return node.QuestionDotToken() != nil && !l.optionalChainGuarded(node)
+}
+
+// inOptionalChain reports whether node is a step of an optional chain no guard has taken: the parser's
+// NodeFlagsOptionalChain, which a guarded chain's steps keep, though there they run as plain steps.
+func (l *lowering) inOptionalChain(node *ast.Node) bool {
+	return node.Flags&ast.NodeFlagsOptionalChain != 0 && !l.optionalChainGuarded(node)
+}
+
+// optionalChainEntry reports whether optionalChain takes node: the outermost node of an optional chain
+// longer than one step, which no guard has taken yet, and none of the shapes the comment above leaves on
+// their roads.
+func (l *lowering) optionalChainEntry(node *ast.Node) bool {
+	if !ast.IsOptionalChain(node) || node.Kind == ast.KindNonNullExpression || !ast.IsOutermostOptionalChain(node) {
+		return false
+	}
+	root := optionalChainRoot(node)
+	if root == nil || root == node || l.optionalChainGuarded(node) {
+		return false
+	}
+	if root.Kind == ast.KindCallExpression && root.Expression().Kind != ast.KindIdentifier {
+		return false
+	}
+	if node.Expression() == root && (node.Kind == ast.KindCallExpression || (node.Kind == ast.KindElementAccessExpression && root.Kind == ast.KindPropertyAccessExpression)) {
+		return false
+	}
+	if node.Kind == ast.KindElementAccessExpression {
+		// The last step's type is the chain's with undefined added, which hides whether an element of a
+		// tuple or an object may be missing; an array's, a string's or a typed array's element is read by
+		// its receiver's type instead.
+		indexed, _ := l.representation(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.Expression())))
+		if indexed != ir.Array && indexed != ir.String && !indexed.IsTypedArray() {
+			return false
+		}
+	}
+	receiver := root.Expression()
+	if skipped := ast.SkipParentheses(receiver); skipped.Kind == ast.KindPropertyAccessExpression && l.optionalChainMethodRead(skipped) {
+		return false
+	}
+	for step := node; step != receiver; step = step.Expression() {
+		if step.Kind == ast.KindPropertyAccessExpression && l.optionalChainHostMember(step) {
+			return false
+		}
+	}
+	return true
+}
+
+// optionalChainMethodRead reports whether a property access reads a method, which a held receiver would
+// detach from its object: a read Adamic refuses as a value (unbound-method).
+func (l *lowering) optionalChainMethodRead(node *ast.Node) bool {
+	member := l.checker.GetSymbolAtLocation(node)
+	if member == nil {
+		return false
+	}
+	for _, declaration := range member.Declarations {
+		if declaration.Kind == ast.KindMethodSignature || declaration.Kind == ast.KindMethodDeclaration {
+			return true
+		}
+	}
+	return false
+}
+
+// optionalChainHostMember reports whether a property access reads a member a Node library file declares,
+// or one with a root that does (a union's), as optionalHostCall reads them; one with no file counts too.
+func (l *lowering) optionalChainHostMember(node *ast.Node) bool {
+	member := l.checker.GetSymbolAtLocation(node)
+	if member == nil {
+		return false
+	}
+	for _, root := range append([]*ast.Symbol{member}, l.checker.GetRootSymbols(member)...) {
+		for _, declaration := range root.Declarations {
+			if source := ast.GetSourceFileOfNode(declaration); source == nil || load.IsNodeLibrary(source) {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+// optionalChain lowers node, the outermost node of a chain optionalChainEntry took, as one guard around
+// every step after its receiver.
+func (l *lowering) optionalChain(node *ast.Node) (ir.Expression, error) {
+	if optionalChainSuspends(node) {
+		return nil, l.notYet(node, "an await or a yield inside an optional chain")
+	}
+	root := optionalChainRoot(node)
+	receiver := root.Expression()
+	value, err := l.expression(receiver)
+	if err != nil {
+		return nil, err
+	}
+	held := value.Type()
+	if !held.IsReference() || held == ir.Weak || (held == ir.Union && !l.nullableObjectUnion(l.checker.GetTypeAtLocation(receiver))) {
+		// A number or a boolean that may be missing is a pair whose present half a step would have to
+		// unwrap; a union other than a nullable object's has no one representation for its steps.
+		return nil, l.optionalChainNotYet(node)
+	}
+	function := -1
+	if l.function != nil {
+		function = l.functionIndex
+	}
+	local := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "optional_chain_receiver", Type: held, Function: function, ExpressionAssigned: true})
+	read := ir.Read{Local: local, Of: held}
+	narrowed := ir.Expression(read)
+	if held == ir.Union {
+		// Only the present arm reads it, where it's the object.
+		narrowed = ir.Narrow{Value: read, To: ir.Object}
+	}
+	index := len(l.optionalChains)
+	l.optionalChains = append(l.optionalChains, optionalChainBinding{root: root, receiver: receiver, read: narrowed})
+	rest, err := l.unparenthesizedValue(node)
+	uses := l.optionalChains[index].uses
+	l.optionalChains = l.optionalChains[:index]
+	if err != nil {
+		return nil, err
+	}
+	if uses != 1 {
+		// A step read its receiver by another road than the binding, which would evaluate it again, or
+		// not at all.
+		return nil, l.optionalChainNotYet(node)
+	}
+	body := []ir.Statement{ir.Declare{Local: local, Value: value}, ir.Evaluate{Value: rest}}
+	present := ir.Unary{Operator: ir.Not, Operand: ir.Binary{Operator: ir.Or, Left: ir.IsUndefined{Value: read}, Right: ir.IsNull{Value: read}}}
+	if l.optionalChainVoid(node) {
+		body = append(body, ir.If{Condition: present, Then: []ir.Statement{ir.Evaluate{Value: rest}}})
+		return ir.Effects{Body: body, Result: ir.Undefined{}}, nil
+	}
+	// The chain's value is its last step's with the chain's undefined beside it: a number or a boolean
+	// held as its maybe, a reference as itself, missing, and a union boxed.
+	of, known := l.representation(l.checker.GetTypeAtLocation(node))
+	if !known || rest.Type() == ir.Weak || (of != rest.Type() && of != ir.Maybe(rest.Type()) && of != ir.Union) {
+		return nil, l.optionalChainNotYet(node)
+	}
+	return ir.Effects{Body: body, Result: ir.Conditional{Condition: present, WhenTrue: fit(rest, of), WhenNot: fit(ir.Undefined{}, of), Of: of}}, nil
+}
+
+// optionalChainNotYet is the stop a chain optionalChain can't take keeps, in the words it stopped with
+// before the guard: optionalCall's for a call, and property's for the rest.
+func (l *lowering) optionalChainNotYet(node *ast.Node) error {
+	if node.Kind == ast.KindCallExpression {
+		return l.notYet(node, optionalCallNotYet)
+	}
+	return l.notYet(node, "an optional chain longer than one step")
+}
+
+// optionalChainVoid reports whether node is a call whose function returns void, which the guard makes as
+// a statement, the chain undefined whether it ran or not.
+func (l *lowering) optionalChainVoid(node *ast.Node) bool {
+	if node.Kind != ast.KindCallExpression {
+		return false
+	}
+	signature := l.checker.GetResolvedSignature(node)
+	return signature != nil && l.checker.GetReturnTypeOfSignature(signature).Flags()&checker.TypeFlagsVoid != 0
+}
+
+// optionalChainSuspends reports whether an await or a yield is anywhere in node outside a function
+// written inside it.
+func optionalChainSuspends(node *ast.Node) bool {
+	var suspends ast.Visitor
+	suspends = func(child *ast.Node) bool {
+		if ast.IsFunctionLike(child) {
+			return false
+		}
+		return child.Kind == ast.KindAwaitExpression || child.Kind == ast.KindYieldExpression || child.ForEachChild(suspends)
+	}
+	return suspends(node)
+}
+
+// optionalChainReceiver is the held receiver's read, where node is the receiver of a chain being guarded,
+// counted for optionalChain's once.
+func (l *lowering) optionalChainReceiver(node *ast.Node) (ir.Expression, bool) {
+	for index := len(l.optionalChains) - 1; index >= 0; index-- {
+		chain := &l.optionalChains[index]
+		if chain.receiver == node || ast.SkipParentheses(chain.receiver) == node {
+			chain.uses++
+			return chain.read, true
+		}
+	}
+	return nil, false
+}
+
+// optionalChainOperandType is the type node has where a guarded chain's steps read it: the held
+// receiver's without null and undefined, and an inner step's without tsc's optional marker. Anywhere
+// else it's the checker's own.
+func (l *lowering) optionalChainOperandType(node *ast.Node) *checker.Type {
+	proven := l.checker.GetTypeAtLocation(node)
+	if len(l.optionalChains) == 0 {
+		return proven
+	}
+	for _, chain := range l.optionalChains {
+		if chain.receiver == node || ast.SkipParentheses(chain.receiver) == node {
+			return l.checker.GetNonNullableType(proven)
+		}
+	}
+	if ast.IsOptionalChain(node) && !ast.IsOutermostOptionalChain(node) && l.optionalChainGuarded(node) {
+		return l.checker.GetNonOptionalType(proven)
+	}
+	return proven
+}
+
+// optionalChainStepType is the type a step of a guarded chain has in the guard's present arm, where only the
+// undefined the chain adds is gone (#cdpxjmb, Lower's must): an inner step's own type without tsc's optional
+// marker, and the last step, a field, the field's own declared type, so a field declared n?: number is still
+// number | undefined there, as the plain road reads it. A step's real undefined is never stripped, so a ! on
+// it keeps its check. It's nil for a node no guard is around, or a last step that isn't a field.
+//
+// The type is what holds an absent optional field right, and it holds it because the checker keeps two
+// undefineds apart. GetTypeOfSymbol gives n?: number as number | missing, the missing type tsc adds to an
+// optional property under exactOptionalPropertyTypes (cohere/TypeScript/tsc/internal/checker/checker.go:17081
+// through getOptionalType, :19049, and :1014). GetNonOptionalType takes out only tsc's optional marker, the undefined
+// it adds inside a chain (removeOptionalTypeMarker, :29609), a different intrinsic from missing (:1013 and
+// :1015). So the field stays number | undefined, representation makes it a MaybeNumber, and fixedFieldRead
+// reads it as one (object.go's of.IsMaybe() arm), with readObjectField marking the read Absent so a shape
+// without the field reads undefined. A step type built any other way (GetNonNullableType, or
+// removeMissingType) drops missing too, and readObjectField then unwraps the field's maybe as a number:
+// scratch-oc's every-step-stripped mutant, red on fields.a.
+func (l *lowering) optionalChainStepType(node *ast.Node) *checker.Type {
+	if !l.optionalChainGuarded(node) {
+		return nil
+	}
+	proven := l.checker.GetTypeAtLocation(node)
+	if ast.IsOutermostOptionalChain(node) {
+		if node.Kind != ast.KindPropertyAccessExpression {
+			return nil
+		}
+		field := l.checker.GetSymbolAtLocation(node.Name())
+		if field == nil {
+			return nil
+		}
+		proven = l.checker.GetTypeOfSymbol(field)
+	}
+	return l.checker.GetNonOptionalType(proven)
+}
+
+// optionalChainResult is the type a call returns in a guarded chain's present arm: an inner step's
+// without tsc's optional marker, and the last step's what its signature returns, since the undefined
+// tsc adds to the chain's type is the guard's, not the call's. Any other call's is its own.
+func (l *lowering) optionalChainResult(node *ast.Node) *checker.Type {
+	if l.optionalChainGuarded(node) {
+		if !ast.IsOutermostOptionalChain(node) {
+			return l.checker.GetNonOptionalType(l.checker.GetTypeAtLocation(node))
+		}
+		if signature := l.checker.GetResolvedSignature(node); signature != nil {
+			return l.checker.GetReturnTypeOfSignature(signature)
+		}
+	}
+	return l.checker.GetTypeAtLocation(node)
+}
+
+// optionalSize is m?.size on a Map or a Set (#8zcm7g4, tsc's builder.ts `!state.emitDiagnosticsPerFile?.size`):
+// the guard's form around MapSize, a number | undefined held as its maybe, so 0 and undefined stay apart.
+func (l *lowering) optionalSize(collection ir.Expression) ir.Expression {
+	function := -1
+	if l.function != nil {
+		function = l.functionIndex
+	}
+	local := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "optional_size_receiver", Type: ir.Map, Function: function, ExpressionAssigned: true})
+	read := ir.Read{Local: local, Of: ir.Map}
+	of := ir.MaybeNumber
+	return ir.Effects{Body: []ir.Statement{ir.Declare{Local: local, Value: collection}}, Result: ir.Conditional{
+		Condition: ir.Unary{Operator: ir.Not, Operand: ir.Binary{Operator: ir.Or, Left: ir.IsUndefined{Value: read}, Right: ir.IsNull{Value: read}}},
+		WhenTrue:  fit(ir.MapSize{Map: read}, of), WhenNot: fit(ir.Undefined{}, of), Of: of,
+	}}
+}
