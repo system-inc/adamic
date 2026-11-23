@@ -305,6 +305,9 @@ func (f *cycleFinder) programOwningLinks(node cycleNode) []cycleNode {
 		for _, field := range f.fields(proven) {
 			links = append(links, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)})
 		}
+		// No shapes road here, so neither a checked view's edges (viewAlsoTable) nor an Iterator slot's road to
+		// the collection its iterator holds: a member this misses falls back to counting, which still frees
+		// (Lower, #66acn2a and #9489gt0).
 		for _, accessor := range f.l.accessorCaptures {
 			if f.l.checker.IsTypeAssignableTo(accessor.holder, proven) {
 				for _, local := range f.l.result.Functions[accessor.function].Environment {
