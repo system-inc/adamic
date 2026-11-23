@@ -45,6 +45,8 @@ unmutated in enumeration_accessor_reach_test.go and in the whole internal/lower.
 | DeclaredOwner: an annotated literal's declared type is never taken | `if declared, named := ...; named {` to `...; false && named {` | TestEnumerationReachDeclaredLiteralLowers | 70, `enumeration reach row declared literal was refused` |
 | GenericClass: a class's own type parameters make its owner unknown | `if enumerationGenericContext(class.Parent) {` to `if enumerationGenericContext(class) {` | TestEnumerationReachGenericClassLowers | 70, `enumeration reach row generic class was refused` |
 | AnyInstance: a generic class is read uninstantiated | `owners = append(owners, l.enumerationAnyInstance(side, static))` to `owners = append(owners, side)` | TestEnumerationReachReachingGetterRefused/generic | 90, `enumeration reach row generic was admitted` |
+| Contextual: a literal's contextual type is never taken | `if contextual := ...; contextual != nil {` to `...; false && contextual != nil {` | TestEnumerationReachContextualLiteralLowers | 70, `enumeration reach row contextual literal was refused` |
+| ContextualScope: a contextual type naming an enclosing type parameter is taken | `if len(enclosing) != 0 && l.eachReached(contextual,` to `if false && ...` | TestEnumerationReachReachingGetterRefused/held | 90, `enumeration reach row held was admitted` |
 | OneWay: an owner reaches only when assignable to a read type, not the other way | `l.checker.IsTypeAssignableTo(owner, read) \|\| l.checker.IsTypeAssignableTo(read, owner)` to `l.checker.IsTypeAssignableTo(owner, read)` | TestEnumerationReachDowncastRefused | 90, `enumeration reach row downcast was admitted` |
 
 UnionMembers fails closed rather than open: a union left unread falls to the
@@ -78,7 +80,12 @@ array of any" before the call is lowered, so those refused rows return the call
 from a function typed number[].
 
 Product order: cloud/fast-gate/enumeration-reach-product-order.py writes the
-ten producer rows, each waiting on nothing.
+twelve producer rows, each waiting on nothing.
+
+A literal with no annotated variable is owned by its contextual type (and each
+member of a union one) when the checker gives one that names no type parameter
+of a declaration around it: a declared return, a parameter, a declared object's
+property. satisfies gives none, since the literal keeps its own type there.
 
 A class's own type parameters are taken at any (enumerationAnyInstance), so its
 instance side relates to a read type whenever some instantiation could, since

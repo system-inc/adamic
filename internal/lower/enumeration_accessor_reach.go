@@ -183,6 +183,9 @@ func (l *lowering) enumerationAccessorOwners(accessor *ast.Node, reach *enumerat
 		if declared, named := l.enumerationLiteralDeclaredOwner(holder); named {
 			return []*checker.Type{declared}, true
 		}
+		if contextual := l.enumerationLiteralContextualOwners(holder); contextual != nil {
+			return contextual, true
+		}
 		owner := regularTypeOfObjectLiteral(l.checker, l.checker.GetTypeAtLocation(holder))
 		if l.eachReached(owner, 0, map[*checker.Type]bool{}, func(reached *checker.Type) bool {
 			return reached.Flags()&checker.TypeFlagsInstantiable != 0
@@ -320,6 +323,53 @@ func (l *lowering) enumerationAnyInstance(side *checker.Type, static bool) *chec
 		anys[index] = l.checker.GetAnyType()
 	}
 	return instantiateType(l.checker, side, newTypeMapper(parameters, anys))
+}
+
+// enumerationLiteralContextualOwners is a literal's contextual type, and each member when it's a union,
+// when the checker gives one that mentions no type parameter of a declaration around the literal: the
+// literal goes into a slot of that type (an annotated variable, a declared return, a parameter, a
+// declared object's property), so every slot that holds it relates to the type or to the member it's
+// narrowed to. A literal under satisfies has none, since satisfies checks against the type and leaves
+// the literal's own type in force. tsc's decodeMappings literal, returned as a MappingsDecoder, is the
+// case (J-0fqbg07). Without enclosing type parameters the type is taken without a walk, since
+// eachReached reads library generic methods (IteratorObject's map<U>) as mentioning one; with them, a
+// walk that meets one of them, or runs past its depth, leaves the literal to its own type.
+func (l *lowering) enumerationLiteralContextualOwners(literal *ast.Node) []*checker.Type {
+	around := literal.Parent
+	for around != nil && around.Kind == ast.KindParenthesizedExpression {
+		around = around.Parent
+	}
+	if around != nil && around.Kind == ast.KindSatisfiesExpression {
+		return nil
+	}
+	contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone)
+	if contextual == nil {
+		return nil
+	}
+	enclosing := map[*ast.Symbol]bool{}
+	for node := literal.Parent; node != nil; node = node.Parent {
+		if !ast.IsFunctionLike(node) && node.Kind != ast.KindClassDeclaration && node.Kind != ast.KindClassExpression && node.Kind != ast.KindInterfaceDeclaration && node.Kind != ast.KindTypeAliasDeclaration {
+			continue
+		}
+		if ast.IsFunctionLike(node) && node.FunctionLikeData() == nil {
+			continue
+		}
+		for _, parameter := range node.TypeParameters() {
+			if symbol := l.checker.GetSymbolOfDeclaration(parameter); symbol != nil {
+				enclosing[symbol] = true
+			}
+		}
+	}
+	if len(enclosing) != 0 && l.eachReached(contextual, 0, map[*checker.Type]bool{}, func(reached *checker.Type) bool {
+		return reached.Flags()&checker.TypeFlagsTypeParameter != 0 && reached.Symbol() != nil && enclosing[reached.Symbol()]
+	}) {
+		return nil
+	}
+	owners := []*checker.Type{contextual}
+	if contextual.Flags()&checker.TypeFlagsUnion != 0 {
+		owners = append(owners, contextual.Types()...)
+	}
+	return owners
 }
 
 // enumerationGenericContext reports whether a declaration, or anything it's inside, has type parameters.

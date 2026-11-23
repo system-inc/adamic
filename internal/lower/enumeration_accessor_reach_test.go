@@ -169,7 +169,7 @@ func TestEnumerationReachReachingGetterRefused(t *testing.T) {
 		{"subclass", "export class Base { get celsius(): number { return 21; } }\nexport class Sub extends Base { count = 1; }\n", "import { Sub } from './held.a';\nfunction read(sub: Sub): number[] { return Object.values(sub); }\nconsole.log(read(new Sub()).join(','));\n"},
 		{"parameter", enumerationReachSensor, "import { type Reading, Sensor } from './held.a';\nfunction read(reading: Reading): number[] { return Object.values(reading); }\nconsole.log(read(new Sensor()).join(','));\n"},
 		{"discriminated", "export class Coded { kind: 1 | 2 = 1; x = 1; get g(): number { return 2; } }\n", "import { Coded } from './held.a';\ntype Tagged = { kind: 1; g: number } | { kind: 2; g: number };\nfunction read(tagged: Tagged): number[] { return Object.values(tagged); }\nconsole.log(read(new Coded()).join(','));\n"},
-		{"held", "export interface Holder<T> { readonly held: T }\nexport function hold<T>(value: T): T { const box: Holder<T> = { get held(): T { return value; } }; return box.held; }\n", "import { hold } from './held.a';\nconst point = { x: 1, y: 2 };\nconsole.log(Object.values(point).join(','));\nconsole.log(String(hold<number>(3)));\n"},
+		{"held", "export interface Holder<T> { readonly held: T }\nfunction make<T>(value: T): Holder<T> { return { get held(): T { return value; } }; }\nexport function hold<T>(value: T): T { const box: Holder<T> = make(value); return box.held; }\n", "import { hold } from './held.a';\nconst point = { x: 1, y: 2 };\nconsole.log(Object.values(point).join(','));\nconsole.log(String(hold<number>(3)));\n"},
 		{"generic", "export class Box<T> { held: T; constructor(held: T) { this.held = held; } get value(): T { return this.held; } }\n", "import { Box } from './held.a';\nconst reading: { readonly value: number } = { value: 1 };\nconsole.log(Object.values(reading).join(','));\nconsole.log(String(new Box<number>(2).value));\n"},
 	} {
 		t.Run(row.name, func(t *testing.T) {
@@ -203,17 +203,39 @@ func TestEnumerationReachGenericClassLowers(t *testing.T) {
 	enumerationReachAgrees(t, "generic class", held, main, "1,2\n1\n1\n")
 }
 
+// Getter-bearing literals inside generic functions whose own types mention T, owned by their contextual
+// types instead: one returned from a function declared to return Cursor (tsc's decodeMappings shape,
+// returned as a MappingsDecoder), one passed to a parameter typed Cursor. Beside Object.values of an
+// unrelated literal each lowers and agrees with Node. Mutant Contextual (the contextual type is never
+// taken) turns it red; mutant ContextualScope (a contextual type that mentions T is taken anyway) turns
+// the held row, a literal returned as Holder<T>, red.
+func TestEnumerationReachContextualLiteralLowers(t *testing.T) {
+	t.Parallel()
+	const held = "export interface Cursor { tag: string; readonly pos: number }\nfunction measure(cursor: Cursor): number { return cursor.pos; }\nexport function open<T extends string>(tag: T): Cursor { return { tag, get pos(): number { return 1; } }; }\nexport function probe<T extends string>(tag: T): number { return measure({ tag, get pos(): number { return 2; } }); }\n"
+	const main = "import { open, probe } from './held.a';\nconst point = { x: 1, y: 2 };\nconsole.log(Object.values(point).join(','));\nconsole.log(String(open('a').pos));\nconsole.log(String(probe('b')));\n"
+	enumerationReachAgrees(t, "contextual literal", held, main, "1,2\n1\n2\n")
+}
+
 // A getter-bearing literal inside a generic function whose own type mentions T, through a field holding
-// the function's value (T extends string, so the field has a native slot), but which initializes a variable declared as a non-generic interface: the literal
-// is reached only through that variable, so the interface is its owner, and beside Object.values of an
-// unrelated literal it lowers and agrees with Node. That's tsc's createTransformationContext shape (a
-// literal typed TransformationContext inside transformNodes<T>). Mutant DeclaredOwner (the declared type
-// is never taken) turns it red; the held row, whose annotation is Holder<T>, stays refused.
+// the function's value (T extends string, so the field has a native slot), which initializes a variable
+// declared as a non-generic interface: the literal is reached only through that variable, so the
+// interface is its owner, and beside Object.values of an unrelated literal it lowers and agrees with
+// Node. That's tsc's createTransformationContext shape (a literal typed TransformationContext inside
+// transformNodes<T>). Counter also holds a chain nested past eachReached's depth, as NodeFactory does,
+// so the contextual road's walk can't clear it and the annotation alone does: mutant DeclaredOwner (the
+// declared type is never taken) turns it red. The held row, whose annotation is Holder<T>, stays refused.
 func TestEnumerationReachDeclaredLiteralLowers(t *testing.T) {
 	t.Parallel()
-	const held = "export interface Counter { count: number; readonly twice: number; tag: string }\nexport function doubled<T extends string>(value: T): number { const box: Counter = { count: 4, get twice(): number { return 8; }, tag: value }; return box.twice; }\n"
+	var held strings.Builder
+	for level := range enumerationReachLevels - 1 {
+		held.WriteString("export interface Link" + strconv.Itoa(level) + " { next: Link" + strconv.Itoa(level+1) + " }\n")
+	}
+	held.WriteString("export interface Link" + strconv.Itoa(enumerationReachLevels-1) + " { value: number }\n")
+	held.WriteString("const chain: Link0 = " + strings.Repeat("{ next: ", enumerationReachLevels-1) + "{ value: 1 }" + strings.Repeat(" }", enumerationReachLevels-1) + ";\n")
+	held.WriteString("export interface Counter { count: number; readonly twice: number; tag: string; link: Link0 }\n")
+	held.WriteString("export function doubled<T extends string>(value: T): number { const box: Counter = { count: 4, get twice(): number { return 8; }, tag: value, link: chain }; return box.twice; }\n")
 	const main = "import { doubled } from './held.a';\nconst point = { x: 1, y: 2 };\nconsole.log(Object.values(point).join(','));\nconsole.log(String(doubled<string>('s')));\n"
-	enumerationReachAgrees(t, "declared literal", held, main, "1,2\n8\n")
+	enumerationReachAgrees(t, "declared literal", held.String(), main, "1,2\n8\n")
 }
 
 // encodeJson reads every field at any depth, so a getter-bearing value under the operand reaches it: a
