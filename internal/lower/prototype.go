@@ -253,7 +253,15 @@ func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 		}
 		if node.Kind == ast.KindObjectLiteralExpression || node.Kind == ast.KindRegularExpressionLiteral || (node.Kind == ast.KindCallExpression && l.isLibraryType(l.checker.GetTypeAtLocation(node), "RegExp", "RegExpStringIterator")) || node.Kind == ast.KindNewExpression || node.Kind == ast.KindArrayLiteralExpression || node.Kind == ast.KindArrowFunction || node.Kind == ast.KindNumericLiteral || node.Kind == ast.KindStringLiteral || node.Kind == ast.KindTrueKeyword || node.Kind == ast.KindFalseKeyword {
 			shape := l.checker.GetTypeAtLocation(node)
-			if l.checker.IsTypeAssignableTo(shape, view) {
+			// An object literal's own type is fresh, and the relation judges a fresh type for excess properties,
+			// so { message: "x", hasOwnProperty: f } wouldn't relate to { message: string } and the walk would
+			// pass over the very literal that hides the override (#jm2ba55). The view reaches the literal all the
+			// same, so it's related by its regular widened type, freshness taken off by the checker's own rule.
+			related := shape
+			if node.Kind == ast.KindObjectLiteralExpression {
+				related = l.checker.GetWidenedType(regularTypeOfObjectLiteral(l.checker, shape))
+			}
+			if l.checker.IsTypeAssignableTo(related, view) {
 				if l.isLibraryType(shape, "RegExp", "RegExpStringIterator") && !l.exactPlainObject(receiver) {
 					// Regex objects have intrinsic prototype behavior and metadata slots. A structural
 					// view cannot make those plain-object methods or own-property descriptors.
