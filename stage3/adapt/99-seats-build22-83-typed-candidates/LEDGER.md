@@ -1,0 +1,1 @@
+- **Type-only, family 83 (#bbssdcy, Compiler accepts):** 99-seats-build22-83-typed-candidates declares the private evolving candidate directory array as `string[]`. Both pushes pass through the string overload of `toAbsolutePath`.
