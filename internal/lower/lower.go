@@ -796,6 +796,10 @@ type lowering struct {
 	// marker, made the first time it's asked for (never_rest_marker.go).
 	neverRest *neverRestMarks
 
+	// dictionaryViewUses is the dictionary view's use test's answers, by cast and by declaration, made the first
+	// time it's asked for (cast_dictionary_view.go).
+	dictionaryViewUses *dictionaryViewMemo
+
 	// unsetUntil is where, in the constructor being lowered, its last assignment of a field without an
 	// initializer ends: before it, this is only for reading and writing fields (useOfThis).
 	unsetUntil int

@@ -36,8 +36,8 @@ javascript's `recordLiteral` marks every record literal `"reference"`, whatever 
 
 Expected: oracle's `TestDictionaryViewStopsAtTheCast/number_record.ts` and `/boolean_record.ts` go red on the javascript backend alone, which reads the number and the boolean as Node does where native stops. The native rows stay green.
 
-## M7: the write walk dropped
+## M7: the use test dropped
 
-`dictionaryViewWritten` answers false, so a write through a dictionary the target is assignable to no longer keeps the NotYet.
+`dictionaryViewUse` answers true for every use, its first line `return true`, so the cast's result may be returned, stored, written or handed to any callee and the view is still taken (#2v3xtgm, J-psxf2gy: the use test on the cast's own value replaced wave 2's program-wide write walk by type, which no tsc unit passed).
 
-Expected: lower's `TestDictionaryViewCasts/written_through_a_dictionary` and `/deleted_through_a_dictionary` go red, admitted where the NotYet at the cast is wanted. Every other row stays green.
+Expected: lower's `TestDictionaryViewCasts/returned`, `/stored_in_a_const_then_written_by_key` and `/handed_to_a_helper_that_writes` go red, admitted where the NotYet at the cast is wanted, and so do `/handed_on_to_a_helper_that_writes`, `/handed_to_a_self-recursive_helper`, `/assigned_to_a_let`, `/written_through_a_dictionary` and `/deleted_through_a_dictionary`. Every admitted row stays green, and so do the rows a type keeps stopped (`/undefined_dropped`, `/number_values`, `/union-held_values`), whose stop comes before the use test is asked.
