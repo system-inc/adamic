@@ -614,7 +614,7 @@ func (f *cycleFinder) viewPairGuard() error {
 			continue
 		}
 		source := f.l.concrete(view.source)
-		failure := f.viewPairFailure(source, target, map[[2]*checker.Type]bool{})
+		failure := f.viewPairFailure(source, target, map[[2]*checker.Type]bool{}, view.untagged)
 		if failure == nil {
 			continue
 		}
@@ -638,8 +638,10 @@ func (f *cycleFinder) viewPairGuard() error {
 // met is judged where it was first met, which bounds the walk by the pairs there are, so it follows
 // every field to the end rather than stopping at a depth and letting the rest through. A type
 // parameter or any is judged like any other type: a declared generic pair the finder doesn't relate
-// fails closed, where skipping it would let it through.
-func (f *cycleFinder) viewPairFailure(source, target *checker.Type, seen map[[2]*checker.Type]bool) *viewPairFailure {
+// fails closed, where skipping it would let it through. Untagged is a view an untagged union's cast made
+// (untaggedUnionCast): no test at its cast tells which arm reaches it, so no arm is skipped for not
+// relating, at the top or beneath it (#axqgdck).
+func (f *cycleFinder) viewPairFailure(source, target *checker.Type, seen map[[2]*checker.Type]bool, untagged bool) *viewPairFailure {
 	pair := [2]*checker.Type{source, target}
 	if seen[pair] || viewPairScalar(source) || viewPairScalar(target) || f.viewPairFunction(source) || f.viewPairFunction(target) {
 		return nil
@@ -652,7 +654,7 @@ func (f *cycleFinder) viewPairFailure(source, target *checker.Type, seen map[[2]
 	// follow judges one nested pair, named for the step it was followed through.
 	follow := func(name string, nestedSource, nestedTarget *checker.Type) *viewPairFailure {
 		nestedSource, nestedTarget = f.l.concrete(nestedSource), f.l.concrete(nestedTarget)
-		failure := f.viewPairFailure(nestedSource, nestedTarget, seen)
+		failure := f.viewPairFailure(nestedSource, nestedTarget, seen, untagged)
 		if failure != nil {
 			failure.through = append([]viewPairStep{{name: name, source: nestedSource, target: nestedTarget}}, failure.through...)
 		}
@@ -699,6 +701,12 @@ func (f *cycleFinder) viewPairFailure(source, target *checker.Type, seen map[[2]
 			// would leave a field only it declares unwalked, so its members pair with the source arm's,
 			// never failing on the arm not relating whole. Only a literal discriminant that shares no value
 			// rules an arm out (viewPairDisjoint), which is Correctness's crossing.
+			//
+			// An untagged view keeps neither: its cast tests nothing, so a FlowAssignment reaches FlowCall's
+			// view, and a field written or read through it as FlowCall's lands where the finder, which never
+			// relates the two, doesn't walk (Memory's item 4 on #axqgdck). Each source arm pairs with each
+			// target arm its fields can be seen through, whether or not it relates, unless the two are
+			// disjoint by a literal, which every checked read of the view's tag then stops.
 			whole := viewed.Flags()&checker.TypeFlagsUnion != 0 && f.deriveRelated(sourceArm, viewed)
 			for _, targetArm := range targetArms {
 				if viewPairScalar(targetArm) || f.viewPairFunction(targetArm) {
@@ -711,11 +719,15 @@ func (f *cycleFinder) viewPairFailure(source, target *checker.Type, seen map[[2]
 					continue
 				}
 				armSource, armTarget := f.l.checker.GetNonNullableType(sourceArm), f.l.checker.GetNonNullableType(targetArm)
-				if !whole || f.viewPairDisjoint(armSource, armTarget) {
+				if !(whole || untagged) || f.viewPairDisjoint(armSource, armTarget) {
 					continue
 				}
+				step := "a split arm"
+				if !whole {
+					step = "an arm no test tells"
+				}
 				if failure := f.viewPairMembers(armSource, armTarget, follow); failure != nil {
-					failure.through = append([]viewPairStep{{name: "a split arm", source: sourceArm, target: targetArm}}, failure.through...)
+					failure.through = append([]viewPairStep{{name: step, source: sourceArm, target: targetArm}}, failure.through...)
 					return failure
 				}
 			}
