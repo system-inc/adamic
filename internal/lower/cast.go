@@ -88,6 +88,9 @@ func (l *lowering) castRoadValue(node *ast.Node, proof castProof, value ir.Expre
 	if proof.overlap {
 		return l.overlapViewCast(node, value, source, target)
 	}
+	if proof.untagged {
+		return l.untaggedUnionCast(node, value, source, target)
+	}
 	if proof.kindUnion != nil {
 		return l.kindUnionValue(node, value, source, proof.kindUnion, message)
 	}
