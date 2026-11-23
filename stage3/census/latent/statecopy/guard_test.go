@@ -758,3 +758,24 @@ func TestSourceSlotPendingStaysSnapshotOwned(t *testing.T) {
 		}
 	}
 }
+
+// The Array.isArray sites checkArrayArmViews holds (#9z2ksv7) are snapshot-owned: a rollback that discards the IR a
+// site's test was lowered into discards the site with it, and carrying one into another program's lowering would hold
+// that program's views to an arm it never tested.
+func TestArrayArmSitesStaySnapshotOwned(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs("../../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if loweringFieldPolicies["arrayArmSites"] != speculativeState {
+		t.Fatal("arrayArmSites' policy must stay snapshot-only")
+	}
+	text := string(generate(root, filepath.Join(root, "internal/lower/lower.go")))
+	if !strings.Contains(text, "result.arrayArmSites = func(value []arrayArmSite)") {
+		t.Fatal("arrayArmSites lost its owned snapshot")
+	}
+	if strings.Contains(text, "arrayArmSites: value.arrayArmSites") {
+		t.Fatal("arrayArmSites must not be carried as a program fact")
+	}
+}
