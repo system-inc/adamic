@@ -1,0 +1,17 @@
+// #hae423v wave 2, Lower's ask on wave 1: a literal whose type is { pos; end } is built as an object, boxed where
+// a range type's union is held, and read back through the read's dispatch, its object arm; a local annotated
+// with the type holds the union itself, and is read the same way.
+interface TextRange { pos: number; end: number; }
+interface Node { kind: number; }
+interface NodeArray<T extends Node> extends Array<T>, TextRange {
+    hasTrailingComma: boolean;
+    transformFlags: number;
+}
+function width(range: TextRange): number {
+    return range.end - range.pos;
+}
+const literal = { pos: 2, end: 7 };
+const annotated: { pos: number; end: number } = { pos: 1, end: 4 };
+console.log(`${width(literal)}|${literal.pos}|${literal.end}`);
+console.log(`${width(annotated)}|${annotated.pos}|${annotated.end}`);
+console.log(String(width({ pos: 10, end: 30 })));

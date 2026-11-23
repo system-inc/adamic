@@ -1,0 +1,28 @@
+// #hae423v wave 2, Lower's ask on wave 1: identity holds across representations. One value reaches a slot held as
+// an object (a Node, a NodeArray) and another held as a range type's union (a TextRange), and the two compare as
+// the same value, as a TextRange compares with itself; a different value of the same shape doesn't.
+interface TextRange { pos: number; end: number; }
+interface Node extends TextRange { kind: number; }
+interface NodeArray<T extends Node> extends Array<T>, TextRange {
+    hasTrailingComma: boolean;
+    transformFlags: number;
+}
+function sameNode(node: Node, range: TextRange): boolean {
+    return node === range;
+}
+function sameNodes(nodes: NodeArray<Node>, range: TextRange): boolean {
+    return nodes === range;
+}
+function itself(range: TextRange): boolean {
+    return range === range;
+}
+const node: Node = { kind: 1, pos: 0, end: 1 };
+const twin: Node = { kind: 1, pos: 0, end: 1 };
+const nodes = [node] as NodeArray<Node>;
+nodes.pos = 0;
+nodes.end = 1;
+nodes.hasTrailingComma = false;
+nodes.transformFlags = 0;
+console.log(`${sameNode(node, node)}|${sameNode(node, twin)}|${sameNode(twin, nodes)}`);
+console.log(`${sameNodes(nodes, nodes)}|${sameNodes(nodes, node)}`);
+console.log(`${itself(node)}|${itself(nodes)}`);
