@@ -71,12 +71,16 @@ func (l *lowering) optionalMethodCall(node *ast.Node) (optionalMethod, bool, err
 
 // optionalMethodSignature is the one call signature of the method node calls when node is
 // object?.method?.(...) or object.method?.(...), written so, with no parentheses around the callee and
-// a receiver that isn't itself in an optional chain, on a method the program declares once, in an
-// interface or an object type, as a method signature or a field holding a function, marked ?, that
-// can't be null. It's nil for any other call.
+// a receiver that isn't itself in an optional chain, on a method the program declares in an interface or
+// an object type, as a method signature or a field holding a function, marked ?, that can't be null. A
+// union's member has a declaration in each type it's read through, as tsc's moduleNameResolver.ts reads
+// host?.getGlobalTypingsCacheLocation?.() on ModuleResolutionHost | ModuleSpecifierResolutionHost
+// (#cdpxjmb); each is held to what a lone one is, and their one call signature is the call's, since
+// the call looks the method up by its name on whichever object is there. It's nil for any other call,
+// and for the root of a chain optionalChain guards, whose call is a plain one.
 func (l *lowering) optionalMethodSignature(node *ast.Node) *checker.Signature {
 	call := node.AsCallExpression()
-	if call.QuestionDotToken == nil || call.Expression.Kind != ast.KindPropertyAccessExpression {
+	if !l.questionDot(node) || call.Expression.Kind != ast.KindPropertyAccessExpression {
 		return nil
 	}
 	receiver := call.Expression.AsPropertyAccessExpression().Expression
@@ -84,12 +88,13 @@ func (l *lowering) optionalMethodSignature(node *ast.Node) *checker.Signature {
 		return nil
 	}
 	method := l.checker.GetSymbolAtLocation(call.Expression)
-	if method == nil || method.Flags&ast.SymbolFlagsOptional == 0 || len(method.Declarations) != 1 {
+	if method == nil || method.Flags&ast.SymbolFlagsOptional == 0 || len(method.Declarations) == 0 {
 		return nil
 	}
-	declaration := method.Declarations[0]
-	if (declaration.Kind != ast.KindMethodSignature && declaration.Kind != ast.KindPropertySignature) || !ast.HasQuestionToken(declaration) || load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
-		return nil
+	for _, declaration := range method.Declarations {
+		if (declaration.Kind != ast.KindMethodSignature && declaration.Kind != ast.KindPropertySignature) || !ast.HasQuestionToken(declaration) || load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+			return nil
+		}
 	}
 	declared := l.checker.GetTypeOfSymbol(method)
 	if l.includesNull(declared) {
@@ -114,10 +119,11 @@ func (l *lowering) optionalMethodSignature(node *ast.Node) *checker.Signature {
 // parameter or a variable (captured or not), whose type holds undefined and no null, and whose other
 // members are one function type with one call signature and no construct signature. It's nil for any
 // other call: a field's o.f?.() is optionalMethodSignature's, and an element, a chain, a call's result,
-// a null-holding or a union callee stay optionalCall's NotYet.
+// a null-holding or a union callee stay optionalCall's NotYet. The root of a chain optionalChain guards,
+// make?.().x, is a plain call: the guard holds the callee.
 func (l *lowering) optionalValueSignature(node *ast.Node) *checker.Signature {
 	call := node.AsCallExpression()
-	if call.QuestionDotToken == nil || call.Expression.Kind != ast.KindIdentifier {
+	if !l.questionDot(node) || call.Expression.Kind != ast.KindIdentifier {
 		return nil
 	}
 	symbol := l.symbol(call.Expression)

@@ -38,6 +38,21 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 	if ast.IsIdentifier(node) && l.exactPlainObject(node) {
 		return ir.Object, nil
 	}
+	if l.optionalChainGuarded(node) {
+		// A step of a chain optionalChain guards is lowered in the chain's present arm, where neither the
+		// chain's undefined nor tsc's optional marker is: an inner step is its own type without the
+		// marker, and the last, a field, is the field as it's declared, as a field narrowed to undefined
+		// is below.
+		if !ast.IsOutermostOptionalChain(node) {
+			if valueType, isKnown := l.representation(l.checker.GetNonOptionalType(l.checker.GetTypeAtLocation(node))); isKnown {
+				return valueType, nil
+			}
+		} else if node.Kind == ast.KindPropertyAccessExpression {
+			if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
+				return l.typeOfSymbol(node, field)
+			}
+		}
+	}
 	if node.Kind == ast.KindPropertyAccessExpression && l.checker.GetTypeAtLocation(node).Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 {
 		// A field narrowed to a nullish value still occupies its declared slot, which may
 		// hold a packed optional scalar or a tagged reference. Read that representation.
@@ -350,6 +365,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	if binding := &l.optionalReceiverBinding; binding.receiver == node && binding.call == l.optionalReceiverCall {
 		binding.uses++
 		return binding.read, nil
+	}
+	if read, bound := l.optionalChainReceiver(node); bound {
+		return read, nil
 	}
 	if err := l.nodeHostCallbackArgument(node); err != nil {
 		return nil, err
@@ -1358,6 +1376,17 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		return value, err
 	}
 	node = ast.SkipParentheses(node)
+	// An optional chain longer than one step runs its steps under one guard (optional_chain.go), which
+	// lowers its last step again through unparenthesizedValue with the receiver held.
+	if l.optionalChainEntry(node) {
+		return l.optionalChain(node)
+	}
+	return l.unparenthesizedValue(node)
+}
+
+// unparenthesizedValue is enumNeverValue's lowering of a node its parentheses are gone from, which
+// optionalChain asks for a chain's last step once its receiver is held.
+func (l *lowering) unparenthesizedValue(node *ast.Node) (ir.Expression, error) {
 	if value, handled, err := l.functionObservation(node); handled {
 		return value, err
 	}
@@ -2479,9 +2508,11 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 // method's object?.method?.(...) and object.method?.(...). Here, object?.method(...) on a method the
 // program declares (a class's, an interface's, or a function value in a field) goes through the
 // object's methods, which stop at undefined as JavaScript's chain does (optionalHostCall, ir.Property's
-// Method). Anything else, a function value called directly as run?.() among them, is NotYet.
+// Method). A call in a chain longer than one step is optionalChain's, which reaches here only with the
+// chain guarded, where the call is a plain one. Anything else, a function value called directly as
+// run?.() among them, is NotYet.
 func (l *lowering) optionalCall(call *ast.Node) error {
-	if call.Flags&ast.NodeFlagsOptionalChain == 0 || l.isOptionalJoin(call) {
+	if !l.inOptionalChain(call) || l.isOptionalJoin(call) {
 		return nil
 	}
 	callee := ast.SkipParentheses(call.AsCallExpression().Expression)
@@ -2500,7 +2531,8 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	if err := l.overloadCertificateCall(node); err != nil {
 		return nil, err
 	}
-	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall)
+	// In a guarded optional chain the callee is read where its object is there (optional_chain.go).
+	signatures := l.checker.GetSignaturesOfType(l.optionalChainOperandType(node.AsCallExpression().Expression), checker.SignatureKindCall)
 	if len(signatures) == 1 && l.censusNeverRestSignature(signatures[0]) {
 		// never[] admits a zero-argument call in TypeScript. The erased slot does
 		// not retain a source signature to prove its required arguments or ABI.
@@ -2576,7 +2608,7 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		}
 	}
 	var returns ir.Type
-	if result := l.concrete(l.checker.GetTypeAtLocation(node)); result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
+	if result := l.concrete(l.optionalChainResult(node)); result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
 		var isKnown bool
 		if returns, isKnown = l.representation(result); !isKnown {
 			return nil, l.notYet(node, "a call returning "+l.checker.TypeToString(result))
@@ -2584,7 +2616,7 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	}
 	// Each argument is made what the function value takes: a number or undefined where it takes
 	// number | undefined is packed as one.
-	if signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall); len(signatures) == 1 {
+	if signatures := l.checker.GetSignaturesOfType(l.optionalChainOperandType(node.AsCallExpression().Expression), checker.SignatureKindCall); len(signatures) == 1 {
 		parameters := signatures[0].Parameters()
 		position := 0
 		expanded := false
@@ -2633,7 +2665,7 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, "a function value returning "+typeName(returns))
 	}
 	// A call through a checked function-type claim checks it (predicates_function_type.go).
-	value, err := l.checkedFunctionTypeCall(node, closure, ir.CallClosure{Closure: closure, Arguments: arguments, Spread: spread, FunctionType: int(l.concrete(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression)).Id()), Returns: returns, ArgumentTypeIDs: l.argumentTypeIDs(node.AsCallExpression().Arguments.Nodes)})
+	value, err := l.checkedFunctionTypeCall(node, closure, ir.CallClosure{Closure: closure, Arguments: arguments, Spread: spread, FunctionType: int(l.concrete(l.optionalChainOperandType(node.AsCallExpression().Expression)).Id()), Returns: returns, ArgumentTypeIDs: l.argumentTypeIDs(node.AsCallExpression().Arguments.Nodes)})
 	if err != nil {
 		return nil, err
 	}

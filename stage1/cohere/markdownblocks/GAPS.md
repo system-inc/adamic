@@ -175,9 +175,11 @@ message mutants retain exit70/empty stdout and are caught only by stderr bytes.
   ```
 
   Production task-list removal keeps discarded splice(0,1).
-- `gaps/17_long_optional_chain.ts`: Node prints `1`; lowering is NotYet,
+- `gaps/17_long_optional_chain.ts`: Node prints `1`; lowering was NotYet,
   `an optional chain longer than one step`. Production checks the chunk then
   reads its text length. All three exact diagnostics and Node outputs are held.
+  Closed by #cdpxjmb: the chain's steps after its receiver run under one guard,
+  and native and the JavaScript backend match Node.
 
 The context source registry is readonly: a mutable array of chunk-owning source
 objects is refused as potentially cyclic, even after using a nominal wrapper.

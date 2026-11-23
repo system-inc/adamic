@@ -59,14 +59,14 @@ func TestOptionalValueCallsAgree(t *testing.T) {
 }
 
 // What optionalValueCall doesn't take keeps optionalCall's NotYet, in its words: a callee that may hold
-// null, which is held as another representation (includesNull); an element callee; and a call whose
-// result the chain goes on reading.
+// null, which is held as another representation (includesNull); and an element callee. A call whose
+// result the chain goes on reading, make?.().x, lowers under optionalChain's guard (#cdpxjmb,
+// optional_chain_test.go).
 func TestOptionalValueCallGapsStop(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, want string }{
 		{"a callee that may hold null", "function run(callback: ((n: number) => void) | null | undefined): void {\n\tcallback?.(1);\n}\nrun(null);\n", optionalCallNotYet},
 		{"an element callee", "const steps: ((n: number) => void)[] = [];\nsteps[0]?.(1);\n", optionalCallNotYet},
-		{"the chain going on after the call", "interface Box {\n\treadonly x: number;\n}\nfunction run(make: (() => Box) | undefined): string {\n\treturn String(make?.().x);\n}\nconsole.log(run(undefined));\n", "an optional chain longer than one step"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
