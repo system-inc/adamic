@@ -28,7 +28,6 @@ func TestSpreadOverwriteStops(t *testing.T) {
 	for _, pin := range []struct{ file, node, at, words string }{
 		{"number_source.ts", "undefined\nundefined\n", "k: undefined", held},
 		{"number_present.ts", "undefined\n", "k: undefined", held},
-		{"string_source.ts", "undefined\nundefined\n", "k: undefined", held},
 		{"optional_string.ts", "true\nundefined\ntrue\nundefined\n", "k: undefined", optional},
 		{"optional_number.ts", "true\nundefined\ntrue\nundefined\n", "k: undefined", optional},
 		// By width a { readonly a: number } may hold k in a slot laid out for a string. A property stops at
@@ -68,26 +67,32 @@ func TestSpreadOverwriteStops(t *testing.T) {
 
 // The neighbors still lower and agree with Node: a spread with no overwrite, an overwrite whose value the
 // source's slot holds alike over a source that may be undefined (its fallback object is laid out by the
-// literal), and one over a present source beside a field the spread carries through.
+// literal), one over a present source beside a field the spread carries through, and Seats' string row,
+// undefined over a string slot, where both are references, so native releases the string and stores undefined.
 func TestSpreadOverwriteNeighborsAgree(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/spread_overwrite", "neighbors.ts"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	truth := onNode(t, path)
-	if disagreement(run{stdout: []byte("1\nundefined\n2\n2\none 2\n")}, truth) != "" {
-		t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
-	}
-	program, err := lowered(t, path)
-	if err != nil {
-		t.Fatalf("Lower: %v", err)
-	}
-	native, _ := natively(t, program)
-	for name, got := range map[string]run{"native": native, "release": released(t, program), "javascript": onJavaScriptBackend(t, program)} {
-		if problem := disagreement(truth, got); problem != "" {
-			t.Errorf("%s: %s: exit %d, stdout %q, stderr %q", name, problem, got.exitCode, got.stdout, got.stderr)
-		}
+	for file, node := range map[string]string{"neighbors.ts": "1\nundefined\n2\n2\none 2\n", "string_source.ts": "undefined\nundefined\n"} {
+		t.Run(file, func(t *testing.T) {
+			t.Parallel()
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/spread_overwrite", file))
+			if err != nil {
+				t.Fatal(err)
+			}
+			truth := onNode(t, path)
+			if disagreement(run{stdout: []byte(node)}, truth) != "" {
+				t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatalf("Lower: %v", err)
+			}
+			native, _ := natively(t, program)
+			for name, got := range map[string]run{"native": native, "release": released(t, program), "javascript": onJavaScriptBackend(t, program)} {
+				if problem := disagreement(truth, got); problem != "" {
+					t.Errorf("%s: %s: exit %d, stdout %q, stderr %q", name, problem, got.exitCode, got.stdout, got.stderr)
+				}
+			}
+		})
 	}
 }
 
