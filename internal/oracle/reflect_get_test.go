@@ -706,6 +706,14 @@ func TestReflectGetOtherShapesNotYet(t *testing.T) {
 		{"notyet_two_arguments.a", "notyet_two_arguments.a:3:9", "Reflect.get other than Reflect.get(Object(value), key, value)"},
 		{"notyet_receiver.a", "notyet_receiver.a:4:9", "Reflect.get other than Reflect.get(Object(value), key, value)"},
 		{"notyet_unguarded.a", "notyet_unguarded.a:4:28", "Reflect.get of a value that may be null or undefined"},
+		// A key that runs code could rebind the value between the target and the receiver, so the
+		// getter would run on another instance than the read's (#m26ebzy: Node prints 42, main
+		// printed 1 on both backends). Only an identifier or a string literal is admitted (Adamic's
+		// ruling (a1) on #bbssdcy). The delegating twin was family 95's getter stop at the call; the
+		// key's stop now answers first. Mutant: the key check dropped, and notyet_key_rebinds.a
+		// lowers.
+		{"notyet_key_rebinds.a", "notyet_key_rebinds.a:18:52", "Reflect.get by a key other than an identifier or a string literal"},
+		{"notyet_key_rebinds_delegating.a", "notyet_key_rebinds_delegating.a:22:52", "Reflect.get by a key other than an identifier or a string literal"},
 		{"notyet_getter_effect.a", "hostErrors.ts:16:12", "a class getter that does more than return its fields and literals joined by operators"},
 		{"notyet_getter_call.a", "hostErrors.ts:16:12", "a class getter that does more than return its fields and literals joined by operators"},
 		{"notyet_getter_on_getter.a", "hostErrors.ts:16:12", "a class getter that does more than return its fields and literals joined by operators"},
