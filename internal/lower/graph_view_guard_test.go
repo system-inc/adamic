@@ -66,6 +66,12 @@ interface HoldsHost { readonly c: Intl.Collator }
 type HostMap = ReadonlyMap<string, Intl.Collator>
 type HostBag = Record<string, Intl.Collator>
 type Unbound<U> = { readonly value: U }
+interface UntaggedA { readonly a: number; readonly inner: MakesBase }
+interface UntaggedB { readonly b: number; readonly inner: MakesDerived }
+interface UntaggedC { readonly c: number }
+type UntaggedABC = UntaggedA | UntaggedB | UntaggedC
+interface HoldsUntagged { readonly held: UntaggedABC }
+interface ViewsUntagged { readonly held: UntaggedA }
 `
 
 // graphViewGuardLowering lowers graphViewGuardDeclarations into a graph program and keeps the
@@ -346,5 +352,51 @@ func TestGraphDynamicShapeWithoutSiteIsRefused(t *testing.T) {
 	var refused *Refused
 	if !errors.As(err, &refused) || refused.What != "a dynamic-shape object in a graph program" || refused.Where != lowered.result.Source {
 		t.Fatalf("got %v, want the dynamic-shape refusal at the program %q", err, lowered.result.Source)
+	}
+}
+
+// An untagged union's cast tests nothing (untaggedUnionCast, #axqgdck), so an UntaggedB reaches the view of
+// UntaggedA though neither relates to the other, and what it holds in inner is read or written as UntaggedA's.
+// UntaggedC has no inner, so the union holds none in common, and the guard's pass over the whole union never
+// pairs it: only the arm loop can.
+// Its view pairs every source arm with the target's, at the top and through every field beneath it (Memory's
+// item 4); the same pair seen by a view whose cast tests its arm skips the unrelated one, as the pairwise rule
+// leans on. An arm disjoint from the target by a literal stays skipped, since a checked read of the tag stops
+// it. Mutants: untagged ignored in the arm loop reds "an untagged arm"; untagged not passed to follow reds
+// "an untagged arm beneath a field"; the disjoint test dropped under untagged reds "a disjoint arm".
+func TestGraphViewGuardUntaggedArms(t *testing.T) {
+	t.Parallel()
+	lowered, types, nodes := graphViewGuardLowering(t)
+	for _, row := range []struct {
+		name, source, target string
+		untagged             bool
+		want                 []string
+	}{
+		{"an untagged arm", "UntaggedABC", "UntaggedA", true, []string{"through an arm no test tells (UntaggedB as UntaggedA) through its field inner (MakesDerived as MakesBase)"}},
+		{"an untagged arm beneath a field", "HoldsUntagged", "ViewsUntagged", true, []string{"through its field held (", "through an arm no test tells (UntaggedB as UntaggedA) through its field inner (MakesDerived as MakesBase)"}},
+		{"a tested arm", "UntaggedABC", "UntaggedA", false, nil},
+		{"a disjoint arm", "CrossA", "Cross", true, nil},
+	} {
+		if types[row.source] == nil || types[row.target] == nil {
+			t.Fatalf("%s: a type isn't declared", row.name)
+		}
+		lowered.viewSources = []viewSource{{source: types[row.source], target: types[row.target], node: nodes[row.target], untagged: row.untagged}}
+		err := (&cycleFinder{l: lowered, where: map[*checker.Type]*ast.Node{}}).viewPairGuard()
+		if row.want == nil {
+			if err != nil {
+				t.Errorf("%s: got %v, want the guard to pass", row.name, err)
+			}
+			continue
+		}
+		var notYet *NotYet
+		if !errors.As(err, &notYet) {
+			t.Errorf("%s: got %v, want NotYet", row.name, err)
+			continue
+		}
+		for _, want := range row.want {
+			if !strings.Contains(notYet.What, want) {
+				t.Errorf("%s: got %q, want it to hold %q", row.name, notYet.What, want)
+			}
+		}
 	}
 }
