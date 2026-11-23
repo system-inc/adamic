@@ -1,0 +1,54 @@
+# #hwjx7gw family 46: gofmt, vet, the named lower and oracle tests, then planted change (a), the mismatch panic
+# dropped (mismatch red on JavaScript and release), and (b), the boolean member's test dropped (decoder red, members and
+# mismatch green), each compiling first and restored after. Source it in the job's shell after the sealed opening and
+# sandboxed_npm stage3/api (it calls sandboxed_products). Never merged.
+L="$TMPDIR/hwf"; mkdir -p "$L"; failed=0
+step() { echo "$1 $2"; [ "$1" = PASS ] || failed=1; }
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg)"
+bad=$(gofmt -l internal/lower internal/oracle); if [ -z "$bad" ]; then step PASS gofmt; else step FAIL gofmt; echo "$bad"; fi
+if go vet ./internal/lower/ ./internal/oracle/ > "$L/vet.log" 2>&1; then step PASS vet; else step FAIL vet; head -30 "$L/vet.log"; fi
+lowerpins='^(TestBoxedUnionSlotPaths|TestNullableRecordSlots|TestDispatchedReadOfAViewedValueStops|TestRecordGuardKeepsAReachableSource)$'
+if go test -count=1 -timeout 30m -v -run "$lowerpins" ./internal/lower/ > "$L/lower.log" 2>&1; then step PASS lower-pins; else step FAIL lower-pins; fi
+grep -E -- '^(--- |ok|FAIL)|^    --- FAIL|_test.go:[0-9]+.*(FAIL|want|got)|panic:' "$L/lower.log" | cut -c1-300 | head -20
+if sandboxed_products ./internal/oracle > "$L/products.log" 2>&1; then step PASS products; else step FAIL products; tail -5 "$L/products.log"; fi
+oraclepins='^(TestWeakFieldUnionMembership|TestWeakRead(UnionFieldStaysNotYet|StaysNotYetInA|Roads|AgreesWithNode|RecordPath)|TestJSONObjectsRefused)$'
+if go test -count=1 -timeout 40m -v -run "$oraclepins" ./internal/oracle/ > "$L/oracle.log" 2>&1; then step PASS oracle-pins; else step FAIL oracle-pins; fi
+grep -E -- '^(--- |ok|FAIL)|^    --- |weak_field_union_membership_test.go:[0-9]+|panic:' "$L/oracle.log" | cut -c1-400 | head -60
+# A mutant counts as red only against a membership test green on every case at the head.
+baseline=0
+for c in members mismatch decoder; do grep -q -- "--- PASS: TestWeakFieldUnionMembership/$c " "$L/oracle.log" && baseline=$((baseline + 1)); done
+if [ $baseline -eq 3 ]; then step PASS membership-green-at-head; else step FAIL membership-green-at-head; fi
+cases() { for c in members mismatch decoder; do if grep -q -- "--- FAIL: TestWeakFieldUnionMembership/$c " "$1"; then printf '%s=red ' $c; elif grep -q -- "--- PASS: TestWeakFieldUnionMembership/$c " "$1"; then printf '%s=green ' $c; else printf '%s=absent ' $c; fi; done; echo; }
+F=internal/lower/entries_records.go; cp "$F" "$L/orig.go"
+plant() { # plant <name> <old> <new>, then run the membership test, saving its log
+	python3 -I - "$F" "$2" "$3" <<'PY' || return 1
+import sys
+p, old, new = sys.argv[1], sys.argv[2], sys.argv[3]
+t = open(p).read()
+assert t.count(old) == 1, 'mutant site not found once'
+open(p, 'w').write(t.replace(old, new))
+PY
+	go test -count=1 -timeout 30m -v -run '^TestWeakFieldUnionMembership$' ./internal/oracle/ > "$L/m-$1.log" 2>&1
+	echo $? > "$L/m-$1.exit"
+	if grep -q -E '\[build failed\]|declared and not used|undefined:' "$L/m-$1.log"; then step FAIL "mutant-$1-compiles"; head -8 "$L/m-$1.log"; else step PASS "mutant-$1-compiles"; fi
+	grep -E -- '--- (PASS|FAIL)|weak_field_union_membership_test.go:[0-9]+' "$L/m-$1.log" | cut -c1-400 | head -14
+	cp "$L/orig.go" "$F"
+}
+nl=$'\n'; tab=$'\t'
+plant a "${tab}b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: message}}})${nl}" "${tab}_, _ = matches, message${nl}" || step FAIL mutant-a-applies
+echo "mutant a: $(cases "$L/m-a.log")"; grep -E 'weak_field_union_membership_test.go:[0-9]+: (JavaScript|release): [a-z]' "$L/m-a.log" | grep -i -E 'want|differ' | cut -c1-300 | head -4
+if [ $baseline -eq 3 ] && [ "$(cases "$L/m-a.log")" = "members=green mismatch=red decoder=green " ]; then step PASS mutant-a-red; else step FAIL mutant-a-red; fi
+plant b "${tab}${tab}${tab}case flags&(checker.TypeFlagsBoolean|checker.TypeFlagsBooleanLiteral) != 0:${nl}${tab}${tab}${tab}${tab}name = \"boolean\"${nl}" "" || step FAIL mutant-b-applies
+echo "mutant b: $(cases "$L/m-b.log")"; grep -E 'weak_field_union_membership_test.go:[0-9]+: .*(NotYet|can.t lower|want)' "$L/m-b.log" | cut -c1-300 | head -4
+if [ $baseline -eq 3 ] && [ "$(cases "$L/m-b.log")" = "members=green mismatch=green decoder=red " ]; then step PASS mutant-b-red; else step FAIL mutant-b-red; fi
+# (c) the whole change undone, main's entries_records.go back: the moved r13p pin and the membership test go red.
+cp proof/performance/hwjx7gw/base.go.txt "$F"
+go test -count=1 -timeout 30m -v -run '^(TestRecordDeclaredKeyStopsArePinned|TestWeakFieldUnionMembership)$' ./internal/oracle/ > "$L/m-c.log" 2>&1
+if grep -q -E '\[build failed\]|declared and not used|undefined:' "$L/m-c.log"; then step FAIL mutant-c-compiles; else step PASS mutant-c-compiles; fi
+grep -E -- '--- FAIL|record_declared_keys_test.go:[0-9]+|weak_field_union_membership_test.go:23' "$L/m-c.log" | cut -c1-300 | head -10
+if grep -q -- '--- FAIL: TestRecordDeclaredKeyStopsArePinned/r13p_direct_write.ts ' "$L/m-c.log" && [ "$(grep -c -- '--- FAIL: TestRecordDeclaredKeyStopsArePinned/' "$L/m-c.log")" = 1 ] && [ "$(cases "$L/m-c.log")" = "members=red mismatch=red decoder=red " ]; then step PASS mutant-c-red; else step FAIL mutant-c-red; fi
+cp "$L/orig.go" "$F"
+cmp -s "$L/orig.go" "$F" && step PASS restored || step FAIL restored
+# The moved pin green at the head, every other record-declared-key pin with it.
+if go test -count=1 -timeout 30m -run '^TestRecordDeclaredKeyStopsArePinned$' ./internal/oracle/ > "$L/pins-r13p.log" 2>&1; then step PASS record-declared-key-pins; else step FAIL record-declared-key-pins; grep -E -- '--- FAIL|record_declared_keys_test.go:[0-9]+' "$L/pins-r13p.log" | cut -c1-300 | head -6; fi
+if [ $failed -eq 0 ]; then echo "VERDICT PASS"; else echo "VERDICT FAIL"; fi
