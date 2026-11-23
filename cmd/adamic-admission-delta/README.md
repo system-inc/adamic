@@ -301,8 +301,8 @@ agreement nor a negative witness: an honest stop where a key or a receiver
 can't be known before the read. It is never a type lie, so it is never listed in
 `negative-witnesses.json`, and the tool refuses a program listed in both. Its
 own list is `cloud/admission-corpus/runtime-notyet-stops.json`, or an explicit
-`--runtime-notyet-stops` path. Only Adamic adds an entry: adding one is a ruling
-routed to @system_adamic, and the `_comment` header says so. The map key is
+`--runtime-notyet-stops` path. Adamic rules each new form. A head may add a
+program entry under an already ruled form (docs/rulings.md:412). The map key is
 SHA-256 of exact program bytes, so an edited program falls out of the list and
 demands Node agreement. Each entry names its `path`, its `ruling_task`, the
 `lifting_task` that will lift the stop, and its exact `stderr`. The tool refuses
@@ -312,10 +312,13 @@ allowlist (`runtimeNotYetForms`), or, keyless, exactly
 `adamic: panic: converting <what> to a string is not yet lowered` with `<what>`
 one of the three on the second allowlist (`runtimeNotYetConversions`, #09dvwny:
 String and a template of an unknown), matched whole, never as a pattern, or
-exactly `adamic: panic: <message>` with `<message>` one of the two on the third
+exactly `adamic: panic: <message>` with `<message>` on the third
 allowlist (`runtimeNotYetKeyless`, #ey7aysy under #0sps03r: Object.keys of a
 runtime host value; #995spev: clearTimeout of an object that isn't a timer but
-holds a truthy `_onTimeout`), matched whole too. Each form names the ruling that made it, and the tool
+holds a truthy `_onTimeout`; #hh1cezv: `an Error's own property isn't represented yet`),
+matched whole too. Adamic ruled the Error form on Nov 23 under docs/rulings.md:411.
+A key no one sets on the Error, where Node answers `false`, stops too: an over-stop
+that fails closed, counted by #nw1kfem. Each form names the ruling that made it, and the tool
 refuses an entry whose `ruling_task` is not its form's ruling. The first
 allowlist holds the ten `internal/ir` DynamicKeyedStops forms a ruled fixture
 reaches; a `compiler bug:` stop never qualifies, listed or allowlisted.

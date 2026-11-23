@@ -524,6 +524,7 @@ func (e *emitter) prepareObjectMetadata() {
 			needs.construction = needs.construction || len(expression.Metadata) != 0
 		case ir.ObjectCall:
 			needs.dynamic = needs.dynamic || expression.Checked
+			needs.fieldTypes = needs.fieldTypes || expression.Method == "hasOwnErrorView"
 		case ir.CheckedCast:
 			needs.fieldTypes = needs.fieldTypes || expression.CheckedFields
 		case ir.DynamicProperty:

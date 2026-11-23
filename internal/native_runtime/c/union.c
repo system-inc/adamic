@@ -376,6 +376,11 @@ static bool key_named(const adamic_string *key, const char *const *names, size_t
 	return false;
 }
 
+bool adamic_error_own_key_stops(const adamic_string *key) {
+	return key_named(key, adamic_dynamic_keyed_error_own_key_stop_names,
+		sizeof adamic_dynamic_keyed_error_own_key_stop_names / sizeof adamic_dynamic_keyed_error_own_key_stop_names[0]);
+}
+
 // keyed_stop says why a run-time key read stops, in the words the JavaScript backend prints too
 // (dynamic_keyed_names.h), and then which key it was reading.
 _Noreturn static void keyed_stop(enum adamic_dynamic_keyed_stop stop, const adamic_string *key) {

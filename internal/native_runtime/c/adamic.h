@@ -575,12 +575,12 @@ void adamic_object_set_initialized(adamic_object *object, const char *name, bool
 static inline unsigned char *adamic_object_field_types(const adamic_object *object) {
 	return adamic_object_initialized(object) + object->shape->count;
 }
-// Error construction owns this tag; ordinary program stores only produce ir.Type tags.
-enum { adamic_error_unwritten = 255 };
-// Every interpreting reader sees the string representation; only the error walker tests the raw tag.
+// Error factories own these tags. Ordinary program stores only produce ir.Type tags.
+enum { adamic_error_own_hidden = 254, adamic_error_unwritten = 255 };
+// Both factory tags describe string slots.
 static inline unsigned char adamic_object_field_type(const adamic_object *object, size_t index) {
  unsigned char type = adamic_object_field_types(object)[index];
- return type == adamic_error_unwritten ? adamic_ir_String : type;
+ return type == adamic_error_unwritten || type == adamic_error_own_hidden ? adamic_ir_String : type;
 }
 void adamic_error_initialize(adamic_object *object);
 
@@ -657,6 +657,8 @@ struct adamic_methods {
 extern const adamic_methods adamic_error_methods;
 extern const adamic_methods adamic_coded_error_methods;
 bool adamic_error_is(const adamic_object *object);
+bool adamic_error_own_key_stops(const adamic_string *key);
+bool adamic_object_has_own_error_view(const adamic_object *object, const adamic_string *key);
 // Complete error shapes publish their enumerable keys once, in the order Node records them.
 typedef struct adamic_error_json {
  const adamic_shape *shape;
