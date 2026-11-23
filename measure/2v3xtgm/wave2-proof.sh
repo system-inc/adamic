@@ -92,16 +92,17 @@ else
 	tail -40 "$T/m6.log"; echo "FAIL M6: $n of 2 red, $javascript on javascript"; exit 1
 fi
 
-# M7: the write walk dropped. The written and deleted rows go red; every other row stays green.
-plant "$VIEW" $'func (l *lowering) dictionaryViewWritten(present *checker.Type) bool {\n' $'func (l *lowering) dictionaryViewWritten(present *checker.Type) bool {\n\treturn false\n' || { restore "$VIEW" "$T/view.orig"; echo "FAIL M7 seam"; exit 1; }
+# M7: the use test answers true for every use. Every row a use keeps stopped goes red, the returned, stored then
+# written and writing helper rows among them; every admitted row and every row a type keeps stopped stays green.
+plant "$VIEW" $'func (l *lowering) dictionaryViewUse(node *ast.Node) bool {\n' $'func (l *lowering) dictionaryViewUse(node *ast.Node) bool {\n\treturn true\n' || { restore "$VIEW" "$T/view.orig"; echo "FAIL M7 seam"; exit 1; }
 go test -count=1 -v -run '^TestDictionaryViewCasts$' ./internal/lower > "$T/m7.log" 2>&1
 restore "$VIEW" "$T/view.orig"
 CASTS=TestDictionaryViewCasts
-n=$(red "$T/m7.log" "$CASTS/written_through_a_dictionary" "$CASTS/deleted_through_a_dictionary")
-if [ "$n" = 2 ] && green "$T/m7.log" "$CASTS/maplike_of_unknown" "$CASTS/undefined_dropped" "$CASTS/number_values" "$CASTS/union-held_values"; then
-	echo "PASS M7: the written and deleted rows red, the rest green"
+n=$(red "$T/m7.log" "$CASTS/returned" "$CASTS/stored_in_a_const_then_written_by_key" "$CASTS/handed_to_a_helper_that_writes" "$CASTS/handed_on_to_a_helper_that_writes" "$CASTS/handed_to_a_self-recursive_helper" "$CASTS/assigned_to_a_let" "$CASTS/written_through_a_dictionary" "$CASTS/deleted_through_a_dictionary")
+if [ "$n" = 8 ] && green "$T/m7.log" "$CASTS/maplike_of_unknown" "$CASTS/record_of_unknown" "$CASTS/undefined_kept" "$CASTS/walked_by_its_own_keys" "$CASTS/handed_to_an_own_keys_helper" "$CASTS/handed_on_to_an_own_keys_helper" "$CASTS/compared_and_walked_as_equal_own_properties" "$CASTS/undefined_dropped" "$CASTS/number_values" "$CASTS/union-held_values"; then
+	echo "PASS M7: the 8 rows a use keeps stopped red, the rest green"
 else
-	tail -40 "$T/m7.log"; echo "FAIL M7: $n of 2 red"; exit 1
+	tail -40 "$T/m7.log"; echo "FAIL M7: $n of 8 red"; exit 1
 fi
 
 go test -count=1 -timeout 0 ./internal/lower ./internal/ir ./internal/native ./internal/javascript ./cmd/adamic-admission-delta ./stage3/census/latent/statecopy > "$T/whole.log" 2>&1; code=$?
