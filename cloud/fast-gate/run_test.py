@@ -4867,6 +4867,55 @@ class GateToolCrashes(unittest.TestCase):
             run.compilerDeclarations(tools, tree)
         self.assertNotIsInstance(raised.exception, run.ChangeRefusal)
 
+    def test_a_go_list_failure_is_the_tree_s_only_when_go_names_its_source(self):
+        # Pins Adamic Loom's must on 005785f9: a go list that exits nonzero is the change's refusal only when go names an
+        # error in a .go file under the tree, or an import cycle; a go: setup failure, a module the cache lacks, or a file
+        # outside the tree stays what the site raised before, never the change's red.
+        os.makedirs(os.path.join(self.directory, "internal/a"))
+        with open(os.path.join(self.directory, "internal/a/a.go"), "w") as handle:
+            handle.write("package a\n")
+        tree = [
+            "internal/a/a.go:3:1: expected 'IDENT', found 'EOF'\n",
+            "# example/internal/a\ninternal/a/a.go:4:2: no required module provides package example/missing\n",
+            "package example/a\n\timports example/b\n\timports example/a: import cycle not allowed\n",
+            os.path.join(self.directory, "internal/a/a.go") + ":1:1: expected 'package', found 'EOF'\n",
+        ]
+        box = [
+            "go: example.com/m@v1.0.0: module lookup disabled by GOPROXY=off\n",
+            "go: go.mod requires go >= 1.99 (running go 1.27.1; GOTOOLCHAIN=local)\n",
+            "go: creating work dir: mkdir /tmp/go-build1: no space left on device\n",
+            "/root/go/pkg/mod/example.com/m@v1.0.0/m.go:3:1: expected 'package', found 'EOF'\n",
+            "../outside/b.go:3:1: expected 'package', found 'EOF'\n",
+        ]
+        for stderr in tree:
+            with self.subTest(stderr=stderr):
+                self.assertIsInstance(run.goListFailure(self.directory, stderr, "go list failed", SystemExit), run.TreeRefusal)
+        for stderr in box:
+            with self.subTest(stderr=stderr):
+                failure = run.goListFailure(self.directory, stderr, "go list failed", SystemExit)
+                self.assertNotIsInstance(failure, run.ChangeRefusal)
+                self.assertIsInstance(failure, SystemExit)
+
+    def test_a_real_go_list_of_a_broken_tree_is_the_tree_s(self):
+        # Pins the reading against go's own words: a module whose package won't parse, and one with an import cycle, each
+        # make go list exit nonzero, and goListFailure reads both as the change's refusal.
+        go = shutil.which("go")
+        if go is None:
+            self.skipTest("no go on this box to list a module with")
+        for name, files in (
+                ("parse", {"a/a.go": "package a\n\nfunc (\n"}),
+                ("cycle", {"a/a.go": "package a\n\nimport _ \"example/b\"\n", "b/b.go": "package b\n\nimport _ \"example/a\"\n"})):
+            with self.subTest(name=name):
+                tree = os.path.join(self.directory, name)
+                for path, text in dict(files, **{"go.mod": "module example\n\ngo 1.20\n"}).items():
+                    os.makedirs(os.path.dirname(os.path.join(tree, path)), exist_ok=True)
+                    with open(os.path.join(tree, path), "w") as handle:
+                        handle.write(text)
+                environment = dict(os.environ, GOFLAGS="-mod=mod", GOPROXY="off", GOWORK="off", GOTOOLCHAIN="local")
+                listing = subprocess.run(run.packageGraphCommand(), cwd=tree, capture_output=True, text=True, env=environment)
+                self.assertNotEqual(listing.returncode, 0, listing.stdout)
+                self.assertIsInstance(run.goListFailure(tree, listing.stderr, "go list failed", SystemExit), run.TreeRefusal, listing.stderr)
+
     def test_duplicate_catalog_entries_are_the_change_s_refusal(self):
         # Pins: catalogFull's empty or duplicate catalog entries, read from the candidate's tree, raise TreeRefusal.
         os.makedirs(os.path.join(self.directory, "verify/catalog"))

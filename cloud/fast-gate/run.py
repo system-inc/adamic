@@ -988,6 +988,31 @@ def packageGraph(tree):
     return listedGoList(tree, packageGraphCommand(), 300, dict(os.environ, **gateEnvironment))
 
 
+# goListSourceError is a line go list prints for an error in a Go source file it read, its path, its line and maybe its
+# column: "internal/lower/lower.go:12:3: expected ';', found ...", or a missing import's "a/b.go:4:2: no required module
+# provides package ...". go names such a path relative to the directory it ran in, the tree, or absolute.
+goListSourceError = re.compile(r"^\s*(\S+\.go):\d+(?::\d+)?: ")
+
+
+def goListFailure(tree, stderr, what, otherwise):
+    """The exception a go list of tree that exited nonzero raises (#qr2812x, Adamic Loom's must on 005785f9): a TreeRefusal,
+    the change's red, only when go names an error in the tree's own source, a .go file under tree at a line, or an
+    import cycle among its packages; anything else (a go: setup failure, a module the cache lacks under GOPROXY=off, a go
+    older than go.mod's directive, a cache or disk it can't write, an error in a file outside the tree) is the box's or
+    the tools', otherwise(what), as it was before, so it never reds a change that didn't cause it."""
+    root = os.path.realpath(tree)
+    for line in stderr.splitlines():
+        if "import cycle not allowed" in line:
+            return TreeRefusal("%s: %s" % (what, stderr.strip()[:2000]))
+        error = goListSourceError.match(line)
+        if error is None:
+            continue
+        path = os.path.realpath(error[1] if os.path.isabs(error[1]) else os.path.join(root, error[1]))
+        if path.startswith(root + os.sep):
+            return TreeRefusal("%s: %s" % (what, stderr.strip()[:2000]))
+    return otherwise("%s: %s" % (what, stderr.strip()[:2000]))
+
+
 def coverageReduced(tree, tools, changed, unowned=None):
     """The changed paths the coverage phase judges, sorted (#gw93f6b, Node's ruling): each neither owned, inside a Go package
     as touched() decides, nor inert, its first rule in tools' executors.txt being inert. The phase is red only for one of
@@ -997,7 +1022,7 @@ def coverageReduced(tree, tools, changed, unowned=None):
     if unowned is None:
         listing = packageGraph(tree)
         if listing.returncode != 0:
-            raise TreeRefusal("go list failed: " + listing.stderr)
+            raise goListFailure(tree, listing.stderr, "go list failed", SystemExit)
         directories, embedded = goPackages(tree, listing.stdout)[:2]
         unowned = unownedPaths(directories, embedded, changed)
     rules = executorMap(tools)[0]
@@ -1079,7 +1104,7 @@ def phaseUnread(tree, tools):
         read.update(path for path in git(tree, "ls-files", "-z", "--", *inputs["paths"]).split("\0") if path)
     listing = packageGraph(tree)
     if listing.returncode != 0:
-        raise TreeRefusal("go list of %s doesn't read: %s" % (tree, listing.stderr.strip()[:300]))
+        raise goListFailure(tree, listing.stderr, "go list of %s doesn't read" % tree, ValueError)
     directories = {importPath: directory for directory, importPath in goPackages(tree, listing.stdout)[0].items()}
     owned = {directories[package] for inputs in declared for package in inputs["packages"] if package in directories}
     rules, targets = executorMap(tools)[0], set().union(*catalogPatchTargets(tree).values())
@@ -1593,7 +1618,8 @@ class MemoryFloorRefusal(ChangeRefusal):
 
 class TreeRefusal(ChangeRefusal):
     """A refusal of what the change's own tree holds that the gate can't read or that names what isn't there: a go list
-    of the candidate that fails, a catalog or TestWASI inventory it can't enumerate, its own layer of the compiler
+    of the candidate that names an error in its own source (goListFailure), a catalog or TestWASI inventory it can't
+    enumerate, its own layer of the compiler
     dependency map out of shape or naming a directory that isn't a package (#qr2812x). Its fix is in the tree, so it
     names no map to declare in."""
 
@@ -2646,7 +2672,7 @@ class Gate:
         else:
             listing = self.command(packageGraphCommand(), cwd=self.arguments.tree, capture_output=True, text=True)
         if listing.returncode != 0:
-            raise TreeRefusal("go list failed: " + listing.stderr)
+            raise goListFailure(self.arguments.tree, listing.stderr, "go list failed", SystemExit)
         directories, embedded, realEmbedded, testEmbedded, reverse, testReverse, self.packageDirectories = goPackages(self.arguments.tree, listing.stdout)
         dependencies = self.compilerDependencies(directories, changed)
         self.memoryFloors(changed)
