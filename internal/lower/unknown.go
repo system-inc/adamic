@@ -72,6 +72,9 @@ func (l *lowering) inProperty(node *ast.Node) (ir.Expression, error) {
 }
 
 func (l *lowering) dynamicProperty(node *ast.Node, object ir.Expression, name string) (ir.Expression, error) {
+	if err := l.dynamicRecordReadGap(node, name); err != nil {
+		return nil, err
+	}
 	if strings.ContainsRune(name, 0) {
 		return nil, l.notYet(node, "a dynamic property name containing NUL (native shape names)")
 	}

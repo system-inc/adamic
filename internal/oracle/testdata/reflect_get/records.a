@@ -2,7 +2,15 @@
 // (#zhgxzjg, Runtime's three record shapes): numbers, booleans, strings, and a number that may be
 // undefined, an own key holding undefined among them. A record of boolean | undefined isn't admitted
 // yet ("record values with an unsupported slot representation"), so it isn't here.
-import { propertyOf } from './hostErrors.ts';
+// propertyOf is hostErrors.ts's, written out here: that module's errorCode reads error.code through an unknown
+// narrowed by in, a named dynamic read, which stops in a program holding a number or boolean record until
+// #3tjjcjs boxes a record's slot by its kind (#859ksab). This file is about the run-time key road, which boxes.
+function propertyOf(value: unknown, key: string): unknown {
+	if (value === null || value === undefined) {
+		throw new TypeError(`Cannot read properties of ${value === null ? "null" : "undefined"} (reading '${key}')`);
+	}
+	return Reflect.get(Object(value), key, value);
+}
 
 function show(label: string, value: unknown): void {
 	if (typeof value === 'string') console.log(`${label}: "${value}"`);

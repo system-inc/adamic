@@ -782,6 +782,10 @@ type lowering struct {
 	// qualify its private members' names (privateName).
 	privateOwners map[*ast.Node]int
 
+	// scalarRecords is whether the program holds a record of numbers or booleans, read once
+	// (scalarRecordsInProgram, #859ksab).
+	scalarRecords, scalarRecordsKnown bool
+
 	// instance is the class instantiation being lowered, if any.
 	instance *instance
 
