@@ -105,10 +105,10 @@ console.log(String(comps("a" as Path, ["x"]).length));
 	}
 }
 
-// An extension of an object, not an array: :32's presence refusals don't see its brand, so `in` on the
-// result would lower where Node answers false (Language's must on efa2009c), and phantomStripped leaves it.
-// In .a, where step 1's call-site check doesn't serve it as a branded supertype first. Mutant:
-// phantomStripped stripping any extension, and this is accepted.
+// An extension of an object at the top of a promise is an overload mint (#z1qkw7d), and in .a every mint is
+// refused, so this stops at the call in the mint's words, which name the overload's result. In .ts step 1's
+// call-site check serves it as a branded supertype first. Mutant: the .a refusal dropped from
+// overloadPhantomResult, and this is accepted.
 func TestOverloadPhantomResultRefusesAnObjectExtension(t *testing.T) {
 	t.Parallel()
 	source := `interface Node { readonly kind: number }

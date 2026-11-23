@@ -21,8 +21,9 @@ var unbrandedAllowed = map[string]struct {
 	calls int
 	why   string
 }{
-	"unbranded.go":  {3, "isArrayType, elementTypeOfArray and unbranded are the one place lowering asks the checker"},
-	"cast_proof.go": {1, "arrayLikeType judges a cast, which sees the brand: a plain array never relates to a branded one by layout"},
+	"unbranded.go":               {3, "isArrayType, elementTypeOfArray and unbranded are the one place lowering asks the checker"},
+	"cast_proof.go":              {1, "arrayLikeType judges a cast, which sees the brand: a plain array never relates to a branded one by layout"},
+	"overload_phantom_result.go": {2, "overloadMintSource asks whether an overload mint's base is an array as the checker sees it, so the base of a chain of extensions is never an array there and the chain is judged whole (#z1qkw7d)"},
 }
 
 // Lowering decides an array's layout through unbranded.go alone, so a phantom extension is held as its
