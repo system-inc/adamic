@@ -145,8 +145,11 @@ console.log(String(new Temperature().celsius));
 // typed as a union holding that interface, a class's static side (the operand is the constructor
 // itself, and the owner found is typeof Sensor, whose static getter Object.values reads), a getter a
 // subclass inherits (the owners found are Base and Sub, whose property is Base's getter; the base isn't
-// assignable to the subclass, its instances are), a parameter typed as the interface, and a getter of a
-// generic class, whose owner relates for no instantiation in particular.
+// assignable to the subclass, its instances are), a parameter typed as the interface, a parameter typed
+// as a discriminated union a class is assignable to as a whole, by its discriminant, though it relates
+// to neither member either way (Lower's witness, so the union is read as itself as well as by its
+// members; mutant DiscriminatedUnion turns it red), and a getter of a generic class, whose owner relates
+// for no instantiation in particular.
 //
 // tsc types Object.values of a class instance, a constructor or a union with an interface member as
 // any[], since only a type literal has an implicit index signature, and the call read as join's
@@ -164,6 +167,7 @@ func TestEnumerationReachReachingGetterRefused(t *testing.T) {
 		{"static", "export class Sensor { static get celsius(): number { return 21; } }\n", "import { Sensor } from './held.a';\nfunction read(): number[] { return Object.values(Sensor); }\nconsole.log(read().join(','));\n"},
 		{"subclass", "export class Base { get celsius(): number { return 21; } }\nexport class Sub extends Base { count = 1; }\n", "import { Sub } from './held.a';\nfunction read(sub: Sub): number[] { return Object.values(sub); }\nconsole.log(read(new Sub()).join(','));\n"},
 		{"parameter", enumerationReachSensor, "import { type Reading, Sensor } from './held.a';\nfunction read(reading: Reading): number[] { return Object.values(reading); }\nconsole.log(read(new Sensor()).join(','));\n"},
+		{"discriminated", "export class Coded { kind: 1 | 2 = 1; x = 1; get g(): number { return 2; } }\n", "import { Coded } from './held.a';\ntype Tagged = { kind: 1; g: number } | { kind: 2; g: number };\nfunction read(tagged: Tagged): number[] { return Object.values(tagged); }\nconsole.log(read(new Coded()).join(','));\n"},
 		{"generic", "export class Box<T> { held: T; constructor(held: T) { this.held = held; } get value(): T { return this.held; } }\n", "import { Box } from './held.a';\nconst reading: { readonly value: number } = { value: 1 };\nconsole.log(Object.values(reading).join(','));\nconsole.log(String(new Box<number>(2).value));\n"},
 	} {
 		t.Run(row.name, func(t *testing.T) {

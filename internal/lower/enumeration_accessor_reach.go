@@ -65,7 +65,7 @@ func (l *lowering) enumerationAccessorReaches(accessor *ast.Node, reach *enumera
 }
 
 // enumerationReadTypes is every object type a value the enumeration reads can sit at, or unknown. The
-// operand's own type and its union members are read by every enumeration; for a deep one, so are,
+// operand's own type, a union both as itself and by its members, is read by every enumeration; for a deep one, so are,
 // recursively, each one's property types, type arguments and array and tuple element types. Any,
 // unknown, object, {}, a type parameter or another instantiable type, an index signature whose values
 // can be objects, a type nested past enumerationReachDepth, and anything else that isn't an object
@@ -104,7 +104,10 @@ func (l *lowering) enumerationReadTypes(operand *ast.Node, deep bool) (bool, []*
 		case flags&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive|checker.TypeFlagsInstantiable) != 0:
 			return true, nil
 		case flags&checker.TypeFlagsUnion != 0:
-			// A union member is the type the value is, so it's read at the union's own depth.
+			// A union member is the type the value is, so it's read at the union's own depth. The union is
+			// read as itself too: tsc relates a source to a discriminated union as a whole, by its
+			// discriminant, where the source relates to no one member either way (Lower's witness).
+			types = append(types, next.proven) // the union itself
 			for _, member := range next.proven.Types() {
 				queue = append(queue, step{proven: member, depth: next.depth})
 			}
