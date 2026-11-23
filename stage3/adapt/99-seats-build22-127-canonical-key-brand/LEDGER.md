@@ -1,0 +1,1 @@
+- **Type-only, family 127 (#bbssdcy, Compiler accepts under the Nov 22 split):** 99-seats-build22-127-canonical-key-brand types the internal `CanonicalKey.__canonicalKey` as `undefined` per rulings rows 29, 30 and 35. The checker finds only its declaration and no public export.
