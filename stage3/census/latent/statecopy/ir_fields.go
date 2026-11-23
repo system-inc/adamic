@@ -167,6 +167,7 @@ var irSpecFields = map[string]irFieldPolicy{
 	"BrandMint.Where":                    {"string", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"BrandMint.Target":                   {"string", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"BrandMint.Members":                  {"[]string", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
+	"BrandMint.Overload":                 {"string", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"Break.Depth":                        {"int", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"Break.Label":                        {"string", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"Call.Function":                      {"int", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
