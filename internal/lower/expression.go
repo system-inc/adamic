@@ -1506,6 +1506,8 @@ func (l *lowering) unparenthesizedValue(node *ast.Node) (ir.Expression, error) {
 		return ir.Void{Value: operand}, nil
 	case ast.KindPrefixUnaryExpression:
 		return l.prefix(node)
+	case ast.KindPostfixUnaryExpression:
+		return l.postfix(node)
 	case ast.KindTypeOfExpression:
 		if value, handled, err := l.hostBindingTypeOf(node); handled {
 			return value, err
