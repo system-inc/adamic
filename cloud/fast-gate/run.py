@@ -358,6 +358,11 @@ def executorMap(tools):
 
 # readsAllowLine is an allow line of executors.txt, "# allow: <package> <glob>: <why>", and readsAllowFields its words
 # after "allow:": a package and a glob, neither with a space in it, then a colon and the why, never empty.
+# performanceFile is the measurements file every landing rewrites at adamic's root (#hed1mkb), which the reads guard
+# keeps every unit from reading (readsGuardFindings).
+performanceFile = "Performance.jsonc"
+
+
 readsAllowLine = re.compile(r"\s*#\s*allow:(.*)")
 readsAllowFields = re.compile(r"(\S+)\s+(\S+):\s+(\S.*)")
 
@@ -1291,6 +1296,20 @@ def readsGuardFindings(tree, tools, changed=None, pathSetChanged=None):
             reds.append("`%s` (%s:%d) matches no tracked path: point it at where the file lives now, or delete it" %
                         (" ".join(["reads", package, pattern] + ([mode] if mode else [])), where, number))
     changedSet = set(changed or ())
+    # Performance.jsonc at adamic's root is rewritten by every landing, so the tested tree never holds what the landed
+    # one does, and no unit may read it (#hed1mkb, guard 1, #djw6hqf): a reads line whose glob matches the root's name
+    # is refused, a bare * included, whatever its mode, and no allow line exempts it; so is a tracked Performance.jsonc
+    # anywhere but the root, its own case. Every line is checked, since the tools' are the census's and a change can add
+    # one to the tree's; a copy outside the root only where the change adds or moves it, the census the whole tree's.
+    for where, number, package, pattern, mode in readers:
+        if fnmatch.fnmatchcase(performanceFile, pattern):
+            reds.append("`%s` (%s:%d) matches %s, which every landing rewrites at adamic's root, so no unit may read it "
+                        "(#hed1mkb): narrow the glob so it can't match the root's %s" %
+                        (" ".join(["reads", package, pattern] + ([mode] if mode else [])), where, number, performanceFile, performanceFile))
+    for path in (files if census else sorted(changedSet & tracked)):
+        if path != performanceFile and path.rsplit("/", 1)[-1] == performanceFile:
+            reds.append("%s is a %s outside adamic's root, where only the root's is the landing's measurements (#hed1mkb): move "
+                        "or rename it" % (path, performanceFile))
     sources = readsCommentFiles(tree) if census or deleted else []
     sources = sorted(set(sources) | {path for path in changedSet if path.endswith(".go") and path in tracked})
     comments = []

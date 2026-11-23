@@ -1082,6 +1082,27 @@ class ReadsGuard(unittest.TestCase):
         with mock.patch.object(run, "packageGraph", side_effect=withVariant):
             self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["a/a_test.go"], []), [self.uncovered % (3, "b/lonely.txt")])
 
+    def test_a_reads_line_matching_the_root_performance_file_is_red_whatever_its_mode(self):
+        # Performance.jsonc at the root is rewritten by every landing (#hed1mkb), so a glob that matches its name is red,
+        # a bare * among them, and an allow line doesn't exempt it; a glob under a directory, as docs/*.jsonc, isn't.
+        lines = "reads a Performance*\nreads a * paths\nreads a docs/*.jsonc\n# allow: a Performance*: no allow exempts it\n"
+        self.write({"cloud/fast-gate/executors.txt": self.executors + lines, "Performance.jsonc": "{}\n", "docs/x.jsonc": "{}\n"})
+        expected = ["`reads a Performance*` (executors.txt:4) matches Performance.jsonc, which every landing rewrites at adamic's root, "
+                    "so no unit may read it (#hed1mkb): narrow the glob so it can't match the root's Performance.jsonc",
+                    "`reads a * paths` (executors.txt:5) matches Performance.jsonc, which every landing rewrites at adamic's root, "
+                    "so no unit may read it (#hed1mkb): narrow the glob so it can't match the root's Performance.jsonc"]
+        self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["docs/x.jsonc"], []), expected)
+        self.assertEqual(self.census(), (1, "\n".join(expected) + "\n"))
+
+    def test_a_performance_file_anywhere_but_the_root_is_red(self):
+        self.write({"Performance.jsonc": "{}\n", "b/Performance.jsonc": "{}\n"})
+        expected = ["b/Performance.jsonc is a Performance.jsonc outside adamic's root, where only the root's is the landing's "
+                    "measurements (#hed1mkb): move or rename it"]
+        self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["b/Performance.jsonc", "Performance.jsonc"], ["b/Performance.jsonc"]), expected)
+        # A change that doesn't touch the copy isn't charged with it; the census names it.
+        self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["a/a.go"], []), [])
+        self.assertEqual(self.census(), (1, expected[0] + "\n"))
+
     def test_a_comment_covered_by_own_files_a_line_a_paths_line_or_the_closure_passes(self):
         for glob in ("a/testdata/own.txt", "b/data.txt", "b/names/*", "b/b.go"):
             with self.subTest(glob=glob):
