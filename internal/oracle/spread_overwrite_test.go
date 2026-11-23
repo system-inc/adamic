@@ -17,18 +17,24 @@ import (
 // released the number's bits as a pointer (exit 139), and a field optional in the source's type had no slot in
 // an actual {} (exit 70 for a string, 139 for a number). Each stops at the overwrite until a spread writes its
 // own layout. Seats' four programs are here as they ran, beside a source that is never undefined, to show the
-// slot's representation is the cause and not the source's nullability. If a stop goes missing, the program is
+// slot's representation is the cause and not the source's nullability, and a field the source's type doesn't
+// declare, which by width the actual source may still hold. If a stop goes missing, the program is
 // run natively under the sanitizers and its run is part of the failure.
 func TestSpreadOverwriteStops(t *testing.T) {
 	t.Parallel()
 	const held = "after a spread whose source holds k as"
 	const optional = "its type makes k optional"
-	for _, pin := range []struct{ file, node, words string }{
-		{"number_source.ts", "undefined\nundefined\n", held},
-		{"number_present.ts", "undefined\n", held},
-		{"string_source.ts", "undefined\nundefined\n", held},
-		{"optional_string.ts", "true\nundefined\ntrue\nundefined\n", optional},
-		{"optional_number.ts", "true\nundefined\ntrue\nundefined\n", optional},
+	const width = "a spread that adds a field the source doesn't have"
+	for _, pin := range []struct{ file, node, at, words string }{
+		{"number_source.ts", "undefined\nundefined\n", "k: undefined", held},
+		{"number_present.ts", "undefined\n", "k: undefined", held},
+		{"string_source.ts", "undefined\nundefined\n", "k: undefined", held},
+		{"optional_string.ts", "true\nundefined\ntrue\nundefined\n", "k: undefined", optional},
+		{"optional_number.ts", "true\nundefined\ntrue\nundefined\n", "k: undefined", optional},
+		// By width a { readonly a: number } may hold k in a slot laid out for a string. A property stops at
+		// object.go's own check, a method in spreadOverwrite, in the same words.
+		{"width.ts", "1 5\n", "k: 5", width},
+		{"width_method.ts", "1 5\n", "k() {", width},
 	} {
 		t.Run(pin.file, func(t *testing.T) {
 			t.Parallel()
@@ -40,7 +46,7 @@ func TestSpreadOverwriteStops(t *testing.T) {
 			if disagreement(run{stdout: []byte(pin.node)}, truth) != "" {
 				t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			want, err := spreadOverwriteLocation(path, "k: undefined")
+			want, err := spreadOverwriteLocation(path, pin.at)
 			if err != nil {
 				t.Fatal(err)
 			}

@@ -15,13 +15,17 @@ import (
 //     exit 70 for a string and 139 for a number ({ ...source, k: undefined } over { readonly k?: string } given {}).
 //
 // A source that may be undefined is kept: its fallback object is laid out by the literal (reuse.go), and with
-// the representations equal its slot and the source's agree. A field the source's type doesn't declare is
-// already a NotYet at its caller. The fix is Optimizer's and Lower's: a spread that writes its own layout.
+// the representations equal its slot and the source's agree. A field the source's type doesn't declare may still
+// be in the actual source by width, so it stops too. The fix is Optimizer's and Lower's: a spread that writes its
+// own layout.
 func (l *lowering) spreadOverwrite(literal *ast.Node, property *ast.Node, name string, value ir.Expression) (ir.Expression, error) {
 	source := literal.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression
 	field := l.checker.GetPropertyOfType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(source)), name)
 	if field == nil {
-		return value, nil
+		// By width the actual source may hold the field anyway ({ readonly a: number } given { a: 1, k: "x" }),
+		// in a slot laid out for its own value. A property or a placeholder stops at its caller in these words
+		// before it gets here; a method meets it here.
+		return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
 	}
 	if field.Flags&ast.SymbolFlagsOptional != 0 {
 		return nil, l.notYet(property, "an overwrite of "+name+" after a spread whose source may not have it (its type makes "+name+" optional), so the copied object may have no slot to write")
