@@ -35,8 +35,7 @@ func TestJSONValues52PinnedAnySampleReadsRemain(t *testing.T) {
 	if source == "" {
 		t.Fatal("ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream git input")
 	}
-	command := toolchain.GitCommandIn(source, "show", typescriptPin(t, root)+":tests/cases/compiler/APISample_parseConfig.ts")
-	sample, err := command.Output()
+	sample, err := pinnedSample(source, typescriptPin(t, root), "tests/cases/compiler/APISample_parseConfig.ts")
 	if err != nil {
 		t.Fatalf("read pinned API sample: %v", err)
 	}
@@ -56,6 +55,57 @@ func TestJSONValues52PinnedAnySampleReadsRemain(t *testing.T) {
 		if !jsonValues52SampleContainsOwnPin(string(sample), row.Path[0], row.Read) {
 			t.Errorf("%s is no longer pinned by %s: remove its exemption; missing own call ts.%s( or read %q", name, row.Baseline, row.Path[0], row.Read)
 		}
+	}
+}
+
+// pinnedSample is path's bytes at pin in source, read by git as PinnedGit reads a pinned commit
+// (internal/buildcache/pinned.go:33): replace objects and grafts off and no transport, so the answer is the pin's own.
+// toolchain's GitEnv already keeps git's configuration out of reach. A replace ref or a graft in the source could
+// otherwise answer with another commit's bytes under the pin's id, and the exemption would be judged on them. It is
+// written here, not shared with PinnedGit, which takes a product's Inputs: a test that keys no product has none.
+func pinnedSample(source, pin, path string) ([]byte, error) {
+	command := toolchain.GitCommandIn(source, "-c", "protocol.allow=never", "show", pin+":"+path)
+	if command.Err != nil {
+		return nil, command.Err
+	}
+	command.Env = append(command.Env, "GIT_NO_REPLACE_OBJECTS=1", "GIT_GRAFT_FILE="+os.DevNull, "GIT_NO_LAZY_FETCH=1")
+	return command.Output()
+}
+
+// A replace ref in the source never changes what the pin's sample reads: pinnedSample reads the pin's own blob.
+func TestJSONValues52PinnedSampleIgnoresAReplaceRef(t *testing.T) {
+	t.Parallel()
+	source := t.TempDir()
+	git := func(arguments ...string) string {
+		t.Helper()
+		command := toolchain.GitCommandIn(source, append([]string{"-c", "user.name=test", "-c", "user.email=test@adamic.invalid", "-c", "commit.gpgSign=false"}, arguments...)...)
+		output, err := command.CombinedOutput()
+		if err != nil {
+			t.Fatalf("git %s: %v: %s", strings.Join(arguments, " "), err, output)
+		}
+		return strings.TrimSpace(string(output))
+	}
+	git("init", "-q")
+	write := func(text string) string {
+		if err := os.WriteFile(filepath.Join(source, "sample.ts"), []byte(text), 0o644); err != nil {
+			t.Fatal(err)
+		}
+		git("add", "sample.ts")
+		git("commit", "-q", "-m", text)
+		return git("rev-parse", "HEAD")
+	}
+	pin := write("pinned\n")
+	other := write("replaced\n")
+	git("replace", pin, other)
+	if plain := git("show", pin+":sample.ts"); plain != "replaced" {
+		t.Fatalf("the planted replace ref doesn't answer for the pin (git show read %q), so this test can't fail", plain)
+	}
+	sample, err := pinnedSample(source, pin, "sample.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if string(sample) != "pinned\n" {
+		t.Errorf("pinnedSample read %q at the pin, not its own %q", sample, "pinned\n")
 	}
 }
 
