@@ -158,7 +158,7 @@ func TestMethodBindRefusals(t *testing.T) {
 		"getter_path":        "bind through a receiver path",
 		"path":               "bind through a receiver path",
 		"getter":             "bind of a getter-backed method value",
-		"assigned_receiver":  "method bind with an assigned receiver identifier",
+		"assigned_receiver":  "method bind whose receiver h isn't a const or a parameter the function never assigns (a parameter the function assigns)",
 		"method_write":       "unbound-method",
 		"index_receiver":     "bind through an indexed receiver",
 		"optional_tail":      "a call through ?.",
