@@ -37,7 +37,8 @@ func TestPickedArrayAgrees(t *testing.T) {
 }
 
 // A Pick is structural, so an object literal or a class instance with a push method fits its type too. Each
-// stops where it goes into the slot held as an array, beside a union with undefined. On the one-doorway head
+// stops where it goes into the slot held as an array, beside a union with undefined and at a generic
+// entry, where T is instantiated (Lower's should). On the one-doorway head
 // before the fit check, each lowered and clang refused its native build (J-jjmfxnc). Mutant: the fit check
 // dropped, and each lowers.
 func TestPickedArrayEntryStops(t *testing.T) {
@@ -47,6 +48,8 @@ func TestPickedArrayEntryStops(t *testing.T) {
 		{"object literal", pickedArrayD + "function collect(errors: Pick<D[], 'push'>): void { errors.push({ text: 'o' }); }\n" + fake + "collect(fake);\nconsole.log('done');\n"},
 		{"class instance", pickedArrayD + "class Fake { push(...items: D[]): number { return items.length; } }\nfunction collect(errors: Pick<D[], 'push'>): void { errors.push({ text: 'c' }); }\ncollect(new Fake());\nconsole.log('done');\n"},
 		{"object literal with undefined", pickedArrayD + "function collect(errors: Pick<D[], 'push'> | undefined): void { errors?.push({ text: 'o' }); }\n" + fake + "collect(fake);\nconsole.log('done');\n"},
+		// Lower's should: the stop holds where T is instantiated, not only at a concrete slot.
+		{"generic entry", pickedArrayD + "function collect<T>(errors: Pick<T[], 'push'>, item: T): void { errors.push(item); }\n" + fake + "collect(fake, { text: 'g' });\nconsole.log('done');\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
