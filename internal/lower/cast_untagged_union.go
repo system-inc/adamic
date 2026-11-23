@@ -14,8 +14,14 @@ import (
 // union target keep their stops. A union with a field every member holds as a literal is tagged, whether or
 // not the literals tell the members apart: unionMemberProof proves its cast or refuses it, and its refusals
 // (duplicate enum aliases, mixed tag representations, a payload refinement) are rulings this arm keeps.
+//
+// A target that declares a literal field (tsc's CallExpression, whose kind is SyntaxKind.CallExpression) is no
+// target for a view with no test: its claim holds a literal that nothing at the cast proves, which the enum-literal
+// rule refuses as an unchecked widening, a Refused no writer can act on. It keeps the untagged stop, NotYet, until
+// its own road is built, a tag test at the cast with its own write judgment (Diagnostics' must on the census;
+// J-4488dtq, J-wfptmen and J-zy798ve showed what that road needs).
 func (l *lowering) untaggedUnionArm(members, targets []*checker.Type) bool {
-	if len(members) < 2 || len(targets) != 1 || !l.plainViewObject(targets[0]) || l.unionHoldsLiterals(members) {
+	if len(members) < 2 || len(targets) != 1 || !l.plainViewObject(targets[0]) || l.unionHoldsLiterals(members) || l.declaresLiteral(targets[0]) {
 		return false
 	}
 	downcast := false
@@ -41,6 +47,16 @@ func (l *lowering) plainViewObject(proven *checker.Type) bool {
 		return false
 	}
 	return len(l.checker.GetIndexInfosOfType(proven)) == 0 && len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) == 0 && len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) == 0
+}
+
+// declaresLiteral is whether a type has a field whose type is one literal, a tag a view with no test can't prove.
+func (l *lowering) declaresLiteral(proven *checker.Type) bool {
+	for _, property := range l.checker.GetPropertiesOfType(proven) {
+		if l.fieldLiteral(proven, property.Name) != nil {
+			return true
+		}
+	}
+	return false
 }
 
 // unionHoldsLiterals is whether some field holds a literal in every member: a tag, distinct or not, which
