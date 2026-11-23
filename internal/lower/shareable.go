@@ -107,7 +107,7 @@ func (l *lowering) shareableWith(proven *checker.Type, path string, where *ast.N
 				visible[field.Name] = true
 			}
 			for _, shape := range shapes {
-				if shape == current || !l.checker.IsTypeAssignableTo(shape, current) {
+				if shape == current || !l.checker.IsTypeAssignableTo(l.relatedShape(shape), current) {
 					continue
 				}
 				class := shape.Symbol() != nil && shape.Symbol().Flags&ast.SymbolFlagsClass != 0

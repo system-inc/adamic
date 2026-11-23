@@ -484,7 +484,7 @@ func (f *scanCycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 			// A value seen as this type may be any object type the program has that can be seen as
 			// it, with fields this type doesn't show.
 			for _, shape := range f.shapes {
-				if shape != proven && f.l.checker.IsTypeAssignableTo(shape, proven) {
+				if shape != proven && f.l.checker.IsTypeAssignableTo(f.l.relatedShape(shape), proven) {
 					queue = append(queue, cycleNode{proven: shape})
 				}
 			}
@@ -894,7 +894,7 @@ func (f *scanCycleFinder) graphLinks(node cycleNode) []cycleNode {
 			links = append(links, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)})
 		}
 		for _, shape := range f.shapes {
-			if shape != proven && f.l.checker.IsTypeAssignableTo(shape, proven) {
+			if shape != proven && f.l.checker.IsTypeAssignableTo(f.l.relatedShape(shape), proven) {
 				links = append(links, cycleNode{proven: shape})
 			}
 		}

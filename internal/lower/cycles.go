@@ -833,7 +833,7 @@ func (f *cycleFinder) reachLinks(node cycleNode) []cycleNode {
 		// A value seen as this type may be any object type the program has that can be seen as
 		// it, with fields this type doesn't show.
 		for _, shape := range f.shapeCandidates(proven) {
-			if shape != proven && f.l.checker.IsTypeAssignableTo(shape, proven) {
+			if shape != proven && f.l.checker.IsTypeAssignableTo(f.l.relatedShape(shape), proven) {
 				links = append(links, cycleNode{proven: shape})
 			}
 		}
