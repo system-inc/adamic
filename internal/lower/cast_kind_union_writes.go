@@ -57,10 +57,13 @@ import (
 // result, with no other narrowing on the way. The premise: a const or never-assigned binding can't be
 // repointed, and the tag it holds was tested or checked at run time, so no tag outside its union reaches the
 // write. It also leans on the tag itself not moving between the test and the write, which main's whole-proof
-// judgment never needed: a tag can be rewritten only through a type whose tag field is writable and wider than
-// the member's literal, and seeing a member that way is refused as widening (adamic/invariant-mutable), with
-// tsc's tags readonly besides (WebAssembly's k15, TestKindUnionWriteTagRewriteStopsAtTheWidening). Every other receiver, a property path, an element, a let (rule 3350 holds a let a call rewrites), a
-// predicate's narrowing, is judged by every literal of the cast proof, as before. Each literal judged still meets
+// judgment never needed. A tag can be rewritten through a type whose tag field is writable and wider than the
+// member's literal, and seeing a member that way is refused as widening (adamic/invariant-mutable,
+// WebAssembly's k15); or with no view at all, by Object.assign, which stops on a shape no plain literal proves,
+// or Object.defineProperty, which is refused (Lower's k16 and k17). tsc's tags are readonly besides. All three
+// are pinned in TestKindUnionWriteTagRewriteStops. Every other receiver, a property path, an element, a let
+// (rule 3350 holds a let a call rewrites), a predicate's narrowing, is judged by every literal of the cast
+// proof, as before. Each literal judged still meets
 // every layout carrying it, and reach is asked after, untouched.
 
 // kindTagCarriers is every type a module of the program declares, an interface, a class or a type alias of an
@@ -286,6 +289,8 @@ func (l *lowering) kindUnionFixedBinding(symbol *ast.Symbol) bool {
 		}
 		assigned := false
 		var visit ast.Visitor
+		// `arguments` is taken as text anywhere in the function, an inner function's own included, which errs
+		// closed: a narrower reading could only admit more.
 		visit = func(node *ast.Node) bool {
 			if node.Kind == ast.KindIdentifier && (node.Text() == "arguments" || ast.IsAssignmentTarget(node) && l.valueSymbol(node) == symbol) {
 				assigned = true

@@ -679,14 +679,16 @@ if (at !== undefined && at.kind !== "c") {
 	}
 }
 
-// WebAssembly's k15 (#t2p4wyv): the narrowing above trusts that a const's tag can't move between its test and the
-// write, which the whole proof never had to. A tag rewritten to another of the proof's, here a C at run time made
-// to say "a", could only be written through a type whose kind is writable and wider than the member's literal, and
-// seeing A | B | C (or what's left of it after a test) as { kind: string } is refused as widening, before, between,
-// or through an alias with no call. So each row stops there, at the upcast, never at the write.
-func TestKindUnionWriteTagRewriteStopsAtTheWidening(t *testing.T) {
+// WebAssembly's k15, and Lower's k16 and k17 (#t2p4wyv): the narrowing above trusts that a const's tag can't move
+// between its test and the write, which the whole proof never had to. A tag rewritten to another of the proof's
+// could be written through a type whose kind is writable and wider than the member's literal, and seeing
+// A | B | C (or what's left of it after a test) as { kind: string } is refused as widening, before, between, or
+// through an alias with no call (k15). Or it could be written with no view at all: Object.assign stops on a shape
+// no plain literal proves (k16), and Object.defineProperty is refused (k17), between the test and the write and
+// before the test. So each row stops at the rewrite, never at the write.
+func TestKindUnionWriteTagRewriteStops(t *testing.T) {
 	t.Parallel()
-	for _, probe := range []struct{ name, source, at string }{
+	for _, probe := range []struct{ name, source, at, words string }{
 		{"retag before the test", kindUnionOwnModel + kindUnionOwnMake + `function retag(w: { kind: string }): void { w.kind = "a"; }
 const n = make(1) as A | B | C;
 retag(n);
@@ -694,7 +696,7 @@ if (n.kind !== "c") {
   n.f = 5;
   console.log(String(n.f));
 }
-`, "main.ts:12:7: "},
+`, "main.ts:12:7: ", "seen as { kind: string; }, whose readonly field kind becomes writable"},
 		{"retag between test and write", kindUnionOwnModel + kindUnionOwnMake + `function retag(w: { kind: string }): void { w.kind = "a"; }
 const n = make(1) as A | B | C;
 if (n.kind !== "a") {
@@ -702,7 +704,7 @@ if (n.kind !== "a") {
   n.f = 5;
   console.log(String(n.f));
 }
-`, "main.ts:13:9: "},
+`, "main.ts:13:9: ", "seen as { kind: string; }, whose readonly field kind becomes writable"},
 		{"retag through an alias, no call", kindUnionOwnModel + kindUnionOwnMake + `const n = make(1) as A | B | C;
 const w: { kind: string } = n;
 if (n.kind !== "a") {
@@ -710,17 +712,44 @@ if (n.kind !== "a") {
   n.f = 5;
   console.log(String(n.f));
 }
-`, "main.ts:11:29: "},
+`, "main.ts:11:29: ", "seen as { kind: string; }, whose readonly field kind becomes writable"},
+		{"k16 assign between", kindUnionOwnModel + kindUnionOwnMake + `const n = make(0) as A | B | C;
+if (n.kind !== "c") {
+  Object.assign(n, { kind: "c" });
+  n.f = 5;
+  console.log(String(n.f));
+}
+`, "main.ts:12:17: ", "Object.assign on a shape not proven by a plain literal or its const binding"},
+		{"k16 assign before", kindUnionOwnModel + kindUnionOwnMake + `const n = make(1) as A | B | C;
+Object.assign(n, { kind: "a" });
+if (n.kind !== "c") {
+  n.f = 5;
+  console.log(String(n.f));
+}
+`, "main.ts:11:15: ", "Object.assign on a shape not proven by a plain literal or its const binding"},
+		{"k17 define between", kindUnionOwnModel + kindUnionOwnMake + `const n = make(0) as A | B | C;
+if (n.kind !== "c") {
+  Object.defineProperty(n, "kind", { value: "c" });
+  n.f = 5;
+  console.log(String(n.f));
+}
+`, "main.ts:12:3: ", "Adamic 0.1 refuses Object.defineProperty"},
+		{"k17 define before", kindUnionOwnModel + kindUnionOwnMake + `const n = make(1) as A | B | C;
+Object.defineProperty(n, "kind", { value: "a" });
+if (n.kind !== "c") {
+  n.f = 5;
+  console.log(String(n.f));
+}
+`, "main.ts:11:1: ", "Adamic 0.1 refuses Object.defineProperty"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSourceAs(t, probe.source, ".ts")
-			var refused *Refused
-			if !errors.As(err, &refused) {
-				t.Fatalf("want the widening refused, got %v", err)
+			if err == nil {
+				t.Fatalf("lowered, want the rewrite stopped at %s", probe.at)
 			}
-			if message := err.Error(); !strings.Contains(message, probe.at) || !strings.Contains(message, "seen as { kind: string; }, whose readonly field kind becomes writable") {
-				t.Fatalf("want the widening refused at %s, got %v", probe.at, err)
+			if message := err.Error(); !strings.Contains(message, probe.at) || !strings.Contains(message, probe.words) {
+				t.Fatalf("want %q at %s, got %v", probe.words, probe.at, err)
 			}
 		})
 	}
