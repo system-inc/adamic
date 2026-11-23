@@ -4676,7 +4676,11 @@ class CensusLaunchers(unittest.TestCase):
                              ("unix.Syscall(59, 0, 0, 0)", "makes a raw system call, unix.Syscall")):
             self.refused(self.roadsLauncher % call, reason)
         self.refused(self.launcher.replace('import "os/exec"', 'import (\n\t"C"\n\t"os/exec"\n)') % 'exec.Command("node")', "uses cgo")
-        self.refused(self.launcher.replace('import "os/exec"', 'import (\n\t"os/exec"; "os"\n)') % 'exec.Command("node")', "imports that can't be read")
+        # Two specs on one line of a group are Go, and read; a raw string's path isn't read, nor is anything between the
+        # package clause and the first declaration that isn't an import.
+        self.census(self.launcher.replace('import "os/exec"', 'import (\n\t"os/exec"; "os"\n)') % 'exec.Command("node")', self.declared, self.helper)
+        self.refused(self.launcher.replace('import "os/exec"', 'import exec `os/exec`') % 'exec.Command(compilerPath())', "imports that can't be read")
+        self.refused(self.launcher.replace('import "os/exec"', 'import "os/exec"\n\nnonsense\n') % 'exec.Command(compilerPath())', "imports that can't be read")
         # A blank import of a package that launches runs its init unread.
         self.refused(self.launcher.replace('import "os/exec"', 'import (\n\t"os/exec"\n\t_ "syscall"\n)') % 'exec.Command("node")', "imports syscall as _")
 
