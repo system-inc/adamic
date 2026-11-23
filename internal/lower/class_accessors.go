@@ -462,7 +462,11 @@ func (l *lowering) finishAccessors() error {
 					node = ir.Call{Function: index, Arguments: []ir.Expression{expression.Object}, Returns: expression.Of}
 				}
 			case ir.SetProperty:
-				if names[expression.Name] && !expression.Define && reach.owner(reach.graph.ReachingAllocations(original.(ir.SetProperty).Object), expression.Name) {
+				// A write to an object held as an array is a NodeArray's side record, which no accessor owns: a range
+				// type's write dispatch (range_fields.go) narrows to the array in one arm, and the flow graph's reach
+				// through that narrow, which keeps no kind, would give it the object arm's owners and a dispatcher
+				// whose HasAccessor reads an array as an object.
+				if names[expression.Name] && !expression.Define && expression.Object.Type() != ir.Array && reach.owner(reach.graph.ReachingAllocations(original.(ir.SetProperty).Object), expression.Name) {
 					// As a read: the fallback store drops the checked write's conversion. The write is
 					// located at its receiver when lowering recorded its site (fresh.go's writeSite).
 					if l.result.CheckedField(expression.ViewReceiverTypeID, expression.Name) {

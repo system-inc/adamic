@@ -71,6 +71,14 @@ func (l *lowering) shapeFit(value *checker.Type, target *checker.Type, libraryAr
 	if len(members) == 0 {
 		return stop, true
 	}
+	// A NodeArray going where a closed range type is held, which the program bit holds as a Union, is served:
+	// every read and write of pos and end through it asks the kind first (range_fields.go, #hae423v). Any other
+	// array, and any target with a member beyond pos and end, is judged below as before.
+	if held == ir.Array && slot == ir.Union && l.rangeHeldAsUnion(l.concrete(target)) {
+		if _, _, layout := l.nodeArrayLayoutOf(l.checker.GetNonNullableType(l.concrete(value))); layout {
+			return "", true
+		}
+	}
 	for _, member := range members {
 		if !shapeFitServed[[2]ir.Type{held, slot}][member.Name] {
 			return stop, true

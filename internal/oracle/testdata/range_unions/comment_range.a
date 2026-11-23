@@ -1,0 +1,30 @@
+// #hae423v wave 2: setCommentRange's write of EmitNode.commentRange?: TextRange, an optional field held as a
+// range type's union, here given a NodeArray and then a plain range, each read back by kind.
+interface TextRange { pos: number; end: number; }
+interface Node { kind: number; }
+interface NodeArray<T extends Node> extends Array<T>, TextRange {
+    hasTrailingComma: boolean;
+    transformFlags: number;
+}
+interface EmitNode { flags: number; commentRange?: TextRange; }
+function setCommentRange(emitNode: EmitNode, range: TextRange): void {
+    emitNode.commentRange = range;
+}
+function commentWidth(emitNode: EmitNode): number {
+    const range = emitNode.commentRange;
+    if (range === undefined) {
+        return -1;
+    }
+    return range.end - range.pos;
+}
+const nodes = [{ kind: 1 }] as NodeArray<Node>;
+nodes.pos = 2;
+nodes.end = 8;
+nodes.hasTrailingComma = false;
+nodes.transformFlags = 0;
+const emitNode: EmitNode = { flags: 0, commentRange: { pos: 0, end: 1 } };
+console.log(String(commentWidth(emitNode)));
+setCommentRange(emitNode, nodes);
+console.log(String(commentWidth(emitNode)));
+setCommentRange(emitNode, { pos: 10, end: 15 });
+console.log(String(commentWidth(emitNode)));

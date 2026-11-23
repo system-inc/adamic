@@ -488,7 +488,25 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	if err != nil {
 		return nil, err
 	}
+	if receiver := target.AsPropertyAccessExpression().Expression; object.Type() == ir.Union && !hostMember && l.rangeReceiver(receiver) {
+		// A closed range type's field, through the Union it's held as where a NodeArray may stand for it: pos and
+		// end are written by kind (range_fields.go), and any other write through one stops.
+		if name := l.fieldName(target.Name()); !l.rangeReceiverOnly(receiver) || name != "pos" && name != "end" {
+			return nil, l.notYet(target, "a write of field "+name+" through a range type held as a union, where a NodeArray may stand for it")
+		}
+		return l.rangeFieldWrite(target, valueNode, object)
+	}
 	_, _, nodeArray := l.nodeArrayLayoutOf(l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression))
+	if object.Type() == ir.Array && !nodeArray {
+		// An upcast hands back its operand's value unchanged (castValue), so in an instance whose T is a
+		// NodeArray, setTextRangeEnd's (range as TextRange).end = end writes the array itself. Its layout is the
+		// operand's type's, read under the instance's mapper, never the cast's TextRange.
+		operand := ast.SkipParentheses(target.AsPropertyAccessExpression().Expression)
+		for operand.Kind == ast.KindAsExpression {
+			operand = ast.SkipParentheses(operand.AsAsExpression().Expression)
+		}
+		_, _, nodeArray = l.nodeArrayLayoutOf(l.concrete(l.checker.GetTypeAtLocation(operand)))
+	}
 	if object.Type() != ir.Object && !(object.Type() == ir.Array && nodeArray) {
 		return nil, l.notYet(target, "assigning a field of a "+typeName(object.Type()))
 	}
@@ -566,7 +584,11 @@ func (l *lowering) absentOptionalFieldWrite(target, receiver *ast.Node, member *
 	if class := l.checker.GetTypeAtLocation(receiver); isClassInstance(class) && l.classSlot(class, name).holds {
 		return nil
 	}
-	if stored, _ := l.representation(l.checker.GetTypeOfSymbol(member)); stored == ir.Union {
+	// A closed range type's Union (range_types.go) is a Union only because a NodeArray may stand for the object
+	// it would be, so its optional field takes the road below, which judges every allocation reaching the write
+	// by the checker's types alone, whatever the field is held as: tsc's setCommentRange writes
+	// EmitNode.commentRange?: TextRange (#hae423v wave 2).
+	if stored, _ := l.representation(l.checker.GetTypeOfSymbol(member)); stored == ir.Union && !l.rangeOnly(l.checker.GetTypeOfSymbol(member)) {
 		return l.notYet(target, "writing a possibly absent optional own field")
 	}
 	if l.omittedOptionals[member.Name] && !present && !l.literalReceiverGivesField(receiver, name) {
