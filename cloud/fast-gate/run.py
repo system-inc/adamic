@@ -226,20 +226,27 @@ toolsSourcePathspec = ["*.go", ":!cohere", ":!stage3/upstream"]
 toolsAttributesPathspec = [":(glob)**/.gitattributes"]
 
 
-def undeclaredTools(tree, tools, command):
+def undeclaredTools(tree, tools, command, paths=None):
     """The tools phase's rule (Gate.toolsDeclared), one reading for the phase and the submit-time fast check (fastCheck):
     each command tree's Go code runs by literal name (toolLiteral, over toolsSourcePathspec) that tools'
     cloud/fast-gate/tools.txt doesn't declare, as "<path>:<line> runs <name>, which cloud/fast-gate/tools.txt doesn't
     declare", in git grep's order. command runs the grep, the caller's Gate.command, so the gate's environment and its
-    process bookkeeping hold. A grep that fails raises RuntimeError, never reads as nothing undeclared."""
+    process bookkeeping hold. With paths, only literals in those files count: the fast check's own change, as the memory
+    floor and compiler censuses refuse only what a change touched, since a stacked change's base is its unlanded parent and
+    the parent's literal is the parent's to answer for (#bwnptrb, Adamic Loom's M6). A grep that fails raises
+    RuntimeError, never reads as nothing undeclared."""
     with open(os.path.join(tools, "cloud/fast-gate/tools.txt")) as handle:
         declared = {line.split("\t")[0] for line in handle if line.strip() and not line.startswith("#")}
-    found = command(["git", "-C", tree, "grep", "-nE", toolLiteralSearch, "--"] + toolsSourcePathspec, capture_output=True, text=True)
+    # Unquoted, so a path with non-ASCII bytes is itself, as the change's paths are read.
+    found = command(["git", "-C", tree, "-c", "core.quotePath=false", "grep", "-nE", toolLiteralSearch, "--"] + toolsSourcePathspec,
+                    capture_output=True, text=True)
     if found.returncode not in (0, 1):
         raise RuntimeError("git grep for tool literals failed: %s" % found.stderr)
-    undeclared = []
+    undeclared, counted = [], None if paths is None else set(paths)
     for line in found.stdout.splitlines():
         path, number, text = line.split(":", 2)
+        if counted is not None and path not in counted:
+            continue
         for name in toolLiteral.findall(text):
             if name not in declared:
                 undeclared.append("%s:%s runs %s, which cloud/fast-gate/tools.txt doesn't declare" % (path, number, name))
@@ -492,6 +499,12 @@ def darwinCompilers(tools, tree):
 # key through the gate tools commit, as every constant of run.py does: the planner's key carries only ADAMIC_ switches
 # in its env (adamic-loom planner/keyfor.go:22-42) and the gate tools commit beside them (planner/phases.go:210-211).
 darwinVetEnvironment = {"GOOS": "darwin", "GOARCH": "arm64", "CGO_ENABLED": "0"}
+# fastCheckGoEnvironment is what the census door's fast check adds to the darwin listing and the darwin vet it runs on a
+# submitted change (#bwnptrb, Adamic Loom's should): no module proxy, so every module comes from the box's own module
+# cache and a change's go.mod never has the planner's box fetch anything, and a module the cache doesn't hold fails as go's
+# own setup failure, which the vet reads as a can't-run (darwinVetRefusal), never the change's red. The block's darwin-vet
+# phase keeps the box's proxy, since its box fetches what main needs.
+fastCheckGoEnvironment = {"GOPROXY": "off"}
 # darwinOnlyName is a Go file's name go builds for darwin alone, or for every platform but darwin: _darwin.go,
 # _darwin_arm64.go, and their _test.go.
 darwinOnlyName = re.compile(r"_darwin(_arm64)?(_test)?\.go$")
@@ -503,8 +516,12 @@ darwinConstraint = r"^//go:build (.*[^A-Za-z0-9_])?darwin([^A-Za-z0-9_].*)?$"
 def darwinOnlyFiles(tree):
     """Every tracked Go file of tree, outside cohere and the upstream corpus (toolsSourcePathspec) and outside testdata,
     whose name or //go:build line makes the darwin build read it differently from a Linux one, sorted: what no unit of
-    the line compiles for darwin."""
-    named = [path for path in git(tree, "-c", "core.quotePath=false", "ls-files", "--", *toolsSourcePathspec).split("\n") if darwinOnlyName.search(path)]
+    the line compiles for darwin. Raises DarwinPathsRefusal when git can't list or search the tree."""
+    try:
+        listed = git(tree, "-c", "core.quotePath=false", "ls-files", "--", *toolsSourcePathspec)
+    except (OSError, subprocess.CalledProcessError) as error:
+        raise DarwinPathsRefusal("git ls-files failed in %s: %s" % (tree, firstLinesOf(getattr(error, "stderr", None) or str(error))))
+    named = [path for path in listed.split("\n") if darwinOnlyName.search(path)]
     found = subprocess.run(["git", "-C", tree, "-c", "core.quotePath=false", "grep", "-l", "-E", darwinConstraint, "--"] + toolsSourcePathspec,
                            capture_output=True, text=True)
     if found.returncode not in (0, 1):
@@ -524,21 +541,26 @@ def darwinVetPatterns(tree, tools):
     return leg + [pattern for pattern in extra if pattern != "./internal/apple" and not pattern.startswith("./internal/apple/")]
 
 
-def darwinVetListing(tree, patterns):
-    """go list -deps -test of patterns in darwinVetEnvironment, the directories the darwin vet compiles: in-module ones
-    tree-relative and sorted, each at or inside a submodule named by the submodule's path, since a pathspec reaches no
-    file below a gitlink. Raises DarwinPathsRefusal when go list fails or names nothing inside tree."""
+def darwinVetListing(tree, patterns, environment=None):
+    """go list -deps -test of patterns in darwinVetEnvironment, environment laid over it (the fast check's
+    fastCheckGoEnvironment), the directories the darwin vet compiles: in-module ones tree-relative and sorted, each at or
+    inside a submodule named by the submodule's path, since a pathspec reaches no file below a gitlink. Raises
+    DarwinPathsRefusal when go list fails or names nothing inside tree, or git can't list the tree's gitlinks."""
     command = ["go", "list", "-deps", "-test", "-f", "{{.Dir}}"] + patterns
     try:
         # Never listedGoList, which keys a listing on its command alone: darwinPaths lists the same form with cgo on.
         listing = subprocess.run(command, cwd=tree, capture_output=True, text=True, timeout=300,
-                                 env=dict(os.environ, **gateEnvironment, **darwinVetEnvironment))
+                                 env=dict(os.environ, **gateEnvironment, **darwinVetEnvironment, **(environment or {})))
     except (OSError, subprocess.SubprocessError) as error:
         raise DarwinPathsRefusal("%s didn't run in %s: %s" % (" ".join(command), tree, error))
     if listing.returncode != 0:
         raise DarwinPathsRefusal("%s failed in %s, exit %d: %s" % (" ".join(command), tree, listing.returncode, firstLinesOf(listing.stderr or "")))
     root = os.path.realpath(tree)
-    gitlinks = [line.split("\t", 1)[1] for line in git(tree, "-c", "core.quotePath=false", "ls-files", "-s").split("\n") if line.startswith("160000 ")]
+    try:
+        entries = git(tree, "-c", "core.quotePath=false", "ls-files", "-s")
+    except (OSError, subprocess.CalledProcessError) as error:
+        raise DarwinPathsRefusal("git ls-files -s failed in %s: %s" % (tree, firstLinesOf(getattr(error, "stderr", None) or str(error))))
+    gitlinks = [line.split("\t", 1)[1] for line in entries.split("\n") if line.startswith("160000 ")]
     directories = set()
     for line in listing.stdout.splitlines():
         real = os.path.realpath(line) if line.strip() else ""
@@ -558,10 +580,11 @@ def darwinVetInputs(tree, unit, full, change):
     planner/phases.go:505-536), which would never see a darwin-only file, with darwinModuleFiles beside them; and the
     darwin-only files by name (darwinOnlyFiles), so one added in a package outside the closure moves the key before its
     package is vetted. A listing that can't be computed keys on the whole tree, so the phase runs and is red on the same
-    refusal, never planned as nothing."""
+    refusal, never planned as nothing. A change that says it's the fast check's (offline) lists in fastCheckGoEnvironment.
+    """
     tools = change["tools"] if change else tree
     try:
-        directories = darwinVetListing(tree, darwinVetPatterns(tree, tools))
+        directories = darwinVetListing(tree, darwinVetPatterns(tree, tools), fastCheckGoEnvironment if change and change.get("offline") else None)
         files = darwinOnlyFiles(tree)
     except DarwinPathsRefusal as refusal:
         return treeInputs("the darwin vet's listing can't be computed, so it keys on the whole tree and the phase is red: %s" % refusal)
@@ -1174,6 +1197,9 @@ def listUnits():
             try:
                 if listing is None or listing.gate is None:
                     raise ValueError("--fast-check checks a change against its base, so it needs --base and never --full")
+                if arguments.tools is None:
+                    # The tree's own tools.txt and executors.txt would let the change judge itself.
+                    raise ValueError("--fast-check judges a change by the gate tools, so it needs --tools and never reads the tree's")
                 reasons = fastCheck(listing.gate, listing.changed, listing.seconds, verdict)
                 writeFastCheckVerdict(arguments.fast_check, verdict)
             except (Exception, SystemExit) as error:
@@ -1208,9 +1234,10 @@ def fastCheck(gate, changed, seconds, verdict):
     coverage is red for the paths no rule covers (uncovered_files) while the map enforces (coverage_enforced), as cover()
     decided them with record=False, so it never runs darwinLeg and never looks for a darwin leg's record: a record can't
     exist at submit, and its absence is the line's darwinRecordMissing park (#ycqnr4b), never a refusal. tools is
-    toolsDeclared's rule (undeclaredTools), every undeclared literal on its line. darwin-vet runs nothing here: verdict
-    says whether a changed path meets its inputs (darwinVetMeets), and the census vets in the background when it does
-    (--fast-check-darwin-vet). It installs nothing (no npmCli, no npmPackages, which a phase runs first) and writes
+    toolsDeclared's rule (undeclaredTools) over the change's own paths, every undeclared literal there on its line, so a
+    stacked change never answers for its parent's. darwin-vet runs nothing here: verdict says whether a changed path meets
+    its inputs (darwinVetMeets), listed offline (fastCheckGoEnvironment), a listing that can't be computed meeting every
+    change, so the census vets in the background and the vet says why it can't run. It installs nothing (no npmCli, no npmPackages, which a phase runs first) and writes
     nothing in the tree. An exception in it is the caller's can't-run, never a red."""
     verdict["seconds"]["coverage"] = round(seconds, 3)
     reasons = []
@@ -1219,12 +1246,12 @@ def fastCheck(gate, changed, seconds, verdict):
         reasons.append("coverage: no gate covers %d changed path%s: %s%s" % (
             len(uncovered), "" if len(uncovered) == 1 else "s", ", ".join(uncovered[:20]), ", ..." if len(uncovered) > 20 else ""))
     started = time.monotonic()
-    undeclared = undeclaredTools(gate.arguments.tree, gate.arguments.tools, gate.command)
+    undeclared = undeclaredTools(gate.arguments.tree, gate.arguments.tools, gate.command, changed)
     verdict["seconds"]["tools"] = round(time.monotonic() - started, 3)
     if undeclared:
         reasons.append("tools: " + "; ".join(undeclared))
     started = time.monotonic()
-    inputs = darwinVetInputs(gate.arguments.tree, "", False, {"base": gate.arguments.base, "sha": gate.arguments.sha, "tools": gate.arguments.tools})
+    inputs = darwinVetInputs(gate.arguments.tree, "", False, {"base": gate.arguments.base, "sha": gate.arguments.sha, "tools": gate.arguments.tools, "offline": True})
     verdict["darwinVet"] = "needed" if darwinVetMeets(inputs, changed) else "unneeded"
     verdict["seconds"]["darwinVetInputs"] = round(time.monotonic() - started, 3)
     return reasons
@@ -1247,10 +1274,13 @@ def fastCheckDarwinVet():
     """run.py --fast-check-darwin-vet --tree <checkout at the sha> --sha <sha> --tools <gate tools>: darwin-vet's own step
     (Gate.darwinVet, go vet of the darwin build over darwinVetPatterns) on the tree as the phase runs it, which the census
     runs in the background for a change whose fast check says the vet is needed (#bwnptrb, Adamic Loom's call 2). It
-    prints its seconds on stdout as one JSON line, {"seconds": n}, whatever the exit. Exit 0 green; RefusalExit red, with
-    "refused: darwin-vet: " and the vet's last lines (darwinVetRefusal), a darwin listing that can't be computed among
-    them as the phase reds it; FastCheckCantRunExit, with "fast check couldn't run: <why>", when the vet can't start: a
-    tree not at the sha, no go on PATH, any exception."""
+    prints its seconds on stdout as one JSON line, {"seconds": n}, whatever the exit. Exit 0 green; RefusalExit only when
+    the vet reports a diagnostic in a package (vetDiagnostics), with "refused: darwin-vet: " and the diagnostics' last
+    lines (darwinVetRefusal); FastCheckCantRunExit, with "fast check couldn't run: <why>", for everything else that isn't
+    green, since a machine's failure never refuses a change (#bwnptrb, Adamic Loom's M5): go's own setup failure (a
+    module the box's cache doesn't hold, a go.mod past GOTOOLCHAIN=local's go, a cache it can't write), darwin vet
+    packages that can't be listed, a git that failed, a tree not at the sha, no go on PATH, SIGTERM (Loom's bound, which
+    ends the vet's go first), any exception."""
     lister = argparse.ArgumentParser()
     lister.add_argument("--fast-check-darwin-vet", action="store_true")
     lister.add_argument("--tree", required=True)
@@ -1272,28 +1302,90 @@ def fastCheckDarwinVet():
 
 
 def darwinVetRefusal(tree, sha, tools):
-    """Gate.darwinVet run on tree, which must be checked out at sha since go vet reads the checkout's files: None when it's
-    green, or its red as the vet's last lines, at most 1500 bytes (lastLines), the phase's own why when no vet ran (a
-    listing that can't be computed). Its Gate is a listing's, which installs nothing and makes no build store, and its
-    out directory, where the vet's log goes, is a temporary one removed before this returns. Raises for a vet that can't
-    start, a tree at another commit among it."""
+    """Gate.darwinVet run at the census (offline, with -json) on tree, which must be checked out at sha since go vet reads
+    the checkout's files: None when it's green, or its red as the diagnostics it reported in a package (vetDiagnostics),
+    their last lines at most 1500 bytes (lastLines). Its Gate is a listing's, which installs nothing and makes no build
+    store, and its out directory, where the vet's log goes, is a temporary one removed before this returns. Raises for
+    everything that judged nothing: a tree at another commit, packages that can't be listed, a vet that can't start or
+    that fails with no diagnostic (go's own setup failure), and SIGTERM, which ends the vet's go first."""
     with tempfile.TemporaryDirectory() as out:
         gate = Gate(argparse.Namespace(tree=tree, base=None, sha=sha, tools=tools, out=out, full=False, branch="", branch_source="",
                                        session="", session_source="", listing=True))
         head, wanted = gate.git(tree, "rev-parse", "HEAD"), gate.git(tree, "rev-parse", "--verify", sha + "^{commit}")
         if head != wanted:
             raise ValueError("%s is checked out at %s, not at %s, and go vet reads the checkout's files" % (tree, head, wanted))
-        # Gate.fail says a first failure on stdout, which holds the seconds alone here: the failure is read from the Gate.
-        with contextlib.redirect_stdout(io.StringIO()):
-            gate.darwinVet()
-        if gate.failure is None:
-            return None
-        log = os.path.join(out, "darwin-vet.log")
-        text = ""
-        if os.path.exists(log):
-            with open(log, errors="replace") as handle:
-                text = handle.read()
-        return lastLines(text if text.strip() else gate.failure["detail"], 1500)
+        # Loom's bound sends SIGTERM to this process's group, then SIGKILL 5 s later (#bwnptrb, M2), and go runs in a
+        # session of its own (spawn's start_new_session), which the group's signal never reaches. Gate.stop is the
+        # gate's own answer to SIGTERM: under the gate's lock, it ends every process of each session spawn made, each
+        # session named by the pid its Popen returned (killSessions), and spawn starts nothing after it.
+        previous = signal.signal(signal.SIGTERM, gate.stop)
+        try:
+            try:
+                # Gate.fail says a first failure on stdout, which holds the seconds alone here: it's read from the Gate.
+                with contextlib.redirect_stdout(io.StringIO()):
+                    gate.darwinVet(atCensus=True)
+            except SystemExit:
+                if not gate.stopped:
+                    raise  # spawn refuses only once stopped; anything else is the vet's own failure
+            if gate.stopped:
+                gate.stopThread.join()
+                raise RuntimeError("SIGTERM at %.1f s stopped the vet, and every process of its go's session is ended" % gate.stopped["at_seconds"])
+        finally:
+            signal.signal(signal.SIGTERM, previous)
+        if "darwin_vet_packages" not in gate.result:
+            # No vet ran: the darwin vet's packages can't be listed (a compiler map that can't be read, a git that
+            # failed), which says nothing about the change's code.
+            raise RuntimeError(gate.failure["detail"] if gate.failure else "the darwin vet ran nothing")
+        with open(os.path.join(out, "darwin-vet.log"), errors="replace") as handle:
+            text = handle.read()
+        diagnostics, errors = vetDiagnostics(text, tree)
+        if diagnostics:
+            return lastLines("\n".join(diagnostics), 1500)
+        if gate.exits["darwin-vet"] != 0 or errors:
+            raise RuntimeError("go vet of the darwin build exited %d with no diagnostic in a package, so it failed before it judged the "
+                               "change: %s" % (gate.exits["darwin-vet"], firstLinesOf("\n".join(errors) or text)))
+        return None
+
+
+# vetPositioned is a line go vet prints for a package it was handed whose source doesn't type-check or parse: the vet
+# tool's own check, "vet: " and the file's position (J-2vtq883 and J-5v7y2cj on go 1.27.1, a darwin-only test calling a
+# moved function among them).
+vetPositioned = re.compile(r"^vet: \S+\.go:\d+:\d+: ")
+
+
+def vetDiagnostics(text, tree):
+    """What go vet -json reported in a package, read from its output: (diagnostics, errors). A diagnostic is a vetPositioned
+    line, kept as it is, or an analyzer's finding in a JSON object of package to analyzer to findings, as "<file>:<line>:
+    <col>: <message> (<analyzer>)", its file relative to tree; an error is an analyzer's own failure there ({"error": ...}),
+    which judges nothing. Nothing else go prints is either, read on go 1.27.1 from its output on Loom's box (J-2vtq883,
+    J-5v7y2cj): a go: setup failure (a go.mod past GOTOOLCHAIN=local's go, inconsistent vendoring), a package that failed
+    to load at an import's position (a go.sum entry missing, a module cache it can't write under GOPROXY=off, a syntax
+    error in the import block), a build cache it can't open, a pattern naming no directory, an import cycle. Plain go vet
+    prints an analyzer's finding as <file>:<line>:<col>: too, the shape a load failure takes, so the census vets with
+    -json, which prints findings apart and exits 0 with them."""
+    diagnostics, errors, decoder, position = [], [], json.JSONDecoder(), 0
+    roots = {os.path.abspath(tree) + os.sep, os.path.realpath(tree) + os.sep}
+    while position < len(text):
+        end = text.find("\n", position)
+        end = len(text) if end < 0 else end
+        line = text[position:end]
+        if line.startswith("{"):
+            try:
+                found, end = decoder.raw_decode(text, position)
+            except ValueError:
+                found = None
+            for package, analyzers in (found.items() if isinstance(found, dict) else ()):
+                for analyzer, findings in (analyzers.items() if isinstance(analyzers, dict) else ()):
+                    if isinstance(findings, dict) and "error" in findings:
+                        errors.append("%s %s: %s" % (package, analyzer, findings["error"]))
+                    for finding in findings if isinstance(findings, list) else ():
+                        where = str(finding.get("posn", "")) if isinstance(finding, dict) else ""
+                        where = next((where[len(root):] for root in roots if where.startswith(root)), where)
+                        diagnostics.append("%s: %s (%s)" % (where, finding.get("message", "") if isinstance(finding, dict) else finding, analyzer))
+        elif vetPositioned.match(line):
+            diagnostics.append(line)
+        position = end + 1
+    return diagnostics, errors
 
 
 def lastLines(text, limit):
@@ -2815,12 +2907,15 @@ class Gate:
         self.result["vet_ok"] = self.step("vet", goPhaseCommand("vet"))
 
     @declaresInputs("darwin-vet", darwinVetInputs)
-    def darwinVet(self):
+    def darwinVet(self, atCensus=False):
         """go vet of the darwin build (darwinVetEnvironment) over the leg's packages and every darwin-only file's
         (darwinVetPatterns), so a darwin-only file that doesn't compile is the change's red where it lands (#gmrwkze:
         add69cbc59 moved native's API, internal/apple/witness_test.go kept calling it, and main landed green, since no
         Linux unit compiles a //go:build darwin file and the darwin phase plans only for the darwin globs). vet's analyzers
-        are red here as they are on Linux. Patterns that can't be listed are red, never a vet of nothing."""
+        are red here as they are on Linux. Patterns that can't be listed are red, never a vet of nothing. atCensus is the
+        census door's fast check (darwinVetRefusal), which vets with fastCheckGoEnvironment laid over the darwin build and
+        with -json, so the vet's diagnostics read apart from go's setup failures (vetDiagnostics), and reads its verdict
+        from the log, since -json exits 0 on an analyzer's finding."""
         self.steps["darwin-vet"] = 0.0
         try:
             patterns = darwinVetPatterns(self.arguments.tree, self.arguments.tools)
@@ -2830,7 +2925,8 @@ class Gate:
             return
         started = time.monotonic()
         with open(os.path.join(self.arguments.out, "darwin-vet.log"), "w") as output:
-            code = self.spawn(["go", "vet"] + patterns, output, directory=self.arguments.tree, environment=darwinVetEnvironment).wait()
+            code = self.spawn(["go", "vet"] + (["-json"] if atCensus else []) + patterns, output, directory=self.arguments.tree,
+                              environment=dict(darwinVetEnvironment, **(fastCheckGoEnvironment if atCensus else {}))).wait()
         self.steps["darwin-vet"] = round(time.monotonic() - started, 1)
         self.exits["darwin-vet"] = code
         self.result["darwin_vet_packages"] = patterns

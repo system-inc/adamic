@@ -4325,7 +4325,9 @@ class FastCheck(unittest.TestCase):
     the verdict file written whatever the exit. A red is exit 3, "refused: " and one line a phase; a check that fails is
     exit 2, "fast check couldn't run: ", the units still printed; the listing's own refusal still wins. These run git and
     go for real, in a module of their own. Mutants, each red here: the darwin leg asked under --fast-check (a leg's
-    record can't exist at submit, so every Apple change would be refused); the uncovered check dropped."""
+    record can't exist at submit, so every Apple change would be refused); the uncovered check dropped; coverage refusing
+    under a map in report mode (M4); the tools check reading the whole tree, so a stacked change answers for its parent's
+    literal (M6)."""
 
     def setUp(self):
         scratch = tempfile.TemporaryDirectory()
@@ -4341,7 +4343,7 @@ class FastCheck(unittest.TestCase):
             # A declared launcher, so the tools literal it gains passes the compiler census and reaches the tools check.
             "probe/probe.go": "package probe\n",
             run.compilerDependenciesPath: json.dumps({"version": 1, "packages": {}, "launchers": {
-                "probe": {"runs": ["go", "wasmtime"], "why": "the fast check's tools probe, never adamic"}}}),
+                "probe": {"runs": ["go", "wasmtime", "wasmer"], "why": "the fast check's tools probe, never adamic"}}}),
             "cloud/fast-gate/unit-needs.json": '{"version":1,"units":[]}',
             "cloud/fast-gate/executors.txt": "mode enforce\ndarwin internal/apple/*\nbuild go.*\ninert *.md\ninert cloud/*\n",
             "cloud/fast-gate/tools.txt": "# declared tools\ngo\tall\tcommand -v go\n",
@@ -4362,18 +4364,19 @@ class FastCheck(unittest.TestCase):
         realRun(["git", "-C", self.tree, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", message], check=True)
         return run.git(self.tree, "rev-parse", "HEAD")
 
-    def change(self, files):
-        """A commit on the base writing files, the tree left checked out at it."""
-        realRun(["git", "-C", self.tree, "checkout", "-q", "--detach", self.base], check=True)
+    def change(self, files, on=None):
+        """A commit on the base (or on) writing files, the tree left checked out at it."""
+        realRun(["git", "-C", self.tree, "checkout", "-q", "--detach", on or self.base], check=True)
         for name, source in files.items():
             self.write(name, source)
         return self.commit("change")
 
-    def checked(self, sha):
-        """main() as the census runs it on base..sha: its exit, its stdout and stderr, and the verdict file it wrote."""
+    def checked(self, sha, base=None, tools=True):
+        """main() as the census runs it on base..sha (the base's by default): its exit, its stdout and stderr, and the
+        verdict file it wrote. tools False leaves --tools out."""
         if os.path.exists(self.verdictPath):
             os.remove(self.verdictPath)
-        argv = ["run.py", "--list-units", "--tree", self.tree, "--base", self.base, "--sha", sha, "--tools", self.tree, "--fast-check", self.verdictPath]
+        argv = ["run.py", "--list-units", "--tree", self.tree, "--base", base or self.base, "--sha", sha] + (["--tools", self.tree] if tools else []) + ["--fast-check", self.verdictPath]
         stdout, stderr, code = io.StringIO(), io.StringIO(), 0
         try:
             with mock.patch.object(sys, "argv", argv), contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr), \
@@ -4476,6 +4479,61 @@ class FastCheck(unittest.TestCase):
         fastCheck.assert_not_called()
         self.assertEqual(verdict["darwinVet"], "needed")
 
+    def test_an_uncovered_path_under_a_map_in_report_mode_passes(self):
+        # M4: report mode records uncovered paths without failing, until the rulings are in (executorMap).
+        with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt")) as handle:
+            rules = handle.read()
+        self.write("cloud/fast-gate/executors.txt", rules.replace("mode enforce\n", "mode report\n"))
+        self.base = self.commit("the map reports")
+        code, stdout, stderr, verdict = self.checked(self.change({"stray/unruled.txt": "stray\n"}))
+        self.assertEqual((code, stderr), (0, ""))
+        self.assertEqual(stdout, self.units())
+        self.assertEqual(verdict["darwinVet"], "unneeded")
+
+    def test_a_stacked_change_answers_for_its_own_tools_never_its_parent_s(self):
+        # M6: the census's base for a stacked change is its unlanded parent, so the parent's literal is in the tree.
+        parent = self.change({"probe/probe.go": 'package probe\n\nimport "os/exec"\n\nvar a = exec.Command("wasmtime")\n'})
+        quiet = self.change({"README.md": "# probe, edited\n"}, on=parent)
+        code, stdout, stderr, verdict = self.checked(quiet, base=parent)
+        self.assertEqual((code, stderr), (0, ""))
+        own = self.change({"probe/child.go": 'package probe\n\nimport "os/exec"\n\nvar b = exec.Command("wasmer")\n'}, on=parent)
+        code, stdout, stderr, verdict = self.checked(own, base=parent)
+        self.assertEqual(code, run.RefusalExit, stderr)
+        self.assertEqual(stderr, "refused: tools: probe/child.go:5 runs wasmer, which cloud/fast-gate/tools.txt doesn't declare\n")
+        # The phase itself still reads the whole tree, as the block's gate does.
+        self.assertEqual(len(run.undeclaredTools(self.tree, self.tree, realRun)), 2)
+
+    def test_without_tools_it_can_t_run_and_never_reads_the_tree_s(self):
+        code, stdout, stderr, verdict = self.checked(self.change({"stray/unruled.txt": "stray\n"}), tools=False)
+        self.assertEqual(code, run.FastCheckCantRunExit)
+        self.assertEqual(stdout, self.units())
+        self.assertTrue(stderr.startswith("fast check couldn't run: ValueError: --fast-check judges a change by the gate tools"), stderr)
+        self.assertEqual(verdict["darwinVet"], "needed")
+
+    def test_the_darwin_listing_runs_offline_and_one_that_can_t_be_computed_needs_the_vet(self):
+        listings = []
+
+        def recorded(command, *arguments, **options):
+            if command[:3] == ["go", "list", "-deps"] and "{{.Dir}}" in command:  # the darwin listing, never touched()'s graph
+                listings.append(options.get("env") or {})
+            if "grep" in command and "-l" in command and broken:
+                return subprocess.CompletedProcess(command, 128, "", "fatal: planted grep failure\n")
+            return realRun(command, *arguments, **options)
+        sha = self.change({"README.md": "# probe, edited\n"})
+        for broken in (False, True):
+            with self.subTest(broken=broken):
+                listings.clear()
+                with mock.patch.dict(os.environ, {"GOPROXY": "direct"}), mock.patch.object(run.subprocess, "run", side_effect=recorded):
+                    code, stdout, stderr, verdict = self.checked(sha)
+                self.assertEqual((code, stderr), (0, ""))
+                if broken:
+                    # A git grep that failed is no listing: the vet is needed, and it says it can't run (never a refusal).
+                    self.assertEqual(verdict["darwinVet"], "needed")
+                    self.assertEqual(listings, [])
+                else:
+                    self.assertEqual(verdict["darwinVet"], "unneeded")
+                    self.assertEqual([env.get("GOPROXY") for env in listings], ["off"])
+
     def test_without_the_flag_the_listing_is_as_it_was(self):
         sha = self.change({"stray/unruled.txt": "stray\n"})
         argv = ["run.py", "--list-units", "--tree", self.tree, "--base", self.base, "--sha", sha, "--tools", self.tree]
@@ -4492,9 +4550,11 @@ class FastCheck(unittest.TestCase):
 
 class FastCheckDarwinVet(unittest.TestCase):
     """run.py --fast-check-darwin-vet, the darwin vet the census runs in the background for a change whose fast check
-    needs it (#bwnptrb, Adamic Loom's call 2): darwin-vet's own step on the tree, its seconds one JSON line on stdout,
-    exit 0 green, 3 with "refused: darwin-vet: " and the vet's last lines red, 2 with "fast check couldn't run: " when it
-    can't start. DarwinVet's module, with go run for real."""
+    needs it (#bwnptrb, Adamic Loom's call 2): darwin-vet's own step on the tree, offline and with -json, its seconds one
+    JSON line on stdout; exit 0 green, 3 with "refused: darwin-vet: " only for a diagnostic in a package, and 2 with
+    "fast check couldn't run: " for anything else, a machine's failure never refusing a change (M5); on SIGTERM it ends
+    its go's session before it exits (M2). DarwinVet's module, with go run for real. Mutants, each red here: any nonzero
+    vet refusing (M5); SIGTERM left to its default, so go outlives python (M2)."""
 
     setUp, write, commit = DarwinVet.setUp, DarwinVet.write, DarwinVet.commit
 
@@ -4516,6 +4576,15 @@ class FastCheckDarwinVet(unittest.TestCase):
         self.assertGreaterEqual(seconds["seconds"], 0)
         return code, stderr.getvalue()
 
+    def standIn(self, script):
+        """A directory holding a stand-in go, script its sh body, for PATH's front."""
+        directory = os.path.join(self.directory, "stand-in")
+        os.makedirs(directory, exist_ok=True)
+        with open(os.path.join(directory, "go"), "w") as handle:
+            handle.write("#!/bin/sh\n" + script)
+        os.chmod(os.path.join(directory, "go"), 0o755)
+        return directory
+
     def test_green_exits_zero(self):
         self.assertEqual(self.vetted(), (0, ""))
 
@@ -4524,16 +4593,56 @@ class FastCheckDarwinVet(unittest.TestCase):
         self.commit("the witness calls a moved function")
         code, stderr = self.vetted()
         self.assertEqual(code, run.RefusalExit, stderr)
-        self.assertTrue(stderr.startswith("refused: darwin-vet: "), stderr)
+        self.assertTrue(stderr.startswith("refused: darwin-vet: vet: internal/apple/witness_test.go:7:"), stderr)
         self.assertIn("undefined: native", stderr)
         self.assertLessEqual(len(stderr.encode()), len("refused: darwin-vet: \n") + 1500)
 
-    def test_a_listing_that_can_t_be_computed_is_refused_as_the_phase_reds_it(self):
+    def test_an_analyzer_s_finding_is_refused(self):
+        # -json exits 0 with a finding, so the verdict is read from what the vet printed, never its exit alone.
+        self.write("internal/apple/say.go", 'package apple\n\nimport "fmt"\n\nfunc Say() { fmt.Printf("%d\\n", "s") }\n')
+        self.commit("a printf finding")
+        code, stderr = self.vetted()
+        self.assertEqual(code, run.RefusalExit, stderr)
+        self.assertEqual(stderr, 'refused: darwin-vet: internal/apple/say.go:5:26: fmt.Printf format %d has arg "s" of wrong type string (printf)\n')
+
+    def assertCantRun(self, said):
+        code, stderr = self.vetted()
+        self.assertEqual(code, run.FastCheckCantRunExit, stderr)
+        self.assertTrue(stderr.startswith("fast check couldn't run: "), stderr)
+        self.assertIn(said, stderr)
+
+    def test_go_s_own_setup_failure_can_t_run(self):
+        # A go.mod past the box's go under GOTOOLCHAIN=local: go's "go: " setup failure.
+        self.write("go.mod", self.sources["go.mod"].replace("go 1.24", "go 1.99"))
+        self.commit("a go the box doesn't run")
+        with mock.patch.dict(os.environ, {"GOTOOLCHAIN": "local"}):
+            self.assertCantRun("go: go.mod requires go >= 1.99")
+
+    def test_a_module_the_box_s_cache_doesn_t_hold_can_t_run(self):
+        # Required, summed, imported, and in no cache: under GOPROXY=off it fails to load at the import, never a diagnostic.
+        self.write("go.mod", self.sources["go.mod"] + "\nrequire example.com/nope v1.0.0\n")
+        self.write("go.sum", "example.com/nope v1.0.0 h1:47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\n"
+                             "example.com/nope v1.0.0/go.mod h1:47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\n")
+        self.write("internal/apple/nope.go", 'package apple\n\nimport _ "example.com/nope"\n')
+        self.commit("a module no cache holds")
+        self.assertCantRun("example.com")
+
+    def test_a_cache_it_can_t_write_can_t_run(self):
+        with mock.patch.dict(os.environ, {"GOCACHE": "/proc/fast-check-no-cache"}):
+            self.assertCantRun("build cache")
+
+    def test_packages_that_can_t_be_listed_can_t_run(self):
         os.remove(os.path.join(self.tree, run.compilerDependenciesPath))
         self.commit("no compiler map")
-        code, stderr = self.vetted()
-        self.assertEqual(code, run.RefusalExit)
-        self.assertTrue(stderr.startswith("refused: darwin-vet: the darwin vet's packages can't be listed: "), stderr)
+        self.assertCantRun("the darwin vet's packages can't be listed: ")
+
+    def test_a_failed_git_grep_can_t_run(self):
+        def grep(command, *arguments, **options):
+            if "grep" in command and "-l" in command:
+                return subprocess.CompletedProcess(command, 128, "", "fatal: planted grep failure\n")
+            return realRun(command, *arguments, **options)
+        with mock.patch.object(run.subprocess, "run", side_effect=grep):
+            self.assertCantRun("git grep for darwin build lines failed")
 
     def test_a_vet_that_can_t_start_can_t_run(self):
         # A tree at another commit than the sha asked.
@@ -4553,10 +4662,90 @@ class FastCheckDarwinVet(unittest.TestCase):
         self.assertTrue(stderr.startswith("fast check couldn't run: FileNotFoundError: "), stderr)
         self.assertIn("'go'", stderr)
 
+    def test_the_vet_runs_offline_with_json(self):
+        said = os.path.join(self.directory, "said")
+        standIn = self.standIn('echo "$GOPROXY $*" > "%s"\necho "{}"\n' % said)
+        with mock.patch.dict(os.environ, {"PATH": standIn + os.pathsep + os.environ["PATH"], "GOPROXY": "direct"}):
+            self.assertEqual(self.vetted(), (0, ""))
+        with open(said) as handle:
+            self.assertTrue(handle.read().startswith("off vet -json ./internal/apple/... "))
+
+    @unittest.skipUnless(os.path.isdir("/proc/self"), "reads each process's state from /proc, as killSessions does")
+    def test_sigterm_ends_the_vet_s_go_and_its_session_before_it_exits(self):
+        # M2: Loom's bound signals python's group, which never reaches go's own session (spawn's start_new_session).
+        pids = os.path.join(self.directory, "go-pids")
+        standIn = self.standIn('sleep 30 &\necho "$$ $!" > "%s.partial" && mv "%s.partial" "%s"\nwait\n' % (pids, pids, pids))
+        python = realPopen([sys.executable, run.__file__, "--fast-check-darwin-vet", "--tree", self.tree, "--sha", run.git(self.tree, "rev-parse", "HEAD"),
+                            "--tools", self.tree], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+                           env=dict(os.environ, PATH=standIn + os.pathsep + os.environ["PATH"]))
+        try:
+            deadline = time.monotonic() + 60
+            while not os.path.exists(pids) and time.monotonic() < deadline and python.poll() is None:
+                time.sleep(0.05)
+            self.assertTrue(os.path.exists(pids), python.communicate(timeout=30) if python.poll() is not None else "no go started")
+            python.send_signal(signal.SIGTERM)
+            stdout, stderr = python.communicate(timeout=60)
+        finally:
+            if python.poll() is None:
+                python.kill()
+                python.wait()
+        self.assertEqual(python.returncode, run.FastCheckCantRunExit, stderr)
+        self.assertTrue(stderr.startswith("fast check couldn't run: RuntimeError: SIGTERM at "), stderr)
+        self.assertEqual(list(json.loads(stdout)), ["seconds"])
+
+        def state(pid):
+            try:
+                with open("/proc/%d/stat" % pid) as handle:
+                    return handle.read().rsplit(")", 1)[1].split()[0]
+            except OSError:
+                return None
+        with open(pids) as handle:
+            started = [int(pid) for pid in handle.read().split()]
+        deadline = time.monotonic() + 10
+        while any(state(pid) not in (None, "Z", "X") for pid in started) and time.monotonic() < deadline:
+            time.sleep(0.05)
+        # go and the child it started in its session are both gone (or dead, awaiting a reaper).
+        self.assertEqual([pid for pid in started if state(pid) not in (None, "Z", "X")], [])
+
     def test_the_last_lines_fit_their_bound_whole(self):
         self.assertEqual(run.lastLines("a\nb\n", 1500), "a\nb")
         self.assertEqual(run.lastLines("first line\n" + "x" * 10 + "\nlast", 12), "last")
         self.assertEqual(run.lastLines("y" * 20, 5), "yyyyy")
+
+
+class VetDiagnostics(unittest.TestCase):
+    """vetDiagnostics over go vet's output as Loom's box printed it on go 1.27.1 (J-2vtq883 and J-5v7y2cj, recorded
+    here): a package's type or syntax error and an analyzer's -json finding are diagnostics, and none of go's setup or
+    loading failures is. Plain vet's finding shares the loader's file:line:col: shape, which is why the census vets with
+    -json."""
+
+    root = "/tmp/adamic-gate/tmpn74oig4_/tmpj80mpf3u"
+    finding = ('{\n\t"example.com/m/apple": {\n\t\t"printf": [\n\t\t\t{\n\t\t\t\t"posn": "%s/apple/a.go:5:24",\n\t\t\t\t"end": "%s/apple/a.go:5:26",\n'
+               '\t\t\t\t"message": "fmt.Printf format %%d has arg \\"s\\" of wrong type string"\n\t\t\t}\n\t\t]\n\t}\n}\n') % (root, root)
+
+    def test_diagnostics_are_read_apart_from_setup_failures(self):
+        printed = 'apple/a.go:5:24: fmt.Printf format %d has arg "s" of wrong type string (printf)'
+        for name, text, diagnostics in (
+                ("clean", "{}\n", []),
+                ("a finding", self.finding, [printed]),
+                ("a type error", "# example.com/m/apple\n# [example.com/m/apple]\nvet: apple/w_test.go:7:32: undefined: native\n",
+                 ["vet: apple/w_test.go:7:32: undefined: native"]),
+                ("a syntax error", "# example.com/m/apple\nvet: apple/a.go:3:9: expected ')', found '{'\n", ["vet: apple/a.go:3:9: expected ')', found '{'"]),
+                ("a type error and a finding", "# example.com/m/other\nvet: other/o.go:3:13: cannot use \"s\" (untyped string constant) as int value in variable declaration\n" + self.finding,
+                 ['vet: other/o.go:3:13: cannot use "s" (untyped string constant) as int value in variable declaration', printed]),
+                ("a module the cache can't hold", "go: downloading example.com/nope v1.0.0\napple/a.go:3:8: mkdir /opt/adamic-block/gomodcache/cache/download/example.com: read-only file system\n", []),
+                ("a go.sum entry missing", "apple/a.go:3:8: missing go.sum entry for module providing package example.com/nope (imported by example.com/m/apple); to add:\n\tgo get example.com/m/apple\n", []),
+                ("a syntax error in the imports", "apple/a.go:4:2: string literal not terminated\n", []),
+                ("a go past the box's", "go: go.mod requires go >= 1.99 (running go 1.27.1; GOTOOLCHAIN=local)\n", []),
+                ("a cache it can't open", "failed to initialize build cache at /proc/no-cache-here: mkdir /proc/no-cache-here: no such file or directory\n", []),
+                ("an import cycle", "package example.com/m/apple\n\timports example.com/m/other from a.go\n\timports example.com/m/apple from o.go: import cycle not allowed\n", []),
+                ("plain vet's finding", 'apple/a.go:5:24: fmt.Printf format %d has arg "s" of wrong type string\n', [])):
+            with self.subTest(name):
+                self.assertEqual(run.vetDiagnostics(text, self.root), (diagnostics, []))
+
+    def test_an_analyzer_s_own_error_is_an_error_never_a_diagnostic(self):
+        self.assertEqual(run.vetDiagnostics('{"example.com/m/apple": {"printf": {"error": "analysis failed"}}}\n', self.root),
+                         ([], ["example.com/m/apple printf: analysis failed"]))
 
 
 if __name__ == "__main__":
