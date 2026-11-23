@@ -9,5 +9,7 @@ class Lazy {
     }
 }
 const runner: Runner = new Lazy();
-console.log(runner.run ? "has run" : "no run");
+if (runner.run) {
+    console.log(runner.run());
+}
 console.log(String(calls));

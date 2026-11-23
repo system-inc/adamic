@@ -12,7 +12,7 @@ whole() { name=$1; shift; "$@" > "$TMPDIR/whole.log" 2>&1; code=$?; if [ $code -
 echo "box: $(hostname) at $(git rev-parse HEAD 2>/dev/null) PART=$part"
 whole npm sandboxed_npm stage3/api stage3/typescript
 if [ "$part" = p ]; then
-	for family in p162 p55; do
+	for family in ${FAMILIES:-p162 p55}; do
 		echo "== $family"
 		bash cloud/probe/run.sh "scratch-rv/$family" --logs "$TMPDIR/logs-$family" > "$TMPDIR/table-$family.txt" 2>&1 || { echo "FAIL run.sh $family"; ok=0; }
 		tail -40 "$TMPDIR/table-$family.txt"

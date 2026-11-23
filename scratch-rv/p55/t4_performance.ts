@@ -1,5 +1,10 @@
+import * as hooks from 'node:perf_hooks';
 interface Clock {
     now(): number;
 }
-const clock: Clock = performance;
-console.log(clock.now ? "has now" : "no now");
+const clock: Clock = hooks.performance;
+if (clock.now) {
+    console.log(String(clock.now() >= 0));
+} else {
+    console.log("no now");
+}
