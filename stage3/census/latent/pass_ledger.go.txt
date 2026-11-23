@@ -37,6 +37,10 @@ var latentPostLoweringSteps = []latent.PassStep{
 	// the IR, numbering its allocation sites where nothing has yet as checkBoundArguments does, and rewrites
 	// nothing else, so a body lowered on its own is recorded as not run, as checkBoundArguments is.
 	{Name: "checkSlotWrites"},
+	// checkArrayArmViews holds each arm Array.isArray's brand decides against every checked view the whole program
+	// made (#9z2ksv7): it reads the lowering's records and rewrites nothing, and a body lowered on its own holds
+	// neither the program's views nor its sites, so it's recorded as not run, as checkSlotWrites is.
+	{Name: "checkArrayArmViews"},
 	// checkFunctionConstructorRoads judges each admitted allocator getter road to a function constructor's new by
 	// its allocator's seal, its uses and the reach of each new's constructor value on the whole program's
 	// allocation graph (#837zjkt): it reads the IR, numbering its allocation sites where nothing has yet as

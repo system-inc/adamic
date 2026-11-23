@@ -336,7 +336,9 @@ func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 				// or a promise all say object. Beside the narrowed members, only undefined, null
 				// (tested for below) and the kinds typeof tells from an object may sit, so any
 				// other member, or one whose holding isn't known, stops here. Arrays use their
-				// own brand check; a class beside an array also excludes that brand below.
+				// own brand check; a class beside an array also excludes that brand below, and so
+				// does an interface arm Array.isArray's domain admits, whose required property no
+				// array can have (arrayExcludedArm, Adamic's ruling on #s8gy89r).
 				declared := l.concrete(l.checker.GetTypeOfSymbol(l.symbol(node)))
 				members := []*checker.Type{declared}
 				if declared.Flags()&checker.TypeFlagsUnion != 0 {
@@ -351,12 +353,12 @@ func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 					held, known := l.representation(member)
 					if narrowed == ir.Array {
 						// Tuples and erased views can hide a layout other than adamic_array.
-						if !l.arrayPredicateDomain(member) {
+						if !l.admitArrayPredicate(node, member) {
 							return nil, l.notYet(node, "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables")
 						}
 						continue
 					}
-					if narrowed == ir.Object && isClassInstance(observed) && known && held == ir.Array {
+					if narrowed == ir.Object && known && held == ir.Array && l.admitArrayPredicate(node, observed) {
 						excludesArray = true
 						continue
 					}
