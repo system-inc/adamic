@@ -172,7 +172,8 @@ func (l *lowering) enumerationPrimitive(proven *checker.Type) bool {
 // accessor is on every instance of the class and of each class extending it, or on the class itself and
 // each class extending it for a static one: every class in the program whose own side's property by the
 // accessor's name is declared by it. Inside type parameters an owner relates for no instantiation in
-// particular, and an accessor held anywhere else has no owner to name: both are not known.
+// particular, and an accessor held anywhere else has no owner to name: both are not known. A class's
+// own type parameters are the exception, taken at any (enumerationAnyInstance).
 func (l *lowering) enumerationAccessorOwners(accessor *ast.Node, reach *enumerationAccessorReach) ([]*checker.Type, bool) {
 	holder := accessor.Parent
 	if holder == nil {
@@ -190,7 +191,9 @@ func (l *lowering) enumerationAccessorOwners(accessor *ast.Node, reach *enumerat
 		}
 		return []*checker.Type{owner}, true
 	}
-	if enumerationGenericContext(holder) {
+	class := holder.Kind == ast.KindClassDeclaration || holder.Kind == ast.KindClassExpression
+	// A class's own type parameters are taken at any below; type parameters around it are not.
+	if class && enumerationGenericContext(holder.Parent) || !class && enumerationGenericContext(holder) {
 		return nil, false
 	}
 	switch holder.Kind {
@@ -239,10 +242,10 @@ func (l *lowering) enumerationAccessorOwners(accessor *ast.Node, reach *enumerat
 		if property == nil || !slices.Contains(property.Declarations, accessor) {
 			continue
 		}
-		if enumerationGenericContext(class) {
+		if enumerationGenericContext(class.Parent) {
 			return nil, false
 		}
-		owners = append(owners, side)
+		owners = append(owners, l.enumerationAnyInstance(side, static))
 		own = own || class == holder
 	}
 	// The accessor's own class must be found among them, or its name doesn't lead back to it, and its
@@ -295,6 +298,26 @@ func (l *lowering) enumerationLiteralDeclaredOwner(literal *ast.Node) (*checker.
 		return nil, false
 	}
 	return l.checker.GetTypeAtLocation(around.Name()), true
+}
+
+// enumerationAnyInstance is a class's instance side with each of its own type parameters taken at any, so
+// it relates to a read type when some instantiation could (any is assignable to and from every type), and
+// a static side as it is, since no static member can name the class's type parameters. tsc's
+// IdentifierNameMap<V> (transformers/utilities.ts) is the case: its size getter kept family 17's sites
+// unknown until the class was read at V = any (J-x8teca6).
+func (l *lowering) enumerationAnyInstance(side *checker.Type, static bool) *checker.Type {
+	if static || side.ObjectFlags()&checker.ObjectFlagsInterface == 0 || side.AsInterfaceType() == nil {
+		return side
+	}
+	parameters := side.AsInterfaceType().TypeParameters()
+	if len(parameters) == 0 {
+		return side
+	}
+	anys := make([]*checker.Type, len(parameters))
+	for index := range anys {
+		anys[index] = l.checker.GetAnyType()
+	}
+	return instantiateType(l.checker, side, newTypeMapper(parameters, anys))
 }
 
 // enumerationGenericContext reports whether a declaration, or anything it's inside, has type parameters.

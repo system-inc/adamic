@@ -148,8 +148,9 @@ console.log(String(new Temperature().celsius));
 // assignable to the subclass, its instances are), a parameter typed as the interface, a parameter typed
 // as a discriminated union a class is assignable to as a whole, by its discriminant, though it relates
 // to neither member either way (Lower's witness, so the union is read as itself as well as by its
-// members; mutant DiscriminatedUnion turns it red), and a getter of a generic class, whose owner relates
-// for no instantiation in particular.
+// members; mutant DiscriminatedUnion turns it red), a getter of a generic class, whose owner taken at
+// T = any reaches a { readonly value: number } view (mutant AnyInstance turns it red), and a literal
+// annotated Holder<T>, whose owner stays unknown.
 //
 // tsc types Object.values of a class instance, a constructor or a union with an interface member as
 // any[], since only a type literal has an implicit index signature, and the call read as join's
@@ -188,6 +189,18 @@ func TestEnumerationReachGenericLiteralLowers(t *testing.T) {
 	const held = "export function doubled<T>(value: T): number { const box = { count: 4, get twice(): number { return 8; } }; return value === undefined ? box.count : box.twice; }\n"
 	const main = "import { doubled } from './held.a';\nconst point = { x: 1, y: 2 };\nconsole.log(Object.values(point).join(','));\nconsole.log(String(doubled<string>('s')));\n"
 	enumerationReachAgrees(t, "generic literal", held, main, "1,2\n8\n")
+}
+
+// A generic class whose getter no enumerated value can hold, read at its type parameter taken at any:
+// tsc's IdentifierNameMap<V> shape, beside Object.values of an unrelated literal, lowers and agrees with
+// Node. Mutant GenericClass (a class's own type parameters make its owner unknown again) turns it red.
+// The generic row, a Box<T> whose getter does reach a { readonly value: number } view at T = any, stays
+// refused, and mutant AnyInstance (the class read uninstantiated, where T relates to nothing) turns that red.
+func TestEnumerationReachGenericClassLowers(t *testing.T) {
+	t.Parallel()
+	const held = "export class Tally<V> { private count = 0; add(value: V): number { this.count += 1; return this.count; } get size(): number { return this.count; } }\n"
+	const main = "import { Tally } from './held.a';\nconst point = { x: 1, y: 2 };\nconsole.log(Object.values(point).join(','));\nconst tally = new Tally<string>();\nconsole.log(String(tally.add('a')));\nconsole.log(String(tally.size));\n"
+	enumerationReachAgrees(t, "generic class", held, main, "1,2\n1\n1\n")
 }
 
 // A getter-bearing literal inside a generic function whose own type mentions T, through a field holding

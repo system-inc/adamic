@@ -23,6 +23,8 @@ var enumerationReachMutations = []enumerationReachMutation{
 	{"GenericLiteral", "	if holder == nil {\n		return nil, false\n	}\n	if holder.Kind == ast.KindObjectLiteralExpression {", "	if holder == nil || enumerationGenericContext(holder) {\n		return nil, false\n	}\n	if holder.Kind == ast.KindObjectLiteralExpression {", "TestEnumerationReachGenericLiteralLowers", []string{"generic literal was refused"}},
 	{"LiteralTypeParameter", "		if l.eachReached(owner, 0,", "		if false && l.eachReached(owner, 0,", "TestEnumerationReachReachingGetterRefused/held", []string{"held was admitted"}},
 	{"DeclaredOwner", "		if declared, named := l.enumerationLiteralDeclaredOwner(holder); named {", "		if declared, named := l.enumerationLiteralDeclaredOwner(holder); false && named {", "TestEnumerationReachDeclaredLiteralLowers", []string{"declared literal was refused"}},
+	{"GenericClass", "		if enumerationGenericContext(class.Parent) {", "		if enumerationGenericContext(class) {", "TestEnumerationReachGenericClassLowers", []string{"generic class was refused"}},
+	{"AnyInstance", "		owners = append(owners, l.enumerationAnyInstance(side, static))", "		owners = append(owners, side)", "TestEnumerationReachReachingGetterRefused/generic", []string{"generic was admitted"}},
 	{"OneWay", "l.checker.IsTypeAssignableTo(owner, read) || l.checker.IsTypeAssignableTo(read, owner)", "l.checker.IsTypeAssignableTo(owner, read)", "TestEnumerationReachDowncastRefused", []string{"downcast was admitted"}},
 }
 
@@ -63,9 +65,19 @@ func TestProduct_EnumerationReachDeclaredOwnerMutant(t *testing.T) {
 	enumerationReachMutantBinary(t, enumerationReachMutations[6])
 }
 
-func TestProduct_EnumerationReachOneWayMutant(t *testing.T) {
+func TestProduct_EnumerationReachGenericClassMutant(t *testing.T) {
 	t.Parallel()
 	enumerationReachMutantBinary(t, enumerationReachMutations[7])
+}
+
+func TestProduct_EnumerationReachAnyInstanceMutant(t *testing.T) {
+	t.Parallel()
+	enumerationReachMutantBinary(t, enumerationReachMutations[8])
+}
+
+func TestProduct_EnumerationReachOneWayMutant(t *testing.T) {
+	t.Parallel()
+	enumerationReachMutantBinary(t, enumerationReachMutations[9])
 }
 
 func TestEnumerationReachMutantsAreCaught(t *testing.T) {

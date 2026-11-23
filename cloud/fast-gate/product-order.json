@@ -2919,6 +2919,8 @@
     "internal/lower TestProduct_EnumerationReachDiscriminatedUnionMutant": [],
     "internal/lower TestProduct_EnumerationReachGenericLiteralMutant": [],
     "internal/lower TestProduct_EnumerationReachLiteralTypeParameterMutant": [],
-    "internal/lower TestProduct_EnumerationReachDeclaredOwnerMutant": []
+    "internal/lower TestProduct_EnumerationReachDeclaredOwnerMutant": [],
+    "internal/lower TestProduct_EnumerationReachGenericClassMutant": [],
+    "internal/lower TestProduct_EnumerationReachAnyInstanceMutant": []
   }
 }

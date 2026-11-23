@@ -43,6 +43,8 @@ unmutated in enumeration_accessor_reach_test.go and in the whole internal/lower.
 | GenericLiteral: any enclosing type parameters make a literal's owner unknown | `if holder == nil {` to `if holder == nil \|\| enumerationGenericContext(holder) {` | TestEnumerationReachGenericLiteralLowers | 70, `enumeration reach row generic literal was refused` |
 | LiteralTypeParameter: a literal whose own type mentions T is owned by that type | `if l.eachReached(owner, 0,` to `if false && l.eachReached(owner, 0,` | TestEnumerationReachReachingGetterRefused/held | 90, `enumeration reach row held was admitted` |
 | DeclaredOwner: an annotated literal's declared type is never taken | `if declared, named := ...; named {` to `...; false && named {` | TestEnumerationReachDeclaredLiteralLowers | 70, `enumeration reach row declared literal was refused` |
+| GenericClass: a class's own type parameters make its owner unknown | `if enumerationGenericContext(class.Parent) {` to `if enumerationGenericContext(class) {` | TestEnumerationReachGenericClassLowers | 70, `enumeration reach row generic class was refused` |
+| AnyInstance: a generic class is read uninstantiated | `owners = append(owners, l.enumerationAnyInstance(side, static))` to `owners = append(owners, side)` | TestEnumerationReachReachingGetterRefused/generic | 90, `enumeration reach row generic was admitted` |
 | OneWay: an owner reaches only when assignable to a read type, not the other way | `l.checker.IsTypeAssignableTo(owner, read) \|\| l.checker.IsTypeAssignableTo(read, owner)` to `l.checker.IsTypeAssignableTo(owner, read)` | TestEnumerationReachDowncastRefused | 90, `enumeration reach row downcast was admitted` |
 
 UnionMembers fails closed rather than open: a union left unread falls to the
@@ -76,7 +78,13 @@ array of any" before the call is lowered, so those refused rows return the call
 from a function typed number[].
 
 Product order: cloud/fast-gate/enumeration-reach-product-order.py writes the
-eight producer rows, each waiting on nothing.
+ten producer rows, each waiting on nothing.
+
+A class's own type parameters are taken at any (enumerationAnyInstance), so its
+instance side relates to a read type whenever some instantiation could, since
+any is assignable to and from every type; a static side needs none, since no
+static member names them. Type parameters around a class, or around an
+interface or type literal, still leave the owner unknown.
 
 A literal's owner: when the literal initializes a variable whose annotation
 names no type parameter and nothing declared inside type parameters, the
