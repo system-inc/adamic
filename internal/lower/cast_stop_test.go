@@ -51,10 +51,10 @@ var castStopProbes = []struct {
 		"stage 0 can't lower a checked cast from Base | undefined to Sub | undefined, which keeps undefined yet"},
 	{"from object", "interface B { readonly b: number } function f(x: object): B { return x as B; }", false,
 		"stage 0 can't lower a checked view of B over a value typed object, which names no fields yet"},
-	// A cast to exactly the source without undefined is presentCast's road and lowers (cast_drops_nullish_test.go);
-	// one that removes undefined and also moves to a supertype is past it, and still stops.
-	{"removes undefined", "interface Base { readonly n: number } interface Sub extends Base { readonly m: number } function f(x: Sub | undefined): Base { return x as Base; }", false,
-		"stage 0 can't lower a checked cast from Sub | undefined to Base, which removes undefined yet"},
+	// A cast to exactly the source without plain undefined or null is presentCast's road and lowers
+	// (cast_drops_nullish_test.go); one whose source holds void is past it, and still stops with this cause.
+	{"removes undefined", "interface S { readonly n: number } function f(x: S | void): S { return x as S; }", false,
+		"stage 0 can't lower a checked cast from void | S to S, which removes undefined yet"},
 	{"mixed source", "interface O { readonly n: number } function f(x: O | string): O { return x as O; }", false,
 		"stage 0 can't lower a checked cast from string | O, which holds primitives, to O, which needs a typeof test before its view yet"},
 }
