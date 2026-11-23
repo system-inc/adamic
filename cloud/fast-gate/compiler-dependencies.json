@@ -699,5 +699,9 @@
         "streams": "stage3/drivers/tsc-entry/evidence/compiler-tips/area-b68b2fe1"
       }
     }
+  },
+  "launchers": {
+    "stage3/lane/adaptedtree": {"runs": ["git", "node", "python3"], "tree": [{"place": "stage3/typescript/node_modules/@esbuild/linux-x64/bin/esbuild", "trace": "J-40fy5rk"}], "why": "builds the adapted TypeScript tree: stage3/apply.py adapts the pinned checkout, node runs hereby's tasks in it (esbuild under them), and git packs it; none of it runs the compiler (J-crks9vh, J-40fy5rk). An interpreter in the tree launders nothing: every exec it starts is held to runs and tree in turn"},
+    "stage3/lane": {"runs": ["git", "gofmt", "node", "python3"], "tree": [{"place": "/bin/sh", "trace": "J-xf8xppa"}, {"place": "/usr/bin/bash", "trace": "J-xf8xppa"}, {"place": "/usr/bin/dirname", "trace": "J-xf8xppa"}, {"place": "/usr/bin/env", "trace": "J-xf8xppa"}, {"place": "/usr/bin/gzip", "trace": "J-xf8xppa"}, {"place": "/usr/bin/tar", "trace": "J-xf8xppa"}], "why": "runs the TypeScript test shards over the adapted tree, each a stage3 script under python3, and git to read the pinned upstream; its shards' scripts run node, sh, bash, tar, gzip, dirname and env (J-xf8xppa), and gofmt formats what one pipes it, reading no source (J-r9dd7rh). None of it runs the compiler, which the tree, stage3/lane/adaptedtree's product, was built without (J-gab3b8t, J-zqtqxh6). An interpreter in the tree launders nothing: every exec it starts is held to runs and tree in turn"}
   }
 }
