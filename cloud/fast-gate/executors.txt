@@ -22,6 +22,9 @@ mode enforce
 # allow: internal/oracle oracle/*.mjs: uncaught_exit_mutant_test.go:41 is wider than the read: it reads adamic, node, json_encode and json_decode .mjs, each on a line of its own
 # allow: stage1/cohere/css/oracles *.[cC][sS][sS]: oracles.go:365 is a helper, never a test: its only importers are stage1/cohere/css's tests, whose key holds this glob's line and the one .css file it matches
 # allow: stage1/cohere/css/oracles cohere: oracles.go:368 is a helper, never a test: its only importers are stage1/cohere/css's tests, whose key holds the cohere line
+# allow: stage1/cohere/css/oracles *.[lL][eE][sS][sS]: oracles.go:366 is a helper whose glob matches nothing on purpose: stage1/cohere/css's whole-repository walk (askedCases) would read the first .less added, and stage1/cohere/css's own line, allowed above, keys it
+# allow: stage1/cohere/css/oracles *.[sS][cC][sS][sS]: oracles.go:367 is a helper whose glob matches nothing on purpose: stage1/cohere/css's whole-repository walk (askedCases) would read the first .scss added, and stage1/cohere/css's own line, allowed above, keys it
+# allow: internal/native/runtimeproducts internal/native_runtime: runtime_files_test.go:20 reads names alone, walking each runtimeFiles entry for a _test.go, which runtimeproducts' paths line keys by name; the files' bytes come through its Go closure
 #
 # executor  glob
 # Darwin only: the Apple package and its examples, tested by a darwin leg on a pool Mac (Shackler). A gate
