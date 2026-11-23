@@ -447,20 +447,29 @@ def compilerDeclarations(tools, tree):
     compiler consumer declares it itself, developer tools, Oct 9). Returns (the declarations, the roots they were read
     from). Raises ValueError for a map in neither, a layer that isn't an object or whose version isn't the first's, or a
     merged map that isn't version 1 with a packages object; a layer that isn't JSON raises json's ValueError, and one
-    that can't be opened OSError. What each declaration names is the census's to judge."""
+    that can't be opened OSError. The candidate's layer is the change's own, so each of those of the tree's layer is a
+    TreeRefusal instead (#qr2812x); the tools' layer's and the merged map's stay the tools'. What each declaration names
+    is the census's to judge."""
     declarations, root = None, None
     for source in (tools, tree):
         if not os.path.exists(os.path.join(source, compilerDependenciesPath)):
             continue
-        with open(os.path.join(source, compilerDependenciesPath)) as handle:
-            layer = json.load(handle)
+        invalid = TreeRefusal if source == tree else ValueError
+        try:
+            with open(os.path.join(source, compilerDependenciesPath)) as handle:
+                layer = json.load(handle)
+        except (OSError, ValueError) as error:
+            if source != tree:
+                raise
+            raise TreeRefusal("invalid compiler dependency map: %s can't be read: %s"
+                              % (os.path.join(source, compilerDependenciesPath), error))
         if not isinstance(layer, dict):
-            raise ValueError("invalid compiler dependency map: " + compilerDependenciesPath + " in " + source)
+            raise invalid("invalid compiler dependency map: " + compilerDependenciesPath + " in " + source)
         if declarations is None:
             declarations, root = layer, source
             continue
         if layer.get("version") != declarations.get("version"):
-            raise ValueError("invalid compiler dependency map: " + compilerDependenciesPath + " in " + source)
+            raise invalid("invalid compiler dependency map: " + compilerDependenciesPath + " in " + source)
         for field in ("packages", "drivers", "launchers"):
             if isinstance(layer.get(field), dict):
                 declarations.setdefault(field, {}).update(layer[field])
@@ -988,7 +997,7 @@ def coverageReduced(tree, tools, changed, unowned=None):
     if unowned is None:
         listing = packageGraph(tree)
         if listing.returncode != 0:
-            raise SystemExit("go list failed: " + listing.stderr)
+            raise TreeRefusal("go list failed: " + listing.stderr)
         directories, embedded = goPackages(tree, listing.stdout)[:2]
         unowned = unownedPaths(directories, embedded, changed)
     rules = executorMap(tools)[0]
@@ -1070,7 +1079,7 @@ def phaseUnread(tree, tools):
         read.update(path for path in git(tree, "ls-files", "-z", "--", *inputs["paths"]).split("\0") if path)
     listing = packageGraph(tree)
     if listing.returncode != 0:
-        raise ValueError("go list of %s doesn't read: %s" % (tree, listing.stderr.strip()[:300]))
+        raise TreeRefusal("go list of %s doesn't read: %s" % (tree, listing.stderr.strip()[:300]))
     directories = {importPath: directory for directory, importPath in goPackages(tree, listing.stdout)[0].items()}
     owned = {directories[package] for inputs in declared for package in inputs["packages"] if package in directories}
     rules, targets = executorMap(tools)[0], set().union(*catalogPatchTargets(tree).values())
@@ -1582,6 +1591,16 @@ class MemoryFloorRefusal(ChangeRefusal):
                 "memoryMegabytes its tests need to start." % self)
 
 
+class TreeRefusal(ChangeRefusal):
+    """A refusal of what the change's own tree holds that the gate can't read or that names what isn't there: a go list
+    of the candidate that fails, a catalog or TestWASI inventory it can't enumerate, its own layer of the compiler
+    dependency map out of shape or naming a directory that isn't a package (#qr2812x). Its fix is in the tree, so it
+    names no map to declare in."""
+
+    def hint(self):
+        return "%s. It's this change's to fix." % self
+
+
 # The exit status of --list-units refusing the change for its own reason (ChangeRefusal), with one line on stderr,
 # "refused: <why>". Every other failure keeps its traceback and exit 1, so a crash is never read as the change's red.
 RefusalExit = 3
@@ -1593,6 +1612,14 @@ RefusalExit = 3
 # darwinPaths that can't be computed, and any other failure beside it keep exit 1. A phase is never traced, so traced's own
 # exit 4 never reaches a phase's.
 DarwinLegMissingExit = 4
+
+# The exit status of a gate whose first failure, or any failure beside a darwin record missing, is the gate tool's own
+# crash: an exception it didn't raise as a ChangeRefusal, which fail() reads by its traceback (#qr2812x, Adamic Loom's
+# ruling). The judge reads this exit from a phase as void gateToolCrashed, Loom's, uncharged: placed again once, then
+# parked until the gate tools move. Any failure that's neither a crash nor a missing record keeps exit 1, since a red
+# anywhere is the change's. platformMissingExit, also 5, is adamic c's own exit for a .a whose platform this box lacks,
+# read from that child process's status, never this process's, so the two never meet.
+GateToolCrashedExit = 5
 
 # The exit status of a submit-time fast check that couldn't run (--list-units --fast-check, --fast-check-darwin-vet), with
 # one line on stderr, "fast check couldn't run: <why>": the check's own failure, never the change's red, which the census
@@ -1663,6 +1690,9 @@ def main():
     signal.signal(signal.SIGTERM, gate.stop)
     try:
         gate.run()
+    except ChangeRefusal as refusal:
+        # The change's own red, said in its words, never a traceback, so the gate exits 1 and not GateToolCrashedExit.
+        gate.fail("runner", refusal.hint())
     except BaseException:
         gate.fail("runner", traceback.format_exc())
     finally:
@@ -1928,6 +1958,10 @@ class Gate:
                         self.exits.setdefault("products", 0)
                         continue
                 self.executePhase(phase, logPath)
+            except ChangeRefusal as refusal:
+                # A refusal of the change reds the phase with its words, never a traceback, which would read as the gate
+                # tool's crash and exit GateToolCrashedExit (#qr2812x).
+                self.fail(phase, refusal.hint())
             except BaseException:
                 self.fail(phase, traceback.format_exc())
 
@@ -2348,7 +2382,7 @@ class Gate:
         entries = catalogEntries(self.arguments.tree)
         names = ["%02d %s" % (entry["number"], entry["name"]) for entry in entries]
         if not names or len(set(names)) != len(names) or len({entry["number"] for entry in entries}) != len(entries):
-            raise ValueError("empty or duplicate catalog entries")
+            raise TreeRefusal("empty or duplicate catalog entries")
         chosen = self.selectedUnits("catalog", names)
         entries = [entry for entry, name in zip(entries, names) if name in chosen]
         names = chosen
@@ -2528,10 +2562,13 @@ class Gate:
 
     def guarded(self, stage, target, *arguments):
         """A thread whose any exception (a process that can't start for want of file descriptors, a
-        missing binary, a bug here) fails the gate at that stage instead of vanishing with the thread."""
+        missing binary, a bug here) fails the gate at that stage instead of vanishing with the thread. A ChangeRefusal
+        fails it with its own words, the change's red, never a traceback (#qr2812x)."""
         def body():
             try:
                 target(*arguments)
+            except ChangeRefusal as refusal:
+                self.fail(stage, refusal.hint())
             except BaseException:
                 self.fail(stage, traceback.format_exc())
         return threading.Thread(target=body)
@@ -2609,7 +2646,7 @@ class Gate:
         else:
             listing = self.command(packageGraphCommand(), cwd=self.arguments.tree, capture_output=True, text=True)
         if listing.returncode != 0:
-            raise SystemExit("go list failed: " + listing.stderr)
+            raise TreeRefusal("go list failed: " + listing.stderr)
         directories, embedded, realEmbedded, testEmbedded, reverse, testReverse, self.packageDirectories = goPackages(self.arguments.tree, listing.stdout)
         dependencies = self.compilerDependencies(directories, changed)
         self.memoryFloors(changed)
@@ -2684,10 +2721,23 @@ class Gate:
         """
         # The gate tools' map with the candidate's laid over it, read as darwinPathsDigest reads it.
         declarations, root = compilerDeclarations(self.arguments.tools, self.arguments.tree)
+        # Whose each bad entry is (#qr2812x): one naming a directory that isn't a package of the tree is the change's, which
+        # declared it wrongly or deleted a package a declaration names, and its own layer overrides the tools'. One of the
+        # wrong shape is the change's when its key is in the tree's own layer, whose entry the merge kept, and otherwise
+        # the tools'. compilerDeclarations has read the tree's layer as an object already, or found none.
+        treeLayer = {}
+        if os.path.exists(os.path.join(self.arguments.tree, compilerDependenciesPath)):
+            with open(os.path.join(self.arguments.tree, compilerDependenciesPath)) as handle:
+                treeLayer = json.load(handle)
+
+        def shapeRefusal(field, key):
+            return TreeRefusal if isinstance(treeLayer.get(field), dict) and key in treeLayer[field] else ValueError
         packages = declarations["packages"]
         for package, inputs in packages.items():
-            if not isinstance(inputs, list) or not inputs or any(not isinstance(value, str) or value not in directories for value in inputs):
-                raise ValueError("invalid compiler dependencies for " + package)
+            if not isinstance(inputs, list) or not inputs or any(not isinstance(value, str) for value in inputs):
+                raise shapeRefusal("packages", package)("invalid compiler dependencies for " + package)
+            if any(value not in directories for value in inputs):
+                raise TreeRefusal("invalid compiler dependencies for " + package)
         # Two kinds of evidence: a reference to the compiler itself, and launching a process, which may run it. A package
         # the map declares a launcher (launchers) answers the second alone: it names what it runs and asserts none of it
         # is the compiler, so a file of it that also references the compiler still needs a compiler declaration.
@@ -2696,9 +2746,12 @@ class Gate:
             raise ValueError("invalid compiler dependency map: launchers")
         for package, declaration in launchers.items():
             runs = declaration.get("runs") if isinstance(declaration, dict) else None
-            if (package not in directories or not isinstance(runs, list) or not runs or any(not isinstance(name, str) or not name or "adamic" in name for name in runs)
+            invalid = "invalid launcher declaration for " + package + ": a package that names what it runs, none of it adamic, and why"
+            if package not in directories:
+                raise TreeRefusal(invalid)
+            if (not isinstance(runs, list) or not runs or any(not isinstance(name, str) or not name or "adamic" in name for name in runs)
                     or not isinstance(declaration.get("why"), str) or not declaration["why"].strip()):
-                raise ValueError("invalid launcher declaration for " + package + ": a package that names what it runs, none of it adamic, and why")
+                raise shapeRefusal("launchers", package)(invalid)
 
         def marked(source):
             return compilerMarker.search(source) or launchMarker.search(source)
@@ -2707,8 +2760,10 @@ class Gate:
             raise ValueError("invalid compiler driver declarations")
         for driver, declaration in self.compilerDrivers.items():
             inputs = declaration.get("dependencies") if isinstance(declaration, dict) else None
-            if not driver.startswith("stage3/drivers/") or not isinstance(inputs, list) or not inputs or any(value not in directories for value in inputs):
-                raise ValueError("invalid compiler driver dependencies for " + driver)
+            if not driver.startswith("stage3/drivers/") or not isinstance(inputs, list) or not inputs or any(not isinstance(value, str) for value in inputs):
+                raise shapeRefusal("drivers", driver)("invalid compiler driver dependencies for " + driver)
+            if any(value not in directories for value in inputs):
+                raise TreeRefusal("invalid compiler driver dependencies for " + driver)
         missing, touchedFiles = [], set(changed)
         for path in self.git(self.arguments.tree, "ls-files").splitlines():
             if path.startswith("stage3/drivers/") and path.endswith((".py", ".sh", ".cjs", ".mjs")):
@@ -3426,10 +3481,17 @@ class Gate:
     def fail(self, step, detail, evidenceMissing=False):
         """The gate's first failure, named and timed. evidenceMissing says this one is a darwin leg's record missing for
         the candidate (#ycqnr4b), never a failure of the change's code; any failure that isn't, first or later, makes
-        exitCode red, so only a gate whose every failure is a missing record exits DarwinLegMissingExit."""
+        exitCode red, so only a gate whose every failure is a missing record exits DarwinLegMissingExit. Every call, first
+        or later, also counts whether it's the gate tool's crash (a traceback) or a red of the change (neither a crash nor
+        a missing record), so exitCode reds on any red, and exits GateToolCrashedExit on a crash with none (#qr2812x)."""
+        # A Python traceback is the gate tool's own exception, not the change's verdict: read from the detail as given,
+        # before the box's load is appended to it.
+        crashed = detail.lstrip().startswith("Traceback (most recent call last)")
         with self.lock:
             if not evidenceMissing:
                 self.failedBeyondEvidence = True
+            self.crashedAny = getattr(self, "crashedAny", False) or crashed
+            self.redBeyond = getattr(self, "redBeyond", False) or (not crashed and not evidenceMissing)
             if self.failure is not None or getattr(self, "stopped", None):
                 return
             self.failure = {"step": step, "detail": detail, "after_seconds": round(time.monotonic() - self.started, 1)}
@@ -3438,10 +3500,8 @@ class Gate:
             self.failure["under_load"] = underLoad(reading)
             loaded = (", under load (%s at first failure)" % loadWords(reading)) if self.failure["under_load"] else ""
             detail = "%s\n(box %s at first failure)" % (detail, loadWords(reading))
-            # A Python traceback is the gate tool's own exception, not the change's verdict: a complete or
-            # whole run goes no further on broken tools, since it would teach nothing (@system_adamic, Oct 8,
-            # after a-check crashed on views slice 1 and its complete run went on for minutes).
-            crashed = detail.lstrip().startswith("Traceback (most recent call last)")
+            # A complete or whole run goes no further on broken tools, since it would teach nothing (@system_adamic,
+            # Oct 8, after a-check crashed on views slice 1 and its complete run went on for minutes).
             if crashed:
                 self.failure["tool_crash"] = True
             print("FIRST FAILURE (%s%s, at %.1f s):\n%s" % (step, ", the gate tool crashed" if crashed else "", self.failure["after_seconds"], detail), flush=True)
@@ -3578,11 +3638,17 @@ class Gate:
             handle.write(line + "\n")
 
     def exitCode(self):
-        """The gate's exit status: 0 green, DarwinLegMissingExit when its every failure was a darwin leg's record missing
-        (fail's evidenceMissing, and nothing failed beside it, first or later), 1 for anything else, a stop among them."""
+        """The gate's exit status: 0 green; 1 for a stop, or for any failure, first or later, that was neither the gate
+        tool's crash nor a darwin leg's record missing, since a red anywhere is the change's; GateToolCrashedExit when a
+        crash failed it and nothing beside it but a missing record (#qr2812x); DarwinLegMissingExit when its every failure
+        was a missing record (fail's evidenceMissing)."""
         if self.failure is None and not self.stopped:
             return 0
-        if self.failure is not None and not self.stopped and not getattr(self, "failedBeyondEvidence", False):
+        if self.stopped or getattr(self, "redBeyond", False):
+            return 1
+        if getattr(self, "crashedAny", False):
+            return GateToolCrashedExit
+        if not getattr(self, "failedBeyondEvidence", False):
             return DarwinLegMissingExit
         return 1
 
@@ -4061,21 +4127,21 @@ def wasiFixtures(tree):
     if "func TestWASI(t *testing.T) {" not in source:
         units = re.findall(r"^func (TestWASIUnit[0-9]+)\(t \*testing\.T\) \{", source, re.M)
         if not units or len(set(units)) != len(units):
-            raise ValueError("cannot enumerate TestWASI fixtures or TestWASIUnit units")
+            raise TreeRefusal("cannot enumerate TestWASI fixtures or TestWASIUnit units")
         return units
     body = source.split("func TestWASI(t *testing.T) {", 1)[1].split("\nfunc ", 1)[0]
     inventory = re.search(r'fixtures := \[\]string\{(.*?)\n\t\}', body, re.S)
     if inventory is None:
-        raise ValueError("cannot enumerate TestWASI fixtures")
+        raise TreeRefusal("cannot enumerate TestWASI fixtures")
     fixtures = re.findall(r'"([^"\n]+)"', inventory[1])
     remainder = re.sub(r'"[^"\n]*"|\s|,', '', inventory[1])
     runs = re.findall(r't\.Run\(([^,]+),', body)
     if remainder or runs.count("fixture") != 1 or any(
             name != "fixture" and not re.fullmatch(r'"[^"\n]+"', name) for name in runs):
-        raise ValueError("unrecognized TestWASI fixture registration")
+        raise TreeRefusal("unrecognized TestWASI fixture registration")
     fixtures += [json.loads(name) for name in runs if name != "fixture"]
     if not fixtures or len(set(fixtures)) != len(fixtures):
-        raise ValueError("empty or duplicate TestWASI fixtures")
+        raise TreeRefusal("empty or duplicate TestWASI fixtures")
     return fixtures
 
 

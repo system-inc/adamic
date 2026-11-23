@@ -4748,5 +4748,135 @@ class VetDiagnostics(unittest.TestCase):
                          ([], ["example.com/m/apple printf: analysis failed"]))
 
 
+class GateToolCrashes(unittest.TestCase):
+    """A gate whose failure is the gate tool's own crash, a traceback, exits GateToolCrashedExit, which the judge reads from
+    a phase as void gateToolCrashed, Loom's, never the change's red (#qr2812x, Adamic Loom's ruling). A red anywhere
+    beside it, first or later, is the change's and exits 1, and a ChangeRefusal reds with its words, never a traceback.
+    The sites that read the change's own tree refuse it with TreeRefusal; the tools' own errors stay a crash. Mutants,
+    each red here: crashes counted only at the first failure; a crash read as the change's red; a refusal formatted as a
+    traceback; the tree's map read as the tools'; the tools' map read as the tree's."""
+
+    def setUp(self):
+        self.directory = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, self.directory)
+
+    def bare(self):
+        """A Gate with no tree behind it, as DarwinLegs builds one, so fail and exitCode run without a process."""
+        gate = run.Gate.__new__(run.Gate)
+        gate.arguments = types.SimpleNamespace(tree=self.directory, out=self.directory, sha="a" * 40, tools=self.directory,
+                                               full=False, run_to_end=False, census=None, unit=None)
+        gate.result, gate.failure, gate.stopped, gate.complete = {}, None, None, False
+        gate.lock, gate.started, gate.killSessions, gate.status = threading.Lock(), 0.0, lambda: None, lambda *arguments: None
+        gate.kind, gate.planned = "fast", ["build"]
+        return gate
+
+    crash = "Traceback (most recent call last):\n  File \"run.py\", line 1, in build\nRuntimeError: a gate-tool bug\n"
+
+    def test_a_crash_alone_exits_gate_tool_crashed(self):
+        # Pins: a gate whose only failure is a traceback exits GateToolCrashedExit and keeps the traceback and tool_crash.
+        gate = self.bare()
+        with mock.patch("builtins.print"):
+            gate.fail("build", self.crash)
+        self.assertEqual(run.GateToolCrashedExit, 5)
+        self.assertEqual(gate.exitCode(), run.GateToolCrashedExit)
+        self.assertTrue(gate.failure["detail"].startswith(self.crash))
+        self.assertTrue(gate.failure["tool_crash"])
+
+    def test_a_refusal_then_a_crash_exits_one(self):
+        # Pins: a first failure in plain words is the change's red, and a crash after it doesn't void it.
+        gate = self.bare()
+        with mock.patch("builtins.print"):
+            gate.fail("census", "compiler dependency census: undeclared compiler consumers: a/b_test.go")
+            gate.fail("build", self.crash)
+        self.assertEqual(gate.exitCode(), 1)
+        self.assertNotIn("tool_crash", gate.failure)
+
+    def test_a_crash_then_a_plain_failure_exits_one(self):
+        # Pins: a red anywhere is the change's, so a plain failure after a first crash still exits 1.
+        gate = self.bare()
+        with mock.patch("builtins.print"):
+            gate.fail("build", self.crash)
+            gate.fail("tests", "p TestFailed\n")
+        self.assertEqual(gate.exitCode(), 1)
+        self.assertTrue(gate.failure["tool_crash"])
+
+    def test_a_missing_record_beside_a_crash_exits_gate_tool_crashed(self):
+        # Pins: a missing darwin record and a crash, either order, exit GateToolCrashedExit; the record alone exits
+        # DarwinLegMissingExit as before.
+        for order in (("missing", "crash"), ("crash", "missing")):
+            with self.subTest(order=order):
+                gate = self.bare()
+                with mock.patch("builtins.print"):
+                    for failure in order:
+                        if failure == "missing":
+                            gate.fail("darwin", "no darwin leg recorded", evidenceMissing=True)
+                        else:
+                            gate.fail("build", self.crash)
+                self.assertEqual(gate.exitCode(), run.GateToolCrashedExit)
+        gate = self.bare()
+        with mock.patch("builtins.print"):
+            gate.fail("darwin", "no darwin leg recorded", evidenceMissing=True)
+        self.assertEqual(gate.exitCode(), run.DarwinLegMissingExit)
+
+    def phase(self, error):
+        """runPhase of one build phase whose executePhase raises error, on a bare gate with npm stubbed."""
+        gate = self.bare()
+        with mock.patch.object(run.Gate, "npmCli", lambda gate: "npm-cli.js"), \
+                mock.patch.object(run.Gate, "npmPackages", lambda gate: True), \
+                mock.patch.object(run.Gate, "executePhase", side_effect=error), mock.patch("builtins.print"):
+            gate.runPhase()
+        return gate
+
+    def test_run_phase_reads_a_crash_as_the_tool_s_and_a_refusal_as_the_change_s(self):
+        # Pins: runPhase's handler keeps a raised RuntimeError's traceback (exit 5), and fails a TreeRefusal with its
+        # words alone (exit 1).
+        gate = self.phase(RuntimeError("a gate-tool bug"))
+        self.assertEqual(gate.exitCode(), run.GateToolCrashedExit)
+        self.assertTrue(gate.failure["detail"].startswith("Traceback (most recent call last)"), gate.failure["detail"])
+        self.assertIn("RuntimeError: a gate-tool bug", gate.failure["detail"])
+        gate = self.phase(run.TreeRefusal("x"))
+        self.assertEqual(gate.exitCode(), 1)
+        self.assertTrue(gate.failure["detail"].startswith("x"), gate.failure["detail"])
+        self.assertNotIn("Traceback", gate.failure["detail"])
+        self.assertEqual(gate.failure["step"], "build")
+
+    def maps(self, toolsMap, treeMap):
+        """A tools root and a tree root, each holding its text of the compiler dependency map."""
+        roots = []
+        for name, text in (("tools", toolsMap), ("tree", treeMap)):
+            root = os.path.join(self.directory, name)
+            os.makedirs(os.path.join(root, os.path.dirname(run.compilerDependenciesPath)))
+            with open(os.path.join(root, run.compilerDependenciesPath), "w") as handle:
+                handle.write(text)
+            roots.append(root)
+        return roots
+
+    good = json.dumps({"version": 1, "packages": {"internal/apple": ["cmd/adamic"]}})
+
+    def test_a_tree_map_that_isn_t_json_is_the_change_s_refusal(self):
+        # Pins: the candidate's layer of the compiler dependency map that won't parse raises TreeRefusal, naming its path.
+        tools, tree = self.maps(self.good, "{")
+        with self.assertRaises(run.TreeRefusal) as raised:
+            run.compilerDeclarations(tools, tree)
+        self.assertIn(os.path.join(tree, run.compilerDependenciesPath), str(raised.exception))
+
+    def test_a_tools_map_that_isn_t_json_stays_the_tools_crash(self):
+        # Pins: the gate tools' layer that won't parse stays a ValueError that isn't a refusal of the change.
+        tools, tree = self.maps("{", self.good)
+        with self.assertRaises(ValueError) as raised:
+            run.compilerDeclarations(tools, tree)
+        self.assertNotIsInstance(raised.exception, run.ChangeRefusal)
+
+    def test_duplicate_catalog_entries_are_the_change_s_refusal(self):
+        # Pins: catalogFull's empty or duplicate catalog entries, read from the candidate's tree, raise TreeRefusal.
+        os.makedirs(os.path.join(self.directory, "verify/catalog"))
+        with open(os.path.join(self.directory, "verify/catalog/check.sh"), "w") as handle:
+            handle.write("#!/bin/sh\n")
+        with open(os.path.join(self.directory, "verify/catalog/catalog.json"), "w") as handle:
+            json.dump([{"number": 1, "name": "a"}, {"number": 1, "name": "a"}], handle)
+        with self.assertRaises(run.TreeRefusal):
+            self.bare().catalogFull()
+
+
 if __name__ == "__main__":
     unittest.main()
