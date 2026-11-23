@@ -1,0 +1,8 @@
+// A program whose numbers need libm: % on doubles that aren't whole lowers to a call of fmod (#pc29n2k), so every
+// binary of it keeps libm, a release build's whose code is generated at the link included (math_link_test.go,
+// #7z36qn6). The loop's thousand steps keep the calls from folding to constants.
+let total = 0;
+for (let step = 1; step <= 1000; step += 1) {
+	total += (step * 0.37) % 1.7;
+}
+console.log(total.toFixed(9));

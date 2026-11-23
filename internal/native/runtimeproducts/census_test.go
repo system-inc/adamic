@@ -1463,7 +1463,7 @@ func archivesMadeIn(directory, asking string) (findings []string, asked int, err
 // runtime's own package from it, to the same files and environment as BuildLean's (TestTheLeanBuildReachesOnlyItsDeclaredFiles):
 // its reach into the package is followed entry by entry, never taken whole as buildcache's slice is, so a call of any
 // other function there is a finding.
-var leanRuntimeEntries = []string{"BuildLog", "ClangIn", "DarwinBuild", "Flags", "Jobserver.Hold", "NativeTargetRefusal", "PrefixMaps", "ResolveTarget", "RuntimeLinkFlags", "ShippedRelease", "Timed", "WASILinkFlags"}
+var leanRuntimeEntries = []string{"BuildLog", "ClangIn", "DarwinBuild", "Flags", "Jobserver.Hold", "MathLinkFlags", "NativeTargetRefusal", "PrefixMaps", "ResolveTarget", "RuntimeLinkFlags", "ShippedRelease", "Timed", "WASILinkFlags"}
 
 // An agreement native's build, native.BuildLean, reaches nothing of internal/native or internal/native_runtime but the
 // files its key declares (agreementproducts.NativeFiles), its reach into internal/native_runtime followed from each of
