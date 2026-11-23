@@ -266,6 +266,11 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 	if err := lowering.checkSlotWrites(); err != nil {
 		return nil, err
 	}
+	// Once every checked view is made: no view puts a getter-bearing object, unread, at a type an enumeration
+	// the accessor guard admitted reads (#1atvfp5).
+	if err := lowering.checkEnumerationReachViews(); err != nil {
+		return nil, err
+	}
 	// Each admitted allocator getter road, by the seal, the uses and the reach of every new it feeds (#837zjkt).
 	if err := lowering.checkFunctionConstructorRoads(); err != nil {
 		return nil, err
@@ -730,6 +735,10 @@ type lowering struct {
 	slotWrites     []slotWrite
 	slotWritesKept map[slotWrite]bool
 	builtTypes     map[int]builtType
+	// enumerationReachSites are the enumerations the accessor guard admitted beside an accessor, each with the
+	// read types it asked by, which checkEnumerationReachViews holds against every checked view once lowering is
+	// done (enumeration_accessor_reach.go, #1atvfp5).
+	enumerationReachSites []enumerationReachSite
 	// crossFunctionWrites holds the first write to each binding from outside its own function.
 	crossFunctionWrites map[*ast.Symbol]*ast.Node
 	// propertyWrites is every property write in the program, by what it can reach (narrowed_nullish.go).

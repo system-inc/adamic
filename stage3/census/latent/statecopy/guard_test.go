@@ -781,3 +781,24 @@ func TestOverloadVerdictsStaySnapshotOwned(t *testing.T) {
 		}
 	}
 }
+
+// The enumerations checkEnumerationReachViews holds (#1atvfp5) are snapshot-owned: a rollback that discards the IR a
+// site was lowered into discards the site with it, and carrying one into another program's lowering would hold that
+// program's views to an enumeration it never made.
+func TestEnumerationReachSitesStaySnapshotOwned(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs("../../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if loweringFieldPolicies["enumerationReachSites"] != speculativeState {
+		t.Fatal("enumerationReachSites' policy must stay snapshot-only")
+	}
+	text := string(generate(root, filepath.Join(root, "internal/lower/lower.go")))
+	if !strings.Contains(text, "result.enumerationReachSites = func(value []enumerationReachSite)") {
+		t.Fatal("enumerationReachSites lost its owned snapshot")
+	}
+	if strings.Contains(text, "enumerationReachSites: value.enumerationReachSites") {
+		t.Fatal("enumerationReachSites must not be carried as a program fact")
+	}
+}

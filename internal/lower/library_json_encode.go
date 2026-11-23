@@ -34,8 +34,9 @@ func (l *lowering) encodeJson(node *ast.Node) (ir.Expression, bool, error) {
 	if len(args) != 1 || hasSpread(node) {
 		return nil, true, l.notYet(node, "encodeJson requires one value argument")
 	}
-	// Reuse Object.keys/entries' descriptor guard before native slot reads.
-	if err := l.enumerationDescriptors(node, false); err != nil {
+	// Reuse Object.keys/entries' descriptor guard before native slot reads, deep: it reads every
+	// field of what the value holds as well.
+	if err := l.enumerationDescriptors(node, args[0], true, false); err != nil {
 		return nil, true, err
 	}
 	value, err := l.expression(args[0])

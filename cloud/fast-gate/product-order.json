@@ -2911,6 +2911,19 @@
     "internal/lower TestProduct_KindAliasInitializerMutant": [],
     "internal/lower TestProduct_KindAliasRunsFirstMutant": [],
     "internal/lower TestProduct_KindAliasRewrittenMutant": [],
-    "internal/lower TestProduct_KindAliasLetMutant": []
+    "internal/lower TestProduct_KindAliasLetMutant": [],
+    "internal/lower TestProduct_EnumerationReachWholeGraphMutant": [],
+    "internal/lower TestProduct_EnumerationReachUnionMembersMutant": [],
+    "internal/lower TestProduct_EnumerationReachDeepReachMutant": [],
+    "internal/lower TestProduct_EnumerationReachOneWayMutant": [],
+    "internal/lower TestProduct_EnumerationReachDiscriminatedUnionMutant": [],
+    "internal/lower TestProduct_EnumerationReachGenericLiteralMutant": [],
+    "internal/lower TestProduct_EnumerationReachLiteralTypeParameterMutant": [],
+    "internal/lower TestProduct_EnumerationReachDeclaredOwnerMutant": [],
+    "internal/lower TestProduct_EnumerationReachGenericClassMutant": [],
+    "internal/lower TestProduct_EnumerationReachAnyInstanceMutant": [],
+    "internal/lower TestProduct_EnumerationReachContextualMutant": [],
+    "internal/lower TestProduct_EnumerationReachContextualScopeMutant": [],
+    "internal/lower TestProduct_EnumerationReachViewPassMutant": []
   }
 }
