@@ -1,0 +1,55 @@
+# #mh5kdde round 1: compiles, the three pins, each pin's mutant red, internal/lower and internal/ir whole. Run with
+# bash after the sealed opening. Never merged.
+set -u
+L="$TMPDIR/mh5"
+mkdir -p "$L"
+failed=0
+step() { echo "$1 $2"; [ "$1" = PASS ] || failed=1; }
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg)"
+F=internal/lower/count_types_classes.go
+bad=$(gofmt -l internal/lower); if [ -z "$bad" ]; then step PASS gofmt; else step FAIL gofmt; echo "$bad"; fi
+if go vet ./internal/lower/ > "$L/vet.log" 2>&1; then step PASS vet; else step FAIL vet; head -40 "$L/vet.log"; fi
+pins='^(TestCountTypeTargetsAskOncePerPairOfClasses|TestCountTypeTargetsCompareFindsNoSharedRowWrong|TestCountTypeClassesKeepFreshTypesApart)$'
+if go test -count=1 -timeout 20m -v -run "$pins" ./internal/lower/ > "$L/pins.log" 2>&1; then step PASS pins; else step FAIL pins; fi
+grep -E -- '^(--- |ok|FAIL)|_test.go:[0-9]+|panic' "$L/pins.log" | head -40
+cp "$F" "$L/orig.go"
+# mutant <name> <test> <python replacing one exact string in F>
+mutant() {
+	local name=$1 test=$2
+	cp "$L/orig.go" "$F"
+	python3 - "$F" || { step FAIL "mutant-$name-applies"; return; }
+	go test -count=1 -timeout 20m -v -run "^${test}\$" ./internal/lower/ > "$L/m-$name.log" 2>&1
+	local code=$?
+	if grep -q -E '\[build failed\]|\[setup failed\]|declared and not used|cannot use|undefined:' "$L/m-$name.log"; then step FAIL "mutant-$name-compiles"; head -10 "$L/m-$name.log"; else step PASS "mutant-$name-compiles"; fi
+	grep -E -- '--- (PASS|FAIL)|_test.go:[0-9]+|panic:' "$L/m-$name.log" | head -8
+	if [ $code -ne 0 ] && grep -q -- "--- FAIL: $test" "$L/m-$name.log"; then step PASS "mutant-$name-red"; else step FAIL "mutant-$name-red"; fi
+}
+echo "== mutant classing: one class per type"
+mutant classing TestCountTypeTargetsAskOncePerPairOfClasses <<'PY'
+import sys
+p = sys.argv[1]; t = open(p).read()
+old = "\t\tif countTypeFresh(proven) {\n"
+assert t.count(old) == 1
+open(p, "w").write(t.replace(old, "\t\tif true || countTypeFresh(proven) {\n"))
+PY
+echo "== mutant shared: a row shared across a shape bucket without identity"
+mutant shared TestCountTypeTargetsCompareFindsNoSharedRowWrong <<'PY'
+import sys
+p = sys.argv[1]; t = open(p).read()
+old = "\t\t\tif checker.Checker_isTypeIdenticalTo(typeChecker, representatives[held], proven) {\n"
+assert t.count(old) == 1
+open(p, "w").write(t.replace(old, "\t\t\tif true || checker.Checker_isTypeIdenticalTo(typeChecker, representatives[held], proven) {\n"))
+PY
+echo "== mutant fresh: freshness not kept apart"
+mutant fresh TestCountTypeClassesKeepFreshTypesApart <<'PY'
+import sys
+p = sys.argv[1]; t = open(p).read()
+old = "\t\tif countTypeFresh(proven) {\n"
+assert t.count(old) == 1
+open(p, "w").write(t.replace(old, "\t\tif false && countTypeFresh(proven) {\n"))
+PY
+cp "$L/orig.go" "$F"
+cmp -s "$L/orig.go" "$F" || step FAIL restore
+if go test -count=1 -timeout 40m ./internal/lower/ ./internal/ir/ > "$L/whole.log" 2>&1; then step PASS whole; else step FAIL whole; fi
+grep -E '^(ok|FAIL|---)|panic:' "$L/whole.log" | head -30
+if [ $failed -eq 0 ]; then echo "VERDICT PASS"; else echo "VERDICT FAIL"; false; fi

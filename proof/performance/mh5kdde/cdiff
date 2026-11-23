@@ -1,0 +1,24 @@
+# #mh5kdde: the one fixture whose output differs, head against base, printed as a diff, three runs each side so a
+# run-to-run difference shows apart from a head-to-base one. Run after environment.sh and sandboxed-job.sh. Never merged.
+set -u
+F=${1:-internal/oracle/testdata/arguments_length_no_reader.a}
+head=$(git log --format=%H -1 --invert-grep --grep='^proof: ' HEAD)
+base=$(git rev-parse "$head"^)
+mkdir -p "$TMPDIR"; T=$(mktemp -d "$TMPDIR/cdiff.XXXXXX")
+go build -o $T/head/adamic ./cmd/adamic || { echo "VERDICT FAIL build head"; exit 1; }
+git diff --name-status "$base" "$head" | while read -r status path; do
+  case $status in A) rm -f "$path" ;; M) git show "$base:$path" > "$path" ;; esac
+done
+go build -o $T/base/adamic ./cmd/adamic || { echo "VERDICT FAIL build base"; exit 1; }
+git checkout -q HEAD -- internal stage3
+for v in head base; do for r in 1 2 3; do
+  (cd "$(dirname "$F")" && $T/$v/adamic c "$(basename "$F")" > $T/$v.$r.out 2> $T/$v.$r.err; echo "exit $?" >> $T/$v.$r.err)
+  echo "$v run $r: out $(wc -c < $T/$v.$r.out) bytes sha $(sha256sum < $T/$v.$r.out | cut -c1-16), err $(sha256sum < $T/$v.$r.err | cut -c1-16)"
+done; done
+echo "== stderr head 1"; cat $T/head.1.err | head -20
+echo "== stderr base 1"; cat $T/base.1.err | head -20
+echo "== diff base 1 against head 1 (stdout)"
+diff $T/base.1.out $T/head.1.out | head -120
+echo "== diff base 1 against base 2 (stdout)"
+diff $T/base.1.out $T/base.2.out | head -20
+echo VERDICT DONE
