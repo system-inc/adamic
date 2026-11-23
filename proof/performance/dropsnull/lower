@@ -1,0 +1,29 @@
+# #b5w3ycg removes-nullish (compiler/cast-drops-nullish-1): compiles, the cast pins and the rows it moved, the road's
+# mutant compiling and red, then internal/dry, internal/lower (products settled) and stage3/fixtures whole. Source it in
+# the job's shell after the sealed opening (it calls sandboxed_products). Never merged.
+L="$TMPDIR/dn"; mkdir -p "$L"; failed=0
+step() { echo "$1 $2"; [ "$1" = PASS ] || failed=1; }
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg)"
+bad=$(gofmt -l internal/lower internal/oracle); if [ -z "$bad" ]; then step PASS gofmt; else step FAIL gofmt; echo "$bad"; fi
+if go vet ./internal/lower/ ./internal/oracle/ > "$L/vet.log" 2>&1; then step PASS vet; else step FAIL vet; head -30 "$L/vet.log"; fi
+pins='^(TestDropsNullishCast.*|TestCastStopNamesItsCause|TestAbsentArmCastsStayRefused|TestInspectorLetHatchesCheckBeforeTrap)$'
+if go test -count=1 -timeout 20m -v -run "$pins" ./internal/lower/ > "$L/pins.log" 2>&1; then step PASS pins; else step FAIL pins; fi
+grep -E -- '^(--- |ok|FAIL)|^    --- FAIL|_test.go:[0-9]+|panic:' "$L/pins.log" | cut -c1-300 | head -40
+F=internal/lower/cast_proof.go; cp "$F" "$L/orig.go"
+python3 - "$F" <<'PY' || step FAIL mutant-applies
+import sys
+p = sys.argv[1]; t = open(p).read()
+old = "\tif l.presentCast(node, source, target) {\n"
+assert t.count(old) == 1
+open(p, "w").write(t.replace(old, "\tif false && l.presentCast(node, source, target) {\n"))
+PY
+go test -count=1 -timeout 20m -v -run '^TestDropsNullishCastLowersAsPresenceCheck$' ./internal/lower/ > "$L/m.log" 2>&1; code=$?
+if grep -q -E '\[build failed\]|declared and not used|undefined:' "$L/m.log"; then step FAIL mutant-compiles; head -8 "$L/m.log"; else step PASS mutant-compiles; fi
+grep -E -- '--- (PASS|FAIL)|_test.go:[0-9]+' "$L/m.log" | cut -c1-300 | head -6
+if [ $code -ne 0 ] && grep -q -- '--- FAIL: TestDropsNullishCastLowersAsPresenceCheck' "$L/m.log"; then step PASS mutant-red; else step FAIL mutant-red; fi
+cp "$L/orig.go" "$F"
+if go test -count=1 -timeout 20m ./internal/dry/ > "$L/dry.log" 2>&1; then step PASS dry; else step FAIL dry; grep -E '^(--- FAIL|FAIL)|_test.go:[0-9]+' "$L/dry.log" | head -10; fi
+if sandboxed_products ./internal/lower ./stage3/fixtures > "$L/products.log" 2>&1; then step PASS products; else step FAIL products; tail -5 "$L/products.log"; fi
+if go test -count=1 -timeout 60m ./internal/lower/ ./stage3/fixtures/ > "$L/whole.log" 2>&1; then step PASS whole; else step FAIL whole; fi
+grep -E '^(ok|FAIL|--- FAIL)|panic:' "$L/whole.log" | head -40
+if [ $failed -eq 0 ]; then echo "VERDICT PASS"; else echo "VERDICT FAIL"; fi
