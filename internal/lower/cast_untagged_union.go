@@ -65,12 +65,15 @@ func (l *lowering) unionHoldsLiterals(members []*checker.Type) bool {
 // representation, with the view's own located message. The value is the operand itself, so its identity is
 // Node's. Its view is marked untagged, so in a graph program viewPairGuard pairs every source arm with the
 // target's, related or not (Memory's item 4 on #axqgdck). It isn't marked cast: no CheckedCast wraps the value,
-// so the view's entry is the operand, as a structural cast's is (checkViewWidenedReads).
+// so the view's entry is the operand, as a structural cast's is (checkViewWidenedReads). Every view this cast's
+// lowering made is marked, not one picked by its place in the list: each is this cast's, and marking one more
+// untagged only makes the guard pair more, so no reorder inside view() can leave this cast's view unmarked
+// (Lower's should).
 func (l *lowering) untaggedUnionCast(node *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {
 	views := len(l.viewSources)
 	checked, err := l.overlapViewCast(node, value, source, target)
-	if len(l.viewSources) > views {
-		l.viewSources[views].untagged = true
+	for index := views; index < len(l.viewSources); index++ {
+		l.viewSources[index].untagged = true
 	}
 	return checked, err
 }
