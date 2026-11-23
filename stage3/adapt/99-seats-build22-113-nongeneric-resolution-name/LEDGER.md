@@ -1,0 +1,1 @@
+- **Type-only, family 113 (#bbssdcy, Nov 22 21:49Z, Compiler under the split):** 99-seats-build22-113-nongeneric-resolution-name gives the private program.ts resolution name getter a FileReference | string parameter and string return. Its three references consume only strings, and the body retains its exact bytes. Temporary under docs/rulings.md:400.
