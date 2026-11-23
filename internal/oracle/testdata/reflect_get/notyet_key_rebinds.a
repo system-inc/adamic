@@ -1,0 +1,19 @@
+// The key is evaluated between Reflect.get's target and its receiver, so a key that runs code could
+// rebind the value between them: here the getter runs on the second Counter and Node prints 42, where a
+// read of the first prints 1 (#m26ebzy). Only a key that runs nothing is admitted.
+class Counter {
+	readonly value: number;
+	constructor(value: number) {
+		this.value = value;
+	}
+	get answer(): number {
+		return this.value;
+	}
+}
+let value: object = new Counter(1);
+function key(): string {
+	value = new Counter(42);
+	return 'answer';
+}
+const answer: unknown = Reflect.get(Object(value), key(), value);
+if (typeof answer === 'number') console.log(String(answer));
