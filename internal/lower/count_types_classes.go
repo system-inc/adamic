@@ -8,6 +8,7 @@ import (
 	"sync/atomic"
 	_ "unsafe"
 
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 )
 
@@ -16,8 +17,10 @@ import (
 // records' own function types and the rows come to a handful. Types the checker holds identical get one answer from
 // assignability, so the targets are put in identity classes and so are the records, the checker is asked once per
 // pair of classes, and each answer is spread to every record of its class, in record order, for every target of its
-// class (#mh5kdde). Identity doesn't see a fresh object literal's freshness, which assignability's excess-property
-// check reads, so a fresh type is a class of its own on both sides (countTypeFresh).
+// class (#mh5kdde). Identity doesn't see everything assignability reads: a fresh object literal's freshness, which
+// the excess-property check reads, so a fresh type is a class of its own on both sides (countTypeFresh), and a
+// signature's declaration kind and the other parts countTypeShape lists, so two types those tell apart never share a
+// bucket, and so never a class.
 
 // countTypeClassesTally counts, while a test sets it, what countTypeTargets did: the checker's assignability answers
 // it asked for, the class pairs they should be, and the records and targets with the classes they made, so a pin holds
@@ -124,9 +127,9 @@ func (l *lowering) countTypeTargetsCompared(ids []int, targets []*checker.Type, 
 }
 
 // countTypeClasses puts types in identity classes: classOf is each type's class, and representatives each class's
-// first type, which the checker is asked about for every type of its class. A type is first bucketed by its call
-// signatures' shape (countTypeShape), which identical types share, so it's held against only the representatives of
-// its own bucket. A fresh type is a class of its own (countTypeFresh) (#mh5kdde).
+// first type, which the checker is asked about for every type of its class. A type is first bucketed by its shape
+// (countTypeShape), which keeps apart identical types assignability tells apart, and it's held against only the
+// representatives of its own bucket. A fresh type is a class of its own (countTypeFresh) (#mh5kdde).
 func countTypeClasses(typeChecker *checker.Checker, types []*checker.Type) (classOf []int, representatives []*checker.Type) {
 	classOf = make([]int, len(types))
 	buckets := map[string][]int{}
@@ -154,14 +157,60 @@ func countTypeClasses(typeChecker *checker.Checker, types []*checker.Type) (clas
 	return classOf, representatives
 }
 
-// countTypeShape is a type's call signatures as identity has to agree on them: how many, and for each its parameter
-// count, minimum argument count, rest parameter and type parameter count. Two types it splits are only asked about
-// apart, never answered wrongly, so it needs to be cheap more than exact (#mh5kdde).
+// countTypeShape is two things. It's what identity has to agree on, a type's signatures by count, parameter count,
+// minimum argument count, rest parameter and type parameter count, so a bucket holds few classes to be checked
+// against. And it's what assignability reads and identity doesn't, so that two identical types it would answer
+// differently never share a class. A split of two types assignability answers alike costs one more question; a
+// merge of two it answers differently gives one of them the other's row, so every such read the relation makes of
+// the types it's handed is here (#mh5kdde):
+//   - a signature's declaration kind: compareSignaturesRelated relates parameters bivariantly where the target's
+//     declaration is a method or a constructor and strictly otherwise (relater.go's strictVariance). Identity calls
+//     interface View { read(value?: number): string }'s read identical to (value?: number) => string, yet
+//     (...items: number[]) => string is assignable to the method and not to the function, so classing the two
+//     dropped rest from read's row (internal/oracle/testdata/arguments_length_no_reader.a, J-89g9jm1).
+//   - whether a signature has a this parameter: identity compares this types only where both have one, and
+//     assignability relates them where the target has one, and reads them in isTopSignature.
+//   - a signature's target, the generic signature it was instantiated from: isInstantiatedGenericParameter reads
+//     it to choose whether a parameter is related as a callback.
+//   - a construct signature's abstract flag and its declaration's accessibility, which signaturesRelatedTo and
+//     constructorVisibilitiesAreCompatible read and identity doesn't.
+//   - an instantiated anonymous type's symbol and a type reference's target: signaturesRelatedTo relates two that
+//     share one signature by signature, erased, and others whole.
+//   - the non-inferrable mark, which anyFunctionType carries: signaturesRelatedTo answers it by identity of the type.
 func countTypeShape(typeChecker *checker.Checker, proven *checker.Type) string {
-	signatures := typeChecker.GetSignaturesOfType(proven, checker.SignatureKindCall)
-	shape := strconv.AppendInt(nil, int64(len(signatures)), 10)
-	for _, signature := range signatures {
-		shape = fmt.Appendf(shape, ";%d,%d,%t,%d", len(signature.Parameters()), signature.MinArgumentCount(), signature.HasRestParameter(), len(signature.TypeParameters()))
+	var shape []byte
+	if proven.Flags()&checker.TypeFlagsObject != 0 {
+		objectFlags := proven.ObjectFlags()
+		if objectFlags&checker.ObjectFlagsInstantiated != 0 {
+			shape = fmt.Appendf(shape, "i%p;", proven.Symbol())
+		}
+		if objectFlags&checker.ObjectFlagsReference != 0 {
+			shape = fmt.Appendf(shape, "r%p;", proven.Target())
+		}
+		if objectFlags&checker.ObjectFlagsNonInferrableType != 0 {
+			shape = append(shape, "n;"...)
+		}
+	}
+	for _, kind := range []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct} {
+		signatures := typeChecker.GetSignaturesOfType(proven, kind)
+		shape = strconv.AppendInt(shape, int64(len(signatures)), 10)
+		for _, signature := range signatures {
+			// A synthesized signature has no declaration, which the relation reads as strict, as it does a
+			// function's; its own mark keeps it apart from every declared kind anyway (#mh5kdde).
+			declaration := "-"
+			if signature.Declaration() != nil {
+				declaration = strconv.Itoa(int(signature.Declaration().Kind))
+			}
+			shape = fmt.Appendf(shape, ";%d,%d,%t,%d,%s,%t,%p", len(signature.Parameters()), signature.MinArgumentCount(), signature.HasRestParameter(), len(signature.TypeParameters()), declaration, signature.ThisParameter() != nil, signature.Target())
+			if kind == checker.SignatureKindConstruct {
+				accessibility := "-"
+				if signature.Declaration() != nil {
+					accessibility = strconv.Itoa(int(signature.Declaration().ModifierFlags() & ast.ModifierFlagsNonPublicAccessibilityModifier))
+				}
+				shape = fmt.Appendf(shape, ",%t,%s", signature.Flags()&checker.SignatureFlagsAbstract != 0, accessibility)
+			}
+		}
+		shape = append(shape, '|')
 	}
 	return string(shape)
 }
