@@ -341,12 +341,22 @@ const enumerationReachShared = "type Shared = { b: number };\nconst lit = { b: 2
 // module, it stays refused. It's refused by the asserted owner directly and, were the literal's own type
 // the owner instead, by the post-pass following the assertion's view, so no mutant of the owner choice can
 // turn it red (J-rr89gsv); it pins the behavior, and an asserted downcast to an incomparable type is
-// TS2352, never a program (J-8w9vc55).
+// TS2352, never a program (J-8w9vc55). The upcast rows are Lower's: an asserted type that hides the getter
+// ({ b, get a } as { b: number }), enumerated by Object.values and Object.entries in another module, stays
+// refused at the head as at main (J-y0fk1wv, J-bb91pr3).
 func TestEnumerationReachAssertedLiteralRefused(t *testing.T) {
 	t.Parallel()
-	const held = "export type View = { b: number; d: 4; e?: number };\nexport const asserted = { b: 1, d: 4, get a(): number { return 1; } } as View;\n"
-	const main = "import { type View, asserted } from './held';\nfunction read(view: View): number[] { return Object.values(view); }\nconsole.log(read(asserted).join(','));\n"
-	enumerationReachRefusedAs(t, "asserted literal", ".ts", held, main)
+	const upcast = "export const asserted = { b: 1, get a(): number { return 2; } } as { b: number };\n"
+	for _, row := range []struct{ name, held, main string }{
+		{"asserted literal", "export type View = { b: number; d: 4; e?: number };\nexport const asserted = { b: 1, d: 4, get a(): number { return 1; } } as View;\n", "import { type View, asserted } from './held';\nfunction read(view: View): number[] { return Object.values(view); }\nconsole.log(read(asserted).join(','));\n"},
+		{"upcast values", upcast, "import { asserted } from './held';\nfunction read(view: { b: number }): number[] { return Object.values(view); }\nconsole.log(read(asserted).join(','));\n"},
+		{"upcast entries", upcast, "import { asserted } from './held';\nfunction show(view: { b: number }): void { for (const [key, value] of Object.entries(view)) console.log(key + '=' + String(value)); }\nshow(asserted);\n"},
+	} {
+		t.Run(row.name, func(t *testing.T) {
+			t.Parallel()
+			enumerationReachRefusedAs(t, row.name, ".ts", row.held, row.main)
+		})
+	}
 }
 
 func TestEnumerationReachViewRefused(t *testing.T) {
