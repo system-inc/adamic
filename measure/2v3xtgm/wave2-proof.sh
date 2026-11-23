@@ -106,7 +106,7 @@ else
 	tail -40 "$T/m7.log"; echo "FAIL M7: $n of 2 red"; exit 1
 fi
 
-go test -count=1 -timeout 0 ./internal/lower ./internal/ir ./internal/native ./internal/javascript ./cmd/adamic-admission-delta > "$T/whole.log" 2>&1; code=$?
+go test -count=1 -timeout 0 ./internal/lower ./internal/ir ./internal/native ./internal/javascript ./cmd/adamic-admission-delta ./stage3/census/latent/statecopy > "$T/whole.log" 2>&1; code=$?
 grep -E -- '^(--- FAIL|ok |FAIL)' "$T/whole.log"
 [ $code = 0 ] && echo "PASS lower, ir, native, javascript and the admission delta whole" || { grep -B3 -A20 -- '--- FAIL' "$T/whole.log" | head -100; echo "FAIL whole"; exit 1; }
 
