@@ -1,0 +1,34 @@
+# #bqwjdep: gofmt, vet and internal/ir whole, then two mutants, each compiling first and red in its own test:
+# (1) a list's length appended to its key, so a repeat reads as a new set (TestPackedPeersReadASetOnceInAnyOrder);
+# (2) a member's index taken as word*63, so a function past the first word comes back wrong
+# (TestTargetSetKeyGivesTheSortedDistinctMembers). Source it after the sealed opening. Never merged.
+L="$TMPDIR/bq"; mkdir -p "$L"; failed=0
+step() { echo "$1 $2"; [ "$1" = PASS ] || failed=1; }
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg)"
+bad=$(gofmt -l internal/ir); if [ -z "$bad" ]; then step PASS gofmt; else step FAIL gofmt; echo "$bad"; fi
+if go vet ./internal/ir/ > "$L/vet.log" 2>&1; then step PASS vet; else step FAIL vet; head -20 "$L/vet.log"; fi
+if go test -count=1 -timeout 30m ./internal/ir/ > "$L/ir.log" 2>&1; then step PASS ir-whole; else step FAIL ir-whole; fi
+grep -E '^(ok|FAIL|--- FAIL)|panic:' "$L/ir.log" | head -10
+go test -count=1 -v -run '^(TestPackedPeers|TestTargetSetKey)' ./internal/ir/ > "$L/pins.log" 2>&1
+grep -E -- '^(--- |ok|FAIL)|_test.go:[0-9]+' "$L/pins.log" | cut -c1-200 | head -12
+F=internal/ir/argument_slots.go; cp "$F" "$L/orig.go"
+plant() { # plant <name> <test> <old> <new>
+	python3 -I - "$F" "$3" "$4" <<'PY' || return 1
+import sys
+p, old, new = sys.argv[1], sys.argv[2], sys.argv[3]
+t = open(p).read()
+assert t.count(old) == 1, 'mutant site not found once'
+open(p, 'w').write(t.replace(old, new))
+PY
+	go test -count=1 -v -run "^$2\$" ./internal/ir/ > "$L/m-$1.log" 2>&1; code=$?
+	if grep -q -E '\[build failed\]|declared and not used|undefined:' "$L/m-$1.log"; then step FAIL "mutant-$1-compiles"; head -6 "$L/m-$1.log"; else step PASS "mutant-$1-compiles"; fi
+	grep -E -- '--- (PASS|FAIL)|_test.go:[0-9]+' "$L/m-$1.log" | cut -c1-200 | head -4
+	if [ $code -ne 0 ] && grep -q -- "--- FAIL: $2" "$L/m-$1.log"; then step PASS "mutant-$1-red"; else step FAIL "mutant-$1-red"; fi
+	cp "$L/orig.go" "$F"
+}
+grep -q -- '--- PASS: TestPackedPeersReadASetOnceInAnyOrder' "$L/pins.log" && grep -q -- '--- PASS: TestTargetSetKeyGivesTheSortedDistinctMembers' "$L/pins.log" && step PASS pins-green-at-head || step FAIL pins-green-at-head
+nl=$'\n'; tab=$'\t'
+plant length TestPackedPeersReadASetOnceInAnyOrder "${tab}key = key[:0]${nl}" "${tab}key = binary.LittleEndian.AppendUint64(key[:0], uint64(len(targets)))${nl}" || step FAIL mutant-length-applies
+plant word TestTargetSetKeyGivesTheSortedDistinctMembers "index*64+bits.TrailingZeros64(word)" "index*63+bits.TrailingZeros64(word)" || step FAIL mutant-word-applies
+cmp -s "$L/orig.go" "$F" && step PASS restored || step FAIL restored
+if [ $failed -eq 0 ]; then echo "VERDICT PASS"; else echo "VERDICT FAIL"; fi
