@@ -444,7 +444,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		// array where a structural object type is held, unless the slot reads it only by members it's
 		// served by (shape_fit.go).
 		if contextual := l.slotType(skipped); contextual != nil {
-			if stop := l.containerWhereOtherGoes(l.checker.GetTypeAtLocation(skipped), contextual, l.libraryCallArgument(skipped)); stop != "" {
+			// The operand of a cast to the object side that Array.isArray decides is judged without its arrays,
+			// which the cast's test stops before they reach the slot (arrayArmOperandType, #9z2ksv7).
+			if stop := l.containerWhereOtherGoes(l.arrayArmOperandType(skipped), contextual, l.libraryCallArgument(skipped)); stop != "" {
 				return nil, l.notYet(skipped, stop)
 			}
 			// And so is a container whose elements are stored otherwise than the slot reads them
