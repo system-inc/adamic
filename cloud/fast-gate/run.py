@@ -1399,6 +1399,9 @@ def readsGuardFindings(tree, tools, changed=None, pathSetChanged=None, record=No
                         (" ".join(["reads", package, pattern] + ([mode] if mode else [])), where, number, apart))
     deleted = [] if census else [path for path in pathSetChanged if path and path not in tracked]
     changedSet = set(changed or ())
+    # A gate whose tools are its own tree has no tools line of its own: every line it reads is the tree's, so a change to
+    # the tree's executors.txt answers for each of them (Adamic Loom's question on #r2a9vd4).
+    sameTree = os.path.realpath(tree) == os.path.realpath(tools)
     # A change's dead line is one that matched a path it deleted and now matches none, or, when it edits the tree's
     # executors.txt, any line of the tree's that matches none, since the change may have written it. The tools' lines
     # are the tools line's, never the change's. A tree line dead on the base is the census's finding already, and the
@@ -1406,7 +1409,7 @@ def readsGuardFindings(tree, tools, changed=None, pathSetChanged=None, record=No
     for where, number, package, pattern, mode in readers:
         if readsAllowed(allowed, package, pattern):
             continue
-        if not census and not (where == "the tree's executors.txt" and "cloud/fast-gate/executors.txt" in changedSet) \
+        if not census and not ((where == "the tree's executors.txt" or sameTree) and "cloud/fast-gate/executors.txt" in changedSet) \
                 and not any(fnmatch.fnmatchcase(path, pattern) for path in deleted):
             continue
         if not trackedMatches(files, pattern):
@@ -1451,7 +1454,7 @@ def readsGuardFindings(tree, tools, changed=None, pathSetChanged=None, record=No
     # old path is only there.
     generatedLists = {pattern for _, _, _, pattern, mode in readers if mode == "generated"}
     shrinks = [] if census else sorted(
-        {path for path in changedSet if path in ("cloud/fast-gate/executors.txt", compilerDependenciesPath, "go.work") or path in generatedLists
+        {path for path in changedSet | set(pathSetChanged) if path in ("cloud/fast-gate/executors.txt", compilerDependenciesPath, "go.work") or path in generatedLists
          or path.rsplit("/", 1)[-1] == "go.mod"} | {path for path in changedSet | set(pathSetChanged) if path.endswith(".go")})
     commentCensus = census or bool(shrinks)
     started = time.monotonic()
@@ -1919,11 +1922,11 @@ def launcherRefusal(source, runs):
 # A reference to the compiler itself, one kind of the census's evidence; launching a process is the other. cmd/adamic is
 # bounded at its name, so cohere's own harness commands (cmd/adamic_path and its siblings, which markdownblocks' oracles
 # run) are no reference to it, while `./cmd/adamic`, `cmd/adamic/...` and `go run ./cmd/adamic c x.ts` still are
-# (Cohere's finding on #1byp10f, Loom's ruling). It names the compiler only as a whole path, followed by a quote, a
-# backtick, a slash, whitespace or the end, so cmd/adamic-gate and cmd/adamic's, another command and a possessive, are
-# no reference to it; that loosens nothing that could launch, since a path a process runs ends at one of those (Adamic
-# Loom's ruling on #ry3pfc6). Comments are still read: a cgo preamble and //go:generate run.
-compilerMarker = re.compile(r'github\.com/system-inc/adamic/internal/(?:load|lower|native|javascript|ir|flow)|cmd/adamic(?=["`/\s]|$)|oracle/adamic|ADAMIC_(?:BIN|BINARY)|"adamic"')
+# (Cohere's finding on #1byp10f, Loom's ruling). Two spellings beside it are no reference either, a hyphen
+# (cmd/adamic-gate, another command) and a possessive (cmd/adamic's, in prose), and only those two are left out, so
+# every launch spelling still matches: a quote, a backslash in a Go string holding generated source, a shell's ' and ;,
+# a newline (Adamic Loom's ruling and her must on #r2a9vd4). Comments are still read: a cgo preamble and //go:generate run.
+compilerMarker = re.compile(r"github\.com/system-inc/adamic/internal/(?:load|lower|native|javascript|ir|flow)|cmd/adamic(?![A-Za-z0-9_-]|'s\b)|oracle/adamic|ADAMIC_(?:BIN|BINARY)|\"adamic\"")
 launchMarker = re.compile(r'"os/exec"|os\.StartProcess|syscall\.Exec')
 
 # The package whose MemoryLimit reads the unit's cgroup limit, the share a test sizes itself from (the memory floor census).

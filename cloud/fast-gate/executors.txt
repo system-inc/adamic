@@ -1625,6 +1625,10 @@ reads internal/buildcache internal/buildcache/cmd/traced/testdata/strace-6.8-x86
 reads internal/buildcache internal/hostconfiguration/configurations.json paths
 # TestTheWorkspaceSumsAreWholeSoGoWritesNoneBesideTheWork — internal/buildcache/gomod_test.go:201
 reads internal/buildcache loom/rules.json paths
+# And -test resolves every workspace package's test embeds too, which no closure holds: internal/oracle's
+# backend_divergences_test.go:52 embeds testdata/backend_divergences.json (Adamic Loom's must on head 5, #r2a9vd4).
+# TestTheWorkspaceSumsAreWholeSoGoWritesNoneBesideTheWork — internal/buildcache/gomod_test.go:201
+reads internal/buildcache internal/oracle/testdata/backend_divergences.json paths
 # TestALibraryOraclesBuildReadsNoStateButItsInitializers (stage1/cohere/tsprinter/oracles/census_test.go:48) runs the
 # same census from the checkout's root (Repository), so the same walk reads every .go file
 # (internal/leancensus/leancensus.go:457, :749-781). Moving the census into its own package, as compilercensus does,

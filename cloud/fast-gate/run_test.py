@@ -1307,6 +1307,24 @@ class ReadsGuard(unittest.TestCase):
         self.assertEqual(run.readsGuardFindings(self.tree, tools, changed, []), [])
         self.assertEqual(run.readsGuardFindings(self.tree, tools), [dead % "executors.txt"])
 
+    def test_a_dead_line_a_change_adds_where_the_tools_are_the_tree_is_red(self):
+        # A gate whose tools are its own tree reads every line as the tools', and a change to the tree's executors.txt
+        # answers for each of them: a dead line it adds is red in change mode there too (Adamic Loom's question on
+        # #r2a9vd4). Mutant: sameTree dropped from the dead-line rule, green.
+        self.write({"cloud/fast-gate/executors.txt": self.executors + "reads a nothing/here.txt\n"})
+        dead = "`reads a nothing/here.txt` (executors.txt:4) matches no tracked path: point it at where the file lives now, or delete it"
+        self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["cloud/fast-gate/executors.txt"], []), [dead])
+
+    def test_a_go_mod_renamed_away_checks_every_comment(self):
+        # git mv of a nested go.mod folds its module into its parent's, so a package's files can enter another unit's key
+        # without touching the comment's file. With rename detection the old path is only in the added and deleted set,
+        # so names are read from both (Adamic Loom's should 2 on #r2a9vd4). Mutant: names read from changed alone, no
+        # census recorded.
+        self.write({"c/go.mod": "module c\n", "c/c.go": "package c\n"})
+        record = {}
+        run.readsGuardFindings(self.tree, self.tree, ["c/go.mod.off"], ["c/go.mod", "c/go.mod.off"], record)
+        self.assertIn("c/go.mod", record["reads_comment_census"]["paths"])
+
     def test_a_reads_comment_is_read_as_repowalk_reads_one(self):
         # repowalk takes every // comment go/scanner finds (repowalk.go readsLines): one after a /* */ comment on its line
         # counts, as does one after a /* */ comment that ends there; go/scanner drops a // comment's carriage returns, and
@@ -4599,7 +4617,11 @@ class CensusLaunchers(unittest.TestCase):
         # (?![A-Za-z0-9_]) back, both refused.
         for text in ("// cmd/adamic-gate/parallelcensus reads this\n", "// cmd/adamic's walk\n", '"cmd/adamic-gate"'):
             self.assertIsNone(run.compilerMarker.search(text), text)
-        for reference in ("// go run ./cmd/adamic\n", "cmd/adamic", '"./cmd/adamic"', "x := `./cmd/adamic`"):
+        # Every launch spelling still names it (Adamic Loom's must on #r2a9vd4): a backslash in a Go string holding
+        # generated source, a shell's ' and ;, a newline, as the old bound read them. Mutant: the lookahead
+        # (?=["`/\s]|$), the backslash, the quote and the semicolon missed.
+        for reference in ("// go run ./cmd/adamic\n", "cmd/adamic", '"./cmd/adamic"', "x := `./cmd/adamic`",
+                          '"go run ./cmd/adamic\\nx"', '"./cmd/adamic\\"', "sh -c 'go run ./cmd/adamic'", "go run ./cmd/adamic; echo"):
             self.assertIsNotNone(run.compilerMarker.search(reference), reference)
 
     def test_a_launcher_that_runs_the_compiler_is_refused(self):
