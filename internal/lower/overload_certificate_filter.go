@@ -7,17 +7,17 @@ import (
 
 // Certificate D (#4z7y6pq): an overload whose result is narrower than its implementation's is served when
 // the implementation returns its first parameter as the caller passed it, or a fresh array holding only
-// that parameter's elements. tsc's core.ts filter is the shape:
+// that parameter's elements. tsc's core.ts filter, as stage 3 adapts it, is the shape:
 //
 //	if (array !== undefined) {
 //	    const len = array.length;
 //	    let i = 0;
-//	    while (i < len && f(array[i])) i++;
+//	    while (i < len && f(array[i]!)) i++;
 //	    if (i < len) {
 //	        const result = array.slice(0, i);
 //	        i++;
 //	        while (i < len) {
-//	            const item = array[i];
+//	            const item = array[i]!;
 //	            if (f(item)) {
 //	                result.push(item);
 //	            }
@@ -33,8 +33,9 @@ import (
 // a new mutable array of that parameter's elements. Either is the overload's result when its arguments are
 // exactly the caller's, which holds only at a direct call the checker resolved to it, so certificate D
 // rides certificate A's per-call gate and storage condition (overloadCertificateCall), never a gate of its
-// own. An element read is array[i] at a number, the element tsc types it as, read as every other index
-// read in the program is (ir.ArrayIndex).
+// own. An element is array[i]! at a number, stage 3's adaptation since noUncheckedIndexedAccess types
+// array[i] T | undefined: lowering's checked read (nonNull), which panics on a missing one, so a value it
+// gives is always one of the array's elements, as certificate B reads its element.
 
 // overloadFilterShape is what certificate D reads from an implementation's body.
 type overloadFilterShape struct {
@@ -45,11 +46,11 @@ type overloadFilterShape struct {
 }
 
 // overloadFilterShapeOf is the shape of implementation's body when it's certificate D's. Its first
-// parameter is only read: for its length, for an element at a number, for a copy through the library's
-// own slice, tested against undefined or for truthiness, or returned bare. Every other parameter is only
-// called directly with one element. Each const initialized to an empty array literal or to the
-// parameter's slice is fresh, and a fresh local is only the receiver of the library's own push of one
-// element, a read of the parameter or a const initialized to one, or returned bare. Every return hands
+// parameter is only read: for its length, at a number, for a copy through the library's own slice,
+// tested against undefined or for truthiness, or returned bare. Every other parameter is only called
+// directly with one element, the parameter's checked read or a const initialized to one. Each const
+// initialized to an empty array literal or to the parameter's slice is fresh, and a fresh local is only
+// the receiver of the library's own push of one element, or returned bare. Every return hands
 // back the parameter or one fresh local, and the body's last statement is a return, so it never falls
 // off its end into undefined. No closure reads the parameter or a fresh local, since one could write
 // either after the return, and nothing reads arguments, which aliases the parameter.
@@ -86,7 +87,7 @@ func (l *lowering) overloadFilterShapeOf(implementation *ast.Node) (overloadFilt
 			if declaration := overloadConstDeclaration(node); declaration != nil && declaration.Initializer() != nil {
 				initializer := ast.SkipParentheses(declaration.Initializer())
 				switch {
-				case l.overloadFilterElementAccess(initializer, array):
+				case l.overloadFilterElement(initializer, array):
 					elements[l.symbol(declaration.Name())] = true
 				case initializer.Kind == ast.KindArrayLiteralExpression && len(initializer.AsArrayLiteralExpression().Elements.Nodes) == 0, l.overloadFilterSlice(initializer, array):
 					fresh[l.symbol(declaration.Name())] = true
@@ -101,7 +102,7 @@ func (l *lowering) overloadFilterShapeOf(implementation *ast.Node) (overloadFilt
 		if ast.IsIdentifier(node) {
 			return elements[l.symbol(node)]
 		}
-		return l.overloadFilterElementAccess(node, array)
+		return l.overloadFilterElement(node, array)
 	}
 
 	// Each push: the Array prototype's own push of one element onto a fresh local, as a statement.
@@ -200,9 +201,15 @@ func overloadFilterReturned(node *ast.Node) bool {
 	return parent != nil && parent.Kind == ast.KindReturnStatement
 }
 
-// overloadFilterElementAccess is whether node is array[index] on the parameter array names, past
-// parentheses, with no ?. and an index tsc types as a number: one of its elements, never a property
-// like array["length"].
+// overloadFilterElement is whether node, past parentheses, is array[index]! on the parameter array names
+// (overloadFilterElementAccess): the checked read, one of its elements or a panic.
+func (l *lowering) overloadFilterElement(node *ast.Node, array *ast.Symbol) bool {
+	node = ast.SkipParentheses(node)
+	return node.Kind == ast.KindNonNullExpression && l.overloadFilterElementAccess(ast.SkipParentheses(node.AsNonNullExpression().Expression), array)
+}
+
+// overloadFilterElementAccess is whether node is array[index] on the parameter array names, with no ?.
+// and an index tsc types as a number: a read at an index, never of a property like array["length"].
 func (l *lowering) overloadFilterElementAccess(node *ast.Node, array *ast.Symbol) bool {
 	if node.Kind != ast.KindElementAccessExpression {
 		return false

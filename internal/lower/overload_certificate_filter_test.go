@@ -8,9 +8,11 @@ import (
 )
 
 // tsc's core.ts filter (:261 to :297 at the stage 3 pin, J-1ncez5n), its eight overloads over one generic
-// implementation, verbatim but for each declaration's export and @internal marker. Overloads 2 and 6
-// promise a mutable T[] over the implementation's readonly T[] | undefined, which certificate D serves
-// (#4z7y6pq); overloads 3 and 7, a predicate's readonly U[], it doesn't.
+// implementation, verbatim but for each declaration's export and @internal marker, and its two element
+// reads array[i]!, stage 3's adaptation (stage3/adapt/32-indexed-reads-program), since
+// noUncheckedIndexedAccess types array[i] T | undefined. Overloads 2 and 6 promise a mutable T[] over
+// the implementation's readonly T[] | undefined, which certificate D serves (#4z7y6pq); overloads 3 and 7,
+// a predicate's readonly U[], it doesn't.
 const overloadCertificateFilter = `function filter<T, U extends T>(array: T[], f: (x: T) => x is U): U[];
 function filter<T>(array: T[], f: (x: T) => boolean): T[];
 function filter<T, U extends T>(array: readonly T[], f: (x: T) => x is U): readonly U[];
@@ -23,12 +25,12 @@ function filter<T>(array: readonly T[] | undefined, f: (x: T) => boolean): reado
     if (array !== undefined) {
         const len = array.length;
         let i = 0;
-        while (i < len && f(array[i])) i++;
+        while (i < len && f(array[i]!)) i++;
         if (i < len) {
             const result = array.slice(0, i);
             i++;
             while (i < len) {
-                const item = array[i];
+                const item = array[i]!;
                 if (f(item)) {
                     result.push(item);
                 }
