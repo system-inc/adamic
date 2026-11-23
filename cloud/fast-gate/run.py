@@ -1314,7 +1314,7 @@ def darwinVetRefusal(tree, sha, tools):
         head, wanted = gate.git(tree, "rev-parse", "HEAD"), gate.git(tree, "rev-parse", "--verify", sha + "^{commit}")
         if head != wanted:
             raise ValueError("%s is checked out at %s, not at %s, and go vet reads the checkout's files" % (tree, head, wanted))
-        # Loom's bound sends SIGTERM to this process's group, then SIGKILL 5 s later (#bwnptrb, M2), and go runs in a
+        # Loom's bound sends SIGTERM to this process's group, then SIGKILL 10 s later (#bwnptrb, M2), and go runs in a
         # session of its own (spawn's start_new_session), which the group's signal never reaches. Gate.stop is the
         # gate's own answer to SIGTERM: under the gate's lock, it ends every process of each session spawn made, each
         # session named by the pid its Popen returned (killSessions), and spawn starts nothing after it.
