@@ -1,0 +1,296 @@
+{
+  "slug": "original-node",
+  "old": "getOriginalNode",
+  "twin": "getOriginalNodeWithoutPredicate",
+  "owner": "src/compiler/utilitiesPublic.ts",
+  "match": "no predicate",
+  "helper": [
+    "/** @internal */",
+    "export function getOriginalNodeWithoutPredicate(node: Node): Node;",
+    "/** @internal */",
+    "export function getOriginalNodeWithoutPredicate(node: Node | undefined): Node | undefined;",
+    "/** @internal */",
+    "export function getOriginalNodeWithoutPredicate(node: Node | undefined): Node | undefined {",
+    "    if (node) {",
+    "        while (node.original !== undefined) {",
+    "            node = node.original;",
+    "        }",
+    "    }",
+    "    return node;",
+    "}"
+  ],
+  "declarations": [
+    "export function getOriginalNode(node: Node): Node;",
+    "export function getOriginalNode<T extends Node>(node: Node, nodeTest: (node: Node) => node is T): T;",
+    "export function getOriginalNode(node: Node | undefined): Node | undefined;",
+    "export function getOriginalNode<T extends Node>(node: Node | undefined, nodeTest: (node: Node) => node is T): T | undefined;",
+    "export function getOriginalNode<T extends Node>(node: Node | undefined, nodeTest?: (node: Node) => node is T): T | undefined {\r\n    if (node) {\r\n        while (node.original !== undefined) {\r\n            node = node.original;\r\n        }\r\n    }\r\n\r\n    if (!node || !nodeTest) {\r\n        return node as T | undefined;\r\n    }\r\n\r\n    return nodeTest(node) ? node : undefined;\r\n}"
+  ],
+  "files": [
+    {
+      "file": "src/compiler/checker.ts",
+      "calls": [
+        {
+          "text": "getOriginalNode(range)",
+          "expression": "getOriginalNode",
+          "count": 1
+        },
+        {
+          "text": "getOriginalNode(location)",
+          "expression": "getOriginalNode",
+          "count": 1
+        },
+        {
+          "text": "getOriginalNode(context.enclosingDeclaration)",
+          "expression": "getOriginalNode",
+          "count": 2
+        }
+      ],
+      "import": {
+        "text": "getOriginalNode",
+        "module": "./_namespaces/ts.js",
+        "keep": false
+      }
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "calls": [
+        {
+          "text": "getOriginalNode(firstChild.parent)",
+          "expression": "getOriginalNode",
+          "count": 1
+        },
+        {
+          "text": "getOriginalNode(parentNode)",
+          "expression": "getOriginalNode",
+          "count": 1
+        },
+        {
+          "text": "getOriginalNode(sourceFile)",
+          "expression": "getOriginalNode",
+          "count": 2
+        },
+        {
+          "text": "getOriginalNode(nodeA)",
+          "expression": "getOriginalNode",
+          "count": 1
+        },
+        {
+          "text": "getOriginalNode(nodeB)",
+          "expression": "getOriginalNode",
+          "count": 1
+        },
+        {
+          "text": "getOriginalNode(previousNode)",
+          "expression": "getOriginalNode",
+          "count": 1
+        },
+        {
+          "text": "getOriginalNode(nextNode)",
+          "expression": "getOriginalNode",
+          "count": 1
+        }
+      ],
+      "import": {
+        "text": "getOriginalNode",
+        "module": "./_namespaces/ts.js",
+        "keep": false
+      }
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "calls": [
+        {
+          "text": "getOriginalNode(currentClassElement)",
+          "expression": "getOriginalNode",
+          "count": 1
+        },
+        {
+          "text": "getOriginalNode(node)",
+          "expression": "getOriginalNode",
+          "count": 3
+        },
+        {
+          "text": "getOriginalNode(member)",
+          "expression": "getOriginalNode",
+          "count": 1
+        },
+        {
+          "text": "getOriginalNode(statement)",
+          "expression": "getOriginalNode",
+          "count": 2
+        },
+        {
+          "text": "getOriginalNode(prop)",
+          "expression": "getOriginalNode",
+          "count": 2
+        },
+        {
+          "text": "getOriginalNode(property)",
+          "expression": "getOriginalNode",
+          "count": 3
+        }
+      ],
+      "import": {
+        "text": "getOriginalNode",
+        "module": "../_namespaces/ts.js",
+        "keep": false
+      }
+    },
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "calls": [
+        {
+          "text": "getOriginalNode(node)",
+          "expression": "getOriginalNode",
+          "count": 1
+        }
+      ],
+      "import": {
+        "text": "getOriginalNode",
+        "module": "../_namespaces/ts.js",
+        "keep": false
+      }
+    },
+    {
+      "file": "src/compiler/transformers/generators.ts",
+      "calls": [
+        {
+          "text": "getOriginalNode(node)",
+          "expression": "getOriginalNode",
+          "count": 1
+        }
+      ],
+      "import": {
+        "text": "getOriginalNode",
+        "module": "../_namespaces/ts.js",
+        "keep": false
+      }
+    },
+    {
+      "file": "src/compiler/transformers/jsx.ts",
+      "calls": [
+        {
+          "text": "getOriginalNode(currentSourceFile)",
+          "expression": "getOriginalNode",
+          "count": 1
+        }
+      ],
+      "import": {
+        "text": "getOriginalNode",
+        "module": "../_namespaces/ts.js",
+        "keep": false
+      }
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "calls": [
+        {
+          "text": "getOriginalNode(node)",
+          "expression": "getOriginalNode",
+          "count": 1
+        }
+      ],
+      "import": {
+        "text": "getOriginalNode",
+        "module": "../../_namespaces/ts.js",
+        "keep": false
+      }
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "calls": [
+        {
+          "text": "getOriginalNode(skipOuterExpressions(expression))",
+          "expression": "getOriginalNode",
+          "count": 1
+        }
+      ],
+      "import": {
+        "text": "getOriginalNode",
+        "module": "../_namespaces/ts.js",
+        "keep": false
+      }
+    },
+    {
+      "file": "src/compiler/transformers/ts.ts",
+      "calls": [
+        {
+          "text": "getOriginalNode(node)",
+          "expression": "getOriginalNode",
+          "count": 2
+        }
+      ],
+      "import": {
+        "text": "getOriginalNode",
+        "module": "../_namespaces/ts.js",
+        "keep": true
+      }
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "calls": [
+        {
+          "text": "getOriginalNode(node)",
+          "expression": "getOriginalNode",
+          "count": 1
+        }
+      ],
+      "import": {
+        "text": "getOriginalNode",
+        "module": "../_namespaces/ts.js",
+        "keep": true
+      }
+    },
+    {
+      "file": "src/services/codefixes/convertToAsyncFunction.ts",
+      "calls": [
+        {
+          "text": "getOriginalNode(node)",
+          "expression": "getOriginalNode",
+          "count": 1
+        }
+      ],
+      "import": {
+        "text": "getOriginalNode",
+        "module": "../_namespaces/ts.js",
+        "keep": false
+      }
+    },
+    {
+      "file": "src/services/textChanges.ts",
+      "calls": [
+        {
+          "text": "getOriginalNode(c.node)",
+          "expression": "getOriginalNode",
+          "count": 1
+        },
+        {
+          "text": "getOriginalNode(c.nodes[0])",
+          "expression": "getOriginalNode",
+          "count": 1
+        }
+      ],
+      "import": {
+        "text": "getOriginalNode",
+        "module": "./_namespaces/ts.js",
+        "keep": false
+      }
+    },
+    {
+      "file": "src/services/utilities.ts",
+      "calls": [
+        {
+          "text": "getOriginalNode(newImport)",
+          "expression": "getOriginalNode",
+          "count": 1
+        }
+      ],
+      "import": {
+        "text": "getOriginalNode",
+        "module": "./_namespaces/ts.js",
+        "keep": false
+      }
+    }
+  ]
+}
