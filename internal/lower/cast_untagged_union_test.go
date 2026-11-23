@@ -29,7 +29,9 @@ func TestUntaggedUnionCastLowers(t *testing.T) {
 		// held by the checked reads; recorded here so a ruling either way moves this row (Lower's should).
 		// binder.ts:1416's shape: a CallExpression out of a union of nodes whose kind is open, the target's a literal.
 		// Its cast is recorded checked, so stringWideningRefusal doesn't judge it as an unchecked widening, which the
-		// enum-literal rule refused (J-4488dtq). Mutant: castRefusal leaving proof.untagged unrecorded.
+		// enum-literal rule refused (J-4488dtq), and Expression, the member it narrows, isn't judged as an
+		// overlap's member (J-wfptmen). Mutants: castRefusal leaving proof.untagged unrecorded; untaggedUnionView judging
+		// a narrowed member.
 		{"a target with a literal kind", "enum SyntaxKind { Identifier = 80, CallExpression = 213, Block = 241 } interface Expression { readonly kind: SyntaxKind; readonly end: number } interface Statement { readonly kind: SyntaxKind; readonly pos: number } interface CallExpression extends Expression { readonly kind: SyntaxKind.CallExpression; readonly argumentCount: number } function f(x: Expression | Statement): CallExpression { return x as CallExpression; }", false},
 		{"an optional literal field", "interface A { readonly kind?: 'a'; readonly a: number } interface B { readonly kind?: 'b'; readonly b: string } function f(x: A | B): A { return x as A; } console.log(String(f({ kind: 'a', a: 1 }).a));", false},
 	} {

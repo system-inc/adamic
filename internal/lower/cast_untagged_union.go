@@ -60,7 +60,7 @@ func (l *lowering) unionHoldsLiterals(members []*checker.Type) bool {
 }
 
 // untaggedUnionCast lowers an untagged union's cast (untaggedUnionArm) as a checked view of the target over
-// the value's own runtime shape, with no test at the cast, as overlapViewCast does: a value of another member
+// the value's own runtime shape, with no test at the cast: a value of another member
 // reads through it what it holds, and stops at its first read of a field it lacks, or holds as another
 // representation, with the view's own located message. The value is the operand itself, so its identity is
 // Node's. Its view is marked untagged, so in a graph program viewPairGuard pairs every source arm with the
@@ -71,9 +71,31 @@ func (l *lowering) unionHoldsLiterals(members []*checker.Type) bool {
 // (Lower's should).
 func (l *lowering) untaggedUnionCast(node *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {
 	views := len(l.viewSources)
-	checked, err := l.overlapViewCast(node, value, source, target)
+	checked, err := l.untaggedUnionView(node, value, source, target)
 	for index := views; index < len(l.viewSources); index++ {
 		l.viewSources[index].untagged = true
 	}
 	return checked, err
+}
+
+// untaggedUnionView is overlapViewCast's judgment fitted to a downcast. A value held as other than an object and a
+// dictionary target keep overlapViewCast's stops. A member the target narrows by Adamic's relation (castAssignable,
+// mutable invariance included) is written through the view only what its own slots hold, and a field the target
+// narrows, a literal kind among them, is checked at every read, so it's not judged again here: judging it as an
+// overlap would stop the cast for the narrowing that is its point (binder.ts:1416's CallExpression out of
+// Expression | Statement, J-wfptmen). Every other member is judged as overlapViewCast judges it: a writable field
+// the view could write it something it can't hold makes the cast NotYet, naming the member.
+func (l *lowering) untaggedUnionView(node *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {
+	if value.Type() != ir.Object || len(l.checker.GetIndexInfosOfType(target)) != 0 {
+		return l.overlapViewCast(node, value, source, target)
+	}
+	for _, member := range castMembers(source) {
+		if l.castAssignable(target, member) {
+			continue
+		}
+		if widening := l.widened(member, target, map[[2]*checker.Type]bool{}); widening != nil {
+			return nil, l.notYet(node, "a checked view of "+l.checker.TypeToString(target)+" that could write "+l.checker.TypeToString(member)+" a field it can't hold")
+		}
+	}
+	return l.view(node, value, source, target)
 }
