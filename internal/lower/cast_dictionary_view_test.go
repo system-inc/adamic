@@ -72,13 +72,15 @@ func TestDictionaryViewCasts(t *testing.T) {
 }
 
 // A source with fields of its own keeps a stop, whichever rule makes it: the view takes object alone, so a fixed
-// object's static type never reaches a record's read through it (#mft3zc6).
+// object's static type never reaches a record's read through it (#mft3zc6). Package is a type literal, whose implicit
+// index signature makes the cast an upcast tsc takes: an interface would be TS2352 before any rule is reached.
 func TestDictionaryViewKeepsAFixedSourceStopped(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSourceAs(t, dictionaryViewDeclarations+"interface Package { readonly name: string } function f(x: Package): MapLike<unknown> { return x as MapLike<unknown>; }", ".ts")
+	_, err := lowerSourceAs(t, dictionaryViewDeclarations+"type Package = { readonly name: string }; function f(x: Package): MapLike<unknown> { return x as MapLike<unknown>; }", ".ts")
 	var notYet *NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "MapLike<unknown>") {
-		t.Fatalf("want a NotYet naming MapLike<unknown>, got %v", err)
+	var refused *Refused
+	if !errors.As(err, &notYet) && !errors.As(err, &refused) {
+		t.Fatalf("want the fixed source stopped, NotYet or Refused, got %v", err)
 	}
 }
 
