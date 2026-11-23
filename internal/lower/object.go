@@ -478,6 +478,11 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, "an indexed record field read without a named declared property")
 	}
 	name := l.fieldName(node.Name())
+	if l.rangeArraysPresent() && l.holdsRangeUnion(l.checker.GetTypeAtLocation(node)) {
+		// A field a range type's value is read from, whatever type declares it, a library mapped type's
+		// included, for checkRangeUnionReads to know a Property of its name by (range_unions.go).
+		l.noteRangeField(name)
+	}
 	if _, iterator := l.libraryIteratorElement(access.Expression); iterator && name != "next" {
 		return nil, l.notYet(node, "a collection iterator property other than next")
 	}
@@ -557,6 +562,13 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		if value, handled, err := l.factoryFieldRead(node, object, name); handled {
 			return value, err
 		}
+	}
+	if object.Type() == ir.Union && l.rangeReceiver(access.Expression) {
+		// A closed range type's field, through the Union it's held as where a NodeArray may stand for it
+		// (range_types.go). dynamicProperty would stop on any getter of the name in the program, and tsc has a
+		// get pos(), so the read asks the kind on its own road, which #hae423v's next wave builds; until then
+		// it stops here, as range_unions.go classes a Property.
+		return nil, l.notYet(node, "a read of field "+name+" through a range type held as a union, where a NodeArray may stand for it")
 	}
 	if object.Type() == ir.Union && access.QuestionDotToken != nil && l.nullableObjectUnion(l.checker.GetTypeAtLocation(access.Expression)) {
 		object = l.optionalNullableObject(object)

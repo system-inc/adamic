@@ -152,6 +152,9 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 
 	// The base name only, so the same program emits the same C on every machine.
 	lowering.result.Source = filepath.Base(program.FileName(entry))
+	// Before any representation is asked, so a closed range type is held one way for the whole lowering
+	// (range_types.go).
+	lowering.rangeArraysPresent()
 	modules, err := lowering.moduleOrder(entry)
 	if err != nil {
 		return nil, err
@@ -287,6 +290,11 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 		return nil, err
 	}
 	if err := lowering.checkViewWidenedReads(); err != nil {
+		return nil, err
+	}
+	// Every road that reads an object operand's layout raw, by range_unions.go's table, where that operand
+	// may be a range type's Union a NodeArray stands for (#hae423v, Lower's Must 2).
+	if err := lowering.checkRangeUnionReads(); err != nil {
 		return nil, err
 	}
 	if err := lowering.checkHostMemberWrites(); err != nil {
@@ -626,6 +634,17 @@ type lowering struct {
 	// elementKey is which element reads a checked view's element check is built for (view_arrays.go).
 	// Nil, in a lowering a test builds by hand, checks every read.
 	elementKey *viewElementKey
+	// rangeArrays is the program bit, that some interface it declares may have the NodeArray layout, once
+	// rangeArraysKnown; rangeShapes memoizes rangeShape per type, and rangeUnionsHeld is whether any type was
+	// held as a range type's Union (range_types.go). rangeFields, once rangeFieldsKnown, is each field name a
+	// value held as a range type's Union may be read by, and rangeFieldsAny that a field of unknown name may be
+	// one (range_unions.go).
+	rangeArrays, rangeArraysKnown bool
+	rangeShapes                   map[*checker.Type]bool
+	rangeUnionsHeld               bool
+	rangeFields                   map[string]bool
+	rangeFieldsKnown              bool
+	rangeFieldsAny                bool
 	// objectIntersections are the intersections objectIntersection is proving, each at its depth on the
 	// walk's path, so a field that holds one of them again ends there.
 	objectIntersections map[*checker.Type]int
