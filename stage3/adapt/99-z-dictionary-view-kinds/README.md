@@ -172,8 +172,11 @@ assumed, below.
   some of them differently: the premise is load-bearing, and the count looks for exactly these.
 - **loadModuleFromExports:** runs both pinned owners beside the tree's own helpers, the real
   `loadModuleFromExportsOrImports` included, with `trace` and `getLoadModuleFromTargetExportOrImport` recording
-  every call, over 28 kinds of `exports` at five subpaths, traced and not. Every trace, target load, factory
-  call and result compares. It also reads each guarded condition alone over each kind: 2629's must answer the
+  every call, over 28 kinds of `exports` at five subpaths, traced and not. Every trace, target load and result
+  compares. The factory's own call doesn't: upstream's `getLoadModuleFromTargetExportOrImport` only returns its
+  nested closure (moduleNameResolver.ts:2751), so an empty array's walk, which calls it and loads nothing, does
+  nothing a caller can see, and the guard that skips that walk answers the same (J-5bzd5hk found the call the only
+  difference). It also reads each guarded condition alone over each kind: 2629's must answer the
   same for every kind that reaches it, and 2637's must differ for exactly `true`, the nonzero numbers and the
   empty array, the rows the table above sends to the same trace.
 

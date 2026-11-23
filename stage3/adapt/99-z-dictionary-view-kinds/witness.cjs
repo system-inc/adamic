@@ -14,7 +14,9 @@
 // moduleNameResolver.ts and core.ts helpers it reaches (loadModuleFromExportsOrImports included, so an empty array's
 // walk is upstream's own), with trace and getLoadModuleFromTargetExportOrImport recording every call. Each kind of
 // exports, false, 0, "", true, numbers, strings, arrays and records, runs at five subpaths with tracing on and off,
-// and every trace, every target load, the factory's every call and the result compare. Both guarded conditions are
+// and every trace, every target load and the result compare. The factory's own call isn't compared: upstream's
+// getLoadModuleFromTargetExportOrImport (moduleNameResolver.ts:2751) only returns its nested closure, so a call
+// that loads nothing has no effect a caller can see (J-5bzd5hk: an empty array's walk calls it, the guard doesn't). Both guarded conditions are
 // also read alone over each kind: 2629's must answer the same for every kind that reaches it, and 2637's may differ
 // only for the kinds README.md's table names, true, a nonzero number and an empty array, whose outcome is the same.
 //
@@ -131,7 +133,6 @@ const given = {
     emptyArray: [], directorySeparator: '/', Diagnostics: new Proxy({}, {get: (_, key) => String(key)}),
     trace: (...args) => { log.push(['trace', ...args]); },
     getLoadModuleFromTargetExportOrImport: (extensions, state, cache, redirectedReference, moduleName, from, isImports) => {
-        log.push(['factory', extensions, moduleName, from === scope, isImports]);
         return (target, subpath, pattern, key) => {
             log.push(['load', target, subpath, pattern, key]);
             return {value: {loaded: [target, subpath, pattern, key]}};
@@ -185,7 +186,7 @@ for (const exports of exportsKinds) {
     }
 }
 verdict(outcomeDiffering.length === 0, `loadModuleFromExports: ${exportsKinds.length} kinds of exports at ${subpaths.length} subpaths, traced and not, ${rows} rows, ` +
-    `every trace, target load, factory call and result compared, differing ${outcomeDiffering.length}${outcomeDiffering.length ? `, first ${outcomeDiffering.slice(0, 3).join('; ')}` : ''}`);
+    `every trace, target load and result compared, differing ${outcomeDiffering.length}${outcomeDiffering.length ? `, first ${outcomeDiffering.slice(0, 3).join('; ')}` : ''}`);
 // Which kinds reach each condition: falsy returns first, and at "." 2626 takes a string, an array and a record with
 // no key starting with a dot.
 const truthy = exportsKinds.filter(exports => exports);
