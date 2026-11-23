@@ -267,7 +267,8 @@ func (f *cycleFinder) shape(proven *checker.Type, where *ast.Node) {
 		f.shaped = map[*checker.Type]bool{}
 	}
 	f.shaped[proven] = true
-	if key, ok := f.scalarShapeKey(proven, where); ok {
+	key, scalar := f.scalarShapeKey(proven, where)
+	if scalar {
 		if f.scalarShapes[key] {
 			return
 		}
@@ -279,6 +280,14 @@ func (f *cycleFinder) shape(proven *checker.Type, where *ast.Node) {
 	f.shapes = append(f.shapes, proven)
 	for _, field := range f.fields(proven) {
 		f.use(f.l.checker.GetTypeOfSymbol(field), declaredAt(field, where))
+	}
+	// A literal cast to a narrower type ({ name, back } as Named) has no variable to carry its regular type,
+	// and its fresh type never relates to the narrower one, since the relation judges a fresh type for excess
+	// properties. So its regular widened type is a shape too, as a variable's would be, and a value seen as
+	// Named may be it, back and all (#sbvnh96). made and use both reach a literal through here. A scalar
+	// shape holds no reference, so it can close no cycle and keeps its one shape (TestCycleScalarLiteralShapesOnce).
+	if !scalar && proven.Flags()&checker.TypeFlagsObject != 0 && proven.ObjectFlags()&checker.ObjectFlagsFreshLiteral != 0 {
+		f.use(f.l.relatedShape(proven), where)
 	}
 }
 
@@ -848,6 +857,10 @@ func (f *cycleFinder) deriveRelated(one *checker.Type, other *checker.Type) bool
 	if f.isFunction(one) || f.isFunction(other) {
 		return false
 	}
+	// A fresh literal is related by its regular widened type, as shape holds it beside the fresh one
+	// (the census): the relation judges a fresh type for excess properties, so { name, back } as Named would
+	// otherwise never be what a value seen as Named reaches (#sbvnh96).
+	one, other = f.l.relatedShape(one), f.l.relatedShape(other)
 	return f.l.checker.IsTypeAssignableTo(one, other) || f.l.checker.IsTypeAssignableTo(other, one)
 }
 
