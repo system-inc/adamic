@@ -334,7 +334,9 @@ static adamic_heap *dynamic_property(adamic_heap *value, const char *name) {
 		if (adamic_record_is(object)) {
 			adamic_string key = {{0, adamic_kind_string, 0}, strlen(name), name, 0, NULL, NULL, 0};
 			const adamic_value *slot = adamic_record_get(object, &key);
-			return slot == NULL ? NULL : adamic_retain(slot->reference);
+			// A record of numbers or booleans keeps them unboxed in the slot, so the value is boxed by the
+			// record's kind, never retained as a pointer (#3tjjcjs).
+			return slot == NULL ? NULL : adamic_record_value_union(object, slot);
 		}
 		// The inherited message, as in adamic_has_property.
 		name = adamic_error_field_name(object, name);
@@ -441,13 +443,13 @@ static adamic_heap *keyed_getter(adamic_object *object, const adamic_accessor *a
 	}
 }
 
-// keyed_record_value is a record's own value as a union, owned, boxed by the kind its shape names
+// adamic_record_value_union is a record's own value as a union, owned, boxed by the kind its shape names
 // (record.c): a number or a boolean may be packed with undefined, and reads as undefined then. A
 // number's undefined is a NaN payload arithmetic never makes, and no program can store raw bytes as a
 // number today: ArrayBuffer and DataView are NotYet (lower's typed_arrays.go), so no two views share a
 // buffer. Whatever admits them canonicalizes a NaN read from bytes before it's stored, as function
 // arguments are.
-static adamic_heap *keyed_record_value(const adamic_record *record, const adamic_value *own) {
+adamic_heap *adamic_record_value_union(const adamic_record *record, const adamic_value *own) {
 	switch (adamic_record_values(record)) {
 	case adamic_field_reference:
 		return adamic_retain(own->reference);
@@ -935,7 +937,7 @@ adamic_heap *adamic_dynamic_property_keyed(adamic_heap *value, const adamic_stri
 	}
 	if (adamic_record_is(object)) {
 		const adamic_value *own = adamic_record_get_own(object, key);
-		if (own != NULL) return keyed_record_value(object, own);
+		if (own != NULL) return adamic_record_value_union(object, own);
 	} else {
 		// An Error made without a message keeps Error.prototype's empty one in private storage.
 		const char *remapped = error && key_is(key, "message") ? adamic_error_field_name(object, "message") : NULL;

@@ -157,9 +157,12 @@ adamic_closure *adamic_object_callee(const adamic_object *object, const char *na
 	if (adamic_record_is(object)) {
 		adamic_string key = {{0, adamic_kind_string, 0}, strlen(name), name, 0, NULL, NULL, 0};
 		const adamic_value *slot = adamic_record_get_own(object, &key);
-		if (slot == NULL || slot->reference == NULL) { return NULL; }
-		const adamic_heap *reference = slot->reference;
-		if (reference->kind == adamic_kind_closure) { return slot->reference; }
+		if (slot == NULL) { return NULL; }
+		// A record of numbers or booleans keeps them unboxed in the slot, which is never a function, so its
+		// key answers not callable before anything reads the slot as a pointer (#3tjjcjs).
+		bool references = adamic_record_values(object) == adamic_field_reference;
+		if (references && slot->reference == NULL) { return NULL; }
+		if (references && slot->reference->kind == adamic_kind_closure) { return slot->reference; }
 		size_t capacity = strlen(name) + 64;
 		char *message = malloc(capacity);
 		if (message == NULL) {

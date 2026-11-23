@@ -230,7 +230,8 @@ adamic_array *adamic_object_values_checked(adamic_object *object, int expected, 
   adamic_heap *observed;
   if (adamic_record_is(object)) {
    const adamic_value *slot = adamic_record_get_own(object, key);
-   observed = slot == NULL ? NULL : adamic_retain(slot->reference);
+   // Boxed by the record's kind: a number or boolean record's slot holds no pointer (#3tjjcjs).
+   observed = slot == NULL ? NULL : adamic_record_value_union(object, slot);
   } else {
    // Readiness is indexed from the slot the lookup returned, never from the packed cache word.
    const adamic_value *slot = adamic_object_data_field(object, name, &cache);
