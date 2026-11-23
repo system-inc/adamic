@@ -1,0 +1,2 @@
+const set = new Set<number>([1]);
+console.log(set.values().toString());

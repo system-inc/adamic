@@ -144,6 +144,13 @@ func (l *lowering) objectPrototypeCallArguments(node, receiver *ast.Node, name s
 	if name != "valueOf" && l.isLibraryType(l.checker.GetTypeAtLocation(receiver), errorClasses...) {
 		return nil, true, l.notYet(node, name+" on Error (its prototype and non-enumerable own descriptors differ from plain objects)")
 	}
+	if name == "toString" || name == "toLocaleString" || name == "valueOf" {
+		// valueOf answers the object itself on every library object with a prototype, an iterator and an Error
+		// alike, which the arm below already gives; only a null-prototype groups object has no valueOf to call.
+		if library := l.libraryObjectOwnAnswer(receiver); library != "" && (name != "valueOf" || library == regexpGroupsAnswer) {
+			return nil, true, l.notYet(node, name+" on "+library+", whose own answer isn't Object.prototype's")
+		}
+	}
 	of, _ := l.representation(l.checker.GetTypeAtLocation(receiver))
 	if l.exactPlainObject(receiver) {
 		of = ir.Object
@@ -230,6 +237,60 @@ func (l *lowering) objectPrototypeCallArguments(node, receiver *ast.Node, name s
 		return ir.Conditional{Condition: ir.IsUndefined{Value: value}, WhenTrue: text, WhenNot: text}, true, nil
 	}
 	return nil, true, l.notYet(node, name+" on a "+typeName(of)+" (function source text and mixed value dispatch are not represented)")
+}
+
+// regexpGroupsAnswer is libraryObjectOwnAnswer's name for a RegExp match's groups, the one receiver here with no
+// prototype, so valueOf stops on it alone.
+const regexpGroupsAnswer = "a RegExp match's groups"
+
+// libraryObjectOwnAnswer names a receiver whose toString, toLocaleString or valueOf answers other than a plain
+// object's on Node, where lowering knows no answer of its own, or is empty. The constant tag below is
+// Object.prototype's, and #20e4t06 and #shqn1d0 found it printed for objects that aren't plain: a Map or Set
+// iterator, whose tag is Map Iterator or Set Iterator, and a RegExp match's groups, which have a null prototype,
+// so Node throws a TypeError at the call. Every member of the receiver's type is asked, failing closed: a named
+// library interface (an iterator, a Promise, an Intl object) unless it's Object itself or an iterator result,
+// which next makes as a plain object; and an anonymous library type declared inside a RegExp result interface,
+// which is its groups. A Map or Set, an array or a string is held as its own kind and keeps its own answer
+// below, and a program's own object or class keeps Object.prototype's. Each object's own tag and groups'
+// missing prototype are the real fix, owed with Runtime Library (Compiler, on #20e4t06).
+func (l *lowering) libraryObjectOwnAnswer(receiver *ast.Node) string {
+	proven := l.concrete(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver)))
+	members := []*checker.Type{proven}
+	// A union's members and an intersection's parts are each asked, so MapIterator<T> & { tag: string } stops as
+	// its iterator part does (Optimizer's should).
+	for index := 0; index < len(members); index++ {
+		if members[index].Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+			members = append(members, members[index].Types()...)
+		}
+	}
+	for _, member := range members {
+		if member.Flags()&checker.TypeFlagsObject == 0 {
+			continue
+		}
+		symbol := l.unbranded(member).Symbol()
+		// A host's object is declared in a declaration file, lib, the prelude or @types/node alike (node:buffer's
+		// Buffer lives in @types/node, #e0cnaa9), so any declaration file counts, never lib alone.
+		if symbol == nil || len(symbol.Declarations) == 0 {
+			continue
+		}
+		if file := ast.GetSourceFileOfNode(symbol.Declarations[0]); !file.IsDeclarationFile && !load.IsLibrary(file) && !load.IsApple(file) {
+			continue
+		}
+		declaration := symbol.Declarations[0]
+		if declaration.Kind == ast.KindInterfaceDeclaration || declaration.Kind == ast.KindClassDeclaration {
+			switch symbol.Name {
+			case "Object", "IteratorYieldResult", "IteratorReturnResult", "Map", "ReadonlyMap", "Set", "ReadonlySet", "Array", "ReadonlyArray", "String", "Number", "Boolean":
+				continue
+			}
+			return "a library " + symbol.Name
+		}
+		for owner := declaration.Parent; owner != nil; owner = owner.Parent {
+			if owner.Kind == ast.KindInterfaceDeclaration && strings.HasPrefix(owner.Name().Text(), "RegExp") {
+				return regexpGroupsAnswer
+			}
+		}
+	}
+	return ""
 }
 
 // Structural object views can hide an override, an Error, or an artificial absent-spread slot.
