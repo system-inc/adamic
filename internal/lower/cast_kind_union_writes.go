@@ -56,7 +56,10 @@ import (
 // a parameter its function never assigns, and its union came from a tag test or a kind-checked cast's own
 // result, with no other narrowing on the way. The premise: a const or never-assigned binding can't be
 // repointed, and the tag it holds was tested or checked at run time, so no tag outside its union reaches the
-// write. Every other receiver, a property path, an element, a let (rule 3350 holds a let a call rewrites), a
+// write. It also leans on the tag itself not moving between the test and the write, which main's whole-proof
+// judgment never needed: a tag can be rewritten only through a type whose tag field is writable and wider than
+// the member's literal, and seeing a member that way is refused as widening (adamic/invariant-mutable), with
+// tsc's tags readonly besides (WebAssembly's k15, TestKindUnionWriteTagRewriteStopsAtTheWidening). Every other receiver, a property path, an element, a let (rule 3350 holds a let a call rewrites), a
 // predicate's narrowing, is judged by every literal of the cast proof, as before. Each literal judged still meets
 // every layout carrying it, and reach is asked after, untouched.
 

@@ -678,3 +678,50 @@ if (at !== undefined && at.kind !== "c") {
 		})
 	}
 }
+
+// WebAssembly's k15 (#t2p4wyv): the narrowing above trusts that a const's tag can't move between its test and the
+// write, which the whole proof never had to. A tag rewritten to another of the proof's, here a C at run time made
+// to say "a", could only be written through a type whose kind is writable and wider than the member's literal, and
+// seeing A | B | C (or what's left of it after a test) as { kind: string } is refused as widening, before, between,
+// or through an alias with no call. So each row stops there, at the upcast, never at the write.
+func TestKindUnionWriteTagRewriteStopsAtTheWidening(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, source, at string }{
+		{"retag before the test", kindUnionOwnModel + kindUnionOwnMake + `function retag(w: { kind: string }): void { w.kind = "a"; }
+const n = make(1) as A | B | C;
+retag(n);
+if (n.kind !== "c") {
+  n.f = 5;
+  console.log(String(n.f));
+}
+`, "main.ts:12:7: "},
+		{"retag between test and write", kindUnionOwnModel + kindUnionOwnMake + `function retag(w: { kind: string }): void { w.kind = "a"; }
+const n = make(1) as A | B | C;
+if (n.kind !== "a") {
+  retag(n);
+  n.f = 5;
+  console.log(String(n.f));
+}
+`, "main.ts:13:9: "},
+		{"retag through an alias, no call", kindUnionOwnModel + kindUnionOwnMake + `const n = make(1) as A | B | C;
+const w: { kind: string } = n;
+if (n.kind !== "a") {
+  w.kind = "a";
+  n.f = 5;
+  console.log(String(n.f));
+}
+`, "main.ts:11:29: "},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, probe.source, ".ts")
+			var refused *Refused
+			if !errors.As(err, &refused) {
+				t.Fatalf("want the widening refused, got %v", err)
+			}
+			if message := err.Error(); !strings.Contains(message, probe.at) || !strings.Contains(message, "seen as { kind: string; }, whose readonly field kind becomes writable") {
+				t.Fatalf("want the widening refused at %s, got %v", probe.at, err)
+			}
+		})
+	}
+}
