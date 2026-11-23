@@ -1592,6 +1592,11 @@ reads stage3/lane/adaptedtree internal/lower/testdata/host_binding/performance_c
 # compilercensus does, narrows this.
 # TestTheAdaptedTreeBuildReachesOnlyItsDeclaredFile via leancensus linknames: internal/leancensus/leancensus.go:765
 reads stage3/lane/adaptedtree *.go
+# The census moves into a package of its own, stage3/lane/adaptedtree/census (#4ps0v4x, adamic
+# keys/adaptedtree-census-own 3860f384), so it keys the same walk there. This line goes first, with adaptedtree's above
+# kept until main's move lands, so the walk is keyed on both sides of the landing; then adaptedtree's line goes.
+# TestTheAdaptedTreeBuildReachesOnlyItsDeclaredFile via leancensus linknames: internal/leancensus/leancensus.go:765
+reads stage3/lane/adaptedtree/census *.go
 # TestAGoProductsBuildReadsNoStateButItsInitializers (internal/buildcache/makecensus_test.go:207) runs the same census
 # from the checkout's root (repositoryRootForTest, make_relative.go:492), so the same walk reads every .go file
 # (internal/leancensus/leancensus.go:457, :749-781). Moving the census into its own package, as compilercensus does,
