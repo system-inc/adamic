@@ -853,6 +853,10 @@ func (f *cycleFinder) deriveRelated(one *checker.Type, other *checker.Type) bool
 	if f.isFunction(one) || f.isFunction(other) {
 		return false
 	}
+	// A fresh literal is related by its regular widened type, as the census holds it beside the fresh one
+	// (use): the relation judges a fresh type for excess properties, so { name, back } as Named would
+	// otherwise never be what a value seen as Named reaches (#sbvnh96).
+	one, other = f.l.relatedShape(one), f.l.relatedShape(other)
 	return f.l.checker.IsTypeAssignableTo(one, other) || f.l.checker.IsTypeAssignableTo(other, one)
 }
 
