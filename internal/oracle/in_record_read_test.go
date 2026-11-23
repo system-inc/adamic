@@ -15,16 +15,14 @@ import (
 // (union.c:332 to :337), so `'k' in o` then `typeof o.k`, with o a Record<string, number> passed as object,
 // printed number on Node and the JavaScript backend and faulted natively under ASan (#859ksab, Language's
 // probes J-t5mxr1v and J-dwhn493 on main 0c9b1201). Until Library's #3tjjcjs boxes the slot by its kind, the
-// read stops at compile time when the receiver may be a record: object, unknown, a type parameter, or a
-// record. A record of strings reads right today but stops too, since which records a program makes can't be
-// read from its types (from_entries.ts makes one with no type node, and stops as Object.fromEntries does). Each pin names its program, Node's answer, and the
+// read stops at compile time when the program holds a record of numbers or booleans, by any value's or type's
+// reading, and the receiver may be a record: object, unknown, a type parameter, or a record. Each pin names its program, Node's answer, and the
 // read it stops at. If a stop goes missing, the program is run natively under the sanitizers and its run is
 // part of the failure.
 func TestInRecordReadStops(t *testing.T) {
 	t.Parallel()
 	for _, pin := range []struct{ file, node, at string }{
 		{"record_number.ts", "number\n", "o.k"},
-		{"record_string.ts", "string\n", "o.k"},
 		// The key is absent, so the read never runs and main agrees, but the stop can't tell which records
 		// reach o.
 		{"record_absent.ts", "absent\n", "o.k"},
@@ -94,11 +92,13 @@ func TestInRecordReadEarlierStops(t *testing.T) {
 	}
 }
 
-// The neighbors still lower and agree: a receiver declared as a program object type, which no record
-// reaches, alone and beside a number record.
+// The neighbors still lower and agree: a record of strings, whose slots are references, in a program with no
+// scalar record, and a receiver declared as a program object type, which no record reaches, alone and beside
+// a number record.
 func TestInRecordReadNeighborsAgree(t *testing.T) {
 	t.Parallel()
 	for file, node := range map[string]string{
+		"record_string.ts":           "string\n",
 		"fixed_control.ts":           "number absent\n",
 		"fixed_in_record_program.ts": "number absent 1\n",
 	} {
