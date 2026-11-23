@@ -4756,12 +4756,12 @@ class CensusLaunchers(unittest.TestCase):
 
     def test_a_dead_allow_is_the_changes_when_it_touches_the_launcher(self):
         # An allow naming a package the launcher doesn't import, a function it doesn't call, or a launcher the map doesn't
-        # declare is dead: the change's red when it touched the launcher's files or the map, else named on the base.
-        # Mutant: references never gathered (every allow reads dead).
+        # declare is dead: the change's red when it touched the launcher's own files, else named on the base, a map edit
+        # included. Mutants: references never gathered (every allow reads dead), and every dead line read the change's.
         allows = self.allowLine("Build") + self.allowLine("Exports") + self.allowLine("Build", package="internal/quiet") + self.allowLine("Build", launcher="tool/other")
         source = self.houseLauncher % ("", "helper", "helper.Build()")
         self.refusedWith(source, "dead allow-launch lines: executors.txt:2, allow-launch tool/launch internal/helper.Exports: no file of tool/launch names it", allows)
-        result = self.census(source, self.declared, self.helper, allows, changed=["internal/quiet/quiet.go"])
+        result = self.census(source, self.declared, self.helper, allows, changed=["internal/quiet/quiet.go", "cloud/fast-gate/compiler-dependencies.json"])
         self.assertEqual(result.get("launch_allows_dead_on_base"), [
             "executors.txt:2, allow-launch tool/launch internal/helper.Exports: no file of tool/launch names it",
             "executors.txt:3, allow-launch tool/launch internal/quiet.Build: no file of tool/launch names it",

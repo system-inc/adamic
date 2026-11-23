@@ -3440,8 +3440,9 @@ class Gate:
                 continue
             missing.append((path, path))
         # An allow-launch line no declared launcher's files use is dead: the launcher isn't declared, or none of its files
-        # names that function of that package. It's the change's when the change touched the launcher's files or the map,
-        # and named on the base otherwise, as a consumer is.
+        # names that function of that package. It's the change's when the change touched the launcher's own files, and
+        # named on the base otherwise, as a consumer is: an allow put on the tools line ahead of the launcher it's for, or
+        # a map edit elsewhere, is never a change's to answer for.
         dead = []
         for (launcher, imported), functions in sorted(allows.items()):
             for function, number in sorted(functions.items()):
@@ -3449,7 +3450,7 @@ class Gate:
                     continue
                 named = "executors.txt:%d, allow-launch %s %s.%s: %s" % (number, launcher, imported, function,
                          "%s isn't a declared launcher" % launcher if launcher not in launchers else "no file of %s names it" % launcher)
-                touched = [path for path in [compilerDependenciesPath] + launcherFiles.get(launcher, []) if path in touchedFiles]
+                touched = [path for path in launcherFiles.get(launcher, []) if path in touchedFiles]
                 dead.append((touched[0] if touched else None, named))
         if any(path is None for path, _ in dead):
             self.result["launch_allows_dead_on_base"] = [named for path, named in dead if path is None]
