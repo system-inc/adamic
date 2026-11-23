@@ -73,53 +73,61 @@ func TestCheckedPredicateIntersectionTargetOutsideStays(t *testing.T) {
 }
 
 // Lower's roads (#c7w6j0y, on the design): an intersection's merged property is a synthetic symbol that
-// carries neither the getter nor the method flag of the part declaring it. Logged on the first run, to pin
-// what each does: a getter must stop or dispatch, never read a slot.
-func TestCheckedPredicateIntersectionTargetSyntheticSymbolsLogged(t *testing.T) {
+// carries neither the getter nor the method flag of the part declaring it, so a getter must stop or
+// dispatch, never read a slot. Each stops at today's words for its read (J-zr8d3qg): a getter in a part at
+// the accessor alias, a method at the call. With the view skipped the two getter rows lower and dispatch,
+// agreeing with Node, so their stop is the view's and fails closed.
+func TestCheckedPredicateIntersectionTargetSyntheticSymbolsStop(t *testing.T) {
+	t.Parallel()
 	const tail = "function show(n: { readonly kind: number }): void { if (isNine(n)) console.log(String(n.kind) + ' ' + String(n.pos)); else console.log('no'); }\n"
-	for _, probe := range []struct{ name, source string }{
-		{"getter part", "interface Token { readonly kind: number; readonly pos: number }\ntype Nine = Token & { get kind(): 9 };\nfunction isNine(n: { readonly kind: number }): n is Nine { return n.kind === 9; }\n" + tail + "class Getter { get kind(): 9 { return 9; } readonly pos: number = 3; }\nshow(new Getter());\nconst plain = { kind: 9, pos: 4 };\nshow(plain);\n"},
-		{"field and getter parts", "type Nine = { readonly kind: 9; readonly pos: number } & { get kind(): 9 };\nfunction isNine(n: { readonly kind: number }): n is Nine { return n.kind === 9; }\n" + tail + "const plain = { kind: 9, pos: 4 };\nshow(plain);\n"},
-		{"method and field parts", "type Nine = { readonly kind: 9; readonly pos: number; run(): number } & { readonly run: () => number };\nfunction isNine(n: { readonly kind: number }): n is Nine { return n.kind === 9; }\nfunction show(n: { readonly kind: number }): void { if (isNine(n)) console.log(String(n.run())); }\nconst plain = { kind: 9, pos: 1, run(): number { return 5; } };\nshow(plain);\n"},
+	for _, probe := range []struct{ name, source, stop string }{
+		{"getter part", "interface Token { readonly kind: number; readonly pos: number }\ntype Nine = Token & { get kind(): 9 };\nfunction isNine(n: { readonly kind: number }): n is Nine { return n.kind === 9; }\n" + tail + "class Getter { get kind(): 9 { return 9; } readonly pos: number = 3; }\nshow(new Getter());\nconst plain = { kind: 9, pos: 4 };\nshow(plain);\n", "a checked field alias of an accessor"},
+		{"field and getter parts", "type Nine = { readonly kind: 9; readonly pos: number } & { get kind(): 9 };\nfunction isNine(n: { readonly kind: number }): n is Nine { return n.kind === 9; }\n" + tail + "const plain = { kind: 9, pos: 4 };\nshow(plain);\n", "a checked field alias of an accessor"},
+		{"method and field parts", "type Nine = { readonly kind: 9; readonly pos: number; run(): number } & { readonly run: () => number };\nfunction isNine(n: { readonly kind: number }): n is Nine { return n.kind === 9; }\nfunction show(n: { readonly kind: number }): void { if (isNine(n)) console.log(String(n.run())); }\nconst plain = { kind: 9, pos: 1, run(): number { return 5; } };\nshow(plain);\n", "a call to a PropertyAccessExpression"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
-			program, err := lowerSourceAs(t, probe.source, ".ts")
-			t.Logf("ROW %s lower: %v", probe.name, err)
-			if err == nil {
-				observed := runAgreementNode(t, writeAgreementSource(t, "main.ts", probe.source))
-				t.Logf("ROW %s node: exit %d stdout %q", probe.name, observed.code, observed.stdout)
-				code, stdout, stderr := brandedNative(t, program)
-				t.Logf("ROW %s native: exit %d stdout %q stderr %q", probe.name, code, stdout, stderr)
+			t.Parallel()
+			_, err := lowerSourceAs(t, probe.source, ".ts")
+			if err == nil || !strings.Contains(err.Error(), probe.stop) {
+				t.Fatalf("want the stop %q, got %v", probe.stop, err)
 			}
 		})
 	}
 }
 
-// Language's storage-side roads (#c7w6j0y, on the design): parts whose members a view may not check.
-// Logged on the first run, to pin each beside its twin: each must stop at its own words or agree with
-// Node, never lower raw.
-func TestCheckedPredicateIntersectionTargetStoragePartsLogged(t *testing.T) {
+// Language's storage-side roads (#c7w6j0y, on the design): parts whose members a view may not check. None
+// lowers raw (J-f2jpj73). A phantom brand typed undefined is never stored, and an honest value agrees.
+// Callable, array and record parts are kept out by plainObjectIntersection and keep main's stop. A nested
+// getter stops at the accessor alias, and a method at rulings.md:27's check at the call. A generic part
+// keeps the stop for a claim its body is lowered without knowing. The symbol-keyed part stops before the
+// rule, at the symbol itself, so it says nothing of the rule until a symbol lowers; it's pinned so that day
+// shows.
+func TestCheckedPredicateIntersectionTargetStorageParts(t *testing.T) {
+	t.Parallel()
 	const value = "const e: Expr = { kind: 9, pos: 2, operator: { kind: 1 } };\n"
 	const guard = "function isT(n: Expr): n is T { return n.kind === 9; }\n"
 	const showPos = "function show(n: Expr): void { if (isT(n)) console.log(String(n.pos)); else console.log('no'); }\n"
-	for _, probe := range []struct{ name, source string }{
-		{"phantom brand part", intersectionExpr + "type T = Expr & { readonly kind: 9; readonly __tagged: undefined };\n" + guard + showPos + value + "show(e);\n"},
-		{"callable part", intersectionExpr + "type T = Expr & ((x: number) => number);\nfunction isT(n: Expr): n is T { return n.kind === 9; }\n" + showPos + value + "show(e);\n"},
-		{"array part", "interface Expr { readonly kind: number; readonly pos: number }\ntype T = readonly Expr[] & { readonly kind: 9 };\nfunction isT(n: { readonly kind: number }): n is T { return n.kind === 9; }\nfunction show(n: { readonly kind: number }): void { if (isT(n)) console.log(String(n.length)); else console.log('no'); }\nconst e: Expr = { kind: 9, pos: 2 };\nshow(e);\n"},
-		{"record part", intersectionExpr + "type T = Expr & Record<string, unknown> & { readonly kind: 9 };\n" + guard + showPos + value + "show(e);\n"},
-		{"nested getter part", intersectionExpr + "type T = Expr & { readonly kind: 9; readonly operator: { get kind(): 1 } };\n" + guard + "function show(n: Expr): void { if (isT(n)) console.log(String(n.operator.kind)); else console.log('no'); }\n" + value + "show(e);\n"},
-		{"method part", intersectionExpr + "type T = Expr & { readonly kind: 9; describe(): string };\n" + guard + "function show(n: Expr): void { if (isT(n)) console.log(n.describe()); else console.log('no'); }\nconst v = { kind: 9, pos: 2, operator: { kind: 1 }, describe(): string { return 'described'; } };\nshow(v);\nconst w: Expr = { kind: 9, pos: 2, operator: { kind: 1 } };\nshow(w);\n"},
-		{"symbol keyed part", intersectionExpr + "const sym: unique symbol = Symbol('s');\ntype T = Expr & { readonly kind: 9; readonly [sym]: number };\n" + guard + "function show(n: Expr): void { if (isT(n)) console.log(String(n[sym])); else console.log('no'); }\n" + value + "show(e);\n"},
-		{"generic part", intersectionExpr + "function isK<T>(n: Expr): n is Expr & T & { readonly kind: 9 } { return n.kind === 9; }\nfunction show<T>(n: Expr): void { if (isK<T>(n)) console.log(String(n.pos)); else console.log('no'); }\n" + value + "show<{ readonly pos: number }>(e);\nshow<{ readonly kind: 8 }>(e);\n"},
+	t.Run("phantom brand part", func(t *testing.T) {
+		t.Parallel()
+		program := lowersAndAgreesWithNodeAs(t, intersectionExpr+"type T = Expr & { readonly kind: 9; readonly __tagged: undefined };\n"+guard+showPos+value+"show(e);\n", ".ts")
+		if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != "2\n" {
+			t.Fatalf("native: exit %d, stdout %q, stderr %q; want 0 and %q", code, stdout, stderr, "2\n")
+		}
+	})
+	for _, probe := range []struct{ name, source, stop string }{
+		{"callable part", intersectionExpr + "type T = Expr & ((x: number) => number);\n" + guard + showPos + value + "show(e);\n", "checked predicate overload target T"},
+		{"array part", "interface Expr { readonly kind: number; readonly pos: number }\ntype T = readonly Expr[] & { readonly kind: 9 };\nfunction isT(n: { readonly kind: number }): n is T { return n.kind === 9; }\nfunction show(n: { readonly kind: number }): void { if (isT(n)) console.log(String(n.length)); else console.log('no'); }\nconst e: Expr = { kind: 9, pos: 2 };\nshow(e);\n", "checked predicate overload target T"},
+		{"record part", intersectionExpr + "type T = Expr & Record<string, unknown> & { readonly kind: 9 };\n" + guard + showPos + value + "show(e);\n", "checked predicate overload target T"},
+		{"nested getter part", intersectionExpr + "type T = Expr & { readonly kind: 9; readonly operator: { get kind(): 1 } };\n" + guard + "function show(n: Expr): void { if (isT(n)) console.log(String(n.operator.kind)); else console.log('no'); }\n" + value + "show(e);\n", "a checked field alias of an accessor"},
+		{"method part", intersectionExpr + "type T = Expr & { readonly kind: 9; describe(): string };\n" + guard + "function show(n: Expr): void { if (isT(n)) console.log(n.describe()); else console.log('no'); }\nconst v = { kind: 9, pos: 2, operator: { kind: 1 }, describe(): string { return 'described'; } };\nshow(v);\n", "a callable field describe read through a checked view"},
+		{"symbol keyed part", intersectionExpr + "const sym: unique symbol = Symbol('s');\ntype T = Expr & { readonly kind: 9; readonly [sym]: number };\n" + guard + "function show(n: Expr): void { if (isT(n)) console.log(String(n[sym])); else console.log('no'); }\n" + value + "show(e);\n", "a value of type unique symbol"},
+		{"generic part", intersectionExpr + "function isK<T>(n: Expr): n is Expr & T & { readonly kind: 9 } { return n.kind === 9; }\nfunction show<T>(n: Expr): void { if (isK<T>(n)) console.log(String(n.pos)); else console.log('no'); }\n" + value + "show<{ readonly pos: number }>(e);\nshow<{ readonly kind: 8 }>(e);\n", "which this body is lowered without knowing"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
-			program, err := lowerSourceAs(t, probe.source, ".ts")
-			t.Logf("ROW %s lower: %v", probe.name, err)
-			if err == nil {
-				observed := runAgreementNode(t, writeAgreementSource(t, "main.ts", probe.source))
-				t.Logf("ROW %s node: exit %d stdout %q", probe.name, observed.code, observed.stdout)
-				code, stdout, stderr := brandedNative(t, program)
-				t.Logf("ROW %s native: exit %d stdout %q stderr %q", probe.name, code, stdout, stderr)
+			t.Parallel()
+			_, err := lowerSourceAs(t, probe.source, ".ts")
+			if err == nil || !strings.Contains(err.Error(), probe.stop) {
+				t.Fatalf("want the stop %q, got %v", probe.stop, err)
 			}
 		})
 	}
