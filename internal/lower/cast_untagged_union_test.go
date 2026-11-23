@@ -77,10 +77,13 @@ func TestUntaggedUnionCastsKeepTheirStops(t *testing.T) {
 		{"a primitive member", members + "function f(x: A | string): A { return x as A; }", ".ts", false, "which holds primitives"},
 		{"a class instance member", members + "class K { readonly k = 1; } function f(x: A | K): A { return x as A; }", ".ts", false, "whose members no literal tag tells apart"},
 		{"a dictionary member", members + "function f(x: A | Record<string, number>): A { return x as A; }", ".ts", false, ""},
-		// binder.ts:1416's shape: a CallExpression, whose kind is a literal, out of a union of nodes whose kind is
-		// open. A view with no test can't prove the literal, so it keeps the untagged stop until its tag road is
-		// built (Diagnostics' must). Mutant: declaresLiteral returning false, and the enum-literal rule refuses it.
+		// A target that holds a literal the source doesn't, at the top (binder.ts's CallExpression) or one field down
+		// (FlowCall, whose node is a CallExpression), and a readonly field the target makes writable (FlowLabel's
+		// antecedent): the unchecked-widening rule would refuse each, so the arm leaves each at the untagged stop and
+		// never turns it Refused (#qxt10dd). Mutant: untaggedUnionArm without its widened test refuses all three.
 		{"a target with a literal kind", "enum SyntaxKind { Identifier = 80, CallExpression = 213, Block = 241 } interface Expression { readonly kind: SyntaxKind; readonly end: number } interface Statement { readonly kind: SyntaxKind; readonly pos: number } interface CallExpression extends Expression { readonly kind: SyntaxKind.CallExpression; readonly argumentCount: number } function f(x: Expression | Statement): CallExpression { return x as CallExpression; }", ".ts", false, "a checked view of CallExpression over the union Expression | Statement, whose members no literal tag tells apart"},
+		{"a target with a literal one field down", "enum SyntaxKind { Identifier = 80, CallExpression = 213 } interface Node { readonly kind: SyntaxKind } interface CallExpression extends Node { readonly kind: SyntaxKind.CallExpression } interface FlowStart { readonly flags: number; readonly node: Node | undefined } interface FlowCall { readonly flags: number; readonly node: CallExpression } function f(x: FlowStart | FlowCall): FlowCall { return x as FlowCall; }", ".ts", false, "a checked view of FlowCall over the union FlowStart | FlowCall, whose members no literal tag tells apart"},
+		{"a readonly field the target makes writable", "interface FlowStart { readonly flags: number; readonly antecedent: FlowStart | undefined } interface FlowLabel { readonly flags: number; antecedent: FlowStart | undefined } function f(x: FlowStart | FlowLabel): FlowLabel { return x as FlowLabel; }", ".ts", false, "a checked view of FlowLabel over the union FlowStart | FlowLabel, whose members no literal tag tells apart"},
 		{"a sub-union target", members + "interface C { readonly c: boolean } function f(x: A | B | C): A | B { return x as A | B; }", ".ts", false, "a checked view of A | B over the union A | B | C, whose members no literal tag tells apart"},
 		// Runtime's two questions on #axqgdck: a writable field whose type differs by arm is refused at the cast by
 		// castUnionWrites (its union type X | Y fits neither arm's slot), so no X is ever written into a B and no
