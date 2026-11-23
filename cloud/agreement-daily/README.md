@@ -8,23 +8,29 @@ sanitized native build, so a wrong answer already on main shows here when no hea
 - `job.sh <k/n>` runs one shard. The day is four jobs:
 
   ```sh
-  source /opt/adamic-block/environment.sh && source cloud/sandboxed-job.sh && bash cloud/agreement-daily/job.sh 1/4
-  source /opt/adamic-block/environment.sh && source cloud/sandboxed-job.sh && bash cloud/agreement-daily/job.sh 2/4
-  source /opt/adamic-block/environment.sh && source cloud/sandboxed-job.sh && bash cloud/agreement-daily/job.sh 3/4
-  source /opt/adamic-block/environment.sh && source cloud/sandboxed-job.sh && bash cloud/agreement-daily/job.sh 4/4
+  source /opt/adamic-block/environment.sh && source cloud/sandboxed-job.sh && AGREEMENT_OPEN_TASKS="$open" bash cloud/agreement-daily/job.sh 1/4
+  source /opt/adamic-block/environment.sh && source cloud/sandboxed-job.sh && AGREEMENT_OPEN_TASKS="$open" bash cloud/agreement-daily/job.sh 2/4
+  source /opt/adamic-block/environment.sh && source cloud/sandboxed-job.sh && AGREEMENT_OPEN_TASKS="$open" bash cloud/agreement-daily/job.sh 3/4
+  source /opt/adamic-block/environment.sh && source cloud/sandboxed-job.sh && AGREEMENT_OPEN_TASKS="$open" bash cloud/agreement-daily/job.sh 4/4
   ```
+
+  `$open` is every task a pending sidecar at the asked commit names that is open when the day is
+  asked, ids without their `#`, separated by spaces. The sealed job can't ask the task store, so the
+  asker reads it, and the tool's `--open-tasks` holds it: a sidecar naming any other task excuses
+  nothing, and its program is judged as if it had none (#92cnfpf). Unset, the job runs nothing and
+  exits 64; set and empty, no task is open.
 
   It lays the submodules as repositories (`sandboxed_repositories`), installs stage3/api offline
   (`sandboxed_npm`), builds the tool, writes the manifest at the job's commit and runs the shard on
   half the box's threads, since a run on all of them timed out under its own load (Nov 21). Then it
   prints the compact report, gzipped and base64'd on one line between `AGREEMENT_REPORT_BEGIN` and
   `AGREEMENT_REPORT_END`; the tool's stderr without its progress lines (the timeout line, every
-  `disagreeing`, `pending`, `compiler failure` and `stale run-time stop` line, and the summary);
+  `disagreeing`, `pending`, `closed sidecar`, `compiler failure` and `stale run-time stop` line, and the summary);
   and last one line `AGREEMENT_DAILY shard=<k/n> head=<sha> exit=<n>`, so the job's ending, which
   quotes its log's last 40 lines, reads as the run and never as base64. The compact report is
   `diff.py compact`'s: the head, shard, verdict, void, void_reason, counts, and each program's
   path, judgment, outcome_hash and task. It exits with the tool's exit, 0 for a pass or a partial
-  shard, 1 red and 3 void; 64 is a shard that isn't k/n, 65 a preamble step, 66 the build or the
+  shard, 1 red and 3 void; 64 is a shard that isn't k/n or AGREEMENT_OPEN_TASKS unset, 65 a preamble step, 66 the build or the
   manifest, and 67 a report.json that didn't parse.
 - `diff.py extract <job log>...` reads the four logs back into one day, as JSON: the head, the
   shards, the counts summed and every program by path. It refuses, exiting 2 and naming the log, a
