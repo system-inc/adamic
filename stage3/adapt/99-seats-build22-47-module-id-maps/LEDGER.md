@@ -1,0 +1,1 @@
+- **JavaScript-changing, families 47 and 160 (#bbssdcy, Adamic’s Nov 22 21:49Z ruling):** 99-seats-build22-47-module-id-maps changes the two private ID tables in the System module transformer to Maps, preserving the collected assignment value and guarded cache deletion. The only readers look up entries by ID.
