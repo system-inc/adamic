@@ -1,0 +1,1 @@
+- **JavaScript-changing, family 164 (#bbssdcy, Nov 22 ruling and Nov 23 harness answer):** 99-seats-build22-164-decoder-step-closure gives appendSourceMap a private decoder step and preserves the public wrapper for its compiler and harness callers.
