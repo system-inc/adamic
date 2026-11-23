@@ -92,9 +92,9 @@ func movedDirection(before, after spread) string {
 		return ""
 	}
 	switch {
-	case after.Max < before.Min:
+	case after.Maximum < before.Minimum:
 		return "faster"
-	case after.Min > before.Max:
+	case after.Minimum > before.Maximum:
 		return "slower"
 	}
 	return ""

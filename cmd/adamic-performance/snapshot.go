@@ -13,14 +13,14 @@ import (
 // comment inside the object would refuse every landing (Lander, on #ctft27r).
 const header = "// Performance.jsonc: Adamic's performance at this commit, rewritten by the line in every landing commit (#hed1mkb).\n" +
 	"// Git history is the series. Never edit it by hand. Times are integer milliseconds: the median of the rounds, with\n" +
-	"// their min and max. cmd/adamic-performance writes it; nothing that builds or tests reads it.\n" +
+	"// their minimum and maximum. cmd/adamic-performance writes it; nothing that builds or tests reads it.\n" +
 	"// An execute program's ratio is native over Node on the judged measure, below 1 meaning native is faster; the\n" +
 	"// judged measure is user time unless its judge says wall. The note calls a number moved only when its new range\n" +
 	"// doesn't overlap the old one and its median moved more than 2% of the old median and more than 5 ms.\n" +
 	"// Comments go only in these whole lines above the object: the lander reads them, then the object as strict JSON.\n"
 
 // schemaVersion is the file's schema, which a reader refuses when it is another.
-const schemaVersion = 1
+const schemaVersion = 2
 
 // A snapshot is the whole file. Its fields are in the file's order, and every one is written, so the keys come out the
 // same way in every commit and git's diff of two snapshots is the numbers alone.
@@ -77,11 +77,12 @@ type program struct {
 	ColdBuild *int64 `json:"coldBuild,omitempty"`
 }
 
-// A spread is the median of the rounds with their min and max, so a comparison can ask whether two ranges overlap.
+// A spread is the median of the rounds with their minimum and maximum, so a comparison can ask whether two ranges
+// overlap.
 type spread struct {
-	Median int64 `json:"median"`
-	Min    int64 `json:"min"`
-	Max    int64 `json:"max"`
+	Median  int64 `json:"median"`
+	Minimum int64 `json:"minimum"`
+	Maximum int64 `json:"maximum"`
 }
 
 // clangTimes are the medians of the warm rounds' C compile and link, as the build log reports what clang ran for.

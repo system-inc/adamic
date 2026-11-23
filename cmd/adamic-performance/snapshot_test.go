@@ -16,9 +16,9 @@ import (
 func fullSnapshot() snapshot {
 	coldBuild := int64(3064)
 	value := noteSnapshot(earlierCommit,
-		namedProgram{Name: "hello", Program: program{Path: generatedPath, Lines: 1, CLines: 28, WarmBuild: spread{Median: 253, Min: 249, Max: 260}, FrontEnd: spread{Median: 27, Min: 26, Max: 29}, Clang: clangTimes{Compile: 29, Link: 113}, Phases: phaseTimes{Load: 180, Lower: 9, Emit: 4}, ColdBuild: &coldBuild}},
-		namedProgram{Name: "Parser", Program: program{Path: "stage3/namespaces/shapes/Parser.a", Lines: 512, CLines: 3946, WarmBuild: spread{Median: 304, Min: 298, Max: 311}, FrontEnd: spread{Median: 64, Min: 63, Max: 66}, Clang: clangTimes{Compile: 61, Link: 117}, Phases: phaseTimes{Load: 190, Lower: 30, Emit: 12}}},
-		namedProgram{Name: "tokenizer", Program: program{Path: "bench/tokenizer.ts", Lines: 120, CLines: 2210, WarmBuild: spread{Median: 421, Min: 410, Max: 430}, FrontEnd: spread{Median: 38, Min: 37, Max: 40}, Clang: clangTimes{Compile: 80, Link: 115}, Phases: phaseTimes{Load: 240, Lower: 25, Emit: 10}}},
+		namedProgram{Name: "hello", Program: program{Path: generatedPath, Lines: 1, CLines: 28, WarmBuild: spread{Median: 253, Minimum: 249, Maximum: 260}, FrontEnd: spread{Median: 27, Minimum: 26, Maximum: 29}, Clang: clangTimes{Compile: 29, Link: 113}, Phases: phaseTimes{Load: 180, Lower: 9, Emit: 4}, ColdBuild: &coldBuild}},
+		namedProgram{Name: "Parser", Program: program{Path: "stage3/namespaces/shapes/Parser.a", Lines: 512, CLines: 3946, WarmBuild: spread{Median: 304, Minimum: 298, Maximum: 311}, FrontEnd: spread{Median: 64, Minimum: 63, Maximum: 66}, Clang: clangTimes{Compile: 61, Link: 117}, Phases: phaseTimes{Load: 190, Lower: 30, Emit: 12}}},
+		namedProgram{Name: "tokenizer", Program: program{Path: "bench/tokenizer.ts", Lines: 120, CLines: 2210, WarmBuild: spread{Median: 421, Minimum: 410, Maximum: 430}, FrontEnd: spread{Median: 38, Minimum: 37, Maximum: 40}, Clang: clangTimes{Compile: 80, Link: 115}, Phases: phaseTimes{Load: 240, Lower: 25, Emit: 10}}},
 	)
 	value.MeasuredAt = "2026-11-21T02:10:00Z"
 	value.Machine.LoadBefore = [3]float64{0.4, 0.6, 0.9}
@@ -28,14 +28,14 @@ func fullSnapshot() snapshot {
 	value.Execute = execute{Rounds: 3, Programs: executions{
 		{Name: "trees", Execution: execution{
 			Judge:  "user",
-			Native: runtimeNumbers{Wall: spread{Median: 1608, Min: 1590, Max: 1650}, User: spread{Median: 1301, Min: 1290, Max: 1320}, PeakKiB: 201114},
-			Node:   runtimeNumbers{Wall: spread{Median: 1504, Min: 1490, Max: 1530}, User: spread{Median: 2032, Min: 2001, Max: 2050}, PeakKiB: 350310},
+			Native: runtimeNumbers{Wall: spread{Median: 1608, Minimum: 1590, Maximum: 1650}, User: spread{Median: 1301, Minimum: 1290, Maximum: 1320}, PeakKiB: 201114},
+			Node:   runtimeNumbers{Wall: spread{Median: 1504, Minimum: 1490, Maximum: 1530}, User: spread{Median: 2032, Minimum: 2001, Maximum: 2050}, PeakKiB: 350310},
 			Ratio:  0.64,
 		}},
 		{Name: "primes_parallel", Execution: execution{
 			Judge:  "wall",
-			Native: runtimeNumbers{Wall: spread{Median: 98, Min: 95, Max: 104}, User: spread{Median: 690, Min: 671, Max: 702}, PeakKiB: 4210},
-			Node:   runtimeNumbers{Wall: spread{Median: 1210, Min: 1190, Max: 1240}, User: spread{Median: 1218, Min: 1200, Max: 1251}, PeakKiB: 91020},
+			Native: runtimeNumbers{Wall: spread{Median: 98, Minimum: 95, Maximum: 104}, User: spread{Median: 690, Minimum: 671, Maximum: 702}, PeakKiB: 4210},
+			Node:   runtimeNumbers{Wall: spread{Median: 1210, Minimum: 1190, Maximum: 1240}, User: spread{Median: 1218, Minimum: 1200, Maximum: 1251}, PeakKiB: 91020},
 			Ratio:  0.08,
 		}},
 	}}
@@ -96,14 +96,14 @@ var fileKeyOrder = []struct {
 	{where: []string{"compile", "programs"}, want: []string{"hello", "Parser", "tokenizer"}},
 	{where: []string{"compile", "programs", "hello"}, want: []string{"path", "lines", "cLines", "warmBuild", "frontEnd", "clang", "phases", "coldBuild"}},
 	{where: []string{"compile", "programs", "Parser"}, want: []string{"path", "lines", "cLines", "warmBuild", "frontEnd", "clang", "phases"}},
-	{where: []string{"compile", "programs", "hello", "warmBuild"}, want: []string{"median", "min", "max"}},
+	{where: []string{"compile", "programs", "hello", "warmBuild"}, want: []string{"median", "minimum", "maximum"}},
 	{where: []string{"compile", "programs", "hello", "clang"}, want: []string{"compile", "link"}},
 	{where: []string{"compile", "programs", "hello", "phases"}, want: []string{"load", "lower", "emit"}},
 	{where: []string{"execute"}, want: []string{"rounds", "programs"}},
 	{where: []string{"execute", "programs"}, want: []string{"trees", "primes_parallel"}},
 	{where: []string{"execute", "programs", "trees"}, want: []string{"judge", "native", "node", "ratio"}},
 	{where: []string{"execute", "programs", "trees", "native"}, want: []string{"wall", "user", "peakKiB"}},
-	{where: []string{"execute", "programs", "trees", "node", "user"}, want: []string{"median", "min", "max"}},
+	{where: []string{"execute", "programs", "trees", "node", "user"}, want: []string{"median", "minimum", "maximum"}},
 }
 
 // The file's keys come out in the schema's order at every level, both halves' programs in theirs, and reading the file
@@ -180,7 +180,7 @@ func TestPerformanceJsoncReaderStripsCommentsButNotStrings(t *testing.T) {
 	if got, want := string(stripLineComments([]byte(`{"a": "x\"//y"} // gone`+"\n"))), `{"a": "x\"//y"} `+"\n"; got != want {
 		t.Errorf("stripped %q, want %q", got, want)
 	}
-	unknown := strings.Replace(string(written), `"schema": 1,`, `"schema": 1, "extra": true,`, 1)
+	unknown := strings.Replace(string(written), `"schema": 2,`, `"schema": 2, "extra": true,`, 1)
 	if _, err := decodeSnapshot([]byte(unknown)); err == nil {
 		t.Error("a field the snapshot doesn't have was read without an error")
 	}

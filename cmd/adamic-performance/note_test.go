@@ -29,20 +29,20 @@ func timed(name string, warmBuild, frontEnd spread) namedProgram {
 
 // Ranges that overlap are level, however far apart their medians, in both directions: hello's warm build moves its
 // median up from 349 to 360 within ranges that share 355 to 362, and Parser's down from 436 to 425 within ranges that
-// share 425 to 440. Each boundary is overlap too: trees' front end has the old max as its new min, and Parser's front
-// end the old min as its new max. Mutant: moved written as the medians differing, in either the faster or the slower
-// branch, which reads the move in that direction as moved.
+// share 425 to 440. Each boundary is overlap too: trees' front end has the old maximum as its new minimum, and Parser's
+// front end the old minimum as its new maximum. Mutant: moved written as the medians differing, in either the faster or
+// the slower branch, which reads the move in that direction as moved.
 func TestPerformanceNoteIsLevelWhenRangesOverlap(t *testing.T) {
 	t.Parallel()
 	previous := noteSnapshot(earlierCommit,
-		timed("hello", spread{Median: 349, Min: 340, Max: 362}, spread{Median: 45, Min: 44, Max: 47}),
-		timed("Parser", spread{Median: 436, Min: 425, Max: 450}, spread{Median: 105, Min: 100, Max: 110}),
-		timed("trees", spread{Median: 328, Min: 320, Max: 335}, spread{Median: 32, Min: 30, Max: 34}),
+		timed("hello", spread{Median: 349, Minimum: 340, Maximum: 362}, spread{Median: 45, Minimum: 44, Maximum: 47}),
+		timed("Parser", spread{Median: 436, Minimum: 425, Maximum: 450}, spread{Median: 105, Minimum: 100, Maximum: 110}),
+		timed("trees", spread{Median: 328, Minimum: 320, Maximum: 335}, spread{Median: 32, Minimum: 30, Maximum: 34}),
 	)
 	current := noteSnapshot(laterCommit,
-		timed("hello", spread{Median: 360, Min: 355, Max: 370}, spread{Median: 45, Min: 44, Max: 47}),
-		timed("Parser", spread{Median: 425, Min: 410, Max: 440}, spread{Median: 96, Min: 92, Max: 100}),
-		timed("trees", spread{Median: 328, Min: 320, Max: 335}, spread{Median: 36, Min: 34, Max: 39}),
+		timed("hello", spread{Median: 360, Minimum: 355, Maximum: 370}, spread{Median: 45, Minimum: 44, Maximum: 47}),
+		timed("Parser", spread{Median: 425, Minimum: 410, Maximum: 440}, spread{Median: 96, Minimum: 92, Maximum: 100}),
+		timed("trees", spread{Median: 328, Minimum: 320, Maximum: 335}, spread{Median: 36, Minimum: 34, Maximum: 39}),
 	)
 	if got, want := compareNote(&previous, current), "level against 1ed745b"; got != want {
 		t.Fatalf("note %q, want %q", got, want)
@@ -51,16 +51,16 @@ func TestPerformanceNoteIsLevelWhenRangesOverlap(t *testing.T) {
 
 // A range clear of the old one moved, faster when it's wholly below and slower when it's wholly above, each read as
 // old median to new, in the programs' order and warm build before front end. Mutant: faster and slower swapped, or the
-// boundary taken as clear (old max equal to new min reads moved, so the level test reds instead).
+// boundary taken as clear (old maximum equal to new minimum reads moved, so the level test reds instead).
 func TestPerformanceNoteNamesWhatMovedFasterOrSlower(t *testing.T) {
 	t.Parallel()
 	previous := noteSnapshot(earlierCommit,
-		timed("hello", spread{Median: 1668, Min: 1600, Max: 1700}, spread{Median: 45, Min: 44, Max: 47}),
-		timed("trees", spread{Median: 328, Min: 320, Max: 335}, spread{Median: 32, Min: 30, Max: 34}),
+		timed("hello", spread{Median: 1668, Minimum: 1600, Maximum: 1700}, spread{Median: 45, Minimum: 44, Maximum: 47}),
+		timed("trees", spread{Median: 328, Minimum: 320, Maximum: 335}, spread{Median: 32, Minimum: 30, Maximum: 34}),
 	)
 	current := noteSnapshot(laterCommit,
-		timed("hello", spread{Median: 349, Min: 340, Max: 362}, spread{Median: 45, Min: 44, Max: 47}),
-		timed("trees", spread{Median: 328, Min: 320, Max: 335}, spread{Median: 40, Min: 35, Max: 41}),
+		timed("hello", spread{Median: 349, Minimum: 340, Maximum: 362}, spread{Median: 45, Minimum: 44, Maximum: 47}),
+		timed("trees", spread{Median: 328, Minimum: 320, Maximum: 335}, spread{Median: 40, Minimum: 35, Maximum: 41}),
 	)
 	want := "hello warmBuild 1668 to 349 ms (faster); trees frontEnd 32 to 40 ms (slower)"
 	if got := compareNote(&previous, current); got != want {
@@ -75,7 +75,7 @@ func TestPerformanceNoteNamesWhatMovedFasterOrSlower(t *testing.T) {
 // moved number instead.
 func TestPerformanceNoteRefusesToCompareAcrossMachinesToolsOrRounds(t *testing.T) {
 	t.Parallel()
-	previous := noteSnapshot(earlierCommit, timed("hello", spread{Median: 1668, Min: 1600, Max: 1700}, spread{Median: 45, Min: 44, Max: 47}))
+	previous := noteSnapshot(earlierCommit, timed("hello", spread{Median: 1668, Minimum: 1600, Maximum: 1700}, spread{Median: 45, Minimum: 44, Maximum: 47}))
 	cases := []struct {
 		change func(current *snapshot)
 		want   string
@@ -90,14 +90,14 @@ func TestPerformanceNoteRefusesToCompareAcrossMachinesToolsOrRounds(t *testing.T
 		{change: func(current *snapshot) { current.Machine.Name, current.Compile.Rounds = "Lunatic", 3 }, want: `not compared: machine.name "Home" to "Lunatic"; compile.rounds 5 to 3`},
 	}
 	for _, each := range cases {
-		current := noteSnapshot(laterCommit, timed("hello", spread{Median: 349, Min: 340, Max: 362}, spread{Median: 45, Min: 44, Max: 47}))
+		current := noteSnapshot(laterCommit, timed("hello", spread{Median: 349, Minimum: 340, Maximum: 362}, spread{Median: 45, Minimum: 44, Maximum: 47}))
 		each.change(&current)
 		if got := compareNote(&previous, current); got != each.want {
 			t.Errorf("note %q, want %q", got, each.want)
 		}
 	}
 	// A machine's load, or whether it was held quiet, doesn't make it another machine.
-	current := noteSnapshot(laterCommit, timed("hello", spread{Median: 1668, Min: 1600, Max: 1700}, spread{Median: 45, Min: 44, Max: 47}))
+	current := noteSnapshot(laterCommit, timed("hello", spread{Median: 1668, Minimum: 1600, Maximum: 1700}, spread{Median: 45, Minimum: 44, Maximum: 47}))
 	current.Machine.LoadBefore, current.Machine.HeldQuiet = [3]float64{17.5, 9, 4}, true
 	if got, want := compareNote(&previous, current), "level against 1ed745b"; got != want {
 		t.Errorf("note %q, want %q", got, want)
@@ -108,7 +108,7 @@ func TestPerformanceNoteRefusesToCompareAcrossMachinesToolsOrRounds(t *testing.T
 // program as new.
 func TestPerformanceNoteOfTheFirstSnapshot(t *testing.T) {
 	t.Parallel()
-	current := noteSnapshot(laterCommit, timed("hello", spread{Median: 349, Min: 340, Max: 362}, spread{Median: 45, Min: 44, Max: 47}))
+	current := noteSnapshot(laterCommit, timed("hello", spread{Median: 349, Minimum: 340, Maximum: 362}, spread{Median: 45, Minimum: 44, Maximum: 47}))
 	if got, want := compareNote(nil, current), "first snapshot"; got != want {
 		t.Fatalf("note %q, want %q", got, want)
 	}
@@ -119,14 +119,14 @@ func TestPerformanceNoteOfTheFirstSnapshot(t *testing.T) {
 // compared against zeros, which reads it as moved slower.
 func TestPerformanceNoteNamesNewAndGonePrograms(t *testing.T) {
 	t.Parallel()
-	hello := spread{Median: 349, Min: 340, Max: 362}
-	frontEnd := spread{Median: 45, Min: 44, Max: 47}
+	hello := spread{Median: 349, Minimum: 340, Maximum: 362}
+	frontEnd := spread{Median: 45, Minimum: 44, Maximum: 47}
 	previous := noteSnapshot(earlierCommit, timed("hello", hello, frontEnd), timed("graph", hello, frontEnd))
 	current := noteSnapshot(laterCommit, timed("hello", hello, frontEnd), timed("trees", hello, frontEnd))
 	if got, want := compareNote(&previous, current), "level against 1ed745b; trees new; graph gone"; got != want {
 		t.Errorf("note %q, want %q", got, want)
 	}
-	current.Compile.Programs[0].Program.WarmBuild = spread{Median: 500, Min: 480, Max: 520}
+	current.Compile.Programs[0].Program.WarmBuild = spread{Median: 500, Minimum: 480, Maximum: 520}
 	if got, want := compareNote(&previous, current), "hello warmBuild 349 to 500 ms (slower); trees new; graph gone"; got != want {
 		t.Errorf("note %q, want %q", got, want)
 	}
@@ -136,7 +136,7 @@ func TestPerformanceNoteNamesNewAndGonePrograms(t *testing.T) {
 // number fixed, so a test moves only what it names.
 func executed(name, judge string, native, node spread) namedExecution {
 	numbers := func(judged spread) runtimeNumbers {
-		other := spread{Median: 500, Min: 490, Max: 510}
+		other := spread{Median: 500, Minimum: 490, Maximum: 510}
 		if judge == "wall" {
 			return runtimeNumbers{Wall: judged, User: other, PeakKiB: 2048}
 		}
@@ -148,7 +148,7 @@ func executed(name, judge string, native, node spread) namedExecution {
 // executeNoteSnapshot is noteSnapshot with hello level in the compile half and the given execute programs over 3
 // rounds.
 func executeNoteSnapshot(commit string, entries ...namedExecution) snapshot {
-	value := noteSnapshot(commit, timed("hello", spread{Median: 349, Min: 340, Max: 362}, spread{Median: 45, Min: 44, Max: 47}))
+	value := noteSnapshot(commit, timed("hello", spread{Median: 349, Minimum: 340, Maximum: 362}, spread{Median: 45, Minimum: 44, Maximum: 47}))
 	value.Execute = execute{Rounds: 3, Programs: executions(entries)}
 	return value
 }
@@ -161,25 +161,25 @@ func executeNoteSnapshot(commit string, entries ...namedExecution) snapshot {
 func TestPerformanceNoteNamesOnlyNativesJudgedMove(t *testing.T) {
 	t.Parallel()
 	previous := executeNoteSnapshot(earlierCommit,
-		executed("trees", "user", spread{Median: 1301, Min: 1290, Max: 1320}, spread{Median: 2032, Min: 2000, Max: 2050}),
-		executed("parallel_files", "wall", spread{Median: 311, Min: 300, Max: 320}, spread{Median: 701, Min: 690, Max: 710}),
+		executed("trees", "user", spread{Median: 1301, Minimum: 1290, Maximum: 1320}, spread{Median: 2032, Minimum: 2000, Maximum: 2050}),
+		executed("parallel_files", "wall", spread{Median: 311, Minimum: 300, Maximum: 320}, spread{Median: 701, Minimum: 690, Maximum: 710}),
 	)
 	current := executeNoteSnapshot(laterCommit,
-		executed("trees", "user", spread{Median: 1402, Min: 1380, Max: 1420}, spread{Median: 2032, Min: 2000, Max: 2050}),
-		executed("parallel_files", "wall", spread{Median: 318, Min: 309, Max: 330}, spread{Median: 701, Min: 690, Max: 710}),
+		executed("trees", "user", spread{Median: 1402, Minimum: 1380, Maximum: 1420}, spread{Median: 2032, Minimum: 2000, Maximum: 2050}),
+		executed("parallel_files", "wall", spread{Median: 318, Minimum: 309, Maximum: 330}, spread{Median: 701, Minimum: 690, Maximum: 710}),
 	)
-	current.Execute.Programs[1].Execution.Native.User = spread{Median: 3200, Min: 3100, Max: 3300}
-	current.Compile.Programs[0].Program.WarmBuild = spread{Median: 500, Min: 480, Max: 520}
+	current.Execute.Programs[1].Execution.Native.User = spread{Median: 3200, Minimum: 3100, Maximum: 3300}
+	current.Compile.Programs[0].Program.WarmBuild = spread{Median: 500, Minimum: 480, Maximum: 520}
 	if got, want := compareNote(&previous, current), "hello warmBuild 349 to 500 ms (slower); trees native user 1301 to 1402 ms (slower)"; got != want {
 		t.Errorf("note %q, want %q", got, want)
 	}
 
 	level := executeNoteSnapshot(laterCommit,
-		executed("trees", "user", spread{Median: 1310, Min: 1300, Max: 1330}, spread{Median: 1500, Min: 1450, Max: 1550}),
-		executed("parallel_files", "wall", spread{Median: 311, Min: 300, Max: 320}, spread{Median: 401, Min: 390, Max: 410}),
+		executed("trees", "user", spread{Median: 1310, Minimum: 1300, Maximum: 1330}, spread{Median: 1500, Minimum: 1450, Maximum: 1550}),
+		executed("parallel_files", "wall", spread{Median: 311, Minimum: 300, Maximum: 320}, spread{Median: 401, Minimum: 390, Maximum: 410}),
 	)
-	level.Execute.Programs[0].Execution.Native.Wall = spread{Median: 9000, Min: 8900, Max: 9100}
-	level.Execute.Programs[1].Execution.Native.User = spread{Median: 3200, Min: 3100, Max: 3300}
+	level.Execute.Programs[0].Execution.Native.Wall = spread{Median: 9000, Minimum: 8900, Maximum: 9100}
+	level.Execute.Programs[1].Execution.Native.User = spread{Median: 3200, Minimum: 3100, Maximum: 3300}
 	if got, want := compareNote(&previous, level), "level against 1ed745b"; got != want {
 		t.Errorf("note %q, want %q", got, want)
 	}
@@ -191,10 +191,10 @@ func TestPerformanceNoteNamesOnlyNativesJudgedMove(t *testing.T) {
 // execute.rounds left out of incomparable, and the note reads level with the execute half's names.
 func TestPerformanceNoteNamesNewGoneAndRejudgedExecutePrograms(t *testing.T) {
 	t.Parallel()
-	trees := spread{Median: 1301, Min: 1290, Max: 1320}
-	onNode := spread{Median: 2032, Min: 2000, Max: 2050}
+	trees := spread{Median: 1301, Minimum: 1290, Maximum: 1320}
+	onNode := spread{Median: 2032, Minimum: 2000, Maximum: 2050}
 	previous := executeNoteSnapshot(earlierCommit, executed("trees", "user", trees, onNode), executed("graph", "user", trees, onNode), executed("sort", "user", trees, onNode))
-	current := executeNoteSnapshot(laterCommit, executed("trees", "user", trees, onNode), executed("primes_parallel", "wall", trees, onNode), executed("sort", "wall", spread{Median: 9000, Min: 8900, Max: 9100}, onNode))
+	current := executeNoteSnapshot(laterCommit, executed("trees", "user", trees, onNode), executed("primes_parallel", "wall", trees, onNode), executed("sort", "wall", spread{Median: 9000, Minimum: 8900, Maximum: 9100}, onNode))
 	if got, want := compareNote(&previous, current), "level against 1ed745b; primes_parallel new; sort judge user to wall; graph gone"; got != want {
 		t.Errorf("note %q, want %q", got, want)
 	}
@@ -210,14 +210,14 @@ func TestPerformanceNoteNamesNewGoneAndRejudgedExecutePrograms(t *testing.T) {
 // named new.
 func TestPerformanceNoteNamesAnExecuteHalfFirstMeasured(t *testing.T) {
 	t.Parallel()
-	trees := spread{Median: 1301, Min: 1290, Max: 1320}
-	onNode := spread{Median: 2032, Min: 2000, Max: 2050}
-	previous := noteSnapshot(earlierCommit, timed("hello", spread{Median: 349, Min: 340, Max: 362}, spread{Median: 45, Min: 44, Max: 47}))
+	trees := spread{Median: 1301, Minimum: 1290, Maximum: 1320}
+	onNode := spread{Median: 2032, Minimum: 2000, Maximum: 2050}
+	previous := noteSnapshot(earlierCommit, timed("hello", spread{Median: 349, Minimum: 340, Maximum: 362}, spread{Median: 45, Minimum: 44, Maximum: 47}))
 	current := executeNoteSnapshot(laterCommit, executed("trees", "user", trees, onNode), executed("sort", "user", trees, onNode))
 	if got, want := compareNote(&previous, current), "level against 1ed745b; execute first measured"; got != want {
 		t.Errorf("note %q, want %q", got, want)
 	}
-	current.Compile.Programs[0].Program.WarmBuild = spread{Median: 500, Min: 480, Max: 520}
+	current.Compile.Programs[0].Program.WarmBuild = spread{Median: 500, Minimum: 480, Maximum: 520}
 	if got, want := compareNote(&previous, current), "hello warmBuild 349 to 500 ms (slower); execute first measured"; got != want {
 		t.Errorf("note %q, want %q", got, want)
 	}
@@ -235,28 +235,28 @@ func TestPerformanceNoteMovesOnlyPastTheFloor(t *testing.T) {
 		before, after spread
 		want          string
 	}{
-		{before: spread{Median: 239, Min: 238, Max: 242}, after: spread{Median: 236, Min: 234, Max: 237}, want: ""},
-		{before: spread{Median: 500, Min: 495, Max: 505}, after: spread{Median: 510, Min: 507, Max: 512}, want: ""},
-		{before: spread{Median: 500, Min: 495, Max: 505}, after: spread{Median: 490, Min: 488, Max: 493}, want: ""},
-		{before: spread{Median: 500, Min: 495, Max: 505}, after: spread{Median: 511, Min: 507, Max: 512}, want: "slower"},
-		{before: spread{Median: 500, Min: 495, Max: 505}, after: spread{Median: 489, Min: 488, Max: 493}, want: "faster"},
-		{before: spread{Median: 30, Min: 29, Max: 31}, after: spread{Median: 35, Min: 33, Max: 36}, want: ""},
-		{before: spread{Median: 30, Min: 29, Max: 31}, after: spread{Median: 36, Min: 33, Max: 37}, want: "slower"},
-		{before: spread{Median: 163, Min: 161, Max: 165}, after: spread{Median: 168, Min: 166, Max: 170}, want: ""},
+		{before: spread{Median: 239, Minimum: 238, Maximum: 242}, after: spread{Median: 236, Minimum: 234, Maximum: 237}, want: ""},
+		{before: spread{Median: 500, Minimum: 495, Maximum: 505}, after: spread{Median: 510, Minimum: 507, Maximum: 512}, want: ""},
+		{before: spread{Median: 500, Minimum: 495, Maximum: 505}, after: spread{Median: 490, Minimum: 488, Maximum: 493}, want: ""},
+		{before: spread{Median: 500, Minimum: 495, Maximum: 505}, after: spread{Median: 511, Minimum: 507, Maximum: 512}, want: "slower"},
+		{before: spread{Median: 500, Minimum: 495, Maximum: 505}, after: spread{Median: 489, Minimum: 488, Maximum: 493}, want: "faster"},
+		{before: spread{Median: 30, Minimum: 29, Maximum: 31}, after: spread{Median: 35, Minimum: 33, Maximum: 36}, want: ""},
+		{before: spread{Median: 30, Minimum: 29, Maximum: 31}, after: spread{Median: 36, Minimum: 33, Maximum: 37}, want: "slower"},
+		{before: spread{Median: 163, Minimum: 161, Maximum: 165}, after: spread{Median: 168, Minimum: 166, Maximum: 170}, want: ""},
 	} {
 		if got := movedDirection(each.before, each.after); got != each.want {
 			t.Errorf("%+v to %+v moved %q, want %q", each.before, each.after, got, each.want)
 		}
 	}
 	// Both halves call it: sort's 3 ms reads level in the compile half's warm build and in the execute half's native.
-	sortBefore, sortAfter := spread{Median: 239, Min: 238, Max: 242}, spread{Median: 236, Min: 234, Max: 237}
-	previous := noteSnapshot(earlierCommit, timed("sort", sortBefore, spread{Median: 45, Min: 44, Max: 47}))
-	current := noteSnapshot(laterCommit, timed("sort", sortAfter, spread{Median: 45, Min: 44, Max: 47}))
+	sortBefore, sortAfter := spread{Median: 239, Minimum: 238, Maximum: 242}, spread{Median: 236, Minimum: 234, Maximum: 237}
+	previous := noteSnapshot(earlierCommit, timed("sort", sortBefore, spread{Median: 45, Minimum: 44, Maximum: 47}))
+	current := noteSnapshot(laterCommit, timed("sort", sortAfter, spread{Median: 45, Minimum: 44, Maximum: 47}))
 	if got, want := compareNote(&previous, current), "level against 1ed745b"; got != want {
 		t.Errorf("compile half: note %q, want %q", got, want)
 	}
-	executedBefore := executeNoteSnapshot(earlierCommit, executed("sort", "user", sortBefore, spread{Median: 700, Min: 690, Max: 710}))
-	executedAfter := executeNoteSnapshot(laterCommit, executed("sort", "user", sortAfter, spread{Median: 700, Min: 690, Max: 710}))
+	executedBefore := executeNoteSnapshot(earlierCommit, executed("sort", "user", sortBefore, spread{Median: 700, Minimum: 690, Maximum: 710}))
+	executedAfter := executeNoteSnapshot(laterCommit, executed("sort", "user", sortAfter, spread{Median: 700, Minimum: 690, Maximum: 710}))
 	if got, want := compareNote(&executedBefore, executedAfter), "level against 1ed745b"; got != want {
 		t.Errorf("execute half: note %q, want %q", got, want)
 	}
@@ -269,8 +269,8 @@ func TestPerformanceNoteMovesOnlyPastTheFloor(t *testing.T) {
 // snapshot), and each case reads "not compared" instead.
 func TestPerformanceNoteComparesEachHalfOnItsOwnToolsAndRounds(t *testing.T) {
 	t.Parallel()
-	trees := spread{Median: 1301, Min: 1290, Max: 1320}
-	onNode := spread{Median: 2032, Min: 2000, Max: 2050}
+	trees := spread{Median: 1301, Minimum: 1290, Maximum: 1320}
+	onNode := spread{Median: 2032, Minimum: 2000, Maximum: 2050}
 	previous := executeNoteSnapshot(earlierCommit, executed("trees", "user", trees, onNode))
 	for _, each := range []struct {
 		change func(current *snapshot)
@@ -293,8 +293,8 @@ func TestPerformanceNoteComparesEachHalfOnItsOwnToolsAndRounds(t *testing.T) {
 			want:   `compile not compared: compile.rounds 5 to 3; execute not compared: tools.node "v24.19.0" to "v24.20.0"`,
 		},
 	} {
-		current := executeNoteSnapshot(laterCommit, executed("trees", "user", spread{Median: 1402, Min: 1380, Max: 1420}, onNode))
-		current.Compile.Programs[0].Program.WarmBuild = spread{Median: 500, Min: 480, Max: 520}
+		current := executeNoteSnapshot(laterCommit, executed("trees", "user", spread{Median: 1402, Minimum: 1380, Maximum: 1420}, onNode))
+		current.Compile.Programs[0].Program.WarmBuild = spread{Median: 500, Minimum: 480, Maximum: 520}
 		each.change(&current)
 		if got := compareNote(&previous, current); got != each.want {
 			t.Errorf("note %q, want %q", got, each.want)
