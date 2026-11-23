@@ -25,7 +25,7 @@ func TestDateISOStringOtherMethodStopsByName(t *testing.T) {
 func TestDateLocaleFormIsRefused(t *testing.T) {
 	t.Parallel()
 	for _, method := range []string{"toLocaleTimeString", "toLocaleDateString", "getHours", "getTimezoneOffset", "toString"} {
-		_, err := lowerSourceAs(t, "const date = new Date(0);\nconsole.log(date."+method+"());\n", ".ts")
+		_, err := lowerSourceAs(t, "const date = new Date(0);\nconsole.log(`${date."+method+"()}`);\n", ".ts")
 		var refused *Refused
 		want := "Adamic 0.1 refuses " + method + ", a locale or local-timezone Date form; Adamic keeps time in UTC and ISO forms: read getTime(), valueOf() or toISOString() and build the text from those"
 		if !errors.As(err, &refused) || !strings.HasSuffix(err.Error(), want) {
