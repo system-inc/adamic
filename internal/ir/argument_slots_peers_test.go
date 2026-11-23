@@ -2,6 +2,7 @@ package ir
 
 import (
 	"math/rand"
+	"slices"
 	"testing"
 )
 
@@ -135,4 +136,44 @@ func TestPackedPeersVisitEachSetOnceAndLinearly(t *testing.T) {
 		}
 	}
 	t.Logf("%d copies of a set of %d: %d visits", copies, width, visits)
+}
+
+// A set is read once whatever order its copies list their functions in and however often they repeat one, and a
+// different set is read on its own: three orderings of {1, 2, 3}, one with a repeat, and {1, 2} make two sets'
+// visits, each member twice. Mutant: the key taken from the list as written (an order or a repeat reads as a new set,
+// 22 visits).
+func TestPackedPeersReadASetOnceInAnyOrder(t *testing.T) {
+	t.Parallel()
+	program := Program{Locals: []Local{{Type: Number}, {Type: MaybeNumber}}, FunctionTypeTargets: map[int][]int{
+		0: {3, 1, 2},
+		1: {2, 3, 1, 1},
+		2: {1, 2, 3},
+		3: {2, 1},
+	}}
+	for index := range 4 {
+		program.Functions = append(program.Functions, Function{Closure: true, Parameters: []int{index % 2}})
+	}
+	if _, visits := program.deriveArgumentFacts(); visits != 2*3+2*2 {
+		t.Fatalf("made %d visits, want %d: {1, 2, 3} once in any order, {1, 2} once", visits, 2*3+2*2)
+	}
+}
+
+// A set's key gives back its functions sorted and each once, as sorting and compacting the list does, over lists of
+// every length up to 300 with repeats, function indexes past one word, and the empty list.
+func TestTargetSetKeyGivesTheSortedDistinctMembers(t *testing.T) {
+	t.Parallel()
+	random := rand.New(rand.NewSource(97))
+	var words []uint64
+	var key []byte
+	for round := range 2000 {
+		targets := make([]int, random.Intn(300))
+		for index := range targets {
+			targets[index] = random.Intn(1 + random.Intn(700))
+		}
+		want := slices.Compact(slices.Sorted(slices.Values(targets)))
+		words, key = targetSetKey(targets, words, key)
+		if got := setMembers(words); !slices.Equal(got, want) {
+			t.Fatalf("round %d: %v gave %v, want %v", round, targets, got, want)
+		}
+	}
 }
