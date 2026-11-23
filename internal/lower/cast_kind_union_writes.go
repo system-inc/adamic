@@ -2,6 +2,7 @@ package lower
 
 import (
 	"reflect"
+	"slices"
 	"strconv"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -44,6 +45,26 @@ import (
 // decrement. An element write (`u[k] = v`) and a field written as a destructuring's or a loop's target stay
 // NotYet (kindUnionWrites), each a road main's checked write hasn't been measured on through a union; a delete
 // is refused before, as any delete is.
+//
+// Adamic narrowed the literals the fourth condition judges on Nov 22 (#t2p4wyv, family 146, binder.ts:2884's
+// `const expr = node as PropertyAccessExpression | ElementAccessExpression`, whose write of flowNode met
+// AsExpression's carrier through another cast's proof), after Language broke the wider premise: a receiver's
+// narrowed union can be stale at the write, since the tag doesn't move but the reference behind it can (k06 to
+// k08, a holder's field, a parameter's field and an alias, repointed between the test and the write), and a
+// lying predicate never proved it (k04b). So the write is judged by the literals of the receiver's own union
+// only where that union can't go stale (kindUnionWriteLiterals): the receiver is a name bound by a const, or by
+// a parameter its function never assigns, and its union came from a tag test or a kind-checked cast's own
+// result, with no other narrowing on the way. The premise: a const or never-assigned binding can't be
+// repointed, and the tag it holds was tested or checked at run time, so no tag outside its union reaches the
+// write. It also leans on the tag itself not moving between the test and the write, which main's whole-proof
+// judgment never needed. A tag can be rewritten through a type whose tag field is writable and wider than the
+// member's literal, and seeing a member that way is refused as widening (adamic/invariant-mutable,
+// WebAssembly's k15); or with no view at all, by Object.assign, which stops on a shape no plain literal proves,
+// or Object.defineProperty, which is refused (Lower's k16 and k17). tsc's tags are readonly besides. All three
+// are pinned in TestKindUnionWriteTagRewriteStops. Every other receiver, a property path, an element, a let
+// (rule 3350 holds a let a call rewrites), a predicate's narrowing, is judged by every literal of the cast
+// proof, as before. Each literal judged still meets
+// every layout carrying it, and reach is asked after, untouched.
 
 // kindTagCarriers is every type a module of the program declares, an interface, a class or a type alias of an
 // object type or an intersection, whose field holds the literal: by its runtime value, as tagLiteralsDistinct
@@ -146,15 +167,16 @@ func kindTagKey(typeChecker *checker.Checker, field string, literal *checker.Typ
 }
 
 // kindUnionWriteHeld judges the named write part, of name, through the cast proof's union by the ruling's fourth
-// condition: nil admits it to main's checked-write road. Every carrier of the cast's literals is asked, the cast's
-// own members among them, since a member written inline in the cast is no declared type the index holds.
+// condition: nil admits it to main's checked-write road. Every carrier of the literals that can reach the write is
+// asked (kindUnionWriteLiterals), the cast's own members among them, since a member written inline in the cast is no
+// declared type the index holds.
 func (l *lowering) kindUnionWriteHeld(part *ast.Node, proof *kindUnion, name string) error {
 	type carrier struct {
 		of, literal *checker.Type
 	}
 	var carriers []carrier
 	held := map[*checker.Type]bool{}
-	for _, literal := range proof.literals {
+	for _, literal := range l.kindUnionWriteLiterals(part, proof) {
 		found, err := l.kindTagCarriersOf(proof.field, literal)
 		if err != nil {
 			return err
@@ -205,6 +227,294 @@ func (l *lowering) kindUnionWriteHeld(part *ast.Node, proof *kindUnion, name str
 		}
 	}
 	return nil
+}
+
+// kindUnionWriteLiterals is the literals a named write, part, through proof's union is judged by (#t2p4wyv): those of
+// the receiver's own union where it can't be stale at the write (kindUnionReceiverHolds), and every literal of the
+// proof otherwise. Every member of the receiver's union at the write must hold one literal at the proof's field, each
+// one of the proof's, since a receiver can't hold a tag the cast didn't check, and one that seems to is a shape
+// misread. The literals keep the proof's order, so a refusal names its carriers as it did.
+func (l *lowering) kindUnionWriteLiterals(part *ast.Node, proof *kindUnion) []*checker.Type {
+	receiver := ast.SkipParentheses(part.AsPropertyAccessExpression().Expression)
+	held := l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeAtLocation(receiver)))
+	own := map[*checker.Type]bool{}
+	for _, member := range castMembers(held) {
+		literal := l.fieldLiteral(member, proof.field)
+		if literal == nil || !slices.Contains(proof.literals, literal) {
+			return proof.literals
+		}
+		own[literal] = true
+	}
+	if !l.kindUnionReceiverHolds(receiver, held, proof.field) {
+		return proof.literals
+	}
+	var literals []*checker.Type
+	for _, literal := range proof.literals {
+		if own[literal] {
+			literals = append(literals, literal)
+		}
+	}
+	return literals
+}
+
+// kindUnionReceiverHolds is whether receiver, parentheses aside, holds at the write only the tags of held, its union
+// there: it's a name a const or a never-assigned parameter binds (kindUnionFixedBinding), and held came from a tag
+// test or a kind-checked cast's own result (kindUnionReceiverTested). A property path, an element, a let and
+// anything else are never asked further.
+func (l *lowering) kindUnionReceiverHolds(receiver *ast.Node, held *checker.Type, field string) bool {
+	if receiver.Kind != ast.KindIdentifier {
+		return false
+	}
+	symbol := l.symbol(receiver)
+	if symbol == nil || symbol.ValueDeclaration == nil || !l.kindUnionFixedBinding(symbol) {
+		return false
+	}
+	return l.kindUnionReceiverTested(receiver, symbol, held, field)
+}
+
+// kindUnionFixedBinding is whether symbol is a binding no write can repoint: a name a const declares (never a let, a
+// var or a using), or a parameter its function never assigns. A parameter can be assigned only inside its own
+// function, so that function is walked, never the program: assignedSymbol (predicates.go) walks the files Load was
+// given, which can leave out the module declaring the function. A function naming arguments counts as assigning,
+// since in a sloppy script `arguments[0] = v` repoints the first parameter.
+func (l *lowering) kindUnionFixedBinding(symbol *ast.Symbol) bool {
+	declaration := symbol.ValueDeclaration
+	switch declaration.Kind {
+	case ast.KindVariableDeclaration:
+		list := declaration.Parent
+		return ast.IsIdentifier(declaration.Name()) && list != nil && list.Kind == ast.KindVariableDeclarationList && list.Flags&ast.NodeFlagsBlockScoped == ast.NodeFlagsConst
+	case ast.KindParameter:
+		if !ast.IsIdentifier(declaration.Name()) || declaration.Parent == nil {
+			return false
+		}
+		assigned := false
+		var visit ast.Visitor
+		// `arguments` is taken as text anywhere in the function, an inner function's own included, which errs
+		// closed: a narrower reading could only admit more.
+		visit = func(node *ast.Node) bool {
+			if node.Kind == ast.KindIdentifier && (node.Text() == "arguments" || ast.IsAssignmentTarget(node) && l.valueSymbol(node) == symbol) {
+				assigned = true
+			}
+			node.ForEachChild(visit)
+			return false
+		}
+		declaration.Parent.ForEachChild(visit)
+		return !assigned
+	}
+	return false
+}
+
+// kindUnionReceiverTested is whether held, the union receiver holds at the write, came from a tag test or a
+// kind-checked cast's own result. A const initialized by a kind-checked cast holds the cast's target union, every
+// tag of which the cast checked at run time, so a write that sees that union whole walks nothing; any other binding
+// seen whole was never tested, a parameter declared at the union among them. Otherwise the checker's flow is walked
+// back from the write (kindUnionReceiverWalk).
+func (l *lowering) kindUnionReceiverTested(receiver *ast.Node, symbol *ast.Symbol, held *checker.Type, field string) bool {
+	declared := l.checker.GetTypeOfSymbol(symbol)
+	cast := l.kindUnionCastBinding(symbol.ValueDeclaration)
+	if checker.Checker_isTypeIdenticalTo(l.checker, held, l.checker.GetNonNullableType(l.concrete(declared))) {
+		return cast
+	}
+	data := receiver.FlowNodeData()
+	if data == nil || data.FlowNode == nil {
+		return false
+	}
+	walk := &kindUnionReceiverWalk{l: l, reference: receiver, declaration: symbol.ValueDeclaration, declared: declared, field: field, cast: cast, seen: map[kindUnionReceiverStep]bool{}}
+	return walk.visit(data.FlowNode, false)
+}
+
+// kindUnionCastBinding is whether declaration is an unannotated const's whose initializer is a kind-checked cast
+// (kindUnionCast, the judgment castProof makes of it), `const expr = node as A | B`: the binding holds the cast's own
+// result, at the cast's target union.
+func (l *lowering) kindUnionCastBinding(declaration *ast.Node) bool {
+	if declaration.Kind != ast.KindVariableDeclaration || declaration.Type() != nil || declaration.Initializer() == nil {
+		return false
+	}
+	cast := ast.SkipParentheses(declaration.Initializer())
+	if cast.Kind != ast.KindAsExpression {
+		return false
+	}
+	source := l.concrete(l.checker.GetTypeAtLocation(cast.AsAsExpression().Expression))
+	target := l.concrete(l.checker.GetTypeAtLocation(cast))
+	proven, err := l.kindUnionCast(cast, source, target)
+	return proven != nil && err == nil
+}
+
+// kindUnionReceiverWalk walks the checker's flow back from a write's receiver to where its binding takes its own
+// type: the const's declaration, or the start of the function the binding belongs to. A closure takes the narrowing
+// of a binding declared outside it from where it's made, as the checker does. Every path must end there narrowed by
+// a tag test, or at a kind-checked cast's own result (cast), and every step on it that narrows the receiver must be
+// a tag test (tagTest, switchTest) or one that drops only undefined and null without a call. Anything else fails the
+// walk: a predicate's call, either side, an assertion's, an `in`, a typeof, an aliased condition, a flow node it
+// doesn't know.
+type kindUnionReceiverWalk struct {
+	l           *lowering
+	reference   *ast.Node
+	declaration *ast.Node
+	declared    *checker.Type
+	field       string
+	cast        bool
+	seen        map[kindUnionReceiverStep]bool
+}
+
+// kindUnionReceiverStep is a flow node as a path meets it, with a tag test nearer the write or without one: a node met
+// both ways is walked both ways, since one path's tag test doesn't stand for another's.
+type kindUnionReceiverStep struct {
+	flow     *ast.FlowNode
+	narrowed bool
+}
+
+func (w *kindUnionReceiverWalk) visit(flow *ast.FlowNode, narrowed bool) bool {
+	for flow != nil {
+		at := kindUnionReceiverStep{flow: flow, narrowed: narrowed}
+		if w.seen[at] {
+			return true
+		}
+		w.seen[at] = true
+		switch {
+		case flow.Flags&ast.FlowFlagsUnreachable != 0:
+			return true
+		case flow.Flags&ast.FlowFlagsStart != 0:
+			if container := flow.Node; container != nil && !kindUnionDeclaredIn(w.declaration, container) {
+				if outer := container.FlowNodeData(); outer != nil && outer.FlowNode != nil {
+					flow = outer.FlowNode
+					continue
+				}
+			}
+			return narrowed || w.cast
+		case flow.Flags&ast.FlowFlagsAssignment != 0:
+			if flow.Node == w.declaration {
+				return narrowed || w.cast
+			}
+			// A const or a never-assigned parameter has no other assignment; meeting one is a binding misread.
+			if predicateMatchingReference(w.l.checker, w.reference, flow.Node) {
+				return false
+			}
+			flow = flow.Antecedent
+		case flow.Flags&ast.FlowFlagsCondition != 0:
+			condition := ast.SkipParentheses(flow.Node)
+			for condition.Kind == ast.KindPrefixUnaryExpression && condition.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken {
+				condition = ast.SkipParentheses(condition.AsPrefixUnaryExpression().Operand)
+			}
+			// A call's condition never stands on the path, a predicate's or a boolean's, even one that narrows
+			// nothing: the ruling says no predicate between, and a call is never asked whether it was one. A
+			// cast's own result seen whole is trusted without a walk (kindUnionReceiverTested), so binder.ts's
+			// `isNarrowableReference(expr)` before its write meets no walk.
+			if condition.Kind == ast.KindCallExpression {
+				return false
+			}
+			narrows, trusted := w.step(flow, w.tagTest(condition), true)
+			if !trusted {
+				return false
+			}
+			narrowed = narrowed || narrows
+			flow = flow.Antecedent
+		case flow.Flags&ast.FlowFlagsSwitchClause != 0:
+			narrows, trusted := w.step(flow, w.switchTest(flow.Node.AsFlowSwitchClauseData().SwitchStatement), false)
+			if !trusted {
+				return false
+			}
+			narrowed = narrowed || narrows
+			flow = flow.Antecedent
+		case flow.Flags&(ast.FlowFlagsCall|ast.FlowFlagsArrayMutation) != 0:
+			// A call that narrows the receiver is an assertion's, never trusted; one that doesn't is passed.
+			if _, trusted := w.step(flow, false, false); !trusted {
+				return false
+			}
+			flow = flow.Antecedent
+		case flow.Flags&ast.FlowFlagsReduceLabel != 0:
+			// Its target's antecedents are walked whole where the label is reached.
+			flow = flow.Antecedent
+		case flow.Flags&ast.FlowFlagsLabel != 0:
+			for list := flow.Antecedents; list != nil; list = list.Next {
+				if !w.visit(list.Flow, narrowed) {
+					return false
+				}
+			}
+			return true
+		default:
+			return false
+		}
+	}
+	return false
+}
+
+// step judges one flow node that may narrow the receiver: narrows says a tag test narrowed it there, and trusted says
+// the node may stand on the path. A node leaving the receiver's type as it found it stands. One narrowing it stands
+// where tag says it's a tag test whose incoming union can't lie (enumTagHazardOf, as the enum tag walk asks it), or
+// where nullish allows a step dropping only undefined and null.
+func (w *kindUnionReceiverWalk) step(flow *ast.FlowNode, tag, nullish bool) (narrows, trusted bool) {
+	before := predicateFlowType(w.l.checker, w.reference, w.declared, w.declared, nil, flow.Antecedent)
+	after := predicateFlowType(w.l.checker, w.reference, w.declared, w.declared, nil, flow)
+	switch {
+	case checker.Checker_isTypeIdenticalTo(w.l.checker, after, before):
+		return false, true
+	case tag:
+		return true, w.l.enumTagHazardOf(before, w.field) == enumTagNoHazard
+	case nullish:
+		return false, checker.Checker_isTypeIdenticalTo(w.l.checker, after, w.l.checker.GetNonNullableType(before))
+	}
+	return false, false
+}
+
+// tagTest is whether condition compares the receiver's field with a literal, `x.kind !== "c"` or `===`, either way
+// round. A comparison with anything but a literal could be with a value whose own narrowing is stale.
+func (w *kindUnionReceiverWalk) tagTest(condition *ast.Node) bool {
+	if condition.Kind != ast.KindBinaryExpression {
+		return false
+	}
+	binary := condition.AsBinaryExpression()
+	if operator := binary.OperatorToken.Kind; operator != ast.KindEqualsEqualsEqualsToken && operator != ast.KindExclamationEqualsEqualsToken {
+		return false
+	}
+	return w.fieldRead(binary.Left) && w.l.kindUnionLiteral(binary.Right) || w.fieldRead(binary.Right) && w.l.kindUnionLiteral(binary.Left)
+}
+
+// switchTest is whether statement switches on the receiver's field with a literal in every case, so each clause
+// narrows by a tag test.
+func (w *kindUnionReceiverWalk) switchTest(statement *ast.Node) bool {
+	switched := statement.AsSwitchStatement()
+	if !w.fieldRead(switched.Expression) {
+		return false
+	}
+	for _, clause := range switched.CaseBlock.AsCaseBlock().Clauses.Nodes {
+		if clause.Kind != ast.KindDefaultClause && !w.l.kindUnionLiteral(clause.AsCaseOrDefaultClause().Expression) {
+			return false
+		}
+	}
+	return true
+}
+
+// fieldRead is whether node reads the walk's field directly off the receiver, as the enum tag walk reads a field: no
+// optional chain, and no accessor on any member.
+func (w *kindUnionReceiverWalk) fieldRead(node *ast.Node) bool {
+	return (&enumTagWalk{l: w.l, reference: w.reference}).fieldRead(node) == w.field
+}
+
+// kindUnionLiteral is whether node, parentheses aside, is a literal a tag test compares with: a string, a number, a
+// template without substitutions or a boolean written as one, or an enum member (enumMember), whose value nothing
+// moves.
+func (l *lowering) kindUnionLiteral(node *ast.Node) bool {
+	node = ast.SkipParentheses(node)
+	switch node.Kind {
+	case ast.KindStringLiteral, ast.KindNumericLiteral, ast.KindNoSubstitutionTemplateLiteral, ast.KindTrueKeyword, ast.KindFalseKeyword:
+		return true
+	case ast.KindPrefixUnaryExpression:
+		unary := node.AsPrefixUnaryExpression()
+		return unary.Operator == ast.KindMinusToken && ast.SkipParentheses(unary.Operand).Kind == ast.KindNumericLiteral
+	}
+	return l.enumMember(node) != nil
+}
+
+// kindUnionDeclaredIn is whether declaration sits inside container, a function whose start the walk met: there the
+// binding's own type begins, and nothing outside narrows it.
+func kindUnionDeclaredIn(declaration, container *ast.Node) bool {
+	for at := declaration.Parent; at != nil; at = at.Parent {
+		if at == container {
+			return true
+		}
+	}
+	return false
 }
 
 // kindUnionNamedWrite is whether part, a property access a write targets, is a named write this head admits:
