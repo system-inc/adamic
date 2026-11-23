@@ -4879,6 +4879,7 @@ class GateToolCrashes(unittest.TestCase):
             "# example/internal/a\ninternal/a/a.go:4:2: no required module provides package example/missing\n",
             "package example/a\n\timports example/b\n\timports example/a: import cycle not allowed\n",
             os.path.join(self.directory, "internal/a/a.go") + ":1:1: expected 'package', found 'EOF'\n",
+            "internal/a/a.go:3:8: missing go.sum entry for module providing package example.com/m; to add: go mod download example.com/m\n",
         ]
         box = [
             "go: example.com/m@v1.0.0: module lookup disabled by GOPROXY=off\n",
@@ -4886,6 +4887,8 @@ class GateToolCrashes(unittest.TestCase):
             "go: creating work dir: mkdir /tmp/go-build1: no space left on device\n",
             "/root/go/pkg/mod/example.com/m@v1.0.0/m.go:3:1: expected 'package', found 'EOF'\n",
             "../outside/b.go:3:1: expected 'package', found 'EOF'\n",
+            "internal/a/a.go:3:8: example.com/m@v1.0.0: module lookup disabled by GOPROXY=off\n",
+            "internal/a/a.go:3:8: example.com/m@v1.0.0: reading /home/job/go/pkg/mod/cache/download/example.com/m/@v/v1.0.0.mod: no such file or directory\n",
         ]
         for stderr in tree:
             with self.subTest(stderr=stderr):
@@ -4916,6 +4919,32 @@ class GateToolCrashes(unittest.TestCase):
                 listing = subprocess.run(run.packageGraphCommand(), cwd=tree, capture_output=True, text=True, env=environment)
                 self.assertNotEqual(listing.returncode, 0, listing.stdout)
                 self.assertIsInstance(run.goListFailure(tree, listing.stderr, "go list failed", SystemExit), run.TreeRefusal, listing.stderr)
+
+    def test_a_real_go_list_of_a_module_the_cache_lacks_is_the_box_s(self):
+        # Pins Planning's question on aa71cbb9 against go's own words: a module go.mod requires and go.sum names, which an
+        # empty module cache lacks under GOPROXY=off, makes go list exit nonzero, and goListFailure never reads it as the
+        # change's, wherever go puts it, a go: line or the import's position in the tree. It prints what go said, so a
+        # reader sees which.
+        if shutil.which("go") is None:
+            self.skipTest("no go on this box to list a module with")
+        tree = os.path.join(self.directory, "fetch")
+        files = {"go.mod": "module example\n\ngo 1.20\n\nrequire example.com/m v1.0.0\n",
+                 "go.sum": "example.com/m v1.0.0 h1:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=\n"
+                           "example.com/m v1.0.0/go.mod h1:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=\n",
+                 "a/a.go": "package a\n\nimport _ \"example.com/m\"\n"}
+        for path, text in files.items():
+            os.makedirs(os.path.dirname(os.path.join(tree, path)), exist_ok=True)
+            with open(os.path.join(tree, path), "w") as handle:
+                handle.write(text)
+        cache = os.path.join(self.directory, "modcache")
+        os.makedirs(cache)
+        environment = dict(os.environ, GOFLAGS="-mod=mod", GOPROXY="off", GOWORK="off", GOTOOLCHAIN="local", GOMODCACHE=cache)
+        listing = subprocess.run(run.packageGraphCommand(), cwd=tree, capture_output=True, text=True, env=environment)
+        print("go list of a module the cache lacks said:\n" + listing.stderr.strip()[:1500])
+        self.assertNotEqual(listing.returncode, 0, listing.stdout)
+        failure = run.goListFailure(tree, listing.stderr, "go list failed", SystemExit)
+        self.assertNotIsInstance(failure, run.ChangeRefusal, listing.stderr)
+        self.assertIsInstance(failure, SystemExit)
 
     def test_duplicate_catalog_entries_are_the_change_s_refusal(self):
         # Pins: catalogFull's empty or duplicate catalog entries, read from the candidate's tree, raise TreeRefusal.

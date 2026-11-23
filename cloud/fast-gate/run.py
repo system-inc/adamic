@@ -993,6 +993,13 @@ def packageGraph(tree):
 # provides package ...". go names such a path relative to the directory it ran in, the tree, or absolute.
 goListSourceError = re.compile(r"^\s*(\S+\.go):\d+(?::\d+)?: ")
 
+# goListModuleFetch is what a positioned go list error says when the line it's at only names where go met a module it
+# couldn't fetch: a module version and the fetch that failed, as "internal/a/a.go:3:8: example.com/m@v1.0.0: module
+# lookup disabled by GOPROXY=off", or reading or verifying one in the module cache. That's the box's gap, a module the
+# sealed image doesn't hold yet, never the change's source (Planning's question on aa71cbb9). A go.sum the change didn't
+# update ("missing go.sum entry") stays the tree's: go.sum is its own file, and the change fixes it there.
+goListModuleFetch = re.compile(r"@v\S*: (?:.*module lookup disabled|.*GOPROXY=off|reading |verifying |.*dial tcp|.*no such host)")
+
 
 def goListFailure(tree, stderr, what, otherwise):
     """The exception a go list of tree that exited nonzero raises (#qr2812x, Adamic Loom's must on 005785f9): a TreeRefusal,
@@ -1008,6 +1015,9 @@ def goListFailure(tree, stderr, what, otherwise):
         if error is None:
             continue
         path = os.path.realpath(error[1] if os.path.isabs(error[1]) else os.path.join(root, error[1]))
+        if goListModuleFetch.search(line[error.end():]):
+            # Where go met a module it couldn't fetch, inside the tree or not: the box's gap, never the change's.
+            continue
         if path.startswith(root + os.sep):
             return TreeRefusal("%s: %s" % (what, stderr.strip()[:2000]))
     return otherwise("%s: %s" % (what, stderr.strip()[:2000]))
