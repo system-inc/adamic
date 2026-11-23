@@ -1,0 +1,3 @@
+// The least program: it calls nothing of libm, since the runtime's Math is V8's ported in, so a Linux binary of it
+// loads no libm at start (math_link_test.go, #7z36qn6).
+console.log("hello world");

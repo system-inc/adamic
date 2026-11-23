@@ -230,8 +230,6 @@ func linkOne(directory string, compiler string, source string, output string, op
 	} else {
 		arguments = append(arguments, native_runtime.RuntimeLinkFlags(runtimeArchive)...)
 	}
-	// The runtime calls libm (trunc, floor, sqrt). On macOS that's part of libSystem and comes free; on
-	// Linux it's its own library, and only the sanitizers' runtime happened to pull it in.
 	if options.Request {
 		// Runtime constructors precede module initialization at the same default priority.
 		arguments = append(arguments, program)
@@ -240,7 +238,8 @@ func linkOne(directory string, compiler string, source string, output string, op
 	if program == "main.o" {
 		arguments = append(arguments, objectPrefixFlags()...)
 	}
-	arguments = append(arguments, "-lm")
+	// libm, kept on Linux only where something linked calls it (native_runtime.MathLinkFlags).
+	arguments = append(arguments, native_runtime.MathLinkFlags(options)...)
 	if options.Target == "wasm32-wasi" {
 		arguments = append(arguments, native_runtime.WASILinkFlags(options)...)
 	}
