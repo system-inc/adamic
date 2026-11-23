@@ -23,7 +23,7 @@ coverage's inputs also carry names, the changed paths it judges (coverageReduced
 leg's record at that tip holds (cloud/fast-gate/darwin-legs/README.md), and --darwin-a-paths with the same arguments the
 .a files its aCheck must cover, one a line.
 --reads-census --tree <checkout> --tools <tools checkout> prints every finding of the reads guard over the whole tree
-(readsGuardFindings), one a line, and exits 0 when there are none.
+(readsGuardFindings), one a line, and exits 0 when there are none, 1 when there are, and 2 when it crashed.
 Merged logs, Git history/branch state, toolchain and external spool identity still belong
 in the pool's verdict key: repository content alone cannot identify those inputs.
 
@@ -1101,30 +1101,45 @@ def coverageInputs(tree, unit, full, change):
 # the guard makes the next one red at the change that causes it. It's on when the gate tools' executors.txt says
 # "mode guard-reads" (executorMap), and --reads-census runs it over a whole tree either way.
 
-# readsComment is a // Reads: comment's whole text as internal/adamiclint/repowalk reads one (its readsLines): the
-# prefix, one space, and one glob with no space in it, written as in the reads line. Anything else declares nothing.
-readsComment = re.compile(r"// Reads: (\S+)")
+# readsComment is a // Reads: comment's whole text as internal/adamiclint/repowalk reads one (repowalk.go:854,
+# readsLines): the prefix "// Reads:", one space, and one glob holding no space as Go's unicode.IsSpace reads one, which
+# is narrower than Python's \s (it leaves out \x1c to \x1f). Anything else declares nothing.
+readsComment = re.compile("// Reads: ([^\t\n\v\f\r \x85\xa0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+)")
 
 
 def readsComments(source):
-    """Each // Reads: comment of a Go file's source, as (line, glob): a // comment whose text is readsComment's whole,
-    so the words inside a string, or quoted in a comment after other words, are no comment. A line's comment starts
-    where goCode, which blanks comments and keeps strings, first differs from the line."""
-    if "// Reads: " not in source:
+    """Each // Reads: comment of a Go file's source, as (line, glob), as repowalk's readsLines finds one (repowalk.go:854):
+    every // comment go/scanner reads, a /* */ comment or code before it on its line included, whose text, with every
+    carriage return dropped as go/scanner drops them from a // comment, is readsComment's whole. So the words inside a
+    string or a /* */ comment, or quoted in a // comment after other words, are no comment. source is read with its
+    carriage returns kept (newline=""), since go/scanner counts a line only at a newline."""
+    if "// Reads:" not in source:
         return []
-    found = []
-    for number, (text, code) in enumerate(zip(source.split("\n"), goCode(source).split("\n")), 1):
-        start = next((index for index, (character, kept) in enumerate(zip(text, code)) if character != kept), None)
-        comment = readsComment.fullmatch(text[start:].rstrip("\r")) if start is not None else None
-        if comment:
-            found.append((number, comment.group(1)))
+    found, position, line = [], 0, 1
+    while position < len(source):
+        if source.startswith("//", position):
+            end = source.find("\n", position)
+            end = len(source) if end < 0 else end
+            comment = readsComment.fullmatch(source[position:end].replace("\r", ""))
+            if comment:
+                found.append((line, comment.group(1)))
+        elif source.startswith("/*", position):
+            close = source.find("*/", position + 2)
+            end = len(source) if close < 0 else close + 2
+        elif source[position] in "\"'`":
+            end = goLiteralEnd(source, position)
+        else:
+            end = position + 1
+        line += source.count("\n", position, end)
+        position = end
     return found
 
 
 def readsCommentFiles(tree):
     """The tracked Go files of tree whose text holds a // Reads: comment's prefix, sorted, for readsComments to read.
+    The prefix is matched without its space, since a carriage return between the two is dropped from the comment.
     Raises when git grep fails, never reads as no comments."""
-    found = subprocess.run(["git", "-C", tree, "-c", "core.quotePath=false", "grep", "-l", "-F", "// Reads: ", "--", "*.go"],
+    found = subprocess.run(["git", "-C", tree, "-c", "core.quotePath=false", "grep", "-l", "-F", "// Reads:", "--", "*.go"],
                            capture_output=True, text=True)
     if found.returncode not in (0, 1):
         raise ValueError("git grep for // Reads: comments failed in %s: %s" % (tree, firstLinesOf(found.stderr)))
@@ -1148,12 +1163,38 @@ def trackedMatches(files, pattern):
 def readsTargets(files, tracked, glob):
     """The paths a // Reads: comment names: every tracked path its glob matches (trackedMatches), or for a plain path,
     the path itself, the tracked files under it when it names a directory (a walk of it, as runtimeproducts' names
-    internal/native_runtime), or the path alone when nothing tracked answers it, which no key can hold."""
+    internal/native_runtime), or the path alone when nothing tracked answers it, which no key can hold. A glob nothing
+    tracked matches (its files moved, or it reaches inside a gitlink, as cohere/*.ts does) is the glob alone, so it reads
+    as a missing path, never as a comment naming nothing."""
     if any(character in glob for character in "*?["):
-        return trackedMatches(files, glob)
+        return trackedMatches(files, glob) or [glob]
     if glob in tracked:
         return [glob]
     return trackedMatches(files, glob.rstrip("/") + "/*") or [glob]
+
+
+def readsGlobApart(glob):
+    """What in glob Python's fnmatch.fnmatchcase, which the guard and cover() match with, and Go's path.Match, which loom's
+    planner matches with (planner/reads.go fnmatch), read apart, or "" when they read it alike: a class opening [! or
+    [^, which Python negates on ! and Go on ^; a backslash, which Python reads as itself and Go as an escape; or a [
+    opening no class path.Match can read (a character or a lo-hi range, or more, no end of one a - or a ], then a ]),
+    which Python matches as itself and Go as nothing."""
+    if "[!" in glob or "[^" in glob:
+        return "a class opening [! or [^, which Python's fnmatch and Go's path.Match negate on different characters"
+    if "\\" in glob:
+        return "a backslash, which Python's fnmatch reads as itself and Go's path.Match as an escape"
+    opening = glob.find("[")
+    while opening >= 0:
+        position, ranges = opening + 1, 0
+        while position < len(glob) and not (glob[position] == "]" and ranges):
+            ranged = glob[position + 1:position + 2] == "-"
+            if glob[position] in "-]" or ranged and glob[position + 2:position + 3] in ("", "-", "]"):
+                break
+            position, ranges = position + (3 if ranged else 1), ranges + 1
+        if position >= len(glob) or glob[position] != "]" or not ranges:
+            return "a [ opening no class Go's path.Match can read, which Python's fnmatch matches as itself and Go as nothing"
+        opening = glob.find("[", position + 1)
+    return ""
 
 
 def readsAllowed(allowed, package, glob):
@@ -1162,18 +1203,27 @@ def readsAllowed(allowed, package, glob):
     return (package, glob) in allowed
 
 
-def readsLineHolds(tree, readers, package, path):
-    """Whether one of package's reads lines (readers, as readsGuardFindings gathers them) holds the tracked path in its
-    key, as cover() reads each line: its glob's match, for its content or, with paths, its name; or what a generated
-    line's list bounds (generatedReach), the whole tree when the list can't be read, as the planner keys it."""
+def readsGeneratedReach(tree, tracked, listPath):
+    """A generated line's reach as loom's planner keys it (planner/reads.go generatedReads): generatedReach's, or None,
+    the whole tree, when the list isn't tracked, since the planner reads only a tracked list."""
+    return generatedReach(tree, listPath) if listPath in tracked else None
+
+
+def readsLineHolds(tree, tracked, readers, package, path):
+    """Whether one of package's reads lines (readers, as readsGuardFindings gathers them) holds the tracked path's
+    content in its key, as a comment, which says the test reads what the file holds, needs: its glob's match, or what a
+    generated line's list bounds (readsGeneratedReach). A paths line never holds it, since the planner keys its matches
+    by name alone, so an edit to one reruns nothing (a comment that truly reads names only takes an allow line, with its
+    why). Nor does a generated line whose list can't be read: the planner keys the whole tree then, but the guard can't
+    tell what it keys, so it's no cover (readsGuardFindings reds the line itself)."""
     for _, _, reader, pattern, mode in readers:
         if reader != package:
             continue
         if mode == "generated":
-            reach = generatedReach(tree, pattern)
-            if reach is None or path in reach[0] or path.startswith(reach[1]):
+            reach = readsGeneratedReach(tree, tracked, pattern)
+            if reach is not None and (path in reach[0] or path.startswith(reach[1])):
                 return True
-        elif fnmatch.fnmatchcase(path, pattern):
+        elif mode != "paths" and fnmatch.fnmatchcase(path, pattern):
             return True
     return False
 
@@ -1195,16 +1245,17 @@ readsClosureFields = ["CFiles", "CXXFiles", "CgoFiles", "Dir", "EmbedFiles", "Fo
 
 
 def readsNearestPackage(packageDirectories, path):
-    """The package directory a tree path is nearest, its own directory's or the nearest above it, as adamic-loom
-    planner/ownfiles.go gives a key its own files, or None outside every package. packageDirectories is a set of
-    tree-relative directories, read by directory and never by import path (readsGuardFindings)."""
+    """The package directory a tree path is nearest, its own directory's or the nearest above it short of the root, as
+    adamic-loom planner/ownfiles.go's nearestPackage gives a key its own files, or None outside every package. The root
+    package, ".", owns only the files directly in it, as touched()'s walk (packageOwner) and the planner's stop short of
+    it. packageDirectories is a set of tree-relative directories, read by directory and never by import path
+    (readsGuardFindings)."""
     directory = os.path.dirname(path) or "."
-    while True:
-        if directory in packageDirectories:
-            return directory
-        if directory in (".", ""):
+    while directory not in packageDirectories:
+        directory = os.path.dirname(directory)
+        if directory == "":
             return None
-        directory = os.path.dirname(directory) or "."
+    return directory
 
 
 def readsClosureCommand(patterns):
@@ -1254,7 +1305,7 @@ def readsClosureFiles(tree, tools, package):
     return files
 
 
-def readsGuardFindings(tree, tools, changed=None, pathSetChanged=None):
+def readsGuardFindings(tree, tools, changed=None, pathSetChanged=None, record=None):
     """The reads guard's findings, each one line that names its fix:
     - a dead reads line: one in the gate tools' executors.txt, or the tree's (the planner keys both, the tools' first,
       planner/reads.go), whose glob, or a generated line's list, matches no tracked path of the tree (git ls-files, a
@@ -1269,8 +1320,11 @@ def readsGuardFindings(tree, tools, changed=None, pathSetChanged=None):
     With changed (and pathSetChanged, the paths it adds or deletes, as cover() gets them), the findings are the
     change's: a line that matched a path the change deleted and now matches none (one dead on the base was never this
     change's to fix, and is the census's), the comments of its changed Go files, and any comment naming a path it
-    deleted. Without, they're the whole tree's (--reads-census). A listing that can't be made raises, never reads as
-    covered."""
+    deleted; or every comment, when the change can shrink a key elsewhere (its executors.txt, a generated list, the
+    compiler map, a go.mod or go.work, a .go file added or deleted), the paths that did and the seconds it took then set
+    in record, a dict, as reads_comment_census. Without, they're the whole tree's (--reads-census). Every line, and
+    every comment checked, is refused when its glob reads apart in the gate and the planner (readsGlobApart), whatever
+    allows it. A listing that can't be made raises, never reads as covered."""
     census = changed is None
     files = sorted(path for path in git(tree, "ls-files", "-z").split("\0") if path)
     tracked = set(files)
@@ -1286,6 +1340,13 @@ def readsGuardFindings(tree, tools, changed=None, pathSetChanged=None):
         if not (package and glob and why):
             reds.append("executors.txt:%d is an allow without a package, a glob and why: write it `# allow: <package> <glob>: <why>`, or delete it" % number)
     allowed = {(package, glob) for _, package, glob, why in allows if package and glob and why}
+    # A glob the gate and loom's planner read apart (readsGlobApart) keys one set of paths and is checked against
+    # another, so it's refused wherever it's written, every line every time, and no allow line exempts it.
+    for where, number, package, pattern, mode in readers:
+        apart = readsGlobApart(pattern)
+        if apart:
+            reds.append("`%s` (%s:%d) holds %s: write the glob so both read it alike, since no allow exempts it" %
+                        (" ".join(["reads", package, pattern] + ([mode] if mode else [])), where, number, apart))
     deleted = [] if census else [path for path in pathSetChanged if path and path not in tracked]
     for where, number, package, pattern, mode in readers:
         if readsAllowed(allowed, package, pattern):
@@ -1301,27 +1362,50 @@ def readsGuardFindings(tree, tools, changed=None, pathSetChanged=None):
     # root's name is refused, a bare * included, and no allow line exempts it; so is a tracked Performance.jsonc anywhere
     # but the root, its own case. A paths line passes by rule, never by an allow (Planning's ruling on #r2a9vd4): it keys
     # names alone, and after the landing that seeds the file every tested tree holds the name too, inherited from main,
-    # so its key moves once, at the seed, never on a landing after. A generated line names its list, never a glob. Every
-    # line is checked, since the tools' are the census's and a change can add one to the tree's; a copy outside the root
-    # only where the change adds or moves it, the census the whole tree's.
+    # so its key moves once, at the seed, never on a landing after. A generated line is read through its list's reach
+    # (readsGeneratedReach), as the planner keys it: refused when the reach holds the root's file, a path equal to it or
+    # an under it starts with, and when the list can't be read, since the planner keys the whole tree then. Every line is
+    # checked, since the tools' are the census's and a change can add one to the tree's; a copy outside the root only
+    # where the change adds or moves it, the census the whole tree's.
     for where, number, package, pattern, mode in readers:
         if mode not in ("paths", "generated") and fnmatch.fnmatchcase(performanceFile, pattern):
             reds.append("`%s` (%s:%d) matches %s, which every landing rewrites at adamic's root, so no unit may read it "
                         "(#hed1mkb): narrow the glob so it can't match the root's %s" %
                         (" ".join(["reads", package, pattern] + ([mode] if mode else [])), where, number, performanceFile, performanceFile))
+        reach = readsGeneratedReach(tree, tracked, pattern) if mode == "generated" else ()
+        if reach is None:
+            reds.append("`reads %s %s generated` (%s:%d) names a list loom's planner can't read as cloud/generated_test.go "
+                        "decodes it (untracked, or not strict JSON of its shape), so it keys the whole tree, %s among it, which "
+                        "every landing rewrites at adamic's root (#hed1mkb): make the list tracked and strict" %
+                        (package, pattern, where, number, performanceFile))
+        elif reach and (performanceFile in reach[0] or performanceFile.startswith(reach[1])):
+            reds.append("`reads %s %s generated` (%s:%d) names a list whose entries reach %s, which every landing rewrites at "
+                        "adamic's root, so no unit may read it (#hed1mkb): drop the entry that reaches it" %
+                        (package, pattern, where, number, performanceFile))
     for path in (files if census else sorted(changedSet & tracked)):
         if path != performanceFile and path.rsplit("/", 1)[-1] == performanceFile:
             reds.append("%s is a %s outside adamic's root, where only the root's is the landing's measurements (#hed1mkb): move "
                         "or rename it" % (path, performanceFile))
-    sources = readsCommentFiles(tree) if census or deleted else []
+    # A change can shrink a key without touching the file of the comment it uncovers: a reads line of the tree's
+    # executors.txt dropped or narrowed, a generated line's list narrowed, the compiler map, a go.mod or go.work changed
+    # (a closure), or a .go file added or deleted, which can make a directory a package that takes files from its
+    # parent's own, or end one (the guard can't list the base's packages to tell which). Any of them checks every comment,
+    # as the census does, its why and seconds kept in record as reads_comment_census.
+    generatedLists = {pattern for _, _, _, pattern, mode in readers if mode == "generated"}
+    shrinks = [] if census else sorted(
+        {path for path in changedSet if path in ("cloud/fast-gate/executors.txt", compilerDependenciesPath, "go.work") or path in generatedLists
+         or path.rsplit("/", 1)[-1] == "go.mod"} | {path for path in pathSetChanged if path.endswith(".go")})
+    commentCensus = census or bool(shrinks)
+    started = time.monotonic()
+    sources = readsCommentFiles(tree) if commentCensus or deleted else []
     sources = sorted(set(sources) | {path for path in changedSet if path.endswith(".go") and path in tracked})
     comments = []
     for path in sources:
         if "testdata" in path.split("/"):
             continue  # a fixture (repowalk's analyzer cases), never a Go file of its package
-        with open(os.path.join(tree, path), errors="replace") as handle:
+        with open(os.path.join(tree, path), errors="replace", newline="") as handle:
             for line, glob in readsComments(handle.read()):
-                if census or path in changedSet or any(fnmatch.fnmatchcase(gone, glob) or gone.startswith(glob.rstrip("/") + "/") for gone in deleted):
+                if commentCensus or path in changedSet or any(fnmatch.fnmatchcase(gone, glob) or gone.startswith(glob.rstrip("/") + "/") for gone in deleted):
                     comments.append((path, line, glob))
     # By directory alone, never import path: goPackages files a dependency compiled for another package's test under
     # that package's path (ForTest), so internal/fresh's directory can map to internal/ir, and an import path read back
@@ -1329,6 +1413,10 @@ def readsGuardFindings(tree, tools, changed=None, pathSetChanged=None):
     packageDirectorySet = set(readsPackageDirectories(tree)) if comments else set()
     closures = {}
     for path, line, glob in comments:
+        apart = readsGlobApart(glob)
+        if apart:
+            reds.append("%s:%d reads %s, which holds %s: write the glob so both read it alike, since no allow exempts it" % (path, line, glob, apart))
+            continue
         package = readsNearestPackage(packageDirectorySet, path)
         if package is None:
             continue  # in no package, so in no unit's key
@@ -1337,7 +1425,7 @@ def readsGuardFindings(tree, tools, changed=None, pathSetChanged=None):
         targets = readsTargets(files, tracked, glob)
         missing = [target for target in targets if target not in tracked]
         uncovered = [target for target in targets if target in tracked and readsNearestPackage(packageDirectorySet, target) != package
-                     and not readsLineHolds(tree, readers, package, target)]
+                     and not readsLineHolds(tree, tracked, readers, package, target)]
         if uncovered and not missing:
             if package not in closures:
                 closures[package] = readsClosureFiles(tree, tools, package)
@@ -1348,20 +1436,32 @@ def readsGuardFindings(tree, tools, changed=None, pathSetChanged=None):
             reds.append("%s:%d reads %s%s, which %s's key doesn't hold: add `reads %s %s` to the tools line's cloud/fast-gate/executors.txt "
                         "(Keys or Judge adds it there; it isn't the change's to add)" %
                         (path, line, uncovered[0], " and %d more" % (len(uncovered) - 1) if len(uncovered) > 1 else "", package, package, glob))
+    if shrinks and record is not None:
+        record["reads_comment_census"] = {"paths": shrinks, "seconds": round(time.monotonic() - started, 1)}
     return reds
+
+
+# readsCensusCrashExit is --reads-census's exit when the census crashed (a listing it couldn't make), never 1, its
+# findings' exit, so a caller can't read a crash as findings or findings as a crash.
+readsCensusCrashExit = 2
 
 
 def readsCensusMain():
     """run.py --reads-census --tree <checkout> --tools <gate tools>: the reads guard over the whole tree (readsGuardFindings
     with no change), each finding a line on stdout, exit 0 when there are none and 1 when there are. It runs whether or
     not the tools turn the guard on, since it's what turns it on: Keys runs it at main's tip with the tools line, and
-    the guard goes on only when it's clean. A census that can't list raises, its traceback on stderr, nothing on stdout."""
+    the guard goes on only when it's clean. A census that crashes (a listing it can't make) exits 2,
+    readsCensusCrashExit, its traceback on stderr, nothing on stdout."""
     lister = argparse.ArgumentParser()
     lister.add_argument("--reads-census", action="store_true")
     lister.add_argument("--tree", required=True)
     lister.add_argument("--tools", required=True)
     arguments = lister.parse_args()
-    reds = readsGuardFindings(arguments.tree, arguments.tools)
+    try:
+        reds = readsGuardFindings(arguments.tree, arguments.tools)
+    except BaseException:
+        traceback.print_exc()
+        sys.exit(readsCensusCrashExit)
     for red in reds:
         print(red)
     sys.exit(1 if reds else 0)
@@ -2206,9 +2306,11 @@ class Gate:
         """The reads guard over this change (readsGuardFindings), once the gate tools' executors.txt turns it on with
         "mode guard-reads"; off, it does nothing and plans nothing. Run by the fast gate after cover(), before any test,
         and by the pool's census phase. Its findings are the change's red at reads, each naming its fix, and kept in the
-        record as reads_guard. A listing it can't make (go list, git grep) is the gate's own error, never the change's
-        red and never covered: it's charged as guarded() charges a stage that couldn't start, its traceback the failure,
-        which fail() marks as the gate tool's crash. Returns whether the gate goes on."""
+        record as reads_guard; when the change checked every comment (readsGuardFindings), the record's
+        reads_comment_census names the paths that made it and its seconds. A listing it can't make (go list, git grep)
+        is the gate's own error, never the change's red and never covered: it's charged as guarded() charges a stage
+        that couldn't start, its traceback the failure, which fail() marks as the gate tool's crash. Returns whether the
+        gate goes on."""
         if not executorMap(self.arguments.tools)[5]:
             return True
         started = time.monotonic()
@@ -2217,11 +2319,14 @@ class Gate:
         try:
             changed = self.git(self.arguments.tree, "-c", "core.quotePath=false", "diff", "--name-only", revision).split("\n")
             pathSetChanged = self.git(self.arguments.tree, "-c", "core.quotePath=false", "diff", "--name-only", "--no-renames", "--diff-filter=AD", revision).split("\n")
-            reds = readsGuardFindings(self.arguments.tree, self.arguments.tools, [path for path in changed if path], [path for path in pathSetChanged if path])
+            commentCensus = {}
+            reds = readsGuardFindings(self.arguments.tree, self.arguments.tools, [path for path in changed if path], [path for path in pathSetChanged if path],
+                                      commentCensus)
         except BaseException:
             self.fail("reads", traceback.format_exc())
             return False
         self.steps["reads"] = round(time.monotonic() - started, 1)
+        self.result.update(commentCensus)
         self.result["reads_guard"] = reds
         self.exits["reads"] = 1 if reds else 0
         if reds:
@@ -3876,15 +3981,34 @@ def generatedReach(tree, listPath):
     as a set of paths, and each under, as a tuple of prefixes every path below it starts with. None when the list can't be
     read as the reader knows it: missing, not one JSON value of the shape cloud/generated_test.go's checkGenerated
     decodes strictly, an entry naming both a path and an under or neither, a path that isn't clean inside the tree, or an
-    under that isn't a clean directory ending in a slash. The caller then reads the whole tree, never less."""
+    under that isn't a clean directory ending in a slash. The caller then reads the whole tree, never less.
+    Its keys are read as Go's decoder matches them to a struct's fields, case folded (goFields), so {"Files": ...} is
+    the list's files, as the planner reads it, and an integer is one only inside Go's int64."""
+
+    def goFields(pairs):
+        """A JSON object's members as encoding/json matches them to a struct's fields, each key lowercased, since it
+        folds case. Two keys folding to one field raise, since Go decodes both into it, the second merged over the
+        first, which no Python value says; so does a key that isn't ASCII, which Go folds by Unicode rules this
+        doesn't copy (a Kelvin sign for a k, a long s for an s), checked before lowering, since Python lowers a Kelvin sign
+        to k. Either is then no list the reader knows."""
+        if not all(key.isascii() for key, _ in pairs):
+            raise ValueError("a key that isn't ASCII")
+        keys = [key.lower() for key, _ in pairs]
+        if len(set(keys)) != len(keys):
+            raise ValueError("two keys folding to one field")
+        return dict(zip(keys, [value for _, value in pairs]))
+
+    def goInteger(value):
+        return value is None or type(value) is int and -2 ** 63 <= value < 2 ** 63
+
     try:
         with open(os.path.join(tree, listPath)) as handle:
-            declared = json.load(handle)
+            declared = json.load(handle, object_pairs_hook=goFields)
     except (OSError, ValueError):
         return None
-    if not isinstance(declared, dict) or not set(declared) <= {"maxFiles", "files"}:
+    if not isinstance(declared, dict) or not set(declared) <= {"maxfiles", "files"}:
         return None
-    if declared.get("maxFiles") is not None and (type(declared["maxFiles"]) is not int):
+    if not goInteger(declared.get("maxfiles")):
         return None
     files = declared.get("files") or []
     if not isinstance(files, list):
@@ -3895,14 +4019,14 @@ def generatedReach(tree, listPath):
 
     paths, unders = {listPath}, []
     for entry in files:
-        if not isinstance(entry, dict) or not set(entry) <= {"path", "under", "suffix", "command", "maxBytes"}:
+        if not isinstance(entry, dict) or not set(entry) <= {"path", "under", "suffix", "command", "maxbytes"}:
             return None
         for field in ("path", "under", "suffix"):
             if entry.get(field) is not None and not isinstance(entry[field], str):
                 return None
         if entry.get("command") is not None and not (isinstance(entry["command"], list) and all(isinstance(word, str) for word in entry["command"])):
             return None
-        if entry.get("maxBytes") is not None and type(entry["maxBytes"]) is not int:
+        if not goInteger(entry.get("maxbytes")):
             return None
         path, under = entry.get("path") or "", entry.get("under") or ""
         if (path == "") == (under == ""):

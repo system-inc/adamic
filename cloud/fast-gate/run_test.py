@@ -986,13 +986,18 @@ class Coverage(FailClosed):
 
 class ReadsGuard(unittest.TestCase):
     """The reads guard (#r2a9vd4): a reads line a change's delete leaves matching no tracked path, and a // Reads: comment
-    naming a path its package's key doesn't hold (its own files, its reads lines, its Go closure), are red, each naming
-    its fix; a line dead on the base isn't the change's. go list is stubbed at its two seams, run.packageGraph (the
-    package directories, a, b and d) and run.readsClosureListing (the closure: a and b, whatever it's asked, recorded in
-    self.listed), so no test here needs go. Mutants, each red here: the guard always passing; the allow list read as
-    allowing everything; a bare allow accepted; go list's failure read as covered, or as the change's red; the closure
-    ignored; a line dead on the base blamed on the change; a comment naming a deleted path unchecked; a string read as a
-    comment."""
+    naming a path its package's key doesn't hold (its own files, its content reads lines, its Go closure), are red, each
+    naming its fix; a line dead on the base isn't the change's. go list is stubbed at its two seams, run.packageGraph (the
+    package directories, self.packages: a, b and d) and run.readsClosureListing (the closure: a and b, whatever it's
+    asked, recorded in self.listed), so no test here needs go. Mutants, each red here: the guard always passing; the
+    allow list read as allowing everything; a bare allow accepted; go list's failure read as covered, or as the change's
+    red; the closure ignored; a line dead on the base blamed on the change; a comment naming a deleted path unchecked; a
+    string read as a comment; a wildcard comment matching nothing read as naming nothing; a paths line read as covering a
+    comment; generated lines skipped by the Performance.jsonc check, an untracked list read, or a list that can't be read
+    read as covering; a glob the gate and the planner read apart passed, in a line or a comment; an indirect shrink
+    leaving unchanged files' comments unchecked; a /* */ comment hiding a // Reads: after it; a carriage return read as
+    a line; two keys folding to one field of a generated list read as one, or an integer past Go's int64 read as one;
+    a crashed census exiting as findings do; the root package owning files below it."""
 
     executors = "mode guard-reads\nreads a b/data.txt\nreads a b/names/* paths\n"
     uncovered = ("a/a_test.go:%d reads b/lonely.txt, which a's key doesn't hold: add `reads a %s` to the tools line's "
@@ -1064,9 +1069,9 @@ class ReadsGuard(unittest.TestCase):
                       run.readsGuardFindings(self.tree, self.tree))
 
     def test_an_uncovered_comment_in_a_changed_file_is_red_naming_the_line_to_add(self):
-        self.write({"a/a_test.go": "package a\n\n// Reads: a/testdata/own.txt\n// Reads: b/data.txt\n// Reads: b/names/*\n// Reads: b/b.go\n"
+        self.write({"a/a_test.go": "package a\n\n// Reads: a/testdata/own.txt\n// Reads: b/data.txt\n// Reads: b/b.go\n"
                                    "var quoted = \"// Reads: b/lonely.txt\"\n// Reads: b/lonely.txt\n"})
-        self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["a/a_test.go"], []), [self.uncovered % (8, "b/lonely.txt")])
+        self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["a/a_test.go"], []), [self.uncovered % (7, "b/lonely.txt")])
         # One go list of a's closure, its declared compiler b beside it.
         self.assertEqual([command[-2:] for command in self.listed], [["./a", "./b"]])
 
@@ -1104,8 +1109,8 @@ class ReadsGuard(unittest.TestCase):
         self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["a/a.go"], []), [])
         self.assertEqual(self.census(), (1, expected[0] + "\n"))
 
-    def test_a_comment_covered_by_own_files_a_line_a_paths_line_or_the_closure_passes(self):
-        for glob in ("a/testdata/own.txt", "b/data.txt", "b/names/*", "b/b.go"):
+    def test_a_comment_covered_by_own_files_a_line_or_the_closure_passes(self):
+        for glob in ("a/testdata/own.txt", "b/data.txt", "b/b.go"):
             with self.subTest(glob=glob):
                 self.write({"a/a_test.go": "package a\n\n// Reads: %s\n" % glob})
                 self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["a/a_test.go"], []), [])
@@ -1121,6 +1126,9 @@ class ReadsGuard(unittest.TestCase):
         self.assertFalse(gate.failure.get("tool_crash"))
         self.assertIn(self.uncovered % (3, "b/lonely.txt"), gate.failure["detail"])
         self.assertEqual(gate.result["reads_guard"], [self.uncovered % (3, "b/lonely.txt")])
+        # The change adds a .go file, so every comment was checked, and the record says why and how long it took.
+        self.assertEqual(gate.result["reads_comment_census"]["paths"], ["a/a_test.go"])
+        self.assertIsInstance(gate.result["reads_comment_census"]["seconds"], float)
 
     def test_a_comment_naming_a_path_the_change_deletes_is_red(self):
         self.write({"a/a_test.go": "package a\n\n// Reads: b/data.txt\n", "d/d_test.go": "package d\n\n// Reads: b/lonely.txt\n"})
@@ -1174,6 +1182,135 @@ class ReadsGuard(unittest.TestCase):
                                             "or delete it\n" + self.uncovered % (3, "b/lonely.txt") + "\n"))
         self.write({"cloud/fast-gate/executors.txt": "reads a b/data.txt\nreads a b/lonely.txt\n"})
         self.assertEqual(self.census(), (0, ""))
+
+    def test_a_wildcard_comment_matching_nothing_is_red_as_a_missing_path(self):
+        # b's own test reads its fixtures by a glob; a change that moves every one away leaves the glob matching nothing,
+        # which is a missing path, never a comment naming nothing.
+        self.write({"b/b_test.go": "package b\n\n// Reads: b/fixtures/*.golden\n", "b/fixtures/one.golden": "one\n"})
+        self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["b/b_test.go"], []), [])
+        self.write({"b/moved/one.golden": "one\n"}, removed=["b/fixtures/one.golden"])
+        moved = ["b/fixtures/one.golden", "b/moved/one.golden"]
+        self.assertEqual(run.readsGuardFindings(self.tree, self.tree, moved, moved), [
+            "b/b_test.go:3 reads b/fixtures/*.golden, which isn't a tracked path: point the comment at where the file lives now, or delete it"])
+        # A glob inside a gitlink matches nothing the superproject tracks, ever: git ls-files holds cohere alone.
+        os.makedirs(os.path.join(self.tree, "cohere"))
+        realRun(["git", "-C", self.tree, "update-index", "--add", "--cacheinfo", "160000,%s,cohere" % self.base], check=True)
+        self.write({"a/a_test.go": "package a\n\n// Reads: cohere/*.ts\n"})
+        self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["a/a_test.go"], []), [
+            "a/a_test.go:3 reads cohere/*.ts, which isn't a tracked path: point the comment at where the file lives now, or delete it"])
+
+    def test_a_comment_only_a_paths_line_matches_is_red(self):
+        # reads a b/names/* paths keys its matches by name alone, so an edit to b/names/one.txt reruns nothing, and a
+        # comment says the test reads what the file holds.
+        self.write({"a/a_test.go": "package a\n\n// Reads: b/names/*\n"})
+        self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["a/a_test.go"], []),
+                         [self.uncovered.replace("b/lonely.txt", "b/names/one.txt") % (3, "b/names/*")])
+
+    def test_a_generated_line_reaching_the_performance_file_or_whose_list_cant_be_read_is_red_and_covers_nothing(self):
+        # The planner keys a generated line's reach (planner/reads.go generatedReads): the whole tree, Performance.jsonc
+        # among it, when the list won't decode strictly or isn't tracked, and any path the list names. Each such line is
+        # red; one naming b/data.txt alone passes. A list that can't be read covers no comment, since the guard can't
+        # tell what the planner keys.
+        lines = ("reads a b/broken.json generated\nreads a b/root.json generated\nreads a b/fine.json generated\n"
+                 "reads a b/untracked.json generated\n")
+        self.write({"cloud/fast-gate/executors.txt": self.executors + lines, "Performance.jsonc": "{}\n", "b/broken.json": "{\n",
+                    "b/root.json": json.dumps({"files": [{"path": "Performance.jsonc"}]}),
+                    "b/fine.json": json.dumps({"files": [{"path": "b/data.txt"}]}), "a/a_test.go": "package a\n\n// Reads: b/lonely.txt\n"})
+        # On disk, readable, naming the comment's file, and never added: the planner reads only a tracked list.
+        with open(os.path.join(self.tree, "b/untracked.json"), "w") as handle:
+            json.dump({"files": [{"path": "b/lonely.txt"}]}, handle)
+        unreadable = ("`reads a %s generated` (executors.txt:%d) names a list loom's planner can't read as cloud/generated_test.go "
+                      "decodes it (untracked, or not strict JSON of its shape), so it keys the whole tree, Performance.jsonc among it, "
+                      "which every landing rewrites at adamic's root (#hed1mkb): make the list tracked and strict")
+        self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["a/a_test.go"], []), [
+            unreadable % ("b/broken.json", 4),
+            "`reads a b/root.json generated` (executors.txt:5) names a list whose entries reach Performance.jsonc, which every "
+            "landing rewrites at adamic's root, so no unit may read it (#hed1mkb): drop the entry that reaches it",
+            unreadable % ("b/untracked.json", 7),
+            self.uncovered % (3, "b/lonely.txt")])
+
+    def test_a_glob_the_gate_and_the_planner_read_apart_is_red_in_a_line_and_a_comment_whatever_allows_it(self):
+        # Python's fnmatch negates [!x] and Go's path.Match [^x]; Go escapes with a backslash, which Python reads as
+        # itself; and Go matches nothing with a [ that opens no class, which Python matches as itself. Each is red in a
+        # line and in a comment, its allow line notwithstanding. A class both read alike, [dl], passes.
+        negates = "a class opening [! or [^, which Python's fnmatch and Go's path.Match negate on different characters"
+        escapes = "a backslash, which Python's fnmatch reads as itself and Go's path.Match as an escape"
+        unclosed = "a [ opening no class Go's path.Match can read, which Python's fnmatch matches as itself and Go as nothing"
+        forms = [("b/[!x]*.txt", negates), ("b/[^x]*.txt", negates), ("b/\\data.txt", escapes), ("b/[data.txt", unclosed),
+                 ("b/[a-].txt", unclosed)]
+        lines = "".join("reads a %s\n# allow: a %s: allowed all the same\n" % (glob, glob) for glob, _ in forms)
+        comments = "".join("// Reads: %s\n" % glob for glob, _ in forms)
+        self.write({"cloud/fast-gate/executors.txt": self.executors + lines + "reads a b/[dl]ata.txt\n",
+                    "a/a_test.go": "package a\n\n" + comments + "// Reads: b/[dl]ata.txt\n"})
+        for reds in (run.readsGuardFindings(self.tree, self.tree), run.readsGuardFindings(self.tree, self.tree, ["a/a_test.go"], [])):
+            for index, (glob, why) in enumerate(forms):
+                with self.subTest(glob=glob):
+                    self.assertIn("`reads a %s` (executors.txt:%d) holds %s: write the glob so both read it alike, since no allow "
+                                  "exempts it" % (glob, 4 + 2 * index, why), reds)
+                    self.assertIn("a/a_test.go:%d reads %s, which holds %s: write the glob so both read it alike, since no allow "
+                                  "exempts it" % (3 + index, glob, why), reds)
+            self.assertFalse([red for red in reds if "[dl]" in red], reds)
+
+    def test_a_change_dropping_the_covering_line_from_the_trees_executors_reds_an_unchanged_files_comment(self):
+        # The comment's file is untouched, but the line that covered it is gone: every comment is checked, as the census
+        # checks them, and the record says which paths made it and its seconds. A change that can't shrink a key elsewhere
+        # checks only its own files' comments.
+        self.write({"cloud/fast-gate/executors.txt": self.executors + "reads a b/lonely.txt\n", "a/a_test.go": "package a\n\n// Reads: b/lonely.txt\n"})
+        self.write({"cloud/fast-gate/executors.txt": self.executors})
+        record = {}
+        self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["cloud/fast-gate/executors.txt"], [], record),
+                         [self.uncovered % (3, "b/lonely.txt")])
+        self.assertEqual(record["reads_comment_census"]["paths"], ["cloud/fast-gate/executors.txt"])
+        self.assertIsInstance(record["reads_comment_census"]["seconds"], float)
+        record = {}
+        self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["b/data.txt"], [], record), [])
+        self.assertEqual(record, {})
+
+    def test_a_reads_comment_is_read_as_repowalk_reads_one(self):
+        # repowalk takes every // comment go/scanner finds (repowalk.go readsLines): one after a /* */ comment on its line
+        # counts, as does one after a /* */ comment that ends there; go/scanner drops a // comment's carriage returns, and
+        # counts a line only at a newline; Go's unicode.IsSpace isn't a space at \x1f. A // Reads: inside a /* */ comment, or
+        # after other words in a // comment, declares nothing.
+        source = ("package a\n\n/* a note */ // Reads: b/lonely.txt\n/* a note\nover lines */ // Reads: b/old.txt\n"
+                  "// Reads: b/lonely\r.txt\r\n// one\r// Reads: b/hidden.txt\n// Reads: b/x\x1fy\n/* // Reads: b/inside.txt */\n"
+                  "// see // Reads: b/quoted.txt\n")
+        self.assertEqual(run.readsComments(source), [(3, "b/lonely.txt"), (5, "b/old.txt"), (6, "b/lonely.txt"), (8, "b/x\x1fy")])
+        # Read from the file, a lone carriage return is no line: the comment is on line 3, as go/scanner counts it.
+        self.write({"a/a_test.go": "package a\n// one\r// two\n/* a note */ // Reads: b/lonely.txt\n"})
+        self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["a/a_test.go"], []), [self.uncovered % (3, "b/lonely.txt")])
+
+    def test_a_generated_list_is_decoded_as_gos_decoder_reads_it(self):
+        # encoding/json matches a key to a field case folded, so {"Files": ...} is the list's files, as the planner reads it;
+        # two keys folding to one field are decoded into it one over the other, an integer past int64 is an error, and a
+        # key that isn't ASCII folds by rules this reader doesn't copy: each of those is the whole tree, None.
+        lists = {"b/folded.json": '{"MaxFiles": 1, "Files": [{"Path": "b/data.txt", "UNDER": null, "MaxBytes": 2}]}',
+                 "b/twice.json": '{"files": [{"under": "b/names/"}], "Files": [{"path": "b/data.txt"}]}',
+                 "b/same.json": '{"files": [{"path": "b/data.txt", "path": "b/old.txt"}]}',
+                 "b/wide.json": '{"maxFiles": 9223372036854775808, "files": [{"path": "b/data.txt"}]}',
+                 "b/long.json": '{"files": [{"path": "b/data.txt", "\\u017fuffix": ".txt"}]}'}
+        self.write(lists)
+        self.assertEqual(run.generatedReach(self.tree, "b/folded.json"), ({"b/folded.json", "b/data.txt"}, ()))
+        for name in ("b/twice.json", "b/same.json", "b/wide.json", "b/long.json"):
+            with self.subTest(name=name):
+                self.assertIsNone(run.generatedReach(self.tree, name))
+
+    def test_a_census_that_crashes_exits_2_never_1_as_findings_do(self):
+        printed, failed = io.StringIO(), io.StringIO()
+        with mock.patch.object(run, "readsGuardFindings", side_effect=ValueError("go list of the tree failed")), \
+                mock.patch.object(sys, "argv", ["run.py", "--reads-census", "--tree", self.tree, "--tools", self.tree]), \
+                contextlib.redirect_stdout(printed), contextlib.redirect_stderr(failed), self.assertRaises(SystemExit) as exited:
+            run.main()
+        self.assertEqual((exited.exception.code, printed.getvalue()), (2, ""))
+        self.assertIn("ValueError: go list of the tree failed", failed.getvalue())
+
+    def test_the_root_package_owns_only_the_files_directly_in_it(self):
+        # As planner/ownfiles.go's nearestPackage walks: notes.txt beside the root's test is its own, and e/notes.txt,
+        # under a directory that's no package, is no package's own, never the root's.
+        self.packages = self.packages + ["."]
+        self.write({"root_test.go": "package adamic\n\n// Reads: notes.txt\n// Reads: e/notes.txt\n", "notes.txt": "notes\n", "e/notes.txt": "notes\n"})
+        self.assertEqual(run.readsGuardFindings(self.tree, self.tree, ["root_test.go"], []), [
+            "root_test.go:4 reads e/notes.txt, which .'s key doesn't hold: add `reads . e/notes.txt` to the tools line's "
+            "cloud/fast-gate/executors.txt (Keys or Judge adds it there; it isn't the change's to add)"])
 
 
 class ReadsGuardInTheGate(unittest.TestCase):
