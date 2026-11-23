@@ -14,7 +14,8 @@ whole npm sandboxed_npm stage3/api stage3/typescript
 if [ "$part" = p ]; then
 	for family in p162 p55; do
 		echo "== $family"
-		bash cloud/probe/run.sh "scratch-rv/$family" --against 0c9b1201dae384f28f03f93c3ee1550d927b2aca --logs "$TMPDIR/logs-$family" 2>&1 | tail -40
+		bash cloud/probe/run.sh "scratch-rv/$family" --logs "$TMPDIR/logs-$family" > "$TMPDIR/table-$family.txt" 2>&1 || { echo "FAIL run.sh $family"; ok=0; }
+		tail -40 "$TMPDIR/table-$family.txt"
 		for log in "$TMPDIR/logs-$family"/*; do
 			[ -f "$log" ] || continue
 			echo "-- $(basename "$log")"
