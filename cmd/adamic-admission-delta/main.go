@@ -282,6 +282,7 @@ func run(args []string) error {
 	runtimeNotYetPath := flags.String("runtime-notyet-stops", "cloud/admission-corpus/runtime-notyet-stops.json", "ruled content-hash run-time NotYet stops")
 	backendDivergencesPath := flags.String("backend-divergences", "internal/oracle/testdata/backend_divergences.json", "ruled backend divergences, the rows internal/oracle pins")
 	heldStopsPath := flags.String("held-stops", "cloud/admission-corpus/held-stops.json", "both-stops a test holds, by exact path and stderr, which --agreement counts as checked stops")
+	openTasksPath := flags.String("open-tasks", "", "the tasks still open when the run was asked, one id a line without its #; --agreement requires it, and a pending sidecar naming any other task excuses nothing")
 	manifestPath := flags.String("manifest", "", "pinned JSON corpus manifest")
 	generator := flags.String("manifest-generator", "", "generator path at head")
 	generatorRevision := flags.String("manifest-generator-revision", "", "generator source revision, defaults to head")
@@ -304,6 +305,9 @@ func run(args []string) error {
 		if err := agreementUsage(given, *manifestPath, *shard); err != nil {
 			return err
 		}
+	} else if given["open-tasks"] {
+		// Only the agreement mode reads a pending sidecar, so only it reads which tasks are open.
+		return fmt.Errorf("--open-tasks is read only by --agreement")
 	} else if *base == "" {
 		return fmt.Errorf("--base is required")
 	}
@@ -352,7 +356,12 @@ func run(args []string) error {
 			return err
 		}
 		fmt.Fprintf(os.Stderr, "held stops: %d\n", len(heldStops.Stops))
-		return runAgreement(agreementRun{root: root, head: *head, headBinary: *headBinary, headLowerBinary: *headLowerBinary, manifestPath: *manifestPath, shard: *shard, asJSON: *asJSON, limit: *limit, compileLimit: *compileLimit, workers: *workers, negatives: negatives, runtimeStops: runtimeStops, divergences: divergences, heldStops: heldStops, jsonTypesBinary: *jsonTypesBinary})
+		openTasks, err := readOpenTasks(*openTasksPath)
+		if err != nil {
+			return err
+		}
+		fmt.Fprintf(os.Stderr, "open tasks: %d\n", len(openTasks))
+		return runAgreement(agreementRun{root: root, head: *head, headBinary: *headBinary, headLowerBinary: *headLowerBinary, manifestPath: *manifestPath, shard: *shard, asJSON: *asJSON, limit: *limit, compileLimit: *compileLimit, workers: *workers, negatives: negatives, runtimeStops: runtimeStops, divergences: divergences, heldStops: heldStops, openTasks: openTasks, jsonTypesBinary: *jsonTypesBinary})
 	}
 	startedAll := time.Now()
 	result := report{Programs: []entry{}, RuledRuntimeStopPaths: []string{}, StaleRuntimeStops: []string{}, PendingRuntimeStops: []string{}, RuledBackendDivergencePaths: []string{}, Verdict: "pass", Phases: map[string]float64{}, Workers: *workers, Classification: "lowering-only"}

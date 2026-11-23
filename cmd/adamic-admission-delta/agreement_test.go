@@ -115,11 +115,18 @@ func agreementFixtureWith(t *testing.T, programs []agreementSource, others map[s
 	return dir, sha, head
 }
 
-// agreementCommand runs the agreement mode on the fixture's head and manifest, with extra arguments, and reads its
-// JSON report.
+// openTestTask is the one task the fixtures' --open-tasks holds open, the task their pending sidecars name.
+const openTestTask = "abc1234"
+
+// agreementCommand runs the agreement mode on the fixture's head and manifest, with --open-tasks holding
+// openTestTask and extra arguments after it, and reads its JSON report.
 func agreementCommand(t *testing.T, dir, sha, head string, extra ...string) (observation, agreementReport) {
 	t.Helper()
-	o := invokeCommand(t, dir, append([]string{"--agreement", "--head", sha, "--head-binary", head, "--manifest", filepath.Join(dir, "manifest.json"), "--json"}, extra...)...)
+	openTasks := filepath.Join(t.TempDir(), "open-tasks")
+	if err := os.WriteFile(openTasks, []byte(openTestTask+"\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	o := invokeCommand(t, dir, append([]string{"--agreement", "--head", sha, "--head-binary", head, "--manifest", filepath.Join(dir, "manifest.json"), "--open-tasks", openTasks, "--json"}, extra...)...)
 	var r agreementReport
 	if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
 		t.Fatalf("%v: %s %s", err, o.Stdout, o.Stderr)
@@ -257,6 +264,8 @@ func TestAgreementFlagErrors(t *testing.T) {
 		{"shard past its count", []string{"--agreement", "--head", "HEAD", "--manifest", "manifest.json", "--shard", "3/2"}, `invalid shard "3/2"`},
 		{"shard without a count", []string{"--agreement", "--head", "HEAD", "--manifest", "manifest.json", "--shard", "2"}, "shard must be i/N"},
 		{"shard not a number", []string{"--agreement", "--head", "HEAD", "--manifest", "manifest.json", "--shard", "a/2"}, `invalid shard "a/2"`},
+		{"without --open-tasks", []string{"--agreement", "--head", "HEAD", "--manifest", "manifest.json"}, "--agreement requires --open-tasks"},
+		{"--open-tasks without --agreement", []string{"--base", "main", "--open-tasks", "open-tasks"}, "--open-tasks is read only by --agreement"},
 	} {
 		o := invokeCommand(t, dir, c.args...)
 		if o.Exit != 1 || !strings.Contains(o.Stderr, c.want) {
@@ -527,6 +536,65 @@ func TestAgreementPendingNeverExcusesAMemoryError(t *testing.T) {
 	o, r := agreementCommand(t, dir, sha, head)
 	if o.Exit != 1 || r.Pending != 0 || r.Disagreeing != 1 || r.MemoryUnsafe != 1 || !strings.HasSuffix(o.Stderr, "\nagreement: compared 1, agreeing 0, ruled 0, checked stops 0, pending 0, disagreeing 1, memory-unsafe 1, refused 0\n") {
 		t.Fatalf("exit %d, %+v, want one memory-unsafe disagreement, its sidecar not excusing it: %s", o.Exit, r, o.Stderr)
+	}
+}
+
+// A sidecar naming a task --open-tasks doesn't hold excuses nothing: its program is judged as if it had none, so it
+// disagrees, and a `closed sidecar` line and the report's closed_sidecars name it. The open task's sidecar still
+// excuses. This is how two live wrong answers hid for three weeks under a sidecar naming a Done task (#92cnfpf).
+// Mutant (agreement.mutants.md): the open check dropped, so closed.a reads pending and the run exits 0.
+func TestAgreementClosedTaskSidecarExcusesNothing(t *testing.T) {
+	t.Parallel()
+	dir, sha, head := agreementFixtureWith(t, []agreementSource{
+		{"corpus/open.a", disagreeingSource},
+		{"corpus/closed.a", disagreeingSource},
+	}, map[string]string{
+		"corpus/open.pending":   "awaits #" + openTestTask + ": reason\n",
+		"corpus/closed.pending": "awaits #zzz9999: reason\n",
+	})
+	o, r := agreementCommand(t, dir, sha, head)
+	if o.Exit != 1 || r.Pending != 1 || r.Disagreeing != 1 || !strings.HasSuffix(o.Stderr, "\nagreement: compared 2, agreeing 0, ruled 0, checked stops 0, pending 1, disagreeing 1, memory-unsafe 0, refused 0\n") {
+		t.Fatalf("exit %d, %+v, want the open task's program pending and the closed task's disagreeing: %s", o.Exit, r, o.Stderr)
+	}
+	if !reflect.DeepEqual(r.ClosedSidecars, []string{"corpus/closed.a"}) {
+		t.Fatalf("closed_sidecars %v, want closed.a alone", r.ClosedSidecars)
+	}
+	for _, judged := range r.Programs {
+		if judged.Path == "corpus/closed.a" && (judged.Judgment != "disagreeing" || judged.Task != "") {
+			t.Fatalf("closed.a judged %+v, want disagreeing with no task", judged)
+		}
+	}
+	if line := stderrLine(o.Stderr, "closed sidecar corpus/closed.a:"); line != "closed sidecar corpus/closed.a: names #zzz9999, which isn't open, so it excuses nothing" {
+		t.Fatalf("the closed sidecar line: %q in %s", line, o.Stderr)
+	}
+}
+
+// --open-tasks is one task id a line without its #: blank lines are skipped, an empty file holds no task open, and a
+// line in any other form is refused, since a list in the wrong form would read every task as closed.
+func TestReadOpenTasks(t *testing.T) {
+	t.Parallel()
+	dir := t.TempDir()
+	write := func(name, text string) string {
+		path := filepath.Join(dir, name)
+		if err := os.WriteFile(path, []byte(text), 0o644); err != nil {
+			t.Fatal(err)
+		}
+		return path
+	}
+	open, err := readOpenTasks(write("good", "abc1234\n\n  92cnfpf \nshqn1d0"))
+	if err != nil || !reflect.DeepEqual(open, map[string]bool{"abc1234": true, "92cnfpf": true, "shqn1d0": true}) {
+		t.Fatalf("good list: %v, %v", open, err)
+	}
+	if open, err := readOpenTasks(write("empty", "")); err != nil || len(open) != 0 {
+		t.Fatalf("empty list: %v, %v, want none open", open, err)
+	}
+	for _, bad := range []string{"#abc1234\n", "abc\n", "ABC1234\n", "abc1234 def5678\n"} {
+		if _, err := readOpenTasks(write("bad", bad)); err == nil || !strings.Contains(err.Error(), "is no task id") {
+			t.Errorf("%q: %v, want refused as no task id", bad, err)
+		}
+	}
+	if _, err := readOpenTasks(filepath.Join(dir, "missing")); err == nil {
+		t.Errorf("a missing list read, want refused")
 	}
 }
 
