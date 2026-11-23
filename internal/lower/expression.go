@@ -169,6 +169,12 @@ func (l *lowering) representationReason(proven *checker.Type) (ir.Type, bool, st
 		// Structural types such as {} admit primitives. Their slots must preserve
 		// the runtime brand with the same boxes used for scalar/reference unions.
 		return ir.Union, true, ""
+	case flags&checker.TypeFlagsObject != 0 && l.rangeHeldAsUnion(proven):
+		// A closed range type in a program with the NodeArray layout: a NodeArray may stand for it, so it's
+		// held as a union of an object and the array, since ir.Object promises an adamic object
+		// (range_types.go, #hae423v). checkRangeUnionReads reads the IR only once a type was.
+		l.rangeUnionsHeld = true
+		return ir.Union, true, ""
 	case flags&checker.TypeFlagsObject != 0 && len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) == 0:
 		return ir.Object, true, ""
 	case flags&checker.TypeFlagsObject != 0:
@@ -449,6 +455,11 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 			// And so is an async promise where an object is held, which has no object layout to be read
 			// through (shape_fit.go's promiseWhereObjectGoes).
 			if stop := l.promiseWhereObjectGoes(skipped, contextual); stop != "" {
+				return nil, l.notYet(skipped, stop)
+			}
+			// And so is a range type's value, held as a Union a NodeArray may stand for, where an object or an
+			// array is held, which would take the Union as its own kind unasked (range_types.go).
+			if stop := l.rangeWhereObjectGoes(skipped, value, contextual); stop != "" {
 				return nil, l.notYet(skipped, stop)
 			}
 		}
