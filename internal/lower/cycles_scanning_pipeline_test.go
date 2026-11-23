@@ -14,6 +14,7 @@ import (
 // programs differ, only which of two stops a program reports first.
 var scanningPipelineExempt = map[string]string{
 	"lowering.checkOverloadResults":            "judges that every call to a narrow overload was settled; reads lowering's notes, rewrites nothing",
+	"lowering.checkOverloadVerdictCalls":       "judges that every call to an unserved overload met its gate; reads lowering's notes and the census, rewrites nothing",
 	"lowering.checkRecordGuardedReads":         "judges guarded record reads; reads the IR, rewrites nothing",
 	"checkFlowLiveness":                        "judges that no function a flow graph took to never run is named after it was built; reads the IR, rewrites nothing",
 	"lowering.checkCheckedPredicateParameters": "judges that every predicate parameter admitted for its checked closure was built as one and that no function it can call observes its argument count; reads lowering's notes and the IR, rewrites nothing",
