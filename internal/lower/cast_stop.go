@@ -42,7 +42,7 @@ const (
 	castClassAncestry      // a class cast with no nominal ancestry between the two
 	castClassTarget        // a cast to a class from a value that isn't a class instance
 	castFromObject         // a source typed object, which names no fields to read
-	castDropsNullish       // a union source cast to its own members without undefined or null: a presence test
+	castDropsNullish       // a union source cast to its members without undefined or null, past presentCast's road
 	castIntersectionMember // a union target one of whose members is an intersection
 	// No branch above fits: the sentence main spoke before the split, so nothing is lost.
 	castUnnamed
