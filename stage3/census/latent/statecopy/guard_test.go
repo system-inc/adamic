@@ -758,3 +758,26 @@ func TestSourceSlotPendingStaysSnapshotOwned(t *testing.T) {
 		}
 	}
 }
+
+// The census's overload verdicts and the calls the gate let through (#4czdn4q) are snapshot-owned: each copy
+// owns its map of nodes, and the verdicts' errors are shared values nothing writes. Mutant: either row dropped
+// from loweringFieldPolicies, and this fails on its policy.
+func TestOverloadVerdictsStaySnapshotOwned(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs("../../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	text := string(generate(root, filepath.Join(root, "internal/lower/lower.go")))
+	for name, of := range map[string]string{"overloadVerdicts": "map[*ast.Node]error", "overloadVerdictCalls": "map[*ast.Node]bool"} {
+		if loweringFieldPolicies[name] != speculativeState {
+			t.Fatalf("%s's policy must stay snapshot-only", name)
+		}
+		if want := "result." + name + " = func(value " + of + ")"; !strings.Contains(text, want) {
+			t.Fatalf("%s lost its owned map snapshot: %s", name, want)
+		}
+		if carried := name + ": value." + name; strings.Contains(text, carried) {
+			t.Fatalf("%s must not be carried as a program fact: %s", name, carried)
+		}
+	}
+}

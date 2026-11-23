@@ -1444,7 +1444,11 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 			// forwarder or a generic instance is asked for: debug.ts's `stackCrawlMark ||
 			// assertEachIsDefined`, an overload set, has neither (#avqasqt). The proof admits only bare
 			// identifier reads as values, so every value read of such a function comes here, and its
-			// direct calls never do.
+			// direct calls never do. A marker is the set as a value, so an overload set with an unserved
+			// overload stops here in its whole set's words (#4czdn4q).
+			if err := l.overloadSetStop(node, l.symbol(node)); err != nil {
+				return nil, err
+			}
 			return l.neverRestMarker(node, l.symbol(node)), nil
 		}
 		if function, isFunction := l.functions[l.symbol(node)]; !isLocal && isFunction {
@@ -2385,10 +2389,14 @@ func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
 // overloadSetValueStop stops an overload set read as a value. A call through the value resolves to
 // the slot's own signature, never to an overload, so a narrow overload's result check would never
 // run there (#z5d0jye, Compiler's must on 19ab1c58). functionValue asks it of a module-level set and
-// nestedReference of a nested one, so both say the same words.
+// nestedReference of a nested one, so both say the same words. A set with an unserved overload says that
+// overload's words first, as its whole set's verdict, at the use (overloadSetStop, #4czdn4q).
 func (l *lowering) overloadSetValueStop(node *ast.Node, symbol *ast.Symbol) error {
 	if symbol == nil {
 		return nil
+	}
+	if err := l.overloadSetStop(node, symbol); err != nil {
+		return err
 	}
 	for _, declaration := range symbol.Declarations {
 		if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil && l.censusImplementation(declaration) != nil {

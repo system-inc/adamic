@@ -187,7 +187,9 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 	if err := lowering.declareModule(declarations); err != nil {
 		return nil, err
 	}
-	lowering.recordExports(entry)
+	if err := lowering.recordExports(entry); err != nil {
+		return nil, err
+	}
 	for _, module := range modules {
 		body, err := lowering.moduleStatements(module)
 		if err != nil {
@@ -199,6 +201,9 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 		return nil, lowering.unlowerable
 	}
 	lowering.checkOverloadResults(modules)
+	if err := lowering.checkOverloadVerdictCalls(modules); err != nil {
+		return nil, err
+	}
 	lowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)
 	lowering.finishClassCalls()
 	// Before the accessors' dispatchers: a read this makes checked can't go through a dispatcher's
@@ -526,6 +531,13 @@ type lowering struct {
 	// node-test proof, whose direct calls overloadNodeTestCall judges one by one
 	// (overload_parse_tree_node.go, #0kkpw2e).
 	overloadNodeTests map[*ast.Node]bool
+	// overloadVerdicts holds, for each overload of a function declaration's set the census judged, its
+	// verdict: censusOverload's Refused or NotYet, or nil when it's served. A set's implementation is keyed
+	// too, always nil, once its set is judged (censusOverloads, #4czdn4q).
+	overloadVerdicts map[*ast.Node]error
+	// overloadVerdictCalls holds each call, new or tagged template overloadCallVerdict let through to an
+	// overload of a function declaration's set, which checkOverloadVerdictCalls reads after lowering.
+	overloadVerdictCalls map[*ast.Node]bool
 	// predicateParametersAdmitted holds each predicate parameter predicateArgumentProof admitted for its
 	// checked closure, and predicateParametersBuilt each one lowering passed as that closure, which
 	// checkCheckedPredicateParameters holds alike once lowering is done (predicate_parameter_value.go).

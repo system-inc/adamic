@@ -1734,7 +1734,9 @@ func scanLowerWithElementKey(key *viewElementKey, program *load.Program, typeChe
 	if err := lowering.declareModule(declarations); err != nil {
 		return nil, err
 	}
-	lowering.recordExports(entry)
+	if err := lowering.recordExports(entry); err != nil {
+		return nil, err
+	}
 	for _, module := range modules {
 		body, err := lowering.moduleStatements(module)
 		if err != nil {

@@ -63,7 +63,7 @@ console.log(String(f(b).n));
 	refuses := func(l *lowering, when string) {
 		t.Helper()
 		var refused *Refused
-		if err := l.censusOverloads(implementation); !errors.As(err, &refused) || !strings.Contains(refused.What, refusal) {
+		if err := l.overloadSetVerdict(implementation); !errors.As(err, &refused) || !strings.Contains(refused.What, refusal) {
 			t.Fatalf("%s: want %q, got %v", when, refusal, err)
 		}
 	}
@@ -83,6 +83,6 @@ console.log(String(f(b).n));
 	l.typeMapper = installed
 	refuses(l, "under the instance mapper")
 	if l.typeMapper != installed {
-		t.Fatal("censusOverloads didn't restore the instance's mapper")
+		t.Fatal("the census didn't restore the instance's mapper")
 	}
 }
