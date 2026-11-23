@@ -63,7 +63,7 @@ func TestUntaggedUnionCastLowers(t *testing.T) {
 // TestUncheckableCastsStayRefused. In .a the arm's cast is refused as every downcast whose checks no proof
 // erases. tsc refuses a sideways cast whose types don't overlap itself (TS2352), so no row holds one. A row
 // with no words holds only that the arm leaves it stopped. Mutants: plainViewObject returning true reds the
-// class and dictionary rows (a primitive member is stopped before the arm, J-dmj0jzs); unionHoldsLiterals
+// class row (a primitive member and a dictionary member are stopped before the arm, J-7j0yf17); unionHoldsLiterals
 // returning false reds "a tagged union's refinement" and TestUncheckableCastsStayRefused's colliding-tag rows;
 // keptCheckDowncastRefusal without proof.untagged reds "in .a".
 func TestUntaggedUnionCastsKeepTheirStops(t *testing.T) {
