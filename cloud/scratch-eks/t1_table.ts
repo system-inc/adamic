@@ -33,7 +33,9 @@ const rows: [string, () => unknown][] = [
 	['DataView', () => new DataView(new ArrayBuffer(1))],
 	['Intl.NumberFormat', () => new Intl.NumberFormat('en-US')],
 	['Intl.Collator', () => new Intl.Collator('en-US')],
-	['TextEncoder', () => new TextEncoder()],
+	['Intl.DateTimeFormat', () => new Intl.DateTimeFormat('en-US')],
+	['Symbol', () => Object(Symbol('s'))],
+	['Iterator helper', () => (map.keys() as unknown as { map(f: (x: string) => string): unknown }).map((x: string) => x)],
 	['JSON', () => JSON],
 	['Math', () => Math],
 	['iterator result', () => map.entries().next()],
@@ -51,11 +53,13 @@ function attempt(f: () => string): string {
 }
 for (const [name, make] of rows) {
 	const x = make() as { toString(): string; toLocaleString(): string };
-	console.log(name);
-	console.log('  toString       ' + attempt(() => x.toString()));
-	console.log('  toLocaleString ' + attempt(() => x.toLocaleString()));
-	console.log('  O.p.toString   ' + attempt(() => Object.prototype.toString.call(x)));
-	console.log('  template       ' + attempt(() => `${x}`));
-	console.log('  String         ' + attempt(() => String(x)));
-	console.log('  toStringTag    ' + attempt(() => String((x as { [Symbol.toStringTag]?: unknown })[Symbol.toStringTag])));
+	const answers = [
+		attempt(() => x.toString()),
+		attempt(() => x.toLocaleString()),
+		attempt(() => Object.prototype.toString.call(x)),
+		attempt(() => `${x}`),
+		attempt(() => String(x)),
+		attempt(() => String((x as { [Symbol.toStringTag]?: unknown })[Symbol.toStringTag])),
+	];
+	console.log(name + ' | ' + answers.join(' | '));
 }
