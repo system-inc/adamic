@@ -1,0 +1,15 @@
+// a4 (#snypn8c, c3): a conditional's true arm is proved by its test, the member on either side of the ===.
+enum K { A, B, C, D }
+function kindOf(n: number): K {
+	return n;
+}
+function take(x: K.A): string {
+	return "took " + String(x);
+}
+function either(n: number): string {
+	const t = kindOf(n);
+	const forward = t === K.A ? take(t) : "not a";
+	const reversed = K.A === t ? take(t) : "not a";
+	return forward + " " + reversed;
+}
+console.log(either(0) + ", " + either(1) + ", " + either(7));
