@@ -12,7 +12,9 @@ flag any relation in the program sets, so a body alone can't measure it, and it'
 the whole program's allocation graph every write admitted only where each allocation
 reaching it holds its field's slot, the writes `checkViewOptionalWrites` and
 `checkKindUnionWriteReach` judged among them (#w8nanzw), so a body lowered on its own
-records it as not run. `checkSourceSlotPending`, after `checkFlowLiveness`, gives
+records it as not run. `checkEnumerationReachViews`, after `checkSlotWrites`, holds
+each enumeration the accessor guard admitted against every checked view the whole
+program made (#1atvfp5); a body lowered on its own records it as not run. `checkSourceSlotPending`, after `checkFlowLiveness`, gives
 back Rule C's held NotYet for a write the view walk met wherever its statement was
 lowered (#5qx6qv4); a body lowered on its own records it as not run.
 `finishViewStaticsAdmitted`, after it, sets each view contract's `StaticsAdmitted`
