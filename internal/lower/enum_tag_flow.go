@@ -272,8 +272,8 @@ func (w *enumTagWalk) stepAt(flow *ast.FlowNode, at *ast.Node, field string) boo
 	if checker.Checker_isTypeIdenticalTo(w.l.checker, after, before) {
 		return true
 	}
-	if checker.Checker_isTypeIdenticalTo(w.l.checker, after, w.l.checker.GetNonNullableType(before)) {
-		return w.proves(at)
+	if handled, passes := w.nullishOnlyStep(at, before, after); handled {
+		return passes
 	}
 	return false
 }
