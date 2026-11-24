@@ -1,0 +1,178 @@
+package lower
+
+import (
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/ir"
+)
+
+// The whole-program passes after the bodies lower judge, and some rewrite, the IR the bodies made. In a
+// first-link lowering, a pass's stop traps the unit it lies in, in the IR already made, and the pass goes
+// on past it where it safely can (firstLinkPass). The stops lowering holds rather than returns where it
+// meets them are recorded the same way, once the bodies are lowered (firstLinkHeldStops), and a stop that
+// names the whole program, never a unit, is a row with no unit (firstLinkProgramStop).
+
+// firstLinkMainRange is where a top-level statement's IR lies in the program's Main, as moduleStatements
+// lowered it: length statements from start, counted before forwarderValues are put ahead of Main.
+type firstLinkMainRange struct {
+	start, length int
+}
+
+// firstLinkPass is a whole-program pass's stop err, which any lowering but a first-link one returns as it
+// always has. A first-link lowering records it as a row with phase name and goes on. A stop that can't be
+// placed in a unit, or at a site this pass stopped at before, is a row of kind "Gap", and the rest of the
+// pass is skipped. A stop inside a unit trapped already is an Echo, no wall of its own, and the rest of the
+// pass is skipped. Otherwise the stop's unit is trapped in the IR already made (firstLinkStubUnit). A pass
+// that rewrites the IR never runs twice, since that could apply its rewrite twice, so its work past the
+// stop is skipped and named in Program.TrapRewritesSkipped, and every row after it is Suspect. Any other
+// pass runs again by run, and its next stop is taken the same way. A nil run is a stop nothing can run
+// again. An error that's neither a NotYet nor a Refused is returned.
+func (l *lowering) firstLinkPass(name string, rewrites bool, err error, run func() error) error {
+	if !l.firstLinkTraps {
+		return err
+	}
+	seen := map[string]bool{}
+	for {
+		row, stopped := l.firstLinkRow(nil, err, name, nil, nil)
+		if !stopped {
+			return err
+		}
+		unit := l.firstLinkPassUnit(row.Site)
+		_, echo := l.firstLinkTrappedAt(unit)
+		switch {
+		case unit == nil || seen[row.Site]:
+			row.Kind, row.Reason = "Gap", row.Kind+": "+row.Reason
+			l.firstLinkRecord(row, nil)
+			l.firstLinkRewriteSkip(name, rewrites)
+			return nil
+		case echo:
+			row.Unit, row.Echo = l.firstLinkUnitName(unit), true
+			l.firstLinkRecord(row, nil)
+			l.firstLinkRewriteSkip(name, rewrites)
+			return nil
+		}
+		seen[row.Site] = true
+		row.Unit = l.firstLinkUnitName(unit)
+		l.firstLinkStubUnit(unit, l.firstLinkRecord(row, unit))
+		if rewrites || run == nil {
+			l.firstLinkRewriteSkip(name, rewrites)
+			return nil
+		}
+		if err = run(); err == nil {
+			return nil
+		}
+	}
+}
+
+// firstLinkRewriteSkip notes that a pass that rewrites the IR skipped its work past a stop.
+func (l *lowering) firstLinkRewriteSkip(name string, rewrites bool) {
+	if !rewrites {
+		return
+	}
+	l.firstLinkRewriteSkipped = true
+	l.result.TrapRewritesSkipped = append(l.result.TrapRewritesSkipped, name)
+}
+
+// firstLinkPassUnit places a whole-program pass's stop, by its Where, in the unit it lies in. A unit
+// trapped already is placed too, so its stop is an Echo. A top-level statement whose IR can't be found
+// in Main can't be trapped there, so its stop is unplaced.
+func (l *lowering) firstLinkPassUnit(where string) *ast.Node {
+	modules, err := l.moduleOrder(l.entry)
+	if err != nil {
+		return nil
+	}
+	for _, module := range modules {
+		unit := l.firstLinkPlace(module, where)
+		if unit == nil {
+			continue
+		}
+		if _, trapped := l.firstLinkTrappedAt(unit); trapped {
+			return unit
+		}
+		if _, _, placed := l.firstLinkMainAt(unit); !firstLinkFunctionUnit(unit) && !placed {
+			return nil
+		}
+		return unit
+	}
+	return nil
+}
+
+// firstLinkMainAt is where a top-level statement's IR lies in Main now. Main holds every module's body,
+// as MainModules counts them, behind forwarderValues once they're put ahead of it. A Main of any other
+// length was reshaped by a pass, as NormalizeAsync moves module bodies into its scheduler entry, so no
+// statement is placed in it.
+func (l *lowering) firstLinkMainAt(unit *ast.Node) (start, length int, placed bool) {
+	at, recorded := l.firstLinkMain[unit]
+	if !recorded || l.result.AsyncEntry > 0 {
+		return 0, 0, false
+	}
+	bodies := 0
+	for _, module := range l.result.MainModules {
+		bodies += module.Statements
+	}
+	shift := len(l.result.Main) - bodies
+	if shift != 0 && shift != len(l.forwarderValues) || at.start+shift+at.length > len(l.result.Main) {
+		return 0, 0, false
+	}
+	return at.start + shift, at.length, true
+}
+
+// firstLinkStubUnit traps a unit in the IR already made: every function lowered from a declaration inside
+// it, the unit itself included, every generic instance among them, has the stub for its body, and a
+// top-level statement's own statements in Main become the stub, then empty blocks, so Main keeps its
+// length.
+func (l *lowering) firstLinkStubUnit(unit *ast.Node, stub ir.Panic) {
+	for index, declaration := range l.functionNodes {
+		for ancestor := declaration; ancestor != nil; ancestor = ancestor.Parent {
+			if ancestor == unit {
+				l.result.Functions[index].Body = []ir.Statement{stub}
+				break
+			}
+		}
+	}
+	if firstLinkFunctionUnit(unit) {
+		return
+	}
+	if start, length, placed := l.firstLinkMainAt(unit); placed && length > 0 {
+		l.result.Main[start] = stub
+		for index := start + 1; index < start+length; index++ {
+			l.result.Main[index] = ir.Block{}
+		}
+	}
+}
+
+// firstLinkHeldStops records, in a first-link lowering, the stops lowering held rather than returned where
+// it met them: the first unlowerable construct, and every async payload it couldn't lower. Each is placed
+// and trapped as a pass's stop is. One that's neither a NotYet nor a Refused stays held, so it's returned
+// as it always is.
+func (l *lowering) firstLinkHeldStops() {
+	if !l.firstLinkTraps {
+		return
+	}
+	if l.unlowerable != nil {
+		l.unlowerable = l.firstLinkPass("unlowerable", false, l.unlowerable, nil)
+	}
+	var held []error
+	for _, failure := range l.asyncPayloadFailures {
+		if err := l.firstLinkPass("asyncPayloadFailures", false, failure, nil); err != nil {
+			held = append(held, err)
+		}
+	}
+	l.asyncPayloadFailures = held
+}
+
+// firstLinkProgramStop records, in a first-link lowering, a stop that names the whole program, never a
+// unit, as a row with phase and no unit, and reports whether it did, so the caller goes on. Any other
+// lowering, or an error that's neither a NotYet nor a Refused, is returned by the caller as it always is.
+func (l *lowering) firstLinkProgramStop(phase string, stop error) bool {
+	if !l.firstLinkTraps {
+		return false
+	}
+	row, stopped := l.firstLinkRow(nil, stop, phase, nil, nil)
+	if !stopped {
+		return false
+	}
+	l.firstLinkRecord(row, nil)
+	// lowerWithElementKey hands its rows over as it returns, which may be before this stop.
+	l.result.Traps = l.traps
+	return true
+}

@@ -128,6 +128,10 @@ type Program struct {
 	// Traps are the units a first-link lowering (lower's Options.FirstLinkTraps) lowered as traps, in the
 	// order it met them. A program lowered any other way has none.
 	Traps []Trap
+	// TrapRewritesSkipped names each whole-program pass that rewrites the IR whose work past a stop a
+	// first-link lowering skipped, in the order skipped. What runs after such a skip may be lowering's own
+	// echo rather than a wall, so every Trap recorded after the first is Suspect.
+	TrapRewritesSkipped []string
 }
 
 // Trap is one unit a first-link lowering couldn't lower, which it lowered as a Panic with Trap set instead:
@@ -147,12 +151,18 @@ type Trap struct {
 	// directive's among them, which traps nothing and is a measurement gap.
 	Unit string
 	// Phase is the lowering phase the unit stopped in: "Refusal" for the refusal pass, "Signature" for a
-	// module function's signature, "Statics" for a class's statics, "Body" for a function's body, or
-	// "Statement" for a module's top-level statement.
+	// module function's signature, "Statics" for a class's statics, "Body" for a function's body,
+	// "Statement" for a module's top-level statement, or a whole-program step's name after the bodies
+	// lowered: a pass's Go name ("findCycles"), "unlowerable", "asyncPayloadFailures", "RelationOverflow"
+	// or "ProgramRegion".
 	Phase string
 	// Suspect says a recovered Go panic was trapped earlier in the same lowering. A panic can leave
-	// lowering's state part written, so this row may be that panic's echo rather than a wall of its own.
+	// lowering's state part written, so this row may be that panic's echo rather than a wall of its own. A
+	// row recorded after a whole-program pass skipped a rewrite (Program.TrapRewritesSkipped) is Suspect too.
 	Suspect bool
+	// Echo says a whole-program pass stopped inside a unit trapped already, whose leftover state may be
+	// what it stopped at: no wall of its own, so the report counts it apart.
+	Echo bool
 }
 
 // PlaceholderCheck records one readiness or storage-arm boundary in the checked-sites report.

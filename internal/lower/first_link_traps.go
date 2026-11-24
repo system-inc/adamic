@@ -46,11 +46,18 @@ func (l *lowering) firstLinkStatements(module *ast.SourceFile) ([]ir.Statement, 
 	if err != nil {
 		return nil, err
 	}
+	// lowerWithElementKey appends this module's body to Main as it stands, so each statement's IR starts
+	// where Main ends now, past what the statements before it lowered to (firstLinkMainAt).
+	ahead := len(l.result.Main)
+	if l.firstLinkMain == nil {
+		l.firstLinkMain = map[*ast.Node]firstLinkMainRange{}
+	}
 	for _, node := range module.Statements.Nodes {
 		statements, err := l.firstLinkStatement(node)
 		if err != nil {
 			return nil, err
 		}
+		l.firstLinkMain[node] = firstLinkMainRange{start: ahead + len(lowered), length: len(statements)}
 		lowered = append(lowered, statements...)
 	}
 	return lowered, nil
@@ -144,7 +151,7 @@ func (l *lowering) firstLinkCatch(phase string, unit *ast.Node, run func() error
 // unit, or is empty when the stop has none, and a panic, which carries no site of its own, is at site. An
 // error that's neither a NotYet nor a Refused is no row.
 func (l *lowering) firstLinkRow(recovered any, err error, phase string, site, unit *ast.Node) (ir.Trap, bool) {
-	row := ir.Trap{Phase: phase, Suspect: l.firstLinkPanicked}
+	row := ir.Trap{Phase: phase, Suspect: l.firstLinkPanicked || l.firstLinkRewriteSkipped}
 	var notYet *NotYet
 	var refused *Refused
 	switch {

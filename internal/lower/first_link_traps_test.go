@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"testing"
 
@@ -91,6 +92,34 @@ func firstLinkRuns(t *testing.T, program *ir.Program) []firstLinkRun {
 	return runs
 }
 
+// firstLinkLocalSites is program's Traps with every site in a Site or a Reason read from its file's base name
+// on: load names a file by the path it was loaded from, a test's temporary directory here, which differs on
+// every run.
+func firstLinkLocalSites(program *ir.Program) []ir.Trap {
+	rows := []ir.Trap{}
+	for _, row := range program.Traps {
+		row.Site = firstLinkLocalSite.ReplaceAllString(row.Site, "$1")
+		row.Reason = firstLinkLocalSite.ReplaceAllString(row.Reason, "$1")
+		rows = append(rows, row)
+	}
+	return rows
+}
+
+// firstLinkLocalSite is a path ending in a file:line:col site, with the site's file from its base name on.
+var firstLinkLocalSite = regexp.MustCompile(`[^\s]*/([^/\s]+:[0-9]+:[0-9]+)`)
+
+// firstLinkFromFile is a stop's text from its site's file's base name on.
+func firstLinkFromFile(stop error, file string) string {
+	if stop == nil {
+		return ""
+	}
+	text := stop.Error()
+	if at := strings.Index(text, file+":"); at >= 0 {
+		return text[at:]
+	}
+	return text
+}
+
 // firstLinkTrapped holds a program's runs to its trap: each prints stdout, then exits 75 with stderr
 // starting with the first-link prefix and then stop, and naming site.
 func firstLinkTrapped(t *testing.T, program *ir.Program, stdout, stop, site string) {
@@ -113,8 +142,8 @@ func TestFirstLinkTrapRunsUpToTheStop(t *testing.T) {
 		t.Fatal(err)
 	}
 	want := ir.Trap{Kind: "NotYet", Reason: "Math.random", Site: "main.a:5:9", Unit: "main.a second", Phase: "Body"}
-	if len(program.Traps) != 1 || program.Traps[0] != want {
-		t.Fatalf("Traps: got %+v, want %+v", program.Traps, want)
+	if rows := firstLinkLocalSites(program); len(rows) != 1 || rows[0] != want {
+		t.Fatalf("Traps: got %+v, want %+v", rows, want)
 	}
 	firstLinkTrapped(t, program, "first ran\n", "NotYet: ", "main.a:5:9")
 }
@@ -128,7 +157,7 @@ func TestFirstLinkTrapOffStopsAtCompileTime(t *testing.T) {
 		t.Fatalf("got %v, want the NotYet for Math.random at main.a:5:9", err)
 	}
 	_, stop := lowerSource(t, firstLinkTwoFunctions)
-	if stop == nil || stop.Error() != err.Error() {
+	if stop == nil || firstLinkFromFile(stop, "main.a") != firstLinkFromFile(err, "main.a") {
 		t.Fatalf("got %v, want Lower's stop %v", err, stop)
 	}
 }
@@ -142,8 +171,8 @@ func TestFirstLinkTrapNestedStubsOnlyItself(t *testing.T) {
 		t.Fatal(err)
 	}
 	want := ir.Trap{Kind: "NotYet", Reason: "Math.random", Site: "main.a:4:10", Unit: "main.a outer.inner", Phase: "Body"}
-	if len(program.Traps) != 1 || program.Traps[0] != want {
-		t.Fatalf("Traps: got %+v, want %+v", program.Traps, want)
+	if rows := firstLinkLocalSites(program); len(rows) != 1 || rows[0] != want {
+		t.Fatalf("Traps: got %+v, want %+v", rows, want)
 	}
 	firstLinkTrapped(t, program, "outer ran\n", "NotYet: ", "main.a:4:10")
 }
@@ -158,8 +187,8 @@ func TestFirstLinkTrapRefusedUnitStubs(t *testing.T) {
 		t.Fatal(err)
 	}
 	want := ir.Trap{Kind: "Refused", Reason: "==", Fix: "use ===, which doesn't coerce", Site: "main.a:5:11", Unit: "main.a second", Phase: "Refusal"}
-	if len(program.Traps) != 1 || program.Traps[0] != want {
-		t.Fatalf("Traps: got %+v, want %+v", program.Traps, want)
+	if rows := firstLinkLocalSites(program); len(rows) != 1 || rows[0] != want {
+		t.Fatalf("Traps: got %+v, want %+v", rows, want)
 	}
 	firstLinkTrapped(t, program, "first ran\n", "Refused: ==", "main.a:5:11")
 	_, off := lowerFirstLink(t, firstLinkRefused, false)
@@ -167,7 +196,7 @@ func TestFirstLinkTrapRefusedUnitStubs(t *testing.T) {
 	if !errors.As(off, &refused) || !strings.HasSuffix(off.Error(), "main.a:5:11: Adamic 0.1 refuses ==; use ===, which doesn't coerce") {
 		t.Fatalf("without the option: got %v, want the refusal of == at main.a:5:11", off)
 	}
-	if _, stop := lowerSource(t, firstLinkRefused); stop == nil || stop.Error() != off.Error() {
+	if _, stop := lowerSource(t, firstLinkRefused); stop == nil || firstLinkFromFile(stop, "main.a") != firstLinkFromFile(off, "main.a") {
 		t.Fatalf("without the option: got %v, want Lower's stop %v", off, stop)
 	}
 }
@@ -182,8 +211,33 @@ func TestFirstLinkTrapSignatureCascade(t *testing.T) {
 	}
 	signature := ir.Trap{Kind: "NotYet", Reason: "a rest parameter that isn't an array", Site: "main.a:1:17", Unit: "main.a either", Phase: "Signature"}
 	reference := ir.Trap{Kind: "NotYet", Reason: "a reference to either, whose signature trapped: NotYet: a rest parameter that isn't an array at main.a:1:17", Site: "main.a:5:17", Unit: "main.a run", Phase: "Body"}
-	if len(program.Traps) != 2 || program.Traps[0] != signature || program.Traps[1] != reference {
-		t.Fatalf("Traps: got %+v, want %+v then %+v", program.Traps, signature, reference)
+	if rows := firstLinkLocalSites(program); len(rows) != 2 || rows[0] != signature || rows[1] != reference {
+		t.Fatalf("Traps: got %+v, want %+v then %+v", rows, signature, reference)
 	}
 	firstLinkTrapped(t, program, "before the call\n", "NotYet: a reference to either, whose signature trapped", "main.a:1:17")
+}
+
+// A whole-program pass's stop traps its unit in the IR already made: setter.ts stops at checkBoundArguments,
+// at 9:15, in the top-level statement that binds (TestBoundNameAccessorsStayStopped's setter). In a first-link
+// lowering that pass records the row with its own name as the phase, the statement's IR in Main becomes the
+// trap, and the program runs up to it, printing 1, then exits 75.
+func TestFirstLinkTrapPassStopRecordsAndTraps(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join("testdata", "bind_name_accessors", "setter.ts"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	loaded, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := LowerWithOptions(context.Background(), loaded, Options{FirstLinkTraps: true})
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := ir.Trap{Kind: "NotYet", Reason: "bind of a function that declares 2 parameters where the type it's bound as names 1", Site: "setter.ts:9:15", Unit: "setter.ts module", Phase: "checkBoundArguments"}
+	if rows := firstLinkLocalSites(program); len(rows) == 0 || rows[0] != want {
+		t.Fatalf("Traps: got %+v, want %+v first", rows, want)
+	}
+	firstLinkTrapped(t, program, "1\n", "NotYet: bind of a function that declares 2 parameters", ":9:15")
 }
