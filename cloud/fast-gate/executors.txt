@@ -1612,10 +1612,11 @@ reads stage3/lane .gitattributes
 # must, never less.
 reads stage3/lane/adaptedtree stage3/*
 reads stage3/lane/adaptedtree .gitattributes
-# TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes (performance_pins_test.go:40) reads Lower's two host binding
-# pins and holds the adapted product's performanceCore.ts to their bytes.
+# TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes (performance_pins_test.go:38-41) reads Lower's two host binding
+# pins and holds the adapted product's performanceCore.ts to their bytes: the adapted core, and since b94d794f the timing
+# facade, which took the place of the hooks pin.
 reads stage3/lane/adaptedtree internal/lower/testdata/host_binding/performance_core_adapted.txt
-reads stage3/lane/adaptedtree internal/lower/testdata/host_binding/performance_core_hooks.txt
+reads stage3/lane/adaptedtree internal/lower/testdata/host_binding/performance_core_timing_facade.txt
 # The adapted tree's census, TestTheAdaptedTreeBuildReachesOnlyItsDeclaredFile, lives in a package of its own,
 # stage3/lane/adaptedtree/census (#4ps0v4x, landed on main as e307fad9), and reads every .go file under the root for a
 # //go:linkname naming a reached package (internal/leancensus/leancensus.go:457, :749-781), skipping cohere and any
