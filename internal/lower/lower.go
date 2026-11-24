@@ -30,6 +30,11 @@ type Options struct {
 	OwnershipQuery bool
 	// ModuleFormat is the module format the build declares its program in. Default ModuleFormatEcmaScript.
 	ModuleFormat ModuleFormat
+	// FirstLinkTraps lowers each unit that stops as a trap, which ends the program when it runs, instead of
+	// stopping the lowering, so one run of the first link names every wall (first_link_traps.go). It's
+	// measurement only: a program lowered so is never a product, and cmd/adamic-firstlink is its one reader.
+	// environmentOptions never sets it. Default off.
+	FirstLinkTraps bool
 }
 
 // ModuleFormat is a module format a build can declare: what Node would run the program as, and so
@@ -98,13 +103,13 @@ func lowerTarget(ctx context.Context, program *load.Program, options Options, wo
 
 	var plan *programMembership
 	if options.ProgramRegion {
-		discovery, err := lowerCheckedWithCycleTypes(program, typeChecker, entry, nil, true, false, options.ModuleFormat, nil)
+		discovery, err := lowerCheckedWithCycleTypes(program, typeChecker, entry, nil, true, false, options.ModuleFormat, options.FirstLinkTraps, nil)
 		if err != nil {
 			return nil, err
 		}
 		plan = discovery.programPlan
 	}
-	built, err := lowerCheckedWithCycleTypes(program, typeChecker, entry, plan, false, options.Debug, options.ModuleFormat, nil, options.OwnershipQuery)
+	built, err := lowerCheckedWithCycleTypes(program, typeChecker, entry, plan, false, options.Debug, options.ModuleFormat, options.FirstLinkTraps, nil, options.OwnershipQuery)
 	if err != nil {
 		return nil, err
 	}
@@ -114,18 +119,18 @@ func lowerTarget(ctx context.Context, program *load.Program, options Options, wo
 
 // lowerChecked lowers a program as an ES module, the format every caller but LowerWithOptions lowers in.
 func lowerChecked(program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery, debug bool, ownershipQuery ...bool) (*lowering, error) {
-	return lowerCheckedWithCycleTypes(program, typeChecker, entry, plan, discovery, debug, ModuleFormatEcmaScript, nil, ownershipQuery...)
+	return lowerCheckedWithCycleTypes(program, typeChecker, entry, plan, discovery, debug, ModuleFormatEcmaScript, false, nil, ownershipQuery...)
 }
 
 // Tests retain transient checker types before lazy queries replace them. A checked view's
 // element reads are keyed by what the program views (viewElementKey). An array contract the key's
 // pre-pass didn't see would leave a read it should check raw, so the key fails closed: the program
 // is lowered again with every element read checked.
-func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery, debug bool, moduleFormat ModuleFormat, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (*lowering, error) {
+func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery, debug bool, moduleFormat ModuleFormat, firstLinkTraps bool, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (*lowering, error) {
 	key := &viewElementKey{}
-	built, err := lowerWithElementKey(key, program, typeChecker, entry, plan, discovery, debug, moduleFormat, cycleTypes, ownershipQuery...)
+	built, err := lowerWithElementKey(key, program, typeChecker, entry, plan, discovery, debug, moduleFormat, firstLinkTraps, cycleTypes, ownershipQuery...)
 	if len(key.misses) != 0 {
-		built, err = lowerWithElementKey(&viewElementKey{every: true}, program, typeChecker, entry, plan, discovery, debug, moduleFormat, cycleTypes, ownershipQuery...)
+		built, err = lowerWithElementKey(&viewElementKey{every: true}, program, typeChecker, entry, plan, discovery, debug, moduleFormat, firstLinkTraps, cycleTypes, ownershipQuery...)
 	}
 	if err != nil {
 		return built, err
@@ -139,12 +144,15 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 	return built, nil
 }
 
-func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery, debug bool, moduleFormat ModuleFormat, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (built *lowering, err error) {
+func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery, debug bool, moduleFormat ModuleFormat, firstLinkTraps bool, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (built *lowering, err error) {
 	lowering := &lowering{cycleTypes: cycleTypes, program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1, entry: entry, programPlan: plan, programDiscovery: discovery, elementKey: key}
 	// A stop before checkHostMemberWrites judges a deferred host member write is main's stop at that write.
 	defer func() { err = lowering.hostMemberPending(lowering.regexpServedPending(err)) }()
+	// The program hands back every trap the lowering recorded, wherever it returns (first_link_traps.go).
+	defer func() { lowering.result.Traps = lowering.traps }()
 	lowering.debug = debug
 	lowering.moduleFormat = moduleFormat
+	lowering.firstLinkTraps = firstLinkTraps
 	lowering.result.ProgramRegion = discovery || plan != nil
 	if plan != nil {
 		lowering.result.ProgramTypes = plan.types
@@ -399,6 +407,14 @@ type lowering struct {
 	// moduleFormat is the module format the build declares (Options.ModuleFormat). A lowering a test
 	// builds by hand leaves it ModuleFormatEcmaScript.
 	moduleFormat ModuleFormat
+
+	// firstLinkTraps is Options.FirstLinkTraps: a unit that stops lowers as a trap instead
+	// (first_link_traps.go). traps are the rows its traps recorded, in the order met, which the lowering
+	// hands back as its program's Traps, and firstLinkPanicked says one of them was a recovered Go panic,
+	// so each row after it is Suspect.
+	firstLinkTraps    bool
+	firstLinkPanicked bool
+	traps             []ir.Trap
 
 	// flowDead is every function a flow graph built during lowering took to never run (flowGraph,
 	// iterableViewFlowGraph), which checkFlowLiveness holds to that once lowering is done.

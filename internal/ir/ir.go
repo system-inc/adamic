@@ -124,6 +124,33 @@ type Program struct {
 	// throws Node's TypeError, and which objects a freeze reaches isn't known across aliases and calls,
 	// so in such a program every object write can throw (FrozenWriteMayThrow); in one without, none does.
 	ObjectsMayFreeze bool
+
+	// Traps are the units a first-link lowering (lower's Options.FirstLinkTraps) lowered as traps, in the
+	// order it met them. A program lowered any other way has none.
+	Traps []Trap
+}
+
+// Trap is one unit a first-link lowering couldn't lower, which it lowered as a Panic with Trap set instead:
+// what stopped it, where, and in which phase. A row is a measurement, never a verdict on the program.
+type Trap struct {
+	// Kind is "Refused" or "NotYet", the stop's own type, or "Panic" for a Go panic recovered while the unit
+	// lowered.
+	Kind string
+	// Reason is the stop's What, as main would have stopped with it, or the recovered panic's value.
+	Reason string
+	// Fix is a Refused's Fix, and empty for any other kind.
+	Fix string
+	// Site is where the stop is, file:line:col, in load.Program's Where form.
+	Site string
+	// Unit is the unit trapped: its module's path and a space, then a function's declaration chain joined by
+	// dots, or "module" for one of the module's top-level statements.
+	Unit string
+	// Phase is the lowering phase the unit stopped in: "Body" for a function's body, or "Statement" for a
+	// module's top-level statement.
+	Phase string
+	// Suspect says a recovered Go panic was trapped earlier in the same lowering. A panic can leave
+	// lowering's state part written, so this row may be that panic's echo rather than a wall of its own.
+	Suspect bool
 }
 
 // PlaceholderCheck records one readiness or storage-arm boundary in the checked-sites report.
@@ -1483,8 +1510,13 @@ type (
 	// Evaluate evaluates an expression for its effects and discards the value: a call as a statement.
 	Evaluate struct{ Value Expression }
 
-	// Panic is the prelude's panic(message): write "adamic: panic: <message>" and exit 70.
-	Panic struct{ Message Expression }
+	// Panic is the prelude's panic(message): write "adamic: panic: <message>" and exit 70. With Trap set it's
+	// a first-link trap instead, a unit a first-link lowering couldn't lower (Program.Traps), which writes
+	// "adamic: first-link trap: <message>" and exits 75, so a run that reaches one is never a pass.
+	Panic struct {
+		Message Expression
+		Trap    bool
+	}
 
 	// SetIndex is array[index] = value, at an index the array has: anywhere else it panics, in both
 	// backends, where JavaScript would grow the array or leave a hole.
