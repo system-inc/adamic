@@ -1,0 +1,13 @@
+diff --git a/internal/native/reuse.go b/internal/native/reuse.go
+index 6c7debd1c7..ca9791f96a 100644
+--- a/internal/native/reuse.go
++++ b/internal/native/reuse.go
+@@ -674,7 +674,7 @@ func (e *emitter) spreadCopy(literal ir.ObjectLiteral, source string) string {
+ 	if !literal.SpreadMaybeUndefined {
+ 		return copy
+ 	}
+-	return fmt.Sprintf("(%s != NULL ? %s : adamic_object_construct(&%s))", source, copy, e.shape(emptyFields(literal)))
++	return fmt.Sprintf("(%s != NULL ? %s : adamic_object_new(&%s))", source, copy, e.shape(emptyFields(literal)))
+ }
+ 
+ // emptySpread gives the fields of the object spreadCopy made for an undefined source the value
