@@ -112,3 +112,67 @@ func TestAddedUnionPlusAssignStaysNotYet(t *testing.T) {
 		t.Fatalf("want combine's NotYet, got %v", err)
 	}
 }
+
+// An array of strings is an arm + converts as Node does, by Array.prototype.toString's join through
+// ToString (family 86, tsc's formatStringFromArgs over `string | number | boolean | readonly string[] |
+// SourceFile`, under row 205 and Adamic's ruling on + over a union). Each row agrees with Node on the
+// JavaScript backend and natively under the sanitizers, an empty array and one holding commas and an empty
+// string included, and the union is read once per +. Mutant: addedObjectsConvert's array branch answering
+// false, as before, and every row is combine's NotYet.
+func TestAddedUnionStringArrayAgrees(t *testing.T) {
+	t.Parallel()
+	const argument = "function argument(list: boolean): string | readonly string[] {\n    if (list) return [\"a\", \"b\"];\n    return \"value\";\n}\n"
+	const holder = "interface Holder { readonly name: string }\ntype Argument = string | number | boolean | readonly string[] | Holder;\n" +
+		"function checkDefined<T>(value: T | undefined): T { if (value === undefined) throw new Error('undefined'); return value; }\n" +
+		"function format(text: string, args: readonly Argument[]): string {\n    return text.replace(/\\{(\\d+)\\}/g, (_match: string, index: string) => \"\" + checkDefined(args[+index]));\n}\n"
+	for _, probe := range []struct{ name, source, stdout string }{
+		{"diagnostic plus", argument + "console.log(\"\" + argument(true));\nconsole.log(\"\" + argument(false));\n", "a,b\nvalue\n"},
+		{"diagnostic arguments", holder + "const holder: Holder = { name: 'h' };\nconsole.log(format('{0}|{1}|{2}|{3}|{4}', ['s', 7, true, ['x', 'y'], holder]));\n", "s|7|true|x,y|[object Object]\n"},
+		{"empty and awkward", "function pick(which: number): string | string[] { return which === 0 ? [] : which === 1 ? ['a,b', '', 'c'] : 'plain'; }\nconsole.log('[' + pick(0) + ']');\nconsole.log('[' + pick(1) + ']');\nconsole.log('[' + pick(2) + ']');\n", "[]\n[a,b,,c]\n[plain]\n"},
+		{"each side and a chain", argument + "const list = argument(true);\nconsole.log(list + '');\nconsole.log('' + list);\nconsole.log('x' + list + 'y');\n", "a,b\na,b\nxa,by\n"},
+		{"read once per plus", "function read(): string | Array<string> { console.log('read'); return ['p', 'q']; }\nconsole.log('<' + read() + '>');\nconsole.log(read() + '!' + read());\n", "read\n<p,q>\nread\nread\np,q!p,q\n"},
+		{"logger field", "interface Entry { readonly message: string | string[] }\nfunction line(entry: Entry): string { return 'log: ' + entry.message; }\nconsole.log(line({ message: 'one' }));\nconsole.log(line({ message: ['two', 'three'] }));\n", "log: one\nlog: two,three\n"},
+	} {
+		for _, extension := range []string{".a", ".ts"} {
+			t.Run(probe.name+extension, func(t *testing.T) {
+				t.Parallel()
+				program := lowersAndAgreesWithNodeAs(t, probe.source, extension)
+				if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != probe.stdout {
+					t.Fatalf("native: exit %d, stdout %q, stderr %q; want 0 and %q", code, stdout, stderr, probe.stdout)
+				}
+			})
+		}
+	}
+}
+
+// Every other array keeps combine's NotYet at compile time, since the helper's join stops at run time on an
+// array of only numbers or booleans: a number[], a (string | number)[], a string[][], a tuple, and a string
+// array beside undefined, which addedUnion's nullable rule holds. += keeps its own NotYet
+// (TestAddedUnionPlusAssignStaysNotYet). Mutant: the branch taking any array, and the number row lowers.
+func TestAddedUnionOtherArraysStayNotYet(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, arm, value string }{
+		{"numbers", "number[]", "[1, 2]"},
+		{"mixed", "(string | number)[]", "['a', 1]"},
+		{"nested", "readonly string[][]", "[['a']]"},
+		{"tuple", "[string, string]", "['a', 'b']"},
+		{"beside undefined", "readonly string[] | undefined", "['a']"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			source := "function pick(flag: boolean): string | " + probe.arm + " { return flag ? " + probe.value + " : 's'; }\nconsole.log('' + pick(true));\n"
+			_, err := lowerSourceAs(t, source, ".ts")
+			if err == nil || !strings.Contains(err.Error(), "a BinaryExpression with a string and") {
+				t.Fatalf("want combine's NotYet, got %v", err)
+			}
+		})
+	}
+	t.Run("plus assign", func(t *testing.T) {
+		t.Parallel()
+		const source = "function pick(flag: boolean): string | string[] { return flag ? ['a'] : 's'; }\nlet s = '';\ns += pick(true);\nconsole.log(s);\n"
+		_, err := lowerSourceAs(t, source, ".ts")
+		if err == nil || !strings.Contains(err.Error(), "a BinaryExpression with a string and a union of differently held members") {
+			t.Fatalf("want combine's NotYet, got %v", err)
+		}
+	})
+}
