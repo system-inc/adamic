@@ -127,6 +127,7 @@ var optionalChainReaders = map[string]optionalChainReader{
 	"optionalReceiver":                {3, readerBeforeGuard},
 	"optionalChainOperand":            {3, readerBeforeGuard},
 	"hostMemberValueCallThrough":      {3, readerDeclines + ": a .call through a chain stops where main stops it"},
+	"dictionaryViewUse":               {1, readerProof + ": the use walk declines an optional call handed the view, guarded or not, so the answer it keeps by the cast holds whichever guard is active"},
 	"hostMemberValueUse":              {1, readerDeclines},
 	"hostMemberValueThrough":          {2, readerDeclines},
 	"hostMemberDeclared":              {1, readerTarget},

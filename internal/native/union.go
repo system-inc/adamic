@@ -66,6 +66,17 @@ func (e *emitter) narrow(narrow ir.Narrow) string {
 			shape = fmt.Sprintf(" || !adamic_record_is((const adamic_object *)%s)", value)
 		}
 		e.line("if (%s == NULL || %s == &adamic_null || %s->kind != adamic_kind_%s%s) adamic_panic(%s, %d);", value, value, value, kind, shape, cString(narrow.Message), len(narrow.Message))
+		// A record's shape names its value kind (record.c), and only a record of references holds values a
+		// Union reads as they are: a record of numbers or booleans keeps them unboxed, and reading one as a
+		// Union would take its bits for a pointer.
+		if narrow.ReferencesMessage != "" {
+			if narrow.To.Present() != ir.Record {
+				panic("compiler bug: a references test on a narrow to other than a record")
+			}
+			e.line("if (adamic_record_values((const adamic_record *)%s) != adamic_field_reference) adamic_panic(%s, %d);", value, cString(narrow.ReferencesMessage), len(narrow.ReferencesMessage))
+		}
+	} else if narrow.ReferencesMessage != "" {
+		panic("compiler bug: a references test on an unchecked narrow")
 	}
 	switch narrow.To {
 	case ir.Number:

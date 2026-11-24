@@ -31,6 +31,7 @@ const (
 	// Adamic's three rulings (Q1 to Q3 on #b5w3ycg, Nov 22), under one principle: in .ts a cast's stop is
 	// NotYet when a run-time check could decide the claim and nobody has built it, and Refused only when no
 	// check ever could.
+	// The view is built for object to a dictionary of unknown values (dictionaryView), and NotYet for the rest.
 	castIndexSignature // a target with an index signature: NotYet, the dictionary view (rulings.md:26 narrowed)
 	castTypeParameter  // a type parameter source: NotYet under an object constraint, Refused unconstrained
 	castIntersection   // an intersection target: NotYet, unless a member is refused on its own
