@@ -1,0 +1,13 @@
+// A direct built-in TypeError may read its existing message.
+class Reader {
+	readonly message = 'read';
+	get messageValue(): string { throw new TypeError(this.message); }
+}
+function read(value: object, key: string): unknown {
+	return Reflect.get(Object(value), key, value);
+}
+try {
+	console.log(String(read(new Reader(), 'messageValue')));
+} catch (error) {
+	if (error instanceof Error) console.log(error.name + ': ' + error.message);
+}

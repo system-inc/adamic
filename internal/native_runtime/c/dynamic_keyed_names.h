@@ -20,7 +20,6 @@ enum adamic_dynamic_keyed_stop {
 	adamic_dynamic_keyed_stop_error_property,
 	adamic_dynamic_keyed_stop_stats_field,
 	adamic_dynamic_keyed_stop_object_literal_getter,
-	adamic_dynamic_keyed_stop_setter_only,
 	adamic_dynamic_keyed_stop_method,
 	adamic_dynamic_keyed_stop_class_constructor,
 };
@@ -39,7 +38,6 @@ static const char *const adamic_dynamic_keyed_stop_messages[] = {
 	"an Error property Node sets and the native Error lacks isn't read yet",
 	"this Stats field isn't held natively yet",
 	"an object literal's getter isn't read by a run-time key yet",
-	"a setter without a getter isn't read by a run-time key yet",
 	"a method isn't read by a run-time key yet",
 	"a class instance's constructor isn't read by a run-time key yet",
 };

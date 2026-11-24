@@ -427,9 +427,10 @@ type lowering struct {
 	// values can reach back is a counted node on a cycle (#t5q4prw, #1vb0x5s). Like graphNodeArrays, a
 	// site from a literal that then fails stays listed, which can only over-stop.
 	graphRecords []graphRecordSite
-	// dynamicKeyedSite is the first run-time key read (reflectGet or viewKeyedRead), where
+	// dynamicKeyedSite is the first readonly view read by a run-time key, where
 	// checkDynamicKeyedGetters says why a class getter keeps the program from reading by a run-time key.
 	dynamicKeyedSite *ast.Node
+	reflectKeyedSite *ast.Node
 	// getterDeclarations is each class getter's declaration, by its function (registerAccessor), which
 	// checkDynamicKeyedGetters reads.
 	getterDeclarations map[int]*ast.Node

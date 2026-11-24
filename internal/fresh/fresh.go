@@ -1507,9 +1507,17 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.DynamicProperty:
 		return a.load(a.value(expression.Object), expression.Name)
 	case ir.DynamicKeyedProperty:
-		// It may call a class getter by whatever name the key holds, so it's taken as a call, which
-		// lets its operands escape and its result be anything outside.
-		return a.call(a.operands(expression), expression.Type())
+		if len(a.proof.program.DynamicKeyedGetterTargets(expression)) == 0 {
+			// Preserve the existing opaque read summary outside getter dispatch.
+			return a.call(a.operands(expression), expression.Type())
+		}
+		receiver := a.value(expression.Object)
+		a.value(expression.Key)
+		// A data result may alias any slot of the receiver. The getter's descriptor
+		// call may retain the receiver and return an independently owned value.
+		result := a.everything(receiver)
+		result.merge(a.call([]value{receiver}, expression.Type()))
+		return result
 	case ir.HasAccessor:
 		a.value(expression.Object)
 		return value{}

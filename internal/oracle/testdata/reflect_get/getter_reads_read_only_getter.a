@@ -1,0 +1,10 @@
+// A keyed getter can call another getter whose closure only reads.
+class Reader {
+	readonly base = 'read only';
+	get inner(): string { return this.base; }
+	get outer(): string { return this.inner; }
+}
+function read(value: object, key: string): unknown {
+	return Reflect.get(Object(value), key, value);
+}
+console.log(String(read(new Reader(), 'outer')));
