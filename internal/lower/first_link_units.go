@@ -61,6 +61,26 @@ func (l *lowering) firstLinkInside(node *ast.Node) error {
 	return nil
 }
 
+// firstLinkSkips reports, in a first-link lowering, whether node lies in a trapped unit, whose code never
+// lowered or lowered as the trap. A whole-program pass that ranges over a table lowering recorded, or over
+// the AST, passes over what such a unit left there, so it judges on past the unit rather than stopping at
+// it again (first_link_passes.go). A pass over the IR needs none: the trap replaced the unit's IR.
+func (l *lowering) firstLinkSkips(node *ast.Node) bool {
+	if !l.firstLinkTraps || node == nil {
+		return false
+	}
+	_, trapped := l.firstLinkTrappedAt(node)
+	return trapped
+}
+
+// firstLinkSkipsAt is firstLinkSkips for an entry that names its site only by its Where.
+func (l *lowering) firstLinkSkipsAt(where string) bool {
+	if !l.firstLinkTraps {
+		return false
+	}
+	return l.firstLinkSkips(l.firstLinkPassUnit(where))
+}
+
 // firstLinkUnitName names a unit as a Trap's Unit does: its module's path, then its declaration chain, or
 // "module" for a top-level statement that declares nothing.
 func (l *lowering) firstLinkUnitName(unit *ast.Node) string {

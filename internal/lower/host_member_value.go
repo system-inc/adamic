@@ -210,6 +210,9 @@ type hostMemberValueJudge struct {
 func (l *lowering) checkHostMemberValues(graph *allocationFlowGraph, stores map[int]ir.SetProperty) error {
 	index := graph.projectionIndex()
 	for _, value := range l.hostMemberValues {
+		if l.firstLinkSkips(value.read) {
+			continue
+		}
 		// A read lowering never made, or made off something other than a local, can't be asked about
 		// here, so it fails closed.
 		if _, isRead := value.object.(ir.Read); !isRead {
@@ -228,6 +231,9 @@ func (l *lowering) checkHostMemberValues(graph *allocationFlowGraph, stores map[
 		}
 	}
 	for _, value := range l.hostMemberValues {
+		if l.firstLinkSkips(value.read) {
+			continue
+		}
 		judge := &hostMemberValueJudge{value: value, graph: graph, stores: stores, seen: map[*ast.Symbol]bool{}}
 		judge.functions, judge.known = l.hostMemberClosures(ir.Property{Object: value.object, Name: value.read.Name().Text()}, graph, map[string]bool{})
 		if err := l.hostMemberValueUse(judge, value.read); err != nil {

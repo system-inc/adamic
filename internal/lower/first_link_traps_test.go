@@ -241,3 +241,47 @@ func TestFirstLinkTrapPassStopRecordsAndTraps(t *testing.T) {
 	}
 	firstLinkTrapped(t, program, "1\n", "NotYet: bind of a function that declares 2 parameters", ":9:15")
 }
+
+// A judging pass that ranges over a table lowering recorded passes over the entries a trapped unit left there,
+// so it judges on past its first stop: two functions each read an optional field a record may reach, which
+// checkRecordGuardedReads stops at the read (TestBrandedSupertypeRecordGuardIsRouted's plain row), and in a
+// first-link lowering both reads are rows with that pass's phase, each in its own function, and no Gap.
+// Mutant: firstLinkSkips answers false, so the pass meets show's read again past its trap, records a Gap and
+// skips show2's.
+func TestFirstLinkTrapPassRunsPastItsStops(t *testing.T) {
+	t.Parallel()
+	const records = `const counts: Record<string, number> = {};
+counts["a"] = 1;
+interface Loose { readonly kind?: number; readonly pos?: number; }
+interface Sized extends Declaration { _sizedBrand: undefined; readonly size?: number; readonly label: string | number; }
+function isSizedLie(n: Loose): n is Sized { return n !== undefined; }
+`
+	const body = ` { if (isSizedLie(n)) { console.log(n.size === undefined ? "none" : String(n.size)); console.log(String(n.label)); } }
+`
+	source := brandedPrelude + records + "function show(n: Loose): void" + body + "function show2(n: Loose): void" + body + "const w = { kind: 80, pos: 2, size: 3, label: \"x\" }; const v: Node = w; show(v);\nshow2(v);\nconsole.log(String(counts[\"a\"]));\n"
+	loaded, err := load.Load([]string{writeAgreementSource(t, "main.ts", source)})
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := LowerWithOptions(context.Background(), loaded, Options{FirstLinkTraps: true})
+	if err != nil {
+		t.Fatal(err)
+	}
+	units := []string{}
+	for _, row := range firstLinkLocalSites(program) {
+		if row.Phase != "checkRecordGuardedReads" {
+			continue
+		}
+		if row.Kind == "Gap" {
+			t.Errorf("a Gap row for checkRecordGuardedReads: %+v", row)
+			continue
+		}
+		if row.Kind != "NotYet" || row.Reason != "a union or optional field read in a program with record storage" || row.Echo {
+			t.Errorf("a checkRecordGuardedReads row that isn't the read's NotYet: %+v", row)
+		}
+		units = append(units, row.Unit)
+	}
+	if len(units) != 2 || units[0] != "main.ts show" || units[1] != "main.ts show2" {
+		t.Errorf("checkRecordGuardedReads rows in units %q, want one in main.ts show, then one in main.ts show2; all rows: %+v", units, firstLinkLocalSites(program))
+	}
+}
