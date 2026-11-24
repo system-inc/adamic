@@ -5103,11 +5103,12 @@ class FastCheck(unittest.TestCase):
         # with "mode guard-reads" a test naming a path its package's key doesn't hold is the change's refusal, and its
         # seconds say it ran; without the line the same change passes and the guard never runs. Mutant, red here: the
         # door's call dropped, so the guarded change passes as the unguarded one does.
-        executors = "mode enforce\ndarwin internal/apple/*\nbuild go.*\ninert *.md\ninert cloud/*\n"
         comment = {"a/a_test.go": "package a\n\n// Reads: README.md\n"}
         for guarded in (False, True):
             with self.subTest(guarded=guarded):
-                base = self.change({"cloud/fast-gate/executors.txt": ("mode guard-reads\n" if guarded else "") + executors})
+                # The setUp base's executors.txt names no guard; the guarded base adds the line to it.
+                base = self.change({"cloud/fast-gate/executors.txt": "mode guard-reads\nmode enforce\ndarwin internal/apple/*\nbuild go.*\n"
+                                                                    "inert *.md\ninert cloud/*\n"}) if guarded else self.base
                 code, stdout, stderr, verdict = self.checked(self.change(comment, on=base), base=base)
                 self.assertEqual(stdout, self.units())
                 if guarded:
