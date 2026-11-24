@@ -1,0 +1,4 @@
+const map = new WeakMap<object, number>();
+console.log(map.toString());
+console.log(map.toLocaleString());
+console.log(Object.prototype.toString.call(map));

@@ -1,5 +1,7 @@
 package javascript
 
+import "github.com/system-inc/adamic/internal/ir"
+
 // Native iterator next is represented as a closure, so the JavaScript backend wraps Node's next
 // with the same closure calling convention. Node's actual iterator still decides its behavior,
 // and each [key, value] it gives is a tuple to a view, as a literal's is.
@@ -8,12 +10,27 @@ package javascript
 // is an AdamicIterator, never a plain object: a run-time key read of an Object.prototype name stops
 // on it with the runtime value stop (dynamic_keyed.go), as native's does on its iterator, whose
 // shape is marked host (map_set.c), where a plain object would hand out Object as its constructor.
-const iteratorClassRuntime = "class AdamicIterator { constructor(next) { this.next = next; } }\n"
+//
+// Each wrapper carries the tag of the iterator it stands for as its own [Symbol.toStringTag], set when it's made and
+// not enumerable, so Object.prototype.toString.call of it answers as Node's own iterator does (ir.ObjectTag, #eksbz4c
+// head T). The tags are written from ir.LibraryObjectTags, the one Go table of them, never spelled here.
+const iteratorClassRuntime = "class AdamicIterator { constructor(next, tag) { this.next = next; Object.defineProperty(this, Symbol.toStringTag, { value: tag }); } }\n"
 
 // A collection's iterator is an AdamicCollectionIterator, an AdamicIterator still, so an iterable
 // view's dispatch can tell it from a string's (ir.IsCollectionIterator), as native's
 // adamic_collection_iterator_is does. Only adamicCollectionIterator makes one: the class is the
-// runtime's own, which no program names.
-const collectionIteratorRuntime = "class AdamicCollectionIterator extends AdamicIterator {}\nconst adamicCollectionIterator = (collection, part) => { const iterator = collection[part](); return new AdamicCollectionIterator(new AdamicClosure(() => { const step = iterator.next(); if (part === 'entries' && !step.done) adamicTuple(step.value); return step; }, [])); };\n"
+// runtime's own, which no program names. A Set is held as a Map here (MapNew), so whether it's a Set's
+// iterator is the IR's to say (ir.CollectionIterator's Set), never the collection's.
+var collectionIteratorRuntime = "class AdamicCollectionIterator extends AdamicIterator {}\nconst adamicCollectionIterator = (collection, part, set) => { const iterator = collection[part](); return new AdamicCollectionIterator(new AdamicClosure(() => { const step = iterator.next(); if (part === 'entries' && !step.done) adamicTuple(step.value); return step; }, []), set ? " + libraryObjectTag("SetIterator") + " : " + libraryObjectTag("MapIterator") + "); };\n"
 
-const stringIteratorRuntime = "const adamicStringIterator = string => { const iterator = string[Symbol.iterator](); return new AdamicIterator(new AdamicClosure(() => iterator.next(), [])); };\n"
+var stringIteratorRuntime = "const adamicStringIterator = string => { const iterator = string[Symbol.iterator](); return new AdamicIterator(new AdamicClosure(() => iterator.next(), []), " + libraryObjectTag("StringIterator") + "); };\n"
+
+// libraryObjectTag is ir.LibraryObjectTags' tag for the library interface named, as a JavaScript string literal. A
+// name the table doesn't hold is a compiler bug.
+func libraryObjectTag(name string) string {
+	tag := ir.LibraryObjectTag(name)
+	if tag == "" {
+		panic("ir.LibraryObjectTags has no tag for " + name)
+	}
+	return quote(tag)
+}
