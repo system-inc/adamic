@@ -1,0 +1,26 @@
+[
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "canJsonReportNoInputFiles",
+    "kind": "FunctionDeclaration",
+    "before": "export function canJsonReportNoInputFiles(raw: any): boolean {\r\n    return !hasProperty(raw, \"files\") && !hasProperty(raw, \"references\");\r\n}",
+    "after": "export function canJsonReportNoInputFiles(raw: unknown): boolean {\r\n    if (/* family12:config-own-keys */ raw === null || raw === undefined) {\r\n        throw new TypeError(\"Cannot convert undefined or null to object\");\r\n    }\r\n    if (/* family12:config-primitive */ typeof raw !== \"object\" && typeof raw !== \"function\") return true;\r\n    return !hasProperty(raw, \"files\") && !hasProperty(raw, \"references\");\r\n}",
+    "why": "Narrow inline while preserving the same own-property lookups and nullish failure."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "normalizeNonListOptionValue",
+    "kind": "FunctionDeclaration",
+    "before": "function normalizeNonListOptionValue(option: CommandLineOption, basePath: string, value: any): CompilerOptionsValue {\r\n    if (option.isFilePath) {\r\n        value = normalizeSlashes(value);\r\n        value = !startsWithConfigDirTemplate(value) ? getNormalizedAbsolutePath(value, basePath) : value;\r\n        if (value === \"\") {\r\n            value = \".\";\r\n        }\r\n    }\r\n    return value;\r\n}",
+    "after": "function normalizeNonListOptionValue(option: CommandLineOption, basePath: string, value: CompilerOptionsValue): CompilerOptionsValue {\r\n    if (!option.isFilePath) return value;\r\n    const input: unknown = value;\r\n    if (/* family12:option-path */ typeof input !== \"string\") return Debug.fail(\"Expected a string file path\");\r\n    const slashes = normalizeSlashes(input);\r\n    const normalized = !startsWithConfigDirTemplate(slashes) ? getNormalizedAbsolutePath(slashes, basePath) : slashes;\r\n    return normalized === \"\" ? \".\" : normalized;\r\n}",
+    "why": "Narrow the already validated path before invoking the string-only helpers."
+  },
+  {
+    "file": "src/compiler/sourcemap.ts",
+    "owner": "tryParseRawSourceMap",
+    "kind": "FunctionDeclaration",
+    "before": "const parsed = JSON.parse(text);",
+    "after": "const parsed: unknown = JSON.parse(text);",
+    "why": "Only publish the JSON value after the source-map predicate accepts it."
+  }
+]

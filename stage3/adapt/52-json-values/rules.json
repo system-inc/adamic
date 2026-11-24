@@ -494,5 +494,69 @@
     "before": "resolutionStack: string[]",
     "after": "resolutionStack: readonly string[]",
     "why": "The config extension reader only forwards the stack to parseConfig."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "JsonConversionNotifier",
+    "kind": "InterfaceDeclaration",
+    "before": "value: any,",
+    "after": "value: AdamicJsonRecoveryValue | undefined,",
+    "why": "Match convertPropertyValueToJson\u2019s recovery domain."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "getExtendsConfigPathOrArray",
+    "kind": "FunctionDeclaration",
+    "before": "value: CompilerOptionsValue,",
+    "after": "value: unknown,",
+    "why": "Preserve the extant string, array and malformed-input branches."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "onPropertySet",
+    "kind": "FunctionDeclaration",
+    "before": "        value: any,",
+    "after": "        value: AdamicJsonRecoveryValue | undefined,",
+    "why": "Match the notifier\u2019s recovery domain."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "onPropertySet",
+    "kind": "FunctionDeclaration",
+    "before": "        if (option && option !== extendsOptionDeclaration) value = convertJsonOption(option, value, basePath, errors, propertyAssignment, propertyAssignment.initializer, sourceFile);",
+    "after": "        const convertedValue = option && option !== extendsOptionDeclaration ? convertJsonOption(option, value, basePath, errors, propertyAssignment, propertyAssignment.initializer, sourceFile) : undefined;",
+    "why": "Retain a typed converted value separately from the raw extends payload."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "onPropertySet",
+    "kind": "FunctionDeclaration",
+    "before": "                currentOption[option.name] = value;",
+    "after": "                if (/* family12:notifier-write */ option === extendsOptionDeclaration) return Debug.fail(\"Unexpected extends option in a named option group\");\r\n                currentOption[option.name] = convertedValue;",
+    "why": "Only store a converted CompilerOptionsValue. The root extends branch keeps its raw input."
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "owner": "readJsonOrUndefined",
+    "kind": "FunctionDeclaration",
+    "before": "if (!jsonText) return undefined;",
+    "after": "if (!jsonText) return /* family12:json-empty */ undefined;",
+    "why": "Give the counter an exact anchor for the early return."
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "owner": "readJsonOrUndefined",
+    "kind": "FunctionDeclaration",
+    "before": "let result = tryParseJson(jsonText);",
+    "after": "let result: unknown = tryParseJson(jsonText);",
+    "why": "Hold the strict parse result as unknown."
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "owner": "readJsonOrUndefined",
+    "kind": "FunctionDeclaration",
+    "before": "    return result;",
+    "after": "    if (/* family12:json-result */ result === undefined || typeof result === \"object\" && result !== null) return result;\r\n    return Debug.fail(`Expected a JSON object or undefined in \"${path}\"`);",
+    "why": "Reject primitive or null results at the object return boundary."
   }
 ]

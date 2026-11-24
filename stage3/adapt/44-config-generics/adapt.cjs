@@ -9,8 +9,15 @@ for (const file of [...new Set(rules.map(r => r.file))]) {
     const source = ts.createSourceFile(file, before, ts.ScriptTarget.Latest, true);
     const predicate = require("./predicate.json");
     const owners = source.statements.filter(n => ts.isFunctionDeclaration(n) && n.name?.text === predicate.name);
-    if (owners.length !== 1 || owners[0].getText(source).replaceAll("\r\n", "\n") !== predicate.text) throw Error("protected predicate changed: S02");
+    const owner = owners[0];
+    const spelling = owner?.getText(source).replaceAll("\r\n", "\n");
+    if (owners.length !== 1 || (spelling !== predicate.text && spelling !== predicate.after)) throw Error("protected predicate changed: S02");
     let text = before, changed = 0;
+    if (spelling === predicate.text) {
+        const ending = before.includes("\r\n") ? "\r\n" : "\n";
+        text = before.slice(0, owner.getStart(source)) + predicate.after.replaceAll("\n", ending) + before.slice(owner.end);
+        changed++;
+    }
     for (const r of rules.filter(r => r.file === file)) {
         const newline = text.includes("\r\n") ? "\r\n" : "\n";
         const a = r.before.replace(/\r?\n/g, newline), b = r.after.replace(/\r?\n/g, newline);

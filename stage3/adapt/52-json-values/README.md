@@ -134,3 +134,11 @@ For #k8ed1f2 cause 43, the existing `parseConfig` rule emits
 `parseConfig`. The original `parseConfig` input pin still expects
 `string[]` at this stage. See [Premises](../99-readonly-family3-views-3/README.md#premises)
 for the readonly view and its forwarding calls.
+
+### Family 12 candidate
+
+`JsonConversionNotifier` and its config callback carry the JSON recovery domain. The callback keeps the converted compiler option separate from the raw extends input. The named-option write checks that the extends descriptor has stayed on its own path.
+
+`readJsonOrUndefined` holds the parsed result as `unknown` and returns only an object or undefined. A different result fails with its path. The `as BuildInfo | undefined` at `emitter.ts:1146` belongs to the cast family and stays as written. The public `parseConfigFileTextToJson.config` exemption retains its existing declaration. Oracle counts for these candidate checks are pending.
+
+The proof checks the actual planned `result` AST binding against the independent type `unknown`. Its `parsed-result-any` control changes only that annotation. The sealed candidate counter records JSON result categories and paths for unexpected results or unfinished calls, plus the notifier guard executions and rejection paths.
