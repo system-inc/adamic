@@ -29,3 +29,9 @@ Expected: `TestCastStopNamesItsCause/field_refinement` goes red on the kind (wan
 `objectCastCause` asks the field refinement's case above `castWidenedTarget`'s, so a target that reads one field narrower and widens another reads as a refinement.
 
 Expected: `TestCastStopNamesItsCause/widened_target` goes red on the kind (want refused=true, got the refinement's NotYet), and so does field_refinement_widening_another_field; the rest stay green.
+
+## M6: a method read narrower taken for a field (#bbssdcy, item 19)
+
+`refinedField` drops its test that every property is a data property, so lib's Promise cast from PromiseLike, whose `then` returns something narrower, reads as a field refinement.
+
+Expected: `TestCastStopNamesItsCause/promise_from_a_thenable` goes red on the kind (want refused=true, got the refinement's NotYet), and so does `TestRecordStoragePromiseArmMeetsNoThenable/cast.ts`; the rest stay green.
