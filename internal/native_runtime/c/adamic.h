@@ -766,6 +766,22 @@ void adamic_region_thread_end(void);
 adamic_object *adamic_object_copy(const adamic_object *source);
 adamic_object *adamic_object_copy_checked(const adamic_object *source, const char *expression);
 
+// adamic_spread_overwrite is one name a spread's literal writes after its source, { ...source, name: value }:
+// the name, a static string; the kind of slot the value is held in; its representation byte, ir.Type's, as
+// every write leaves one; and the value, owned, which the result takes.
+typedef struct adamic_spread_overwrite {
+	const char *name;
+	adamic_field_kind kind;
+	unsigned char representation;
+	adamic_value value;
+} adamic_spread_overwrite;
+// adamic_object_spread_with is { ...source, name: value, ... } for a literal whose result can't take its
+// source's shape (object_spread.c): a fresh plain object in a shape made from the source's own keys and
+// the count overwrites, given in the literal's order. The source is only read; NULL and &adamic_null are
+// an empty one. It stops on a source it doesn't copy yet, and on an overwrite whose kind and byte don't
+// describe its value.
+adamic_object *adamic_object_spread_with(const adamic_object *source, const adamic_spread_overwrite *overwrites, size_t count);
+
 // adamic_object_has is object.hasOwnProperty(name).
 bool adamic_object_has(const adamic_object *object, const adamic_string *name);
 
