@@ -1,0 +1,15 @@
+// Readonly view indexing keeps its original getter judgment alongside Reflect.get.
+import * as ts from '../enum_views/barrel.a';
+class Wrapper {
+	private readonly map = new Map<string, number>();
+	get size(): number { return this.map.size; }
+}
+function read(value: object, key: string): unknown {
+	return Reflect.get(Object(value), key, value);
+}
+const wrapper = new Wrapper();
+const kinds = (ts as Readonly<Record<'SyntaxKind', Readonly<Record<string, string | number>>>>).SyntaxKind;
+const name = ['Identifier'].join('');
+console.log(String(read(wrapper, 'size')));
+console.log(`${kinds[name]} ${wrapper.size}`);
+console.log(Object.keys({ tscUsesKeys: 1 }).join(','));

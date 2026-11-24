@@ -1,0 +1,12 @@
+// Runtime descriptor lookup chooses the subclass getter, which calls its method.
+class Base {
+	get answer(): number { return 1; }
+}
+class Derived extends Base {
+	pick(): number { return 42; }
+	override get answer(): number { return this.pick(); }
+}
+function read(value: object, key: string): unknown {
+	return Reflect.get(Object(value), key, value);
+}
+console.log(String(read(new Derived(), 'answer')));

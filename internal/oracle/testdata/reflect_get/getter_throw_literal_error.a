@@ -1,0 +1,12 @@
+// A direct built-in Error with a literal message is the throw allocation exception.
+class Reader {
+	get messageValue(): string { throw new Error('literal'); }
+}
+function read(value: object, key: string): unknown {
+	return Reflect.get(Object(value), key, value);
+}
+try {
+	console.log(String(read(new Reader(), 'messageValue')));
+} catch (error) {
+	if (error instanceof Error) console.log(error.name + ': ' + error.message);
+}

@@ -1,0 +1,13 @@
+// Several runtime keys choose a method-backed getter, a data field and a miss.
+class Reader {
+	readonly data = 'field';
+	pick(): string { return 'getter'; }
+	get answer(): string { return this.pick(); }
+}
+function read(value: object, key: string): unknown {
+	return Reflect.get(Object(value), key, value);
+}
+const reader = new Reader();
+for (const key of ['data', 'answer', 'missing']) {
+	console.log(String(read(reader, key)));
+}

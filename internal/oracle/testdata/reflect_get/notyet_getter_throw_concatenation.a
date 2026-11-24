@@ -1,0 +1,13 @@
+// An Error directly under throw does not exempt a message allocation.
+class Reader {
+	readonly key = 'x';
+	get messageValue(): string { throw new Error('key ' + this.key); }
+}
+function read(value: object, key: string): unknown {
+	return Reflect.get(Object(value), key, value);
+}
+try {
+	console.log(String(read(new Reader(), 'messageValue')));
+} catch (error) {
+	if (error instanceof Error) console.log(error.name + ': ' + error.message);
+}

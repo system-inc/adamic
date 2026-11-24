@@ -413,13 +413,12 @@ static const adamic_accessor *keyed_accessor(const adamic_object *object, const 
 	return NULL;
 }
 
-// keyed_getter calls a class getter with the object as this, as Reflect.get with the object as the
-// receiver does, and boxes what it gives by the getter's own representation (ir.Type's, written by
-// the emitter into the accessor), owned. Lowering admits a run-time key read only where every class
-// getter is one return of its own fields, literals and operators, which can't throw, of a
-// representation boxed here, and null only as a union (reflect_get.go).
+// The Reflect.get gate makes the lookup object the receiver. The descriptor loans it to
+// the getter. A successful getter transfers its owned result; a throw leaves the pending
+// exception for the caller's keyed-read edge.
 static adamic_heap *keyed_getter(adamic_object *object, const adamic_accessor *accessor) {
 	adamic_value value = accessor->get(object);
+	if (adamic_thrown != NULL) return NULL;
 	switch (accessor->type) {
 	case 1: return adamic_box_number(value.number);
 	case 2: return value.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
@@ -927,7 +926,7 @@ adamic_heap *adamic_dynamic_property_keyed(adamic_heap *value, const adamic_stri
 		const adamic_accessor *accessor = keyed_accessor(object, key);
 		if (accessor != NULL) {
 			if (row->literal) keyed_stop(adamic_dynamic_keyed_stop_object_literal_getter, key);
-			if (accessor->get == NULL) keyed_stop(adamic_dynamic_keyed_stop_setter_only, key);
+			if (accessor->get == NULL) return NULL;
 			return keyed_getter(object, accessor);
 		}
 		// By content, as every name the key meets is.

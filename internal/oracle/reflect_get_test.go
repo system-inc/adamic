@@ -10,6 +10,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/native_runtime"
@@ -79,7 +80,7 @@ func reflectGetFixture(t *testing.T, name string) string {
 // constructor row reads constructor natively.
 func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 	t.Parallel()
-	for _, probe := range []struct{ file, stdout string }{
+	for _, probe := range append([]struct{ file, stdout string }{
 		{"property_of.a", propertyOfAnswers},
 		{"read_twice.a", "namename\nname\n"},
 		{"getter.a", "getter: \"ENOENT\"\nabsent: undefined\n"},
@@ -117,7 +118,7 @@ func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 		{"stop_host_stats_field.a", "directory\nnumber\n"},
 		{"stop_host_stats_ctime.a", "directory\nobject\n"},
 		{"error_fields.a", "code: \"ENOENT\"\nmessage: \"ENOENT: no such file or directory, open '/nonexistent-adamic-reflect-get/file'\"\ncaught foo: undefined\ncaught in: code yes message yes foo no\nerrorCode: \"ENOENT\"\ncoded code: \"ERR_INVALID_ARG_VALUE\"\ncoded name: \"TypeError\"\ncoded foo: undefined\ncoded in: code yes message yes foo no\nthrown: \"thrown\"\nname: \"Error\"\nthrown foo: undefined\nthrown in: message yes name yes foo no\n"},
-	} {
+	}, reflectGetFamily95Answers...) {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()
 			path := reflectGetFixture(t, probe.file)
@@ -704,6 +705,8 @@ func TestReflectGetOtherShapesNotYet(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ file, at, what string }{
 		{"notyet_two_arguments.a", "notyet_two_arguments.a:3:9", "Reflect.get other than Reflect.get(Object(value), key, value)"},
+		{"notyet_distinct_instance.a", "notyet_distinct_instance.a:8:9", "Reflect.get other than Reflect.get(Object(value), key, value)"},
+		{"notyet_readonly_delegating_getter.a", "notyet_readonly_delegating_getter.a:14:16", "a readonly view read by a run-time key in a program with a class getter"},
 		{"notyet_receiver.a", "notyet_receiver.a:4:9", "Reflect.get other than Reflect.get(Object(value), key, value)"},
 		{"notyet_unguarded.a", "notyet_unguarded.a:4:28", "Reflect.get of a value that may be null or undefined"},
 		// A key that runs code could rebind the value between the target and the receiver, so the
@@ -714,6 +717,16 @@ func TestReflectGetOtherShapesNotYet(t *testing.T) {
 		// lowers.
 		{"notyet_key_rebinds.a", "notyet_key_rebinds.a:18:52", "Reflect.get by a key other than an identifier or a string literal"},
 		{"notyet_key_rebinds_delegating.a", "notyet_key_rebinds_delegating.a:22:52", "Reflect.get by a key other than an identifier or a string literal"},
+		{"notyet_getter_writes_field.a", "notyet_getter_writes_field.a:7:9", "a class getter that does more than return its fields and literals joined by operators"},
+		{"notyet_getter_reads_writing_getter.a", "notyet_getter_reads_writing_getter.a:8:9", "a class getter that does more than return its fields and literals joined by operators"},
+		{"notyet_getter_throw_concatenation.a", "notyet_getter_throw_concatenation.a:7:9", "a class getter that does more than return its fields and literals joined by operators"},
+		{"notyet_getter_throw_stored_error.a", "notyet_getter_throw_stored_error.a:6:9", "a class getter that does more than return its fields and literals joined by operators"},
+		{"notyet_getter_returns_allocated_message.a", "notyet_getter_returns_allocated_message.a:7:9", "a class getter that does more than return its fields and literals joined by operators"},
+		{"notyet_getter_allocates.a", "notyet_getter_allocates.a:7:9", "a class getter that does more than return its fields and literals joined by operators"},
+		{"notyet_getter_calls_writing_method.a", "notyet_getter_calls_writing_method.a:8:9", "a class getter that does more than return its fields and literals joined by operators"},
+		// A checked view read boxes a union field's number for the read's consumer (Emit, #5np1c51), so the walk refuses every
+		// read through a checked view. Mutant: the view arm dropped, and this row lowers.
+		{"notyet_getter_view_union.ts", "notyet_getter_view_union.ts:11:9", "a class getter that does more than return its fields and literals joined by operators"},
 		{"notyet_getter_effect.a", "hostErrors.ts:16:12", "a class getter that does more than return its fields and literals joined by operators"},
 		{"notyet_getter_call.a", "hostErrors.ts:16:12", "a class getter that does more than return its fields and literals joined by operators"},
 		{"notyet_getter_on_getter.a", "hostErrors.ts:16:12", "a class getter that does more than return its fields and literals joined by operators"},
@@ -807,5 +820,69 @@ func TestReflectGetLeavesOtherProgramsAlone(t *testing.T) {
 	}
 	if code := native.C(program); strings.Contains(code, "adamic_keyed_class") || strings.Contains(code, "adamic_dynamic_property_keyed") {
 		t.Fatal("a program without the read carries its table")
+	}
+}
+
+// Row 116 applies before the keyed runtime can see a half-masked descriptor.
+func TestReflectGetRefusesMaskedGetter(t *testing.T) {
+	t.Parallel()
+	_, err := lowered(t, reflectGetFixture(t, "refused_setter_masks_getter.a"))
+	var refused *lower.Refused
+	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "refused_setter_masks_getter.a:7:2") || !strings.Contains(err.Error(), "an accessor override that hides the inherited getter or setter") {
+		t.Fatalf("expected the half-descriptor refusal at the class, got %v", err)
+	}
+}
+
+var reflectGetFamily95Answers = []struct{ file, stdout string }{
+	{"delegating_getter.a", "0\n"},
+	{"getter_reads_read_only_getter.a", "read only\n"},
+	{"getter_throw_literal_error.a", "Error: literal\n"},
+	{"getter_throw_read_type_error.a", "TypeError: read\n"},
+	{"getter_throws_caught.a", "caught getter\n42\n"},
+	{"ownership_arms.a", "42 42!\n"},
+	{"setter_only.a", "undefined\n"},
+	{"setter_only_override.a", "undefined\n"},
+	{"setter_only_inherited.a", "undefined\n"},
+	{"getter_delegate_field.a", "42\n"},
+	{"getter_method_override.a", "42\n"},
+	{"getter_key_loop.a", "field\ngetter\nundefined\n"},
+	{"getter_plain_union_field.ts", "true\n"},
+}
+
+// The counted ABI uses one retain for a borrowed data slot and transfers a getter's owned
+// result. Counted builds also exercise the release path on a getter throw.
+func TestReflectGetFamily95(t *testing.T) {
+	for _, probe := range reflectGetFamily95Answers {
+		t.Run(probe.file, func(t *testing.T) {
+			path := reflectGetFixture(t, probe.file)
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			want := run{stdout: []byte(probe.stdout)}
+			runner := filepath.Join(repository, "oracle", "node.mjs")
+			generated := filepath.Join(t.TempDir(), "program.mjs")
+			if err := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o600); err != nil {
+				t.Fatal(err)
+			}
+			for name, source := range map[string]string{"Node": path, "JavaScript": generated} {
+				got := execute(t, "node", "--disable-warning=ExperimentalWarning", runner, source)
+				if difference := disagreement(want, got); difference != "" {
+					t.Errorf("%s: %s", name, difference)
+				}
+			}
+			binary := filepath.Join(t.TempDir(), "counted")
+			if err := native.Build(native.C(program), binary, native_runtime.Options{Count: true}); err != nil {
+				t.Fatal(err)
+			}
+			got := execute(t, binary)
+			if string(got.stdout) != probe.stdout {
+				t.Errorf("counted stdout %q, want %q", got.stdout, probe.stdout)
+			}
+			t.Logf("%s", got.stderr)
+			if problem := leakcheck.Unbalanced(leakcheck.Run{Stdout: got.stdout, Stderr: got.stderr, ExitCode: got.exitCode}); problem != "" {
+				t.Fatal(problem)
+			}
+		})
 	}
 }
