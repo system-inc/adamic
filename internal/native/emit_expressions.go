@@ -207,9 +207,13 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.PhantomMember:
 		return e.phantomMember(expression)
 	case ir.Property:
-		if expression.MethodTruthiness {
+		if expression.MethodTruthiness || expression.SlotDefined {
 			object := e.snapshot(ir.Object, e.value(expression.Object))
-			read := fmt.Sprintf("adamic_object_method_truthy(%s, %s, &%s)", object, cString(expression.Name), e.cache())
+			test := "adamic_object_method_truthy"
+			if expression.SlotDefined {
+				test = "adamic_object_slot_defined"
+			}
+			read := fmt.Sprintf("%s(%s, %s, &%s)", test, object, cString(expression.Name), e.cache())
 			if expression.Optional {
 				read = fmt.Sprintf("(%s != NULL && (adamic_heap *)%s != &adamic_null && %s)", object, object, read)
 			}

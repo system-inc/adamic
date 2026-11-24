@@ -136,6 +136,10 @@ func (read methodPresenceRead) then(result ir.Expression) ir.Expression {
 // is false for any other operand, which its consumer lowers as it always has.
 func (l *lowering) methodPresence(operand *ast.Node) (read methodPresenceRead, handled bool, err error) {
 	node := ast.SkipParentheses(operand)
+	// A required field read through a checked view only to test for it (view_field_presence.go).
+	if present, handled, err := l.viewFieldPresence(node, false); handled {
+		return methodPresenceRead{present: present}, true, err
+	}
 	if !l.methodPresenceTest(node) {
 		return methodPresenceRead{}, false, nil
 	}
@@ -719,7 +723,8 @@ func (l *lowering) methodPresenceNot(operand *ast.Node) (ir.Expression, bool, er
 // truthiness and then, where that holds, the method's presence, with the receiver's effects.
 func (l *lowering) methodPresenceAndRight(node *ast.Node) (ir.Expression, bool, error) {
 	binary := node.AsBinaryExpression()
-	if binary.OperatorToken.Kind != ast.KindAmpersandAmpersandToken || !l.methodPresenceTest(ast.SkipParentheses(binary.Right)) {
+	right := ast.SkipParentheses(binary.Right)
+	if binary.OperatorToken.Kind != ast.KindAmpersandAmpersandToken || !l.methodPresenceTest(right) && l.viewFieldPresenceOperand(right, false) == nil {
 		return nil, false, nil
 	}
 	if !truthinessOnly(node) {

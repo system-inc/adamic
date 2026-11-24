@@ -245,6 +245,30 @@ bool adamic_object_method_truthy(const adamic_object *object, const char *name, 
 	return adamic_object_slot_truthy(object, slot);
 }
 
+// adamic_object_slot_defined is adamic_object_method_truthy's lookup asked whether the slot holds anything but
+// undefined, absence answering false: a presence test's (value as T).f !== undefined (lower's
+// viewFieldPresence). A record's own key is read as dynamic_property reads it, as a union.
+bool adamic_object_slot_defined(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	if (object == NULL || (const adamic_heap *)object == &adamic_null) {
+		static const char message[] = "slot presence read on null or undefined";
+		adamic_panic(message, sizeof message - 1);
+	}
+	if (adamic_record_is(object)) {
+		adamic_string key = {{0, adamic_kind_string, 0}, strlen(name), name, 0, NULL, NULL, 0};
+		const adamic_value *slot = adamic_record_get_own(object, &key);
+		if (slot == NULL) return false;
+		adamic_heap *value = adamic_record_value_union(object, slot);
+		bool defined = value != NULL;
+		adamic_release(value);
+		return defined;
+	}
+	adamic_method_entry method = {0};
+	size_t slot = object_callee_slot(object, name, cache);
+	if (slot == SIZE_MAX) return adamic_regex_method(object, name, &method);
+	if (slot >= object->shape->count) return true;
+	return adamic_object_slot_defined_at(object, slot);
+}
+
 // A field made as undefined alone holds NULL, whereas number | undefined holds a packed number.
 // The shape decides which union member is live; reading NULL's bits as a double would produce 0.
 adamic_maybe_number adamic_object_maybe_number(const adamic_object *object, const char *name, adamic_slot_cache *cache) {

@@ -328,6 +328,15 @@ bool adamic_object_slot_truthy(const adamic_object *object, size_t index) {
 	return truthy;
 }
 
+// A slot holds undefined as NULL, as dynamic_slot gives it: absent, uninitialized, a NULL reference or an
+// absent packed number or boolean.
+bool adamic_object_slot_defined_at(const adamic_object *object, size_t index) {
+	adamic_heap *value = dynamic_slot(object, index);
+	bool defined = value != NULL;
+	adamic_release(value);
+	return defined;
+}
+
 // dynamic_property is a narrowed read past the guard, as has_property is an in test.
 static adamic_heap *dynamic_property(adamic_heap *value, const char *name) {
 	if (value != NULL && value->kind == adamic_kind_closure && strcmp(name, "length") == 0) {
