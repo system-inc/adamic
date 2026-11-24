@@ -14,6 +14,9 @@ func (e *emitter) objectFieldRead(expression ir.Property) string {
 		}
 		return "((receiver) => Boolean(" + read + "))(" + e.value(expression.Object) + ")"
 	}
+	if expression.SlotDefined {
+		return "((receiver) => adamicMethodSlot(receiver, " + quote(expression.Name) + ") !== undefined)(" + e.value(expression.Object) + ")"
+	}
 	if expression.Unset && expression.View != "" {
 		return fmt.Sprintf("adamicPlaceholderViewField(%s, %s, %s, %d, %s, [%s], %t, %t)", e.value(expression.Object), quote(expression.Name), quote(expression.View), expression.UnsetType, quote(expression.ViewType), e.values(expression.ViewAllowed), expression.Optional, expression.Absent)
 	}

@@ -472,7 +472,9 @@ bool adamic_fs_file_exists(const adamic_string *path) {
     return exists;
 }
 
-static const char *const date_fields[] = {"_fsFileTime"};
+// A Date's time is a private slot, named with # as every private host slot is (native/fields.go), since
+// Node's Date has no own field: no field name a program writes reaches it (lower's viewFieldPresence).
+static const char *const date_fields[] = {"#time"};
 static const bool date_refs[] = {false};
 static const adamic_field_kind date_kinds[] = {adamic_field_number};
 static const adamic_shape date_shape = {1, date_fields, date_refs, &adamic_host_methods, date_kinds};
@@ -498,7 +500,7 @@ adamic_object *adamic_fs_file_date_now(void) {
 
 double adamic_fs_file_date_time(const adamic_object *date) {
     static adamic_slot_cache cache;
-    return adamic_object_field(date, "_fsFileTime", &cache)->number;
+    return adamic_object_field(date, "#time", &cache)->number;
 }
 
 // Native and JS-walk realpath errors share one system-error variant.
