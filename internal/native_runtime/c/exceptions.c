@@ -170,6 +170,34 @@ bool adamic_error_is(const adamic_object *object) {
 	return object->shape->methods == &adamic_error_methods || object->shape->methods == &adamic_coded_error_methods;
 }
 
+// The detached intrinsic tests Error descriptors without reading their values.
+// A key no one sets on the Error, where Node answers false, stops too: an
+// over-stop that fails closed, counted by #nw1kfem.
+bool adamic_object_has_own_error_view(const adamic_object *object, const adamic_string *key) {
+	if (!adamic_error_is(object)) return adamic_object_has_own(object, key);
+	if (key->length == 5 && memcmp(key->bytes, "stack", 5) == 0) return true;
+	bool message = key->length == 7 && memcmp(key->bytes, "message", 7) == 0;
+	bool name = key->length == 4 && memcmp(key->bytes, "name", 4) == 0;
+	if (message || name) {
+		// The old assumption that every factory leaves name inherited was wrong.
+		// The SystemError factory marks its own non-enumerable name explicitly.
+		// A public message slot means the factory supplied an own non-enumerable message.
+		const char *field = message ? "message" : "name";
+		adamic_slot_cache cache = {0};
+		const adamic_value *slot = adamic_object_optional_find(object, field, &cache);
+		// Every Error shape carries name and message (or #message).
+		if (slot == NULL) {
+			static const char missing[] = "compiler bug: an Error shape without its name or message slot";
+			adamic_panic(missing, sizeof missing - 1);
+		}
+		return (message && adamic_error_field_name(object, field)[0] != '#') ||
+			adamic_object_field_types(object)[slot - object->slots] != adamic_error_unwritten;
+	}
+	if (!adamic_error_own_key_stops(key) && adamic_object_has_own(object, key)) return true;
+	static const char stop[] = "an Error's own property isn't represented yet";
+	adamic_panic(stop, sizeof stop - 1);
+}
+
 // Public lookup sees Error.prototype.message without creating an own property.
 const char *adamic_error_field_name(const adamic_object *object, const char *name) {
 	return object->shape == &absent_message_shape && strcmp(name, "message") == 0 ? "#message" : name;

@@ -108,8 +108,9 @@ static const adamic_json_schema *describe_object(const adamic_object *object) {
 		// construction bytes intact; the ordinary message byte does not decide this stop.
 		for (size_t index = 0; index < shape->count; index++) {
 			const char *name = shape->names[index];
+			unsigned char type = adamic_object_field_types(object)[index];
 			if ((strcmp(name, "name") == 0 || strcmp(name, "#message") == 0) &&
-				adamic_object_field_types(object)[index] != adamic_error_unwritten)
+				type != adamic_error_unwritten && type != adamic_error_own_hidden)
 				stop(ADAMIC_JSON_ERROR_WRITE_STOP);
 		}
 		error = adamic_error_json_lookup(shape);

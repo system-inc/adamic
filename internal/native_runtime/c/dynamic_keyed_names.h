@@ -149,6 +149,18 @@ static const char *const adamic_dynamic_keyed_error_names[] = {
 	"constructor",
 };
 
+static const char *const adamic_dynamic_keyed_error_own_key_stop_names[] = {
+	"cause",
+	"errno",
+	"syscall",
+	"path",
+	"dest",
+	"toString",
+	"constructor",
+	"info",
+	"requireStack",
+};
+
 // Each of adamic_dynamic_keyed_array_prototype_names by its index, with Node's length for it.
 #define ADAMIC_DYNAMIC_KEYED_ARRAY_PROTOTYPE_FUNCTIONS(function) \
 	function(0, 1) \

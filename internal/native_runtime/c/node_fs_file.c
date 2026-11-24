@@ -824,7 +824,16 @@ static void remove_path(const char *name, bool recursive, bool force) {
         char *message = malloc(length);
         if (message == NULL) { adamic_panic("out of memory", 13); }
         snprintf(message, length, "Path is a directory: rm returned EISDIR (is a directory) %s", name);
-        raise_error(&coded_error_shape, "SystemError", "ERR_FS_EISDIR", message); free(message); return;
+        raise_error(&coded_error_shape, "SystemError", "ERR_FS_EISDIR", message);
+        adamic_slot_cache cache = {0};
+        const adamic_value *name_slot = adamic_object_optional_find(adamic_thrown, "name", &cache);
+        if (name_slot == NULL) {
+            static const char missing[] = "compiler bug: an Error shape without its name or message slot";
+            adamic_panic(missing, sizeof missing - 1);
+        }
+        adamic_object_field_types(adamic_thrown)[name_slot - adamic_thrown->slots] = adamic_error_own_hidden;
+        free(message);
+        return;
     }
     if (rmdir(name) == 0) { return; }
     int error = errno;

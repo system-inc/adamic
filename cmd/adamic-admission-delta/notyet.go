@@ -79,8 +79,13 @@ const (
 // its line here.
 // An Error's newly enumerable name or absent message stops whole too, with no key read or
 // conversion (Adamic, Nov 13, #z4a9p9e); #ejcaz75 lifts the stop.
+// An Error's unknown own key stops keylessly (Adamic, Nov 23, #hh1cezv,
+// applying docs/rulings.md:411, lifted by #nw1kfem). A key no one sets on the
+// Error, where Node answers false, stops too: an over-stop that fails closed,
+// counted by #nw1kfem.
 var runtimeNotYetKeyless = map[string]string{
-	ir.JSONErrorWriteStop: "#z4a9p9e",
+	"an Error's own property isn't represented yet":       "#hh1cezv",
+	ir.JSONErrorWriteStop:                                 "#z4a9p9e",
 	"this runtime value's own keys aren't enumerated yet": "#0sps03r",
 	"Intl.Collator's compare isn't built yet":             "#zjndrx5",
 	"Intl.Collator with a defined locale isn't built yet": "#zjndrx5",
