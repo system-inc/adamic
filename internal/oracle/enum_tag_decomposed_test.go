@@ -47,16 +47,18 @@ func TestEnumTagDecomposedIsRefused(t *testing.T) {
 }
 
 // What stays open: one member literal written into its own slot, a slot typed the whole Kind taking the
-// open value, and a literal another member takes whole beside a member with a literal slot (control_mixed:
+// open value, a literal another member takes whole beside a member with a literal slot (control_mixed:
 // the literal isn't built as that member, so its slot promises nothing; memberLiteralSlotWidened's
-// takenWhole). Each lowers and agrees with Node on the JavaScript backend and natively under the leak
-// check.
+// takenWhole), and the open value compared by === with one member before it's written (control_narrowed:
+// the program's own comparison of a const local proves the member, enumComparedMember, #snypn8c c3). Each
+// lowers and agrees with Node on the JavaScript backend and natively under the leak check.
 func TestEnumTagDecomposedControlsAgreeWithNode(t *testing.T) {
 	t.Parallel()
 	for name, stdout := range map[string]string{
-		"control_literal": "circle 1 square 20 7\n",
-		"control_whole":   "tagged 7 2 tagged 7 3 named x\n",
-		"control_mixed":   "7 7 0\n",
+		"control_literal":  "circle 1 square 20 7\n",
+		"control_whole":    "tagged 7 2 tagged 7 3 named x\n",
+		"control_mixed":    "7 7 0\n",
+		"control_narrowed": "circle 1 open 7\n",
 	} {
 		for _, extension := range []string{".a", ".ts"} {
 			t.Run(name+extension, func(t *testing.T) {
@@ -88,27 +90,5 @@ func TestEnumTagDecomposedControlsAgreeWithNode(t *testing.T) {
 				}
 			})
 		}
-	}
-}
-
-// The open value narrowed by === to one member before it goes into the slot (control_narrowed) is refused
-// on main as well, at the literal, in the same words and at the same place: measured with both of
-// #egmxf20's arms dropped (J-ty3bkbb). It's main's enum-literal rule, not this one, so it's pinned as a
-// stop here, for whoever lifts it to see.
-func TestEnumTagDecomposedNarrowedStaysMainsStop(t *testing.T) {
-	t.Parallel()
-	for _, extension := range []string{".a", ".ts"} {
-		t.Run("control_narrowed"+extension, func(t *testing.T) {
-			t.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/enum_tag_decomposed", "control_narrowed"+extension))
-			if err != nil {
-				t.Fatal(err)
-			}
-			_, err = lowered(t, path)
-			var refused *lower.Refused
-			if !errors.As(err, &refused) || !strings.Contains(err.Error(), "enum member slot") || !strings.Contains(err.Error(), "control_narrowed"+extension+":13:17:") {
-				t.Fatalf("want main's enum member slot refusal at control_narrowed%s:13:17, got %v", extension, err)
-			}
-		})
 	}
 }

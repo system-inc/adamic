@@ -1,0 +1,23 @@
+// s3 (#snypn8c, c3): a case reached by falling through from a clause with statements of its own may hold
+// that clause's value too, so the chain stops proving there.
+enum K { A, B, C, D }
+function kindOf(n: number): K {
+	return n;
+}
+function take(x: K.A | K.C): string {
+	return "took " + String(x);
+}
+function note(): void {
+	console.log("c");
+}
+function operator(n: number): string {
+	const op = kindOf(n);
+	switch (op) {
+		case K.C:
+			note();
+		case K.A:
+			return take(op);
+	}
+	return "other";
+}
+console.log(operator(0) + ", " + operator(2) + ", " + operator(7));
