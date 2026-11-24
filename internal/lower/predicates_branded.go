@@ -1,8 +1,6 @@
 package lower
 
 import (
-	"fmt"
-	"os"
 	"slices"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -169,16 +167,10 @@ func (l *lowering) brandedRefinementMembership(node *ast.Node, value ir.Expressi
 		if property == nil {
 			return nil, nil, family(field, "the intersection doesn't declare")
 		}
-		refined := l.checker.GetTypeOfSymbol(property)
-		if os.Getenv("R9DEBUG") != "" {
-			parts := ""
-			for _, part := range target.Types() {
-				if own := l.checker.GetPropertyOfType(part, field); own != nil {
-					parts += " | part " + l.checker.TypeToString(part) + ": " + l.checker.TypeToString(l.checker.GetTypeOfSymbol(own)) + fmt.Sprintf(" flags %d", own.Flags)
-				}
-			}
-			fmt.Fprintf(os.Stderr, "R9 %s field %s: %s flags %d symflags %d concrete %s%s\n", l.checker.TypeToString(target), field, l.checker.TypeToString(refined), refined.Flags(), property.Flags, l.checker.TypeToString(l.concrete(refined)), parts)
-		}
+		// The checker's type for an intersection's property distributes over each part's union, so it can
+		// hold a member that intersects two tagged types into an empty one, Identifier & StringLiteral here,
+		// which no value is: reduced, it's gone, and each member left has a check of its own.
+		refined := enumTagReducedType(l.checker, l.checker.GetTypeOfSymbol(property))
 		held, known := l.kept(refined)
 		if !known || slotless(held) {
 			return nil, nil, family(field, "has no held representation")

@@ -2,7 +2,6 @@ package lower
 
 import (
 	"fmt"
-	"os"
 	"slices"
 	"strings"
 
@@ -912,9 +911,6 @@ func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, sour
 	isType := func(name string) ir.Expression {
 		return equal(ir.TypeOf{Value: value}, ir.StringConstant{Index: l.constant(name)})
 	}
-	if os.Getenv("R9DEBUG") != "" {
-		fmt.Fprintf(os.Stderr, "R9 enter target %s flags %d value %v depth %d\n", l.checker.TypeToString(target), target.Flags(), value.Type(), depth)
-	}
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		var setup []ir.Statement
 		var result ir.Expression = ir.BooleanConstant{Value: false}
@@ -1077,9 +1073,6 @@ func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, sour
 	}
 	if cause := l.checkedPredicateTargetCause(target); cause != "" {
 		return nil, nil, l.notYet(node, cause+" ("+l.checker.TypeToString(target)+")")
-	}
-	if os.Getenv("R9DEBUG") != "" {
-		fmt.Fprintf(os.Stderr, "R9 final target %s flags %d value %v source %s depth %d\n", l.checker.TypeToString(target), target.Flags(), value.Type(), l.checker.TypeToString(source), depth)
 	}
 	return nil, nil, l.notYet(node, "checked predicate overload target "+l.checker.TypeToString(target))
 }
