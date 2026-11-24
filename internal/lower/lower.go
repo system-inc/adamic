@@ -655,6 +655,9 @@ type lowering struct {
 	// elementFits is elementsHeldOtherwise's walk answered once per value type and slot type, so
 	// judging every value handed to a slot costs each pair once (element_fit.go).
 	elementFits map[elementFitKey]*elementMismatch
+	// fieldFitFresh is set while elementsHeldOtherwise walks a value whose every object is made right there
+	// (freshObjectValue), so fieldsSeenAs leaves its scalar fields to their own slots.
+	fieldFitFresh bool
 	// intersectionViewDepth is how many intersections' view contracts are being built, each inside
 	// a field of the one before (view_lazy.go's intersectionViewDepthBound).
 	intersectionViewDepth int
