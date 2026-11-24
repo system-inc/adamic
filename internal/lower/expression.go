@@ -2466,6 +2466,9 @@ func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expr
 		return nil, err
 	}
 	l.fitCallArguments(function, arguments, spread)
+	if err := l.spreadPackStop(call.Arguments.Nodes, arguments, spread, 0, function); err != nil {
+		return nil, err
+	}
 	return l.censusOverloadResult(call, ir.Call{Function: function, Arguments: arguments, Spread: spread, Returns: l.result.Functions[function].Returns})
 }
 
