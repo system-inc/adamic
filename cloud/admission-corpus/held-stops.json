@@ -842,6 +842,42 @@
       "test": "internal/oracle/view_array_object_test.go: TestViewArrayLiteralIsNotAnObject"
     },
     {
+      "path": "internal/oracle/testdata/view_cast_enum_slots/contracts_lie.ts",
+      "stderr": "adamic: panic: field read failed: tag.parent.parent matches no member of HasDoc; expected HasDoc, found object\n",
+      "hatch": "cast, line 12: const tag = node as Tag;",
+      "test": "internal/oracle/view_cast_enum_slots_test.go: TestViewCastEnumSlotsRiskRowsAgreeOrStop"
+    },
+    {
+      "path": "internal/oracle/testdata/view_cast_enum_slots/nested_parent_lie.ts",
+      "stderr": "adamic: panic: field read failed: tag.parent.kind expected Kind.Doc, found number 8\n",
+      "hatch": "cast, line 8: const tag = node as PropertyLikeTag;",
+      "test": "internal/oracle/view_cast_enum_slots_test.go: TestViewCastEnumSlotsLiesStopAtTheRead"
+    },
+    {
+      "path": "internal/oracle/testdata/view_cast_enum_slots/own_kind_lie.ts",
+      "stderr": "adamic: panic: field read failed: named.kind expected Kind.Name, found number 8\n",
+      "hatch": "cast, line 9: const named = node as NameLike;",
+      "test": "internal/oracle/view_cast_enum_slots_test.go: TestViewCastEnumSlotsLiesStopAtTheRead"
+    },
+    {
+      "path": "internal/oracle/testdata/view_cast_enum_slots/set_parent_lie.ts",
+      "stderr": "adamic: panic: field read failed: tag.parent.kind expected Kind.Doc, found number 0\n",
+      "hatch": "cast, line 13: const tag = node as PropertyLikeTag;",
+      "test": "internal/oracle/view_cast_enum_slots_test.go: TestViewCastEnumSlotsRiskRowsAgreeOrStop"
+    },
+    {
+      "path": "internal/oracle/testdata/view_cast_enum_slots/two_level_lie.ts",
+      "stderr": "adamic: panic: field read failed: declaration.name.expression.kind expected Kind.Name, found number 8\n",
+      "hatch": "cast, line 11: const declaration = node as LateBound;",
+      "test": "internal/oracle/view_cast_enum_slots_test.go: TestViewCastEnumSlotsLiesStopAtTheRead"
+    },
+    {
+      "path": "internal/oracle/testdata/view_cast_enum_slots/union_parent_lie.ts",
+      "stderr": "adamic: panic: field read failed: tag.parent matches no member of Doc | TypeLiteral; expected Doc | TypeLiteral, found object\n",
+      "hatch": "cast, line 9: const tag = node as Tag;",
+      "test": "internal/oracle/view_cast_enum_slots_test.go: TestViewCastEnumSlotsLiesStopAtTheRead"
+    },
+    {
       "path": "internal/oracle/testdata/view_literal_runs/stop_above.ts",
       "stderr": "adamic: panic: field read failed: imported.argument.literal expected Kind, found number 14\n",
       "hatch": "cast, line 11: const imported = node as LiteralImportTypeNode;",
