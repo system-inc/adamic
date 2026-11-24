@@ -45,6 +45,9 @@ type elementMismatch struct {
 	stored, read *checker.Type
 	held, as     ir.Type
 	unnamed      string
+	// field names the object field stored otherwise than the slot reads it (fieldsSeenAs), "" for a
+	// container's elements.
+	field string
 }
 
 // elementsHeldOtherwise is the stop for the value made at node going into slot when a container in it
@@ -96,6 +99,9 @@ func (l *lowering) elementsHeldOtherwise(node *ast.Node, slot *checker.Type) str
 		return where + ", its containers nested deeper than their elements are judged"
 	case found.unnamed != "":
 		return where + ", with no representation Adamic can name for the " + found.unnamed + " elements (" + l.checker.TypeToString(found.stored) + " stored, read as " + l.checker.TypeToString(found.read) + ")"
+	}
+	if found.field != "" {
+		return where + ": its field " + found.field + ", a " + l.checker.TypeToString(found.stored) + ", is stored as " + heldName(found.held) + " and read there as " + l.checker.TypeToString(found.read) + ", held as " + heldName(found.as) + " (give it the slot's type where it's made, or copy its fields into one)"
 	}
 	return where + ": its " + l.checker.TypeToString(found.stored) + " elements are stored as " + heldName(found.held) + " and read there as " + l.checker.TypeToString(found.read) + ", held as " + heldName(found.as) + " (build it as the slot's type where it's made, or copy its elements into one)"
 }
@@ -226,6 +232,18 @@ func (l *lowering) fieldsSeenAs(stored *checker.Type, viewed *checker.Type, dept
 			continue
 		}
 		if inside := l.checker.GetPropertyOfType(stored, field.Name); inside != nil {
+			// A field is stored as the object's own type holds it, and a plain read through viewed works it as
+			// viewed holds it, with nothing between to convert: a number or a boolean stored as itself and read
+			// as a union is read as a box it never was, and native faulted where Node printed the field
+			// (#6gwzmjx: { kind, amount: 1 } passed as Held, whose readonly amount is number | string).
+			// readonly lets the field widen, which says nothing of how it's laid out. A side whose
+			// representation can't be named is left to the walks that judge it.
+			storedField, viewedField := l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(field)
+			if held, heldKnown := l.kept(storedField); heldKnown && storedField != viewedField {
+				if as, asKnown := l.kept(viewedField); asKnown && !elementReadAs(held, as) {
+					return &elementMismatch{stored: storedField, read: viewedField, held: held, as: as, field: field.Name}
+				}
+			}
 			if found := l.elementsSeenAs(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(field), 0, false, depth+1, visited); found != nil {
 				return found
 			}
