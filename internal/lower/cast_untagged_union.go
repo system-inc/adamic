@@ -10,10 +10,14 @@ import (
 // target (#axqgdck, rulings.md:18: an untagged downcast makes a checked view with no tag test). Every member
 // and the target are plain objects held as ir.Object: no class instance, callable, array, tuple, dictionary
 // or phantom extension, so nothing reaches the view that a field read can't check. The target is one object,
-// a member or narrower than one (castAssignable to it), so the cast is a downcast; a sideways target and a
-// union target keep their stops. A union with a field every member holds as a literal is tagged, whether or
-// not the literals tell the members apart: unionMemberProof proves its cast or refuses it, and its refusals
-// (duplicate enum aliases, mixed tag representations, a payload refinement) are rulings this arm keeps.
+// or a union of them (union target (a), #b5w3ycg), each a member or narrower than one (castAssignable to it),
+// so the cast is a downcast; a sideways target keeps its stop. A union target's view reads the checker's common
+// properties of its members, each through its own field contract, and a field the members hold in different
+// representations stops at that contract (supportsUntaggedRead, view_unions_untagged.go), which is (b)'s, never
+// a read this arm admits (Lower, on #b5w3ycg). A union with a field every member holds as a literal is tagged,
+// whether or not the literals tell the members apart: unionMemberProof proves its cast or refuses it, and its
+// refusals (duplicate enum aliases, mixed tag representations, a payload refinement) are rulings this arm
+// keeps. A target union tagged that way is the tag road's too, so it keeps its stop here.
 //
 // The arm never turns a NotYet into a Refused. A cast the unchecked-widening rule would refuse (widened, as
 // stringWideningRefusal judges a cast) keeps the untagged stop: a target narrowing a field to an enum literal at
@@ -22,18 +26,28 @@ import (
 // and takes the arm: its read through the view is checked against the literal (viewedField's ViewAllowed), as any
 // view's is. Those wait for their own road, a tag test at
 // the cast with a write judgment fitted to a downcast (#qxt10dd; Diagnostics' must on the census, J-2f10jv9).
-func (l *lowering) untaggedUnionArm(source *checker.Type, members, targets []*checker.Type) bool {
-	if len(members) < 2 || len(targets) != 1 || !l.plainViewObject(targets[0]) || l.unionHoldsLiterals(members) || l.widened(source, targets[0], map[[2]*checker.Type]bool{}) != nil {
+func (l *lowering) untaggedUnionArm(source, target *checker.Type, members, targets []*checker.Type) bool {
+	if len(members) < 2 || len(targets) == 0 || l.unionHoldsLiterals(members) || len(targets) > 1 && l.unionHoldsLiterals(targets) || l.widened(source, target, map[[2]*checker.Type]bool{}) != nil {
 		return false
 	}
-	downcast := false
 	for _, member := range members {
 		if !l.plainViewObject(member) {
 			return false
 		}
-		downcast = downcast || l.castAssignable(targets[0], member)
 	}
-	return downcast
+	for _, wanted := range targets {
+		if !l.plainViewObject(wanted) {
+			return false
+		}
+		downcast := false
+		for _, member := range members {
+			downcast = downcast || l.castAssignable(wanted, member)
+		}
+		if !downcast {
+			return false
+		}
+	}
+	return true
 }
 
 // plainViewObject is an object type a checked view reads field by field: an object held as ir.Object that's
