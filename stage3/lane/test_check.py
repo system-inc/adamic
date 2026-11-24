@@ -73,7 +73,7 @@ class LandingLaneTests(unittest.TestCase):
         self.execution = dict(apply_exit=0, oracle_exit=1,
                               platform=dict(os='linux', arch='x64', node='v24.19.0'))
 
-    def replay(self):
+    def replay(self, *, pre_family7_replay=True):
         (self.results / 'execution.json').write_text(json.dumps(self.execution))
         (self.results / 'oracle/report.json').write_text(json.dumps(self.oracle))
         (self.results / 'oracle/tests.log').write_text(self.log)
@@ -86,11 +86,17 @@ class LandingLaneTests(unittest.TestCase):
             self.reference.splitlines(True), self.local.splitlines(True),
             fromfile='reference/api/typescript.d.ts', tofile='local/api/typescript.d.ts'))
         (self.results / 'oracle/baseline.diff').write_text(diff)
-        result = subprocess.run([sys.executable, str(LANE / 'check.py'), str(self.results),
-                                 '--sanctioned', str(self.sanctioned_file)], capture_output=True, text=True)
+        command = [sys.executable, str(LANE / 'check.py'), str(self.results),
+                   '--sanctioned', str(self.sanctioned_file)]
+        if pre_family7_replay:
+            command.append('--pre-family7-replay')
+        result = subprocess.run(command, capture_output=True, text=True)
         report = json.loads((self.results / 'report.json').read_text())
         self.assertEqual(result.returncode, 0 if report['status'] == 'pass' else 1)
         self.assertEqual(result.stdout, report['verdict'] + '\n')
+        self.assertIs(report['pre_family7_replay'], pre_family7_replay)
+        verdict = json.loads((self.results / 'verdict.json').read_text())
+        self.assertIs(verdict['pre_family7_replay'], pre_family7_replay)
         return report
 
     def killed(self, label):
@@ -103,6 +109,51 @@ class LandingLaneTests(unittest.TestCase):
     def test_sanctioned_observation_passes(self):
         self.assertEqual(self.replay()['status'], 'pass')
         self.assertEqual(check.failed_tests(self.log), self.expected['failed_tests'])
+
+    def test_family7_printer_signature_is_checked_in_byte_comparisons(self):
+        tree = self.results / 'adapted-tree'
+        table = tree / 'patch-set.md'
+        emitter = tree / 'src/compiler/emitter.ts'
+        emitter.parent.mkdir(parents=True)
+        source = """function createPrinter() {
+    function writeNode(hint: EmitHint, node: Node, sourceFile: SourceFile | undefined, output: EmitTextWriter) {}
+    function writeList<T extends Node>(format: ListFormat, nodes: NodeArray<T> | undefined) {}
+    return { writeNode, writeList };
+}
+"""
+        metadata = {
+            'row present': '| 99-method-parameter-adaptations | 6 | 35 | 35 |\n',
+            'row missing': '| another-adapter | 1 | 1 | 1 |\n',
+            'table missing': None,
+        }
+        for label, contents in metadata.items():
+            with self.subTest(metadata=label):
+                if contents is None:
+                    table.unlink()
+                else:
+                    table.write_text(contents)
+                emitter.write_text(source)
+                self.assertEqual(self.replay(pre_family7_replay=False)['status'], 'pass')
+
+                emitter.write_text(source.replace('nodes: NodeArray<T> | undefined', 'nodes: NodeArray<T>'))
+                report = self.replay(pre_family7_replay=False)
+                self.assertEqual(report['status'], 'fail')
+                self.assertIn('family 7 printer signatures: AssertionError [ERR_ASSERTION]: writeList.nodes',
+                              report['errors'])
+
+    def test_family7_printer_uses_remaining_deadline(self):
+        from unittest.mock import patch
+
+        tree = self.results / 'adapted-tree'
+        with patch.object(check.time, 'monotonic', return_value=10), patch.object(check.subprocess, 'run') as run:
+            run.side_effect = subprocess.TimeoutExpired('node', 2)
+            expired = ['family 7 printer signatures: shard deadline expired']
+            self.assertEqual(check.method_signature_errors(tree, 12), expired)
+            self.assertEqual(run.call_args.kwargs['timeout'], 2)
+
+            run.reset_mock()
+            self.assertEqual(check.method_signature_errors(tree, 10), expired)
+            run.assert_not_called()
 
     def test_unsanctioned_line(self):
         self.local = self.local.replace('interface Host {', 'interface Host {\n        rogue: string;')
@@ -317,7 +368,7 @@ class LandingLaneTests(unittest.TestCase):
                 row['message'] = ''
             return rows
         with patch.object(check, 'read_failures', side_effect=mutant):
-            report = check.check_results(self.results, sanctioned_file=self.sanctioned_file)
+            report = check.check_results(self.results, sanctioned_file=self.sanctioned_file, pre_family7_replay=True)
         # The mutant leaves every gate predicate and cause untouched.
         self.assertEqual(report['status'], 'pass')
         self.assertEqual(report['cause_counts']['baseline-content'], 1)
@@ -371,7 +422,7 @@ assert.ok(row.elapsed_ms >= 0);
     def test_failure_details_survive_missing_api_snapshot(self):
         self.replay()
         (self.results / 'adapted-tree/tests/baselines/local/api/typescript.d.ts').unlink()
-        report = check.check_results(self.results, sanctioned_file=self.sanctioned_file)
+        report = check.check_results(self.results, sanctioned_file=self.sanctioned_file, pre_family7_replay=True)
         self.assertEqual(report['status'], 'fail')
         self.assertIn('api/typescript.d.ts', report['failures'][0]['message'])
 
@@ -379,7 +430,7 @@ assert.ok(row.elapsed_ms >= 0);
         from unittest.mock import patch
         self.replay()
         with patch.object(check, 'read_failures', side_effect=ValueError('invalid observation fixture')):
-            report = check.check_results(self.results, sanctioned_file=self.sanctioned_file)
+            report = check.check_results(self.results, sanctioned_file=self.sanctioned_file, pre_family7_replay=True)
         self.assertEqual(report['status'], 'pass')
         self.assertIn('invalid observation fixture', report['failure_details_error'])
 
@@ -426,7 +477,7 @@ assert.ok(row.elapsed_ms >= 0);
     def test_missing_evidence(self):
         self.replay()
         (self.results / 'oracle/baseline.diff').unlink()
-        report = check.check_results(self.results, sanctioned_file=self.sanctioned_file)
+        report = check.check_results(self.results, sanctioned_file=self.sanctioned_file, pre_family7_replay=True)
         self.assertEqual(report['status'], 'fail')
         self.assertIn('missing or invalid lane evidence', report['errors'][0])
 

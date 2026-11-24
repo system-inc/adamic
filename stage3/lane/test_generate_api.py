@@ -78,7 +78,7 @@ class ApiSanctionGeneratorTests(unittest.TestCase):
         (oracle / 'baseline.diff').write_text(''.join(difflib.unified_diff(
             proof['original'].splitlines(True), local.splitlines(True),
             fromfile='reference/api/typescript.d.ts', tofile='local/api/typescript.d.ts')))
-        return check.api_check(results, proof)[0]
+        return check.api_check(results, proof, pre_family7_replay=True)[0]
 
     def test_api_sanction_applied_and_guard_accepts(self):
         proof = self.generated()
