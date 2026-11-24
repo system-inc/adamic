@@ -161,15 +161,24 @@ func (w *enumTagWalk) proves(node *ast.Node) bool {
 		w.proved++
 		return true
 	}
+	if !w.inLocalTests(node) {
+		return false
+	}
+	w.proved++
+	if w.firstProof < 0 || node.Pos() < w.firstProof {
+		w.firstProof = node.Pos()
+	}
+	return true
+}
+
+// inLocalTests reports whether node sits in one of an access reference's local tests. A nil node, a
+// switch clause's, never does.
+func (w *enumTagWalk) inLocalTests(node *ast.Node) bool {
 	if node == nil {
 		return false
 	}
 	for _, test := range w.tests {
 		if node.Pos() >= test.Pos() && node.End() <= test.End() {
-			w.proved++
-			if w.firstProof < 0 || node.Pos() < w.firstProof {
-				w.firstProof = node.Pos()
-			}
 			return true
 		}
 	}
@@ -272,8 +281,8 @@ func (w *enumTagWalk) stepAt(flow *ast.FlowNode, at *ast.Node, field string) boo
 	if checker.Checker_isTypeIdenticalTo(w.l.checker, after, before) {
 		return true
 	}
-	if checker.Checker_isTypeIdenticalTo(w.l.checker, after, w.l.checker.GetNonNullableType(before)) {
-		return w.proves(at)
+	if handled, passes := w.nullishOnlyStep(at, before, after); handled {
+		return passes
 	}
 	return false
 }
