@@ -1,0 +1,21 @@
+package lower
+
+import "testing"
+
+// TestZZCastBranchProbe lowers the site's shapes and prints each stop beside the BRANCH lines the scratch prints in
+// castRoad write. Not parallel: each program's prints must sit beside its own PROBE line.
+func TestZZCastBranchProbe(t *testing.T) {
+	const info = "interface Info { readonly version: string; signature: string | undefined } "
+	for _, probe := range []struct{ name, source string }{
+		{"site shape as written", info + "type Encoded = Omit<Info, \"signature\"> & { signature: string | false | undefined }; function f(x: Encoded): Info { return x as Info; }"},
+		{"site shape, readonly signature", info + "type Encoded = Omit<Info, \"signature\"> & { readonly signature: string | false | undefined }; function f(x: Encoded): Info { return x as Info; }"},
+		{"plain twin as written", info + "interface Encoded { readonly version: string; signature: string | false | undefined } function f(x: Encoded): Info { return x as Info; }"},
+		{"plain twin, readonly signature", info + "interface Encoded { readonly version: string; readonly signature: string | false | undefined } function f(x: Encoded): Info { return x as Info; }"},
+		{"site replica", "interface FileInfo { readonly version: string; signature: string | undefined; affectsGlobalScope: true | undefined; impliedFormat: number | undefined } type EncodedFileInfo = Omit<FileInfo, \"signature\"> & { readonly signature: string | false | undefined }; function isString(text: string | false | undefined | EncodedFileInfo): text is string { return typeof text === \"string\"; } function toFileInfo(fileInfo: string | EncodedFileInfo): FileInfo { return isString(fileInfo) ? { version: fileInfo, signature: fileInfo, affectsGlobalScope: undefined, impliedFormat: undefined } : isString(fileInfo.signature) ? fileInfo as FileInfo : { version: fileInfo.version, signature: fileInfo.signature === false ? undefined : fileInfo.version, affectsGlobalScope: fileInfo.affectsGlobalScope, impliedFormat: fileInfo.impliedFormat }; }"},
+		{"control widening another field", "interface Info { readonly version: string; signature: string | undefined; count: number } type Encoded = Omit<Info, \"signature\" | \"count\"> & { readonly signature: string | false | undefined; count: number | string }; function f(x: Encoded): Info { return x as Info; }"},
+		{"control primitive source", info + "type Encoded = Omit<Info, \"signature\"> & { readonly signature: string | false | undefined }; function f(x: Encoded | string): Info { return x as Info; }"},
+	} {
+		_, err := lowerSourceAs(t, probe.source, ".ts")
+		t.Logf("PROBE %s: %T: %v", probe.name, err, err)
+	}
+}
