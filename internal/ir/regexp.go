@@ -78,6 +78,15 @@ type RegExpGroup struct {
 
 func (r RegExpGroup) Type() Type { return r.Of }
 
+// IsRegExpGroups is whether Value, an object, is a RegExp match's groups object, read from the runtime
+// object itself, never its static type, since a program's own object can carry the groups type: natively
+// its shape's methods are adamic_groups_methods (adamic_regexp_groups_is), and on the JavaScript backend
+// its prototype is null, as Node's is. A call of an Object.prototype method on a receiver whose type
+// admits groups throws Node's TypeError when it holds (lower/prototype.go's regexpGroupsMissingMethod).
+type IsRegExpGroups struct{ Value Expression }
+
+func (IsRegExpGroups) Type() Type { return Boolean }
+
 // RegExpReplacement describes the closure ABI; Rest is its final array element type.
 type RegExpReplacement struct {
 	Groups []RegExpReplacementGroup

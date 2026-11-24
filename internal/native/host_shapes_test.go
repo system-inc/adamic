@@ -22,7 +22,8 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-// A runtime shape is a host's when its methods are adamic_host_methods (adamic.h), and nothing makes
+// A runtime shape is a host's when its methods are adamic_host_methods, or adamic_groups_methods for a
+// RegExp match's groups object (adamic.h's adamic_host_shape), and nothing makes
 // that so: a shape whose methods are NULL reads as a plain object by a run-time key, so
 // Object.prototype's closures stand in for a Stats' members and an iterator's internal slots go out
 // as values. Nothing at run time catches that, so this test
@@ -40,7 +41,7 @@ import (
 //
 // A row is one of three verdicts:
 //   - Host: the object's prototype on Node isn't Object's, so the shape's methods must be
-//     adamic_host_methods, or, for an Error, adamic_error_methods or adamic_coded_error_methods. Its pin is a
+//     adamic_host_methods (adamic_groups_methods for a match's groups), or, for an Error, adamic_error_methods or adamic_coded_error_methods. Its pin is a
 //     reflect_get stop fixture that stops on it on both backends where Node answers; or, for an
 //     Error, the Error rule (its initializer's methods are one of the two Error sentinels, and
 //     stop_host_error_prototype.a pins an Object.prototype name stopping on one); or, for a shape
@@ -352,7 +353,7 @@ var hostShapeReaders = []struct {
 	{"regexp.c", "adamic_regex_group_lookup", "the regular expression runtime reading its own objects", "", ""},
 	{"regexp.c", "adamic_regex_property", "the regular expression runtime reading its own objects", "", ""},
 	{"regexp_compile_runtime.c", "adamic_regex_compile_new", "copies the run-time compiler's own groups shape", "", ""},
-	{"timers_impl.h", "timer_foreign_handle", "returns false at its shape->methods == &adamic_host_methods test, host_object's own, before it reads a name, so it reads _onTimeout only as a record's key or a plain object's own field", "", ""},
+	{"timers_impl.h", "timer_foreign_handle", "returns false at its adamic_host_shape test, host_object's own, before it reads a name, so it reads _onTimeout only as a record's key or a plain object's own field", "", ""},
 	{"union.c", "has_property", "reached past host_stop at adamic_has_property, or for an array's own properties", "", ""},
 	{"union.c", "dynamic_property", "reached past host_stop at adamic_dynamic_property, or for an array's own properties", "", ""},
 	{"union.c", "keyed_slot", "called by adamic_dynamic_property_keyed after its host_object test, by keyed_array and keyed_tuple for an array's or a tuple's own properties, or by keyed_stats for the four fields a Stats' shape holds that Node's Stats has", "", ""},
@@ -663,9 +664,9 @@ func fileShapes(file, source string) ([]foundShape, []string) {
 		case current.text == "names" && (at(index-1) == "." || at(index-1) == ">" && at(index-2) == "-") && at(index+1) == "=" && at(index+2) != "=":
 			builder(index)
 			continue
-		case current.text == "methods" && (at(index-1) == "." || at(index-1) == ">" && at(index-2) == "-") && at(index+1) == "=" && at(index+2) != "=" && (at(index+3) == "adamic_host_methods" || errorSentinel(at(index+3))):
+		case current.text == "methods" && (at(index-1) == "." || at(index-1) == ">" && at(index-2) == "-") && at(index+1) == "=" && at(index+2) != "=" && (hostSentinel(at(index+3)) || errorSentinel(at(index+3))):
 			if found := builder(index); found != nil {
-				found.host = found.host || at(index+3) == "adamic_host_methods"
+				found.host = found.host || hostSentinel(at(index+3))
 				found.errorShape = found.errorShape || errorSentinel(at(index+3))
 			}
 			continue
@@ -879,7 +880,13 @@ func shapeInitializer(tokens []cToken) (host, errorShape bool, problem string) {
 			return false, false, "a shape initializer with more than five fields"
 		}
 	}
-	return methods == "& adamic_host_methods", strings.HasPrefix(methods, "& ") && errorSentinel(strings.TrimPrefix(methods, "& ")), ""
+	return strings.HasPrefix(methods, "& ") && hostSentinel(strings.TrimPrefix(methods, "& ")), strings.HasPrefix(methods, "& ") && errorSentinel(strings.TrimPrefix(methods, "& ")), ""
+}
+
+// hostSentinel reports whether a methods table is one adamic_host_shape reads as a host's (adamic.h):
+// adamic_host_methods, or adamic_groups_methods for a RegExp match's groups object, whose prototype is null.
+func hostSentinel(name string) bool {
+	return name == "adamic_host_methods" || name == "adamic_groups_methods"
 }
 
 // errorSentinel reports whether a methods table is one adamic_error_is reads as an Error's (exceptions.c):
@@ -959,7 +966,7 @@ func generatedShapes(root string) ([]foundShape, []string, error) {
 							unclassified = append(unclassified, where+": a generated shape initializer without five fields")
 							continue
 						}
-						host := strings.TrimSpace(fields[3]) == "&adamic_host_methods"
+						host := strings.HasPrefix(strings.TrimSpace(fields[3]), "&") && hostSentinel(strings.TrimPrefix(strings.TrimSpace(fields[3]), "&"))
 						errorShape := strings.HasPrefix(strings.TrimSpace(fields[3]), "&") && errorSentinel(strings.TrimPrefix(strings.TrimSpace(fields[3]), "&"))
 						shapes = append(shapes, foundShape{file: relative, scope: scope, index: count, line: files.Position(literal.Pos()).Line, host: host, errorShape: errorShape})
 						count++
