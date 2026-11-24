@@ -39,7 +39,7 @@ var inertExpressions = func() map[string]bool {
 	for _, name := range strings.Fields(`ArrayConcat ArrayFill ArrayIndex ArrayIsArray ArrayLiteral ArrayOfScalars ArrayPop
 		ArrayPush ArrayReverse ArraySearch ArraySlice ArraySplice Binary BooleanConstant BooleanToString Box CharCodeAt
 		CheckedCast ClosureSelf Coalesce CodePoints CollectionIterator Comma Conditional Defined Effects ErrorToString
-		GeneratorDone HasAccessor HasOwn HasProperty InstanceOf IsCollectionIterator IsGenerator IsNull IsUndefined
+		GeneratorDone HasAccessor HasOwn HasProperty InstanceOf IsCollectionIterator IsGenerator IsNull IsRegExpGroups IsUndefined
 		IterableOf JSONDecode JSONNull JoinEnter JoinLeave FunctionLength Length LibraryGlobal Logical LogicalAssignment MakeClosure
 		MakeError MapClear MapDelete MapEntries MapGet MapHas MapKeys MapNew MapSet MapSize MapValues MathCall MaybeOf
 		Narrow NodeBufferCall Null NumberCall NumberConstant NumberFormat NumberToString ObjectKeys OwnFunction PhantomMember PlaceholderUse PromiseValue Property Read RecordCall RecordCoalesce RecordLiteral

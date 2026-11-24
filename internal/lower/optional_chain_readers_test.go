@@ -205,4 +205,5 @@ var optionalChainReaders = map[string]optionalChainReader{
 	"checkedPredicateInferredPart":    {1, readerProof},
 	"predicateUseDirections":          {1, readerProof},
 	"censusLengthLeaf":                {1, readerProof},
+	"calleeSourceText":                {3, "spells the callee as the source writes it for a TypeError's message, where V8 keeps a written ?. whatever optionalChain does with the step; it lowers nothing"},
 }

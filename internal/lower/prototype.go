@@ -144,16 +144,28 @@ func (l *lowering) objectPrototypeCallArguments(node, receiver *ast.Node, name s
 	if name != "valueOf" && l.isLibraryType(l.checker.GetTypeAtLocation(receiver), errorClasses...) {
 		return nil, true, l.notYet(node, name+" on Error (its prototype and non-enumerable own descriptors differ from plain objects)")
 	}
-	if name == "toString" || name == "toLocaleString" || name == "valueOf" {
+	if name == "toString" || name == "toLocaleString" {
 		// valueOf answers the object itself on every library object with a prototype, an iterator and an Error
-		// alike, which the arm below already gives; only a null-prototype groups object has no valueOf to call.
-		if library := l.libraryObjectOwnAnswer(receiver); library != "" && (name != "valueOf" || library == regexpGroupsAnswer) {
+		// alike, which the arm below already gives. A RegExp match's groups object is tested for at run time below.
+		if library := l.libraryObjectOwnAnswer(receiver); library != "" && library != regexpGroupsAnswer {
 			return nil, true, l.notYet(node, name+" on "+library+", whose own answer isn't Object.prototype's")
 		}
 	}
 	of, _ := l.representation(l.checker.GetTypeAtLocation(receiver))
 	if l.exactPlainObject(receiver) {
 		of = ir.Object
+	}
+	// A RegExp match's groups object has a null prototype, so on Node a direct call of any of these on one finds
+	// nothing to call and throws a TypeError, where a program's own object of the same type answers as
+	// Object.prototype does: the value tells them apart, never the type (#eksbz4c). Object.prototype's own
+	// method called through .call reaches the groups object as this and answers, so only a direct call is
+	// tested. Each arm below that answers an object makes its answer in regexpGroupsMissingMethod.
+	missing := false
+	if access := ast.SkipParentheses(node.AsCallExpression().Expression); access.Kind == ast.KindPropertyAccessExpression && access.AsPropertyAccessExpression().Expression == receiver && l.regexpGroupsAdmitted(receiver) {
+		if of != ir.Object {
+			return nil, true, l.notYet(node, name+" on "+regexpGroupsAnswer+" held as "+typeName(of))
+		}
+		missing = true
 	}
 	if of == ir.Object || of == ir.Union {
 		if reason := l.prototypeHazard(receiver, name); reason != "" {
@@ -187,7 +199,17 @@ func (l *lowering) objectPrototypeCallArguments(node, receiver *ast.Node, name s
 		}
 		// Every own field of a plain object or a class instance is enumerable. Methods are on its
 		// prototype, absent from its shape, and defineProperty is refused.
-		return l.hasOwnPropertyArguments(node, receiver, written)
+		lowered, handled, err := l.hasOwnPropertyArguments(node, receiver, written)
+		if !missing || !handled || err != nil {
+			return lowered, handled, err
+		}
+		owned, isOwned := lowered.(ir.HasOwn)
+		if !isOwned {
+			return nil, true, l.notYet(node, name+" on "+regexpGroupsAnswer+" lowered other than as an own-property test")
+		}
+		return l.regexpGroupsMissingMethod(node, name, []ir.Expression{owned.Object, owned.Key}, func(reads []ir.Expression) ir.Expression {
+			return ir.HasOwn{Object: reads[0], Key: reads[1]}
+		})
 	}
 	if len(written) != 0 {
 		return nil, true, l.notYet(node, name+" with arguments")
@@ -207,12 +229,18 @@ func (l *lowering) objectPrototypeCallArguments(node, receiver *ast.Node, name s
 	}
 	if name == "valueOf" {
 		if result, _ := l.representation(l.checker.GetTypeAtLocation(node)); result == ir.Union && of == ir.Object {
+			if missing {
+				return l.regexpGroupsMissingMethod(node, name, []ir.Expression{value}, func(reads []ir.Expression) ir.Expression { return fit(reads[0], result) })
+			}
 			return fit(value, result), true, nil
 		} else if result != of {
 			return nil, true, l.notYet(node, "valueOf whose library result type erases the "+typeName(of)+" representation to Object (keeping or returning that result needs a tagged object view)")
 		}
 		switch of {
 		case ir.Number, ir.Boolean, ir.String, ir.Object, ir.Array, ir.Map, ir.Closure:
+			if missing {
+				return l.regexpGroupsMissingMethod(node, name, []ir.Expression{value}, func(reads []ir.Expression) ir.Expression { return reads[0] })
+			}
 			return value, true, nil
 		}
 	}
@@ -232,6 +260,9 @@ func (l *lowering) objectPrototypeCallArguments(node, receiver *ast.Node, name s
 			}
 		}
 		text := ir.StringConstant{Index: l.constant(tag)}
+		if missing {
+			return l.regexpGroupsMissingMethod(node, name, []ir.Expression{value}, func([]ir.Expression) ir.Expression { return text })
+		}
 		// Both arms are the same, but the test evaluates the receiver exactly once, preserving its
 		// side effects and any narrowed-read check. No field is read to produce the constant tag.
 		return ir.Conditional{Condition: ir.IsUndefined{Value: value}, WhenTrue: text, WhenNot: text}, true, nil
@@ -240,54 +271,85 @@ func (l *lowering) objectPrototypeCallArguments(node, receiver *ast.Node, name s
 }
 
 // regexpGroupsAnswer is libraryObjectOwnAnswer's name for a RegExp match's groups, the one receiver here with no
-// prototype, so valueOf stops on it alone.
+// prototype, so a direct call of an Object.prototype method on one throws (regexpGroupsMissingMethod).
 const regexpGroupsAnswer = "a RegExp match's groups"
 
-// libraryObjectOwnAnswer names a receiver whose toString, toLocaleString or valueOf answers other than a plain
-// object's on Node, where lowering knows no answer of its own, or is empty. The constant tag below is
-// Object.prototype's, and #20e4t06 and #shqn1d0 found it printed for objects that aren't plain: a Map or Set
-// iterator, whose tag is Map Iterator or Set Iterator, and a RegExp match's groups, which have a null prototype,
-// so Node throws a TypeError at the call. Every member of the receiver's type is asked, failing closed: a named
-// library interface (an iterator, a Promise, an Intl object) unless it's Object itself or an iterator result,
-// which next makes as a plain object; and an anonymous library type declared inside a RegExp result interface,
-// which is its groups. A Map or Set, an array or a string is held as its own kind and keeps its own answer
-// below, and a program's own object or class keeps Object.prototype's. Each object's own tag and groups'
-// missing prototype are the real fix, owed with Runtime Library (Compiler, on #20e4t06).
+// libraryObjectOwnAnswer names a receiver whose toString or toLocaleString answers other than a plain object's on
+// Node, where lowering knows no answer of its own, or is empty. The constant tag Object.prototype's arm gives is
+// [object Object], and #20e4t06 found it printed for a Map or Set iterator, whose tag is Map Iterator or Set
+// Iterator, so the call stops at compile time for any named library interface (an iterator, a Promise, an Intl
+// object) unless it's Object itself or an iterator result, which next makes as a plain object. A Map or Set, an
+// array or a string is held as its own kind and keeps its own answer, and a program's own object or class keeps
+// Object.prototype's. Each library object's own tag is the real fix, owed with Runtime Library (#eksbz4c's head T).
+// A RegExp match's groups, an anonymous library type declared inside a RegExp result interface, is named
+// regexpGroupsAnswer only where no member stops, since it stops nothing: a groups object has no tag of its own, and
+// a direct call that would find no method on one is tested for it at run time (regexpGroupsAdmitted, #eksbz4c's
+// head G). Every member of the receiver's type is asked, failing closed.
 func (l *lowering) libraryObjectOwnAnswer(receiver *ast.Node) string {
+	answer := ""
+	for _, member := range l.ownAnswerMembers(receiver) {
+		own := l.memberOwnAnswer(member)
+		if own != "" && own != regexpGroupsAnswer {
+			return own
+		}
+		if own != "" {
+			answer = own
+		}
+	}
+	return answer
+}
+
+// regexpGroupsAdmitted reports whether any member of receiver's type is a RegExp match's groups, so a value it holds
+// may be a groups object, whose prototype is null, whatever its other members are.
+func (l *lowering) regexpGroupsAdmitted(receiver *ast.Node) bool {
+	for _, member := range l.ownAnswerMembers(receiver) {
+		if l.memberOwnAnswer(member) == regexpGroupsAnswer {
+			return true
+		}
+	}
+	return false
+}
+
+// ownAnswerMembers are the object types libraryObjectOwnAnswer asks of receiver: the type proven at it, and a
+// union's members and an intersection's parts, each asked, so MapIterator<T> & { tag: string } stops as its
+// iterator part does (Optimizer's should).
+func (l *lowering) ownAnswerMembers(receiver *ast.Node) []*checker.Type {
 	proven := l.concrete(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver)))
 	members := []*checker.Type{proven}
-	// A union's members and an intersection's parts are each asked, so MapIterator<T> & { tag: string } stops as
-	// its iterator part does (Optimizer's should).
 	for index := 0; index < len(members); index++ {
 		if members[index].Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
 			members = append(members, members[index].Types()...)
 		}
 	}
-	for _, member := range members {
-		if member.Flags()&checker.TypeFlagsObject == 0 {
-			continue
+	return members
+}
+
+// memberOwnAnswer is libraryObjectOwnAnswer's name for one member, or empty for a member that answers as a plain
+// object does.
+func (l *lowering) memberOwnAnswer(member *checker.Type) string {
+	if member.Flags()&checker.TypeFlagsObject == 0 {
+		return ""
+	}
+	symbol := l.unbranded(member).Symbol()
+	// A host's object is declared in a declaration file, lib, the prelude or @types/node alike (node:buffer's
+	// Buffer lives in @types/node, #e0cnaa9), so any declaration file counts, never lib alone.
+	if symbol == nil || len(symbol.Declarations) == 0 {
+		return ""
+	}
+	if file := ast.GetSourceFileOfNode(symbol.Declarations[0]); !file.IsDeclarationFile && !load.IsLibrary(file) && !load.IsApple(file) {
+		return ""
+	}
+	declaration := symbol.Declarations[0]
+	if declaration.Kind == ast.KindInterfaceDeclaration || declaration.Kind == ast.KindClassDeclaration {
+		switch symbol.Name {
+		case "Object", "IteratorYieldResult", "IteratorReturnResult", "Map", "ReadonlyMap", "Set", "ReadonlySet", "Array", "ReadonlyArray", "String", "Number", "Boolean":
+			return ""
 		}
-		symbol := l.unbranded(member).Symbol()
-		// A host's object is declared in a declaration file, lib, the prelude or @types/node alike (node:buffer's
-		// Buffer lives in @types/node, #e0cnaa9), so any declaration file counts, never lib alone.
-		if symbol == nil || len(symbol.Declarations) == 0 {
-			continue
-		}
-		if file := ast.GetSourceFileOfNode(symbol.Declarations[0]); !file.IsDeclarationFile && !load.IsLibrary(file) && !load.IsApple(file) {
-			continue
-		}
-		declaration := symbol.Declarations[0]
-		if declaration.Kind == ast.KindInterfaceDeclaration || declaration.Kind == ast.KindClassDeclaration {
-			switch symbol.Name {
-			case "Object", "IteratorYieldResult", "IteratorReturnResult", "Map", "ReadonlyMap", "Set", "ReadonlySet", "Array", "ReadonlyArray", "String", "Number", "Boolean":
-				continue
-			}
-			return "a library " + symbol.Name
-		}
-		for owner := declaration.Parent; owner != nil; owner = owner.Parent {
-			if owner.Kind == ast.KindInterfaceDeclaration && strings.HasPrefix(owner.Name().Text(), "RegExp") {
-				return regexpGroupsAnswer
-			}
+		return "a library " + symbol.Name
+	}
+	for owner := declaration.Parent; owner != nil; owner = owner.Parent {
+		if owner.Kind == ast.KindInterfaceDeclaration && strings.HasPrefix(owner.Name().Text(), "RegExp") {
+			return regexpGroupsAnswer
 		}
 	}
 	return ""
@@ -332,6 +394,129 @@ func (l *lowering) programOwnAnswerValues() ([]ownAnswerValue, bool) {
 		module.AsNode().ForEachChild(visit)
 	}
 	return l.ownAnswerValues, true
+}
+
+// regexpGroupsMissingMethod is a direct call of an Object.prototype method on a receiver whose type admits a RegExp
+// match's groups, made of values, the receiver's first and then the arguments', each evaluated once in JavaScript's
+// order. A groups object has no prototype, so Node finds nothing to call and throws a TypeError naming the callee as
+// its source reads, "match.groups.toString is not a function", and anything else answers as answer makes of the
+// values (#eksbz4c's head G). The test is of the value at run time, never the type (ir.IsRegExpGroups), and the
+// TypeError is thrown as global.gc's is (library_node_globals.go), its text computed here, never the JavaScript
+// backend's own, which would name the code it emitted. A callee whose text isn't spelled here stops.
+func (l *lowering) regexpGroupsMissingMethod(node *ast.Node, name string, values []ir.Expression, answer func(reads []ir.Expression) ir.Expression) (ir.Expression, bool, error) {
+	text, spelled := calleeSourceText(ast.SkipParentheses(node.AsCallExpression().Expression))
+	if !spelled {
+		return nil, true, l.notYet(node, name+" on "+regexpGroupsAnswer+" through a callee whose text Node's TypeError names isn't spelled")
+	}
+	index := len(l.result.Functions)
+	function := ir.Function{Name: "regexp_groups_missing_method"}
+	reads := []ir.Expression{}
+	for _, value := range values {
+		local := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "argument", Type: value.Type(), Function: index})
+		function.Parameters = append(function.Parameters, local)
+		reads = append(reads, ir.Read{Local: local, Of: value.Type()})
+	}
+	result := answer(reads)
+	function.Returns = result.Type()
+	failure := ir.MakeError{Message: ir.StringConstant{Index: l.constant(text + " is not a function")}, Name: ir.StringConstant{Index: l.constant("TypeError")}}
+	function.Body = []ir.Statement{
+		ir.If{Condition: ir.IsRegExpGroups{Value: reads[0]}, Then: []ir.Statement{ir.Throw{Value: failure}}},
+		ir.Return{Value: result},
+	}
+	l.result.Functions = append(l.result.Functions, function)
+	return ir.Call{Function: index, Arguments: values, Returns: function.Returns}, true, nil
+}
+
+// calleeSourceText is a callee as V8 names it in a TypeError, from the parsed source, since V8 prints its own tree
+// and never the text (measured on Node, J-cg4gdgf and #eksbz4c head G's probes): parentheses, a non-null assertion
+// and a cast are gone once types are stripped, a property is .name and an optional one ?.name, an element access
+// with a string key reads as that property and one with an index as [index], a string literal is written in double
+// quotes, an array literal is its elements between brackets, joined by a comma alone, and a call is its callee and
+// (...), with arguments or none. Anything else isn't spelled here (false), and its caller stops.
+func calleeSourceText(node *ast.Node) (string, bool) {
+	switch node.Kind {
+	case ast.KindIdentifier:
+		return node.Text(), true
+	case ast.KindThisKeyword:
+		return "this", true
+	case ast.KindParenthesizedExpression, ast.KindNonNullExpression, ast.KindAsExpression, ast.KindSatisfiesExpression, ast.KindTypeAssertionExpression:
+		return calleeSourceText(node.Expression())
+	case ast.KindStringLiteral:
+		if strings.ContainsAny(node.Text(), "\"\\\n\r\u2028\u2029") {
+			return "", false
+		}
+		return `"` + node.Text() + `"`, true
+	case ast.KindArrayLiteralExpression:
+		// A spread or a hole has no case here, so an array literal holding one isn't spelled.
+		elements := []string{}
+		for _, element := range node.AsArrayLiteralExpression().Elements.Nodes {
+			text, spelled := calleeSourceText(element)
+			if !spelled {
+				return "", false
+			}
+			elements = append(elements, text)
+		}
+		return "[" + strings.Join(elements, ",") + "]", true
+	case ast.KindCallExpression:
+		call := node.AsCallExpression()
+		if call.QuestionDotToken != nil {
+			return "", false
+		}
+		callee, spelled := calleeSourceText(call.Expression)
+		return callee + "(...)", spelled
+	case ast.KindPropertyAccessExpression:
+		access := node.AsPropertyAccessExpression()
+		if access.Name().Kind != ast.KindIdentifier {
+			return "", false
+		}
+		separator := "."
+		if access.QuestionDotToken != nil {
+			separator = "?."
+		}
+		object, spelled := calleeSourceText(access.Expression)
+		return object + separator + access.Name().Text(), spelled
+	case ast.KindElementAccessExpression:
+		access := node.AsElementAccessExpression()
+		if access.QuestionDotToken != nil {
+			return "", false
+		}
+		key := ast.SkipParentheses(access.ArgumentExpression)
+		object, spelled := calleeSourceText(access.Expression)
+		switch {
+		case (key.Kind == ast.KindStringLiteral || key.Kind == ast.KindNoSubstitutionTemplateLiteral) && dottedPropertyName(key.Text()):
+			return object + "." + key.Text(), spelled
+		case key.Kind == ast.KindNumericLiteral && arrayIndexText(key.Text()):
+			return object + "[" + key.Text() + "]", spelled
+		}
+		return "", false
+	}
+	return "", false
+}
+
+// dottedPropertyName reports whether text is a name V8 would print after a dot: ASCII letters, digits, _ and $, not
+// led by a digit. Any other key isn't spelled.
+func dottedPropertyName(text string) bool {
+	for index, character := range text {
+		switch {
+		case character >= 'a' && character <= 'z', character >= 'A' && character <= 'Z', character == '_', character == '$':
+		case character >= '0' && character <= '9' && index > 0:
+		default:
+			return false
+		}
+	}
+	return text != ""
+}
+
+// arrayIndexText reports whether a numeric literal is written as V8 prints an index: decimal digits with no
+// leading zero, the way [match.groups][0] reads in its TypeError.
+func arrayIndexText(text string) bool {
+	for _, character := range text {
+		if character < '0' || character > '9' {
+			return false
+		}
+	}
+	return text == "0" || (text != "" && text[0] != '0')
 }
 
 // Structural object views can hide an override, an Error, or an artificial absent-spread slot.

@@ -351,7 +351,7 @@ static bool timer_foreign_handle(const adamic_object *object) {
         adamic_field_kind kind = adamic_record_values(object);
         return slot != NULL && timer_slot_truthy(kind == adamic_field_reference, kind, *slot);
     }
-    if (object->shape->methods == &adamic_host_methods) return false;
+    if (adamic_host_shape(object->shape)) return false;
     for (size_t index = 0; index < object->shape->count; index++) {
         if (strcmp(object->shape->names[index], "_onTimeout") != 0 || !adamic_object_present(object, index)) continue;
         adamic_field_kind kind = object->shape->kinds == NULL ? adamic_field_number : object->shape->kinds[index];
