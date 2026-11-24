@@ -1,0 +1,21 @@
+diff --git a/internal/lower/unknown.go b/internal/lower/unknown.go
+index 82a12b54a6..6f8f49c8f5 100644
+--- a/internal/lower/unknown.go
++++ b/internal/lower/unknown.go
+@@ -61,6 +61,16 @@ func (l *lowering) inProperty(node *ast.Node) (ir.Expression, error) {
+ 	if l.classes[l.symbol(ast.SkipParentheses(binary.Right))] != nil {
+ 		return nil, l.notYet(binary.Right, "in on a class constructor (static property presence descriptors)")
+ 	}
++	if l.typedPresenceReceiver(binary.Right) {
++		// Wrong on purpose: a key outside the receiver's own fields answers false, with no prototype lookup.
++		declared := false
++		for _, field := range l.checker.GetPropertiesOfType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(binary.Right))) {
++			declared = declared || field.Name == key.Text()
++		}
++		if !declared {
++			return ir.BooleanConstant{Value: false}, nil
++		}
++	}
+ 	object, err := l.expression(binary.Right)
+ 	if err != nil {
+ 		return nil, err
