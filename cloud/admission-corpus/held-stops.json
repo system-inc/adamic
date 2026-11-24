@@ -152,6 +152,12 @@
       "test": "internal/oracle/census_overload_result_test.go: TestCensusOverloadResultStop"
     },
     {
+      "path": "internal/oracle/testdata/construction_partial_unset_read_fails.ts",
+      "stderr": "adamic: panic: read before assignment: field 'parent' in partial.parent\n",
+      "hatch": "cast, line 18: return { name, items: [x], origin } as Big;",
+      "test": "internal/oracle/construction_partial_test.go: TestConstructionPartialUnsetReadStops"
+    },
+    {
       "path": "internal/oracle/testdata/entries_checked_literal.a",
       "stderr": "adamic: panic: Object enumeration key 'hidden': actual string, declared \"good\"\n",
       "hatch": "library-claim (Object.entries types every value as the view's value type; the hidden field enters through the structural assignment at line 6), line 2: Object.entries(view);",

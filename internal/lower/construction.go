@@ -9,6 +9,8 @@ import (
 
 // A fresh plain literal can reserve its factory's fixed scalar slots. Its asserted
 // result remains a checked view; reserving storage proves no value initialized.
+// Past that rule, a .ts literal reserves a target of any known field storage where
+// castProof has no other road for it (constructionWidened).
 func (l *lowering) constructionCast(node *ast.Node) bool {
 	source := l.factoryConstructionSource(node)
 	if source == nil {
@@ -22,14 +24,21 @@ func (l *lowering) constructionCast(node *ast.Node) bool {
 	if len(fields) == 0 {
 		return false
 	}
+	scalar := true
 	for _, field := range fields {
 		if strings.ContainsRune(field.Name, 0) || strings.HasPrefix(field.Name, "#") || field.Name == "__proto__" {
 			return false
 		}
 		held, known := l.representation(l.checker.GetTypeOfSymbol(field))
-		if field.Flags&ast.SymbolFlagsOptional != 0 || !known || held < ir.Number || held > ir.String || !interfaceScalar(l.checker.GetTypeOfSymbol(field)) {
+		if !known {
 			return false
 		}
+		if field.Flags&ast.SymbolFlagsOptional != 0 || held < ir.Number || held > ir.String || !interfaceScalar(l.checker.GetTypeOfSymbol(field)) {
+			scalar = false
+		}
+	}
+	if !scalar && !l.constructionWidened(node, source, target, fields) {
+		return false
 	}
 	provided := map[string]bool{}
 	for _, property := range source.AsObjectLiteralExpression().Properties.Nodes {
@@ -51,11 +60,62 @@ func (l *lowering) constructionCast(node *ast.Node) bool {
 		}
 		actual := l.checker.GetTypeAtLocation(value)
 		wanted := l.checker.GetTypeOfSymbol(field)
-		if !interfaceScalar(actual) || !l.checker.IsTypeAssignableTo(actual, wanted) {
+		if scalar {
+			if !interfaceScalar(actual) || !l.checker.IsTypeAssignableTo(actual, wanted) {
+				return false
+			}
+			continue
+		}
+		// objectLiteral fits each written value to its declared slot, which would convert a value held
+		// another way without a word: it's held as the slot holds it, all the way down, and seen as the
+		// slot's type it widens nothing a write through the target could break, or the cast stays stopped.
+		have, haveKnown := l.representation(actual)
+		held, _ := l.representation(wanted)
+		if !haveKnown || have != held || !l.checker.IsTypeAssignableTo(actual, wanted) || !l.sameKeeping(actual, wanted, map[[2]*checker.Type]bool{}) || !l.castAssignableAt(value, actual, wanted) {
 			return false
 		}
 	}
 	return len(provided) < len(fields)
+}
+
+// constructionWidened is whether a .ts literal may reserve a target whose fields aren't all required
+// scalars (Platforms' ruling on #b5w3ycg, generic over any construction). It's admitted only where castProof
+// would otherwise stop it as castSideways, so no cast that has a road today changes road: the literal's own
+// type isn't assignable to the target, which castProof would take as an upcast first, and the target isn't
+// assignable to it, which is a structural view. In .a the sideways cast keeps its refusal. A closure or Weak
+// slot, a method and an accessor stay stopped: a call or a Weak read reaches its slot past the readiness
+// check an unwritten required field's read stops at.
+func (l *lowering) constructionWidened(node, source *ast.Node, target *checker.Type, fields []*ast.Symbol) bool {
+	if !l.checkedAssertionSource(node) {
+		return false
+	}
+	literal := l.concrete(l.checker.GetTypeAtLocation(source))
+	if l.checker.IsTypeAssignableTo(literal, target) || l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(literal), target) || l.objectCastCause(literal, target) != castSideways {
+		return false
+	}
+	for _, field := range fields {
+		if field.Flags&ast.SymbolFlagsMethod != 0 || accessorSymbol(field) {
+			return false
+		}
+		switch held, _ := l.representation(l.checker.GetTypeOfSymbol(field)); held {
+		case ir.Number, ir.Boolean, ir.String, ir.Object, ir.Array, ir.Union, ir.MaybeNumber, ir.MaybeBoolean:
+		default:
+			return false
+		}
+	}
+	return true
+}
+
+// unwrittenField lays a target field the literal doesn't write, absent either way. A required one is
+// Uninitialized too, so a read of it stops loudly (#dm8exc2); an optional one is really absent, and a read
+// of it gives undefined, as Node's does.
+func (l *lowering) unwrittenField(field *ast.Symbol) ir.Field {
+	held, _ := l.representation(l.checker.GetTypeOfSymbol(field))
+	zero := ir.Expression(zeroValue(held))
+	if held.IsReference() {
+		zero = ir.Undefined{Of: held}
+	}
+	return ir.Field{Name: field.Name, Value: zero, Absent: true, Uninitialized: field.Flags&ast.SymbolFlagsOptional == 0}
 }
 
 func (l *lowering) constructLiteral(node *ast.Node) (ir.Expression, error) {
@@ -77,12 +137,7 @@ func (l *lowering) constructLiteral(node *ast.Node) (ir.Expression, error) {
 		if present[field.Name] {
 			continue
 		}
-		held, _ := l.representation(l.checker.GetTypeOfSymbol(field))
-		zero := ir.Expression(zeroValue(held))
-		if held.IsReference() {
-			zero = ir.Undefined{Of: held}
-		}
-		literal.Fields = append(literal.Fields, ir.Field{Name: field.Name, Value: zero, Absent: true, Uninitialized: true})
+		literal.Fields = append(literal.Fields, l.unwrittenField(field))
 	}
 	return literal, nil
 }
@@ -179,6 +234,10 @@ func (l *lowering) constructionJSON(node *ast.Node) (*ir.JSONSchema, bool) {
 		field := l.checker.GetPropertyOfType(target, name)
 		held, _ := l.representation(l.checker.GetTypeOfSymbol(field))
 		kind := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[held]
+		if kind == "" {
+			// A widened construction's other storage has no descriptor here, and an empty kind is none.
+			return nil, false
+		}
 		schema.Fields = append(schema.Fields, ir.JSONField{Name: l.constant(name), Slot: index, Schema: &ir.JSONSchema{Kind: kind}})
 	}
 	return schema, true
@@ -223,6 +282,9 @@ func (l *lowering) reserveFactoryFields(node *ast.Node, literal ir.ObjectLiteral
 	for _, field := range literal.Fields {
 		present[field.Name] = field.Value.Type()
 	}
+	// reserved is where each slot laid here sits, so a target that requires a slot another target laid
+	// optional makes it Uninitialized: a read through the one that requires it stops, as constructLiteral's.
+	reserved := map[string]int{}
 	var failure error
 	var visit ast.Visitor
 	visit = func(n *ast.Node) bool {
@@ -232,17 +294,17 @@ func (l *lowering) reserveFactoryFields(node *ast.Node, literal ir.ObjectLiteral
 		if n.Kind == ast.KindAsExpression && l.factoryConstructionSource(n) == node && l.constructionCast(n) {
 			for _, field := range l.checker.GetPropertiesOfType(l.concrete(l.checker.GetTypeAtLocation(n))) {
 				held, _ := l.representation(l.checker.GetTypeOfSymbol(field))
+				laid := l.unwrittenField(field)
 				if old, found := present[field.Name]; found {
 					if old != held {
 						failure = l.notYet(n, "factory target layouts with incompatible field storage")
+					} else if index, ours := reserved[field.Name]; ours && laid.Uninitialized {
+						literal.Fields[index].Uninitialized = true
 					}
 					continue
 				}
-				zero := ir.Expression(zeroValue(held))
-				if held.IsReference() {
-					zero = ir.Undefined{Of: held}
-				}
-				literal.Fields = append(literal.Fields, ir.Field{Name: field.Name, Value: zero, Absent: true, Uninitialized: true})
+				reserved[field.Name] = len(literal.Fields)
+				literal.Fields = append(literal.Fields, laid)
 				present[field.Name] = held
 			}
 		}
