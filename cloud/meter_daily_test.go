@@ -12,6 +12,8 @@ import (
 // meter-daily's outcome_test.py, run here so a gate runs it: a suite only a hand runs can't fail (#mpesmv7, Correctness
 // on #ny0c3gb). It holds which outcome run.sh records for each meter exit, OverBudget and BudgetUnknown apart from
 // Failed, and which outcomes submit.sh commits. It needs nothing but python3: temporary report.json files, no network.
+// slim_test.py and records_test.py run beside it (#jnx6n47): slim.py's record holds the summary and the rows readers
+// read and refuses a log or a file over 1 MB, and no committed record after the last full one holds either.
 func TestMeterDailyOutcomes(t *testing.T) {
 	t.Parallel()
 	path := filepath.Join(t.TempDir(), "meter-daily-outcomes.txt")
@@ -21,7 +23,7 @@ func TestMeterDailyOutcomes(t *testing.T) {
 	}
 	// -B writes no bytecode, and -X pycache_prefix reads it only under an empty directory of the test's own, never a
 	// __pycache__ in the tree, which no key holds; -s leaves the user site, and a usercustomize there, off sys.path.
-	command := toolchain.Command("python3", "-B", "-s", "-X", "pycache_prefix="+t.TempDir(), "-m", "unittest", "-v", "outcome_test")
+	command := toolchain.Command("python3", "-B", "-s", "-X", "pycache_prefix="+t.TempDir(), "-m", "unittest", "-v", "outcome_test", "slim_test", "records_test")
 	command.Dir = "meter-daily"
 	command.Stdout = output
 	command.Stderr = output
