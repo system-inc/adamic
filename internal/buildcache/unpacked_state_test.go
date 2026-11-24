@@ -2,6 +2,7 @@ package buildcache
 
 import (
 	"errors"
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -27,15 +28,26 @@ func unpackedSourceForTest(t *testing.T) string {
 	return root
 }
 
+// noCapabilities and oneUser are status's capability bits and ids for a process that holds no capability and is uid
+// and gid 1000 every way (real, effective, saved, filesystem).
+const noCapabilities = "0000000000000000"
+const oneUser = "1000\t1000\t1000\t1000"
+
+// statusForTest is /proc/self/status as the kernel writes it, cut to the lines the proofs read.
+func statusForTest(effective, permitted, uids, gids string) func() ([]byte, error) {
+	return func() ([]byte, error) {
+		return []byte("Name:\ttraced\nUid:\t" + uids + "\nGid:\t" + gids + "\nCapPrm:\t" + permitted + "\nCapEff:\t" + effective + "\n"), nil
+	}
+}
+
 // closedReadsForTest are the reads of a process closed out of every path under a tree: another uid owns all of it,
-// none of it is writable, the process holds no capability, and the tree is on a writable mount, so only the no-write
-// proof can hold. A test changes one read to open the tree.
+// none of it is writable, the process holds no capability and is uid 1000 every way, and the tree is on a writable
+// mount, so only the no-write proof can hold. A test changes one read to open the tree.
 func closedReadsForTest() closureReads {
 	return closureReads{
 		readOnlyMount: func(string) bool { return false },
 		mountInfo:     func() ([]byte, error) { return nil, errors.New("this test reads no mountinfo") },
-		status:        func() ([]byte, error) { return []byte("Name:\ttraced\nCapEff:\t0000000000000000\n"), nil },
-		effectiveUid:  1000,
+		status:        statusForTest(noCapabilities, noCapabilities, oneUser, oneUser),
 		owner:         func(string) (int, error) { return 2000, nil },
 		writable:      func(string) (bool, error) { return false, nil },
 	}
@@ -62,15 +74,25 @@ func TestAClosedUnpackedSourceRecordsTheManifestsHeads(t *testing.T) {
 	}
 }
 
-// The no-write proof holds only when nothing under the root is the process's to change: a file it owns (whose mode its
-// owner can change back), a file it may write, or a capability past both refuses, naming what was found, and so do
-// capabilities that can't be read.
+// The no-write proof holds only when nothing under the root is the process's to change, now or once it uses what it
+// holds: a file it owns (whose mode its owner can change back), a file it may write, a capability past both, effective
+// or permitted, or ids it can switch among refuses, naming what was found, and so does a status that can't be read.
 // Mutant: the owner not checked: "an owned file" goes red.
 // Mutant: regular files not asked whether they are writable, only directories: "a writable file" goes red.
-// Mutant: the capabilities not checked: every CAP_ case and both unreadable cases go red.
-// Mutant: only CAP_DAC_OVERRIDE and CAP_FOWNER checked: "CAP_CHOWN" and "CAP_SYS_ADMIN" go red.
+// Mutant: the capabilities not checked: every CAP_ case and the unreadable capability cases go red.
+// Mutant: only CAP_DAC_OVERRIDE and CAP_FOWNER checked: "CAP_CHOWN", "CAP_SETGID", "CAP_SETUID" and "CAP_SYS_ADMIN" go
+// red.
+// Mutant: CapPrm not read, heldCapabilities' `return effective | permitted, nil` to `return effective, nil`:
+// "CAP_DAC_OVERRIDE permitted" goes red.
+// Mutant: the Uid and Gid lines' ids not compared, statusIdentity's `if id != ids[0] {` to `if false && id != ids[0] {`:
+// "a saved uid apart" and "gids apart" go red.
 func TestTheNoWriteProofRefusesWhatTheProcessCouldChange(t *testing.T) {
 	t.Parallel()
+	holding := func(effective, permitted string) func(reads *closureReads, file string) {
+		return func(reads *closureReads, file string) {
+			reads.status = statusForTest(effective, permitted, oneUser, oneUser)
+		}
+	}
 	for name, test := range map[string]struct {
 		open func(reads *closureReads, file string)
 		want func(file string) string
@@ -84,49 +106,58 @@ func TestTheNoWriteProofRefusesWhatTheProcessCouldChange(t *testing.T) {
 					return 2000, nil
 				}
 			},
-			want: func(file string) string { return file + " is owned by effective uid 1000" },
+			want: func(file string) string { return file + " is owned by uid 1000, the process's" },
 		},
 		"a writable file": {
 			open: func(reads *closureReads, file string) {
 				reads.writable = func(path string) (bool, error) { return path == file, nil }
 			},
-			want: func(file string) string { return file + " is writable by effective uid 1000" },
+			want: func(file string) string { return file + " is writable by uid 1000" },
 		},
-		"CAP_DAC_OVERRIDE": {
+		"CAP_DAC_OVERRIDE":           {open: holding("0000000000000002", noCapabilities), want: func(string) string { return "the process holds CAP_DAC_OVERRIDE" }},
+		"CAP_DAC_OVERRIDE permitted": {open: holding(noCapabilities, "0000000000000002"), want: func(string) string { return "the process holds CAP_DAC_OVERRIDE" }},
+		"CAP_FOWNER":                 {open: holding("0000000000000008", noCapabilities), want: func(string) string { return "the process holds CAP_FOWNER" }},
+		"CAP_CHOWN":                  {open: holding("0000000000000001", noCapabilities), want: func(string) string { return "the process holds CAP_CHOWN" }},
+		"CAP_SETGID":                 {open: holding("0000000000000040", noCapabilities), want: func(string) string { return "the process holds CAP_SETGID" }},
+		"CAP_SETUID":                 {open: holding("0000000000000080", noCapabilities), want: func(string) string { return "the process holds CAP_SETUID" }},
+		"CAP_SYS_ADMIN":              {open: holding("0000000000200000", noCapabilities), want: func(string) string { return "the process holds CAP_SYS_ADMIN" }},
+		"a saved uid apart": {
 			open: func(reads *closureReads, file string) {
-				reads.status = func() ([]byte, error) { return []byte("CapEff:\t0000000000000002\n"), nil }
+				reads.status = statusForTest(noCapabilities, noCapabilities, "1000\t1000\t0\t1000", oneUser)
 			},
-			want: func(file string) string { return "the process holds CAP_DAC_OVERRIDE" },
+			want: func(string) string { return "its Uid ids differ" },
 		},
-		"CAP_FOWNER": {
+		"gids apart": {
 			open: func(reads *closureReads, file string) {
-				reads.status = func() ([]byte, error) { return []byte("CapEff:\t0000000000000008\n"), nil }
+				reads.status = statusForTest(noCapabilities, noCapabilities, oneUser, "1000\t1000\t1000\t27")
 			},
-			want: func(file string) string { return "the process holds CAP_FOWNER" },
+			want: func(string) string { return "its Gid ids differ" },
 		},
-		"CAP_CHOWN": {
+		"a Uid line that doesn't parse": {
 			open: func(reads *closureReads, file string) {
-				reads.status = func() ([]byte, error) { return []byte("CapEff:\t0000000000000001\n"), nil }
+				reads.status = statusForTest(noCapabilities, noCapabilities, "1000", oneUser)
 			},
-			want: func(file string) string { return "the process holds CAP_CHOWN" },
-		},
-		"CAP_SYS_ADMIN": {
-			open: func(reads *closureReads, file string) {
-				reads.status = func() ([]byte, error) { return []byte("CapEff:\t0000000000200000\n"), nil }
-			},
-			want: func(file string) string { return "the process holds CAP_SYS_ADMIN" },
+			want: func(string) string { return "its ids can't be read" },
 		},
 		"a CapEff line that doesn't parse": {
 			open: func(reads *closureReads, file string) {
-				reads.status = func() ([]byte, error) { return []byte("CapEff:\tall of them\n"), nil }
+				reads.status = statusForTest("all of them", noCapabilities, oneUser, oneUser)
 			},
-			want: func(file string) string { return "its capabilities can't be read" },
+			want: func(string) string { return "its capabilities can't be read" },
+		},
+		"no CapPrm line": {
+			open: func(reads *closureReads, file string) {
+				reads.status = func() ([]byte, error) {
+					return []byte("Uid:\t" + oneUser + "\nGid:\t" + oneUser + "\nCapEff:\t" + noCapabilities + "\n"), nil
+				}
+			},
+			want: func(string) string { return "its capabilities can't be read" },
 		},
 		"a status that can't be read": {
 			open: func(reads *closureReads, file string) {
 				reads.status = func() ([]byte, error) { return nil, errors.New("no /proc here") }
 			},
-			want: func(file string) string { return "its capabilities can't be read" },
+			want: func(string) string { return "its capabilities and ids can't be read" },
 		},
 	} {
 		t.Run(name, func(t *testing.T) {
@@ -152,6 +183,9 @@ func TestTheNoWriteProofRefusesWhatTheProcessCouldChange(t *testing.T) {
 // Mutant: matched by path only, the device pass skipped: "a read-only bind whose filesystem is mounted writable above"
 // goes red.
 // Mutant: a root on no mount named taken as proven: "the root's own mount missing" goes red.
+// Mutant: the options read from the superblock's field, mountsReadOnly's `options: fields[5]})` to
+// `options: fields[len(fields)-1]})`: "a writable mount of a read-only superblock" goes red, since the mount's own
+// option, sixth, is the one that governs writes through it.
 func TestAReadOnlyMountHoldsOnlyWhenEveryMountUnderTheRootIsReadOnly(t *testing.T) {
 	t.Parallel()
 	for name, test := range map[string]struct {
@@ -175,7 +209,8 @@ func TestAReadOnlyMountHoldsOnlyWhenEveryMountUnderTheRootIsReadOnly(t *testing.
 		"a read-only bind and another device writable above": {"/var/lib/job/tree", "21 0 8:2 / / ro,relatime - ext4 /dev/sda2 ro\n" +
 			"29 21 8:3 /job /var/lib/job rw,relatime - ext4 /dev/sdb1 rw\n" +
 			"30 29 8:1 /job/tree /var/lib/job/tree ro,relatime - ext4 /dev/sda1 rw\n", true},
-		"the root's own mount missing": {"/var/lib/job/tree", "29 1 8:1 /other /mnt/other ro,relatime - ext4 /dev/sda1 ro\n", false},
+		"the root's own mount missing":               {"/var/lib/job/tree", "29 1 8:1 /other /mnt/other ro,relatime - ext4 /dev/sda1 ro\n", false},
+		"a writable mount of a read-only superblock": {"/src", "22 1 0:21 / /src rw,relatime - ext4 /dev/sda1 ro\n", false},
 	} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
@@ -216,31 +251,80 @@ func TestTheReadOnlyMountProofNeedsMountinfo(t *testing.T) {
 	}
 }
 
-// A read-only mount proves nothing to a process that could remount it read-write: one holding CAP_SYS_ADMIN, or one
-// whose capabilities can't be read, is refused by the mount proof, and with every path writable no proof stands.
-// Mutant: the mount proof asks no capability: "CAP_SYS_ADMIN held" goes red.
+// A read-only mount proves nothing to a process that could remount it read-write: one holding CAP_SYS_ADMIN, effective
+// or permitted, or one whose capabilities can't be read, is refused by the mount proof itself, asked alone over a
+// mountinfo whose every mount is read-only, so no other proof's words can answer for it.
+// Mutant: readOnlyMountProof's `if capabilities&(1<<sysAdminCapability) != 0 {` to
+// `if false && capabilities&(1<<sysAdminCapability) != 0 {`: both CAP_SYS_ADMIN cases go red.
+// Mutant: CapPrm not read (heldCapabilities): "CAP_SYS_ADMIN permitted" goes red.
 func TestTheReadOnlyMountProofRefusesAProcessThatCanRemount(t *testing.T) {
 	t.Parallel()
 	for name, test := range map[string]struct {
 		status func() ([]byte, error)
 		want   string
 	}{
-		"CAP_SYS_ADMIN held":      {func() ([]byte, error) { return []byte("CapEff:\t0000000000200000\n"), nil }, "CAP_SYS_ADMIN"},
-		"capabilities unreadable": {func() ([]byte, error) { return nil, errors.New("no /proc here") }, "its capabilities can't be read"},
+		"CAP_SYS_ADMIN held":      {statusForTest("0000000000200000", noCapabilities, oneUser, oneUser), "which can remount it read-write"},
+		"CAP_SYS_ADMIN permitted": {statusForTest(noCapabilities, "0000000000200000", oneUser, oneUser), "which can remount it read-write"},
+		"capabilities unreadable": {func() ([]byte, error) { return nil, errors.New("no /proc here") }, "its capabilities can't be read: no /proc here"},
 	} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			reads := closedReadsForTest()
 			reads.readOnlyMount = func(string) bool { return true }
-			reads.mountInfo = func() ([]byte, error) { return []byte{}, nil }
+			reads.mountInfo = func() ([]byte, error) { return []byte("21 0 8:1 / / ro,relatime - ext4 /dev/sda1 ro\n"), nil }
 			reads.status = test.status
-			// Every path is writable, so a refused mount proof leaves no proof standing.
-			reads.writable = func(string) (bool, error) { return true, nil }
-			proof, err := closedProofWith(t.TempDir(), reads)
-			if err == nil || !strings.Contains(err.Error(), test.want) {
-				t.Fatalf("proved %q, err %v, want a refusal saying %q", proof, err, test.want)
+			if err := readOnlyMountProof("/src", reads); err == nil || !strings.Contains(err.Error(), test.want) {
+				t.Fatalf("the mount proof answered %v, want a refusal saying %q", err, test.want)
 			}
 		})
+	}
+}
+
+// A root that is a link is proven over the tree it names, not as the link alone, which the walk would never descend:
+// a link to a tree the process may write, or owns, refuses.
+// Mutant: the no-write proof given the unresolved root, closedProofWith's `uid, err := noWriteProof(resolved, reads)`
+// to `uid, err := noWriteProof(root, reads)`: both cases go red.
+func TestARootThatIsALinkIsProvenOverItsTree(t *testing.T) {
+	t.Parallel()
+	for name, open := range map[string]func(reads *closureReads, link string){
+		"a writable tree": func(reads *closureReads, link string) {
+			reads.writable = func(string) (bool, error) { return true, nil }
+		},
+		"an owned tree": func(reads *closureReads, link string) {
+			reads.owner = func(path string) (int, error) {
+				if path == link {
+					return 2000, nil
+				}
+				return 1000, nil
+			}
+		},
+	} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			link := filepath.Join(t.TempDir(), "source")
+			if err := os.Symlink(unpackedSourceForTest(t), link); err != nil {
+				t.Fatal(err)
+			}
+			reads := closedReadsForTest()
+			open(&reads, link)
+			if proof, err := closedProofWith(link, reads); err == nil {
+				t.Fatalf("proved %q over a link to a tree the process could change", proof)
+			}
+		})
+	}
+}
+
+// A manifest whose submodule's directory holds its files but no HEAD is refused, naming the submodule, rather than
+// recorded without its commit.
+// Mutant: manifestHeads' check of every repository's HEAD skipped: red.
+func TestAManifestMissingASubmodulesHeadIsRefused(t *testing.T) {
+	t.Parallel()
+	root := unpackedSourceForTest(t)
+	if err := os.Remove(filepath.Join(root, ".tracked/module/HEAD")); err != nil {
+		t.Fatal(err)
+	}
+	if state, err := unpackedTreeState(root, proofForTest(closedReadsForTest())); err == nil || !strings.Contains(err.Error(), "no commit for module") {
+		t.Fatalf("recorded %q, err %v", state, err)
 	}
 }
 
