@@ -1,0 +1,22 @@
+# #d1chbm7 round 14 reads (Performance): item 1 (d), stock tsc 6.0.3 and Node on every program alone, then item 1 (a)
+# and (e), read-proof.cjs on a tree stage3/apply.sh wrote at this commit. Run after environment.sh, sandboxed-job.sh,
+# sandboxed_typescript_source and sandboxed_npm stage3/api. Never merged.
+set -u
+K=proof/performance/d17
+export NODE_PATH=$PWD/stage3/api/node_modules
+TSC="node $PWD/stage3/api/node_modules/typescript/bin/tsc"
+for f in "$K"/programs/*.ts; do
+  n=$(basename "$f")
+  $TSC --ignoreConfig --noEmit --strict --moduleDetection force --skipLibCheck --pretty false "$f" > "$TMPDIR/tsc.out" 2>&1; t=$?
+  js="$TMPDIR/js/${n%.ts}.js"; mkdir -p "$TMPDIR/js"
+  node -e 'const ts=require("typescript"),fs=require("fs");fs.writeFileSync(process.argv[2],ts.transpileModule(fs.readFileSync(process.argv[1],"utf8"),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.CommonJS}}).outputText)' "$f" "$js"
+  out=$(node "$js" 2>&1 | grep -v -E '^\s+at |^Node\.js v|^$' | tr '\n' '|' | cut -c1-200); 
+  echo "GATE $n tsc=$t $(sed -E 's|^.*/||' "$TMPDIR/tsc.out" | tr '\n' ' ' | cut -c1-160) node=[$out]"
+done
+bash stage3/apply.sh "$TMPDIR/adapted" > "$TMPDIR/apply.log" 2>&1; echo "apply exit=$?"
+node "$K/reads/read-proof.cjs" "$TMPDIR/adapted" > "$TMPDIR/proof.txt" 2>&1; echo "read-proof exit=$?"
+grep -v -E '^(Entry |Slot |Signature key |Key [0-9]|Reference:)' "$TMPDIR/proof.txt"
+grep -c '^Entry ' "$TMPDIR/proof.txt"; grep -E '^Slot ' "$TMPDIR/proof.txt" | sed -E 's/^Slot [0-9]+: //' | sort | uniq -c
+grep -E 'more than its slot|rest' "$TMPDIR/proof.txt" | head
+echo "PROOF_TXT_BEGIN"; gzip -9c "$TMPDIR/proof.txt" | base64; echo "PROOF_TXT_END $(shasum -a 256 < "$TMPDIR/proof.txt")"
+echo VERDICT done
