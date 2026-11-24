@@ -501,6 +501,14 @@ class ProductTests(unittest.TestCase):
             print(f'{case} shard={shard(case, len(CASES))}/{len(CASES)}')
 
 
+class Family25Tests(unittest.TestCase):
+    def test_call_written_read_adapter(self):
+        adapter = ROOT / 'stage3/adapt/99-seats-family25-call-written-reads'
+        env = dict(os.environ, NODE_PATH=str(APPLY.pinned_packages(ROOT / 'stage3/api')))
+        subprocess.run(['node', '--test', str(adapter / 'test.cjs')],
+                       cwd=ROOT, env=env, check=True)
+
+
 class ProofShardTests(unittest.TestCase):
     def test_every_indexed_read_file_has_one_shard(self):
         script = """

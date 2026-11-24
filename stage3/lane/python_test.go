@@ -51,6 +51,7 @@ var applyPythonGroups = map[string][]string{
 		"test_apply.ProductTests.test_write_table_is_explicit",
 	},
 	"TestApplyProofShardPython": {
+		"test_apply.Family25Tests.test_call_written_read_adapter",
 		"test_apply.ProofShardTests.test_every_indexed_read_file_has_one_shard",
 	},
 }
