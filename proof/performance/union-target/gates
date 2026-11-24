@@ -1,0 +1,14 @@
+# #b5w3ycg union target (a): dry, lower and stage3/fixtures whole, then oracle whole, native whole with
+# ADAMIC_TEST_WASI=1, compilercensus and parallelcensus, each after its products settle. Source it after the sealed
+# opening and sandboxed_npm stage3/api. Never merged.
+L="$TMPDIR/utg"; mkdir -p "$L"; failed=0
+step() { echo "$1 $2"; [ "$1" = PASS ] || failed=1; }
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg)"
+if go test -count=1 -timeout 20m ./internal/dry/ > "$L/dry.log" 2>&1; then step PASS dry; else step FAIL dry; grep -E '^(--- FAIL|FAIL)|_test.go:[0-9]+' "$L/dry.log" | head -10; fi
+if sandboxed_products ./internal/lower ./stage3/fixtures ./internal/oracle ./internal/native ./internal/compilercensus ./cmd/adamic-gate/parallelcensus > "$L/products.log" 2>&1; then step PASS products; else step FAIL products; tail -8 "$L/products.log"; fi
+for p in internal/lower stage3/fixtures internal/oracle; do if go test -count=1 -timeout 75m ./$p/ > "$L/$(basename $p).log" 2>&1; then step PASS "$p"; else step FAIL "$p"; fi; grep -E '^(ok|FAIL|--- FAIL)|panic:' "$L/$(basename $p).log" | head -12; done
+if ADAMIC_TEST_WASI=1 go test -count=1 -timeout 60m ./internal/native/ > "$L/native.log" 2>&1; then step PASS native; else step FAIL native; fi
+grep -E '^(ok|FAIL|--- FAIL)|panic:' "$L/native.log" | head -12
+if go test -count=1 -timeout 30m ./internal/compilercensus/ ./cmd/adamic-gate/parallelcensus/ > "$L/census.log" 2>&1; then step PASS census-packages; else step FAIL census-packages; fi
+grep -E '^(ok|FAIL|--- FAIL)|panic:' "$L/census.log" | head -10
+if [ $failed -eq 0 ]; then echo "VERDICT PASS"; else echo "VERDICT FAIL"; fi

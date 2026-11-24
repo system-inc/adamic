@@ -1,0 +1,15 @@
+# #b5w3ycg union target (a): the admission delta against Memory's head 0c8e6f0f, the head's parent, with the corpus manifest, so only the
+# head's own rows can move (the membership programs, held to Node).
+# Source it in the job's shell after the sealed opening, sandboxed_repositories and sandboxed_npm stage3/api. Never merged.
+L="$TMPDIR/utd"; mkdir -p "$L"
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg)"
+base=0c8e6f0f19
+python3 -I cloud/admission-corpus/manifest.py --sha "$(git rev-parse HEAD)" > "$L/manifest.json"; code=$?
+if [ $code -ne 0 ]; then echo "FAIL manifest exit $code"; echo "VERDICT FAIL"; return 1 2>/dev/null || exit 1; fi
+python3 -I -c 'import json,sys; m=json.load(open(sys.argv[1])); print(" ".join("%s=%d" % (c["name"], len(c["programs"])) for c in m["corpora"]))' "$L/manifest.json"
+echo "manifest ok"
+go run ./cmd/adamic-admission-delta --base "$(git rev-parse "$base")" --manifest "$L/manifest.json" > "$L/delta.log" 2>&1; code=$?
+echo "delta exit $code"
+grep -nE 'cast_untagged_union_target' "$L/delta.log" | cut -c1-300 | head -20
+tail -14 "$L/delta.log" | cut -c1-300
+if [ $code -eq 0 ] && grep -q 'verdict: pass' "$L/delta.log"; then echo "VERDICT PASS"; else echo "VERDICT FAIL"; fi
