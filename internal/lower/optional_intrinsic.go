@@ -11,7 +11,6 @@ import (
 // different guard and ABI, and a chain that continues past the call is
 // optionalChain's (optional_chain.go).
 func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error) {
-	call := node.AsCallExpression()
 	if l.questionDot(node) || hasSpread(node) || optionalIntrinsicContinues(node) {
 		return nil, false, nil
 	}
@@ -22,14 +21,12 @@ func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error
 	if value, handled, err := l.optionalMapGet(node); handled {
 		return value, true, err
 	}
-	callee := ast.SkipParentheses(call.Expression)
-	if callee.Kind != ast.KindPropertyAccessExpression || (!l.libraryMember(callee) && !l.nodeFSEntryMethod(callee)) {
+	// The callee as written: `(x?.m)()` isn't x?.m(), since the parentheses end the chain (optionalCallee).
+	callee := l.optionalCallee(node)
+	if callee == nil || (!l.libraryMember(callee) && !l.nodeFSEntryMethod(callee)) {
 		return nil, false, nil
 	}
 	access := callee.AsPropertyAccessExpression()
-	if !l.questionDot(callee) {
-		return nil, false, nil
-	}
 	receiver, err := l.expression(access.Expression)
 	if err != nil {
 		return nil, true, err

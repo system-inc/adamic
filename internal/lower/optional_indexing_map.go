@@ -9,12 +9,14 @@ import (
 // evaluated only after that guard and the ordinary lookup keeps undefined.
 func (l *lowering) optionalMapGet(node *ast.Node) (ir.Expression, bool, error) {
 	call := node.AsCallExpression()
-	callee := ast.SkipParentheses(call.Expression)
-	if l.questionDot(node) || callee.Kind != ast.KindPropertyAccessExpression {
+	// The callee as written: `(m?.get)(k)` calls what m?.get gives, and throws when m is missing
+	// (optionalCallee, #492fbpd).
+	callee := l.optionalCallee(node)
+	if l.questionDot(node) || callee == nil {
 		return nil, false, nil
 	}
 	access := callee.AsPropertyAccessExpression()
-	if !l.questionDot(callee) || access.Name().Text() != "get" || !l.libraryMember(callee) {
+	if access.Name().Text() != "get" || !l.libraryMember(callee) {
 		return nil, false, nil
 	}
 	proven := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))
