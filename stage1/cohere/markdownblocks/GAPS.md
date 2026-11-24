@@ -332,7 +332,8 @@ as values, prefixing the original JavaScript exception message with Go's
 
 `gaps/7_postfix_property.ts` proves that a postfix property increment used as an
 expression is NotYet: Node prints 0 and 1; Adamic reports
-`a PostfixUnaryExpression`. The production pass instead assigns the old counter
+`a postfix update value whose target is not a plain name`. A postfix update of a numeric
+local lowers since #f3n0gyp; a property target keeps its stop. The production pass instead assigns the old counter
 and then increments it in a separate statement. Compiler-owned files are untouched.
 The native tokenizer/event engine, resolvers, rollback/subtokenization, full mdast
 construction and printer AstPath remain unfinished.
