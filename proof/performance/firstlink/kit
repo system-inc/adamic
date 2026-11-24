@@ -1,0 +1,39 @@
+# #sp53hvd: the first link's measurement, tried on a stage1 program until the trap-mode harness hands over tsc's C.
+# Emits a program's C, then the measurement whole (every unit, then the link), in two shards, and with each planted
+# control: a unit refused by #error, and a link missing a symbol. Source it after the sealed opening. Never merged.
+W="$TMPDIR/fl"; mkdir -p "$W"; failed=0
+step() { echo "$1 $2"; [ "$1" = PASS ] || failed=1; }
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg), $(clang --version | head -1)"
+go build -o "$W/adamic" ./cmd/adamic > "$W/build.log" 2>&1 && step PASS build || { step FAIL build; head -20 "$W/build.log"; }
+program=""
+for p in stage1/cohere/tsprinter/main.ts stage1/cohere/lint/main.ts stage1/cohere/json/main.ts stage1/cohere/css/main.ts; do
+	if "$W/adamic" c "$p" > "$W/program.c" 2> "$W/c.err"; then program=$p; break; fi
+	echo "no C from $p: $(head -1 "$W/c.err" | cut -c1-200)"
+done
+[ -n "$program" ] && step PASS "emit $program ($(wc -l < "$W/program.c") lines)" || { step FAIL emit; echo "VERDICT FAIL"; return 1 2>/dev/null || exit 1; }
+measure() { # measure <name> <env...>
+	local name=$1; shift
+	env ADAMIC_FIRSTLINK_C="$W/program.c" ADAMIC_FIRSTLINK_OUT="$W/$name" "$@" go test -count=1 -timeout 60m -v -run '^TestFirstLinkMeasure$' ./internal/native/ > "$W/$name.log" 2>&1
+	echo "== $name (exit $?)"
+	grep -E '^(SPLIT|FLAGS|COMPILED|REFUSED|RUNTIME|LINK|UNDEFINED|\| )|--- (PASS|FAIL|SKIP)' "$W/$name.log" | grep -v '^FLAGS' | cut -c1-260 | head -40
+}
+measure whole ADAMIC_FIRSTLINK_LINK=1
+grep -q '^LINK OK' "$W/whole.log" && step PASS whole-links || step FAIL whole-links
+# Peaks are clang's own, never the Go test's size: distinct across units, the smallest unit's below the largest's.
+python3 -I - "$W/whole/units.jsonl" <<'PYC' && step PASS peaks-are-clangs || step FAIL peaks-are-clangs
+import json, sys
+rows = [json.loads(l) for l in open(sys.argv[1])]
+peaks = sorted(r["peakKiB"] for r in rows)
+small = min(rows, key=lambda r: r["bytes"]); large = max(rows, key=lambda r: r["bytes"])
+print("peaks KiB: %d distinct of %d, from %d to %d; smallest unit %s %d KiB, largest %s %d KiB" % (len(set(peaks)), len(rows), peaks[0], peaks[-1], small["name"], small["peakKiB"], large["name"], large["peakKiB"]))
+sys.exit(0 if len(set(peaks)) > len(rows) // 2 and small["peakKiB"] < large["peakKiB"] else 1)
+PYC
+measure shard0 ADAMIC_FIRSTLINK_SHARD=0/2
+measure shard1 ADAMIC_FIRSTLINK_SHARD=1/2
+n0=$(grep -c '' "$W/shard0/units.jsonl" 2>/dev/null); n1=$(grep -c '' "$W/shard1/units.jsonl" 2>/dev/null); nw=$(grep -c '' "$W/whole/units.jsonl" 2>/dev/null)
+[ -n "$nw" ] && [ "$((n0 + n1))" = "$nw" ] && step PASS "shards cover the units once ($n0 + $n1 = $nw)" || step FAIL "shards ($n0 + $n1, whole $nw)"
+measure plantunit ADAMIC_FIRSTLINK_PLANT=unit ADAMIC_FIRSTLINK_LINK=1
+[ "$(grep -c '^REFUSED' "$W/plantunit.log")" = 1 ] && grep -q '^REFUSED.*adamic_firstlink_planted' "$W/plantunit.log" && grep -q '^LINK not run' "$W/plantunit.log" && step PASS control-unit-refused || step FAIL control-unit-refused
+measure plantlink ADAMIC_FIRSTLINK_PLANT=link ADAMIC_FIRSTLINK_LINK=1
+grep -q '^UNDEFINED adamic_firstlink_planted_missing ' "$W/plantlink.log" && grep -q '^LINK FAIL' "$W/plantlink.log" && step PASS control-link-undefined || step FAIL control-link-undefined
+if [ $failed -eq 0 ]; then echo "VERDICT PASS"; else echo "VERDICT FAIL"; fi
