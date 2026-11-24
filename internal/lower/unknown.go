@@ -55,7 +55,7 @@ func (l *lowering) inProperty(node *ast.Node) (ir.Expression, error) {
 	if key.Text() == "stack" || key.Text() == "cause" || key.Text() == "errno" || key.Text() == "syscall" || key.Text() == "path" {
 		return nil, l.notYet(key, "in on an Error internal or optional property (host descriptor metadata)")
 	}
-	if reason := l.presenceHazard(key.Text()); reason != "" {
+	if reason := l.presenceHazard(key.Text(), l.typedPresenceReceiver(binary.Right)); reason != "" {
 		return nil, l.notYet(node, "in when "+reason)
 	}
 	if l.classes[l.symbol(ast.SkipParentheses(binary.Right))] != nil {
@@ -328,8 +328,24 @@ func (l *lowering) dynamicReadHazard(name string) bool {
 	return nullable
 }
 
-// Native absent-spread slots and ambient class fields are storage, not proof of JS presence.
-func (l *lowering) presenceHazard(name string) string {
+// typedPresenceReceiver says whether an in test's receiver takes family 65's typed road (#2hzryxh): the checker
+// proves it one object type that declares fields, an interface's, a class instance's or a literal's. Unknown,
+// object, any, Object, {}, a type parameter, a union or an intersection leaves the receiver's origin unresolved,
+// so it keeps presenceHazard's whole scan: the unknown half is held (Adamic's ruling on #bbssdcy, Nov 23 03:50Z).
+func (l *lowering) typedPresenceReceiver(receiver *ast.Node) bool {
+	proven := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver))
+	if proven.Flags()&checker.TypeFlagsObject == 0 || l.isLibraryType(proven, "Object", "Function") {
+		return false
+	}
+	return len(l.checker.GetPropertiesOfType(proven)) > 0
+}
+
+// Native absent-spread slots and ambient class fields are storage, not proof of JS presence. A typed
+// receiver (typedPresenceReceiver) sets the spread clause aside, whatever spread made the object it holds: a
+// spread copies presence per slot, from its actual source's own keys and never its type, and an absent source
+// copies none (reuse.go's spreadCopy), so the in test answers from the copy's bits and then its prototype's
+// names (union.c's has_property), as Node does. The class clauses below still judge every receiver.
+func (l *lowering) presenceHazard(name string, typed bool) string {
 	modules, err := l.moduleOrder(l.program.Files()[0])
 	if err != nil {
 		return "runtime shapes are not known"
@@ -337,7 +353,7 @@ func (l *lowering) presenceHazard(name string) string {
 	reason := ""
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
-		if node.Kind == ast.KindObjectLiteralExpression {
+		if node.Kind == ast.KindObjectLiteralExpression && !typed {
 			for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
 				if property.Kind == ast.KindSpreadAssignment && l.includesUndefined(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression)) {
 					reason = "a possibly absent spread has no property presence descriptors"
