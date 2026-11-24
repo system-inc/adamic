@@ -79,6 +79,10 @@ const sysAdminCapability = 21
 // Either root is on a read-only mount and so is every mount at or under it or of its part of the filesystem
 // (readOnlyMountProof), or nothing under root can be written by the process nor made writable by it (noWriteProof).
 //
+// Each proof is of the process and of everything it can start, the tests among them, and status's NoNewPrivs line is
+// what makes that so (noNewPrivileges): without it, a child that execs a setuid binary or one with file capabilities
+// gains what no capability line of this process shows.
+//
 // One gap is named rather than closed: root's ancestors are asked nothing, so a process that may write root's parent
 // can rename root away and put another tree in its place.
 func closedProofWith(root string, reads closureReads) (string, error) {
@@ -113,6 +117,9 @@ func readOnlyMountProof(root string, reads closureReads) error {
 	}
 	capabilities, err := heldCapabilities(string(status))
 	if err != nil {
+		return err
+	}
+	if err := noNewPrivileges(string(status)); err != nil {
 		return err
 	}
 	if capabilities&(1<<sysAdminCapability) != 0 {
@@ -220,6 +227,9 @@ func noWriteProof(root string, reads closureReads) (int, error) {
 	if err != nil {
 		return 0, err
 	}
+	if err := noNewPrivileges(string(status)); err != nil {
+		return 0, err
+	}
 	for _, capability := range reopeningCapabilities {
 		if capabilities&(1<<capability.bit) != 0 {
 			return 0, fmt.Errorf("the process holds %s", capability.name)
@@ -277,6 +287,21 @@ func heldCapabilities(status string) (uint64, error) {
 		*read.bits = bits
 	}
 	return effective | permitted, nil
+}
+
+// noNewPrivileges is why the process, or something it starts, could gain privileges by exec, or nil when it can't:
+// status's NoNewPrivs line reads 1, so no setuid binary and no file capability raises what an exec'd child holds above
+// what this process holds. A status without the line, or with 0, refuses, as an unread capability does (Loom's ruling
+// on #3z7bv9q: every sealed unit is a dynamic user, on which systemd forces NoNewPrivileges).
+func noNewPrivileges(status string) error {
+	value, ok := statusLine(status, "NoNewPrivs")
+	if !ok {
+		return errors.New("its no_new_privs can't be read: /proc/self/status holds no NoNewPrivs line")
+	}
+	if value != "1" {
+		return fmt.Errorf("NoNewPrivs is %s, so a child it starts can gain privileges by exec (a setuid binary, a file capability)", value)
+	}
+	return nil
 }
 
 // statusIdentity is the one id status's Uid or Gid line (name) holds as the process's real, effective, saved and
