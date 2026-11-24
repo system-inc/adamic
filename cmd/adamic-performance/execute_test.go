@@ -140,8 +140,8 @@ func TestPerformanceExecuteInterleavesAndMirrorsItsRounds(t *testing.T) {
 			t.Errorf("program %d is %s judged on %s, want %s on %s", index, entry.Name, entry.Execution.Judge, executeSources[index].name, executeSources[index].judge)
 		}
 	}
-	native := runtimeNumbers{Wall: spread{Median: 112, Min: 100, Max: 130}, User: spread{Median: 102, Min: 90, Max: 120}, PeakKiB: 2012}
-	node := runtimeNumbers{Wall: spread{Median: 212, Min: 200, Max: 230}, User: spread{Median: 222, Min: 210, Max: 240}, PeakKiB: 70012}
+	native := runtimeNumbers{Wall: spread{Median: 112, Minimum: 100, Maximum: 130}, User: spread{Median: 102, Minimum: 90, Maximum: 120}, PeakKiB: 2012}
+	node := runtimeNumbers{Wall: spread{Median: 212, Minimum: 200, Maximum: 230}, User: spread{Median: 222, Minimum: 210, Maximum: 240}, PeakKiB: 70012}
 	for name, wantEntry := range map[string]execution{
 		"trees":           {Judge: "user", Native: native, Node: node, Ratio: 0.46},
 		"primes_parallel": {Judge: "wall", Native: native, Node: node, Ratio: 0.53},

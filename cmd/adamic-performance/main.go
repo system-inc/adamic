@@ -5,9 +5,9 @@
 //
 // The line runs it from the repository's root in every landing commit and commits what it writes, so git's history of
 // the file is the series and each landing's diff shows what moved (#hed1mkb). It measures two halves, each number the
-// median of its rounds with their min and max. The compile half: a cold build of hello, then warm builds and adamic c
-// of four programs, interleaved over -rounds. The execute half, after it on the same caches: bench's everyday programs
-// and primes_parallel, each run natively and on Node as bench runs them, through internal/benchmark's reaper,
+// median of its rounds with their minimum and maximum. The compile half: a cold build of hello, then warm builds and
+// adamic c of four programs, interleaved over -rounds. The execute half, after it on the same caches: bench's everyday
+// programs and primes_parallel, each run natively and on Node as bench runs them, through internal/benchmark's reaper,
 // interleaved over -execute-rounds, every run's answer held to Node's (measureExecute). Every child gets a temporary
 // directory's caches, so the cold build is cold and nothing touches this machine's, and Node must be on PATH.
 //

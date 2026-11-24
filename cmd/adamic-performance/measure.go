@@ -277,12 +277,12 @@ func milliseconds(seconds float64) int64 {
 	return int64(math.Round(seconds * 1000))
 }
 
-// spreadOf is the median of values with their min and max. The median of an even count is the lower of the middle
-// two, so it is always a round that was measured, never an average no round took. values is never empty: rounds is at
-// least 1.
+// spreadOf is the median of values with their minimum and maximum. The median of an even count is the lower of the
+// middle two, so it is always a round that was measured, never an average no round took. values is never empty: rounds
+// is at least 1.
 func spreadOf(values []int64) spread {
 	sorted := slices.Sorted(slices.Values(values))
-	return spread{Median: sorted[(len(sorted)-1)/2], Min: sorted[0], Max: sorted[len(sorted)-1]}
+	return spread{Median: sorted[(len(sorted)-1)/2], Minimum: sorted[0], Maximum: sorted[len(sorted)-1]}
 }
 
 // countLines is how many lines text holds, a last one with no newline counted.

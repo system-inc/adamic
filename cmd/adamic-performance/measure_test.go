@@ -10,8 +10,8 @@ import (
 	"time"
 )
 
-// An odd count's median is its middle, and an even count's the lower of the middle two, so the median is always a
-// round that ran; min and max are the ends, whatever order the rounds came in. Mutant: the upper middle taken (index
+// An odd count's median is its middle, and an even count's the lower of the middle two, so the median is always a round
+// that ran; minimum and maximum are the ends, whatever order the rounds came in. Mutant: the upper middle taken (index
 // len/2), and the even case reads 40.
 func TestPerformanceMedianTakesTheLowerMiddle(t *testing.T) {
 	t.Parallel()
@@ -19,10 +19,10 @@ func TestPerformanceMedianTakesTheLowerMiddle(t *testing.T) {
 		values []int64
 		want   spread
 	}{
-		{values: []int64{7}, want: spread{Median: 7, Min: 7, Max: 7}},
-		{values: []int64{50, 10, 30}, want: spread{Median: 30, Min: 10, Max: 50}},
-		{values: []int64{40, 10, 30, 20}, want: spread{Median: 20, Min: 10, Max: 40}},
-		{values: []int64{60, 10, 40, 30, 20, 50}, want: spread{Median: 30, Min: 10, Max: 60}},
+		{values: []int64{7}, want: spread{Median: 7, Minimum: 7, Maximum: 7}},
+		{values: []int64{50, 10, 30}, want: spread{Median: 30, Minimum: 10, Maximum: 50}},
+		{values: []int64{40, 10, 30, 20}, want: spread{Median: 20, Minimum: 10, Maximum: 40}},
+		{values: []int64{60, 10, 40, 30, 20, 50}, want: spread{Median: 30, Minimum: 10, Maximum: 60}},
 	} {
 		values := slices.Clone(each.values)
 		if got := spreadOf(values); got != each.want {
@@ -166,7 +166,7 @@ func TestPerformanceMeasureRunsEveryRoundThroughItsRunner(t *testing.T) {
 		Path:      "stage3/namespaces/shapes/Parser.a",
 		Lines:     len("Parser"),
 		CLines:    10 + len("Parser.a"),
-		WarmBuild: spread{Median: 228, Min: 218, Max: 238},
+		WarmBuild: spread{Median: 228, Minimum: 218, Maximum: 238},
 		Clang:     clangTimes{Compile: 22, Link: 102},
 		Phases:    phaseTimes{Load: 42, Lower: 10, Emit: 5},
 	}
@@ -179,7 +179,7 @@ func TestPerformanceMeasureRunsEveryRoundThroughItsRunner(t *testing.T) {
 	}
 	for _, entry := range measured.Programs {
 		frontEnd := entry.Program.FrontEnd
-		if frontEnd.Min > frontEnd.Median || frontEnd.Median > frontEnd.Max || frontEnd.Min < 20 {
+		if frontEnd.Minimum > frontEnd.Median || frontEnd.Median > frontEnd.Maximum || frontEnd.Minimum < 20 {
 			t.Errorf("%s's front end is %+v", entry.Name, frontEnd)
 		}
 	}
