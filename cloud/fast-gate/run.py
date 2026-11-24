@@ -22,8 +22,6 @@ coverage's inputs also carry names, the changed paths it judges (coverageReduced
 --darwin-paths-digest --tree <checkout at the tip> --sha <tip> --tools <tools checkout> prints the darwinPaths a darwin
 leg's record at that tip holds (cloud/fast-gate/darwin-legs/README.md), and --darwin-a-paths with the same arguments the
 .a files its aCheck must cover, one a line.
---compiler-packages prints the compiler's own packages, compilerPackages, as one JSON object, {"version": 1,
-"compilerPackages": [...]}: the planner keys a held launcher's units with exactly these (#ry3pfc6).
 --reads-census --tree <checkout> --tools <tools checkout> prints every finding of the reads guard over the whole tree
 (readsGuardFindings), one a line, and exits 0 when there are none, 1 when there are, and 2 when it crashed.
 --fast-check <verdict> with --list-units, --base, --sha and --tools runs the census door's submit-time fast check after the
@@ -1912,10 +1910,22 @@ def goArguments(code, index, count):
 #
 # A regex over Go text can't prove a launcher never runs the compiler (Adamic Loom's ruling on #ry3pfc6), so this census
 # is a cheap early refusal, and the proof is the trace: every traced run of a declared launcher's unit holds its every
-# exec to its runs, or voids and keys wide (the exec check). What this census doesn't read, and the exec check catches:
+# exec to its runs and its tree, or voids launchUndeclared (the exec check). What this census doesn't read, and the exec
+# check catches:
 # a //go:linkname to a launching function, a launch through a package outside the house (golang.org/x/tools/go/packages
 # with NeedExportFile, go/build, net/http/cgi), a method reached through a type, alias or constant of an allowed
 # package, or on a value an allowed function returns, reflect or unsafe, and assembly.
+#
+# When the exec check finds an exec a declaration doesn't name, the declaration is wrong, and only this line fixes it
+# (Adamic Loom's ruling on #ry3pfc6). A key stays a function of the commit and this tools line, so a hold never widens one:
+# the judge voids the unit launchUndeclared, the Queue holds the package (launchHeld, for the board and the page) and
+# stalls a change that voids so twice (VoidAgainInfra), and every unit of that package voids on every block until the
+# declaration is fixed here. The page goes to the declaration's owner (system_adamic_loom_planning_keys) and Adamic
+# Loom. The fix is one commit on loom/planner-reads, promoted the same hour: either the exec joins the launcher's runs
+# or its tree, with the trace job that shows it running no compiler, or the package's launcher entry goes, so its units
+# key wide again with their compiler closures. That commit's sha is the evidence the hold's clear names. The census's
+# refusal is the early check, so a hold means an exec that neither it nor any live run before it showed: it should be
+# rare, and when it isn't, that's a finding about the census.
 literalName = re.compile(r'"((?:[^"\\\n]|\\.)*)"|`([^`]*)`')
 # houseModule is adamic's module; an import under it is a house package, read from the tree.
 houseModule = "github.com/system-inc/adamic/"
@@ -2313,18 +2323,7 @@ DarwinLegMissingExit = 4
 FastCheckCantRunExit = 2
 
 
-def compilerPackagesMain():
-    """run.py --compiler-packages: compilerPackages as one JSON object, {"version": 1, "compilerPackages": [...]}, in its
-    order. The planner keys every unit of a launcher the Queue holds for an exec its runs don't name with exactly these,
-    read at the plan's own tools commit, so a held launcher can never key narrower than the compiler (Adamic Loom's ruling
-    on #ry3pfc6). It reads no tree."""
-    print(json.dumps({"version": 1, "compilerPackages": list(compilerPackages)}))
-
-
 def main():
-    if "--compiler-packages" in sys.argv:
-        compilerPackagesMain()
-        return
     if "--phase-unread" in sys.argv:
         phaseUnreadMain()
         return
