@@ -1,0 +1,16 @@
+--- a/internal/lower/cast_stop.go
++++ b/internal/lower/cast_stop.go
+@@ -323,13 +323,9 @@
+ 	if !l.checker.IsTypeAssignableTo(present, source) {
+ 		return ""
+ 	}
+-	const notField = ast.SymbolFlagsMethod | ast.SymbolFlagsGetAccessor | ast.SymbolFlagsSetAccessor
+ 	field := ""
+ 	for _, property := range l.checker.GetPropertiesOfType(present) {
+ 		inside := l.checker.GetPropertyOfType(source, property.Name)
+-		if property.Flags&notField != 0 || inside != nil && inside.Flags&notField != 0 {
+-			return ""
+-		}
+ 		if inside == nil || field != "" {
+ 			continue
+ 		}

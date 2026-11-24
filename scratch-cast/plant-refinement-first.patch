@@ -1,0 +1,17 @@
+--- a/internal/lower/cast_stop.go
++++ b/internal/lower/cast_stop.go
+@@ -285,12 +285,12 @@
+ 	case present.Flags()&checker.TypeFlagsUnion != 0:
+ 		cause, _ := l.unionTargetCause(source, present)
+ 		return cause
++	case l.refinedField(source, present) != "":
++		return castFieldRefinement
+ 	case present.Flags()&checker.TypeFlagsObject != 0 && l.checker.IsTypeAssignableTo(present, source) && l.widened(present, source, map[[2]*checker.Type]bool{}) != nil:
+ 		return castWidenedTarget
+ 	case present.Flags()&checker.TypeFlagsObject != 0 && !l.checker.IsTypeAssignableTo(present, source):
+ 		return castSideways
+-	case l.refinedField(source, present) != "":
+-		return castFieldRefinement
+ 	}
+ 	return castUnnamed
+ }
