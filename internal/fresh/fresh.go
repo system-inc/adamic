@@ -1088,6 +1088,9 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.IsCollectionIterator:
 		a.value(expression.Value)
 		return value{}
+	case ir.IsRegExpGroups:
+		a.value(expression.Value)
+		return value{}
 	case ir.PromiseValue:
 		return a.call([]value{a.value(expression.Value)}, ir.Promise)
 	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined, ir.JSONNull, ir.Null:

@@ -46,6 +46,7 @@ var rangeDispatches = []rangeUnionExample{
 	{ir.ErrorToString{}, "taken only where UnknownKind said the value is an Error"},
 	{ir.IsCollectionIterator{}, "reads the runtime object's own heap kind"},
 	{ir.IsGenerator{}, "reads the runtime object's own heap kind"},
+	{ir.IsRegExpGroups{}, "adamic_regexp_groups_is asks the heap kind first, then an object's shape, and JavaScript asks the real value's prototype"},
 	{ir.JSONStringify{}, "json_objects.c reads by the allocation's own representation bytes, an array's as an array's"},
 	{ir.OwnFunction{}, "taken only where UnknownKind said the value is an object, and reads by its own runtime shape"},
 	{ir.TypeOf{}, "adamic_union_typeof switches on the kind"},

@@ -20,6 +20,15 @@ const adamic_methods adamic_coded_error_methods = {0, NULL, NULL};
 // A host object's shape names these (adamic.h): empty, so a method lookup or an in test that walks
 // a shape's methods finds nothing in them.
 const adamic_methods adamic_host_methods = {0, NULL, NULL};
+// A RegExp match's groups object's shape names these instead (adamic.h): a host's to every reader
+// (adamic_host_shape), and to adamic_regexp_groups_is alone a groups object.
+const adamic_methods adamic_groups_methods = {0, NULL, NULL};
+
+bool adamic_regexp_groups_is(const void *value) {
+	if (value == NULL || ((const adamic_heap *)value)->kind != adamic_kind_object) return false;
+	const adamic_object *object = value;
+	return object->shape->methods == &adamic_groups_methods;
+}
 
 // All runtime error factories allocate through object_new. Marking their slots there also
 // covers factory decoration after allocation, before any program can write the error.

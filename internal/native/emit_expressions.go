@@ -72,6 +72,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_generator_is(%s)", e.value(expression.Value)))
 	case ir.IsCollectionIterator:
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_collection_iterator_is(%s)", e.value(expression.Value)))
+	case ir.IsRegExpGroups:
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_regexp_groups_is(%s)", e.value(expression.Value)))
 	case ir.RegExpNew:
 		for _, argument := range expression.Arguments {
 			e.value(argument)

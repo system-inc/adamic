@@ -348,6 +348,7 @@ var irSpecFields = map[string]irFieldPolicy{
 	"IsCollectionIterator.Value":         {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"IsGenerator.Value":                  {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"IsNull.Value":                       {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
+	"IsRegExpGroups.Value":               {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"IsNull.AlwaysFalse":                 {"bool", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"IsUndefined.Value":                  {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"IterableOf.Value":                   {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},

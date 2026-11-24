@@ -1037,6 +1037,10 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 		return "adamicIsGenerator(" + e.value(expression.Value) + ")"
 	case ir.IsCollectionIterator:
 		return "(" + e.value(expression.Value) + " instanceof AdamicCollectionIterator)"
+	case ir.IsRegExpGroups:
+		// A match's groups object is V8's own, whose prototype is null, and no object this backend makes has a
+		// null prototype, so the prototype tells groups from a program's object of the same type.
+		return "(Object.getPrototypeOf(" + e.value(expression.Value) + ") === null)"
 	case ir.PromiseValue:
 		name := "resolve"
 		if expression.Reject {

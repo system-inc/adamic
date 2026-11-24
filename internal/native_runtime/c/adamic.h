@@ -670,12 +670,32 @@ typedef struct adamic_error_json {
 void adamic_register_error_json(adamic_error_json *entry);
 const adamic_error_json *adamic_error_json_lookup(const adamic_shape *shape);
 // adamic_host_methods, another empty table, marks a runtime shape whose object's prototype on Node
-// isn't Object's, a Stats, an iterator, a match's groups object or memoryUsage's, so an in test, a
+// isn't Object's, a Stats, an iterator or memoryUsage's (a match's groups object has its own, below), so an in test, a
 // read it narrows and a run-time key read all stop on it (union.c's host_stop, #ey7aysy). The emitter
 // never writes it, so every object a program makes is plain, as on Node; an Error keeps its own
 // sentinel. A runtime shape left unmarked reads as plain, so host_shapes_test.go holds every runtime
 // shape to a table that classifies it against Node.
 extern const adamic_methods adamic_host_methods;
+// adamic_groups_methods, a third empty table, marks a RegExp match's groups object, whose prototype on
+// Node is null, so its toString, valueOf, hasOwnProperty and the rest of Object.prototype's methods
+// aren't there to call (#eksbz4c). The regular expression compiler writes it into each groups shape,
+// a literal's (internal/regexp/native.go) and a run-time pattern's (regexp_compile_runtime.c), and no
+// other shape names it. A groups object is a host's all the same: adamic_host_shape counts both tables,
+// and every reader that asks whether a shape is a host's asks it, so no road but the groups test below
+// tells the two apart. Every sentinel table is empty, so only its address tells it from the others,
+// and TestRuntimeSentinelsStayDistinctInRelease holds the four distinct in a ThinLTO release binary.
+extern const adamic_methods adamic_groups_methods;
+// adamic_host_shape says whether a shape is a host's (adamic_host_methods), a RegExp match's groups
+// among them (adamic_groups_methods): the one test of the host sentinel, union.c's host_object,
+// json_objects.c's stop and timers_impl.h's alike.
+static inline bool adamic_host_shape(const adamic_shape *shape) {
+	return shape->methods == &adamic_host_methods || shape->methods == &adamic_groups_methods;
+}
+// adamic_regexp_groups_is says whether a value is a RegExp match's groups object, by its shape's methods
+// table, never its static type, since a program's own object can carry the groups type: a call of
+// toString, toLocaleString, valueOf, hasOwnProperty or propertyIsEnumerable on a receiver whose type
+// admits groups throws Node's TypeError when it is (ir.IsRegExpGroups, lower/prototype.go).
+bool adamic_regexp_groups_is(const void *value);
 // adamic_host_stop stops, in the runtime value form naming the key, when the value is a host object
 // (union.c): every reader of a value's names by a key calls it before reading one.
 void adamic_host_stop(const adamic_heap *value, const adamic_string *key);
