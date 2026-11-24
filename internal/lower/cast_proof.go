@@ -47,6 +47,9 @@ type castProof struct {
 	// untagged is a cast from a union no literal tag tells apart to one plain object, a member or narrower
 	// (untaggedUnionArm): a checked view of the target with no test at the cast (untaggedUnionCast).
 	untagged bool
+	// dictionaryView is a cast from object to a dictionary of unknown values (dictionaryView,
+	// cast_dictionary_view.go): a test at the cast that the value is a record whose values are references.
+	dictionaryView bool
 }
 
 // castRepair is the fix a refused cast names, by file kind. In .a a cast to a union member is refused too
@@ -320,6 +323,13 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 		}
 		return castProof{classes: targets}, nil
 	}
+	// object with undefined beside it, cast to a dictionary of unknown values that keeps undefined, is the checked
+	// dictionary view, taken where unionCastCause would answer castIndexSignature: absentArm wants two members beside
+	// undefined, and the view never more than one. dictionaryView's own tests come first, since they turn away
+	// nearly every cast before the cause is asked.
+	if source.Flags()&checker.TypeFlagsUnion != 0 && l.dictionaryView(node, source, target) && l.unionCastCause(members, target) == castIndexSignature {
+		return castProof{dictionaryView: true}, nil
+	}
 	if present := l.absentArm(source, target); present != nil {
 		proof, err := l.unionMemberProof(present, target, stop)
 		proof.absent = err == nil
@@ -372,6 +382,9 @@ func (l *lowering) castRoad(node *ast.Node, source, target *checker.Type, stop f
 		}
 
 		cause, detail := l.objectCastCause(source, target), ""
+		if cause == castIndexSignature && l.dictionaryView(node, source, target) {
+			return castProof{dictionaryView: true}, nil
+		}
 		switch cause {
 		case castUnionTarget, castWidenedMember, castIntersectionMember:
 			cause, detail = l.unionTargetCause(source, l.checker.GetNonNullableType(target))
