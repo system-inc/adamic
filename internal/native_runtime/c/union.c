@@ -670,7 +670,8 @@ static adamic_string *closure_node_name(const adamic_closure *closure) {
 
 // host_object is the one predicate for a value whose prototype on Node isn't Object's, a program
 // class's instance aside (#ey7aysy, Adamic's ruling on #0sps03r): an object with no class, not a
-// record, whose shape's methods are adamic_host_methods (adamic.h). The runtime marks each of its own
+// record, whose shape is a host's (adamic_host_shape: its methods are adamic_host_methods, or a match's
+// groups object's adamic_groups_methods, adamic.h). The runtime marks each of its own
 // shapes whose object's prototype on Node is another's, a Stats, a Dirent, an iterator, a match's
 // groups object (whose is null) or process.memoryUsage()'s, and host_shapes_test.go holds every
 // runtime shape to that marking. The emitter and the JSON decoder never write the sentinel, so an
@@ -678,7 +679,7 @@ static adamic_string *closure_node_name(const adamic_closure *closure) {
 // sentinel and is carved out below. The JavaScript backend's adamicDynamicGet names the same values
 // by their prototype (dynamic_keyed.go).
 static bool host_object(const adamic_object *object) {
-	return object->class == NULL && !adamic_record_is(object) && object->shape->methods == &adamic_host_methods;
+	return object->class == NULL && !adamic_record_is(object) && adamic_host_shape(object->shape);
 }
 
 // prototype_value is what an object inherits from Object.prototype under the key, as an immortal

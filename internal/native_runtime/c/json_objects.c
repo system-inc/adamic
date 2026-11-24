@@ -99,7 +99,7 @@ static const adamic_json_schema *describe_object(const adamic_object *object) {
 	if (adamic_record_is(object)) stop("NotYet: JSON.stringify a record held by an object");
 	if (object->tuple) stop("NotYet: JSON.stringify a tuple held by an object");
 	const adamic_shape *shape = object->shape;
-	if (shape->methods == &adamic_host_methods) stop("NotYet: JSON.stringify a runtime library value (a Date, a Stats or another whose own fields aren't Node's)");
+	if (adamic_host_shape(shape)) stop("NotYet: JSON.stringify a runtime library value (a Date, a Stats or another whose own fields aren't Node's)");
 	const adamic_error_json *error = NULL;
 	if (adamic_error_is(object)) {
 		// An inherited empty message is held as #message by absent_message_shape; writing it
