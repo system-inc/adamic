@@ -730,6 +730,8 @@ type lowering struct {
 	// writtenAccessorNames is every name a getter or setter in the program has, "" for a computed one
 	// (enum_tag_flow.go's accessorName). accessorNames below holds getters alone.
 	writtenAccessorNames map[string]bool
+	// enumTagViewProbes memoizes the #x2cjvy9 probe's view registrations (enumTagViewProbe), never for landing.
+	enumTagViewProbes map[enumTagViewKey]error
 	// closedKindAnswers is closedKinds' answer by type and field, and closedKindDeclared and closedKindBuilt
 	// the program's declared types and build sites it judges each type against, found once; closedKindNewOnly
 	// is each function declaration with a declared this, and whether every use of it is a new callee or a
