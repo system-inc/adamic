@@ -532,7 +532,7 @@ func (e *emitter) prepareObjectMetadata() {
 		case ir.DynamicKeyedProperty:
 			needs.dynamic, needs.keyed = true, true
 		case ir.Property:
-			needs.fieldTypes = needs.fieldTypes || expression.View != "" || expression.MethodTruthiness
+			needs.fieldTypes = needs.fieldTypes || expression.View != "" || expression.MethodTruthiness || expression.SlotDefined
 			if expression.Readiness != "" || expression.View != "" {
 				needs.readiness[expression.Name] = true
 			}

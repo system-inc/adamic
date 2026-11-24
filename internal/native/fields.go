@@ -52,7 +52,7 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 	for _, names := range [][]string{
 		{"heapUsed"}, {"name", "entryType", "startTime", "duration"}, {"setBlocking"}, {"timeOrigin", "now", "mark", "measure", "clearMarks", "clearMeasures"},
 		{"kind", "path"}, {"name", "type"},
-		{"name", "message", "code"}, {"name", "message", "code", "syscall", "path", "errno"}, {"_fsFileTime"},
+		{"name", "message", "code"}, {"name", "message", "code", "syscall", "path", "errno"}, {"#time"},
 		// node_fs_file.c's Stats, Node's fourteen own numbers and then its four Dates (#6xfkdwj).
 		{"dev", "mode", "nlink", "uid", "gid", "rdev", "blksize", "ino", "size", "blocks", "atimeMs", "mtimeMs", "ctimeMs", "birthtimeMs", "atime", "mtime", "ctime", "birthtime"},
 		{"close", "on"},

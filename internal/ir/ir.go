@@ -615,8 +615,13 @@ type (
 		// (docs/0.1.md), so only a callee is one: the CallClosure's Closure, or the field a narrowing's
 		// Defined holds there (MethodCallee).
 		Method bool
-		// MethodTruthiness observes a structural method slot as a boolean without detaching it.
+		// MethodTruthiness observes a structural method slot as a boolean without detaching it, and a
+		// required field read through a checked view only to test it (lower's viewFieldPresence): the
+		// value's own slot, its class's method or a record's own key, absence answering false.
 		MethodTruthiness bool
+		// SlotDefined observes, as MethodTruthiness does, whether the slot holds anything but undefined,
+		// absence answering false: a presence test's (value as T).f !== undefined (viewFieldPresence).
+		SlotDefined bool
 		// NotRecord says the read runs where a storage test found neither a record nor a class instance
 		// (lower's weakFieldRead, in its fixed branch): its receiver is proven plain by its value, as
 		// PlainReceivers proves one by its type, so a bare-name entry doesn't check it (Program.CheckedRead).
@@ -1240,7 +1245,7 @@ func (c Conditional) Type() Type {
 }
 func (ObjectLiteral) Type() Type { return Object }
 func (p Property) Type() Type {
-	if p.Optional && !p.MethodTruthiness {
+	if p.Optional && !p.MethodTruthiness && !p.SlotDefined {
 		return Maybe(p.Of)
 	}
 	return p.Of
