@@ -1,0 +1,22 @@
+// Keep both a fresh getter string and a field string past several reads and the receiver's scope.
+class Reader {
+	readonly data: string;
+	constructor(value: number) { this.data = String(value); }
+	get fresh(): string { return this.data + '!'; }
+}
+function read(value: object, key: string): unknown {
+	return Reflect.get(Object(value), key, value);
+}
+function exercise(value: number): string {
+	const reader = new Reader(value);
+	let data = '';
+	let fresh = '';
+	for (let index = 0; index < 4; index++) {
+		const field = read(reader, 'data');
+		const made = read(reader, 'fresh');
+		if (typeof field === 'string') data = field;
+		if (typeof made === 'string') fresh = made;
+	}
+	return data + ' ' + fresh;
+}
+console.log(exercise(42));

@@ -46,7 +46,6 @@ var DynamicKeyedStops = []DynamicKeyedStop{
 	// narrower words than a host object's.
 	{"StatsField", "this Stats field isn't held natively yet"},
 	{"ObjectLiteralGetter", "an object literal's getter isn't read by a run-time key yet"},
-	{"SetterOnly", "a setter without a getter isn't read by a run-time key yet"},
 	{"Method", "a method isn't read by a run-time key yet"},
 	// A class instance's constructor is its class, a value the read can't find natively: an instance
 	// carries its class's metadata, never the class object the program holds.

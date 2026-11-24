@@ -265,8 +265,7 @@ func (l *lowering) viewKeyedRead(node *ast.Node, object ir.Expression) (ir.Expre
 	if key.Type() != ir.String {
 		return nil, true, l.notYet(access.ArgumentExpression, "a readonly view read by a key that isn't a string (symbol keys and key coercion)")
 	}
-	// The read can call a class getter the key names, from inside the runtime, so it arms the same
-	// program-wide getter judgment Reflect.get's read does (checkDynamicKeyedGetters).
+	// Keep this road's program-wide syntax guard. A Reflect.get elsewhere does not relax it.
 	if err := l.checkDynamicKeyedGetterSyntax(node); err != nil {
 		return nil, true, err
 	}

@@ -586,6 +586,8 @@ func canThrow(program *ir.Program, instruction *Instruction, lengths bool) bool 
 				throws = throws || operation == "exit" || operation == "setExitCode" || operation == "cwd" || operation == "chdir" || operation == "measure"
 			case reflect.TypeOf(ir.NodeHostCall{}):
 				throws = throws || value.Interface().(ir.NodeHostCall).Throws
+			case reflect.TypeOf(ir.DynamicKeyedProperty{}):
+				throws = throws || program.DynamicKeyedMayThrow(value.Interface().(ir.DynamicKeyedProperty))
 			case callType:
 				if program.CallMayThrow(value.Interface().(ir.Call)) {
 					throws = true

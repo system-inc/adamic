@@ -1592,7 +1592,12 @@ type (
 
 	// Throw throws Value, an Error: to the innermost Try around it, or out of the function, whose
 	// caller passes it on the same way, or, out of every function, as a panic of String(Value).
-	Throw struct{ Value Expression }
+	Throw struct {
+		Value Expression
+		// DirectError is lowering evidence that the source throw directly constructs a built-in Error.
+		// The getter walk reads this evidence after lowering.
+		DirectError bool
+	}
 
 	// Try runs Body; if a throw leaves it, Catch runs with the error in CatchLocal (-1 when the catch
 	// binds nothing). Finally runs after either, however they're left, and a throw neither caught nor
