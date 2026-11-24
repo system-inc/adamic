@@ -4,6 +4,11 @@
         "internal/load/testdata/0.1/refuse/**",
         "stage1/**/gaps/**",
         "review/**",
+        {
+            "pattern": "stage3/drivers/tsc/corpus/**",
+            "reason": "TypeScript 6.0.3's own test inputs from tests/cases/compiler with their upstream baselines and Node goldens (stage3/drivers/tsc/README.md): foreign code the diagnostics oracle feeds to tsc byte for byte, so cohere neither checks nor formats it, as with vendored code (Kirk's cohere-zero ask, Nov 24, #ybkwr91).",
+            "kind": "input"
+        },
         "internal/oracle/testdata/records_buckets/**",
         "internal/lower/testdata/input-spread/*_array.a",
         {
