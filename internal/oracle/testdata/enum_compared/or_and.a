@@ -1,0 +1,17 @@
+// a2 (#snypn8c, c3): an || of comparisons, one under an &&, proves both members, as parseImportAttributes'
+// caller's `currentToken === WithKeyword || (currentToken === AssertKeyword && ...)` does (parser.ts:8417).
+enum K { A, B, C, D }
+function kindOf(n: number): K {
+	return n;
+}
+function take(x: K.A | K.B): string {
+	return "took " + String(x);
+}
+function attributes(n: number, flag: boolean): string {
+	const t = kindOf(n);
+	if (t === K.A || (t === K.B && flag)) {
+		return take(t);
+	}
+	return "skip " + String(t);
+}
+console.log(attributes(0, false) + ", " + attributes(1, true) + ", " + attributes(1, false) + ", " + attributes(2, true) + ", " + attributes(7, true));

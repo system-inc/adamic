@@ -1,4 +1,5 @@
-// The open value narrowed by === to one member (#egmxf20): main's enum-literal rule refuses it too.
+// The open value compared by === with one member before it's written (#egmxf20): the comparison of a const
+// local proves the member (enumComparedMember, #snypn8c c3), so it lowers.
 enum Kind { Circle, Square }
 interface Circle { readonly kind: Kind.Circle; readonly radius: number }
 interface Square { readonly kind: Kind.Square; readonly side: number }

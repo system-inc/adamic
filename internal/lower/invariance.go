@@ -1776,8 +1776,10 @@ func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual 
 	// `CompilerOptions | BuilderFileEmit`, is open.
 	targetLiteral := (contextual.Flags()&checker.TypeFlagsNumberLiteral != 0 || l.numericEnum(l.enumIdentity(contextual))) && !l.openEnumSlot(contextual)
 	if targetLiteral {
+		// A const alias of a member proves it, and so does the program's own comparison of a const local
+		// before the write (enumComparedMember, Adamic's ruling of Nov 19 on #snypn8c).
 		if declared := l.enumStoredType(node); declared != nil {
-			if l.openNumericEnumType(declared) && !l.enumMemberOrigin(node, l.enumIdentity(declared), map[*ast.Node]bool{}) {
+			if l.openNumericEnumType(declared) && !l.enumMemberOrigin(node, l.enumIdentity(declared), map[*ast.Node]bool{}) && !l.enumComparedMember(node, l.enumIdentity(declared), contextual) {
 				return &widening{source: declared, target: contextual, enum: true}
 			}
 		}

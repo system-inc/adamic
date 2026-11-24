@@ -257,6 +257,7 @@ var symbolComparers = map[string]symbolComparer{
 	"directBindMethodRead":              {1, "a bind call's receiver and its first argument, both expressions"},
 	"directPredicateCallee":             {1, "a call's callee, against the predicate declaration's own name"},
 	"enumMemberOrigin":                  {1, "an enum member's enum declaration name, against the enum it must belong to"},
+	"identityMember":                    {1, "an enum member's enum declaration name, against the enum it must belong to, as enumMemberOrigin's"},
 	"kindSetBody.parameterRead":         {1, "a bare identifier used as an expression receiver or nullish guard, never a shorthand name"},
 	"kindSetBody.read":                  {1, "a bare alias expression in a comparison, never a shorthand name"},
 	"evolvingObject":                    {1, "a binary expression's left operand at :32; a shorthand write is :49's, through valueSymbol"},
