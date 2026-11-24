@@ -55,6 +55,21 @@ func TestWriteUnderStaysInItsDirectory(t *testing.T) {
 
 // The report counts every trap by phase, kind and reason, and counts the traps lower couldn't place in a unit, which
 // traps.md names as a measurement gap.
+// A site under the root's directory is written relative to it; one outside it, or with no path, stays as it came.
+// Mutant: relativeSites returning traps unchanged, red.
+func TestSitesAreRelativeToTheRoot(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	placed := relativeSites(root, []ir.Trap{
+		{Site: filepath.Join(root, "src", "a.ts") + ":3:5"},
+		{Site: "/elsewhere/b.ts:1:1"},
+		{Site: "a.ts:2:2"},
+	})
+	if placed[0].Site != "src/a.ts:3:5" || placed[1].Site != "/elsewhere/b.ts:1:1" || placed[2].Site != "a.ts:2:2" {
+		t.Fatalf("relativeSites: %+v", placed)
+	}
+}
+
 func TestReportCountsAndNamesTheGap(t *testing.T) {
 	t.Parallel()
 	traps := []ir.Trap{
@@ -68,7 +83,13 @@ func TestReportCountsAndNamesTheGap(t *testing.T) {
 		counted.ByReason["Refused: sort without a comparator"] != 2 || counted.Unplaced != 1 {
 		t.Fatalf("summarize: %+v", counted)
 	}
+	if counted.Findings != findingsRule {
+		t.Fatalf("traps.json must open with the findings rule: %q", counted.Findings)
+	}
 	text := markdown(counted)
+	if !strings.HasPrefix(text, "Findings: "+findingsRule+".") {
+		t.Errorf("traps.md must open with the findings rule:\n%s", text)
+	}
 	for _, want := range []string{"4 traps, 1 of them unplaced", ", 1 of them suspect", "## Body, 3", "| 2 | Refused | sort without a comparator | a.a:3:5 |", "## checkSlotWrites, 1"} {
 		if !strings.Contains(text, want) {
 			t.Errorf("traps.md lacks %q:\n%s", want, text)
@@ -142,7 +163,7 @@ func TestTheDoorReportsATrapAndTheBinaryStopsAtIt(t *testing.T) {
 	if err := json.Unmarshal(data, &counted); err != nil {
 		t.Fatal(err)
 	}
-	if counted.Total != 1 || counted.Traps[0].Phase != "Body" || counted.Traps[0].Kind != "Refused" || !strings.Contains(counted.Traps[0].Site, "two.a:6:") {
+	if counted.Total != 1 || counted.Traps[0].Phase != "Body" || counted.Traps[0].Kind != "Refused" || !strings.HasPrefix(counted.Traps[0].Site, "two.a:6:") {
 		t.Fatalf("traps.json: %s", data)
 	}
 	binary := exec.Command(filepath.Join(output, "firstlink"))
