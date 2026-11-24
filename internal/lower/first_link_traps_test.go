@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"errors"
+	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -283,5 +284,48 @@ function isSizedLie(n: Loose): n is Sized { return n !== undefined; }
 	}
 	if len(units) != 2 || units[0] != "main.ts show" || units[1] != "main.ts show2" {
 		t.Errorf("checkRecordGuardedReads rows in units %q, want one in main.ts show, then one in main.ts show2; all rows: %+v", units, firstLinkLocalSites(program))
+	}
+}
+
+// An error that's neither a NotYet nor a Refused is a row of kind "Error" in a first-link lowering, never the
+// end of it, and the rows after it are Suspect; a context's cancellation is still returned. No source road
+// reaches such an error honestly (each sits behind a checker guarantee or is a compiler bug), so this drives
+// a real first-link lowering's catch and pass with one: a body step whose lowering returns it traps its
+// function with the error's words at the function, and a pass that returns it records a row with no unit and
+// goes on.
+func TestFirstLinkTrapPlainErrorIsARow(t *testing.T) {
+	t.Parallel()
+	loaded, err := load.Load([]string{writeAgreementSource(t, "main.a", firstLinkTwoFunctions)})
+	if err != nil {
+		t.Fatalf("Load: %v", err)
+	}
+	entry := loaded.Files()[0]
+	check, release := loaded.Checker(context.Background(), entry)
+	t.Cleanup(release)
+	built, err := lowerWithElementKey(&viewElementKey{}, loaded, check, entry, nil, false, false, ModuleFormatEcmaScript, true, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	first := entry.Statements.Nodes[0]
+	stub, trapped, err := built.firstLinkCatch("Body", first, func() error { return errors.New("lower: compiler bug: a plain error") })
+	if err != nil || !trapped || !stub.Trap {
+		t.Fatalf("catch of a plain error: stub %+v trapped %v err %v; want a trap and no error", stub, trapped, err)
+	}
+	row := built.traps[len(built.traps)-1]
+	row.Site = firstLinkLocalSite.ReplaceAllString(row.Site, "$1")
+	if want := (ir.Trap{Kind: "Error", Reason: "lower: compiler bug: a plain error", Site: "main.a:1:1", Unit: "main.a first", Phase: "Body"}); row != want {
+		t.Fatalf("the plain error's row: got %+v, want %+v", row, want)
+	}
+	if err := built.firstLinkPass("checkSomething", false, errors.New("lower: compiler bug: a pass's plain error"), nil); err != nil {
+		t.Fatalf("a pass's plain error: got %v, want it recorded and nil", err)
+	}
+	row = built.traps[len(built.traps)-1]
+	if want := (ir.Trap{Kind: "Error", Reason: "lower: compiler bug: a pass's plain error", Phase: "checkSomething", Suspect: true}); row != want {
+		t.Fatalf("the pass's plain error's row: got %+v, want %+v, Suspect after the first error", row, want)
+	}
+	rows := len(built.traps)
+	_, trapped, err = built.firstLinkCatch("Body", first, func() error { return fmt.Errorf("lowering stopped: %w", context.Canceled) })
+	if trapped || !errors.Is(err, context.Canceled) || len(built.traps) != rows {
+		t.Fatalf("a cancellation: trapped %v err %v rows %d, want it returned with no row (%d rows before)", trapped, err, len(built.traps), rows)
 	}
 }

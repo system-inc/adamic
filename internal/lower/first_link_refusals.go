@@ -14,7 +14,7 @@ import (
 // unit is never judged again, by the registry's walk or by a pre-check, since its code never lowers. A
 // directive, a pragma or any other stop no unit holds is a row with no unit, a measurement gap, and the
 // judging goes on past it. Its rules and its order are refuse's own: only what happens at a stop differs.
-// An error that's neither a NotYet nor a Refused is returned, as refuse returns it.
+// Only a context's cancellation or deadline is returned, as refuse returns it.
 func (l *lowering) firstLinkRefuse(module *ast.SourceFile) error {
 	// As refuse words them, each one, where refuse stops at the first.
 	for _, directive := range module.CommentDirectives {
@@ -51,7 +51,8 @@ func (l *lowering) firstLinkRefusalGap(stop error) {
 // first stop and names it only by its Where, so each stop is placed (firstLinkPlace), its unit trapped, and
 // the check run again, whose walk passes over the trapped unit. A stop that can't be placed, or that lies
 // in a unit trapped already, which the check doesn't pass over, ends the check with a row with no unit, so
-// the loop is bounded by the module's units. A Go panic in the check ends it the same way.
+// the loop is bounded by the module's units. A Go panic in the check, or an error that's neither a NotYet
+// nor a Refused, which names no site to place, ends it the same way.
 func (l *lowering) firstLinkPrecheck(module *ast.SourceFile, check func(*ast.SourceFile) error) error {
 	for {
 		var recovered any
@@ -67,7 +68,7 @@ func (l *lowering) firstLinkPrecheck(module *ast.SourceFile, check func(*ast.Sou
 			return err
 		}
 		var unit *ast.Node
-		if recovered == nil {
+		if row.Kind != "Panic" && row.Kind != "Error" {
 			unit = l.firstLinkPlace(module, row.Site)
 		}
 		if unit == nil {
@@ -119,8 +120,8 @@ type firstLinkStop struct {
 // in its unit traps the unit first, as refuse prefers the stronger one in the module.
 func (l *lowering) firstLinkRefusalWalk(module *ast.SourceFile) error {
 	var deferred []firstLinkStop
-	// stopped is an error that's no unit's stop, which ends the walk as it ends refuse's. leaving is the unit
-	// just trapped, which the walk leaves without visiting more of it.
+	// stopped is a context's cancellation or deadline, which ends the walk as it ends refuse's. leaving is the
+	// unit just trapped, which the walk leaves without visiting more of it.
 	var stopped error
 	var leaving *ast.Node
 	var visit ast.Visitor
@@ -186,7 +187,7 @@ func (l *lowering) firstLinkRefusalWalk(module *ast.SourceFile) error {
 			// The unit trapped lies outside the statement the walk was in, so the rest of the statement went
 			// unjudged, and the statement is trapped whole.
 			if _, trapped := l.firstLinkTrappedAt(statement); !trapped {
-				l.firstLinkRecord(ir.Trap{Kind: "Gap", Reason: "the refusal walk left " + l.firstLinkUnitName(leaving) + ", which is outside this statement", Site: l.program.Where(statement), Unit: l.firstLinkUnitName(statement), Phase: "Refusal", Suspect: l.firstLinkPanicked || l.firstLinkRewriteSkipped}, statement)
+				l.firstLinkRecord(ir.Trap{Kind: "Gap", Reason: "the refusal walk left " + l.firstLinkUnitName(leaving) + ", which is outside this statement", Site: l.program.Where(statement), Unit: l.firstLinkUnitName(statement), Phase: "Refusal", Suspect: l.firstLinkSuspect || l.firstLinkRewriteSkipped}, statement)
 			}
 			leaving = nil
 		}

@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"strings"
@@ -126,9 +127,9 @@ func (l *lowering) signatureTrap(node *ast.Node, symbol *ast.Symbol) error {
 	return l.notYet(node, "a reference to "+symbol.Name+", whose signature trapped: "+message)
 }
 
-// firstLinkCatch runs one step of a unit's lowering. When it stops, by a NotYet, a Refused or a Go panic,
-// it records the row with phase, traps unit, and returns its stub. An error that's neither a NotYet nor a
-// Refused is no unit's stop, so it isn't trapped, and it's returned as main would return it.
+// firstLinkCatch runs one step of a unit's lowering. When it stops, by a NotYet, a Refused, any other error
+// or a Go panic, it records the row with phase, traps unit, and returns its stub. A context's cancellation
+// or deadline is returned, as main would return it.
 func (l *lowering) firstLinkCatch(phase string, unit *ast.Node, run func() error) (stub ir.Panic, trapped bool, err error) {
 	// The lowering puts these back when it returns an error, but not when it panics.
 	outer, outerThis, outerIndex, outerClosures := l.function, l.this, l.functionIndex, l.closures
@@ -148,10 +149,12 @@ func (l *lowering) firstLinkCatch(phase string, unit *ast.Node, run func() error
 }
 
 // firstLinkRow is the row of a stop, by its error or by the Go panic recovered while it ran: Unit names
-// unit, or is empty when the stop has none, and a panic, which carries no site of its own, is at site. An
-// error that's neither a NotYet nor a Refused is no row.
+// unit, or is empty when the stop has none. An error that's neither a NotYet nor a Refused, a compiler bug
+// among them, is a stop of kind "Error" in a first-link lowering, a wall the run names rather than one that
+// ends it. A panic or such an error carries no site of its own, so it's at site. A context's cancellation or
+// deadline is no stop, and no row, so the caller returns it.
 func (l *lowering) firstLinkRow(recovered any, err error, phase string, site, unit *ast.Node) (ir.Trap, bool) {
-	row := ir.Trap{Phase: phase, Suspect: l.firstLinkPanicked || l.firstLinkRewriteSkipped}
+	row := ir.Trap{Phase: phase, Suspect: l.firstLinkSuspect || l.firstLinkRewriteSkipped}
 	var notYet *NotYet
 	var refused *Refused
 	switch {
@@ -164,8 +167,13 @@ func (l *lowering) firstLinkRow(recovered any, err error, phase string, site, un
 		row.Kind, row.Reason, row.Site = "NotYet", notYet.What, notYet.Where
 	case errors.As(err, &refused):
 		row.Kind, row.Reason, row.Fix, row.Site = "Refused", refused.What, refused.Fix, refused.Where
-	default:
+	case err == nil || errors.Is(err, context.Canceled) || errors.Is(err, context.DeadlineExceeded):
 		return ir.Trap{}, false
+	default:
+		row.Kind, row.Reason = "Error", err.Error()
+		if site != nil {
+			row.Site = l.program.Where(site)
+		}
 	}
 	if unit != nil {
 		row.Unit = l.firstLinkUnitName(unit)
@@ -178,8 +186,8 @@ func (l *lowering) firstLinkRow(recovered any, err error, phase string, site, un
 // and its stub is never used.
 func (l *lowering) firstLinkRecord(row ir.Trap, unit *ast.Node) ir.Panic {
 	l.traps = append(l.traps, row)
-	if row.Kind == "Panic" {
-		l.firstLinkPanicked = true
+	if row.Kind == "Panic" || row.Kind == "Error" {
+		l.firstLinkSuspect = true
 	}
 	if unit == nil {
 		return ir.Panic{}

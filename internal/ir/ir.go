@@ -138,7 +138,8 @@ type Program struct {
 // what stopped it, where, and in which phase. A row is a measurement, never a verdict on the program.
 type Trap struct {
 	// Kind is "Refused" or "NotYet", the stop's own type, "Panic" for a Go panic recovered while the unit
-	// lowered, or "Gap" for a stretch of the program lowering couldn't judge, whose Reason says which.
+	// lowered, "Error" for any other error, a compiler bug among them, or "Gap" for a stretch of the
+	// program lowering couldn't judge, whose Reason says which.
 	Kind string
 	// Reason is the stop's What, as main would have stopped with it, or the recovered panic's value.
 	Reason string
@@ -156,9 +157,9 @@ type Trap struct {
 	// lowered: a pass's Go name ("findCycles"), "unlowerable", "asyncPayloadFailures", "RelationOverflow"
 	// or "ProgramRegion".
 	Phase string
-	// Suspect says a recovered Go panic was trapped earlier in the same lowering. A panic can leave
-	// lowering's state part written, so this row may be that panic's echo rather than a wall of its own. A
-	// row recorded after a whole-program pass skipped a rewrite (Program.TrapRewritesSkipped) is Suspect too.
+	// Suspect says a recovered Go panic or an "Error" was trapped earlier in the same lowering. Either can
+	// leave lowering's state part written, so this row may be its echo rather than a wall of its own. A row
+	// recorded after a whole-program pass skipped a rewrite (Program.TrapRewritesSkipped) is Suspect too.
 	Suspect bool
 	// Echo says a whole-program pass stopped inside a unit trapped already, whose leftover state may be
 	// what it stopped at: no wall of its own, so the report counts it apart.

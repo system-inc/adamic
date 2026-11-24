@@ -25,7 +25,8 @@ type firstLinkMainRange struct {
 // that rewrites the IR never runs twice, since that could apply its rewrite twice, so its work past the
 // stop is skipped and named in Program.TrapRewritesSkipped, and every row after it is Suspect. Any other
 // pass runs again by run, and its next stop is taken the same way. A nil run is a stop nothing can run
-// again. An error that's neither a NotYet nor a Refused is returned.
+// again. An error that's neither a NotYet nor a Refused is a row of kind "Error" with no unit, and the
+// rest of the pass is skipped. Only a context's cancellation or deadline is returned.
 func (l *lowering) firstLinkPass(name string, rewrites bool, err error, run func() error) error {
 	if !l.firstLinkTraps {
 		return err
@@ -35,6 +36,12 @@ func (l *lowering) firstLinkPass(name string, rewrites bool, err error, run func
 		row, stopped := l.firstLinkRow(nil, err, name, nil, nil)
 		if !stopped {
 			return err
+		}
+		if row.Kind == "Error" {
+			// It names no site to place, and running the pass again could meet it again.
+			l.firstLinkRecord(row, nil)
+			l.firstLinkRewriteSkip(name, rewrites)
+			return nil
 		}
 		unit := l.firstLinkPassUnit(row.Site)
 		_, echo := l.firstLinkTrappedAt(unit)

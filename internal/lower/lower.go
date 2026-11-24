@@ -481,11 +481,12 @@ type lowering struct {
 
 	// firstLinkTraps is Options.FirstLinkTraps: a unit that stops lowers as a trap instead
 	// (first_link_traps.go). traps are the rows its traps recorded, in the order met, which the lowering
-	// hands back as its program's Traps, and firstLinkPanicked says one of them was a recovered Go panic,
-	// so each row after it is Suspect.
-	firstLinkTraps    bool
-	firstLinkPanicked bool
-	traps             []ir.Trap
+	// hands back as its program's Traps, and firstLinkSuspect says one of them was a recovered Go panic or
+	// an error that's neither a NotYet nor a Refused, either of which may leave lowering's state part
+	// written, so each row after it is Suspect.
+	firstLinkTraps   bool
+	firstLinkSuspect bool
+	traps            []ir.Trap
 	// firstLinkTrapped is every unit trapped, by its node, and firstLinkStubs the trap each lowers as
 	// (first_link_units.go). signatureTraps is each module function whose signature trapped, by its symbol,
 	// with its trap's message, which a reference to it stops naming (signatureTrap).
