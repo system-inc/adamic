@@ -26,7 +26,7 @@ func TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes(t *testing.T) {
 		first, last int
 	}{
 		{"performance_core_adapted.txt", 7, 29},
-		{"performance_core_timing_facade.txt", 62, 89},
+		{"performance_core_hooks.txt", 62, 88},
 	}
 	for _, pin := range pins {
 		t.Run(pin.file, func(t *testing.T) {
@@ -36,7 +36,7 @@ func TestPerformanceCoreYewmv46PinsEqualAdaptedProductBytes(t *testing.T) {
 			}
 			actual := bytes.Join(lines[pin.first-1:pin.last], nil)
 			// Reads: internal/lower/testdata/host_binding/performance_core_adapted.txt
-			// Reads: internal/lower/testdata/host_binding/performance_core_timing_facade.txt
+			// Reads: internal/lower/testdata/host_binding/performance_core_hooks.txt
 			expected, err := os.ReadFile(filepath.Join(repositoryFromLane, "internal/lower/testdata/host_binding", pin.file))
 			if err != nil {
 				t.Fatal(err)

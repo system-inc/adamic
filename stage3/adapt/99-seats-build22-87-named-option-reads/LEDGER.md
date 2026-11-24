@@ -1,1 +1,0 @@
-- **JavaScript-changing named option reads (#bbssdcy, family 87, Nov 22 and 23, 2026):** 99-seats-build22-87-named-option-reads holds compilerOptions once in each of two moduleNameResolver.ts helpers and reads baseUrl, then paths where present, through the existing checked read path. The receiver audit covers tsc's own options producers. Rulings :294 and :305.

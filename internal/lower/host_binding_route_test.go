@@ -67,9 +67,7 @@ func tscPerformanceDeclarations(t *testing.T) string {
 	return string(text)
 }
 
-// tscPerformanceHooks is tryGetPerformanceHooks as the tree stands before 99-seats-build22-121-timing-facade.
-// The adapted-tree guard pins the facade's body in performance_core_timing_facade.txt.
-// This fixture holds tsc's three roads past the declaration (Language on #yewmv46): the binding into an
+// tscPerformanceHooks is the adapted file's tryGetPerformanceHooks, lines 62 to 88, byte for byte. It holds tsc's three roads past the declaration (Language on #yewmv46): the binding into an
 // object literal, destructured back out, then seen as PerformanceTime, a base interface no row
 // registers, at `hooks.performanceTime = performance`. tscPerformanceGetter stands before it.
 func tscPerformanceHooks(t *testing.T) string {
