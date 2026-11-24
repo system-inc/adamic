@@ -13,7 +13,10 @@ import (
 // no CheckedCast, and its view marked untagged. A source holding undefined beside two or more such members
 // takes absentArm's presence check first, whose message is the only cast message. tsc's shapes: a member of
 // PackageJsonInfo | MissingPackageJsonInfo, Node out of FileReference | Node, and an Identifier out of
-// Declaration | Expression, whose kind is open on both. Mutant: untaggedUnionArm returning false reds every row.
+// Declaration | Expression, whose kind is open on both. A union target (union target (a), #b5w3ycg) is a view of
+// the union read through the fields every target member declares in one representation: two members of three,
+// and tsc's objectFlags read through ObjectType | UnionType (utilities.ts:8280). Mutants: untaggedUnionArm returning
+// false reds every row; its gate held to one target again reds the two union-target rows alone.
 func TestUntaggedUnionCastLowers(t *testing.T) {
 	t.Parallel()
 	members := "interface A { readonly a: number; readonly shared: string } interface B { readonly b: string; readonly shared: string } "
@@ -27,6 +30,12 @@ func TestUntaggedUnionCastLowers(t *testing.T) {
 		{"a member beside undefined", members + "function f(x: A | B | undefined): A { return x as A; } console.log(String(f({ a: 1, shared: 's' }).a));", true},
 		// An optional literal field is no tag (fieldLiteral answers nil for kind?: 'a'), so the union takes this arm,
 		// held by the checked reads; recorded here so a ruling either way moves this row (Lower's should).
+		{"a union target", members + "interface C { readonly c: boolean } function f(x: A | B | C): string { return (x as A | B).shared; } console.log(f({ a: 1, shared: 's' }));", false},
+		{"tsc's objectFlags through a union target", "interface Type { readonly flags: number } interface ObjectType extends Type { readonly objectFlags: number } interface UnionType extends Type { readonly types: readonly Type[]; readonly objectFlags: number } interface IntrinsicType extends Type { readonly intrinsicName: string } function f(t: ObjectType | UnionType | IntrinsicType): number { return (t as ObjectType | UnionType).objectFlags; } console.log(String(f({ flags: 1, objectFlags: 4 })));", false},
+		// The arm judges the widening rule against the cast's whole target (untaggedUnionArm), which on keepsNullishCast's
+		// road holds undefined beside the member: it lowers as it did when the rule judged the member alone (Lower's
+		// question on #b5w3ycg; J-q94k2e4 ran it at both). The one-target mutant leaves it green.
+		{"a member keeping undefined", members + "interface C { readonly c: boolean } function f(x: A | B | C | undefined): A | undefined { return x as A | undefined; } console.log(String(f({ a: 1, shared: 's' })?.a));", false},
 		{"an optional literal field", "interface A { readonly kind?: 'a'; readonly a: number } interface B { readonly kind?: 'b'; readonly b: string } function f(x: A | B): A { return x as A; } console.log(String(f({ kind: 'a', a: 1 }).a));", false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
@@ -86,7 +95,11 @@ func TestUntaggedUnionCastsKeepTheirStops(t *testing.T) {
 		// FlowUnreachable lacks antecedent, so the union isn't assignable to FlowLabel and takes unionMemberProof, as
 		// tsc's FlowNode does; with two members it's an upcast in TypeScript's eyes and the relation refuses it first.
 		{"a readonly field the target makes writable", "interface FlowStart { readonly flags: number; readonly antecedent: FlowStart | undefined } interface FlowLabel { readonly flags: number; antecedent: FlowStart | undefined } interface FlowUnreachable { readonly flags: number } function f(x: FlowStart | FlowLabel | FlowUnreachable): FlowLabel { return x as FlowLabel; }", ".ts", false, "whose members no literal tag tells apart"},
-		{"a sub-union target", members + "interface C { readonly c: boolean } function f(x: A | B | C): A | B { return x as A | B; }", ".ts", false, "a checked view of A | B over the union A | B | C, whose members no literal tag tells apart"},
+		// A union target lowers where its members agree on a field's representation (TestUntaggedUnionCastLowers). A
+		// field they hold differently stops at its contract (supportsUntaggedRead), union target (b)'s, and a target
+		// tagged by a literal every member holds is the tag road's, keeping the untagged stop.
+		{"a union target whose shared field differs", "interface A { readonly a: number; readonly shared: string } interface B { readonly b: string; readonly shared: number } interface C { readonly c: boolean } function f(x: A | B | C): string { return String((x as A | B).shared); }", ".ts", false, "checked view field shared of type string | number"},
+		{"a tagged union target", "interface A { readonly kind: 'a'; readonly shared: string } interface B { readonly kind: 'b'; readonly shared: string } interface C { readonly c: boolean } function f(x: A | B | C): string { return (x as A | B).shared; }", ".ts", false, "a checked view of A | B over the union A | B | C, whose members no literal tag tells apart"},
 		// Runtime's two questions on #axqgdck: a writable field whose type differs by arm is refused at the cast by
 		// castUnionWrites (its union type X | Y fits neither arm's slot), so no X is ever written into a B and no
 		// cycle the finder can't see closes through one. One nested in a readonly field, which castUnionWrites
