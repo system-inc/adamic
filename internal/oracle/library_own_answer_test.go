@@ -65,3 +65,42 @@ func TestLibraryObjectOwnAnswerControlsAgree(t *testing.T) {
 		})
 	}
 }
+
+// A Map or Set iterator held by a program's own view, an interface or a type literal with next, stops at its
+// toString, toLocaleString or Object.prototype.toString.call (#v414yhr): on main each printed [object Object] on
+// every backend at exit 0, where Node prints [object Map Iterator] or [object Set Iterator] (J-a6w4knm). The view
+// is the program's own, so libraryObjectOwnAnswer didn't ask the iterator; prototypeHazard's scan now counts the
+// call that makes it. Mutant: the scan's new arm dropped (scratch-ts), which lowers every row again.
+func TestLibraryObjectViewStops(t *testing.T) {
+	t.Parallel()
+	for _, stop := range []struct{ name, position, library string }{
+		{"v1_interface_map_tostring.a", "6:13", "a library MapIterator"},
+		{"v2_interface_set_locale.a", "6:13", "a library SetIterator"},
+		{"v3_interface_map_call.a", "6:13", "a library MapIterator"},
+		{"v4_literal_set_tostring.a", "3:13", "a library SetIterator"},
+		{"v5_literal_map_locale.a", "3:13", "a library MapIterator"},
+		{"v6_literal_set_call.a", "3:13", "a library SetIterator"},
+	} {
+		t.Run(stop.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowered(t, libraryOwnAnswerFixture(t, stop.name))
+			var notYet *lower.NotYet
+			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), stop.library+" may be hidden by the view") || !strings.Contains(err.Error(), stop.name+":"+stop.position) {
+				t.Fatalf("want a NotYet at %s:%s naming %s hidden by the view, got %v", stop.name, stop.position, stop.library, err)
+			}
+		})
+	}
+}
+
+// What a view holds that isn't a library object with its own answer keeps lowering and agrees with Node natively,
+// sanitized and on JavaScript: a program's own object literal and class instance behind the same interface, an
+// iterator result behind a view of its done, and a program that makes a Map iterator its view can't hold.
+func TestLibraryObjectViewControlsAgree(t *testing.T) {
+	t.Parallel()
+	for _, name := range []string{"c4_view_own.a", "c5_view_class.a", "c6_view_result.a", "c7_view_unrelated.a"} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			loomViewsDAgrees(t, libraryOwnAnswerDirectory+name)
+		})
+	}
+}
