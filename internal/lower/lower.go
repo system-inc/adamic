@@ -324,6 +324,12 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 	if err := lowering.checkViewLogicalWrites(); err != nil {
 		return nil, err
 	}
+	// After findCycles, whose resolveCountTypes fills FunctionTypeTargets, the target set each closure call's
+	// layout packs for: a spread through a function value is judged against every target its layout admits
+	// (#wzr4atz).
+	if err := lowering.checkClosureSpreadLayouts(); err != nil {
+		return nil, err
+	}
 	if discovery || plan != nil {
 		if lowering.result.HasAsync() {
 			return nil, &Refused{Where: program.Where(entry.AsNode()), What: "Program region with async work", Fix: "keep Program members in the one-shot synchronous CLI"}
@@ -763,6 +769,10 @@ type lowering struct {
 	// arrayArmSites are the tests lowering built whose array brand decides an arm arrayExcludedArm admitted, which
 	// checkArrayArmViews holds against every checked view once lowering is done (library_array_predicate.go).
 	arrayArmSites []arrayArmSite
+	// closureSpreadSites are the calls with a spread through a function value callClosure made, which
+	// checkClosureSpreadLayouts judges against every target their layouts pack for once FunctionTypeTargets
+	// is filled (arguments_length.go, #wzr4atz).
+	closureSpreadSites []closureSpreadSite
 	// slotWrites is each write admitted only where every allocation reaching it holds a slot for its field,
 	// judged once lowering is done (checkSlotWrites), slotWritesKept each kept, by its fields but its proof
 	// (recordSlotWrite), and builtTypes the type each object literal is built at, by the id of its own type, its

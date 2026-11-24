@@ -16,7 +16,7 @@ import (
 
 func TestSpreadPackAlikeAgreesWithNode(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"o03-string-spread-into-union-rest", "o05-number-after-spread", "o08-function-value-string-spread", "o09-function-value-fixed-beside-spread"} {
+	for _, name := range []string{"o03-string-spread-into-union-rest", "o05-number-after-spread", "o08-function-value-string-spread", "o09-function-value-fixed-beside-spread", "o12-function-value-two-union-rests-string-spread", "o13-function-value-number-rests-apart", "o14-function-declarations-union-rest-beside-number-rest"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs(filepath.Join("testdata", "spread_pack", name+".ts"))
@@ -53,6 +53,10 @@ func TestSpreadPackUnlikeStops(t *testing.T) {
 		{"o04-boolean-spread-into-union-rest", "4:6", "a call with a spread of elements held as a boolean where the callee reads a " + union},
 		{"o06-method-number-spread", "6:36", "a call with a spread of elements held as a number where the callee reads a " + union},
 		{"o07-function-value-number-spread", "4:6", "a call with a spread of elements held as a number where the callee reads a " + union},
+		// A function value's layout packs for every closure its type admits, so lead's call collects show's union
+		// rest from the pack too, though lead's own signature reads its number spread alike (#wzr4atz).
+		{"o10-function-value-layout-union-rest-beside-string-spread", "7:9", "a call with a spread through a function value whose layout reads a " + union + " where the call packs a number"},
+		{"o11-function-value-layout-union-rest", "6:9", "a call with a spread through a function value whose layout reads a " + union + " where the call packs a number"},
 	} {
 		t.Run(row.name, func(t *testing.T) {
 			t.Parallel()

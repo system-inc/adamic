@@ -2823,10 +2823,17 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	if censusCallableSlotless(returns) {
 		return nil, l.notYet(node, "a function value returning "+typeName(returns))
 	}
+	call := ir.CallClosure{Closure: closure, Arguments: arguments, Spread: spread, FunctionType: int(l.concrete(l.optionalChainOperandType(node.AsCallExpression().Expression)).Id()), Returns: returns, ArgumentTypeIDs: l.argumentTypeIDs(node.AsCallExpression().Arguments.Nodes)}
 	// A call through a checked function-type claim checks it (predicates_function_type.go).
-	value, err := l.checkedFunctionTypeCall(node, closure, ir.CallClosure{Closure: closure, Arguments: arguments, Spread: spread, FunctionType: int(l.concrete(l.optionalChainOperandType(node.AsCallExpression().Expression)).Id()), Returns: returns, ArgumentTypeIDs: l.argumentTypeIDs(node.AsCallExpression().Arguments.Nodes)})
+	value, err := l.checkedFunctionTypeCall(node, closure, call)
 	if err != nil {
 		return nil, err
+	}
+	// Its layout packs for every target its function type admits, known once findCycles has filled
+	// FunctionTypeTargets, so the spread is judged against those too then (checkClosureSpreadLayouts,
+	// #wzr4atz).
+	if len(spread) != 0 {
+		l.closureSpreadSites = append(l.closureSpreadSites, closureSpreadSite{nodes: node.AsCallExpression().Arguments.Nodes, call: call, packs: l.spreadPacks(node.AsCallExpression().Arguments.Nodes, arguments, spread)})
 	}
 	// A nested overload set that captures is called through its closure value, so a narrow overload's
 	// result is checked here too.

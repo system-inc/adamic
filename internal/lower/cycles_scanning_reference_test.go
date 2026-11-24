@@ -1899,6 +1899,11 @@ func scanLowerWithElementKey(key *viewElementKey, program *load.Program, typeChe
 	if err := lowering.checkViewLogicalWrites(); err != nil {
 		return nil, err
 	}
+	// As lowerWithElementKey does: a spread through a function value is judged against every target its layout
+	// packs for once FunctionTypeTargets is filled, and refuses alike in both modes (#wzr4atz).
+	if err := lowering.checkClosureSpreadLayouts(); err != nil {
+		return nil, err
+	}
 	if discovery || plan != nil {
 		if lowering.result.HasAsync() {
 			return nil, &Refused{Where: program.Where(entry.AsNode()), What: "Program region with async work", Fix: "keep Program members in the one-shot synchronous CLI"}
