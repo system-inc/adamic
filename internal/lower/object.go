@@ -590,7 +590,7 @@ func (l *lowering) propertyRead(node *ast.Node, object ir.Expression, name strin
 		// (range_types.go). dynamicProperty would stop on any getter of the name in the program, and tsc has a
 		// get pos(), so pos and end are read by kind on their own road; any other read through a range type
 		// stops, as range_unions.go classes a Property.
-		if access.QuestionDotToken == nil && l.rangeReceiverOnly(access.Expression) && (name == "pos" || name == "end") {
+		if !questionDot && l.rangeReceiverOnly(access.Expression) && (name == "pos" || name == "end") {
 			return l.rangeFieldRead(node, object, name)
 		}
 		return nil, l.notYet(node, "a read of field "+name+" through a range type held as a union, where a NodeArray may stand for it")
