@@ -208,4 +208,5 @@ var optionalChainReaders = map[string]optionalChainReader{
 	"overloadFilterElementAccess":     {1, readerProof},
 	"overloadFilterSlice":             {2, readerProof},
 	"overloadFilterParameterRead":     {1, readerProof},
+	"calleeSourceText":                {3, "spells the callee as the source writes it for a TypeError's message, where V8 keeps a written ?. whatever optionalChain does with the step; it lowers nothing"},
 }

@@ -77,8 +77,8 @@ func rangeUnionOf(expression ir.Expression) rangeUnion {
 	}
 	switch expression.(type) {
 	case ir.ArrayIsArray, ir.CheckedCast, ir.DynamicKeyedProperty, ir.DynamicProperty, ir.ErrorToString,
-		ir.IsCollectionIterator, ir.IsGenerator, ir.JSONStringify, ir.OwnFunction, ir.TypeOf, ir.UnionToString,
-		ir.UnknownKind, ir.ViewElement:
+		ir.IsCollectionIterator, ir.IsGenerator, ir.IsRegExpGroups, ir.JSONStringify, ir.OwnFunction, ir.TypeOf,
+		ir.UnionToString, ir.UnknownKind, ir.ViewElement:
 		return rangeUnionDispatches
 	case ir.BoundMethod, ir.HasAccessor, ir.HasOwn, ir.InstanceOf, ir.JSONEncode, ir.ObjectKeys,
 		ir.Property, ir.RecordStorage:

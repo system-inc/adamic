@@ -69,6 +69,7 @@ var gobTypes = []any{
 	IsCollectionIterator{},
 	IsGenerator{},
 	IsNull{},
+	IsRegExpGroups{},
 	IsUndefined{},
 	IterableOf{},
 	IteratorNext{},
