@@ -98,9 +98,8 @@ func TestProduct_EnumerationReachViewPassMutant(t *testing.T) {
 	enumerationReachMutantBinary(t, enumerationReachMutations[12])
 }
 
-// The mutants run one at a time: five of their pins build and run programs natively and under Node, and
-// thirteen mutant binaries doing so at once starved this package's own agreement rows past their Node
-// deadline on an eight-core box (TestEnumerationReachUnrelatedGetterLowers, three checks on Golem and Pupa).
+// The mutants run one at a time, so at most one mutant binary competes with this package's own tests on a
+// small box. Each pin fails fast under its mutant, so the walk stays far inside the test budget.
 func TestEnumerationReachMutantsAreCaught(t *testing.T) {
 	t.Parallel()
 	for _, m := range enumerationReachMutations {
