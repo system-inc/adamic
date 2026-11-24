@@ -500,8 +500,9 @@ type objectMetadataNeeds struct {
 	keyed bool
 
 	// records is whether any object literal is a record (hasRecordStorage), construction whether any
-	// object literal has an absent field or any array literal metadata (constructionNeeded), and
-	// readiness the names some property read carries a readiness or a view for (fieldReadinessNeeded).
+	// object literal has an absent field or a spread that may be undefined, or any array literal metadata
+	// (constructionNeeded), and readiness the names some property read carries a readiness or a view for
+	// (fieldReadinessNeeded).
 	// writeProperty asks all three for every property write, and each was its own walk of the whole
 	// program, so emission cost writes × program (#67w3g0x's scout-link round 5: the CPU grew 3.49× with
 	// writes held at 324 as the program grew 3.47×). Read here, each is the one walk's.
@@ -519,7 +520,9 @@ func (e *emitter) prepareObjectMetadata() {
 		switch expression := expression.(type) {
 		case ir.ObjectLiteral:
 			needs.records = needs.records || expression.Record
-			needs.construction = needs.construction || constructionFields(expression.Fields)
+			// A spread that may be undefined makes construction storage when it is (spreadCopy), so its
+			// literal's fields and every later write publish what they write.
+			needs.construction = needs.construction || constructionFields(expression.Fields) || expression.SpreadMaybeUndefined
 		case ir.ArrayLiteral:
 			needs.construction = needs.construction || len(expression.Metadata) != 0
 		case ir.ObjectCall:
