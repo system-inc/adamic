@@ -15,6 +15,15 @@ HEADER = re.compile(r'^//\s*@(\w+)\s*:\s*([^\r\n]*)')
 OPTIONS = '''target module moduleResolution strict strictNullChecks strictFunctionTypes strictBindCallApply strictPropertyInitialization noImplicitAny noImplicitThis alwaysStrict noUnusedLocals noUnusedParameters noImplicitReturns noFallthroughCasesInSwitch noUncheckedIndexedAccess exactOptionalPropertyTypes useUnknownInCatchVariables noPropertyAccessFromIndexSignature allowUnreachableCode allowUnusedLabels experimentalDecorators emitDecoratorMetadata useDefineForClassFields downlevelIteration jsx jsxFactory jsxFragmentFactory noLib lib skipLibCheck skipDefaultLibCheck noErrorTruncation allowSyntheticDefaultImports esModuleInterop isolatedModules verbatimModuleSyntax moduleDetection preserveConstEnums resolveJsonModule allowJs checkJs allowImportingTsExtensions noResolve ignoreDeprecations'''.split()
 CANONICAL = {s.lower(): s for s in OPTIONS}
 METADATA = {'noemit', 'noemitonerror', 'declaration', 'sourcemap', 'inlinesourcemap', 'inlinesources', 'removecomments', 'noemithelpers', 'importhelpers'}
+# Accepted for command construction only. Census eligibility uses CANONICAL
+# and METADATA above, and the original materialize() path below.
+EMIT_PATHS = ('outDir', 'outFile', 'declarationDir', 'tsBuildInfoFile')
+COMMAND_STRINGS = (*EMIT_PATHS, 'sourceRoot', 'mapRoot', 'rootDir')
+COMMAND_OPTIONS = {name.lower(): name for name in (
+    'noEmit', 'noEmitOnError', 'declaration', 'sourceMap', 'inlineSourceMap',
+    'inlineSources', 'removeComments', 'noEmitHelpers', 'importHelpers',
+    'declarationMap', 'emitDeclarationOnly', 'incremental', 'composite', *COMMAND_STRINGS,
+)}
 FEATURES = [
     ('jsx', r'jsx|tsx'), ('decorators', r'decorator'),
     ('modules', r'import|export|module'), ('namespaces', r'namespace'),
@@ -32,6 +41,14 @@ FEATURES = [
 ]
 
 def materialize(raw):
+    return _materialize(raw, command=False)
+
+
+def materialize_command(raw):
+    return _materialize(raw, command=True)
+
+
+def _materialize(raw, command):
     text = raw.decode('utf-8-sig')
     options = {}
     content = ''
@@ -39,6 +56,15 @@ def materialize(raw):
         match = HEADER.match(line)
         if match:
             name, value = match[1].lower(), match[2].strip()
+            if command and name in COMMAND_OPTIONS:
+                key = COMMAND_OPTIONS[name]
+                if key in COMMAND_STRINGS and value and ',' not in value:
+                    options[key] = value
+                elif key not in COMMAND_STRINGS and value in ('true', 'false'):
+                    options[key] = value == 'true'
+                else:
+                    raise ValueError(f'unsupported directive @{match[1]}: {value}')
+                continue
             if name == 'declaration' and value != 'false':
                 raise ValueError('declaration baseline requires emission')
             if name in METADATA:
@@ -46,7 +72,8 @@ def materialize(raw):
                     raise ValueError('variant metadata')
                 continue
             if name not in CANONICAL or (',' in value and name != 'lib'):
-                raise ValueError('unsupported header or variant')
+                raise ValueError(f'unsupported directive @{match[1]}: {value}' if command
+                                 else 'unsupported header or variant')
             key = CANONICAL[name]
             options[key] = [v.strip() for v in value.split(',')] if name == 'lib' else {'true': True, 'false': False}.get(value, value)
         else:
@@ -118,6 +145,22 @@ def choose(tree, stock_api):
             seen.update(best['codes'])
     return chosen, len(candidates)
 
+def selection_manifest(tree, selected, eligible):
+    rows = []
+    for index, case in enumerate(selected, 1):
+        source, baseline = case['source'], case['baseline']
+        name = f'{index:03d}_{source.stem}'
+        rows.append({
+            'id': name, 'source': source.relative_to(tree).as_posix(),
+            'source_sha256': hashlib.sha256(source.read_bytes()).hexdigest(),
+            'baseline': baseline.relative_to(tree).as_posix() if baseline else None,
+            'baseline_sha256': hashlib.sha256(baseline.read_bytes()).hexdigest() if baseline else None,
+            'feature': case['feature'], 'codes': case['codes'], 'options': case['options'],
+            'path': f'corpus/{name}/{source.name}',
+        })
+    return {'upstream_commit': PIN, 'eligible': eligible, 'cases': rows}
+
+
 def main():
     if len(sys.argv) != 3:
         sys.exit('usage: corpus.py <pinned-tree> <stock-typescript-lib>')
@@ -128,7 +171,6 @@ def main():
     output = ROOT / 'corpus'
     output.mkdir()  # Never replace a reviewed corpus.
     selected, eligible = choose(tree, sys.argv[2])
-    manifest = []
     for index, case in enumerate(selected, 1):
         source = case['source']
         name = f'{index:03d}_{source.stem}'
@@ -141,15 +183,10 @@ def main():
         (folder / 'expected.stdout').write_bytes(case['expected'])
         (folder / 'expected.stderr').write_bytes(b'')
         (folder / 'expected.exit').write_text('2\n' if case['codes'] else '0\n')
-        manifest.append({'id': name, 'source': 'tests/cases/compiler/' + source.name,
-                         'path': str(Path('corpus') / name / source.name),
-                         'source_sha256': hashlib.sha256(raw).hexdigest(),
-                         'baseline': 'tests/baselines/reference/' + case['baseline'].name if case['baseline'] else None,
-                         'baseline_sha256': hashlib.sha256(case['baseline'].read_bytes()).hexdigest() if case['baseline'] else None,
-                         'feature': case['feature'], 'codes': case['codes'], 'options': case['options']})
-    (ROOT / 'selection.json').write_text(json.dumps({'upstream_commit': PIN, 'eligible': eligible, 'cases': manifest}, indent=2) + '\n')
+    manifest = selection_manifest(tree, selected, eligible)
+    (ROOT / 'selection.json').write_text(json.dumps(manifest, indent=2) + '\n')
     shutil.copyfile(tree / 'LICENSE.txt', ROOT / 'LICENSE-TypeScript.txt')
-    print(f'selected {len(selected)} from {eligible}; clean=60; codes={len(set(c for row in manifest for c in row["codes"]))}')
+    print(f'selected {len(selected)} from {eligible}; clean=60; codes={len(set(c for row in manifest["cases"] for c in row["codes"]))}')
 
 if __name__ == '__main__':
     main()

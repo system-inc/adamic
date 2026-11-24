@@ -3,6 +3,7 @@
 import argparse
 from concurrent.futures import ThreadPoolExecutor
 import difflib
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -12,7 +13,7 @@ import subprocess
 import tempfile
 import time
 
-from corpus import ROOT, materialize
+from corpus import ROOT, materialize, materialize_command
 
 
 def command_argv(arguments):
@@ -40,34 +41,59 @@ def compare(folder, expected, identifier):
     return failures
 
 
-def run(command, results, record=False, tiny_only=False, golden_root=ROOT):
+def project_rows(tiny_only):
     selected = json.loads((ROOT / 'selection.json').read_text())['cases']
     rows = [] if tiny_only else [(row['id'], row, ROOT / 'corpus' / row['id']) for row in selected]
-    rows.append(('tiny', {'options': {'strict': True, 'target': 'es2020'}}, ROOT / 'tiny'))
-    failures = []
+    return rows + [('tiny', {'options': {'strict': True, 'target': 'es2020'}}, ROOT / 'tiny')]
+
+
+def project_inputs(identifier, row, source):
+    options = dict(row['options'])
+    files = {}
+    programs = sorted(source.glob('*.a')) if identifier == 'tiny' else [ROOT / row['path']]
+    for program in programs:
+        name = program.name if identifier != 'tiny' else program.with_suffix('.ts').name
+        raw = program.read_bytes()
+        if identifier != 'tiny' and hashlib.sha256(raw).hexdigest() != row['source_sha256']:
+            raise RuntimeError(f'source hash mismatch: {identifier}')
+        if identifier == 'tiny' and raw.startswith(b'// a-check:'):
+            raw = raw.split(b'\n', 1)[1]
+        if identifier != 'tiny' and materialize(raw)[1] != row['options']:
+            raise RuntimeError(f'header options changed: {identifier}')
+        content, headers = materialize_command(raw)
+        for key, value in headers.items():
+            if key in options and options[key] != value:
+                raise RuntimeError(f'conflicting directive @{key}: {identifier}')
+            options[key] = value
+        files[name] = content
+    return files, options
+
+
+def project_config(files, options):
+    return {'compilerOptions': {'types': [], 'skipDefaultLibCheck': True,
+                                'noErrorTruncation': True, 'ignoreDeprecations': '6.0', **options},
+            'files': list(files)}
+
+
+def project_args(options):
+    args = ['--project', 'tsconfig.json', '--pretty', 'false']
+    if options.get('noEmit') is True:
+        args.append('--noEmit')
+    return args
+
+
+def run(command, results, record=False, tiny_only=False, golden_root=ROOT):
+    rows = project_rows(tiny_only)
     started = time.monotonic()
     def execute(item):
         identifier, row, source = item
         folder = results / identifier
         folder.mkdir(parents=True)
-        options = {'types': [], 'skipDefaultLibCheck': True, 'noErrorTruncation': True,
-                   'ignoreDeprecations': '6.0', **row['options']}
-        files = []
-        programs = sorted(source.glob('*.a')) if identifier == 'tiny' else [ROOT / row['path']]
-        for program in programs:
-            name = program.name if identifier != 'tiny' else program.with_suffix('.ts').name
-            raw = program.read_bytes()
-            if identifier == 'tiny' and raw.startswith(b'// a-check:'):
-                # Gate metadata is not part of the tiny project's diagnostic positions.
-                raw = raw.split(b'\n', 1)[1]
-            content, headers = materialize(raw)
-            if identifier != 'tiny' and headers != row['options']:
-                raise RuntimeError(f'header options changed: {identifier}')
+        files, options = project_inputs(identifier, row, source)
+        for name, content in files.items():
             (folder / name).write_text(content)
-            files.append(name)
-        config = {'compilerOptions': options, 'files': files}
-        (folder / 'tsconfig.json').write_text(json.dumps(config, indent=2) + '\n')
-        argv = command + ['--project', 'tsconfig.json', '--noEmit', '--pretty', 'false']
+        (folder / 'tsconfig.json').write_text(json.dumps(project_config(files, options), indent=2) + '\n')
+        argv = command + project_args(options)
         (folder / 'command.json').write_text(json.dumps(argv) + '\n')
         try:
             with (folder / 'actual.stdout').open('wb') as stdout, (folder / 'actual.stderr').open('wb') as stderr:
