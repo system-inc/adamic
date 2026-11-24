@@ -1,0 +1,18 @@
+// s5 (#snypn8c, c3): a default over an open enum holds every number no case names, so it proves nothing.
+enum K { A, B, C, D }
+function kindOf(n: number): K {
+	return n;
+}
+function take(x: K.B | K.C | K.D): string {
+	return "took " + String(x);
+}
+function rest(n: number): string {
+	const op = kindOf(n);
+	switch (op) {
+		case K.A:
+			return "a";
+		default:
+			return take(op);
+	}
+}
+console.log(rest(0) + ", " + rest(2) + ", " + rest(7));

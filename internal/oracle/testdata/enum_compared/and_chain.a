@@ -1,0 +1,19 @@
+// a3 (#snypn8c, c3): an && chain whose middle is an || of comparisons proves those members, as
+// `moduleSpecifier && (currentToken === WithKeyword || currentToken === AssertKeyword) && ...` does
+// (parser.ts:8701).
+enum K { A, B, C, D }
+function kindOf(n: number): K {
+	return n;
+}
+function take(x: K.A | K.B): string {
+	return "took " + String(x);
+}
+function attributes(n: number, ready: boolean, broken: boolean): string {
+	const t = kindOf(n);
+	let result = "skip " + String(t);
+	if (ready && (t === K.A || t === K.B) && !broken) {
+		result = take(t);
+	}
+	return result;
+}
+console.log(attributes(0, true, false) + ", " + attributes(1, true, false) + ", " + attributes(1, false, false) + ", " + attributes(0, true, true) + ", " + attributes(2, true, false) + ", " + attributes(7, true, false));
