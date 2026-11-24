@@ -1645,8 +1645,12 @@ def fastCheck(gate, changed, seconds, verdict):
     toolsDeclared's rule (undeclaredTools) over the change's own paths, every undeclared literal there on its line, so a
     stacked change never answers for its parent's. darwin-vet runs nothing here: verdict says whether a changed path meets
     its inputs (darwinVetMeets), listed offline (fastCheckGoEnvironment), a listing that can't be computed meeting every
-    change, so the census vets in the background and the vet says why it can't run. It installs nothing (no npmCli, no npmPackages, which a phase runs first) and writes
-    nothing in the tree. An exception in it is the caller's can't-run, never a red."""
+    change, so the census vets in the background and the vet says why it can't run. reads is the reads guard over the
+    change's own paths (readsGuardFindings, as Gate.readsGuard runs it), once the gate tools' executors.txt says "mode
+    guard-reads": the door is where the line meets each change alone, since no line plans the census phase that runs it
+    in the fast gate, so here is where it gates (Adamic Loom's ruling on #ry3pfc6, after b94d794f landed an under-key the
+    guard was on for and never ran on). Its seconds say it ran. It installs nothing (no npmCli, no npmPackages, which a
+    phase runs first) and writes nothing in the tree. An exception in it is the caller's can't-run, never a red."""
     verdict["seconds"]["coverage"] = round(seconds, 3)
     reasons = []
     uncovered = gate.result["uncovered_files"]
@@ -1662,6 +1666,14 @@ def fastCheck(gate, changed, seconds, verdict):
     inputs = darwinVetInputs(gate.arguments.tree, "", False, {"base": gate.arguments.base, "sha": gate.arguments.sha, "tools": gate.arguments.tools, "offline": True})
     verdict["darwinVet"] = "needed" if darwinVetMeets(inputs, changed) else "unneeded"
     verdict["seconds"]["darwinVetInputs"] = round(time.monotonic() - started, 3)
+    if executorMap(gate.arguments.tools)[5]:
+        started = time.monotonic()
+        revision = "%s...%s" % (gate.arguments.base, gate.arguments.sha)
+        pathSetChanged = [path for path in gate.git(gate.arguments.tree, "-c", "core.quotePath=false", "diff", "--name-only", "--no-renames",
+                                                    "--diff-filter=AD", revision).split("\n") if path]
+        found = readsGuardFindings(gate.arguments.tree, gate.arguments.tools, changed, pathSetChanged, {})
+        verdict["seconds"]["reads"] = round(time.monotonic() - started, 3)
+        reasons.extend("reads: " + finding for finding in found)
     return reasons
 
 

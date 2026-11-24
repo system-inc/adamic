@@ -5098,6 +5098,35 @@ class FastCheck(unittest.TestCase):
                                  "tools: probe/probe.go:6 runs wasmtime, which cloud/fast-gate/tools.txt doesn't declare\n")
         self.assertEqual(verdict["darwinVet"], "unneeded")
 
+    def test_a_reads_comment_its_key_doesnt_hold_is_refused_at_reads_once_the_guard_is_on(self):
+        # The guard runs here, at the door, since no line plans the census phase that runs it in the fast gate (#ry3pfc6):
+        # with "mode guard-reads" a test naming a path its package's key doesn't hold is the change's refusal, and its
+        # seconds say it ran; without the line the same change passes and the guard never runs. Mutant, red here: the
+        # door's call dropped, so the guarded change passes as the unguarded one does.
+        executors = "mode enforce\ndarwin internal/apple/*\nbuild go.*\ninert *.md\ninert cloud/*\n"
+        comment = {"a/a_test.go": "package a\n\n// Reads: README.md\n"}
+        for guarded in (False, True):
+            with self.subTest(guarded=guarded):
+                base = self.change({"cloud/fast-gate/executors.txt": ("mode guard-reads\n" if guarded else "") + executors})
+                code, stdout, stderr, verdict = self.checked(self.change(comment, on=base), base=base)
+                self.assertEqual(stdout, self.units())
+                if guarded:
+                    self.assertEqual(code, run.RefusalExit, stderr)
+                    self.assertEqual(stderr, "refused: reads: a/a_test.go:3 reads README.md, which a's key doesn't hold: add `reads a README.md` "
+                                             "to the tools line's cloud/fast-gate/executors.txt (Keys or Judge adds it there; it isn't the change's to add)\n")
+                    self.assertIn("reads", verdict["seconds"])
+                else:
+                    self.assertEqual((code, stderr), (0, ""))
+                    self.assertNotIn("reads", verdict["seconds"])
+
+    def test_a_reads_guard_that_cant_list_is_the_checks_cant_run_never_a_refusal(self):
+        base = self.change({"cloud/fast-gate/executors.txt": "mode guard-reads\nmode enforce\nbuild go.*\ninert *.md\ninert cloud/*\n"})
+        sha = self.change({"a/a_test.go": "package a\n"}, on=base)
+        with mock.patch.object(run, "readsGuardFindings", side_effect=ValueError("go list of the tree's packages failed")):
+            code, stdout, stderr, verdict = self.checked(sha, base=base)
+        self.assertEqual(code, run.FastCheckCantRunExit, stderr)
+        self.assertTrue(stderr.startswith("fast check couldn't run: ValueError: go list of the tree's packages failed"), stderr)
+
     def test_an_apple_change_with_no_leg_record_is_never_refused_and_asks_for_the_vet(self):
         # No darwin-legs record exists, and none can at submit: the miss is the line's darwinRecordMissing park (#ycqnr4b).
         sha = self.change({"internal/apple/apple.go": "package apple\n\n// Edited is the change.\nconst Edited = 1\n"})
