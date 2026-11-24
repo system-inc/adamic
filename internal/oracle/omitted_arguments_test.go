@@ -39,7 +39,7 @@ func TestOmittedArgumentZeroMutantIsCaught(t *testing.T) {
 		if !ok {
 			continue
 		}
-		if property, ok := call.Closure.(ir.Property); ok && property.Name == "setText" {
+		if property, ok := omittedMethodProperty(call.Closure); ok && property.Name == "setText" {
 			for len(call.Arguments) < 3 {
 				call.Arguments = append(call.Arguments, ir.MaybeOf{Of: ir.MaybeNumber, Value: ir.NumberConstant{}})
 				changed++
@@ -94,6 +94,15 @@ func TestOmittedOriginalProbePolicy(t *testing.T) {
 
 }
 
+// omittedMethodProperty finds the method name while leaving the original callee on the call.
+func omittedMethodProperty(callee ir.Expression) (ir.Property, bool) {
+	if defined, ok := callee.(ir.Defined); ok {
+		callee = defined.Value
+	}
+	property, ok := callee.(ir.Property)
+	return property, ok
+}
+
 func TestOmittedReaderZeroMutantIsCaught(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/omitted_reader.a"))
@@ -114,7 +123,7 @@ func TestOmittedReaderZeroMutantIsCaught(t *testing.T) {
 		if !ok {
 			continue
 		}
-		if property, ok := call.Closure.(ir.Property); ok && property.Name == "pick" && len(call.Arguments) == 0 {
+		if property, ok := omittedMethodProperty(call.Closure); ok && property.Name == "pick" && len(call.Arguments) == 0 {
 			call.Arguments = append(call.Arguments, ir.MaybeOf{Of: ir.MaybeNumber, Value: ir.NumberConstant{}})
 			changed++
 		}

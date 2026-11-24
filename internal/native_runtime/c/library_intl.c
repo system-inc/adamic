@@ -18,8 +18,8 @@
 #include <string.h>
 
 // collator_compare_slot is #compare's place in collator_shape, the one place new writes it and the
-// value read reads it, so the two can't drift; adamic_object_callee's arm reads slot 0 by the same
-// rule (object.c), and collator_names[collator_compare_slot] is checked to be "#compare" where it's read.
+// value read reads it, so the two can't drift; adamic_object_callee's arm reads #compare by name
+// through its static slot cache (object.c), and collator_names[collator_compare_slot] is checked to be "#compare" where it's read.
 enum { collator_compare_slot = 0 };
 static const char *const collator_names[] = {"#compare", "#locale"};
 static const bool collator_references[] = {true, true};
