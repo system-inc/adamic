@@ -1737,6 +1737,12 @@ func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type
 		}
 		return &Refused{Where: l.program.Where(node), What: "an arbitrary number or a value from another enum assigned to " + l.checker.TypeToString(found.target) + "; its members are a closed union", Fix: "use a declared member of this enum, or compare the number with its members and return the matching member (adamic/enum-members)"}
 	}
+	// This refusal is what keeps a base view made from a never field's owner from writing the field (ruling
+	// 2, objectIntersectionFields and never_read.go's declaredNeverRead): an Arrow whose name every
+	// declaration types never, seen as a Base whose name is writable, could write a string where never is
+	// read, and stops here. The road Adamic ruled covered on Nov 24 18:03Z (#bbssdcy) needs no refusal: a
+	// writable alias held from before the cast writes the real object's own slot, which the never view
+	// never reads, since its read stops without loading the slot.
 	what := "a value of type " + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read"
 	fix := "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
 	if found.parameter {

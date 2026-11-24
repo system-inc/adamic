@@ -43,23 +43,102 @@ type neverStep struct {
 // judged from, and the one that made it never, which the trap names. placeholder is a never assigned
 // whole, `let flag: boolean = null!`, which no narrowing made, so the placeholder rule keeps it. One with
 // no steps is a binding only its own function writes whose walk found none (neverRead), trusted without.
+// declared is a read of a field every declaration types never (declaredNeverField), which no narrowing
+// made either, trusted wherever it runs.
 type neverMaking struct {
 	earliest    neverStep
 	madeNever   neverStep
 	placeholder bool
+	declared    bool
 }
 
 // neverRead judges a read the checker types never: an identifier, this, a property or an element
 // access, not in a type, not a declaration's name (a shorthand's is a read), not an assignment's target
 // and not a direct callee. It answers the making the caller traps when the read is trusted, a not yet
-// when it isn't, and neither when the read isn't one, the enum form traps it already, the declared type
-// is never itself, the flow can't reach the read, or a never value was assigned whole.
+// when it isn't, and neither when the read isn't one, the enum form traps it already, a binding's
+// declared type is never itself, the flow can't reach the read, or a never value was assigned whole. A
+// field every declaration types never is ruling 2's, judged by declaredNeverRead.
 func (l *lowering) neverRead(node *ast.Node) (*neverMaking, error) {
 	node = ast.SkipParentheses(node)
 	if !l.neverReadPosition(node) || l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsNever == 0 || l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil {
 		return nil, nil
 	}
+	if name := l.declaredNeverField(node); name != "" {
+		return l.declaredNeverRead(node, name)
+	}
 	return l.neverJudged(node)
+}
+
+// A field every declaration types never, as tsc's ArrowFunction declares `readonly name: never`, is
+// ruling 2's (Adamic on #bbssdcy, Nov 24): it is held as the plain member holds it, with no slot of its
+// own, since a literal allocates only the fields it has, and an intersection holding the member takes
+// that storage too (objectIntersectionFields). No value has its type, so a read of it or a write into it
+// runs only where a value lied about its type through a hatch, a cast, and each is a :76 read
+// (rulings.md:76): the receiver, and a write's value, are evaluated, then the trap, and nothing is loaded
+// from the slot or stored into it. That is Adamic's condition: whatever the real object holds under the
+// name (a writable alias held from before the cast may write its own slot there, a road she ruled
+// covered on Nov 24 18:03Z) never reaches a never read, since the read never loads it.
+
+// declaredNeverField is the name a property read, or an element read keyed by a string literal, spells
+// when every declaration of the field it names types it never (declaredNever), and "" for any other.
+func (l *lowering) declaredNeverField(node *ast.Node) string {
+	var key *ast.Node
+	switch node.Kind {
+	case ast.KindPropertyAccessExpression:
+		key = node.Name()
+	case ast.KindElementAccessExpression:
+		key = node.AsElementAccessExpression().ArgumentExpression
+		if key.Kind != ast.KindStringLiteral && key.Kind != ast.KindNoSubstitutionTemplateLiteral {
+			return ""
+		}
+	default:
+		return ""
+	}
+	if !l.declaredNever(l.checker.GetSymbolAtLocation(key)) {
+		return ""
+	}
+	return key.Text()
+}
+
+// declaredNever is whether a field is required and each of its declarations writes its type as never, a
+// property's type node the checker reads as never. A field tsc makes never by intersecting declarations
+// that disagree, { name: string } & { name: number }, isn't: its property holds every declaration it
+// merges, and one of them writes string (#mhggcdw's conflict case keeps its stop). Nor is a field a
+// member inherits from a base chain that conflicts, whose property is that merged one, or one a generic
+// declares as a type parameter an instance fixes to never, whose declaration writes the parameter.
+func (l *lowering) declaredNever(field *ast.Symbol) bool {
+	if field == nil || field.Flags&ast.SymbolFlagsOptional != 0 || len(field.Declarations) == 0 {
+		return false
+	}
+	for _, declaration := range field.Declarations {
+		if declaration.Kind != ast.KindPropertySignature && declaration.Kind != ast.KindPropertyDeclaration || declaration.Type() == nil {
+			return false
+		}
+		if l.checker.GetTypeFromTypeNode(declaration.Type()).Flags()&checker.TypeFlagsNever == 0 {
+			return false
+		}
+	}
+	return true
+}
+
+// declaredNeverRead is the making of a read of a field every declaration types never: no narrowing made
+// it, so it is trusted wherever it runs, and lowers to the trap. A getter of the name, or one the program
+// could install, would answer the read itself, running code the trap leaves out, so that read stops as
+// not yet, as a narrowed one does (neverPlaceWrittenBetween).
+func (l *lowering) declaredNeverRead(node *ast.Node, name string) (*neverMaking, error) {
+	if l.propertyWritesOf().accessors || l.accessorName(name) {
+		return nil, l.notYet(node, "a read of field "+name+", declared never, that a getter may serve")
+	}
+	return &neverMaking{declared: true}, nil
+}
+
+// declaredNeverWrite is o.name = value into a field every declaration types never, made ruling 2's :76
+// read at the write: only a value of type never can be written there, so the write runs only where one
+// lied. The receiver is evaluated, then the value, in JavaScript's order, then the trap, naming the write,
+// and nothing is stored.
+func (l *lowering) declaredNeverWrite(target *ast.Node, object, value ir.Expression) ir.Statement {
+	message := "unreachable write of " + strings.Join(strings.Fields(sourceExpression(target)), " ") + " at " + l.program.Where(target) + ", a field declared never"
+	return ir.Evaluate{Value: ir.Comma{Left: object, Right: ir.Comma{Left: value, Right: l.neverTrap(message, ir.Number)}}}
 }
 
 // enumNeverReadGap judges a numeric enum's never read, which enum_never.go traps, by the same test
@@ -380,10 +459,11 @@ func (l *lowering) enumSwitchScrutineeGap(scrutinee *ast.Node) error {
 }
 
 // neverReadEvaluated is what a trusted never read evaluates before the trap: a binding's read, at its
-// declared slot, or a property or an element read's receiver and key, since a field narrowed to never has
-// no representation of its own to read at (typeOf's not yet), and what it would read is never used. A
-// getter of the name stops the read before it's trusted (neverPlaceWrittenBetween), so leaving the read
-// itself out runs nothing less of the program's.
+// declared slot, or a property or an element read's receiver and key, since a field narrowed to never, or
+// declared never (ruling 2), has no representation of its own to read at (typeOf's not yet), and what it
+// would read is never used. A getter of the name stops the read before it's trusted
+// (neverPlaceWrittenBetween, declaredNeverRead), so leaving the read itself out runs nothing less of the
+// program's.
 func (l *lowering) neverReadEvaluated(node *ast.Node) (ir.Expression, error) {
 	node = ast.SkipParentheses(node)
 	switch node.Kind {
@@ -422,10 +502,19 @@ func (l *lowering) neverReadTrap(node *ast.Node, evaluated ir.Expression, making
 	if making.madeNever.node != nil {
 		message += ", never after " + making.madeNever.kind + " " + strings.Join(strings.Fields(sourceExpression(making.madeNever.node)), " ") + " at " + l.program.Where(making.madeNever.node)
 	}
+	if making.declared {
+		message += ", a field declared never"
+	}
+	return ir.Comma{Left: evaluated, Right: l.neverTrap(message, of)}
+}
+
+// neverTrap is a call of a function that panics with message, giving back of, which a never read's trap
+// and a never field's write share.
+func (l *lowering) neverTrap(message string, of ir.Type) ir.Expression {
 	function := len(l.result.Functions)
 	l.result.Functions = append(l.result.Functions, ir.Function{
 		Name: "never_read", Returns: of,
 		Body: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}},
 	})
-	return ir.Comma{Left: evaluated, Right: ir.Call{Function: function, Returns: of}}
+	return ir.Call{Function: function, Returns: of}
 }

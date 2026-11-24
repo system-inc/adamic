@@ -313,8 +313,10 @@ func (l *lowering) objectCanFreeze() bool {
 // object, array or boxed union field is held as it is in any object, and a Weak is not
 // (recordStorageType). An optional boolean, a tagged byte the dictionary's rule refuses, is held as
 // any plain object holds it where every member that has the field holds it that way too
-// (intersectionMembersHoldMaybeBoolean), and stops otherwise. A field held as a closure waits on its
-// own ruling. A field that holds the intersection itself is the object being proven.
+// (intersectionMembersHoldMaybeBoolean), and stops otherwise. A field every member that declares it
+// declares never takes the plain member's storage (ruling 2, intersectionMembersDeclareNever), and one
+// reduced to never by conflict stops. A field held as a closure waits on its own ruling. A field that
+// holds the intersection itself is the object being proven.
 func (l *lowering) objectIntersection(proven *checker.Type) (ir.Type, bool, string) {
 	for _, part := range proven.Types() {
 		kind := ""
@@ -409,6 +411,17 @@ type objectIntersectionVerdict struct {
 func (l *lowering) objectIntersectionFields(proven *checker.Type) (ir.Type, bool, string) {
 	for _, field := range l.checker.GetPropertiesOfType(proven) {
 		fieldType := l.checker.GetTypeOfSymbol(field)
+		// Ruling 2 (Adamic on #bbssdcy, Nov 24): a field every member that declares it declares never, as
+		// tsc's ArrowFunction declares name in Expression & ArrowFunction, takes the plain member's storage,
+		// which is no slot of its own, and every read of it or write into it is a :76 read (rulings.md:76)
+		// that loads and stores nothing (never_read.go's declaredNeverRead and declaredNeverWrite). A field
+		// reduced to never by conflict, { name: string } & { name: number }, keeps the stop below with its
+		// words (#mhggcdw's case), since a member declares string. What keeps a base view made from the
+		// field's owner from writing the field is the invariance refusal (invariance.go:1746,
+		// adamic/invariant-mutable): an Arrow seen as a Base whose name is writable is refused there.
+		if fieldType.Flags()&checker.TypeFlagsNever != 0 && l.intersectionMembersDeclareNever(proven, field.Name) {
+			continue
+		}
 		if held, known := l.recordStorageType(fieldType); !known || held == ir.Closure {
 			if plain, plainKnown := l.representation(fieldType); held == ir.MaybeBoolean && plainKnown && plain == ir.MaybeBoolean && l.intersectionMembersHoldMaybeBoolean(proven, field.Name) {
 				continue
@@ -463,6 +476,27 @@ func (l *lowering) intersectionMembersHoldMaybeBoolean(proven *checker.Type, nam
 		held = true
 	}
 	return held
+}
+
+// intersectionMembersDeclareNever reports whether every member of the intersection proven that has the
+// field name declares it never (declaredNever), and at least one does, asking each member as
+// intersectionMembersHoldMaybeBoolean does: the member's property is the checker's, so a field it
+// inherits is judged by the declarations it inherits, and one a conflict in its own base chain made never
+// answers no. A member that declares another type answers no too, and the intersection keeps its stop.
+// An intersection's property always comes from a member, so finding none fails closed.
+func (l *lowering) intersectionMembersDeclareNever(proven *checker.Type, name string) bool {
+	declared := false
+	for _, part := range proven.Types() {
+		property := l.checker.GetPropertyOfType(part, name)
+		if property == nil {
+			continue
+		}
+		if !l.declaredNever(property) {
+			return false
+		}
+		declared = true
+	}
+	return declared
 }
 
 // objectAssignCallableSourceRefusal refuses an Object.assign whose source is callable or constructable

@@ -516,6 +516,11 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 		return nil, err
 	}
 	field := l.checker.GetSymbolAtLocation(target.Name())
+	if l.declaredNever(field) {
+		// A field every declaration types never is written only with a value that lied: ruling 2's :76 read
+		// at the write, which stores nothing (declaredNeverWrite).
+		return []ir.Statement{l.declaredNeverWrite(target, object, value)}, nil
+	}
 	value, _, declared, err := l.fieldWriteValue(target, field, value)
 	if err != nil {
 		return nil, err
