@@ -1,8 +1,11 @@
 package lower
 
 import (
+	"slices"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 )
 
@@ -79,7 +82,108 @@ func (l *lowering) brandedMembership(target *checker.Type, visited map[*checker.
 	if l.isArrayType(target) {
 		return l.brandedMembership(l.elementTypeOfArray(target), visited)
 	}
+	if base, _ := l.brandedRefinement(target); base != nil {
+		return true
+	}
 	return target.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(target) && l.fieldLiteral(target, "kind") == nil && l.brandedSupertype(target)
+}
+
+// brandedRefinement splits a branded base with refined parts, tsc's NamedDeclaration & { name:
+// DeclarationName } (ruling 9 of Nov 24, #c7w6j0y's rule 2 with a branded base), into its base and the
+// names of the fields its refining parts declare, or gives a nil base when target isn't one. The base is
+// the one named part, a branded supertype; every other part is an anonymous object of required plain
+// fields, with no kind, no brand, no index and no call or construct signature, so each field it adds has
+// a membership of its own. A target with two named parts, a branded refining part, an optional refined
+// field or a merged kind that's one literal isn't this road: the last is the tag's, and the others are
+// cases the ruling doesn't cover, so they keep the family's stop.
+func (l *lowering) brandedRefinement(target *checker.Type) (*checker.Type, []string) {
+	if target.Flags()&checker.TypeFlagsIntersection == 0 || !l.plainObjectIntersection(target) || l.fieldLiteral(target, "kind") != nil {
+		return nil, nil
+	}
+	var base *checker.Type
+	fields := []string{}
+	for _, part := range target.Types() {
+		if isClassInstance(part) || part.Flags()&checker.TypeFlagsObject == 0 {
+			return nil, nil
+		}
+		if part.ObjectFlags()&checker.ObjectFlagsAnonymous == 0 {
+			if base != nil || !l.brandedSupertype(part) {
+				return nil, nil
+			}
+			base = part
+			continue
+		}
+		if l.checker.GetPropertyOfType(part, "kind") != nil || len(l.checker.GetIndexInfosOfType(part)) != 0 || len(l.checker.GetSignaturesOfType(part, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(part, checker.SignatureKindConstruct)) != 0 {
+			return nil, nil
+		}
+		for _, property := range l.checker.GetPropertiesOfType(part) {
+			if property.Flags&(ast.SymbolFlagsOptional|ast.SymbolFlagsMethod|ast.SymbolFlagsGetAccessor|ast.SymbolFlagsSetAccessor) != 0 || checker.IsKnownSymbol(property) || phantomField(l.checker.GetTypeOfSymbol(property)) {
+				return nil, nil
+			}
+			if !slices.Contains(fields, property.Name) {
+				fields = append(fields, property.Name)
+			}
+		}
+	}
+	if base == nil || len(fields) == 0 {
+		return nil, nil
+	}
+	return base, fields
+}
+
+// brandedRefinementMembership is ruling 9's check at the call: the base's road, that the value is an
+// object with the base's views registered so its own fields are checked where they're read, and each
+// refined field's membership, all decided together. Language's two conditions are each a step here.
+// (a) A field the base and a refining part both declare is checked as the checker's type for the
+// intersection's property, never by one part's membership alone: a base narrower than the part, or a
+// part narrower than the base, is the narrower of the two. (b) A refined field a getter may answer keeps
+// a NotYet of its own (rulings.md:19), since a value checked at the call can answer differently at the
+// read. A getter the program writes is found by its name (accessorName); a declaration file's getter
+// can't reach the call, since no library type carries the base's phantom brand, a required field that
+// makes it assignable. A refined field with no check keeps the whole target at the family's stop, as rule
+// 2 says. The intersection's own view is registered too, since a true-side read is keyed by the
+// intersection's id, which the base's view doesn't serve (brandedIntersectionReceiver aliases only a meet
+// with the base's supertypes, and a required refinement of an optional field isn't one).
+func (l *lowering) brandedRefinementMembership(node *ast.Node, value ir.Expression, source, target, base *checker.Type, fields []string, local func(string, ir.Type) int, depth int) ([]ir.Statement, ir.Expression, error) {
+	family := func(field, why string) error {
+		return l.notYet(node, "checked predicate overload target "+l.checker.TypeToString(target)+", whose refined field "+field+" "+why)
+	}
+	for _, field := range fields {
+		if l.accessorName(field) {
+			return nil, nil, l.notYet(node, "a checked predicate target "+l.checker.TypeToString(target)+" whose refined field "+field+" a getter may answer")
+		}
+	}
+	if err := l.brandedSupertypeViews(node, source, base); err != nil {
+		return nil, nil, err
+	}
+	if _, err := l.view(node, nil, source, target); err != nil {
+		return nil, nil, err
+	}
+	l.viewSources[len(l.viewSources)-1].narrows = true
+	var setup []ir.Statement
+	result := censusCondition(value)
+	for _, field := range fields {
+		property := l.checker.GetPropertyOfType(target, field)
+		if property == nil {
+			return nil, nil, family(field, "the intersection doesn't declare")
+		}
+		// The checker's type for an intersection's property distributes over each part's union, so it can
+		// hold a member that intersects two tagged types into an empty one, Identifier & StringLiteral here,
+		// which no value is: reduced, it's gone, and each member left has a check of its own.
+		refined := enumTagReducedType(l.checker, l.checker.GetTypeOfSymbol(property))
+		held, known := l.kept(refined)
+		if !known || slotless(held) {
+			return nil, nil, family(field, "has no held representation")
+		}
+		read := ir.Property{Object: value, Name: field, Of: held, View: "predicate argument." + field, ViewType: l.checker.TypeToString(refined)}
+		statements, test, err := l.predicateMembership(node, read, refined, refined, local, depth+1)
+		if err != nil {
+			return nil, nil, family(field, "has no check: "+err.Error())
+		}
+		setup = append(setup, statements...)
+		result = ir.Binary{Operator: ir.And, Left: result, Right: test}
+	}
+	return setup, result, nil
 }
 
 func (l *lowering) registerBrandedSupertypeViews(node *ast.Node, source, target *checker.Type) error {
