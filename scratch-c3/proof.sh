@@ -70,6 +70,8 @@ PY
 	grep -E "_test.go:[0-9]+:" "$TMPDIR/step.log" | head -20
 fi
 if [ "$part" = d ]; then
+	# The census products read the TypeScript source, which must be the job's own copy (sandboxed_typescript_source).
+	step "typescript source" sandboxed_typescript_source
 	whole "lower whole" go test -count=1 -timeout 40m ./internal/lower/
 fi
 if [ "$part" = b ]; then
