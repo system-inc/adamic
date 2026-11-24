@@ -227,6 +227,165 @@ go build -work -o "$TMPDIR/probe" .
 	}
 }
 
+// sandboxed-job.sh gives the job's TMPDIR to the scratch's own tmp where the runner names LOOM_JOB_SCRATCH, made 0700 and
+// the job's, so every temporary directory a job makes lands on the scratch's disk: internal/native's adamic-build-*,
+// adamic-units-* and adamic-runtime-headers-* filled Lunatic's 16 GB /tmp held in memory while its scratch sat nearly
+// empty (J-54dascs; #7k79mkn). A scratch's tmp that resolves inside the tree keeps the caller's TMPDIR and says so, and
+// where the runner names no scratch TMPDIR stays the caller's. The test sources the script twice in a temporary tree,
+// under `umask 022`, makes a directory with mktemp -d between, and reads TMPDIR after each source; TMPDIR is set
+// outright, so both reads agree.
+//
+// Mutants: the `export TMPDIR="$sandboxedJobTemporary"` line dropped (red on the scratch beside the tree, its TMPDIR the
+// caller's); the `case` that refuses a path inside the tree dropped, so it always exports (red on the link into the
+// tree, its TMPDIR the link); `chmod 0700` dropped (red on the scratch beside the tree's mode, since `umask 022` leaves
+// mkdir's 0755); the chmod moved ahead of the refusal (red on the link into the tree, whose inside turns 0700).
+func TestSandboxedJobGivesTheScratchItsTemporaryDirectory(t *testing.T) {
+	t.Parallel()
+	script, err := filepath.Abs("sandboxed-job.sh")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, test := range []struct {
+		name string
+		// scratch names LOOM_JOB_SCRATCH; linked makes the scratch's tmp a link to a directory inside the tree before the
+		// source; stays is what the output says where TMPDIR stays the caller's, or "" where nothing says it stays.
+		scratch bool
+		linked  bool
+		stays   string
+	}{
+		{"the runner names a scratch beside the tree", true, false, ""},
+		{"the runner names no scratch", false, false, ""},
+		{"the scratch's tmp is a link into the tree", true, true, "resolves inside the tree"},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+			directory := t.TempDir()
+			tree, outside := filepath.Join(directory, "tree"), filepath.Join(directory, "outside")
+			for _, made := range []string{tree, outside} {
+				if err := os.Mkdir(made, 0o755); err != nil {
+					t.Fatal(err)
+				}
+			}
+			scratch, temporary := filepath.Join(outside, "scratch"), filepath.Join(outside, "tmp")
+			if test.linked {
+				inside := filepath.Join(tree, "inside")
+				for _, made := range []string{inside, scratch} {
+					if err := os.Mkdir(made, 0o755); err != nil {
+						t.Fatal(err)
+					}
+				}
+				if err := os.Symlink(inside, filepath.Join(scratch, "tmp")); err != nil {
+					t.Fatal(err)
+				}
+			}
+			command := toolchain.Command("bash", "-c", `umask 022
+. "$SANDBOXED_JOB_SCRIPT" || exit 1
+printf 'tmpdir=%s\n' "$TMPDIR"
+made=$(mktemp -d) || exit 1
+printf 'made=%s\n' "$made"
+. "$SANDBOXED_JOB_SCRIPT" || exit 1
+printf 'tmpdir-again=%s\n' "$TMPDIR"
+`)
+			if command.Err != nil {
+				t.Fatal(command.Err)
+			}
+			command.Dir = tree
+			environment := command.Env
+			if environment == nil {
+				environment = os.Environ()
+			}
+			kept := make([]string, 0, len(environment)+3)
+			for _, variable := range environment {
+				name, _, _ := strings.Cut(variable, "=")
+				switch name {
+				case "TMPDIR", "LOOM_JOB_SCRATCH", "ADAMIC_BUILD_CACHE_DIR", "GOTMPDIR":
+				default:
+					kept = append(kept, variable)
+				}
+			}
+			kept = append(kept, "SANDBOXED_JOB_SCRIPT="+script, "TMPDIR="+temporary)
+			if test.scratch {
+				kept = append(kept, "LOOM_JOB_SCRATCH="+scratch)
+			}
+			command.Env = kept
+			output, err := command.CombinedOutput()
+			said := string(output)
+			if err != nil {
+				t.Fatalf("bash: %v\n%s", err, said)
+			}
+			values := map[string]string{}
+			for _, line := range strings.Split(said, "\n") {
+				for _, key := range []string{"tmpdir", "made", "tmpdir-again"} {
+					if found, ok := strings.CutPrefix(line, key+"="); ok {
+						values[key] = found
+					}
+				}
+			}
+			for _, key := range []string{"tmpdir", "made", "tmpdir-again"} {
+				if values[key] == "" {
+					t.Fatalf("want a %s line, got:\n%s", key, said)
+				}
+			}
+			if values["tmpdir-again"] != values["tmpdir"] {
+				t.Errorf("TMPDIR is %s after the first source and %s after the second, want one value:\n%s", values["tmpdir"],
+					values["tmpdir-again"], said)
+			}
+			want := temporary
+			if test.scratch && !test.linked {
+				want = filepath.Join(scratch, "tmp")
+			}
+			resolvedWant, err := filepath.EvalSymlinks(want)
+			if err != nil {
+				t.Fatalf("the TMPDIR wanted, %s, wasn't made: %v\n%s", want, err, said)
+			}
+			resolved, err := filepath.EvalSymlinks(values["tmpdir"])
+			if err != nil {
+				t.Fatalf("TMPDIR %s wasn't made: %v\n%s", values["tmpdir"], err, said)
+			}
+			if resolved != resolvedWant {
+				t.Errorf("TMPDIR is %s, want %s:\n%s", values["tmpdir"], want, said)
+			}
+			// mktemp -d keeps the directory, so it resolves, and t.TempDir's cleanup takes it with the rest
+			resolvedMade, err := filepath.EvalSymlinks(values["made"])
+			if err != nil {
+				t.Fatalf("mktemp -d's %s wasn't kept: %v\n%s", values["made"], err, said)
+			}
+			if !strings.HasPrefix(resolvedMade, resolvedWant+string(filepath.Separator)) {
+				t.Errorf("mktemp -d made %s, want it under %s:\n%s", values["made"], want, said)
+			}
+			if test.stays != "" {
+				if !strings.Contains(said, test.stays) {
+					t.Errorf("want %q said, got:\n%s", test.stays, said)
+				}
+				// The refusal comes before any chmod, so the directory inside the tree keeps its own mode.
+				if test.linked {
+					info, err := os.Stat(filepath.Join(tree, "inside"))
+					if err != nil {
+						t.Fatal(err)
+					}
+					if info.Mode().Perm() != 0o755 {
+						t.Errorf("the tree's inside is %v after the source, want 0755 left alone", info.Mode())
+					}
+				}
+				return
+			}
+			if strings.Contains(said, "TMPDIR stays") {
+				t.Errorf("want nothing said of TMPDIR staying, got:\n%s", said)
+			}
+			if !test.scratch {
+				return
+			}
+			info, err := os.Stat(want)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if !info.IsDir() || info.Mode().Perm() != 0o700 {
+				t.Errorf("the scratch's tmp %s is %v, want a directory of mode 0700", want, info.Mode())
+			}
+		})
+	}
+}
+
 // sandboxed_products gives its go test no clock but the job's own ceiling: go's default 10 minutes killed internal/oracle's
 // products before they settled on Lunatic's 8 cores (Library's J-1xphvcc, routed by Runtime on #jobs), so a slow box
 // read as the head's red. The test sources the script in a temporary tree beside a stand-in go that lists one product
