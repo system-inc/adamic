@@ -92,15 +92,13 @@ func enumerationReachRefusedAs(t *testing.T, name, extension, held, main string)
 }
 
 // Object.values and Object.entries of a const literal, Object.values of a parameter (the checked
-// enumeration, which asks the rule a second time), encodeJson, and Object.keys of a shape with an
-// optional field (the fallback road objectKeys hands to objectCall), beside a class whose getter no
-// enumerated value can hold: each lowers and agrees with Node, where the program-wide scan refused all
-// five. Mutant WholeGraph (every accessor reaches) turns it red.
+// enumeration, which asks the rule a second time), and Object.keys of a shape with an optional field
+// (the fallback road objectKeys hands to objectCall), beside a class whose getter no enumerated value can
+// hold: each lowers and agrees with Node, where the program-wide scan refused all four. Mutant WholeGraph
+// (every accessor reaches) turns it red. encodeJson's road is TestEnumerationReachUnrelatedEncodeLowers.
 func TestEnumerationReachUnrelatedGetterLowers(t *testing.T) {
 	t.Parallel()
-	const main = `import { encodeJson } from 'adamic';
-import { Temperature } from './held.a';
-interface Point { x: number; y: number }
+	const main = `import { Temperature } from './held.a';
 const point = { x: 1, y: 2 };
 function total(shape: { readonly x: number; readonly y: number }): number {
   let sum = 0;
@@ -112,13 +110,28 @@ function total(shape: { readonly x: number; readonly y: number }): number {
 console.log(Object.values(point).join(','));
 for (const [key, value] of Object.entries(point)) console.log(` + "`${key}:${value}`" + `);
 console.log(String(total(point)));
-const reading: Point = { x: 3, y: 4 };
-console.log(encodeJson<Point>(reading));
 const partial: { x: number; y?: number } = { x: 5 };
 console.log(Object.keys(partial).join(','));
 console.log(String(new Temperature().celsius));
 `
-	enumerationReachAgrees(t, "unrelated", enumerationReachTemperature, main, "1,2\nx:1\ny:2\n3\n{\"x\":3,\"y\":4}\nx\n27\n")
+	enumerationReachAgrees(t, "unrelated", enumerationReachTemperature, main, "1,2\nx:1\ny:2\n3\nx\n27\n")
+}
+
+// encodeJson beside the same unrelated getter lowers and prints the encoding natively. It's held to
+// native output alone, not to Node: oracle/node.mjs compiles oracle/json_types.go with go run for every
+// source naming encodeJson unless ADAMIC_JSON_TYPES names a prebuilt one, which internal/oracle's tests
+// build and internal/lower's don't, so a Node run here spent its ten-second agreement deadline compiling
+// on an eight-core box (four checks on Golem and Pupa). Mutant WholeGraph turns it red too.
+func TestEnumerationReachUnrelatedEncodeLowers(t *testing.T) {
+	t.Parallel()
+	const main = "import { encodeJson } from 'adamic';\nimport { Temperature } from './held.a';\ninterface Point { x: number; y: number }\nconst reading: Point = { x: 3, y: 4 };\nconsole.log(encodeJson<Point>(reading));\nconsole.log(String(new Temperature().celsius));\n"
+	_, program, err := enumerationReachLower(t, ".a", enumerationReachTemperature, main)
+	if err != nil {
+		t.Fatalf("enumeration reach row unrelated encode was refused: %v", err)
+	}
+	if code, out, errs := brandedNative(t, program); code != 0 || out != "{\"x\":3,\"y\":4}\n27\n" {
+		t.Fatalf("enumeration reach row unrelated encode natively: exit=%d stdout=%q stderr=%q", code, out, errs)
+	}
 }
 
 // Object.values of a parameter typed as a union of two object shapes with number values, beside the
