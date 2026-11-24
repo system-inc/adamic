@@ -298,12 +298,15 @@ func (l *lowering) objectCastCause(source, target *checker.Type) castCause {
 // refinedField is the first field a field-refinement downcast reads narrower, or "" when the cast is none
 // (Adamic's item 19 on #bbssdcy): present, the target without its nullish members, is a plain object with no
 // index, call or construct signature; source is an object, or an intersection of objects, so it holds no
-// primitive, type parameter or nullish member; present is assignable to source; and some field of present holds a
-// type assignable to source's for that field, but not the reverse. That it widens none of source's writable fields
-// is objectCastCause's order, which asks castWidenedTarget first, and a target that does keeps that refusal: no
-// view can hold its claim once source writes the wider value. tsc's toBuilderStateFileInfoForMultiEmit
-// (builder.ts:2233 in TypeScript 6.0.3) is one: its source is an Omit<...> & { readonly signature } in the adapted
-// tree, which castRoad's structural view doesn't take, since that view wants a source that is one object.
+// primitive, type parameter or nullish member; present is assignable to source; every property of present is a
+// data property, as is each one source holds of the same name, never a method or an accessor; and some field of
+// present holds a type assignable to source's for that field, but not the reverse. Item 19 rules a field read
+// narrower, so a method that returns something narrower (lib's Promise seen over PromiseLike, whose then does) is
+// none, and keeps main's sentence. That it widens none of source's writable fields is objectCastCause's order,
+// which asks castWidenedTarget first, and a target that does keeps that refusal: no view can hold its claim once
+// source writes the wider value. tsc's toBuilderStateFileInfoForMultiEmit (builder.ts:2233 in TypeScript 6.0.3) is
+// one: its source is an Omit<...> & { readonly signature } in the adapted tree, which castRoad's structural view
+// doesn't take, since that view wants a source that is one object.
 func (l *lowering) refinedField(source, present *checker.Type) string {
 	if present.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(present) || len(l.checker.GetIndexInfosOfType(present)) != 0 || l.castSignatures(present) {
 		return ""
@@ -320,17 +323,22 @@ func (l *lowering) refinedField(source, present *checker.Type) string {
 	if !l.checker.IsTypeAssignableTo(present, source) {
 		return ""
 	}
+	const notField = ast.SymbolFlagsMethod | ast.SymbolFlagsGetAccessor | ast.SymbolFlagsSetAccessor
+	field := ""
 	for _, property := range l.checker.GetPropertiesOfType(present) {
 		inside := l.checker.GetPropertyOfType(source, property.Name)
-		if inside == nil {
+		if property.Flags&notField != 0 || inside != nil && inside.Flags&notField != 0 {
+			return ""
+		}
+		if inside == nil || field != "" {
 			continue
 		}
 		read, held := l.checker.GetTypeOfSymbol(property), l.checker.GetTypeOfSymbol(inside)
 		if l.checker.IsTypeAssignableTo(read, held) && !l.checker.IsTypeAssignableTo(held, read) {
-			return property.Name
+			field = property.Name
 		}
 	}
-	return ""
+	return field
 }
 
 // distinctTagField is whether some field holds a literal in every member, each apart from the others, as
