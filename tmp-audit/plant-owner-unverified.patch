@@ -1,0 +1,12 @@
+diff --git a/stage3/verdict/compiler_process.py b/stage3/verdict/compiler_process.py
+--- a/stage3/verdict/compiler_process.py
++++ b/stage3/verdict/compiler_process.py
+@@ -206,7 +206,7 @@
+     verified = False
+     try:
+         pid = os.getpid()
+-        start_time = verified_process_start_time(pid)
++        start_time = process_start_time(pid)
+         if start_time is None:
+             raise ValueError('cannot open the cleanup owner process handle')
+         owner = {'pid': pid, 'start_time': start_time,

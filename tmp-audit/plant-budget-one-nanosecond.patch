@@ -1,0 +1,13 @@
+diff --git a/stage3/lane/python_test.go b/stage3/lane/python_test.go
+--- a/stage3/lane/python_test.go
++++ b/stage3/lane/python_test.go
+@@ -554,7 +554,8 @@
+ func runPythonCommand(t testing.TB, directory string, environment []string, arguments ...string) []byte {
+ 	t.Helper()
+ 	root := repositoryRoot(t)
+-	ctx, cancel, limit := pythonUnitContext(directory)
++	limit := 30 * time.Second
++	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second+time.Nanosecond)
+ 	defer cancel()
+ 	if observer, ok := t.(interface{ observePythonUnitContext(context.Context) }); ok {
+ 		observer.observePythonUnitContext(ctx)

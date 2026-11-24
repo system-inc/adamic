@@ -1,0 +1,11 @@
+diff --git a/stage3/verdict/test_verdict.py b/stage3/verdict/test_verdict.py
+--- a/stage3/verdict/test_verdict.py
++++ b/stage3/verdict/test_verdict.py
+@@ -459,6 +459,7 @@
+                 self.assertEqual(result.returncode, 0)
+                 pid = int((folder / 'stdout').read_text())
+                 self.assertFalse(Path(f'/proc/{pid}').exists())
++                os.kill(pid, 0)
+                 child.send_signal(signal.SIGTERM)
+                 self.assertEqual(child.wait(timeout=5), -signal.SIGTERM)
+                 print(f'detached child reaped, recorder forwarded SIGTERM to its own child {own_pid}',

@@ -1,0 +1,23 @@
+diff --git a/stage3/verdict/compiler_process.py b/stage3/verdict/compiler_process.py
+--- a/stage3/verdict/compiler_process.py
++++ b/stage3/verdict/compiler_process.py
+@@ -121,9 +121,16 @@
+         raise ValueError('receipt PID namespace differs from the reader PID namespace')
+     if owner['state'] == 'released':
+         return owner, 'released'
+-    current_start_time = verified_process_start_time(pid, allow_thread_reuse=True)
+-    if current_start_time is None:
+-        return owner, 'dead'
++    try:
++        current_start_time = process_start_time(pid)
++    except (FileNotFoundError, ProcessLookupError):
++        # A filtered procfs may hide an existing PID in this namespace.
++        try:
++            fd = os.pidfd_open(pid)
++        except ProcessLookupError:
++            return owner, 'dead'
++        os.close(fd)
++        raise ValueError('owner PID exists but its procfs identity cannot be read')
+     return owner, 'alive' if current_start_time == start_time else 'dead'
+ 
+ 

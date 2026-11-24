@@ -1,0 +1,14 @@
+diff --git a/stage3/verdict/compiler_process.py b/stage3/verdict/compiler_process.py
+--- a/stage3/verdict/compiler_process.py
++++ b/stage3/verdict/compiler_process.py
+@@ -38,10 +38,6 @@
+         if allow_thread_reuse and error.errno in (errno.EINVAL, errno.ENOENT):
+             prove_non_leader_thread(pid)
+             return None
+-        if error.errno == errno.ENOSYS:
+-            raise ValueError('the host has no pidfds (ENOSYS)') from error
+-        if error.errno == errno.EMFILE:
+-            raise ValueError('the process reached its descriptor limit (EMFILE)') from error
+         raise ValueError(f'cannot open a process handle for PID {pid}: {error}') from error
+     try:
+         with os.fdopen(fd, 'rb', buffering=0):

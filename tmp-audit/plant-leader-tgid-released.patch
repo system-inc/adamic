@@ -1,0 +1,12 @@
+diff --git a/stage3/verdict/compiler_process.py b/stage3/verdict/compiler_process.py
+--- a/stage3/verdict/compiler_process.py
++++ b/stage3/verdict/compiler_process.py
+@@ -74,8 +74,6 @@
+     group = int(groups[0])
+     if group <= 0:
+         raise ValueError(f'status for PID {pid} has no valid Tgid')
+-    if group == pid:
+-        raise ValueError(f'status Tgid equals PID {pid}; process identity cannot be proven')
+ 
+ 
+ def read_boot_id():
