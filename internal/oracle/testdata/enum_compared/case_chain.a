@@ -1,0 +1,22 @@
+// a1 (#snypn8c, c3): a case chain over a const local proves the write into a slot of those members, as
+// parseTypeOperatorOrHigher's `case KeyOfKeyword: case UniqueKeyword: case ReadonlyKeyword:` does
+// (parser.ts:4754).
+enum K { A, B, C, D }
+function kindOf(n: number): K {
+	return n;
+}
+function take(x: K.A | K.B): string {
+	return "took " + String(x);
+}
+function operator(n: number): string {
+	const op = kindOf(n);
+	switch (op) {
+		case K.A:
+		case K.B:
+			return take(op);
+		case K.C:
+			return "c";
+	}
+	return "other " + String(op);
+}
+console.log(operator(0) + ", " + operator(1) + ", " + operator(2) + ", " + operator(3) + ", " + operator(7));

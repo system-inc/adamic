@@ -1,0 +1,16 @@
+// s1 (#snypn8c, c3): excluding members by !== leaves every other number in, so t is still open.
+enum K { A, B, C, D }
+function kindOf(n: number): K {
+	return n;
+}
+function take(x: K.A | K.B): string {
+	return "took " + String(x);
+}
+function excluded(n: number): string {
+	const t = kindOf(n);
+	if (t !== K.C && t !== K.D) {
+		return take(t);
+	}
+	return "skip";
+}
+console.log(excluded(0) + ", " + excluded(7));
