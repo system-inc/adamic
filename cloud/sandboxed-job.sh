@@ -8,7 +8,12 @@
 # step that fails, so the `&&` stops the job before its command. One step exits instead: sandboxed_repositories on a
 # tree the runner's lay didn't lay is the box's gap, and ends the job with 3 however the caller chained it. A rented
 # machine runs the job in a laid tree with no .git, an empty HOME at /tmp/home and a read-only /opt/adamic-block, so:
-#   - TMPDIR is made, since the job's tools write there first;
+#   - TMPDIR is made, since the job's tools write there first. Where the runner names a scratch it is the scratch's
+#     own tmp, made 0700 and the job's, so every temporary directory a job makes lands on the scratch's disk, never a
+#     house box's 16 GB /tmp held in memory: internal/native's adamic-build-*, adamic-units-* and
+#     adamic-runtime-headers-* filled Lunatic's while its 73 GB scratch sat nearly empty (J-54dascs; Adamic Loom's road
+#     on #7k79mkn). A path that doesn't read, isn't the job's or resolves inside the tree keeps the caller's TMPDIR and
+#     says so on stderr. It is set outright, never built from TMPDIR, so a job that sources this twice gets one value;
 #   - the build cache (ADAMIC_BUILD_CACHE_DIR) and the TypeScript copy live outside the tree, in LOOM_JOB_SCRATCH where
 #     the runner names one (the job's own directory on the tree's data disk) and in TMPDIR where it doesn't: a walker
 #     that reads every file under $PWD never meets the kit's own files (internal/acheck read the cache's runtime.a as
@@ -48,6 +53,27 @@ mkdir -p "$sandboxedJobScratch" || sandboxedJobFail "couldn't make the job's scr
 case "$(cd "$sandboxedJobScratch" && pwd -P)/" in
 	"$(pwd -P)"/*) sandboxedJobFail "the job's scratch $sandboxedJobScratch is inside the tree $PWD" || return 1 ;;
 esac
+# Every temporary directory on the scratch's disk where the runner names one (#7k79mkn): the scratch's own tmp, made
+# 0700 and owned by the job, and refused like the scratch itself when it resolves inside the tree. Anything that doesn't
+# hold keeps the caller's TMPDIR, and stderr says which and why.
+if [ -n "${LOOM_JOB_SCRATCH:-}" ]; then
+	sandboxedJobTemporary="$sandboxedJobScratch/tmp"
+	# Resolved before anything is changed on it, so a tmp that links into the tree is never chmodded there.
+	if ! mkdir -p "$sandboxedJobTemporary" 2> /dev/null; then
+		echo "sandboxed-job: TMPDIR stays $TMPDIR: couldn't make $sandboxedJobTemporary" >&2
+	else
+		case "$(cd "$sandboxedJobTemporary" && pwd -P)/" in
+			"$(pwd -P)"/*) echo "sandboxed-job: TMPDIR stays $TMPDIR: $sandboxedJobTemporary resolves inside the tree $PWD" >&2 ;;
+			*)
+				if [ ! -O "$sandboxedJobTemporary" ] || ! chmod 0700 "$sandboxedJobTemporary" 2> /dev/null || [ ! -w "$sandboxedJobTemporary" ]; then
+					echo "sandboxed-job: TMPDIR stays $TMPDIR: $sandboxedJobTemporary isn't the job's own, 0700" >&2
+				else
+					export TMPDIR="$sandboxedJobTemporary"
+				fi
+				;;
+		esac
+	fi
+fi
 export ADAMIC_BUILD_CACHE_DIR="$sandboxedJobScratch/adamic-build"
 mkdir -p "$ADAMIC_BUILD_CACHE_DIR" || sandboxedJobFail "couldn't make the build cache $ADAMIC_BUILD_CACHE_DIR" || return 1
 # Go's $WORK on the scratch's disk, never the memory-backed /tmp a house box's TMPDIR sits on (#7k79mkn). Only where the
