@@ -1,0 +1,96 @@
+{
+    "src/compiler/commandLineParser.ts": [
+        {
+            "owner": "convertConfigFileToObject",
+            "kind": "Parameter",
+            "before": "errors: Pick<DiagnosticWithLocation[], \"push\">",
+            "after": "appendDiagnostic: (diagnostic: DiagnosticWithLocation) => void"
+        },
+        {
+            "owner": "convertToJson",
+            "kind": "Parameter",
+            "before": "errors: Pick<DiagnosticWithLocation[], \"push\">",
+            "after": "appendDiagnostic: (diagnostic: DiagnosticWithLocation) => void"
+        },
+        {
+            "owner": "parseConfigFileTextToJson",
+            "kind": "Block",
+            "before": "{\r\n    const jsonSourceFile = parseJsonText(fileName, jsonText);\r\n    return {\r\n        config: convertConfigFileToObject(jsonSourceFile, jsonSourceFile.parseDiagnostics, /*jsonConversionNotifier*/ undefined),\r\n        error: jsonSourceFile.parseDiagnostics.length ? jsonSourceFile.parseDiagnostics[0] : undefined,\r\n    };\r\n}",
+            "after": "{\r\n    const jsonSourceFile = parseJsonText(fileName, jsonText);\r\n    const parseDiagnostics = jsonSourceFile.parseDiagnostics;\r\n    return {\r\n        config: convertConfigFileToObject(jsonSourceFile, d => parseDiagnostics.push(d), /*jsonConversionNotifier*/ undefined),\r\n        error: jsonSourceFile.parseDiagnostics.length ? jsonSourceFile.parseDiagnostics[0] : undefined,\r\n    };\r\n}"
+        },
+        {
+            "owner": "convertConfigFileToObject",
+            "kind": "CallExpression",
+            "before": "errors.push(createDiagnosticForNodeInSourceFile(\r\n            sourceFile,\r\n            rootExpression,\r\n            Diagnostics.The_root_value_of_a_0_file_must_be_an_object,\r\n            getBaseFileName(sourceFile.fileName) === \"jsconfig.json\" ? \"jsconfig.json\" : \"tsconfig.json\",\r\n        ))",
+            "after": "appendDiagnostic(createDiagnosticForNodeInSourceFile(\r\n            sourceFile,\r\n            rootExpression,\r\n            Diagnostics.The_root_value_of_a_0_file_must_be_an_object,\r\n            getBaseFileName(sourceFile.fileName) === \"jsconfig.json\" ? \"jsconfig.json\" : \"tsconfig.json\",\r\n        ))"
+        },
+        {
+            "owner": "convertConfigFileToObject",
+            "kind": "CallExpression",
+            "before": "convertToJson(sourceFile, firstObject, errors, /*returnValue*/ true, jsonConversionNotifier)",
+            "after": "convertToJson(sourceFile, firstObject, appendDiagnostic, /*returnValue*/ true, jsonConversionNotifier)"
+        },
+        {
+            "owner": "convertConfigFileToObject",
+            "kind": "CallExpression",
+            "before": "convertToJson(sourceFile, rootExpression, errors, /*returnValue*/ true, jsonConversionNotifier)",
+            "after": "convertToJson(sourceFile, rootExpression, appendDiagnostic, /*returnValue*/ true, jsonConversionNotifier)"
+        },
+        {
+            "owner": "convertToObject",
+            "kind": "CallExpression",
+            "before": "convertToJson(sourceFile, sourceFile.statements[0]?.expression, errors, /*returnValue*/ true, /*jsonConversionNotifier*/ undefined)",
+            "after": "convertToJson(sourceFile, sourceFile.statements[0]?.expression, d => errors.push(d), /*returnValue*/ true, /*jsonConversionNotifier*/ undefined)"
+        },
+        {
+            "owner": "convertObjectLiteralExpressionToJson",
+            "kind": "CallExpression",
+            "before": "errors.push(createDiagnosticForNodeInSourceFile(sourceFile, element, Diagnostics.Property_assignment_expected))",
+            "after": "appendDiagnostic(createDiagnosticForNodeInSourceFile(sourceFile, element, Diagnostics.Property_assignment_expected))"
+        },
+        {
+            "owner": "convertObjectLiteralExpressionToJson",
+            "kind": "CallExpression",
+            "before": "errors.push(createDiagnosticForNodeInSourceFile(sourceFile, element.questionToken, Diagnostics.The_0_modifier_can_only_be_used_in_TypeScript_files, \"?\"))",
+            "after": "appendDiagnostic(createDiagnosticForNodeInSourceFile(sourceFile, element.questionToken, Diagnostics.The_0_modifier_can_only_be_used_in_TypeScript_files, \"?\"))"
+        },
+        {
+            "owner": "convertObjectLiteralExpressionToJson",
+            "kind": "CallExpression",
+            "before": "errors.push(createDiagnosticForNodeInSourceFile(sourceFile, element.name, Diagnostics.String_literal_with_double_quotes_expected))",
+            "after": "appendDiagnostic(createDiagnosticForNodeInSourceFile(sourceFile, element.name, Diagnostics.String_literal_with_double_quotes_expected))"
+        },
+        {
+            "owner": "convertPropertyValueToJson",
+            "kind": "CallExpression",
+            "before": "errors.push(createDiagnosticForNodeInSourceFile(sourceFile, valueExpression, Diagnostics.String_literal_with_double_quotes_expected))",
+            "after": "appendDiagnostic(createDiagnosticForNodeInSourceFile(sourceFile, valueExpression, Diagnostics.String_literal_with_double_quotes_expected))"
+        },
+        {
+            "owner": "convertPropertyValueToJson",
+            "kind": "CallExpression",
+            "before": "errors.push(createDiagnosticForNodeInSourceFile(sourceFile, valueExpression, Diagnostics.Compiler_option_0_requires_a_value_of_type_1, option.name, getCompilerOptionValueTypeString(option)))",
+            "after": "appendDiagnostic(createDiagnosticForNodeInSourceFile(sourceFile, valueExpression, Diagnostics.Compiler_option_0_requires_a_value_of_type_1, option.name, getCompilerOptionValueTypeString(option)))"
+        },
+        {
+            "owner": "convertPropertyValueToJson",
+            "kind": "CallExpression",
+            "before": "errors.push(createDiagnosticForNodeInSourceFile(sourceFile, valueExpression, Diagnostics.Property_value_can_only_be_string_literal_numeric_literal_true_false_null_object_literal_or_array_literal))",
+            "after": "appendDiagnostic(createDiagnosticForNodeInSourceFile(sourceFile, valueExpression, Diagnostics.Property_value_can_only_be_string_literal_numeric_literal_true_false_null_object_literal_or_array_literal))"
+        },
+        {
+            "owner": "parseOwnConfigOfJsonSourceFile",
+            "kind": "CallExpression",
+            "before": "convertConfigFileToObject(\r\n        sourceFile,\r\n        errors,\r\n        { rootOptions, onPropertySet },\r\n    )",
+            "after": "convertConfigFileToObject(\r\n        sourceFile,\r\n        d => errors.push(d),\r\n        { rootOptions, onPropertySet },\r\n    )"
+        }
+    ],
+    "src/compiler/parser.ts": [
+        {
+            "owner": "parseSourceFile",
+            "kind": "Block",
+            "before": "{\r\n            const result = parseJsonText(fileName, sourceText, languageVersion, syntaxCursor, setParentNodes);\r\n            convertToJson(result, result.statements[0]?.expression, result.parseDiagnostics, /*returnValue*/ false, /*jsonConversionNotifier*/ undefined);\r\n            result.referencedFiles = emptyArray;\r\n            result.typeReferenceDirectives = emptyArray;\r\n            result.libReferenceDirectives = emptyArray;\r\n            result.amdDependencies = emptyArray;\r\n            result.hasNoDefaultLib = false;\r\n            result.pragmas = emptyMap as ReadonlyPragmaMap;\r\n            return result;\r\n        }",
+            "after": "{\r\n            const result = parseJsonText(fileName, sourceText, languageVersion, syntaxCursor, setParentNodes);\r\n            const rootExpression = result.statements[0]?.expression;\r\n            const parseDiagnostics = result.parseDiagnostics;\r\n            convertToJson(result, rootExpression, d => parseDiagnostics.push(d), /*returnValue*/ false, /*jsonConversionNotifier*/ undefined);\r\n            result.referencedFiles = emptyArray;\r\n            result.typeReferenceDirectives = emptyArray;\r\n            result.libReferenceDirectives = emptyArray;\r\n            result.amdDependencies = emptyArray;\r\n            result.hasNoDefaultLib = false;\r\n            result.pragmas = emptyMap as ReadonlyPragmaMap;\r\n            return result;\r\n        }"
+        }
+    ]
+}
