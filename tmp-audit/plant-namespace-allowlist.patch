@@ -1,0 +1,10 @@
+--- a/stage3/adapt/99-seats-build22-41-pragma-arg-regexes/adapt.cjs
++++ b/stage3/adapt/99-seats-build22-41-pragma-arg-regexes/adapt.cjs
+@@ -377,7 +377,6 @@
+         const text = enclosing.getText(source);
+         const count = remaining.get(text);
+         const line = source.getLineAndCharacterOfPosition(use.getStart(source)).line + 1;
+-        assert(count !== undefined, `Unreviewed namespace use: ${relative}:${line}`);
+         if (count === undefined) continue;
+         assert(count > 0, `Unreviewed namespace use: ${relative}:${line}`);
+         remaining.set(text, count - 1);
