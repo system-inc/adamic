@@ -75,7 +75,7 @@ const sysAdminCapability = 21
 
 // closedProofWith is how root is proven closed to the process reads describes, as unpackedTreeState's record names it,
 // or why it isn't (Loom's ruling on #3z7bv9q). Either root is on a read-only mount and so is every mount at or under
-// it (readOnlyMountProof), or nothing under root can be written by the process nor made writable by it (noWriteProof).
+// it or of its part of the filesystem (readOnlyMountProof), or nothing under root can be written by the process nor made writable by it (noWriteProof).
 func closedProofWith(root string, reads closureReads) (string, error) {
 	mountError := readOnlyMountProof(root, reads)
 	if mountError == nil {
@@ -88,7 +88,8 @@ func closedProofWith(root string, reads closureReads) (string, error) {
 }
 
 // readOnlyMountProof is why root isn't proven on a read-only mount, or nil when it is: its own mount is read-only, and
-// so is every mount at or under it, by mountinfo, a mount below root being one statfs on root never sees. Root's links
+// so is every mount at or under it and every other mount of its part of the filesystem, by mountinfo (mountsReadOnly),
+// each one a mount statfs on root never sees. Root's links
 // are resolved first, as mountinfo names every mount point resolved; mountinfo that can't be read proves nothing. A
 // process holding CAP_SYS_ADMIN could remount the tree read-write, write and remount it read-only again, so a mount
 // proves nothing to it, and capabilities that can't be read prove nothing either.
@@ -118,10 +119,23 @@ func readOnlyMountProof(root string, reads closureReads) error {
 	return mountsReadOnly(filepath.Clean(resolved), mountInfo)
 }
 
-// mountsReadOnly is why some mount at or under root, a resolved and clean path, isn't read-only, or nil when every one
-// is. Each line of mountInfo is one mount: its fifth field the mount point, its sixth the mount's own options, ro or rw
-// among them. "Under" is by whole path components (under), so /src-other is no mount under /src.
+// A mountLine is one line of /proc/self/mountinfo, as mountsReadOnly reads it: its third field, the filesystem's
+// device (major:minor), its fourth, the directory of that filesystem mounted, its fifth, the mount point, and its
+// sixth, the mount's own options, ro or rw among them. The two paths are unescaped and clean.
+type mountLine struct {
+	device, filesystemRoot, point, options string
+}
+
+// mountsReadOnly is why root, a resolved and clean path, can be written through some mount, or nil when it can't. Every
+// mount at or under root must be read-only, and so must every mount of root's own filesystem that reaches root's part
+// of it: a read-only bind of /var/lib/job/tree proves nothing while its filesystem is mounted read-write at
+// /var/lib/job, through which every file is rewritten. Root's own mount is the one at the longest mount point root is at
+// or under (of two at one point, the later, mounted over the earlier, is the one root's path reaches), and with none,
+// nothing is proven. A mount of the same device reaches root's part when the directory it mounts is root's directory
+// in the filesystem, above it or inside it. "Under" is by whole path components (under), so /src-other is no mount
+// under /src.
 func mountsReadOnly(root string, mountInfo []byte) error {
+	var mounts []mountLine
 	for _, line := range strings.Split(string(mountInfo), "\n") {
 		if line == "" {
 			continue
@@ -130,9 +144,32 @@ func mountsReadOnly(root string, mountInfo []byte) error {
 		if len(fields) < 6 {
 			return fmt.Errorf("/proc/self/mountinfo holds a line it can't read: %q", line)
 		}
-		point := filepath.Clean(unescapeMountPoint(fields[4]))
-		if under(point, root) && !slices.Contains(strings.Split(fields[5], ","), "ro") {
-			return fmt.Errorf("%s is mounted %s", point, fields[5])
+		mounts = append(mounts, mountLine{device: fields[2], filesystemRoot: filepath.Clean(unescapeMountPoint(fields[3])),
+			point: filepath.Clean(unescapeMountPoint(fields[4])), options: fields[5]})
+	}
+	own := -1
+	for index, mount := range mounts {
+		if under(root, mount.point) && (own < 0 || len(mount.point) >= len(mounts[own].point)) {
+			own = index
+		}
+	}
+	if own < 0 {
+		return fmt.Errorf("/proc/self/mountinfo names no mount %s is on", root)
+	}
+	relative, err := filepath.Rel(mounts[own].point, root)
+	if err != nil {
+		return err
+	}
+	rootInFilesystem := filepath.Join(mounts[own].filesystemRoot, relative)
+	for _, mount := range mounts {
+		if slices.Contains(strings.Split(mount.options, ","), "ro") {
+			continue
+		}
+		if under(mount.point, root) {
+			return fmt.Errorf("%s is mounted %s", mount.point, mount.options)
+		}
+		if mount.device == mounts[own].device && (under(mount.filesystemRoot, rootInFilesystem) || under(rootInFilesystem, mount.filesystemRoot)) {
+			return fmt.Errorf("%s mounts the filesystem %s is on %s", mount.point, root, mount.options)
 		}
 	}
 	return nil
@@ -162,7 +199,9 @@ func unescapeMountPoint(escaped string) string {
 // own file writable again; every entry is asked, links and all. And the kernel answers that the process may write no
 // directory and no regular file under root, the manifest included, since a test that could rewrite .tracked could move
 // the very heads the record holds. A link's own text changes only through its directory, which is asked, and nothing
-// else under root (a socket, a device) holds any of the tree's content.
+// else under root (a socket, a device) holds any of the tree's content. One blind spot is named rather than closed: a
+// link under root whose target is outside it lets what is read through the link change at the target, which no entry
+// under root shows. The git path has the same spot, since status sees a link's text and never its target's change.
 func noWriteProof(root string, reads closureReads) error {
 	status, err := reads.status()
 	if err != nil {
