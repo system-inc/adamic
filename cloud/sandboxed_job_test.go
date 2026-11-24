@@ -121,6 +121,112 @@ printf 'cache=%s\ncopy=%s\n' "$ADAMIC_BUILD_CACHE_DIR" "$ADAMIC_TYPESCRIPT_SOURC
 	}
 }
 
+// sandboxed-job.sh puts Go's work directory ($WORK, where every action of a build writes its scratch files) under
+// LOOM_JOB_SCRATCH where the runner names one. go makes it under GOTMPDIR, else TMPDIR, and a house box's TMPDIR is a
+// 16 GB /tmp held in memory, which stage1/cohere/markdownblocks' oracle builds filled while the job's scratch on the data
+// disk sat empty (J-3y63xbt, J-ramwydp; #7k79mkn). Where the runner names none, GOTMPDIR stays the caller's (unset
+// here) and go works under TMPDIR as before. The test sources the script in a temporary tree holding a module of one
+// empty main, runs a real `go build -work` there with GOTOOLCHAIN=local and nothing to fetch, and reads the WORK= line go
+// prints on stderr.
+//
+// Mutant: the GOTMPDIR export dropped (the scratch case red, its WORK under TMPDIR).
+func TestSandboxedJobGivesGoTheScratchToWorkIn(t *testing.T) {
+	t.Parallel()
+	script, err := filepath.Abs("sandboxed-job.sh")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, test := range []struct {
+		name    string
+		scratch bool
+	}{
+		{"the runner names a scratch beside the tree", true},
+		{"the runner names no scratch", false},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+			directory := t.TempDir()
+			tree, outside := filepath.Join(directory, "tree"), filepath.Join(directory, "outside")
+			for _, made := range []string{tree, outside} {
+				if err := os.Mkdir(made, 0o755); err != nil {
+					t.Fatal(err)
+				}
+			}
+			module := map[string]string{"go.mod": "module example.invalid/probe\n\ngo 1.22\n", "main.go": "package main\n\nfunc main() {}\n"}
+			for name, content := range module {
+				if err := os.WriteFile(filepath.Join(tree, name), []byte(content), 0o644); err != nil {
+					t.Fatal(err)
+				}
+			}
+			scratch, temporary := filepath.Join(outside, "scratch"), filepath.Join(outside, "tmp")
+			command := toolchain.Command("bash", "-c", `. "$SANDBOXED_JOB_SCRIPT" || exit 1
+if [ -n "${GOTMPDIR+set}" ]; then echo "gotmpdir=$GOTMPDIR"; else echo "gotmpdir unset"; fi
+go build -work -o "$TMPDIR/probe" .
+`)
+			if command.Err != nil {
+				t.Fatal(command.Err)
+			}
+			command.Dir = tree
+			environment := command.Env
+			if environment == nil {
+				environment = os.Environ()
+			}
+			// The caller's GOFLAGS, workspace, toolchain policy and shared cache (GOCACHEPROG, which may read a store
+			// over HTTP) are left out, so the build reads its own module and the local release's standard library alone.
+			kept := make([]string, 0, len(environment)+8)
+			for _, variable := range environment {
+				name, _, _ := strings.Cut(variable, "=")
+				switch name {
+				case "TMPDIR", "GOTMPDIR", "LOOM_JOB_SCRATCH", "ADAMIC_BUILD_CACHE_DIR", "GOFLAGS", "GOWORK", "GOTOOLCHAIN", "GOPROXY", "GOCACHEPROG":
+				default:
+					if !strings.HasPrefix(name, "ADAMIC_GOCACHE_") {
+						kept = append(kept, variable)
+					}
+				}
+			}
+			kept = append(kept, "SANDBOXED_JOB_SCRIPT="+script, "TMPDIR="+temporary, "GOFLAGS=-buildvcs=false", "GOWORK=off", "GOTOOLCHAIN=local",
+				"GOPROXY=off")
+			if test.scratch {
+				kept = append(kept, "LOOM_JOB_SCRATCH="+scratch)
+			}
+			command.Env = kept
+			output, err := command.CombinedOutput()
+			said := string(output)
+			if err != nil {
+				t.Fatalf("bash: %v\n%s", err, said)
+			}
+			work := ""
+			for _, line := range strings.Split(said, "\n") {
+				if found, ok := strings.CutPrefix(line, "WORK="); ok {
+					work = found
+				}
+			}
+			if work == "" {
+				t.Fatalf("want go's WORK= line, got:\n%s", said)
+			}
+			// -work keeps the directory, so it resolves, and t.TempDir's cleanup takes it with the rest
+			resolved, err := filepath.EvalSymlinks(work)
+			if err != nil {
+				t.Fatalf("go's work directory %s wasn't kept: %v", work, err)
+			}
+			want := temporary
+			if test.scratch {
+				want = scratch
+			}
+			resolvedWant, err := filepath.EvalSymlinks(want)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if !strings.HasPrefix(resolved, resolvedWant+string(filepath.Separator)) {
+				t.Errorf("go worked in %s, want it under %s:\n%s", work, want, said)
+			}
+			if !test.scratch && !strings.Contains(said, "gotmpdir unset") {
+				t.Errorf("want GOTMPDIR left unset where the runner names no scratch, got:\n%s", said)
+			}
+		})
+	}
+}
+
 // sandboxed_products gives its go test no clock but the job's own ceiling: go's default 10 minutes killed internal/oracle's
 // products before they settled on Lunatic's 8 cores (Library's J-1xphvcc, routed by Runtime on #jobs), so a slow box
 // read as the head's red. The test sources the script in a temporary tree beside a stand-in go that lists one product

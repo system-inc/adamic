@@ -14,6 +14,10 @@
 #     that reads every file under $PWD never meets the kit's own files (internal/acheck read the cache's runtime.a as
 #     programs, CLI's J-0pmqbfg; Adamic's rule on #qee4r6g), and internal/native's debug products refuse the home cache
 #     (Apple's J-7me59b7 and J-8xkd55x);
+#   - Go's work directory goes there too where the runner names a scratch (GOTMPDIR): go makes it under GOTMPDIR, else
+#     TMPDIR, and a house box's TMPDIR is a 16 GB /tmp held in memory, which stage1/cohere/markdownblocks' oracle
+#     builds filled while the scratch sat empty (J-3y63xbt, J-ramwydp; #7k79mkn). Where the runner names none, GOTMPDIR
+#     stays the caller's;
 #   - npm's logs go under it, since /opt/adamic-block/npmcache/_logs is read-only (WebAssembly);
 #   - sandboxed_git gives the job a one-commit git of the tree as laid, for a mutant script that restores a file with
 #     `git show HEAD:<file>` or reads `git status`. It costs about 27 s over adamic's tree (Loom's J-a5zgp8d), so only a
@@ -46,6 +50,12 @@ case "$(cd "$sandboxedJobScratch" && pwd -P)/" in
 esac
 export ADAMIC_BUILD_CACHE_DIR="$sandboxedJobScratch/adamic-build"
 mkdir -p "$ADAMIC_BUILD_CACHE_DIR" || sandboxedJobFail "couldn't make the build cache $ADAMIC_BUILD_CACHE_DIR" || return 1
+# Go's $WORK on the scratch's disk, never the memory-backed /tmp a house box's TMPDIR sits on (#7k79mkn). Only where the
+# runner names a scratch: else it would be TMPDIR again, and the caller's GOTMPDIR is left as it was.
+if [ -n "${LOOM_JOB_SCRATCH:-}" ]; then
+	export GOTMPDIR="$sandboxedJobScratch/go-tmp"
+	mkdir -p "$GOTMPDIR" || sandboxedJobFail "couldn't make Go's work directory $GOTMPDIR" || return 1
+fi
 export npm_config_logs_dir="$TMPDIR/npm-logs"
 mkdir -p "$npm_config_logs_dir" || sandboxedJobFail "couldn't make npm's log directory $npm_config_logs_dir" || return 1
 # A git identity for any commit the job makes itself (the meter commits its run; adamic-loom on #zwzer5f), since HOME is
