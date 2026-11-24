@@ -8,6 +8,7 @@
 // A mode named refuse_ or for a broken overwrite stops in the primitive, and the test reads its words.
 #include "adamic.h"
 #include "graph_regions.h"
+#include "json_stringify.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -33,6 +34,16 @@ static const char *const p01_names[] = {"kind", "value"};
 static const bool p01_references[] = {true, false};
 static const adamic_field_kind p01_kinds[] = {adamic_field_reference, adamic_field_number};
 static const adamic_shape p01_shape = {2, p01_names, p01_references, NULL, p01_kinds};
+
+// p01's reverse, a number over a reference slot: { kind: 'Holder', value: 'v' }.
+static const char *const reverse_names[] = {"kind", "value"};
+static const bool reverse_references[] = {true, true};
+static const adamic_field_kind reverse_kinds[] = {adamic_field_reference, adamic_field_reference};
+static const adamic_shape reverse_shape = {2, reverse_names, reverse_references, NULL, reverse_kinds};
+
+// A constructed source that wrote a and never wrote b.
+static const char *const kept_names[] = {"a", "b"};
+static const adamic_shape kept_shape = {2, kept_names, reverse_references, NULL, reverse_kinds};
 
 // moduleNameResolver.ts 245:77's two sources of Resolved: :140's has no originalPath, and :2774's holds it
 // in slot 3, written as undefined or never written.
@@ -177,6 +188,18 @@ static void print(const char *label, adamic_object *object) {
 	adamic_release(keys);
 }
 
+// json prints JSON.stringify of a result, for the modes whose program prints one (with_json).
+static bool with_json;
+static void json(adamic_object *object) {
+	static const adamic_json_schema any = {.kind = adamic_json_union};
+	adamic_value empty = {.reference = NULL};
+	adamic_string *printed = adamic_json_stringify_objects((adamic_value){.reference = object}, &any, empty, NULL, empty, NULL);
+	fputs("json ", stdout);
+	print_string(printed);
+	putchar('\n');
+	adamic_release(printed);
+}
+
 static void has(const adamic_object *object, const char *name) {
 	printf("has %s %s\n", name, adamic_has_property(&object->heap, name) ? "true" : "false");
 }
@@ -209,6 +232,7 @@ static adamic_object *witness(const adamic_object *source, const adamic_spread_o
 	adamic_object *result = adamic_object_spread_with(source, overwrites, count);
 	print("result", result);
 	if (probe != NULL) has(result, probe);
+	if (with_json) json(result);
 	layout(result);
 	if (held) {
 		print("source", (adamic_object *)source);
@@ -217,6 +241,15 @@ static adamic_object *witness(const adamic_object *source, const adamic_spread_o
 	}
 	return result;
 }
+
+// kept_source is a constructed source holding a, its b reserved and never written.
+static adamic_object *kept_source(void) {
+	adamic_object *source = adamic_object_construct(&kept_shape);
+	set_written(source, 0, (adamic_value){.reference = text("x")}, adamic_ir_String);
+	return source;
+}
+
+static const adamic_spread_overwrite appended_c = {"c", adamic_field_number, adamic_ir_Number, {.number = 1}};
 
 static adamic_object *number_source(double number) {
 	adamic_object *source = adamic_object_new(&k_number);
@@ -352,6 +385,10 @@ static void region(bool program) {
 int main(int argc, char **argv) {
 	if (argc != 2) return 2;
 	const char *mode = argv[1];
+	static const char *const json_modes[] = {"optional_string_absent", "p01", "p01_reverse", "resolver_2774_absent", "absent_kept"};
+	for (size_t index = 0; index < sizeof json_modes / sizeof json_modes[0]; index++) {
+		if (strcmp(mode, json_modes[index]) == 0) with_json = true;
+	}
 	if (seats(mode)) {
 		adamic_object *source = seat(mode);
 		adamic_object *result = witness(source, &undefined_k, 1, "k");
@@ -376,6 +413,23 @@ int main(int argc, char **argv) {
 		adamic_maybe_boolean picked = {strcmp(mode, "p01_true") == 0, true};
 		adamic_spread_overwrite value = {"value", adamic_field_number, adamic_ir_MaybeBoolean, {.maybe_boolean = adamic_maybe_boolean_pack(picked)}};
 		adamic_release(witness(source, &value, 1, "value"));
+		adamic_release(source);
+	} else if (strcmp(mode, "p01_reverse") == 0) {
+		// Memory's must 2: a number over a reference slot never retains the string it replaces.
+		adamic_object *source = adamic_object_new(&reverse_shape);
+		source->slots[0].reference = text("Holder");
+		adamic_object_field_types(source)[0] = adamic_ir_String;
+		source->slots[1].reference = text("v");
+		adamic_object_field_types(source)[1] = adamic_ir_String;
+		adamic_spread_overwrite value = {"value", adamic_field_number, adamic_ir_Number, {.number = 1234.5678}};
+		adamic_release(witness(source, &value, 1, "value"));
+		adamic_release(source);
+	} else if (strcmp(mode, "absent_kept") == 0) {
+		// Memory's must 1: a field the source never wrote stays absent in the result, and a name appended
+		// after it comes after the source's own keys.
+		adamic_object *source = kept_source();
+		adamic_object *result = witness(source, &appended_c, 1, "b");
+		adamic_release(result);
 		adamic_release(source);
 	} else if (strcmp(mode, "resolver_140") == 0 || strcmp(mode, "resolver_2774_undefined") == 0 || strcmp(mode, "resolver_2774_absent") == 0) {
 		adamic_object *source = resolver_source(strcmp(mode, "resolver_140") != 0, strcmp(mode, "resolver_2774_undefined") == 0);
@@ -454,12 +508,13 @@ int main(int argc, char **argv) {
 		region(false);
 	} else if (strcmp(mode, "program_source") == 0) {
 		region(true);
-	} else if (strcmp(mode, "graph_result_complete") == 0 || strcmp(mode, "graph_result_written") == 0) {
+	} else if (strcmp(mode, "graph_result_complete") == 0 || strcmp(mode, "graph_result_written") == 0 || strcmp(mode, "graph_result_absent") == 0) {
 		// Memory's seam: a result adopted into a graph region moves by its allocation size, its write
-		// order with it, and frees with its region.
-		bool written = strcmp(mode, "graph_result_written") == 0;
-		adamic_object *source = written ? resolver_source(true, false) : number_source(1);
-		adamic_object *result = written ? resolved(source, false) : adamic_object_spread_with(source, &undefined_k, 1);
+		// order with it, and frees with its region. Its keys are read after the move, so a write order
+		// left aimed at the freed original reads freed memory.
+		bool written = strcmp(mode, "graph_result_written") == 0, absent = strcmp(mode, "graph_result_absent") == 0;
+		adamic_object *source = written ? resolver_source(true, false) : absent ? kept_source() : number_source(1);
+		adamic_object *result = written ? resolved(source, false) : absent ? adamic_object_spread_with(source, &appended_c, 1) : adamic_object_spread_with(source, &undefined_k, 1);
 		result = adamic_graph_adopt(result, adamic_object_allocation_size(result));
 		print("result", result);
 		layout(result);

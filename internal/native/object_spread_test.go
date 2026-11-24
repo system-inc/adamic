@@ -27,7 +27,10 @@ import (
 // result's allocation size and every slot's kind, representation byte, initialized byte and write order,
 // under ASan and UBSan, and counted, where its allocations must be its frees.
 //
-// Runtime's four conditions are rows too: a NULL source and &adamic_null both an empty one; an overwrite
+// Memory's two musts are rows too: absent_kept, a constructed source's unwritten field kept absent with a
+// name appended after its keys, by Object.keys and JSON.stringify, and graph_result_absent, that result
+// adopted into a graph region and read after the move; p01 and p01_reverse, a scalar over a scalar and a
+// number over a reference, balanced. Runtime's four conditions are rows too: a NULL source and &adamic_null both an empty one; an overwrite
 // whose kind and byte don't describe its value stopping in the primitive; a source in a graph region and
 // one in the Program region read and never written, their references retained into a heap result that
 // outlives them; and a thousand spreads over one layout interning one shape, by the counted build's
@@ -43,7 +46,14 @@ import (
 //   - an overwritten slot's representation byte taken from the source: p01 reads a MaybeBoolean as a number;
 //   - an overwritten slot's kind taken from the source: width reads a number as a pointer, and
 //     number_source stops reading undefined as a scalar;
-//   - the kind and byte invariant dropped: wrong_byte stops later, in other words.
+//   - the kind and byte invariant dropped: wrong_byte stops later, in other words;
+//   - the result always made by adamic_object_new, never constructed (Memory's must 1): absent_kept shows
+//     the field its source never wrote, and resolver_2774_absent orders originalPath by its slot;
+//   - a slot an overwrite takes copied from the source anyway, retained by the result's reference bit
+//     (Memory's must 2): number_source retains a number's bits as a pointer;
+//   - that copy retained by the source's bit instead: p01_reverse retains the string the number replaces,
+//     and the counts go unbalanced. With the skip in place the two bits agree on every slot copied, so
+//     this mutant drops the skip too, or it changes nothing.
 
 // objectSpreadMode is one mode of the harness: its oracle.js mode, or the words it stops with, and its
 // layout lines, the counted build's alone marked by an "interned" line.
@@ -58,6 +68,12 @@ type objectSpreadMode struct {
 var (
 	objectSpreadSeat        = []string{"layout: size 66 complete", "layout: k kind 2 byte 13 initialized 1 order -"}
 	objectSpreadSeatWritten = []string{"layout: size 72 written", "layout: k kind 2 byte 13 initialized 1 order 0"}
+	objectSpreadKept        = []string{
+		"layout: size 104 written",
+		"layout: a kind 2 byte 3 initialized 1 order 0",
+		"layout: b kind 2 byte 0 initialized 0 order absent",
+		"layout: c kind 0 byte 1 initialized 1 order 1",
+	}
 	objectSpreadWritten2774 = []string{
 		"layout: size 144 written",
 		"layout: path kind 2 byte 3 initialized 1 order 0",
@@ -83,6 +99,8 @@ var objectSpreadModes = []objectSpreadMode{
 	{name: "width_method", layout: []string{"layout: size 84 complete", "layout: a kind 0 byte 1 initialized 1 order -", "layout: k kind 2 byte 8 initialized 1 order -"}},
 	{name: "p01", layout: []string{"layout: size 84 complete", "layout: kind kind 2 byte 3 initialized 1 order -", "layout: value kind 0 byte 9 initialized 1 order -"}},
 	{name: "p01_true", layout: []string{"layout: size 84 complete", "layout: kind kind 2 byte 3 initialized 1 order -", "layout: value kind 0 byte 9 initialized 1 order -"}},
+	{name: "p01_reverse", layout: []string{"layout: size 84 complete", "layout: kind kind 2 byte 3 initialized 1 order -", "layout: value kind 0 byte 1 initialized 1 order -"}},
+	{name: "absent_kept", layout: objectSpreadKept},
 	{name: "resolver_140", layout: []string{
 		"layout: size 138 complete",
 		"layout: path kind 2 byte 3 initialized 1 order -",
@@ -114,6 +132,7 @@ var objectSpreadModes = []objectSpreadMode{
 	{name: "program_source", program: true, layout: []string{"layout: size 102 complete", "layout: held kind 2 byte 4 initialized 1 order -", "layout: label kind 2 byte 3 initialized 1 order -", "layout: count kind 0 byte 1 initialized 1 order -"}},
 	{name: "graph_result_complete", layout: objectSpreadSeat},
 	{name: "graph_result_written", layout: objectSpreadWritten2774},
+	{name: "graph_result_absent", layout: objectSpreadKept},
 	{name: "refuse_record", stop: "NotYet: spread of record storage"},
 	{name: "refuse_host", stop: "NotYet: a spread with overwrites of a runtime library value (a host or groups object)"},
 	{name: "refuse_groups", stop: "NotYet: a spread with overwrites of a runtime library value (a host or groups object)"},
@@ -141,6 +160,12 @@ var objectSpreadMutations = []struct {
 	{"published-in-slot-order", [][2]string{{"\t\tadamic_object_publish(result, index);\n", "\t\tif (result->write_order != NULL) result->write_order[index] = index;\n"}}, []string{"resolver_2774_absent"}},
 	{"byte-from-source", [][2]string{{"\t\tadamic_object_field_types(result)[index] = overwrites[at].representation;\n", "\t\tadamic_object_field_types(result)[index] = index < held && adamic_object_present(source, index) ? adamic_object_field_type(source, index) : overwrites[at].representation;\n"}}, []string{"p01"}},
 	{"kind-from-source", [][2]string{{"\t\tkinds[index] = overwrites[at].kind;\n", "\t\tif (index >= held) kinds[index] = overwrites[at].kind;\n"}}, []string{"width", "number_source"}},
+	{"always-object-new", [][2]string{{"\tadamic_object *result = ordered ? adamic_object_construct(shape) : adamic_object_new(shape);\n\tif (ordered) memcpy(result->write_order, source->write_order, held * sizeof(size_t));\n", "\tadamic_object *result = adamic_object_new(shape);\n"}}, []string{"absent_kept", "resolver_2774_absent"}},
+	{"replaced-slot-copied", [][2]string{{"if (taken[index] || !adamic_object_present(source, index)) continue;", "if (!adamic_object_present(source, index)) continue;"}}, []string{"number_source"}},
+	{"retain-by-source-bit", [][2]string{
+		{"if (taken[index] || !adamic_object_present(source, index)) continue;", "if (!adamic_object_present(source, index)) continue;"},
+		{"if (shape->references[index]) adamic_retain(found->reference);", "if (base->references[index]) adamic_retain(found->reference);"},
+	}, []string{"p01_reverse"}},
 	{"invariant-dropped", [][2]string{{"\t\tif (agrees(&overwrites[at])) continue;\n", "\t\tcontinue;\n"}}, []string{"wrong_byte"}},
 }
 

@@ -19,10 +19,14 @@ function print(label, object) {
   for (const key of keys) console.log(` ${key}=${show(Reflect.get(Object(object), key, object))}`);
 }
 
+// The modes whose program prints JSON.stringify of its result.
+const jsonModes = new Set(['optional_string_absent', 'p01', 'p01_reverse', 'resolver_2774_absent', 'absent_kept']);
+
 function witness(source, spread, probe) {
   const result = spread(source);
   print('result', result);
   if (probe !== undefined) console.log(`has ${probe} ${probe in result}`);
+  if (jsonModes.has(mode)) console.log(`json ${JSON.stringify(result)}`);
   if (source !== undefined && source !== null) {
     print('source', source);
     console.log('source unchanged');
@@ -57,6 +61,8 @@ const modes = {
   width_method: () => witness({ a: 1, k: 'x' }, (source) => ({ ...source, k() { return 5; } })),
   p01: () => witness({ kind: 'Holder', value: 1234.5678 }, (source) => ({ ...source, value: undefined }), 'value'),
   p01_true: () => witness({ kind: 'Holder', value: 1234.5678 }, (source) => ({ ...source, value: true }), 'value'),
+  p01_reverse: () => witness({ kind: 'Holder', value: 'v' }, (source) => ({ ...source, value: 1234.5678 }), 'value'),
+  absent_kept: () => witness({ a: 'x' }, (source) => ({ ...source, c: 1 }), 'b'),
   resolver_140: () => witness(resolved140(), resolved),
   resolver_2774_undefined: () => witness(resolved2774(), resolved),
   resolver_2774_absent: () => witness(resolved140(), resolved),
@@ -79,6 +85,7 @@ const modes = {
   program_source: region,
   graph_result_complete: () => print('result', undefinedK({ k: 1 })),
   graph_result_written: () => print('result', resolved(resolved140())),
+  graph_result_absent: () => print('result', { ...{ a: 'x' }, c: 1 }),
 };
 
 if (!(mode in modes)) throw new Error(`no mode ${mode}`);

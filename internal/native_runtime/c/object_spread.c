@@ -216,7 +216,9 @@ adamic_object *adamic_object_spread_with(const adamic_object *source, const adam
 		result->slots[index] = *found;
 		adamic_object_initialized(result)[index] = adamic_object_initialized(owner)[at];
 		adamic_object_field_types(result)[index] = adamic_object_field_type(owner, at);
-		if (base->references[index]) adamic_retain(found->reference);
+		// Retained by the result's bit, which is the source's here: a slot an overwrite takes is skipped above,
+		// so a reference it replaces is never retained, and a number it replaces never read as one.
+		if (shape->references[index]) adamic_retain(found->reference);
 	}
 	for (size_t at = 0; at < count; at++) {
 		size_t index = slots[at];
