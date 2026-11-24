@@ -1152,9 +1152,18 @@ adamic_object *adamic_collection_iterator_planned(adamic_map *collection, int pa
 // The result is a plain counted object, never adopted into a region.
 adamic_object *adamic_iterator_result(adamic_field_kind kind, bool present, adamic_value element, unsigned char element_tag);
 // adamic_collection_iterator_is says whether a value is an iterator adamic_collection_iterator made:
-// an object of the iterator shape whose next is a collection's, never a string's iterator, which
-// shares the shape. An iterable view's dispatch asks it (ir.IsCollectionIterator).
+// an object of a Map's or a Set's iterator shape whose next is a collection's, never a string's
+// iterator, which has a shape of its own. An iterable view's dispatch asks it (ir.IsCollectionIterator).
 bool adamic_collection_iterator_is(const void *value);
+// adamic_object_tag is Object.prototype.toString's answer for a library object with a tag of its own, judged by
+// the value, never its type (ir.ObjectTag, #eksbz4c head T): a Map's, a Set's or a string's iterator's by its
+// shape's address, a matchAll iterator's by regexp.c's, a WeakMap's or a WeakSet's by its kind and set flag, and a
+// Promise's by its kind. Any other value, NULL among them, answers NULL, whose tag is Object. map_set.c's
+// object_tags is the one native spelling of a library tag, held to ir.LibraryObjectTags, the Go one, by
+// TestRuntimeObjectTagsAreIRs. The string is an immortal literal.
+adamic_string *adamic_object_tag(const void *value);
+// adamic_object_to_string is adamic_object_tag's answer, or "[object Object]" where it's NULL.
+adamic_string *adamic_object_to_string(const void *value);
 // adamic_intl_collator_new is new Intl.Collator(locale, tsc's options), locale borrowed and NULL for
 // undefined: an owned host object whose compare closure stops when called, and which stops itself
 // for a defined locale (library_intl.c, #zjndrx5).
@@ -1702,6 +1711,8 @@ void adamic_weak_thread_end(void);
 // value is let go of (adamic_weak_forget).
 typedef struct adamic_weak_map adamic_weak_map;
 adamic_weak_map *adamic_weak_map_new(bool set, bool reference_values);
+// adamic_weak_map_set_is says whether a weak collection is a WeakSet, as adamic_weak_map_new was told.
+bool adamic_weak_map_set_is(const adamic_weak_map *map);
 adamic_weak *adamic_weak_key(void *key);
 adamic_weak *adamic_weak_key_find(const void *key);
 bool adamic_weak_map_lookup(adamic_weak_map *map, const adamic_weak *key, adamic_value *value);

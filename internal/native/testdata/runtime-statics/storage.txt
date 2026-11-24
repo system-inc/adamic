@@ -140,6 +140,10 @@
 # Shape metadata a result registers so a run-time key read sees a plain object: union.c's
 # adamic_register_shape_types writes next and registered once, under its lock, and nothing after.
 `map_set.c:result_metadata:1`
+# adamic_object_tag's answers, Object.prototype.toString's text for each library tag and Object's, are immortal
+# ADAMIC_STRING literals (references=0): retain and release leave them unchanged, so they hold no mutable shared state.
+`map_set.c:object_tags:1`
+`map_set.c:object_tag_object:1`
 `maybe.c:adamic_string_undefined:1`
 `node_fs_file.c:cache:1`
 `node_fs_file.c:cache:2`
