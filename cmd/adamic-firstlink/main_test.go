@@ -55,18 +55,24 @@ func TestWriteUnderStaysInItsDirectory(t *testing.T) {
 
 // The report counts every trap by phase, kind and reason, and counts the traps lower couldn't place in a unit, which
 // traps.md names as a measurement gap.
-// A site under the root's directory is written relative to it; one outside it, or with no path, stays as it came.
-// Mutant: relativeSites returning traps unchanged, red.
-func TestSitesAreRelativeToTheRoot(t *testing.T) {
+// Sites are written relative to the deepest directory holding the root and every site, so a program rooted at
+// src/tsc/tsc.ts reads its src/compiler sites as compiler/...; a site with no path stays as it came, and so does every
+// site when the only directory they share is the filesystem's root. Mutant: relativeSites returning traps
+// unchanged, red.
+func TestSitesAreRelativeToTheProgramsCommonDirectory(t *testing.T) {
 	t.Parallel()
-	root := t.TempDir()
-	placed := relativeSites(root, []ir.Trap{
-		{Site: filepath.Join(root, "src", "a.ts") + ":3:5"},
-		{Site: "/elsewhere/b.ts:1:1"},
+	tree := t.TempDir()
+	placed := relativeSites(filepath.Join(tree, "src", "tsc"), []ir.Trap{
+		{Site: filepath.Join(tree, "src", "compiler", "checker.ts") + ":3:5"},
+		{Site: filepath.Join(tree, "src", "tsc", "tsc.ts") + ":1:1"},
 		{Site: "a.ts:2:2"},
 	})
-	if placed[0].Site != "src/a.ts:3:5" || placed[1].Site != "/elsewhere/b.ts:1:1" || placed[2].Site != "a.ts:2:2" {
+	if placed[0].Site != "compiler/checker.ts:3:5" || placed[1].Site != "tsc/tsc.ts:1:1" || placed[2].Site != "a.ts:2:2" {
 		t.Fatalf("relativeSites: %+v", placed)
+	}
+	apart := relativeSites(filepath.Join(tree, "src"), []ir.Trap{{Site: filepath.Join(tree, "src", "a.ts") + ":1:1"}, {Site: "/b.ts:1:1"}})
+	if apart[0].Site != filepath.Join(tree, "src", "a.ts")+":1:1" || apart[1].Site != "/b.ts:1:1" {
+		t.Fatalf("sites sharing only the filesystem's root must stay as they came: %+v", apart)
 	}
 }
 
@@ -77,9 +83,10 @@ func TestReportCountsAndNamesTheGap(t *testing.T) {
 		{Kind: "Refused", Reason: "sort without a comparator", Site: "a.a:9:5", Unit: "a.a third", Phase: "Body"},
 		{Kind: "NotYet", Reason: "a pass's stop", Site: "a.a:12:1", Unit: "", Phase: "checkSlotWrites"},
 		{Kind: "Panic", Reason: "index out of range", Site: "a.a:20:1", Unit: "a.a fourth", Phase: "Body", Suspect: true},
+		{Kind: "NotYet", Reason: "an echo", Site: "a.a:21:1", Unit: "a.a fourth", Phase: "findCycles", Echo: true},
 	}
-	counted := summarize(traps)
-	if counted.Total != 4 || counted.Suspect != 1 || counted.ByPhase["Body"] != 3 || counted.ByPhase["checkSlotWrites"] != 1 || counted.ByKind["Refused"] != 2 ||
+	counted := summarize(traps, []string{"normalizeAsync"})
+	if counted.Total != 5 || counted.Suspect != 1 || counted.Echo != 1 || len(counted.RewritesSkipped) != 1 || counted.ByPhase["Body"] != 3 || counted.ByPhase["checkSlotWrites"] != 1 || counted.ByKind["Refused"] != 2 ||
 		counted.ByReason["Refused: sort without a comparator"] != 2 || counted.Unplaced != 1 {
 		t.Fatalf("summarize: %+v", counted)
 	}
@@ -90,12 +97,12 @@ func TestReportCountsAndNamesTheGap(t *testing.T) {
 	if !strings.HasPrefix(text, "Findings: "+findingsRule+".") {
 		t.Errorf("traps.md must open with the findings rule:\n%s", text)
 	}
-	for _, want := range []string{"4 traps, 1 of them unplaced", ", 1 of them suspect", "## Body, 3", "| 2 | Refused | sort without a comparator | a.a:3:5 |", "## checkSlotWrites, 1"} {
+	for _, want := range []string{"5 traps, 1 of them unplaced", ", 1 of them suspect", ", 1 of them echoes", "Rewrites skipped past a stop, in order: normalizeAsync.", "## Body, 3", "| 2 | Refused | sort without a comparator | a.a:3:5 |", "## checkSlotWrites, 1"} {
 		if !strings.Contains(text, want) {
 			t.Errorf("traps.md lacks %q:\n%s", want, text)
 		}
 	}
-	if empty := summarize(nil); empty.Traps == nil || empty.Total != 0 {
+	if empty := summarize(nil, nil); empty.Traps == nil || empty.RewritesSkipped == nil || empty.Total != 0 {
 		t.Fatalf("no traps should write an empty list, not null: %+v", empty)
 	}
 }
