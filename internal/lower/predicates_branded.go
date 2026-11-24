@@ -145,8 +145,8 @@ func (l *lowering) brandedRefinement(target *checker.Type) (*checker.Type, []str
 // intersection's id, which the base's view doesn't serve (brandedIntersectionReceiver aliases only a meet
 // with the base's supertypes, and a required refinement of an optional field isn't one).
 func (l *lowering) brandedRefinementMembership(node *ast.Node, value ir.Expression, source, target, base *checker.Type, fields []string, local func(string, ir.Type) int, depth int) ([]ir.Statement, ir.Expression, error) {
-	family := func() error {
-		return l.notYet(node, "checked predicate overload target "+l.checker.TypeToString(target))
+	family := func(field, why string) error {
+		return l.notYet(node, "checked predicate overload target "+l.checker.TypeToString(target)+", whose refined field "+field+" "+why)
 	}
 	for _, field := range fields {
 		if l.accessorName(field) {
@@ -165,17 +165,17 @@ func (l *lowering) brandedRefinementMembership(node *ast.Node, value ir.Expressi
 	for _, field := range fields {
 		property := l.checker.GetPropertyOfType(target, field)
 		if property == nil {
-			return nil, nil, family()
+			return nil, nil, family(field, "the intersection doesn't declare")
 		}
 		refined := l.checker.GetTypeOfSymbol(property)
 		held, known := l.kept(refined)
 		if !known || slotless(held) {
-			return nil, nil, family()
+			return nil, nil, family(field, "has no held representation")
 		}
 		read := ir.Property{Object: value, Name: field, Of: held, View: "predicate argument." + field, ViewType: l.checker.TypeToString(refined)}
 		statements, test, err := l.predicateMembership(node, read, refined, refined, local, depth+1)
 		if err != nil {
-			return nil, nil, family()
+			return nil, nil, family(field, "has no check: "+err.Error())
 		}
 		setup = append(setup, statements...)
 		result = ir.Binary{Operator: ir.And, Left: result, Right: test}
