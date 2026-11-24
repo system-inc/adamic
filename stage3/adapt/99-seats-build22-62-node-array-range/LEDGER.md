@@ -1,0 +1,1 @@
+- **JavaScript-changing NodeArray range write (#bbssdcy, family 62, Nov 22 split):** 99-seats-build22-62-node-array-range copies the two coordinates to the factory result in the setter's read and write order and returns that object by identity. Built by a Seats Codex lane, read by review-l and then by CLI (rounds 4 and 5).
