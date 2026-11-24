@@ -182,6 +182,8 @@ var rangeMoves = []rangeUnionExample{
 	{ir.Void{}, "evaluates its operand and reads nothing of it"},
 	{ir.WeakCollectionDelete{}, "drops the entry keyed by the key's weak handle, by identity"},
 	{ir.WeakCollectionHas{}, "tests for the entry keyed by the key's weak handle, by identity"},
+	{ir.WeakMapGet{}, "the entry keyed by the key's weak handle, by identity; its value is a scalar"},
+	{ir.WeakMapSet{}, "keys an entry by the key's weak handle, by identity; its value is a scalar"},
 	{ir.WeakOf{}, "the target's weak handle"},
 	{ir.WeakSetAdd{}, "keys an entry by the key's weak handle, by identity"},
 	{ir.WeakTarget{}, "reads a weak reference"},
