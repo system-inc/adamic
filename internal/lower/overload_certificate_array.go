@@ -581,6 +581,9 @@ func (l *lowering) checkOverloadVerdictCalls(modules []*ast.SourceFile) error {
 		if stop != nil || ast.IsPartOfTypeNode(node) {
 			return stop != nil
 		}
+		if l.firstLinkSkips(node) {
+			return false
+		}
 		if node.Kind == ast.KindCallExpression || node.Kind == ast.KindNewExpression || node.Kind == ast.KindTaggedTemplateExpression {
 			if resolved := l.checker.GetResolvedSignature(node); resolved != nil && !l.overloadVerdictCalls[node] {
 				if judged, err := l.overloadCallJudgment(node, resolved.Declaration()); judged && err != nil && !l.overloadVerdictUninstantiated(node) {

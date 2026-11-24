@@ -1896,6 +1896,11 @@ adamic_object *adamic_write_text_file(const adamic_string *path, const adamic_st
 // adamic_panic writes "adamic: panic: <message>" to stderr and exits 70 (EX_SOFTWARE).
 _Noreturn void adamic_panic(const char *message, size_t length);
 
+// adamic_first_link_trap writes "adamic: first-link trap: <message>" to stderr and exits 75 (EX_TEMPFAIL):
+// the program reached a unit a first-link lowering couldn't lower (lower's Options.FirstLinkTraps), so its
+// run is never a pass.
+_Noreturn void adamic_first_link_trap(const char *bytes, size_t length);
+
 // ADAMIC_CHECK_STACK starts every function the compiler emits: past adamic_stack_limit, the stack is
 // nearly gone, and that's a panic, as Node's RangeError is, rather than a segfault (stack.c). The
 // stack grows down on every processor Adamic targets. __builtin_frame_address is the real frame even

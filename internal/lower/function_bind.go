@@ -473,6 +473,9 @@ func (l *lowering) checkBoundArguments() error {
 	var reach func(ir.Expression) ([]int, bool)
 	var named func(*ast.Node) ([]int, bool)
 	for _, record := range l.closureRecords {
+		if l.firstLinkSkips(record.node) {
+			continue
+		}
 		function := l.result.Functions[record.function]
 		if function.Source.Role != "bound_function" {
 			continue
