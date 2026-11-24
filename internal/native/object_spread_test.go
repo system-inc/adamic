@@ -7,11 +7,11 @@ import (
 	"os/exec"
 	"path/filepath"
 	"slices"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
 
-	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
@@ -242,9 +242,28 @@ func objectSpreadRed(mode objectSpreadMode, node string, counted bool, run objec
 		return fmt.Sprintf("layout %q, want %q", layout, want)
 	}
 	if counted {
-		if report := leakcheck.Unbalanced(leakcheck.Run{Stdout: []byte(run.stdout), Stderr: []byte(run.stderr)}); report != "" {
-			return report
+		return objectSpreadUnbalanced(run.stderr)
+	}
+	return ""
+}
+
+// objectSpreadUnbalanced reads a counted run's last line, as leakcheck.Unbalanced does (which this package
+// can't import): its allocations must be its frees and its values let go of with their regions.
+func objectSpreadUnbalanced(stderr string) string {
+	counts := recordGraphCounts.FindStringSubmatch(stderr)
+	if counts == nil {
+		return "no counts line"
+	}
+	var values [3]int
+	for index := range values {
+		value, err := strconv.Atoi(counts[index+1])
+		if err != nil {
+			return fmt.Sprintf("unreadable counts: %v", err)
 		}
+		values[index] = value
+	}
+	if allocations, frees, regions := values[0], values[1], values[2]; allocations != frees+regions {
+		return fmt.Sprintf("heap values leaked: %d (allocations %d, frees %d, in regions %d)", allocations-frees-regions, allocations, frees, regions)
 	}
 	return ""
 }
