@@ -1,0 +1,33 @@
+# #b5w3ycg union target (a): gofmt, vet, the cast pins in lower, the untagged oracle tests, then the mutant (the gate
+# held to one target again), compiling first, against a head where every pin is green. Source it after the sealed
+# opening and sandboxed_npm stage3/api (it calls sandboxed_products). Never merged.
+L="$TMPDIR/ut"; mkdir -p "$L"; failed=0
+step() { echo "$1 $2"; [ "$1" = PASS ] || failed=1; }
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg)"
+bad=$(gofmt -l internal/lower internal/oracle); if [ -z "$bad" ]; then step PASS gofmt; else step FAIL gofmt; echo "$bad"; fi
+if go vet ./internal/lower/ ./internal/oracle/ > "$L/vet.log" 2>&1; then step PASS vet; else step FAIL vet; head -20 "$L/vet.log"; fi
+lp='^(TestUntaggedUnion.*|TestCastStopNamesItsCause|TestKeepsNullishCast.*|TestDropsNullishCast.*|TestAbsentArmCastsStayRefused)$'
+if go test -count=1 -timeout 30m -v -run "$lp" ./internal/lower/ > "$L/lower.log" 2>&1; then step PASS lower-pins; else step FAIL lower-pins; fi
+grep -E -- '^(--- FAIL|ok|FAIL)|^    --- FAIL|_test.go:[0-9]+.*(want|got|lowered)' "$L/lower.log" | cut -c1-300 | head -20
+if sandboxed_products ./internal/oracle > "$L/products.log" 2>&1; then step PASS products; else step FAIL products; tail -5 "$L/products.log"; fi
+op='^(TestUntaggedUnion.*)$'
+if go test -count=1 -timeout 40m -v -run "$op" ./internal/oracle/ > "$L/oracle.log" 2>&1; then step PASS oracle-pins; else step FAIL oracle-pins; fi
+grep -E -- '^(--- |ok|FAIL)|^    --- |cast_untagged_union_target_test.go:[0-9]+' "$L/oracle.log" | grep -v "gate cache" | cut -c1-300 | head -30
+green() { grep -q -- "--- PASS: TestUntaggedUnionCastLowers/a_union_target " "$1" && grep -q -- "--- PASS: TestUntaggedUnionCastLowers/tsc's_objectFlags_through_a_union_target " "$1"; }
+green "$L/lower.log" && grep -q -- '--- PASS: TestUntaggedUnionTargetCast/honest ' "$L/oracle.log" && grep -q -- '--- PASS: TestUntaggedUnionTargetCast/lie ' "$L/oracle.log" && step PASS union-rows-green-at-head || step FAIL union-rows-green-at-head
+F=internal/lower/cast_untagged_union.go; cp "$F" "$L/orig.go"
+python3 -I - "$F" <<'PY' || step FAIL mutant-applies
+import sys
+p = sys.argv[1]; t = open(p).read()
+old = "if len(members) < 2 || len(targets) == 0 ||"
+assert t.count(old) == 1
+open(p, "w").write(t.replace(old, "if len(members) < 2 || len(targets) != 1 ||"))
+PY
+go test -count=1 -timeout 30m -v -run '^TestUntaggedUnionCastLowers$' ./internal/lower/ > "$L/m-lower.log" 2>&1
+go test -count=1 -timeout 30m -v -run '^TestUntaggedUnionTargetCast$' ./internal/oracle/ > "$L/m-oracle.log" 2>&1
+if grep -q -E '\[build failed\]|declared and not used|undefined:' "$L/m-lower.log" "$L/m-oracle.log"; then step FAIL mutant-compiles; else step PASS mutant-compiles; fi
+grep -E -- '--- FAIL' "$L/m-lower.log" "$L/m-oracle.log" | cut -c1-200 | head -10
+lowerred=$(grep -c -- '    --- FAIL: TestUntaggedUnionCastLowers/' "$L/m-lower.log")
+if [ "$lowerred" = 2 ] && grep -q -- '--- FAIL: TestUntaggedUnionCastLowers/a_union_target ' "$L/m-lower.log" && grep -q -- "--- FAIL: TestUntaggedUnionCastLowers/tsc's_objectFlags_through_a_union_target " "$L/m-lower.log" && grep -q -- '--- FAIL: TestUntaggedUnionTargetCast/honest ' "$L/m-oracle.log" && grep -q -- '--- FAIL: TestUntaggedUnionTargetCast/lie ' "$L/m-oracle.log"; then step PASS mutant-red; else step FAIL mutant-red; echo "lower reds: $lowerred"; fi
+cp "$L/orig.go" "$F"; cmp -s "$L/orig.go" "$F" && step PASS restored || step FAIL restored
+if [ $failed -eq 0 ]; then echo "VERDICT PASS"; else echo "VERDICT FAIL"; fi
