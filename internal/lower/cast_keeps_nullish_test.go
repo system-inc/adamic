@@ -114,10 +114,11 @@ func TestKeepsNullishCastOutsideItsShapeStops(t *testing.T) {
 			"Adamic 0.1 refuses a cast the runtime can't check; "},
 		{"present classes", "class A { readonly n: number = 1; } class B extends A { readonly m: number = 2; } function f(x: A | undefined): B | undefined { return x as B | undefined; }", ".ts",
 			"stage 0 can't lower a checked cast from A | undefined to B | undefined, which keeps undefined yet"},
-		// C narrows A's field to a literal no view can prove, so the untagged arm (#axqgdck) keeps its stop. A cast to
-		// A itself, a member, has the arm's checked view for a road and lowers.
-		{"no present road", "interface A { readonly a: string } interface B { readonly b: string } interface C { readonly a: 'x' } function f(x: A | B | undefined): C | undefined { return x as C | undefined; }", ".ts",
-			"stage 0 can't lower a checked view of C | undefined over the union A | B | undefined, whose members no literal tag tells apart yet"},
+		// CallExpression narrows the members' kind to an enum literal, which the unchecked-widening rule refuses, so
+		// the untagged arm (#axqgdck) keeps its stop. A cast to a member, or to a target narrowing a field to a
+		// string literal (checked where it's read), has the arm's checked view for a road and lowers.
+		{"no present road", "enum SyntaxKind { Identifier = 80, CallExpression = 213, Block = 241 } interface Expression { readonly kind: SyntaxKind; readonly end: number } interface Statement { readonly kind: SyntaxKind; readonly pos: number } interface CallExpression extends Expression { readonly kind: SyntaxKind.CallExpression; readonly argumentCount: number } function f(x: Expression | Statement | undefined): CallExpression | undefined { return x as CallExpression | undefined; }", ".ts",
+			"stage 0 can't lower a checked view of CallExpression | undefined over the union Expression | Statement | undefined, whose members no literal tag tells apart yet"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()

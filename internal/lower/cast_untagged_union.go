@@ -16,9 +16,11 @@ import (
 // (duplicate enum aliases, mixed tag representations, a payload refinement) are rulings this arm keeps.
 //
 // The arm never turns a NotYet into a Refused. A cast the unchecked-widening rule would refuse (widened, as
-// stringWideningRefusal judges a cast) keeps the untagged stop: a target holding a literal at any depth (FlowCall,
-// whose node is a CallExpression of kind SyntaxKind.CallExpression), which nothing at the cast proves, and a
-// readonly field the target makes writable (FlowLabel's antecedent). Those wait for their own road, a tag test at
+// stringWideningRefusal judges a cast) keeps the untagged stop: a target narrowing a field to an enum literal at
+// any depth (FlowCall, whose node is a CallExpression of kind SyntaxKind.CallExpression), and a readonly field the
+// target makes writable (FlowLabel's antecedent). A field the target narrows to a string literal passes that rule
+// and takes the arm: its read through the view is checked against the literal (viewedField's ViewAllowed), as any
+// view's is. Those wait for their own road, a tag test at
 // the cast with a write judgment fitted to a downcast (#qxt10dd; Diagnostics' must on the census, J-2f10jv9).
 func (l *lowering) untaggedUnionArm(source *checker.Type, members, targets []*checker.Type) bool {
 	if len(members) < 2 || len(targets) != 1 || !l.plainViewObject(targets[0]) || l.unionHoldsLiterals(members) || l.widened(source, targets[0], map[[2]*checker.Type]bool{}) != nil {
