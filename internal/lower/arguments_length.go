@@ -234,6 +234,135 @@ func (l *lowering) fitCallArguments(function int, arguments []ir.Expression, spr
 	}
 }
 
+// spreadPackStop judges a call with a spread against the slots its callee reads (#p9zm9q5). Such a
+// call packs each argument as it's held (packCallArguments), and the callee reads each slot as its
+// own parameter's type and copies a rest slot for slot (copyRest), so nothing converts on the way:
+// a number or a boolean packed where a union is read is its bits read as a heap pointer. So an
+// argument is admitted only where it's held as the slot is (packedAlike). A fixed argument before
+// the first spread meets its own parameter; a spread's elements, and every argument after a spread,
+// meet each slot they can land in. The first skip arguments, a method's receiver, have no node and
+// aren't judged. slots are the callee's parameters before its rest, and rest its rest's element, or 0
+// for none: a function's from its locals (functionSlots), a function value's from its one signature
+// (signatureSlots). Stopping here fails closed; packing each value as its slot is #p9zm9q5's Must for
+// Lower.
+func (l *lowering) spreadPackStop(nodes []*ast.Node, arguments []ir.Expression, spread []bool, skip int, slots []ir.Type, rest ir.Type) error {
+	if len(spread) == 0 {
+		return nil
+	}
+	from := func(position int) []ir.Type {
+		landing := slices.Clone(slots[min(position, len(slots)):])
+		if rest != 0 {
+			landing = append(landing, rest)
+		}
+		return landing
+	}
+	position := 0
+	expanded := false
+	for index, argument := range arguments {
+		var landing []ir.Type
+		held := argument.Type()
+		doing := "passing a " + typeName(held)
+		switch {
+		case len(spread) > index && spread[index]:
+			expanded = true
+			if literal, isLiteral := argument.(ir.ArrayLiteral); isLiteral && len(literal.Elements) == 0 {
+				continue
+			}
+			held = l.spreadElement(nodes[index-skip], argument)
+			doing = "of elements held as a " + typeName(held)
+			landing = from(position)
+		case expanded:
+			landing = from(position)
+		case position < len(slots):
+			landing = slots[position : position+1]
+			position++
+		default:
+			landing = from(position)
+			position++
+		}
+		if index < skip {
+			continue
+		}
+		for _, slot := range landing {
+			if !packedAlike(slot, held) {
+				return l.notYet(nodes[index-skip], "a call with a spread "+doing+" where the callee reads a "+typeName(slot))
+			}
+		}
+	}
+	return nil
+}
+
+// functionSlots is a lowered function's parameter slots before its rest, and its rest's element.
+func (l *lowering) functionSlots(function int) ([]ir.Type, ir.Type) {
+	declared := l.result.Functions[function]
+	slots := []ir.Type{}
+	for index, parameter := range declared.Parameters {
+		if declared.RestElement != 0 && index == len(declared.Parameters)-1 {
+			break
+		}
+		slots = append(slots, l.result.Locals[parameter].Type)
+	}
+	return slots, declared.RestElement
+}
+
+// signatureSlots is what a function value's one signature takes, as the closure road fits its fixed
+// arguments: each parameter's representation, a defaulted one's maybe, and a rest's element. A slot it
+// can't represent stops, since nothing could be judged against it.
+func (l *lowering) signatureSlots(node *ast.Node, signature *checker.Signature) ([]ir.Type, ir.Type, error) {
+	slots := []ir.Type{}
+	for _, parameter := range signature.Parameters() {
+		declaration := (*ast.Node)(nil)
+		if len(parameter.Declarations) > 0 && parameter.Declarations[0].Kind == ast.KindParameter {
+			declaration = parameter.Declarations[0]
+		}
+		proven := l.checker.GetTypeOfSymbol(parameter)
+		if declaration != nil && declaration.AsParameterDeclaration().DotDotDotToken != nil {
+			elements := []*checker.Type{}
+			if proven.Flags()&checker.TypeFlagsObject != 0 && proven.ObjectFlags()&checker.ObjectFlagsReference != 0 {
+				elements = l.checker.GetTypeArguments(proven)
+			}
+			element, known := ir.Type(0), false
+			if len(elements) == 1 {
+				element, known = l.representation(elements[0])
+			}
+			if !known {
+				return nil, 0, l.notYet(node, "a call with a spread through a function value whose rest element has no representation")
+			}
+			return slots, element, nil
+		}
+		takes, known := l.representation(proven)
+		if !known {
+			return nil, 0, l.notYet(node, "a call with a spread through a function value whose parameter has no representation")
+		}
+		if declaration != nil && declaration.AsParameterDeclaration().Initializer != nil {
+			takes = ir.Maybe(takes)
+		}
+		slots = append(slots, takes)
+	}
+	return slots, 0, nil
+}
+
+// spreadElement is how a spread argument's elements are held: a tuple literal's own element, or the
+// element of the array type callArguments admitted.
+func (l *lowering) spreadElement(node *ast.Node, argument ir.Expression) ir.Type {
+	if literal, isLiteral := argument.(ir.ArrayLiteral); isLiteral {
+		return literal.Element
+	}
+	proven := l.concrete(l.checker.GetTypeAtLocation(node.AsSpreadElement().Expression))
+	element, _ := l.representation(l.checker.GetTypeArguments(proven)[0])
+	return element
+}
+
+// packedAlike says a packed slot holding a value of type held reads back as type slot with nothing
+// converted, the rule copyRest's restHoldsAlike copies by: the same type, or a reference read as a
+// reference. A weak reference is made by adamic_weak_of, so it's alike only to itself.
+func packedAlike(slot, held ir.Type) bool {
+	if slot == held {
+		return true
+	}
+	return slot.IsReference() && held.IsReference() && slot != ir.Weak && held != ir.Weak
+}
+
 // Optional method admission must account for the receiver, not just an assignable
 // function signature. An own closure facade does not make every class with a
 // same-signature method reachable. This does not narrow the count candidate set.
