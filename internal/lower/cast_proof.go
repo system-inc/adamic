@@ -384,6 +384,8 @@ func (l *lowering) castRoad(node *ast.Node, source, target *checker.Type, stop f
 			cause, detail = l.unionTargetCause(source, l.checker.GetNonNullableType(target))
 		case castWidenedTarget:
 			detail = l.widenedWords(l.checker.GetNonNullableType(target), source)
+		case castFieldRefinement:
+			detail = l.refinedField(source, l.checker.GetNonNullableType(target))
 		}
 		return castProof{}, stop(cause, detail)
 	}
