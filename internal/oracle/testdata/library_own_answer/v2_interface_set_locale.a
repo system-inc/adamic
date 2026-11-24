@@ -1,0 +1,6 @@
+interface Stepper {
+	next(): unknown;
+}
+const set = new Set<number>([1]);
+const view: Stepper = set.values();
+console.log(view.toLocaleString());
