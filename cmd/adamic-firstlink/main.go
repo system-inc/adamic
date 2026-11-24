@@ -31,6 +31,8 @@ import (
 	"sort"
 	"strings"
 
+	// Loom's jobserver bounds every clang this command's native build runs.
+	_ "github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
@@ -150,14 +152,16 @@ func writeUnder(directory, name, text string) (string, error) {
 
 // report is traps.json: every trap in lower's order, and the counts row 1 of #bcbp175 reads.
 type report struct {
-	Traps    []ir.Trap `json:"traps"`
-	Total    int                `json:"total"`
-	ByPhase  map[string]int     `json:"by_phase"`
-	ByKind   map[string]int     `json:"by_kind"`
-	ByReason map[string]int     `json:"by_reason"`
+	Traps    []ir.Trap      `json:"traps"`
+	Total    int            `json:"total"`
+	ByPhase  map[string]int `json:"by_phase"`
+	ByKind   map[string]int `json:"by_kind"`
+	ByReason map[string]int `json:"by_reason"`
+
 	// Unplaced counts the traps lower couldn't place in a unit: a pass stopped at a site with no unit, and was
 	// skipped from there on, so what it would have found after that site is a measurement gap.
 	Unplaced int `json:"unplaced"`
+
 	// Suspect counts the traps met after a recovered Go panic in the same lowering, which may be that panic's echo
 	// rather than walls of their own (ir.Trap.Suspect).
 	Suspect int `json:"suspect"`
