@@ -195,9 +195,18 @@ func recordPrototypeName(name string) bool {
 	}
 	return false
 }
-func (l *lowering) recordKey(node *ast.Node, read bool) (ir.Expression, error) {
+
+type recordKeyMode uint8
+
+const (
+	recordKeyUnchecked recordKeyMode = iota
+	recordKeyPrototypeCheck
+	recordKeyValueRead
+)
+
+func (l *lowering) recordKey(node *ast.Node, mode recordKeyMode) (ir.Expression, error) {
 	n := ast.SkipParentheses(node)
-	if read && (n.Kind == ast.KindStringLiteral || n.Kind == ast.KindNoSubstitutionTemplateLiteral) && recordPrototypeName(n.Text()) {
+	if mode != recordKeyUnchecked && (n.Kind == ast.KindStringLiteral || n.Kind == ast.KindNoSubstitutionTemplateLiteral) && recordPrototypeName(n.Text()) {
 		return nil, &Refused{Where: l.program.Where(node), What: "record key " + n.Text() + " names an Object.prototype member", Fix: "use an own-property test and a supported own-key operation; inherited values are outside the record's value type"}
 	}
 	key, err := l.expression(node)
@@ -207,12 +216,48 @@ func (l *lowering) recordKey(node *ast.Node, read bool) (ir.Expression, error) {
 	if key.Type() == ir.Number {
 		return ir.NumberToString{Value: key}, nil
 	}
+	// Family 115, Adamic's Nov 24 19:29:49Z ruling on #bbssdcy and Language's
+	// conditions: a record value read evaluates the key once, converts only its
+	// number arm by ECMAScript NumberToString, and keeps the same own-key lookup.
+	if mode == recordKeyValueRead && key.Type() == ir.Union && recordBoxedKeyType(l.concrete(l.checker.GetTypeAtLocation(node))) {
+		function := -1
+		if l.function != nil {
+			function = l.functionIndex
+		}
+		local := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "record_key", Type: ir.Union, Function: function, ExpressionAssigned: true})
+		held := ir.Read{Local: local, Of: ir.Union}
+		isNumber := ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant("number")}}
+		return ir.Effects{
+			Body: []ir.Statement{ir.Declare{Local: local, Value: key}},
+			Result: ir.Conditional{
+				Condition: isNumber,
+				WhenTrue:  ir.NumberToString{Value: ir.Narrow{Value: held, To: ir.Number}},
+				WhenNot:   ir.Narrow{Value: held, To: ir.String},
+				Of:        ir.String,
+			},
+		}, nil
+	}
 	if key.Type() != ir.String {
 		return nil, l.notYet(node, "a record key other than string or number")
 	}
 	return key, nil
 }
-func (l *lowering) recordAccess(node *ast.Node, read bool) (ir.Expression, ir.Expression, ir.Type, error) {
+
+func recordBoxedKeyType(proven *checker.Type) bool {
+	if proven.Flags()&checker.TypeFlagsUnion == 0 {
+		return false
+	}
+	for _, arm := range proven.Types() {
+		if arm.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike) == 0 {
+			return false
+		}
+	}
+	return true
+}
+
+func (l *lowering) recordAccess(node *ast.Node, mode recordKeyMode) (ir.Expression, ir.Expression, ir.Type, error) {
+	read := mode != recordKeyUnchecked
 	n := ast.SkipParentheses(node)
 	var receiver, keyNode *ast.Node
 	var name string
@@ -245,7 +290,7 @@ func (l *lowering) recordAccess(node *ast.Node, read bool) (ir.Expression, ir.Ex
 	}
 	var key ir.Expression
 	if keyNode != nil {
-		key, err = l.recordKey(keyNode, read)
+		key, err = l.recordKey(keyNode, mode)
 	} else {
 		if read && recordPrototypeName(name) {
 			return nil, nil, 0, &Refused{Where: l.program.Where(node), What: "record key " + name + " names an Object.prototype member", Fix: "use own keys"}
@@ -258,7 +303,11 @@ func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error)
 	if l.recordTarget(node) || l.recordReadTarget(node) && !l.recordReadDiscarded(node) && !l.recordReadOwnGuarded(node) {
 		discarded := l.recordReadDiscarded(node)
 		guarded := l.recordReadOwnGuarded(node)
-		r, k, of, err := l.recordAccess(node, !discarded && !guarded)
+		mode := recordKeyUnchecked
+		if !discarded && !guarded {
+			mode = recordKeyValueRead
+		}
+		r, k, of, err := l.recordAccess(node, mode)
 		if err != nil {
 			return nil, true, err
 		}
@@ -297,7 +346,7 @@ func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error)
 		return read, true, nil
 	}
 	if node.Kind == ast.KindDeleteExpression && l.recordTarget(node.AsDeleteExpression().Expression) {
-		r, k, of, err := l.recordAccess(node.AsDeleteExpression().Expression, false)
+		r, k, of, err := l.recordAccess(node.AsDeleteExpression().Expression, recordKeyUnchecked)
 		return ir.RecordCall{Method: "delete", Arguments: []ir.Expression{r, k}, Element: of, Returns: ir.Boolean}, true, err
 	}
 	if value, handled, err := l.recordScalarComparison(node); handled {
@@ -308,7 +357,7 @@ func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error)
 	}
 	b := node.AsBinaryExpression()
 	if b.OperatorToken.Kind == ast.KindInKeyword && l.recordElement(l.checker.GetTypeAtLocation(b.Right)) != nil {
-		k, err := l.recordKey(b.Left, true)
+		k, err := l.recordKey(b.Left, recordKeyPrototypeCheck)
 		if err != nil {
 			return nil, true, err
 		}
@@ -316,7 +365,11 @@ func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error)
 		return ir.RecordCall{Method: "has", Arguments: []ir.Expression{k, r}, Returns: ir.Boolean}, true, err
 	}
 	if (b.OperatorToken.Kind == ast.KindEqualsToken || b.OperatorToken.Kind == ast.KindQuestionQuestionEqualsToken) && l.recordTarget(b.Left) {
-		r, k, of, err := l.recordAccess(b.Left, b.OperatorToken.Kind == ast.KindQuestionQuestionEqualsToken)
+		mode := recordKeyUnchecked
+		if b.OperatorToken.Kind == ast.KindQuestionQuestionEqualsToken {
+			mode = recordKeyPrototypeCheck
+		}
+		r, k, of, err := l.recordAccess(b.Left, mode)
 		if err != nil {
 			return nil, true, err
 		}
@@ -441,7 +494,7 @@ func (l *lowering) recordLiteral(node *ast.Node, t *checker.Type) (ir.Expression
 			if err := l.recordComputedEntry(node, p, of); err != nil {
 				return nil, err
 			}
-			key, err = l.recordKey(name.AsComputedPropertyName().Expression, false)
+			key, err = l.recordKey(name.AsComputedPropertyName().Expression, recordKeyUnchecked)
 		} else {
 			if p.Kind == ast.KindPropertyAssignment && name.Text() == "__proto__" {
 				return nil, l.notYet(p, "a prototype-setting record literal")
@@ -519,7 +572,7 @@ func (l *lowering) recordObjectCallArguments(node *ast.Node, name string, args [
 		l.unplannedAllocation(node, l.recordElement(l.checker.GetTypeAtLocation(args[0])), "a record's entries")
 	}
 	if name == "hasOwn" {
-		k, err := l.recordKey(args[1], false)
+		k, err := l.recordKey(args[1], recordKeyUnchecked)
 		if err != nil {
 			return nil, true, err
 		}
