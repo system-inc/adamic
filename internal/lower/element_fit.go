@@ -36,6 +36,11 @@ type elementFitKey struct {
 	own, slot *checker.Type
 	built     ir.Type
 	shallow   bool
+	// fresh is a value whose every object is made right there (freshObjectValue), whose scalar fields
+	// are stored as the slot holds them, or an argument to a function a declaration file declares, whose
+	// host reads it by its own code, never by a plain read through the slot (declaredCallArgument), so
+	// fieldsSeenAs doesn't judge their scalar fields.
+	fresh bool
 }
 
 // elementMismatch is where a container's elements are stored otherwise than a slot reads them: the two
@@ -45,6 +50,9 @@ type elementMismatch struct {
 	stored, read *checker.Type
 	held, as     ir.Type
 	unnamed      string
+	// field names the object field stored otherwise than the slot reads it (fieldsSeenAs), "" for a
+	// container's elements.
+	field string
 }
 
 // elementsHeldOtherwise is the stop for the value made at node going into slot when a container in it
@@ -78,10 +86,12 @@ func (l *lowering) elementsHeldOtherwise(node *ast.Node, slot *checker.Type) str
 		return ""
 	}
 	own := l.checker.GetTypeAtLocation(node)
-	key := elementFitKey{own: own, slot: slot, built: built, shallow: node.Kind == ast.KindArrayLiteralExpression}
+	key := elementFitKey{own: own, slot: slot, built: built, shallow: node.Kind == ast.KindArrayLiteralExpression, fresh: l.freshObjectValue(node) || l.declaredCallArgument(node)}
 	found, answered := l.elementFits[key]
 	if !answered {
+		l.fieldFitFresh = key.fresh
 		found = l.elementsSeenAs(own, slot, built, key.shallow, 0, map[[2]*checker.Type]bool{})
+		l.fieldFitFresh = false
 		if l.elementFits == nil {
 			l.elementFits = map[elementFitKey]*elementMismatch{}
 		}
@@ -96,6 +106,9 @@ func (l *lowering) elementsHeldOtherwise(node *ast.Node, slot *checker.Type) str
 		return where + ", its containers nested deeper than their elements are judged"
 	case found.unnamed != "":
 		return where + ", with no representation Adamic can name for the " + found.unnamed + " elements (" + l.checker.TypeToString(found.stored) + " stored, read as " + l.checker.TypeToString(found.read) + ")"
+	}
+	if found.field != "" {
+		return where + ": its field " + found.field + ", a " + l.checker.TypeToString(found.stored) + ", is stored as " + heldName(found.held) + " and read there as " + l.checker.TypeToString(found.read) + ", held as " + heldName(found.as) + " (give it the slot's type where it's made, or copy its fields into one)"
 	}
 	return where + ": its " + l.checker.TypeToString(found.stored) + " elements are stored as " + heldName(found.held) + " and read there as " + l.checker.TypeToString(found.read) + ", held as " + heldName(found.as) + " (build it as the slot's type where it's made, or copy its elements into one)"
 }
@@ -226,6 +239,21 @@ func (l *lowering) fieldsSeenAs(stored *checker.Type, viewed *checker.Type, dept
 			continue
 		}
 		if inside := l.checker.GetPropertyOfType(stored, field.Name); inside != nil {
+			// A field is stored as the object's own type holds it, and a plain read through viewed works it as
+			// viewed holds it, with nothing between to convert: a number or a boolean stored as itself and read
+			// as a union is read as a box it never was, and native faulted where Node printed the field
+			// (#6gwzmjx: { kind, amount: 1 } passed as Held, whose readonly amount is number | string).
+			// readonly lets the field widen, which says nothing of how it's laid out. A side whose
+			// representation can't be named is left to the walks that judge it.
+			// Only a field held unboxed, a number or a boolean, read as a union's box is judged, the class
+			// #6gwzmjx measured: a boolean read as a maybe-boolean and a reference read as a union are other
+			// layouts, judged where they're known (Node's option literals, a union's own arms).
+			storedField, viewedField := l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(field)
+			if held, heldKnown := l.kept(storedField); !l.fieldFitFresh && heldKnown && (held == ir.Number || held == ir.Boolean) && storedField != viewedField {
+				if as, asKnown := l.kept(viewedField); asKnown && as == ir.Union {
+					return &elementMismatch{stored: storedField, read: viewedField, held: held, as: as, field: field.Name}
+				}
+			}
 			if found := l.elementsSeenAs(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(field), 0, false, depth+1, visited); found != nil {
 				return found
 			}
@@ -241,6 +269,53 @@ func (l *lowering) fieldsSeenAs(stored *checker.Type, viewed *checker.Type, dept
 		}
 	}
 	return nil
+}
+
+// freshObjectValue is whether every object node's value can be is made right there, as its slot holds it: an
+// object literal tsc types fresh, a conditional's arms, both sides of || and ??, the right of && (its left's
+// falsy arms hold no object to read), parentheses, and null or undefined. Anything else may be held
+// elsewhere at its own type.
+func (l *lowering) freshObjectValue(node *ast.Node) bool {
+	node = ast.SkipParentheses(node)
+	switch node.Kind {
+	case ast.KindObjectLiteralExpression:
+		return l.freshObjectLiteral(node)
+	case ast.KindNullKeyword:
+		return true
+	case ast.KindIdentifier:
+		return node.Text() == "undefined" && l.symbol(node) == l.checker.GetUndefinedSymbol()
+	case ast.KindConditionalExpression:
+		conditional := node.AsConditionalExpression()
+		return l.freshObjectValue(conditional.WhenTrue) && l.freshObjectValue(conditional.WhenFalse)
+	case ast.KindBinaryExpression:
+		binary := node.AsBinaryExpression()
+		switch binary.OperatorToken.Kind {
+		case ast.KindAmpersandAmpersandToken:
+			return l.freshObjectValue(binary.Right)
+		case ast.KindBarBarToken, ast.KindQuestionQuestionToken:
+			return l.freshObjectValue(binary.Left) && l.freshObjectValue(binary.Right)
+		}
+	}
+	return false
+}
+
+// declaredCallArgument is whether node is an argument of a call whose resolved signature a declaration file
+// declares (lib, the prelude, Node's types): the host reads what it's handed by its own code, by the
+// value's own layout, as Node's option literals for writeFileSync, mkdirSync, rmSync and statSync agree.
+func (l *lowering) declaredCallArgument(node *ast.Node) bool {
+	site := node
+	for site.Parent != nil && site.Parent.Kind == ast.KindParenthesizedExpression {
+		site = site.Parent
+	}
+	if site.Parent == nil || site.Parent.Kind != ast.KindCallExpression && site.Parent.Kind != ast.KindNewExpression {
+		return false
+	}
+	signature := l.checker.GetResolvedSignature(site.Parent)
+	if signature == nil || signature.Declaration() == nil {
+		return false
+	}
+	file := ast.GetSourceFileOfNode(signature.Declaration())
+	return file != nil && file.IsDeclarationFile
 }
 
 // heldMembers is a type's members that can hold a value, a union's but null and undefined, or the type.
