@@ -17,3 +17,9 @@ Expected: `TestCastStopNamesItsCause/untagged_union` goes red on the kind (want 
 `arrayCastCause` answers castUnnamed for every array cast, as main did before #53amvnn.
 
 Expected: `TestCastStopNamesItsCause` goes red on array_elements, mutable_array, tuple_from_array, tuple_from_tuples and array_arm (each names its cause), and stays green on the rest.
+
+## M4: an array's interface read as a dictionary
+
+`castExtendsArray` answers false, so an interface whose base-type chain reaches Array or ReadonlyArray (tsc's NodeArray, MutableNodeArray, MissingList, SortedArray) falls through to castIndexSignature (#2v3xtgm, Compiler's ruling).
+
+Expected: `TestCastStopNamesItsCause/missing_list` and `TestCastStopNamesItsCause/node_or_node_array` go red on the kind (a NotYet dictionary view where the array's refusal is wanted), and `TestCastStopNamesItsCause/map-like_dictionary` stays green, since a real dictionary never had an array base.
