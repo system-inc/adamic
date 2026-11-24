@@ -370,6 +370,14 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 			l.noteOverloadCertificate(overload, true)
 			return nil
 		}
+		if l.overloadFilterCertificate(implementation, overload) {
+			// The body returns its first parameter as the caller passed it, or a fresh array it built only
+			// from that parameter's elements, either of which is this overload's result when its arguments
+			// are exactly the caller's, so every call keeps that premise at overloadCertificateCall
+			// (certificate D, #4z7y6pq).
+			l.noteOverloadCertificate(overload, true)
+			return nil
+		}
 		if l.overloadNodeTestProof(implementation, overload) {
 			// Every return is the node argument before anything writes it, a value the node test just said
 			// yes to, or undefined: this overload's result at a call that passes its test, so each direct call

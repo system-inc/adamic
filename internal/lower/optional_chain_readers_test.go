@@ -205,4 +205,7 @@ var optionalChainReaders = map[string]optionalChainReader{
 	"checkedPredicateInferredPart":    {1, readerProof},
 	"predicateUseDirections":          {1, readerProof},
 	"censusLengthLeaf":                {1, readerProof},
+	"overloadFilterElementAccess":     {1, readerProof},
+	"overloadFilterSlice":             {2, readerProof},
+	"overloadFilterParameterRead":     {1, readerProof},
 }
