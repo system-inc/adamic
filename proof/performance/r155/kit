@@ -1,0 +1,52 @@
+# Family 155 patch 1 round 5, read 2 (Performance, #bbssdcy): apply the head at the pin, run its test.cjs, Seats'
+# three probes, a stock tsc check of each drift, the emit identity of the edit, and one planted mutant. Run after
+# environment.sh, sandboxed-job.sh, sandboxed_typescript_source and sandboxed_npm stage3/api stage3/typescript.
+# Never merged.
+set -u
+K=proof/performance/r155
+A=stage3/adapt/99-seats-scout24-syntactic-result-member
+OUT=$TMPDIR/applied
+NODE_PATH=$PWD/stage3/api/node_modules
+export NODE_PATH
+TSC="node $PWD/stage3/api/node_modules/typescript/bin/tsc"
+node -e 'console.log("typescript", require("typescript").version)'
+bash stage3/apply.sh "$OUT" > "$TMPDIR/apply.log" 2>&1; code=$?
+echo "apply exit=$code"
+[ $code = 0 ] || { grep -n -E "Error|error|refus|assert" "$TMPDIR/apply.log" | head -20; echo "VERDICT FAIL apply"; exit 3; }
+git -C "$OUT" rev-parse "refs/stage3/99-seats-scout24-syntactic-result-member-before^{tree}" "refs/stage3/99-seats-scout24-syntactic-result-member-after^{tree}"
+git -C "$OUT" show "refs/stage3/99-seats-scout24-syntactic-result-member-after:src/compiler/expressionToTypeNode.ts" | shasum -a 256
+
+echo "== test.cjs at the head"
+node "$A/test.cjs" "$OUT" > "$TMPDIR/test.log" 2>&1; echo "test exit=$?"; cat "$TMPDIR/test.log"
+
+echo "== emit identity of the edit (transpileModule, before against after)"
+node -e '
+const ts=require("typescript"),cp=require("child_process");
+const show=s=>cp.execFileSync("git",["-C",process.argv[1],"show","refs/stage3/99-seats-scout24-syntactic-result-member-"+s+":src/compiler/expressionToTypeNode.ts"]).toString();
+const js=s=>ts.transpileModule(show(s),{compilerOptions:{target:ts.ScriptTarget.ES2020,module:ts.ModuleKind.CommonJS}}).outputText;
+console.log("emit identical:", js("before")===js("after"));' "$OUT"
+
+echo "== Seats' probes"
+node "$K/probes.cjs" "$OUT" "$A" "$TMPDIR/probes" 2>&1
+
+echo "== stock tsc over src/compiler: the head, then each drift of the -after file"
+F=src/compiler/expressionToTypeNode.ts
+cp "$OUT/$F" "$TMPDIR/head-file.ts"
+(cd "$OUT" && $TSC -p src/compiler --noEmit > "$TMPDIR/tsc-head.log" 2>&1); echo "tsc head exit=$? diagnostics=$(grep -c 'error TS' "$TMPDIR/tsc-head.log")"; grep 'error TS' "$TMPDIR/tsc-head.log" | head -3
+for d in typeWrite destructure argument; do
+  cp "$TMPDIR/probes/after-$d.ts" "$OUT/$F"
+  (cd "$OUT" && $TSC -p src/compiler --noEmit > "$TMPDIR/tsc-$d.log" 2>&1); echo "tsc $d exit=$? diagnostics=$(grep -c 'error TS' "$TMPDIR/tsc-$d.log")"; grep 'error TS' "$TMPDIR/tsc-$d.log" | head -3
+done
+cp "$TMPDIR/head-file.ts" "$OUT/$F"
+
+echo "== mutant: the reader pins dropped (adapt.cjs's checkText(readers, ...)); test.cjs should go red"
+cp "$A/adapt.cjs" "$TMPDIR/adapt.cjs.orig"
+node -e '
+const fs=require("fs"),f=process.argv[1];let t=fs.readFileSync(f,"utf8");
+const from="    checkText(readers, pins.readers, \"reviewed reportFallback guard\", node =>\n        enclosing(node, parent => ts.isIfStatement(parent) || ts.isConditionalExpression(parent), \"reportFallback access\"));\n";
+if(!t.includes(from)){console.log("MUTANT NOT APPLIED");process.exit(1)}
+fs.writeFileSync(f,t.replace(from,""));console.log("mutant applied");' "$A/adapt.cjs"
+node --check "$A/adapt.cjs" && echo "mutant compiles"
+node "$A/test.cjs" "$OUT" > "$TMPDIR/test-mutant.log" 2>&1; echo "test under mutant exit=$?"; grep -E "PASS|Error|accepted|wrong guard" "$TMPDIR/test-mutant.log" | head -20
+cp "$TMPDIR/adapt.cjs.orig" "$A/adapt.cjs"
+echo "VERDICT done"

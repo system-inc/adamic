@@ -1,0 +1,46 @@
+{
+    "producers": [
+        "const notImplemented: SyntacticResult = syntacticResult(/*type*/ undefined, /*reportFallback*/ false);",
+        "const alreadyReported: SyntacticResult = syntacticResult(/*type*/ undefined, /*reportFallback*/ false);",
+        "const failed: SyntacticResult = syntacticResult(/*type*/ undefined, /*reportFallback*/ true);",
+        "resultType = syntacticResult(serializeTypeAnnotationOfDeclaration(declaredType, context, node, symbol));",
+        "resultType = syntacticResult(serializeTypeAnnotationOfDeclaration(declaredType, context, node, symbol, addUndefined));",
+        "resultType = syntacticResult(serializeTypeAnnotationOfDeclaration(declaredType, context, node, symbol, requiresAddingUndefined));",
+        "return syntacticResult(serializeExistingTypeNodeWithFallback(type, context, requiresAddingUndefined));",
+        "return syntacticResult(createUndefinedTypeNode());",
+        "return syntacticResult(addUndefinedIfNeeded(factory.createLiteralTypeNode(factory.createNull()), requiresAddingUndefined, node, context));",
+        "return syntacticResult(factory.createKeywordTypeNode(SyntaxKind.AnyKeyword));",
+        "return syntacticResult(inferExpressionType(node as ClassExpression, context, /*reportFallback*/ true, requiresAddingUndefined));",
+        "return syntacticResult(factory.createKeywordTypeNode(SyntaxKind.StringKeyword));",
+        "return syntacticResult(\r\n            factory.createFunctionTypeNode(\r\n                typeParameters,\r\n                parameters,\r\n                returnType,\r\n            ),\r\n        );",
+        "return syntacticResult(inferExpressionType(arrayLiteral, context, /*reportFallback*/ false, requiresAddingUndefined));",
+        "return syntacticResult(inferExpressionType(objectLiteral, context, /*reportFallback*/ false, requiresAddingUndefined));",
+        "return syntacticResult(addUndefinedIfNeeded(result, requiresAddingUndefined, node, context));",
+        "returnType = syntacticResult(serializeTypeAnnotationOfDeclaration(returnTypeNode, context, fn, symbol));",
+        "return syntacticResult(serializeExistingTypeNode(type, context));"
+    ],
+    "readers": [
+        "result.type !== undefined ? result.type : inferExpressionType(expr, context, result.reportFallback)",
+        "resultType.type !== undefined ? resultType.type : inferTypeOfDeclaration(node, symbol, context, resultType.reportFallback)",
+        "resultType.type !== undefined ? resultType.type : inferTypeOfDeclaration(node, symbol, context, resultType.reportFallback)",
+        "resultType.type !== undefined ? resultType.type : inferTypeOfDeclaration(node, symbol, context, resultType.reportFallback)",
+        "expressionType.type !== undefined ? expressionType.type : inferExpressionType(element, context, expressionType.reportFallback)",
+        "expressionResult.type !== undefined ? expressionResult.type : inferTypeOfDeclaration(prop, /*symbol*/ undefined, context, expressionResult.reportFallback)",
+        "returnType.type !== undefined ? returnType.type : inferReturnTypeOfSignatureSignature(fn, context, symbol, reportFallback && returnType.reportFallback && !returnTypeNode)"
+    ],
+    "counts": {
+        "SyntacticResult/Identifier/TypeAliasDeclaration": 1,
+        "SyntacticResult/Identifier/TypeReference": 10,
+        "reportFallback/Identifier/BinaryExpression": 1,
+        "reportFallback/Identifier/CallExpression": 2,
+        "reportFallback/Identifier/IfStatement": 4,
+        "reportFallback/Identifier/Parameter": 7,
+        "reportFallback/Identifier/PropertyAccessExpression": 7,
+        "reportFallback/Identifier/PropertySignature": 3,
+        "reportFallback/Identifier/ShorthandPropertyAssignment": 1,
+        "syntacticResult/Identifier/CallExpression": 18,
+        "syntacticResult/Identifier/FunctionDeclaration": 3,
+        "object spread": 0,
+        "Object.assign": 0
+    }
+}
