@@ -13,7 +13,9 @@
 #     house box's 16 GB /tmp held in memory: internal/native's adamic-build-*, adamic-units-* and
 #     adamic-runtime-headers-* filled Lunatic's while its 73 GB scratch sat nearly empty (J-54dascs; Adamic Loom's road
 #     on #7k79mkn). A path that doesn't read, isn't the job's or resolves inside the tree keeps the caller's TMPDIR and
-#     says so on stderr. It is set outright, never built from TMPDIR, so a job that sources this twice gets one value;
+#     says so on stderr. It is set outright, never built from TMPDIR, so a job that sources this twice gets one value.
+#     XDG_CACHE_HOME goes there too unless the caller set it, since the job's HOME is /tmp/home and Go's build cache
+#     defaults under it (J-t31ak6z);
 #   - the build cache (ADAMIC_BUILD_CACHE_DIR) and the TypeScript copy live outside the tree, in LOOM_JOB_SCRATCH where
 #     the runner names one (the job's own directory on the tree's data disk) and in TMPDIR where it doesn't: a walker
 #     that reads every file under $PWD never meets the kit's own files (internal/acheck read the cache's runtime.a as
@@ -73,6 +75,13 @@ if [ -n "${LOOM_JOB_SCRATCH:-}" ]; then
 				;;
 		esac
 	fi
+fi
+# The user cache too, Go's build cache among it: a sandboxed job's HOME is /tmp/home, so `go env GOCACHE` read
+# /tmp/home/.cache/go-build and filled Lunatic's /tmp quietly, since go never fails a build on a cache it can't write
+# (J-t31ak6z after J-3hwgeyb; #7k79mkn). Only where the runner names a scratch, and never over the caller's own.
+if [ -n "${LOOM_JOB_SCRATCH:-}" ] && [ -z "${XDG_CACHE_HOME:-}" ]; then
+	export XDG_CACHE_HOME="$sandboxedJobScratch/cache"
+	mkdir -p "$XDG_CACHE_HOME" || sandboxedJobFail "couldn't make the user cache $XDG_CACHE_HOME" || return 1
 fi
 export ADAMIC_BUILD_CACHE_DIR="$sandboxedJobScratch/adamic-build"
 mkdir -p "$ADAMIC_BUILD_CACHE_DIR" || sandboxedJobFail "couldn't make the build cache $ADAMIC_BUILD_CACHE_DIR" || return 1
