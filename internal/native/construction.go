@@ -15,8 +15,8 @@ func constructionFields(fields []ir.Field) bool {
 	return false
 }
 
-// constructionNeeded is whether any object literal has an absent field or any array literal metadata,
-// read from the emitter's one walk of the program (prepareObjectMetadata).
+// constructionNeeded is whether any object literal has an absent field or a spread that may be undefined, or
+// any array literal metadata, read from the emitter's one walk of the program (prepareObjectMetadata).
 func (e *emitter) constructionNeeded() bool {
 	e.prepareObjectMetadata()
 	return e.objectMetadata.construction
