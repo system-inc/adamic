@@ -106,7 +106,7 @@ func run(arguments []string, stdout, stderr io.Writer) int {
 		fmt.Fprintf(stderr, "adamic-firstlink: lower: %v\n", err)
 		return 1
 	}
-	written, err := writeReport(output, lowered.Traps)
+	written, err := writeReport(output, relativeSites(filepath.Dir(asked.root), lowered.Traps))
 	if err != nil {
 		fmt.Fprintf(stderr, "adamic-firstlink: report: %v\n", err)
 		return 1
@@ -137,6 +137,27 @@ func run(arguments []string, stdout, stderr io.Writer) int {
 	return 0
 }
 
+// relativeSites writes each trap's site relative to the root's directory, so a row reads the same on every box. A
+// site outside that directory, or one with no path, is kept as it came.
+func relativeSites(rootDirectory string, traps []ir.Trap) []ir.Trap {
+	base, err := filepath.Abs(rootDirectory)
+	if err != nil {
+		return traps
+	}
+	placed := make([]ir.Trap, len(traps))
+	for index, trap := range traps {
+		placed[index] = trap
+		path, position, found := strings.Cut(trap.Site, ":")
+		if !found || !filepath.IsAbs(path) {
+			continue
+		}
+		if relative, err := filepath.Rel(base, path); err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+			placed[index].Site = filepath.ToSlash(relative) + ":" + position
+		}
+	}
+	return placed
+}
+
 // writeUnder writes text to name under directory, making its directories, and says where it wrote. A name that
 // would leave directory is refused, so the command writes nowhere its caller didn't name.
 func writeUnder(directory, name, text string) (string, error) {
@@ -150,8 +171,15 @@ func writeUnder(directory, name, text string) (string, error) {
 	return path, os.WriteFile(path, []byte(text), 0o644)
 }
 
+// findingsRule opens traps.json and traps.md, so nobody files a wall from a row raw.
+const findingsRule = "leads only; reproduce without FirstLinkTraps before filing"
+
 // report is traps.json: every trap in lower's order, and the counts row 1 of #bcbp175 reads.
 type report struct {
+	// Findings says what a row may be used for. A trap-mode run's output is a lead, never a miscompile finding,
+	// until it's reproduced as an ordinary program with no trap mode (Compiler's condition 3 on #ht9e83d).
+	Findings string `json:"findings"`
+
 	Traps    []ir.Trap      `json:"traps"`
 	Total    int            `json:"total"`
 	ByPhase  map[string]int `json:"by_phase"`
@@ -168,7 +196,7 @@ type report struct {
 }
 
 func summarize(traps []ir.Trap) report {
-	counted := report{Traps: traps, Total: len(traps), ByPhase: map[string]int{}, ByKind: map[string]int{}, ByReason: map[string]int{}}
+	counted := report{Findings: findingsRule, Traps: traps, Total: len(traps), ByPhase: map[string]int{}, ByKind: map[string]int{}, ByReason: map[string]int{}}
 	if counted.Traps == nil {
 		counted.Traps = []ir.Trap{}
 	}
@@ -207,7 +235,7 @@ func writeReport(directory string, traps []ir.Trap) ([]string, error) {
 // markdown is traps.md: the totals, then one table a phase, each trap's reason counted with its first site.
 func markdown(counted report) string {
 	var text strings.Builder
-	fmt.Fprintf(&text, "# First-link traps\n\n%d traps", counted.Total)
+	fmt.Fprintf(&text, "Findings: %s. A trap-mode run's output is a lead, never a miscompile finding, until it's reproduced as an ordinary program.\n\n# First-link traps\n\n%d traps", counted.Findings, counted.Total)
 	if counted.Unplaced > 0 {
 		fmt.Fprintf(&text, ", %d of them unplaced: a pass stopped where lower couldn't name a unit and was skipped from there on, so what it would have found after is a measurement gap", counted.Unplaced)
 	}
