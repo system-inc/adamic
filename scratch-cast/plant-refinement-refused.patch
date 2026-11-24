@@ -1,0 +1,11 @@
+--- a/internal/lower/cast_stop.go
++++ b/internal/lower/cast_stop.go
+@@ -139,7 +139,7 @@
+ 	case castSideways:
+ 		return l.notYet(node, "a checked view of "+to+" over "+from+", which "+to+" doesn't extend")
+ 	case castFieldRefinement:
+-		return l.notYet(node, "a checked view of "+to+" over "+from+", which reads the field "+field+" of "+from+" narrower")
++		return &Refused{Where: l.program.Where(node), What: "a checked view of " + to + " over " + from + ", which reads the field " + field + " of " + from + " narrower"}
+ 	case castFromObject:
+ 		return l.notYet(node, "a checked view of "+to+" over a value typed "+from+", which names no fields")
+ 	case castTargetTypeParameter:
