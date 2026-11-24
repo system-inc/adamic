@@ -24,7 +24,8 @@ const declaration = parameterType => [
     '    ) {',
     '        return defaultValue !== undefined && typeof type === "object"',
     '            // e.g. ScriptTarget.ES2015 -> "es6/es2015"',
-    '            ? arrayFrom(type.entries())',
+    // 32-indexed-reads-program gives arrayFrom its type argument before this adapter runs.
+    '            ? arrayFrom<[string, string | number]>(type.entries())',
     '                .filter(([, value]) => value === defaultValue)',
     '                .map(([name]) => name)',
     '                .join("/")',

@@ -32,6 +32,10 @@ function formatDefaultValue(
 }
 ```
 
+By the time this adapter runs, 32-indexed-reads-program has given `arrayFrom` its type argument,
+`arrayFrom<[string, string | number]>(type.entries())`, and the adapter's pin holds that text, the one line any
+earlier adapter changes in the helper.
+
 Its one call, the only other read of its name in the file:
 
 ```ts
