@@ -14,7 +14,7 @@ import (
 // Object.keys, values and entries of one through a { message: string } view, each printed 2 where Node
 // prints 0, in .a and .ts alike (#bbhwj30, Lower's 10:21Z comment). errorMayHide (prototype.go) now decides
 // whether an argument may hold an Error, the test prototypeHazard's Error case makes too, and every such
-// road is NotYet. It also fires for an Error the runtime made, from a failing host call, which has no
+// road listed below is NotYet. It also fires for an Error the runtime made, from a failing host call, which has no
 // new Error node to find: whenever the library's Error fits the argument's type and the program catches.
 // The fixtures sit in error_own_keys, since the flow and fresh corpora lower every program at the top of
 // testdata. Mutants: errorMayHide dropped from the keys, values and entries paths turns the view and
@@ -41,7 +41,6 @@ func TestErrorOwnKeysNotYet(t *testing.T) {
 		{"entries_runtime.ts", "Object.entries of a value that may hold an Error", false},
 		{"has_own_property_runtime.a", "an Error may be hidden by the view", false},
 		{"property_is_enumerable_runtime.a", "an Error may be hidden by the view", false},
-		{"detached_has_own_runtime.a", "an Error may be hidden by the view", false},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()

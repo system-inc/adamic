@@ -1,6 +1,36 @@
 {
-  "_comment": "Adding an entry is a ruling routed to @system_adamic, and only Adamic adds one. A run-time NotYet (#zhgxzjg, Adamic, Nov 2) is an honest stop where a key or a receiver can't be known before the read; it is never a type lie, so it is never listed in negative-witnesses.json, and a program can't sit in both. Schema: stops maps SHA-256 of exact source bytes to path (where the program lives, documentary and for scheduling), ruling_task, lifting_task (the task that lifts the stop; an entry without either is refused), and stderr (exact bytes: adamic: panic: <form> (reading '<key>'), with the form one of the tool's allowlisted forms, each naming its ruling, never a compiler bug). A listed program passes only when both backends exit 70 with exactly that stderr, their stdout is byte for byte Node's first bytes, and Node runs the source to the end, exit 0, printing more. One that now runs to the end and agrees with Node fails the gate as stale, so its entry leaves. No name lookup; an edit falls out of the list and demands Node agreement.",
+  "_comment": "Adding an entry is a ruling-dependent action. A new form is routed to @system_adamic alone. A head may add a program entry under an already ruled form (docs/rulings.md:412). A run-time NotYet (#zhgxzjg, Adamic, Nov 2) is an honest stop where a key or a receiver can't be known before the read; it is never a type lie, so it is never listed in negative-witnesses.json, and a program can't sit in both. Schema: stops maps SHA-256 of exact source bytes to path (where the program lives, documentary and for scheduling), ruling_task, lifting_task (the task that lifts the stop; an entry without either is refused), and stderr (exact bytes: adamic: panic: <form> (reading '<key>'), with the form one of the tool's allowlisted forms, each naming its ruling, never a compiler bug). A listed program passes only when both backends exit 70 with exactly that stderr, their stdout is byte for byte Node's first bytes, and Node runs the source to the end, exit 0, printing more. One that now runs to the end and agrees with Node fails the gate as stale, so its entry leaves. No name lookup; an edit falls out of the list and demands Node agreement.",
   "stops": {
+    "b07ac08e5804d02852d154f7344c00f7fe90541ab6b7e8b21284375f066a784f": {
+      "path": "internal/oracle/testdata/error_own_intrinsic/system-error-info.ts",
+      "ruling_task": "#hh1cezv",
+      "lifting_task": "#nw1kfem",
+      "stderr": "adamic: panic: an Error's own property isn't represented yet\n"
+    },
+    "686710669bc6743f3645bf6804bb7c8fb57085b7185066ce05ee12a7628d633d": {
+      "path": "internal/oracle/testdata/error_own_intrinsic/realpath-syscall.ts",
+      "ruling_task": "#hh1cezv",
+      "lifting_task": "#nw1kfem",
+      "stderr": "adamic: panic: an Error's own property isn't represented yet\n"
+    },
+    "bb9010b2abdf86b09ed9f86fe6a126bdde8c78fad9e96b639266fd782ce0305b": {
+      "path": "internal/oracle/testdata/error_own_intrinsic/host-syscall.ts",
+      "ruling_task": "#hh1cezv",
+      "lifting_task": "#nw1kfem",
+      "stderr": "adamic: panic: an Error's own property isn't represented yet\n"
+    },
+    "2715b4ac1d6d363d8db4ba8b78293de04cf6561d8ff8cb142a637de1d289bd08": {
+      "path": "internal/oracle/testdata/error_own_intrinsic/unknown-key.ts",
+      "ruling_task": "#hh1cezv",
+      "lifting_task": "#nw1kfem",
+      "stderr": "adamic: panic: an Error's own property isn't represented yet\n"
+    },
+    "61a75d38d1a7b7a8d51c71c929c5fad79a8755cca1ef1ff6895fa6c13593073b": {
+      "path": "internal/oracle/testdata/error_own_intrinsic/stack-value.ts",
+      "ruling_task": "#zhgxzjg",
+      "lifting_task": "#xf4n18n",
+      "stderr": "adamic: panic: an Error property Node sets and the native Error lacks isn't read yet (reading 'stack')\n"
+    },
     "47fd37fa64c58682983a994cff4dccab02b90932f9410baa9422c0b045a37676": {
       "path": "internal/oracle/testdata/reflect_get/stop_error_stack.a",
       "ruling_task": "#zhgxzjg",

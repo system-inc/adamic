@@ -173,8 +173,12 @@ func (l *lowering) detachedOwnCall(node *ast.Node) (ir.Expression, bool, error) 
 		(of != ir.Record && of != ir.Object) || checker.IsTupleType(proven) {
 		return nil, true, l.notYet(args[0], "detached hasOwnProperty on other than a present record or object")
 	}
+	method := "hasOwn"
 	if of == ir.Object {
-		if reason := l.prototypeHazard(args[0], ""); reason != "" {
+		if l.errorMayHide(args[0]) {
+			method = "hasOwnErrorView"
+		}
+		if reason := l.prototypeHazardWithErrorTable(args[0], "", true); reason != "" {
 			return nil, true, l.notYet(args[0], "detached hasOwnProperty through an object view ("+reason+")")
 		}
 		if reason := l.privateKeyHazard(args[0], args[1]); reason != "" {
@@ -192,7 +196,7 @@ func (l *lowering) detachedOwnCall(node *ast.Node) (ir.Expression, bool, error) 
 	arguments = append(arguments, target, key)
 	b := l.libraryArrayBuilder(arguments)
 	offset := len(arguments) - 2
-	var result ir.Expression = ir.ObjectCall{Method: "hasOwn", Arguments: []ir.Expression{b.read(b.parameters[offset]), b.read(b.parameters[offset+1])}, Returns: ir.Boolean}
+	var result ir.Expression = ir.ObjectCall{Method: method, Arguments: []ir.Expression{b.read(b.parameters[offset]), b.read(b.parameters[offset+1])}, Returns: ir.Boolean}
 	if of == ir.Record {
 		result = ir.RecordCall{Method: "hasOwn", Arguments: []ir.Expression{b.read(b.parameters[offset]), b.read(b.parameters[offset+1])}, Returns: ir.Boolean}
 	}
