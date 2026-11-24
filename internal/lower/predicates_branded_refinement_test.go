@@ -52,7 +52,9 @@ func TestBrandedRefinementAgrees(t *testing.T) {
 }
 
 // Every lie stops at exit 70 where Node reads on, and each stops where the rule says it does. A JSDocLink
-// whose name is a member name, which tsc's body answers true, stops at the call (the ruling's own case).
+// whose name is a member name, which tsc's body answers true, stops in that body, at its read through
+// NamedDeclaration's view, and at the call when the body doesn't read the name as the base's type (the
+// ruling's own case).
 // Language's condition (a) is two rows: a field the base and a refining part both declare is checked as
 // the narrower of the two, so a base narrower than the part stops a value the part alone would pass, and
 // a part narrower than the base stops a value the base alone would pass, both at the call. A base field a
@@ -64,21 +66,28 @@ func TestBrandedRefinementAgrees(t *testing.T) {
 func TestBrandedRefinementLiesStop(t *testing.T) {
 	t.Parallel()
 	const loose = "interface Named extends Node { readonly name?: Node }\n"
+	const jsDocLink = "interface JSDocLink extends Node { readonly kind: 4; readonly name?: Identifier | MemberName }\n" +
+		"const member: MemberName = { kind: 3, pos: 0, left: id };\nconst link: JSDocLink = { kind: 4, pos: 0, name: member };\n"
 	for _, probe := range []struct{ name, source, stderr string }{
-		{"misnamed link", refinementWorld + refinementSite + "interface JSDocLink extends Node { readonly kind: 4; readonly name?: Identifier | MemberName }\n" +
-			"const member: MemberName = { kind: 3, pos: 0, left: id };\nconst link: JSDocLink = { kind: 4, pos: 0, name: member };\nshow(link);\n", "predicate argument.name"},
+		// tsc's own body reads the name through NamedDeclaration's view, which stops the lie there, before
+		// the call's check is reached.
+		{"misnamed link in tsc's body", refinementWorld + refinementSite + jsDocLink + "show(link);\n", "adamic: panic: field read failed: (node as NamedDeclaration).name matches no member of DeclarationName | undefined"},
+		// A body that never reads the name as the base's type leaves the lie to the call's check.
+		{"misnamed link at the call", refinementWorld + loose + jsDocLink +
+			"function isNamed(node: Named): node is NamedDeclaration & { name: DeclarationName } { return node.name !== undefined; }\n" +
+			"function show(n: Named): void { if (isNamed(n)) console.log(n.name.text); else console.log('no'); }\nshow(link);\n", "adamic: panic: predicate isNamed at "},
 		{"base narrower than the part", strings.Replace(refinementWorld, "readonly name?: DeclarationName", "readonly name?: Identifier", 1) + loose +
 			"function isNamed(node: Named): node is NamedDeclaration & { name: Identifier | StringLiteral } { return node.name !== undefined; }\n" +
 			"function show(n: Named): void { if (isNamed(n)) console.log(n.name.text); else console.log('no'); }\n" +
-			"const other: Named = { kind: 50, pos: 0, name: literal };\nshow(other);\n", "true branch"},
+			"const other: Named = { kind: 50, pos: 0, name: literal };\nshow(other);\n", "adamic: panic: predicate isNamed at "},
 		{"part narrower than the base", refinementWorld + loose +
 			"function isNamed(node: Named): node is NamedDeclaration & { name: Identifier } { return node.name !== undefined; }\n" +
 			"function show(n: Named): void { if (isNamed(n)) console.log(n.name.text); else console.log('no'); }\n" +
-			"const quoted: NamedDeclaration = { kind: 41, pos: 0, _declarationBrand: undefined, name: literal };\nshow(quoted);\n", "true branch"},
+			"const quoted: NamedDeclaration = { kind: 41, pos: 0, _declarationBrand: undefined, name: literal };\nshow(quoted);\n", "adamic: panic: predicate isNamed at "},
 		{"base field", refinementWorld + "interface Loose { readonly kind: number; readonly pos: number | string; readonly name?: Node }\n" +
 			"function isNamed(node: Loose): node is NamedDeclaration & { name: DeclarationName } { return node.name !== undefined; }\n" +
 			"function show(n: Loose): void { if (isNamed(n)) console.log(String(n.pos + 1)); else console.log('no'); }\n" +
-			"const raw = { kind: 40, pos: 'p', name: id };\nconst wrong: Loose = raw;\nshow(wrong);\n", "field read failed: n.pos"},
+			"const raw = { kind: 40, pos: 'p', name: id };\nconst wrong: Loose = raw;\nshow(wrong);\n", "adamic: panic: field read failed: n.pos is not a number"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
