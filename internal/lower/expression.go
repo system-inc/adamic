@@ -1589,6 +1589,9 @@ func (l *lowering) unparenthesizedValue(node *ast.Node) (ir.Expression, error) {
 		if value, handled, err := l.methodPresenceAnd(node); handled {
 			return value, err
 		}
+		if value, handled, err := l.viewFieldDefined(node); handled {
+			return value, err
+		}
 		// A flow-narrowed never expression still reads its declared boolean slots.
 		// Only a live result needs a placeholder for a non-returning arm.
 		if (binary.OperatorToken.Kind == ast.KindBarBarToken || binary.OperatorToken.Kind == ast.KindAmpersandAmpersandToken) && l.isNever(binary.Right) && !l.isNever(node) {
