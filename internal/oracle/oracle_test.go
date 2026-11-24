@@ -800,9 +800,13 @@ func stderrCompared(stderr []byte) []byte {
 	return timeoutWarningLine.ReplaceAll(stderr, []byte("${1}pid${2}"))
 }
 
-// disagreement says how two runs differ, or "" when they don't.
+// disagreement says how two runs differ, or "" when they don't. A run that met a first-link trap is never an
+// agreement, whatever the other did: a program lowered in trap mode is measurement (lower's
+// Options.FirstLinkTraps), and two that trap alike would otherwise agree.
 func disagreement(oracle run, native run) string {
 	switch {
+	case bytes.Contains(oracle.stderr, []byte("adamic: first-link trap:")) || bytes.Contains(native.stderr, []byte("adamic: first-link trap:")):
+		return "a run met a first-link trap, which is never a pass"
 	case oracle.exitCode != native.exitCode:
 		return "exit codes differ"
 	case !bytes.Equal(oracle.stdout, native.stdout):
