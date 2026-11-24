@@ -1,0 +1,10 @@
+type F = () => number;
+type A = F | string;
+const values: A[] = [() => 3, "four"];
+function target(...rest: A[]): void {
+    for (const value of rest) {
+        if (typeof value === "function") console.log(String(value()));
+        else console.log(value);
+    }
+}
+target(...values);

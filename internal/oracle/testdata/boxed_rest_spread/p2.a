@@ -1,0 +1,13 @@
+type A = string | number;
+const values: A[] = [1, "two", 3];
+function all(...rest: A[]): void {
+    console.log(String(arguments.length));
+    for (const value of rest) console.log(String(value));
+}
+function fixed(first: A, ...rest: A[]): void {
+    console.log(String(arguments.length));
+    console.log(String(first));
+    for (const value of rest) console.log(String(value));
+}
+all("start", ...values, "end");
+fixed("start", ...values, "end");

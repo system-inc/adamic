@@ -1,0 +1,15 @@
+interface SourceFile { text: string }
+type A = string | number | boolean | undefined | readonly string[] | SourceFile;
+function target(message: string, ...args: readonly A[]): void {
+    console.log(message + ":" + String(args.length));
+    for (const arg of args) {
+        if (typeof arg === "object") {
+            if (Array.isArray(arg)) console.log("object:" + arg.join(","));
+            else if ("text" in arg) console.log("object:" + arg.text);
+        } else console.log(typeof arg + ":" + String(arg));
+    }
+}
+function relay(message: string, ...args: readonly A[]): void { target(message, ...args); }
+const strings: readonly string[] = ["a", "b"];
+const source: SourceFile = { text: "source" };
+relay("message", "x", 2, true, undefined, strings, source);

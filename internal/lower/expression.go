@@ -2461,7 +2461,7 @@ func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expr
 	if err := l.overloadCertificateCall(call.AsNode()); err != nil {
 		return nil, err
 	}
-	arguments, spread, err := l.callArguments(call.Arguments.Nodes)
+	arguments, spread, err := l.callArgumentsFor(call.Arguments.Nodes, call, function)
 	if err != nil {
 		return nil, err
 	}
