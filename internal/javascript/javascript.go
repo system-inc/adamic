@@ -484,7 +484,7 @@ func functionName(program *ir.Program, function int) string {
 func (e *emitter) prototype(methods []ir.Method) string {
 	entries := []string{}
 	for _, method := range methods {
-		entries = append(entries, quote(method.Name)+": "+functionName(e.program, method.Function))
+		entries = append(entries, objectKey(method.Name)+": "+functionName(e.program, method.Function))
 	}
 	key := strings.Join(entries, ", ")
 	if name, isDeclared := e.prototypeNames[key]; isDeclared {
@@ -1214,7 +1214,7 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 			if field.Absent {
 				continue
 			}
-			fields = append(fields, quote(field.Name)+": "+e.value(field.Value))
+			fields = append(fields, objectKey(field.Name)+": "+e.value(field.Value))
 		}
 		object := "({" + strings.Join(fields, ", ") + "})"
 		if expression.Class != 0 {
@@ -1236,7 +1236,7 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 				if field.Uninitialized && field.Value.Type() == ir.Union {
 					representation = int(ir.Union)
 				}
-				types = append(types, quote(field.Name)+": "+fmt.Sprint(representation))
+				types = append(types, objectKey(field.Name)+": "+fmt.Sprint(representation))
 			}
 			parentTypes := ""
 			if spreadValue != "" {
@@ -1277,7 +1277,7 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 		if len(expression.Metadata) != 0 {
 			types := []string{}
 			for _, field := range expression.Metadata {
-				types = append(types, quote(field.Name)+": "+fmt.Sprint(field.Value.Type()))
+				types = append(types, objectKey(field.Name)+": "+fmt.Sprint(field.Value.Type()))
 			}
 			array = "adamicRecordFieldTypes(" + array + ", {" + strings.Join(types, ", ") + "})"
 		}
@@ -1750,6 +1750,19 @@ func number(value float64) string {
 		return "(-0)"
 	}
 	return "(" + strconv.FormatFloat(value, 'g', -1, 64) + ")"
+}
+
+// objectKey writes a name as an object literal's key. A key spelled __proto__, plain or quoted, sets the
+// literal's prototype in JavaScript instead of making an own field: lowering refuses that spelling in the
+// program (internal/lower/object.go's PropertyAssignment refusal), and a literal's own prototype is
+// written apart, as `__proto__: ` in ObjectLiteral's case. So any field or method the program named
+// __proto__ some other way, a shorthand above all, is written computed, which always makes an own field,
+// as native's does (#pyak7te).
+func objectKey(name string) string {
+	if name == "__proto__" {
+		return "[" + quote(name) + "]"
+	}
+	return quote(name)
 }
 
 // quote is a JavaScript string literal for a string the checker gave as WTF-8: every code unit
