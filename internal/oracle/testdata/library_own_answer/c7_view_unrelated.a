@@ -1,0 +1,6 @@
+const map = new Map<string, number>([['a', 1]]);
+for (const key of map.keys()) {
+	console.log(key);
+}
+const named: { readonly name: string } = { name: 'own' };
+console.log(named.toString());

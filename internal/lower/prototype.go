@@ -293,6 +293,47 @@ func (l *lowering) libraryObjectOwnAnswer(receiver *ast.Node) string {
 	return ""
 }
 
+// ownAnswerValue is a type some expression in the program has that libraryObjectOwnAnswer names, and that name.
+type ownAnswerValue struct {
+	shape   *checker.Type
+	library string
+}
+
+// programOwnAnswerValues is each distinct type a call, new, property or element read in the program has that
+// libraryObjectOwnAnswer names, a match's groups aside, first seen first: every library object with an answer of
+// its own that the program can hold, since each is made or reached by one of those. It's one walk per lowering,
+// kept as entriesProgramHasRecords keeps its, so a toString through a view asks only the relation (#v414yhr). A
+// type is named as the instance first asking it reads it, which a value's library type never depends on: a call
+// gives MapIterator<T> as a MapIterator whatever T is. It's false when the program's modules aren't known.
+func (l *lowering) programOwnAnswerValues() ([]ownAnswerValue, bool) {
+	if l.ownAnswerValuesKnown {
+		return l.ownAnswerValues, true
+	}
+	modules, err := l.moduleOrder(l.program.Files()[0])
+	if err != nil {
+		return nil, false
+	}
+	l.ownAnswerValuesKnown = true
+	seen := map[*checker.Type]bool{}
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindCallExpression || node.Kind == ast.KindNewExpression || node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression {
+			shape := l.checker.GetTypeAtLocation(node)
+			if !seen[shape] {
+				seen[shape] = true
+				if library := l.libraryObjectOwnAnswer(node); library != "" && library != regexpGroupsAnswer {
+					l.ownAnswerValues = append(l.ownAnswerValues, ownAnswerValue{shape: shape, library: library})
+				}
+			}
+		}
+		return node.ForEachChild(visit)
+	}
+	for _, module := range modules {
+		module.AsNode().ForEachChild(visit)
+	}
+	return l.ownAnswerValues, true
+}
+
 // Structural object views can hide an override, an Error, or an artificial absent-spread slot.
 // Until prototype dispatch and presence descriptors exist, refuse any compatible runtime shape
 // in the whole program with one of those hazards. This deliberately errs toward refusal.
@@ -305,6 +346,22 @@ func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 	}
 	if name != "valueOf" && l.errorMayHide(receiver) {
 		return "an Error may be hidden by the view"
+	}
+	// A library object whose own answer isn't Object.prototype's, a Map or Set iterator, a Date, can be held by a
+	// program's own view ({ next(): unknown }), where its toString would print [object Object] and Node prints its
+	// tag (#v414yhr). Any expression whose type libraryObjectOwnAnswer names may be such a value, so a view it relates
+	// to stops. The program's such types are found once (programOwnAnswerValues); only the relation is per view. A receiver libraryObjectOwnAnswer names itself has its own stop, a match's groups their own road, and
+	// a const made from a plain literal holds nothing else.
+	if (name == "toString" || name == "toLocaleString") && l.libraryObjectOwnAnswer(receiver) == "" && !l.exactPlainObject(receiver) {
+		values, known := l.programOwnAnswerValues()
+		if !known {
+			return "the program's runtime shapes are not known"
+		}
+		for _, value := range values {
+			if l.checker.IsTypeAssignableTo(value.shape, view) {
+				return value.library + " may be hidden by the view"
+			}
+		}
 	}
 	reason := ""
 	var visit ast.Visitor

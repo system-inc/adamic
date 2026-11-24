@@ -1,0 +1,6 @@
+interface Stepper {
+	next(): unknown;
+}
+const map = new Map<string, number>([['a', 1]]);
+const view: Stepper = map.keys();
+console.log(view.toString());

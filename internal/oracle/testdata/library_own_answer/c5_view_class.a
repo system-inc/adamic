@@ -1,0 +1,13 @@
+interface Stepper {
+	next(): unknown;
+}
+class Counter implements Stepper {
+	count = 0;
+	next(): number {
+		this.count++;
+		return this.count;
+	}
+}
+const own: Stepper = new Counter();
+console.log(own.toString());
+console.log(Object.prototype.toString.call(own));
