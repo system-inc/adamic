@@ -1,0 +1,20 @@
+# #5cdpvdv: which IR types meet at combine's "a BinaryExpression with a value and a value" stop. Builds adamic with the
+# stop's words extended by the two operands' ir.Type numbers (ir.go: 4 Object, 5 Array, 9 Union...), then compiles each
+# probe with js. Source it after the sealed opening. Never merged.
+W="$TMPDIR/5c"; mkdir -p "$W"
+F=internal/lower/expression.go; cp "$F" "$W/orig.go"
+python3 -I - "$F" <<'PY'
+import sys
+p = sys.argv[1]; t = open(p).read()
+old = 'return nil, l.notYet(node, describe(node)+" with a "+typeName(left.Type())+" and a "+typeName(right.Type()))\n}'
+assert t.count(old) == 1
+new = 'return nil, l.notYet(node, describe(node)+" with a "+typeName(left.Type())+" and a "+typeName(right.Type())+" [types "+strconv.Itoa(int(left.Type()))+" "+strconv.Itoa(int(right.Type()))+"]")\n}'
+t = t.replace(old, new)
+if '"strconv"' not in t:
+    t = t.replace('import (\n', 'import (\n\t"strconv"\n', 1)
+open(p, 'w').write(t)
+PY
+go build -o "$W/adamic" ./cmd/adamic > "$W/build.log" 2>&1 && echo "PASS build" || { echo "FAIL build"; head -20 "$W/build.log"; }
+cp "$W/orig.go" "$F"
+for f in proof/performance/5cdpvdv/probes/*.ts; do echo "== $(basename $f)"; "$W/adamic" js "$f" > /dev/null 2> "$W/err"; echo "exit $?"; head -2 "$W/err" | cut -c1-300; done
+echo "VERDICT OK"
