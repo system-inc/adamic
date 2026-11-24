@@ -237,6 +237,12 @@
 `runtime-file:normalize_tables.h`
 `runtime-file:number.c`
 `runtime-file:object.c`
+# adamic_object_spread_with's interned shapes (#5c0z219): an entry is pushed once under
+# spread_shapes_lock and published with release order, read with acquire, as union.c's shape_types is,
+# and never changes or goes away once it's on the list.
+`runtime-file:object_spread.c`
+`object_spread.c:spread_shapes:1`
+`object_spread.c:spread_shapes_lock:1`
 `runtime-file:parallel.c`
 `runtime-file:parallel.h`
 `runtime-file:parse.c`
