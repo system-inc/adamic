@@ -28,18 +28,20 @@ func closedProof(root string) (string, error) {
 			var mount syscall.Statfs_t
 			return syscall.Statfs(path, &mount) == nil && uint64(mount.Flags)&statfsReadOnly != 0
 		},
-		mountInfo:    func() ([]byte, error) { return os.ReadFile("/proc/self/mountinfo") },
-		status:       func() ([]byte, error) { return os.ReadFile("/proc/self/status") },
-		effectiveUid: os.Geteuid(),
-		owner: func(path string) (int, error) {
-			var stat syscall.Stat_t
-			if err := syscall.Lstat(path, &stat); err != nil {
-				return 0, err
-			}
-			return int(stat.Uid), nil
-		},
-		writable: writableByThisProcess,
+		mountInfo: func() ([]byte, error) { return os.ReadFile("/proc/self/mountinfo") },
+		status:    func() ([]byte, error) { return os.ReadFile("/proc/self/status") },
+		owner:     ownerOf,
+		writable:  writableByThisProcess,
 	})
+}
+
+// ownerOf is the uid owning path, the path itself and never what a link names (lstat).
+func ownerOf(path string) (int, error) {
+	var stat syscall.Stat_t
+	if err := syscall.Lstat(path, &stat); err != nil {
+		return 0, err
+	}
+	return int(stat.Uid), nil
 }
 
 // writableByThisProcess asks the kernel whether this process's effective uid and groups may write path: faccessat2 with
