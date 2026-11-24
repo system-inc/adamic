@@ -862,6 +862,7 @@ var irSpecFields = map[string]irFieldPolicy{
 	"ViewElement.Element":                {"Type", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"ViewElement.Unrelated":              {"bool", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"ViewElement.Optional":               {"bool", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
+	"ViewElement.Position":               {"bool", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"ViewElementCheck.Contract":          {"ViewContractID", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"ViewElementCheck.Where":             {"string", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"ViewElementCheck.View":              {"string", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
