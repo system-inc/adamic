@@ -98,7 +98,8 @@ func rangeUnionOf(expression ir.Expression) rangeUnion {
 		ir.SetValues, ir.StringCall, ir.StringFromCodes, ir.StringIndex, ir.StringIterator, ir.StringLength,
 		ir.ToFixed, ir.Trim, ir.Truthy, ir.TypedArrayFill, ir.TypedArrayNew, ir.TypedArraySet, ir.TypedArraySort,
 		ir.TypedArraySubarray, ir.Unary, ir.Unwrap, ir.Utf8At, ir.Utf8Length, ir.Void, ir.WeakCollectionDelete,
-		ir.WeakCollectionHas, ir.WeakOf, ir.WeakSetAdd, ir.WeakTarget, ir.WriteTextFile, ir.Yield:
+		ir.WeakCollectionHas, ir.WeakMapGet, ir.WeakMapSet, ir.WeakOf, ir.WeakSetAdd, ir.WeakTarget, ir.WriteTextFile,
+		ir.Yield:
 		return rangeUnionMoves
 	}
 	return 0
