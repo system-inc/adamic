@@ -10,15 +10,17 @@ import (
 // parser.ts:4754), an || with an inner && (or_and, parser.ts:8417), an && chain (and_chain,
 // parser.ts:8701) and a conditional's true arm either way round (conditional). Each lowers and agrees with
 // Node on the JavaScript backend and natively under the leak check, every value a member it proves or
-// one it doesn't, 7 among them, which never reaches the slot. The stops are pinned in
-// internal/lower/enum_compared_test.go, and the mutants in testdata/enum_compared/mutants.md.
+// one it doesn't, 7 among them, which never reaches the slot. negative_zero holds -0 beside 0 through the
+// slot, its sign kept (Language's z01). The stops are pinned in internal/lower/enum_compared_test.go, and
+// the mutants in testdata/enum_compared/mutants.md.
 func TestEnumComparedMemberAgreesWithNode(t *testing.T) {
 	t.Parallel()
 	for name, stdout := range map[string]string{
-		"case_chain":  "took 0, took 1, c, other 3, other 7\n",
-		"or_and":      "took 0, took 1, skip 1, skip 2, skip 7\n",
-		"and_chain":   "took 0, took 1, skip 1, skip 0, skip 2, skip 7\n",
-		"conditional": "took 0 took 0, not a not a, not a not a\n",
+		"case_chain":    "took 0, took 1, c, other 3, other 7\n",
+		"or_and":        "took 0, took 1, skip 1, skip 2, skip 7\n",
+		"and_chain":     "took 0, took 1, skip 1, skip 0, skip 2, skip 7\n",
+		"conditional":   "took 0 took 0, not a not a, not a not a\n",
+		"negative_zero": "-Infinity false, Infinity true, other\n",
 	} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()

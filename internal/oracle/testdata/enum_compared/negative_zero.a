@@ -1,0 +1,18 @@
+// Language's z01 (#snypn8c, c3): `-0 === K.A` holds when K.A is 0, so the comparison proves -0 into a K.A
+// slot. The slot holds the value as made, its sign kept, never the member's constant folded in: a later
+// head that folds a member-typed read to its literal prints Infinity here where Node prints -Infinity.
+enum K { A, B }
+function kindOf(n: number): K {
+	return n;
+}
+function take(x: K.A): string {
+	return String(1 / x) + " " + String(Object.is(x, K.A));
+}
+function at(n: number): string {
+	const t = kindOf(n);
+	if (t === K.A) {
+		return take(t);
+	}
+	return "other";
+}
+console.log(at(-0) + ", " + at(0) + ", " + at(1));
