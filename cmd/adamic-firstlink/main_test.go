@@ -87,7 +87,7 @@ const twoFunctions = `function first(): void {
 function second(): number {
     const values: number[] = [3, 1, 2];
     values.sort();
-    return values[0];
+    return values.length;
 }
 first();
 console.log(String(second()));
