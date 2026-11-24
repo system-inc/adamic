@@ -13,7 +13,10 @@ func TestRecordBoxedKeysAgainstNode(t *testing.T) {
 	} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			path := filepath.Join(repository, "internal/oracle/testdata/record_boxed_keys", name+".ts")
+			path, err := filepath.Abs(filepath.Join("testdata", "record_boxed_keys", name+".ts"))
+			if err != nil {
+				t.Fatal(err)
+			}
 			truth := onNode(t, path)
 			if truth.exitCode != 0 {
 				t.Fatalf("Node stopped: %+v", truth)
@@ -37,7 +40,10 @@ func TestRecordBoxedKeyPrototypeMiss(t *testing.T) {
 	for _, name := range []string{"p4-prototype-miss", "p4-unboxed-twin"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			path := filepath.Join(repository, "internal/oracle/testdata/record_boxed_keys", name+".ts")
+			path, err := filepath.Abs(filepath.Join("testdata", "record_boxed_keys", name+".ts"))
+			if err != nil {
+				t.Fatal(err)
+			}
 			truth := onNode(t, path)
 			if truth.exitCode != 0 || string(truth.stdout) != "function\n" {
 				t.Fatalf("Node prototype baseline: %+v", truth)
