@@ -90,6 +90,10 @@ type agreementReport struct {
 	Disagreeing  int `json:"disagreeing"`
 	MemoryUnsafe int `json:"memory_unsafe"`
 	Refused      int `json:"refused"`
+	// FirstLinkTraps counts the programs a run of which met a first-link trap: a program lowered in trap mode
+	// (lower's Options.FirstLinkTraps), measurement and never a product. It's classed apart, never agreeing or a
+	// checked stop, and in none of Compared, and any fails the run.
+	FirstLinkTraps int `json:"first_link_traps"`
 	// TimedOutRuns, RetriedRuns and StillTimedOutRuns count runtime timeouts as the delta's report does (#pajbaba).
 	TimedOutRuns      int                        `json:"timed_out_runs"`
 	RetriedRuns       int                        `json:"retried_runs"`
@@ -104,6 +108,19 @@ type agreementReport struct {
 	Verdict        string             `json:"verdict"`
 	Void           bool               `json:"void"`
 	VoidReason     string             `json:"void_reason,omitempty"`
+}
+
+// firstLinkTrapPrefix is what a first-link trap writes to stderr as it ends a program lowered in trap mode.
+const firstLinkTrapPrefix = "adamic: first-link trap:"
+
+// firstLinkTrapRun reports whether any of a program's runs met a first-link trap.
+func firstLinkTrapRun(runs ...observation) bool {
+	for _, run := range runs {
+		if strings.Contains(run.Stderr, firstLinkTrapPrefix) {
+			return true
+		}
+	}
+	return false
 }
 
 // nativeWarmLimit bounds the one native build that makes the runtime's archives before the run's own builds: the
@@ -306,6 +323,12 @@ func runAgreement(agreement agreementRun) error {
 		case !clang:
 			judged.Judgment = "void"
 		default:
+			if firstLinkTrapRun(*record.Node, *record.JavaScript, *record.Native) {
+				result.FirstLinkTraps++
+				judged.Judgment = "first-link trap"
+				lines = append(lines, fmt.Sprintf("first-link trap %s: a run wrote %q, so the program was lowered in trap mode and proves nothing", record.Path, firstLinkTrapPrefix))
+				break
+			}
 			if stale[index] {
 				result.StaleRuntimeStops = append(result.StaleRuntimeStops, record.Path)
 				lines = append(lines, fmt.Sprintf("stale run-time stop %s: it agrees with Node, so its entry leaves the list", record.Path))
@@ -361,7 +384,7 @@ func runAgreement(agreement agreementRun) error {
 	}
 	result.Compared = result.Agreeing + result.Ruled + result.CheckedStops + result.Pending + result.Disagreeing
 	result.TimedOutRuns, result.RetriedRuns, result.StillTimedOutRuns = runner.timedOutRuns, runner.retriedRuns, runner.stillTimedOutRuns
-	red := result.Disagreeing > 0 || len(result.CompilerFailures) > 0 || len(result.StaleRuntimeStops) > 0
+	red := result.Disagreeing > 0 || len(result.CompilerFailures) > 0 || len(result.StaleRuntimeStops) > 0 || result.FirstLinkTraps > 0
 	result.VoidReason = strings.Join(voids, "; ")
 	switch {
 	case red:
