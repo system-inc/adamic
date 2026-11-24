@@ -238,7 +238,8 @@ go build -work -o "$TMPDIR/probe" .
 // Mutants: the `export TMPDIR="$sandboxedJobTemporary"` line dropped (red on the scratch beside the tree, its TMPDIR the
 // caller's); the `case` that refuses a path inside the tree dropped, so it always exports (red on the link into the
 // tree, its TMPDIR the link); `chmod 0700` dropped (red on the scratch beside the tree's mode, since `umask 022` leaves
-// mkdir's 0755); the chmod moved ahead of the refusal (red on the link into the tree, whose inside turns 0700).
+// mkdir's 0755); the chmod moved ahead of the refusal (red on the link into the tree, whose inside turns 0700); the
+// XDG_CACHE_HOME export dropped (red on both scratch cases, whose user cache would be HOME's on /tmp).
 func TestSandboxedJobGivesTheScratchItsTemporaryDirectory(t *testing.T) {
 	t.Parallel()
 	script, err := filepath.Abs("sandboxed-job.sh")
@@ -285,6 +286,7 @@ made=$(mktemp -d) || exit 1
 printf 'made=%s\n' "$made"
 . "$SANDBOXED_JOB_SCRIPT" || exit 1
 printf 'tmpdir-again=%s\n' "$TMPDIR"
+printf 'xdg=%s\n' "${XDG_CACHE_HOME-unset}"
 `)
 			if command.Err != nil {
 				t.Fatal(command.Err)
@@ -298,7 +300,7 @@ printf 'tmpdir-again=%s\n' "$TMPDIR"
 			for _, variable := range environment {
 				name, _, _ := strings.Cut(variable, "=")
 				switch name {
-				case "TMPDIR", "LOOM_JOB_SCRATCH", "ADAMIC_BUILD_CACHE_DIR", "GOTMPDIR":
+				case "TMPDIR", "LOOM_JOB_SCRATCH", "ADAMIC_BUILD_CACHE_DIR", "GOTMPDIR", "XDG_CACHE_HOME":
 				default:
 					kept = append(kept, variable)
 				}
@@ -315,7 +317,7 @@ printf 'tmpdir-again=%s\n' "$TMPDIR"
 			}
 			values := map[string]string{}
 			for _, line := range strings.Split(said, "\n") {
-				for _, key := range []string{"tmpdir", "made", "tmpdir-again"} {
+				for _, key := range []string{"tmpdir", "made", "tmpdir-again", "xdg"} {
 					if found, ok := strings.CutPrefix(line, key+"="); ok {
 						values[key] = found
 					}
@@ -325,6 +327,14 @@ printf 'tmpdir-again=%s\n' "$TMPDIR"
 				if values[key] == "" {
 					t.Fatalf("want a %s line, got:\n%s", key, said)
 				}
+			}
+			// The user cache (Go's build cache among it) is the scratch's wherever the runner names one, whatever TMPDIR did.
+			wantCache := "unset"
+			if test.scratch {
+				wantCache = filepath.Join(scratch, "cache")
+			}
+			if values["xdg"] != wantCache {
+				t.Errorf("XDG_CACHE_HOME is %s, want %s:\n%s", values["xdg"], wantCache, said)
 			}
 			if values["tmpdir-again"] != values["tmpdir"] {
 				t.Errorf("TMPDIR is %s after the first source and %s after the second, want one value:\n%s", values["tmpdir"],
