@@ -65,9 +65,10 @@ var castStopProbes = []struct {
 		"stage 0 can't lower a checked view of A & T over the type parameter T, constrained to { readonly n: number; } yet"},
 	{"unconstrained type parameter", "interface A { readonly a: number } function f<T>(x: T): A & T { return x as A & T; }", true,
 		"a cast the runtime can't check: a cast from the type parameter T to A & T, which nothing at run time can test, since T may be any type; constrain T to an object type"},
-	// To one member, an untagged union's cast lowers as a checked view (#axqgdck, untaggedUnionArm); to a sub-union of
-	// its members it keeps this stop.
-	{"untagged union", "interface A { readonly a: number } interface B { readonly b: string } interface C { readonly c: boolean } function f(x: A | B | C): A | B { return x as A | B; }", false,
+	// To one member or to a union of members, an untagged union's cast lowers as a checked view (#axqgdck and #b5w3ycg's
+	// union target (a), untaggedUnionArm); to a union of members a literal tag tells apart, the tag road's, it keeps
+	// this stop.
+	{"untagged union", "interface A { readonly kind: 'a'; readonly a: number } interface B { readonly kind: 'b'; readonly b: string } interface C { readonly c: boolean } function f(x: A | B | C): A | B { return x as A | B; }", false,
 		"stage 0 can't lower a checked view of A | B over the union A | B | C, whose members no literal tag tells apart yet"},
 	{"union target", "interface Base { readonly flags: number } interface A extends Base { readonly a: number } interface B extends Base { readonly b: string } function f(x: Base): A | B { return x as A | B; }", false,
 		"stage 0 can't lower a checked view of the union A | B over Base, whose members no literal tag tells apart yet"},
