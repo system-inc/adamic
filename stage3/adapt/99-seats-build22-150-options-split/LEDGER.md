@@ -1,0 +1,1 @@
+- **Family 150, compiler accepts under the split (#bbssdcy, Nov 22):** 99-seats-build22-150-options-split initializes the missing watch-options local just before parseOptionValue and passes the same record. The callee and earlier arguments are plain reads. The write and argument retain their independent handle checks. Built by a Seats Codex lane, rounds 1 to 4, read by review-l.
