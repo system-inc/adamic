@@ -32,7 +32,7 @@
 // traced; Loom reads it as a void, sourceUnrunnable, never retried. Exit 4 means that only together with the report's
 // one line saying the command never started (outcome neverStarted, the refusal's words its reason), since the command
 // can exit 4 itself. traced writes that line before starting anything, from -tree-state or from a run's tree state
-// before its command. The command is never told where the report is (ADAMIC_TRACE_REPORT is unset before it starts),
+// before its command, and exits 4 only once it is written: with no report, or one it can't write, it exits 2. The command is never told where the report is (ADAMIC_TRACE_REPORT is unset before it starts),
 // and a run that started its command writes the report whole after the command and every process it started has
 // ended, over anything written to it meanwhile, and exits 2 when it can't, so a command never leaves that line beside
 // traced's exit 4.
@@ -280,13 +280,24 @@ func traceReport() string {
 }
 
 // exitNeverStarted ends traced before it started any command, the source being unpacked and not proven closed
-// (buildcache.ErrSourceNotClosed): the report, when there is one, holds one line, outcome neverStarted with err's words,
-// and traced exits 4, which together are Loom's sourceUnrunnable.
+// (buildcache.ErrSourceNotClosed), with neverStarted's status.
 func exitNeverStarted(report string, err error) {
-	if report != "" {
-		buildcache.WriteReport(report, []buildcache.Report{{Outcome: buildcache.ReportNeverStarted, Reason: "traced: " + err.Error()}})
+	os.Exit(neverStarted(report, err))
+}
+
+// neverStarted writes report's one line, outcome neverStarted with err's words, and is 4, which together with that
+// line is Loom's sourceUnrunnable. With no report, or one it can't write, it is 2, traced's own failure, with why on
+// stderr: exit 4 never stands without the line that says the command never started.
+func neverStarted(report string, err error) int {
+	if report == "" {
+		fmt.Fprintln(os.Stderr, "traced: no ADAMIC_TRACE_REPORT to say the command never started")
+		return 2
 	}
-	os.Exit(4)
+	if writeError := buildcache.WriteReport(report, []buildcache.Report{{Outcome: buildcache.ReportNeverStarted, Reason: "traced: " + err.Error()}}); writeError != nil {
+		fmt.Fprintln(os.Stderr, "traced: ADAMIC_TRACE_REPORT:", writeError)
+		return 2
+	}
+	return 4
 }
 
 // treeStateBefore is the tree's state before the run: the one ADAMIC_TRACE_TREE_STATE's file holds, taken by -tree-state

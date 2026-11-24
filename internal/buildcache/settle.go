@@ -93,8 +93,14 @@ func TreeState() (string, error) {
 	return treeStateAt(root)
 }
 
-// treeStateAt is TreeState for the tree at root.
+// treeStateAt is TreeState for the tree at root. Only a .git that doesn't exist makes root no checkout: any other
+// error looking for it is returned, never read as an unpacked source's absent .git.
 func treeStateAt(root string) (string, error) {
+	var gitError error
+	keying(func() { _, gitError = statGit(filepath.Join(root, ".git")) })
+	if gitError != nil && !errors.Is(gitError, fs.ErrNotExist) {
+		return "", fmt.Errorf("looking for %s's .git: %v", root, gitError)
+	}
 	if unpackedSource(root) {
 		return unpackedTreeState(root, closedProof)
 	}
