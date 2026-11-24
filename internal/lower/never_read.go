@@ -101,11 +101,14 @@ func (l *lowering) declaredNeverField(node *ast.Node) string {
 }
 
 // declaredNever is whether a field is required and each of its declarations writes its type as never, a
-// property's type node the checker reads as never. A field tsc makes never by intersecting declarations
-// that disagree, { name: string } & { name: number }, isn't: its property holds every declaration it
-// merges, and one of them writes string (#mhggcdw's conflict case keeps its stop). Nor is a field a
-// member inherits from a base chain that conflicts, whose property is that merged one, or one a generic
-// declares as a type parameter an instance fixes to never, whose declaration writes the parameter.
+// property's type node the checker reads as never. A single declaration written `name: string & number`
+// is declared never too: the checker reads that one type node as never, and no value inhabits it, so it
+// is that member's own declaration and not a conflict between members. A field tsc makes never by
+// intersecting declarations of different members that disagree, { name: string } & { name: number },
+// isn't: its property holds every declaration it merges, and one of them writes string (#mhggcdw's
+// conflict case keeps its stop). Nor is a field a member inherits from a base chain that conflicts, whose
+// property is that merged one, or one a generic declares as a type parameter an instance fixes to never,
+// whose declaration writes the parameter.
 func (l *lowering) declaredNever(field *ast.Symbol) bool {
 	if field == nil || field.Flags&ast.SymbolFlagsOptional != 0 || len(field.Declarations) == 0 {
 		return false

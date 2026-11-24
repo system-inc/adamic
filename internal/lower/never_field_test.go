@@ -3,6 +3,7 @@ package lower
 import (
 	"errors"
 	"os"
+	"slices"
 	"strings"
 	"testing"
 
@@ -137,6 +138,119 @@ func TestNeverFieldWriteIsATrapAtTheWrite(t *testing.T) {
 	}
 	if stored {
 		t.Fatal("the write into a field declared never stores its value")
+	}
+}
+
+// neverFieldStores counts what in a lowered program can store field name into an object that already
+// exists: an ir.SetProperty of that name, an ir.LogicalAssignment whose computed key names it (its keyed
+// SetProperty has no name of its own), and every Object.assign (an ir.ObjectCall "assign"), which copies
+// whatever its sources hold. They are the object writes ir.Program.FrozenWriteMayThrow counts, which
+// native lowers to adamic_object_write_field and adamic_object_assign; an ir.ObjectLiteral makes an
+// object rather than writing one, and an ir.SetIndex writes an array.
+func neverFieldStores(program *ir.Program, name string) int {
+	stores := 0
+	scan := func(node any) bool {
+		switch node := node.(type) {
+		case ir.SetProperty:
+			if node.Name == name {
+				stores++
+			}
+		case ir.LogicalAssignment:
+			if slices.Contains(node.KeyNames, name) {
+				stores++
+			}
+		case ir.ObjectCall:
+			if node.Method == "assign" {
+				stores++
+			}
+		}
+		return true
+	}
+	walk(program.Main, scan)
+	for _, function := range program.Functions {
+		walk(function.Body, scan)
+	}
+	return stores
+}
+
+// neverFieldRoad is a program whose put writes Slot's name, declared never and writable, by write, after
+// two checks leave shape never, as a field a cast reaches: tsc accepts each write.
+func neverFieldRoad(write string) string {
+	return "type Shape = \"circle\" | \"square\";\ninterface Slot {\n\treadonly kind: number;\n\tname: never;\n}\nfunction put(o: Slot, shape: Shape): string {\n\tif (shape === \"circle\") return \"circle\";\n\tif (shape === \"square\") return \"square\";\n\t" + write + "\n\treturn \"written\";\n}\nconsole.log(\"put\");\n"
+}
+
+// Lower's question on ruling 2 (#bbssdcy): the intersection gives a never field no slot, so every road
+// that writes a declared-never field reached through a cast traps or stops at compile time, and none
+// stores. A plain = is the :76 read at the write (declaredNeverWrite). The logical assignments, ++ and --
+// each ask the field's representation first (logicalAssignment's typeOf of the write, updateProperty's of
+// the field), never (no value has it). A destructuring target that is a field stops for any field
+// (destructuringAssignment, objectDestructuringAssignment), and here the array's tuple element of type
+// never stops sooner, at the value. A string-literal key goes to finiteElementWrite, whose finiteKeyFields
+// finds no representation for the field. Object.assign stops at a target no literal proves, which a field
+// declared never always is, since only a cast or a never value makes one. o.name += x isn't a row: tsc
+// refuses it, since never + never is a number, and every arithmetic compound makes a number or a string,
+// none of which never holds. Each control writes an ordinary field the same way and lowers, and the same
+// count finds its store, so the count can see one; destructuring has none, since it stores no field at all.
+func TestNeverFieldEveryWriteRoadTrapsOrStops(t *testing.T) {
+	t.Parallel()
+	const objectSource = "type Source = { readonly k: \"a\"; readonly v: string } | { readonly k: \"b\"; readonly v: number };\ninterface Slot {\n\treadonly kind: number;\n\tname: never;\n}\nfunction put(o: Slot, src: Source): string {\n\tif (src.k === \"a\") return \"a\";\n\tif (src.k === \"b\") return \"b\";\n\t({ v: o.name } = src);\n\treturn \"written\";\n}\nconsole.log(\"put\");\n"
+	const neverWhat = "a value of type never, never (no value has it)"
+	for _, road := range []struct{ name, source, at, what string }{
+		{"plain", neverFieldRoad("o.name = shape;"), "o.name = shape", ""},
+		{"or_assign", neverFieldRoad("o.name ||= shape;"), "o.name ||= shape", neverWhat},
+		{"and_assign", neverFieldRoad("o.name &&= shape;"), "o.name &&= shape", neverWhat},
+		{"nullish_assign", neverFieldRoad("o.name ??= shape;"), "o.name ??= shape", neverWhat},
+		{"increment", neverFieldRoad("o.name++;"), "o.name++", neverWhat},
+		{"decrement", neverFieldRoad("o.name--;"), "o.name--", neverWhat},
+		{"object_destructuring", objectSource, "o.name } = src", "assigning to a PropertyAccessExpression in a destructuring assignment"},
+		{"array_destructuring", neverFieldRoad("[o.name] = [shape];"), "shape];", "a tuple element of type never"},
+		{"element", neverFieldRoad("o[\"name\"] = shape;"), "o[\"name\"] = shape", "a computed field with an unsupported representation"},
+		{"object_assign", neverFieldRoad("Object.assign(o, { name: shape });"), "o, { name: shape }", "Object.assign on a shape not proven by a plain literal or its const binding"},
+	} {
+		t.Run(road.name, func(t *testing.T) {
+			t.Parallel()
+			program, err := lowerSourceAs(t, road.source, ".ts")
+			where := neverReadWhere(t, road.source, road.at)
+			if road.what != "" {
+				var notYet *NotYet
+				var refused *Refused
+				switch {
+				case errors.As(err, &notYet) && notYet.What == road.what && strings.HasSuffix(notYet.Where, where):
+				case errors.As(err, &refused) && refused.What == road.what && strings.HasSuffix(refused.Where, where):
+				default:
+					t.Fatalf("got %v, want a stop at %s saying %q", err, where, road.what)
+				}
+				return
+			}
+			if err != nil {
+				t.Fatalf("want it to lower, got %v", err)
+			}
+			if !neverFieldTrapped(program, "write", "o.name", where) {
+				t.Fatalf("want a trap naming the write of o.name at %s, got traps %q", where, neverFieldTrapMessages(program))
+			}
+			if stores := neverFieldStores(program, "name"); stores != 0 {
+				t.Fatalf("the write into a field declared never stores %d times", stores)
+			}
+		})
+	}
+	const box = "interface Box {\n\tkind: number;\n\tcount: number;\n\tlabel: string;\n}\nfunction touch(o: Box, text: string): void {\n\t"
+	for _, control := range []struct{ name, write, field string }{
+		{"control_assign", "o.label = text;", "label"},
+		{"control_or_assign", "o.label ||= text;", "label"},
+		{"control_increment", "o.count++;", "count"},
+		{"control_element", "o[\"label\"] = text;", "label"},
+		{"control_object_assign", "const held = { kind: 1, label: \"a\" };\n\tObject.assign(held, { label: text });", "label"},
+	} {
+		t.Run(control.name, func(t *testing.T) {
+			t.Parallel()
+			program, err := lowerSourceAs(t, box+control.write+"\n}\nconsole.log(\"touch\");\n", ".ts")
+			if err != nil {
+				t.Fatalf("want it to lower, got %v", err)
+			}
+			if neverFieldStores(program, control.field) == 0 {
+				t.Fatalf("the count finds no store of %s, so it couldn't see one of a never field", control.field)
+			}
+		})
 	}
 }
 
