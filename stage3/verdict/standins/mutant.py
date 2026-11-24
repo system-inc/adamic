@@ -8,12 +8,13 @@ import sys
 completed = subprocess.run([str(Path(__file__).resolve().parent / 'node.sh'), *sys.argv[1:]],
                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 output = completed.stdout
-# A target filename isolates a single case when proving a suite's byte comparison.
+# prove.py targets acceptance and tiny's `tiny` case and upstream's
+# tests/cases/compiler/ArrowFunctionExpression1.ts (live and legacy stdout).
 targets = os.environ.get('STAGE3_VERDICT_MUTANT_TARGET')
 target = None
 if targets:
     names = targets.split(',')
-    target = names[-1] if Path.cwd().parent.name == 'baselines' else names[0]
+    target = names[-1] if Path.cwd().parents[2].name == 'baselines' else names[0]
 if target is None or any(Path(name).exists() for name in target.split(',')):
     position = output.find(b'error TS')
     if position >= 0:
