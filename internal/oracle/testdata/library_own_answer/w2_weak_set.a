@@ -1,0 +1,4 @@
+const set = new WeakSet<object>();
+console.log(set.toString());
+console.log(set.toLocaleString());
+console.log(Object.prototype.toString.call(set));

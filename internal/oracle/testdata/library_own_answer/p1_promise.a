@@ -1,0 +1,7 @@
+async function one(): Promise<number> {
+	return 1;
+}
+const promise = one();
+console.log(promise.toString());
+console.log(promise.toLocaleString());
+console.log(Object.prototype.toString.call(promise));

@@ -55,6 +55,10 @@ adamic_weak_map *adamic_weak_map_new(bool set, bool reference_values) {
 	return map;
 }
 
+bool adamic_weak_map_set_is(const adamic_weak_map *map) {
+	return map->set;
+}
+
 adamic_weak_map_entry *adamic_weak_map_entry_of(adamic_weak_map *map, const adamic_weak *key) {
 	if (map->capacity == 0 || key == NULL) {
 		return NULL;
