@@ -1,0 +1,1 @@
+- **JavaScript-changing diagnostic append callbacks (#bbssdcy, family 62, Nov 22 split):** 99-seats-build22-62-append-callbacks passes typed diagnostic append callbacks through the two JSON conversion workers, preserving each append and the public convertToObject signature. Built by a Seats Codex lane, read by review-l.
