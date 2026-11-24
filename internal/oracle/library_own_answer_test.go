@@ -9,13 +9,17 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-// An explicit toString, toLocaleString or valueOf on a library object whose own answer isn't Object.prototype's
-// stops at compile time (#20e4t06, #shqn1d0, Compiler's two-hour stop). On main each lowered to the constant
-// "[object Object]" tag (prototype.go's objectPrototypeCallArguments): a Map or Set iterator, where Node prints
-// [object Map Iterator] or [object Set Iterator], and a RegExp match's groups, which have a null prototype, so
-// Node throws a TypeError at the call (exit 70), and valueOf answered the groups themselves. The template and
-// String() roads already stop on main, before ToPrimitive (J-d27ejbm). The real fix, each object's own tag and
-// groups' missing prototype, follows with Runtime Library.
+// An explicit toString or toLocaleString on a library object whose own answer isn't Object.prototype's stops at
+// compile time (#20e4t06, Compiler's two-hour stop). On main each lowered to the constant "[object Object]" tag
+// (prototype.go's objectPrototypeCallArguments) for a Map or Set iterator, where Node prints [object Map Iterator] or
+// [object Set Iterator]. The template and String() roads already stop on main, before ToPrimitive (J-d27ejbm). The
+// real fix, each object's own tag, follows with Runtime Library (#eksbz4c's head T).
+//
+// A RegExp match's groups object has a null prototype, so on Node a direct call of toString, toLocaleString,
+// valueOf, hasOwnProperty or propertyIsEnumerable on one throws a TypeError naming the callee as written (exit 70
+// uncaught), where a program's own object of the groups type answers as Object.prototype does (#shqn1d0's stop,
+// lifted by #eksbz4c's head G). Each such call tests its receiver at run time, by the shape's sentinel natively
+// (adamic_groups_methods) and by a null prototype on the JavaScript backend.
 const libraryOwnAnswerDirectory = "internal/oracle/testdata/library_own_answer/"
 
 func libraryOwnAnswerFixture(t *testing.T, name string) string {
@@ -36,9 +40,6 @@ func TestLibraryObjectOwnAnswerStops(t *testing.T) {
 		{"i1_entries.a", "2:13", "a library "},
 		{"i2_keys_locale.a", "2:13", "a library "},
 		{"i3_set_values.a", "2:13", "a library "},
-		{"g1_tostring.a", "3:14", "a RegExp match's groups"},
-		{"g4_valueof.a", "3:21", "a RegExp match's groups"},
-		{"g5_local.a", "4:14", "a RegExp match's groups"},
 		{"k1_call_iterator.a", "2:13", "a library "},
 	} {
 		t.Run(stop.name, func(t *testing.T) {
@@ -53,15 +54,70 @@ func TestLibraryObjectOwnAnswerStops(t *testing.T) {
 }
 
 // What keeps its answer and still agrees with Node natively, sanitized and on JavaScript: an iterator result,
-// Object.prototype.toString.call of a RegExp match's groups (Object's own tag, prototype or none),
-// which next makes as a plain object; a Map's own tag and an array's join; and a program's object literal and
-// class instance, Object.prototype's own.
+// which next makes as a plain object; Object.prototype.toString.call of a RegExp match's groups (Object's own tag,
+// prototype or none); a Map's own tag and an array's join; a program's object literal and class instance,
+// Object.prototype's own; and a program's own object of the groups type (h1, h3), which the run-time test lets
+// answer as Object.prototype does. Mutant (b), the test always true, throws on h1 and h3.
 func TestLibraryObjectOwnAnswerControlsAgree(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"i4_result.a", "c3_map_array.a", "c1_control.a", "k2_call_groups.a"} {
+	for _, name := range []string{"i4_result.a", "c3_map_array.a", "c1_control.a", "k2_call_groups.a", "h1_own.a", "h3_own_has.a", "g9_caught.a"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			loomViewsDAgrees(t, libraryOwnAnswerDirectory+name)
 		})
+	}
+}
+
+// Each direct call of an Object.prototype method on a real groups object throws Node's TypeError, uncaught, after
+// what the program printed before it, natively, sanitized and on the JavaScript backend: toString (g1, and g5 through
+// a local), toLocaleString (g6), valueOf (g4), hasOwnProperty (g7) and propertyIsEnumerable (g8, through a local),
+// where main stopped at compile time or panicked natively; and h2, one parameter of the groups type that sees a
+// program's own object first, which answers, and then real groups, which throw. Mutants: the run-time test always
+// false (a), and internal/regexp/native.go writing adamic_host_methods again (d), each of which answers instead.
+func TestRegExpGroupsMissingMethodsThrowAsNode(t *testing.T) {
+	t.Parallel()
+	for _, row := range []struct{ name, message string }{
+		{"g1_tostring.a", "TypeError: match.groups.toString is not a function"},
+		{"g4_valueof.a", "TypeError: match.groups.valueOf is not a function"},
+		{"g5_local.a", "TypeError: groups.toString is not a function"},
+		{"g6_locale.a", "TypeError: match.groups.toLocaleString is not a function"},
+		{"g7_has.a", "TypeError: match.groups.hasOwnProperty is not a function"},
+		{"g8_enumerable.a", "TypeError: groups.propertyIsEnumerable is not a function"},
+		{"h2_param.a", "TypeError: groups.toString is not a function"},
+	} {
+		t.Run(row.name, func(t *testing.T) {
+			t.Parallel()
+			libraryOwnAnswerHeldToNode(t, row.name, 70, row.message)
+		})
+	}
+}
+
+// libraryOwnAnswerHeldToNode runs a fixture on Node, natively, sanitized and on the JavaScript backend, and each
+// backend must give Node's stdout, stderr and exit. Node's own run must exit as exit says with message in its stderr,
+// so a fixture that stops throwing on Node fails here rather than passing as one that agrees.
+func libraryOwnAnswerHeldToNode(t *testing.T, name string, exit int, message string) {
+	t.Helper()
+	path := libraryOwnAnswerFixture(t, name)
+	want := onNode(t, path)
+	if want.exitCode != exit || !strings.Contains(string(want.stderr), message) {
+		t.Fatalf("Node: want exit %d with %q, got exit %d stdout %q stderr %q", exit, message, want.exitCode, want.stdout, want.stderr)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, backend := range []string{"native", "sanitized", "javascript"} {
+		var got run
+		switch backend {
+		case "native":
+			got = releasedUncached(t, program)
+		case "sanitized":
+			got, _ = nativelyUncached(t, program)
+		case "javascript":
+			got = onJavaScriptBackend(t, program)
+		}
+		if diff := disagreement(want, got); diff != "" {
+			t.Errorf("%s: %s, stdout %q stderr %q", backend, diff, got.stdout, got.stderr)
+		}
 	}
 }
