@@ -2115,9 +2115,14 @@ func (l *lowering) programClassesConvert() bool {
 
 // addedObjectsConvert is whether every object a value of type proven can be is one the ToPrimitive helper
 // converts as Node does: an object the program declares, a class instance or an interface or type literal,
-// with no call or construct signature. A function, a class object, an array (whose join stops on one of only
-// numbers or booleans, arrayToString) and an object of a type a declaration file declares (a Map, a Set, a
-// Date, node:buffer's Buffer, a typed array) aren't, since the helper stops on each at run time.
+// with no call or construct signature, or an array whose element type is string, mutable or readonly. A
+// function, a class object, any other array (whose join stops on one of only numbers or booleans,
+// arrayToString) and an object of a type a declaration file declares (a Map, a Set, a Date, node:buffer's
+// Buffer, a typed array) aren't, since the helper stops on each at run time. An array of strings joins
+// its elements through ToString, as Array.prototype.toString does, and never reaches that stop: its
+// elements are strings, held as references, so ArrayOfScalars is false for it, and an empty one joins as
+// "". That's row 205 and Adamic's ruling on + over a union (Nov 22, family 69), taken for tsc's diagnostic
+// arguments, `"" + args[i]` over `string | number | boolean | readonly string[] | SourceFile` (family 86).
 func (l *lowering) addedObjectsConvert(proven *checker.Type, visited map[*checker.Type]bool) bool {
 	proven = l.concrete(proven)
 	if visited[proven] {
@@ -2136,7 +2141,7 @@ func (l *lowering) addedObjectsConvert(proven *checker.Type, visited map[*checke
 		return proven.Flags()&(checker.TypeFlagsIntersection|checker.TypeFlagsNonPrimitive|checker.TypeFlagsUnknown|checker.TypeFlagsAny|checker.TypeFlagsTypeParameter) == 0
 	}
 	if l.isArrayType(proven) {
-		return false
+		return l.concrete(l.elementTypeOfArray(proven)).Flags() == checker.TypeFlagsString
 	}
 	if len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0 || len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
 		return false
