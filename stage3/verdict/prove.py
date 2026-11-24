@@ -43,7 +43,8 @@ def main():
         introduced = {row['case'] for row in mutant['failures']} - {row['case'] for row in original['failures']}
         for row in mutant['failures']:
             if row['case'] in introduced:
-                if set(row['differences']) != {'stdout'}:
+                if (set(row['differences']) != {'stdout', 'legacy'}
+                        or set(row['differences']['legacy']) != {'stdout'}):
                     raise RuntimeError(f'{name}: mutant caught by a different comparison')
                 difference = row['differences']['stdout']
                 if difference['actual_size'] != difference['expected_size']:
@@ -56,8 +57,8 @@ def main():
                 continue
             folder = output / 'B' / name / row.get('capture', row['case'])
             source = output / 'A' / name / row.get('capture', row['case'])
-            before = (source / 'actual.stdout').read_bytes()
-            after = (folder / 'actual.stdout').read_bytes()
+            before = (source / 'candidate/actual.stdout').read_bytes()
+            after = (folder / 'candidate/actual.stdout').read_bytes()
             if len(before) != len(after) or sum(a != b for a, b in zip(before, after)) != 1:
                 raise RuntimeError('stand-in B did not change exactly one byte')
     evidence = output / 'evidence'

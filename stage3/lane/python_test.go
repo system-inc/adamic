@@ -3,15 +3,21 @@ package lane
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/token"
 	"os"
+	"os/exec"
 	"path/filepath"
+	"runtime"
 	"slices"
 	"strings"
 	"testing"
+	"testing/synctest"
 	"time"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 // The two Python suites phase:stage3 ran beside the upstream suite are Go tests of their own, so Planner places each
@@ -392,7 +398,32 @@ func TestCachesPython(t *testing.T) {
 
 func TestVerdictPython(t *testing.T) {
 	t.Parallel()
-	runPython(t, "stage3/verdict", "test_verdict")
+	t.Logf("%s", runPythonCommand(t, "stage3/verdict", nil, "test_verdict.py"))
+}
+
+func TestVerdictAcceptanceRegenerationPython(t *testing.T) {
+	t.Parallel()
+	source := verdictRegenerationSource(t)
+	t.Logf("%s", runPythonCommand(t, "stage3/verdict", source, "test_regeneration.py", "Regeneration.test_acceptance_regenerates"))
+}
+
+func TestVerdictUpstreamRegenerationPython(t *testing.T) {
+	t.Parallel()
+	source := verdictRegenerationSource(t)
+	t.Logf("%s", runPythonCommand(t, "stage3/verdict", source, "test_regeneration.py", "Regeneration.test_upstream_regenerates"))
+}
+
+func verdictRegenerationSource(t *testing.T) []string {
+	t.Helper()
+	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
+	if source == "" {
+		t.Fatal("ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout")
+	}
+	source, err := filepath.Abs(source)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return []string{"ADAMIC_TYPESCRIPT_SOURCE=" + source}
 }
 
 func TestScannerScratchRunnerPython(t *testing.T) {
@@ -439,24 +470,145 @@ func runPython(t *testing.T, directory string, modules ...string) {
 	runPythonCommand(t, directory, nil, append([]string{"-m", "unittest"}, modules...)...)
 }
 
+func pythonUnitBudget(directory string) time.Duration {
+	if directory == "stage3/verdict" {
+		return 30 * time.Second
+	}
+	return 55 * time.Second
+}
+
+func pythonUnitContext(directory string) (context.Context, context.CancelFunc, time.Duration) {
+	limit := pythonUnitBudget(directory)
+	ctx, cancel := context.WithTimeout(context.Background(), limit)
+	return ctx, cancel, limit
+}
+
+func TestPythonUnitBudget(t *testing.T) {
+	for directory, want := range map[string]time.Duration{
+		"stage3/verdict": 30 * time.Second,
+		"stage3/lane":    55 * time.Second,
+	} {
+		t.Run(directory, func(t *testing.T) {
+			synctest.Test(t, func(t *testing.T) {
+				start := time.Now()
+				ctx, cancel, limit := pythonUnitContext(directory)
+				defer cancel()
+
+				<-ctx.Done()
+				elapsed := time.Since(start)
+				if limit != want || elapsed != want || ctx.Err() != context.DeadlineExceeded {
+					t.Fatalf("unit budget %s, context expired after %s with %v; want %s and context deadline exceeded",
+						limit, elapsed, ctx.Err(), want)
+				}
+				t.Logf("unit budget %s, context expired after %s with %v", limit, elapsed, ctx.Err())
+			})
+		})
+	}
+}
+
+// The test clock advances after runPythonCommand creates its context and
+// before capture begins. The expired context keeps the command from starting.
+type expiredPythonUnit struct {
+	testing.TB
+	diagnostics   chan string
+	contextBudget time.Duration
+}
+
+func (unit *expiredPythonUnit) observePythonUnitContext(ctx context.Context) {
+	if deadline, ok := ctx.Deadline(); ok {
+		unit.contextBudget = time.Until(deadline)
+	}
+	if unit.contextBudget != 30*time.Second {
+		runtime.Goexit()
+	}
+}
+
+func (unit expiredPythonUnit) TempDir() string {
+	time.Sleep(30*time.Second + time.Nanosecond)
+	return unit.TB.TempDir()
+}
+
+func (unit expiredPythonUnit) Fatalf(format string, args ...any) {
+	unit.diagnostics <- fmt.Sprintf(format, args...)
+	runtime.Goexit()
+}
+
+func TestRunPythonCommandVerdictBudget(t *testing.T) {
+	synctest.Test(t, func(t *testing.T) {
+		unit := expiredPythonUnit{TB: t, diagnostics: make(chan string, 1)}
+		done := make(chan struct{})
+		go func() {
+			defer close(done)
+			runPythonCommand(&unit, "stage3/verdict", nil, "-c", "raise AssertionError('expired command started')")
+		}()
+		<-done
+		if unit.contextBudget != 30*time.Second {
+			t.Fatalf("wrapper context deadline is %s from creation, want 30s", unit.contextBudget)
+		}
+		t.Logf("wrapper context deadline is %s from creation", unit.contextBudget)
+		select {
+		case report := <-unit.diagnostics:
+			const want = "exceeded its 30s unit budget: context deadline exceeded"
+			if !strings.Contains(report, want) || pythonUnitBudget("stage3/verdict") != 30*time.Second {
+				t.Fatalf("want %q, got %q", want, report)
+			}
+			t.Log(strings.TrimSpace(report))
+		default:
+			t.Fatal("expired wrapper returned without a budget diagnostic")
+		}
+	})
+}
+
 // runPythonCommand runs python3 with arguments from directory, environment added to the toolchain's, and fails with
 // its output when it fails.
-func runPythonCommand(t *testing.T, directory string, environment []string, arguments ...string) {
+func runPythonCommand(t testing.TB, directory string, environment []string, arguments ...string) []byte {
 	t.Helper()
 	root := repositoryRoot(t)
-	ctx, cancel := context.WithTimeout(context.Background(), 55*time.Second)
+	ctx, cancel, limit := pythonUnitContext(directory)
 	defer cancel()
+	if observer, ok := t.(interface{ observePythonUnitContext(context.Context) }); ok {
+		observer.observePythonUnitContext(ctx)
+	}
 	// -E and -S keep python off the box's PYTHON* settings and site directories, as the adapted tree's build runs it.
 	command := boundedCommand(ctx, filepath.Join(root, directory), "python3", append([]string{"-E", "-S", "-B"}, arguments...)...)
 	// -B is this python's; the suites' own python children read PYTHONDONTWRITEBYTECODE, so none writes a
 	// __pycache__ into the tree (stage3/oracle's, on Cloud, before).
 	command.Env = append(command.Env, "STAGE3_CACHE="+t.TempDir(), "PYTHONDONTWRITEBYTECODE=1")
-	command.Env = append(command.Env, environment...)
 	// Ordinary apply clones the pinned TypeScript from the gate input, which the toolchain's environment doesn't carry.
 	if source, ok := os.LookupEnv("ADAMIC_TYPESCRIPT_SOURCE"); ok {
 		command.Env = append(command.Env, "ADAMIC_TYPESCRIPT_SOURCE="+source)
 	}
-	if output, err := command.CombinedOutput(); err != nil {
+	command.Env = append(command.Env, environment...)
+	output, err := capturePythonCommand(ctx, command)
+	if ctx.Err() != nil {
+		t.Fatalf("%s in %s exceeded its %s unit budget: %v\n%s", command, directory, limit, ctx.Err(), output)
+	}
+	if err != nil {
 		t.Fatalf("%s in %s: %v\n%s", command, directory, err, output)
 	}
+	return output
+}
+
+// Capture the streams within the same deadline as the command and its descendants.
+func capturePythonCommand(ctx context.Context, command *exec.Cmd) ([]byte, error) {
+	stdout, stderr, err := childguard.Capture(ctx, command)
+	return append(stdout, stderr...), err
+}
+
+func TestPythonWrapperDeadlineWithInheritedStderr(t *testing.T) {
+	t.Parallel()
+	const marker = "child inherited stderr"
+	ctx, cancel := context.WithTimeout(context.Background(), 500*time.Millisecond)
+	defer cancel()
+	command := exec.CommandContext(ctx, "sh", "-c", `(printf '%s\n' "$1" >&2; exec sleep 4) & wait`, "stderr-holder", marker)
+	start := time.Now()
+	output, err := capturePythonCommand(ctx, command)
+	elapsed := time.Since(start)
+	if err == nil || ctx.Err() != context.DeadlineExceeded || !strings.Contains(string(output), marker) {
+		t.Fatalf("expected expired deadline and child stderr marker, got %v, %v, %q", err, ctx.Err(), output)
+	}
+	if elapsed >= 2*time.Second {
+		t.Fatalf("500ms deadline took %s while descendant held stderr: %s", elapsed, output)
+	}
+	t.Logf("500ms deadline returned in %s with %q", elapsed, strings.TrimSpace(string(output)))
 }
