@@ -1,0 +1,9 @@
+type A = number | string;
+const values: A[] = [1, "two"];
+function target(original: A[], ...rest: A[]): void {
+    rest.push(3);
+    console.log(String(original === rest));
+    console.log(String(original.length));
+    console.log(String(rest.length));
+}
+target(values, ...values);

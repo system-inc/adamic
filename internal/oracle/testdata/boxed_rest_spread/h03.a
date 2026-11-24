@@ -1,0 +1,9 @@
+type A = number | string;
+const values: A[] = [7, "eight"];
+function target(count: number | undefined, flag: boolean | undefined, ...rest: A[]): void {
+    console.log(typeof count + ":" + String(count));
+    console.log(typeof flag + ":" + String(flag));
+    console.log("rest:" + String(rest.length));
+    for (const value of rest) console.log(String(value));
+}
+target(42, false, ...values);

@@ -85,7 +85,12 @@ func (l *lowering) readArgumentsCount() ir.Expression {
 // callArguments keeps spreads at their evaluation point. Backends expand them once,
 // before evaluating the next argument, so a later mutation cannot change the count.
 func (l *lowering) callArguments(nodes []*ast.Node) ([]ir.Expression, []bool, error) {
+	return l.callArgumentsFor(nodes, nil, -1)
+}
+
+func (l *lowering) callArgumentsFor(nodes []*ast.Node, call *ast.CallExpression, function int) ([]ir.Expression, []bool, error) {
 	arguments := []ir.Expression{}
+	boxedRest := -1
 	spread := make([]bool, len(nodes))
 	anySpread := false
 	for index, node := range nodes {
@@ -120,7 +125,14 @@ func (l *lowering) callArguments(nodes []*ast.Node) ([]ir.Expression, []bool, er
 			}
 			element, known := l.representation(elements[0])
 			if !known || slotless(element) {
-				return nil, nil, l.notYet(node, "a call spreading elements that cannot be packed")
+				// Family 23, rulings.md:225 and :342 as amended Nov 24 at 19:29:49Z
+				// on #bbssdcy. l.isArrayType above admits only Array or ReadonlyArray,
+				// excluding subclasses. Built-in Symbol.iterator writes are refused.
+				if !known || element != ir.Union || !l.checker.IsArrayType(proven) ||
+					!l.boxedRestSpread(call, function, index, elements[0]) {
+					return nil, nil, l.notYet(node, "a call spreading elements that cannot be packed")
+				}
+				boxedRest = index
 			}
 			spread[index], anySpread = true, true
 		}
@@ -133,7 +145,70 @@ func (l *lowering) callArguments(nodes []*ast.Node) ([]ir.Expression, []bool, er
 	if !anySpread {
 		spread = nil
 	}
+	if boxedRest >= 0 {
+		rest := len(l.result.Functions[function].Parameters) - 1
+		for index, argument := range arguments {
+			if index == boxedRest {
+				continue
+			}
+			// The spread pack reads fixed parameters in their declared slot
+			// representations, so fit explicit fixed arguments before packing.
+			if index < rest {
+				local := l.result.Functions[function].Parameters[index]
+				held := l.result.Locals[local].Type
+				arguments[index] = fit(argument, held)
+				if arguments[index].Type() != held {
+					return nil, nil, l.notYet(nodes[boxedRest], "a call spreading elements that cannot be packed")
+				}
+			}
+		}
+	}
 	return arguments, spread, nil
+}
+
+// boxedRestSpread proves the fixed prefix ends before the spread and that the
+// resolved call and its actual lowered target agree on the rest array layout.
+func (l *lowering) boxedRestSpread(call *ast.CallExpression, function, position int, source *checker.Type) bool {
+	if call == nil || source.Flags()&checker.TypeFlagsUnion == 0 {
+		return false
+	}
+	target := l.result.Functions[function]
+	if target.Receiver || target.RestElement != ir.Union {
+		return false
+	}
+	signature := l.checker.GetResolvedSignature(call.AsNode())
+	if signature == nil || !signature.HasRestParameter() ||
+		signature.Declaration() == nil || signature.Declaration().Body() == nil {
+		return false
+	}
+	rest := len(signature.Parameters()) - 1
+	if rest < 0 || position < rest || rest != len(target.Parameters)-1 {
+		return false
+	}
+	for index, argument := range call.Arguments.Nodes {
+		// Other spreads can shift the prefix or contribute differently packed
+		// slots. Keep the existing stop for a mixed pack.
+		if index != position && argument.Kind == ast.KindSpreadElement {
+			return false
+		}
+	}
+	array := l.concrete(l.checker.GetTypeOfSymbol(signature.Parameters()[rest]))
+	if !l.checker.IsArrayType(array) {
+		return false
+	}
+	destination := l.elementTypeOfArray(array)
+	held, known := l.representation(destination)
+	if !known || held != ir.Union || destination.Flags()&checker.TypeFlagsUnion == 0 {
+		return false
+	}
+	// Exact member identity preserves all of Adamic's writable, optional
+	// and nominal guarantees. No structural upcast is needed for this copy.
+	for _, arm := range source.Types() {
+		if !slices.Contains(destination.Types(), arm) {
+			return false
+		}
+	}
+	return true
 }
 
 // resolveCountTypes uses the same assignability relation and closed-world function

@@ -1,0 +1,5 @@
+type Arg = number | string;
+const values: Arg[] = [1, "one"];
+values[Symbol.iterator] = function () { return [9].values(); };
+function target(...args: Arg[]): void { console.log(String(args.length)); }
+target(...values);
