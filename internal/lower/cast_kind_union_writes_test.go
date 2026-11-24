@@ -134,6 +134,90 @@ console.log(String(odd.text + 1));
 	}
 }
 
+// The native leg is the plain probe table because native agreement uses registered .a products.
+func TestKindUnionWriteDistinctTagBaseLowers(t *testing.T) {
+	t.Parallel()
+	lowersAndAgreesWithNodeAs(t, kindUnionSignatureHonest, ".ts")
+}
+
+const kindUnionSignatureTags = `enum SyntaxKind { ArrowFunction = 1, FunctionExpression = 2, Other = 3, ArrowAlias = 1 }
+interface Node { readonly kind: SyntaxKind; readonly pos: number }
+`
+
+const kindUnionSignatureBase = `interface SignatureBase extends Node { readonly kind: SyntaxKind.ArrowFunction | SyntaxKind.FunctionExpression }
+`
+
+const kindUnionSignatureMembers = `interface ArrowFunction extends SignatureBase { readonly kind: SyntaxKind.ArrowFunction; flowNode: Node | undefined }
+interface FunctionExpression extends SignatureBase { readonly kind: SyntaxKind.FunctionExpression; flowNode: Node | undefined }
+`
+
+const kindUnionSignatureWrite = `const flow: Node = { kind: SyntaxKind.Other, pos: 7 };
+function mark(node: Node): void {
+    const seen = node as ArrowFunction | FunctionExpression;
+    seen.flowNode = flow;
+    if (seen.flowNode !== undefined) console.log("" + seen.flowNode.pos);
+}
+`
+
+const kindUnionSignatureHonest = kindUnionSignatureTags + kindUnionSignatureBase + `interface ArrowFunction extends SignatureBase { readonly kind: SyntaxKind.ArrowFunction; flowNode: Node }
+interface FunctionExpression extends SignatureBase { readonly kind: SyntaxKind.FunctionExpression; flowNode: Node }
+const flow: Node = { kind: SyntaxKind.Other, pos: 7 };
+function mark(node: Node): void {
+    const seen = node as ArrowFunction | FunctionExpression;
+    seen.flowNode = flow;
+    if (seen.kind === SyntaxKind.ArrowFunction) console.log("" + seen.flowNode.pos);
+    if (seen.kind === SyntaxKind.FunctionExpression) console.log("" + seen.flowNode.pos);
+}
+const arrow: ArrowFunction = { kind: SyntaxKind.ArrowFunction, pos: 0, flowNode: { kind: SyntaxKind.Other, pos: 0 } };
+const expression: FunctionExpression = { kind: SyntaxKind.FunctionExpression, pos: 1, flowNode: { kind: SyntaxKind.Other, pos: 0 } };
+mark(arrow);
+mark(expression);
+`
+const kindUnionSignatureBare = kindUnionSignatureTags + kindUnionSignatureBase + kindUnionSignatureMembers + kindUnionSignatureWrite + `const bare: SignatureBase = { kind: SyntaxKind.ArrowFunction, pos: 0 };
+mark(bare);
+`
+const kindUnionSignatureWrongSlot = kindUnionSignatureTags + kindUnionSignatureBase + `interface NumericSignature extends Node { readonly kind: SyntaxKind.ArrowFunction | SyntaxKind.FunctionExpression; flowNode: number }
+` + kindUnionSignatureMembers + kindUnionSignatureWrite + `const numeric: NumericSignature = { kind: SyntaxKind.ArrowFunction, pos: 0, flowNode: 3 };
+mark(numeric);
+`
+const kindUnionSignatureAlias = kindUnionSignatureTags + kindUnionSignatureBase + `interface AliasSignature extends Node { readonly kind: SyntaxKind.ArrowFunction | SyntaxKind.ArrowAlias }
+` + kindUnionSignatureMembers + kindUnionSignatureWrite + `const alias: AliasSignature = { kind: SyntaxKind.ArrowAlias, pos: 0 };
+mark(alias);
+`
+
+// The native leg is the plain probe table because native agreement uses registered .a products.
+func TestKindUnionWriteDistinctTagBaseStillMeetsReach(t *testing.T) {
+	t.Parallel()
+	for _, row := range []struct{ name, source, want string }{
+		{"missing slot", kindUnionSignatureBare, "a value reaching it is built as SignatureBase without flowNode"},
+		{"different slot type", kindUnionSignatureWrongSlot, "a value reaching it is built as NumericSignature, whose flowNode is number, not Node | undefined"},
+		{"enum alias", kindUnionSignatureAlias, "AliasSignature carries kind SyntaxKind.ArrowFunction but its layout holds no flowNode"},
+	} {
+		t.Run(row.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, row.source, ".ts")
+			var notYet *NotYet
+			if !errors.As(err, &notYet) || !strings.Contains(notYet.What, row.want) {
+				t.Fatalf("want NotYet containing %q, got %v", row.want, err)
+			}
+		})
+	}
+}
+
+// The native leg of the runnable rows is the plain probe table because native agreement uses registered .a products.
+func TestKindUnionWriteJudgesInlineProofMembers(t *testing.T) {
+	t.Parallel()
+	source := kindUnionWritesModel + `function mark(node: Node): void {
+    (node as { readonly kind: SyntaxKind.NumericLiteral; readonly pos: number; flags: number } | { readonly kind: SyntaxKind.StringLiteral; readonly pos: number; flags: number | undefined }).flags = 5;
+}
+`
+	_, err := lowerSourceAs(t, source, ".ts")
+	var notYet *NotYet
+	if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "but they declare flags as ") {
+		t.Fatalf("want the inline proof members to disagree on the slot, got %v", err)
+	}
+}
+
 // In .a the cast is refused before any write is judged: its tag test is a check no proof erases, and the fix
 // narrows by the tag (head 1's refusal), so a named write through the union never reaches head 2's judgment there.
 func TestKindUnionWriteInAStopsAtTheCast(t *testing.T) {

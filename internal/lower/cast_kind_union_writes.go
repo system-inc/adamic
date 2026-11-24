@@ -19,8 +19,9 @@ import (
 // types. A run-time stop isn't enough for it: two interfaces sharing a kind and declaring the field with
 // different types (`{ text: string }` and `{ text: number }`, both kind StringLiteral) make a valid program
 // Node runs, and a write of a string through the union would land in the number's layout, so that program is
-// NotYet, never a stop at run time (the head 2 probe's w3). A declared type carrying a cast's kind and
-// declaring no such field holds no slot for it, which waits under #x0nd1mh. One declaring it optional is judged
+// NotYet, never a stop at run time (the head 2 probe's w3). A carrier without the field stops at the index.
+// Outside the index, checkSlotWrites judges whether the allocation that reaches the write holds the slot.
+// A carrier declaring it optional is judged
 // as every optional field's write is, by whether each object reaching the write holds its slot (slot_writes.go,
 // #w8nanzw), its type compared with the others' as any carrier's is. One declaring
 // the field readonly holds the slot but promised it never changes, a promise Adamic's immutable default leans on
@@ -66,16 +67,12 @@ import (
 // proof, as before. Each literal judged still meets
 // every layout carrying it, and reach is asked after, untouched.
 
-// kindTagCarriers is every type a module of the program declares, an interface, a class or a type alias of an
-// object type or an intersection, whose field holds the literal: by its runtime value, as tagLiteralsDistinct
-// compares tags, so two enums' members with one value meet. An intersection alias (`Node & { kind: K.A; text:
-// number }`) is a layout a value can be built at as much as an interface is, so leaving it out would let a valid
-// program Node runs stop at run time, w3's class. A field holding a whole enum, open as Node's kind is, carries no literal
-// (tagHoldsAnyNumber): a value reaching such a type was built at one that does (enum_tag_closed_kind.go's first
-// half). Every file the program holds is walked, a module it only imports types from and a declaration file among
-// them, never the bundled library or the prelude (load.Program.SourceFiles). The index is built for a field the
-// first time a write through a cast tagged by it is judged, never before, so a program with no such write
-// resolves no declared type it didn't already.
+// kindTagCarriers files a declared interface, class or object or intersection alias only when its tag
+// field holds one distinct runtime literal value. Enum aliases with the same value count once. An open
+// numeric tag carries no literal. The cast's own members are judged separately. Adamic ruled on Nov 24
+// (#bbssdcy, item 13) that the index only refuses early, and a value really built at such a base is an
+// allocation the reach walk stops at its write. The index is built on demand from every source file
+// the program holds, including files imported only for types and declaration files.
 func (l *lowering) kindTagCarriersOf(field string, literal *checker.Type) ([]*checker.Type, error) {
 	key, keyed := kindTagKey(l.checker, field, literal)
 	if !keyed {
@@ -113,7 +110,7 @@ func (l *lowering) kindTagCarriersOf(field string, literal *checker.Type) ([]*ch
 	return l.kindTagCarriers[key], nil
 }
 
-// indexKindTagCarrier adds declared to the index under each literal its field holds.
+// indexKindTagCarrier files declared only when its field has a single runtime literal key.
 func (l *lowering) indexKindTagCarrier(field string, declared *checker.Type) {
 	if declared == nil || declared.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 {
 		return
@@ -126,6 +123,7 @@ func (l *lowering) indexKindTagCarrier(field string, declared *checker.Type) {
 	if l.tagHoldsAnyNumber(held) {
 		return
 	}
+	var carrierKey string
 	for _, member := range castMembers(held) {
 		if member.Flags()&(checker.TypeFlagsStringLiteral|checker.TypeFlagsNumberLiteral|checker.TypeFlagsBooleanLiteral) == 0 {
 			continue
@@ -134,10 +132,15 @@ func (l *lowering) indexKindTagCarrier(field string, declared *checker.Type) {
 		if !keyed {
 			continue
 		}
-		carriers := l.kindTagCarriers[key]
-		// Two members of one value (an enum's alias) name the type once.
+		if carrierKey != "" && key != carrierKey {
+			return
+		}
+		carrierKey = key
+	}
+	if carrierKey != "" {
+		carriers := l.kindTagCarriers[carrierKey]
 		if len(carriers) == 0 || carriers[len(carriers)-1] != declared {
-			l.kindTagCarriers[key] = append(carriers, declared)
+			l.kindTagCarriers[carrierKey] = append(carriers, declared)
 		}
 	}
 }
