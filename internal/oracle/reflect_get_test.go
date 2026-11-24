@@ -515,6 +515,7 @@ var reflectGetStops = []struct{ file, stdout, stop, key, node string }{
 	{"stop_host_iterator.a", "iterator\n", "RuntimeValue", "constructor", "iterator\nfunction\n"},
 	{"stop_host_stats_date.a", "mtime object\n", "RuntimeValue", "getTime", "mtime object\nfunction\n"},
 	{"stop_host_iterator_next.a", "iterator\n", "RuntimeValue", "next", "iterator\nfunction\n"},
+	{"stop_host_set_iterator_next.a", "iterator\n", "RuntimeValue", "next", "iterator\nfunction\n"},
 	{"stop_host_memory_field.a", "memory\n", "RuntimeValue", "rss", "memory\nnumber\n"},
 	{"stop_host_memory_heap.a", "memory number\n", "RuntimeValue", "heapUsed", "memory number\nnumber\n"},
 	{"stop_host_dirent.a", "entries true\n", "RuntimeValue", "isFile", "entries true\nfunction\n"},

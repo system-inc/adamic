@@ -1,0 +1,9 @@
+// A Set's iterator has a shape of its own natively, beside a Map's (map_set.c, #eksbz4c head T), and is a
+// host object as a Map's is: its next is its prototype's method on Node, so a run-time key read stops on it.
+// Node prints function.
+import { propertyOf } from './hostErrors.ts';
+
+const values = new Set<number>([1]).values();
+console.log('iterator');
+const value = propertyOf(values, 'next');
+console.log(typeof value);

@@ -104,6 +104,7 @@ var viewNoField = []viewReadExample{
 	{ir.IterableOf{}, "a generator where an Iterable<T> slot holds it, whose steps hand over what its body yields; it holds no field a view checks"},
 	{ir.IsCollectionIterator{}, "tests whether a view's object is a collection's iterator"},
 	{ir.IsRegExpGroups{}, "tests whether an object is a RegExp match's groups, by its shape's sentinel"},
+	{ir.ObjectTag{}, "answers an object's library tag from its shape's address or its kind, and reads no field"},
 	{ir.IsGenerator{}, "tests a view's object's heap kind"},
 	{ir.IsNull{}, "tests a reference"},
 	{ir.IsUndefined{}, "tests a reference"},

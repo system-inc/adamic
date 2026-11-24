@@ -149,7 +149,13 @@ var hostShapeTable = []hostShapeRow{
 	{file: hostShapeRuntime + "library_object.c", scope: "adamic_object_values_checked", name: "number_pair", verdict: hostShapeHost, internal: "a checked Object.entries pair: " + tupleReason},
 	{file: hostShapeRuntime + "library_object.c", scope: "adamic_object_values_checked", name: "boolean_pair", verdict: hostShapeHost, internal: "a checked Object.entries pair: " + tupleReason},
 	{file: hostShapeRuntime + "library_object.c", scope: "adamic_object_values_checked", name: "string_pair", verdict: hostShapeHost, internal: "a checked Object.entries pair: " + tupleReason},
-	{file: hostShapeRuntime + "map_set.c", name: "iterator_shape", verdict: hostShapeHost, stop: "stop_host_iterator_next.a"},
+	// A Map's, a Set's and a string's iterator each have a shape of their own, so adamic_object_tag reads a tag
+	// from the address (#eksbz4c, head T). A string's iterator is made only by an async function's for-of over a
+	// string (flow's async_normalize.go), which steps it itself; an explicit [Symbol.iterator]() call on a string
+	// stops at compile time, so no program holds one.
+	{file: hostShapeRuntime + "map_set.c", name: "map_iterator_shape", verdict: hostShapeHost, stop: "stop_host_iterator_next.a"},
+	{file: hostShapeRuntime + "map_set.c", name: "set_iterator_shape", verdict: hostShapeHost, stop: "stop_host_set_iterator_next.a"},
+	{file: hostShapeRuntime + "map_set.c", name: "string_iterator_shape", verdict: hostShapeHost, internal: "a string's iterator, made only by an async function's for-of over a string, which steps it and hands no program the object"},
 	{file: hostShapeRuntime + "map_set.c", name: "state_shape", verdict: hostShapeHost, internal: "a collection iterator's state, held in its next closure's cell, which no program reads"},
 	{file: hostShapeRuntime + "map_set.c", name: "result_shapes", index: 0, verdict: hostShapePlain, answer: plainFixture, row: "show('map number', "},
 	{file: hostShapeRuntime + "map_set.c", name: "result_shapes", index: 1, verdict: hostShapePlain, answer: plainFixture, row: "show('set boolean', "},
@@ -228,7 +234,8 @@ var hostShapeWrappers = []struct {
 	file, declaration, construction, native string
 }{
 	{"internal/javascript/library_intl.go", "class AdamicIntlCollator {", "new AdamicIntlCollator(", hostShapeRuntime + "library_intl.c  collator_shape[0]"},
-	{"internal/javascript/library_map_set.go", "class AdamicIterator {", "new AdamicIterator(", hostShapeRuntime + "map_set.c  iterator_shape[0]"},
+	{"internal/javascript/library_map_set.go", "class AdamicIterator {", "new AdamicIterator(", hostShapeRuntime + "map_set.c  string_iterator_shape[0]"},
+	{"internal/javascript/library_map_set.go", "class AdamicCollectionIterator extends AdamicIterator {", "new AdamicCollectionIterator(", hostShapeRuntime + "map_set.c  map_iterator_shape[0]"},
 	{"internal/javascript/library_node_process.go", "class AdamicHostObject {}", "Object.setPrototypeOf(usage, AdamicHostObject.prototype)", hostShapeRuntime + "node_process.c adamic_node_memory_usage shape[0]"},
 	{"internal/javascript/library_node_fs_file.go", "class AdamicFSWatcher {", "new AdamicFSWatcher(", hostShapeRuntime + "node_fs_watch_impl.h  fs_watcher_shape[0]"},
 }

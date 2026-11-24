@@ -300,6 +300,7 @@ var graphFlowRules = map[reflect.Type]graphFlowRule{
 	reflect.TypeFor[ir.IsGenerator]():              {class: graphFlowCannotHold, why: "a boolean (generator.go:64)"},
 	reflect.TypeFor[ir.IsCollectionIterator]():     {class: graphFlowCannotHold, why: "a boolean (generator.go:71)"},
 	reflect.TypeFor[ir.IsRegExpGroups]():           {class: graphFlowCannotHold, why: "a boolean (regexp.go:86)"},
+	reflect.TypeFor[ir.ObjectTag]():                {class: graphFlowCannotHold, why: "a string (object_tag.go:10)"},
 	reflect.TypeFor[ir.ArrayIsArray]():             {class: graphFlowCannotHold, why: "a boolean (array_is_array.go:6)"},
 	reflect.TypeFor[ir.HasProperty]():              {class: graphFlowCannotHold, why: "a boolean (unknown.go:9)"},
 	reflect.TypeFor[ir.UnknownKind]():              {class: graphFlowCannotHold, why: "a number (unknown.go:36)"},
