@@ -54,6 +54,7 @@ var gccRuntimeUnits = []string{
 	"normalize.c",
 	"number.c",
 	"object.c",
+	"object_spread.c",
 	"parallel.c",
 	"parse.c",
 	"process.c",
@@ -300,6 +301,15 @@ func TestGCCRuntimeNumber(t *testing.T)         { t.Parallel(); checkGCCRuntimeU
 
 func TestProduct_GCCRuntimeObject(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "object.c") }
 func TestGCCRuntimeObject(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "object.c") }
+
+func TestProduct_GCCRuntimeObjectSpread(t *testing.T) {
+	t.Parallel()
+	gccRuntimeUnit(t, "object_spread.c")
+}
+func TestGCCRuntimeObjectSpread(t *testing.T) {
+	t.Parallel()
+	checkGCCRuntimeUnit(t, "object_spread.c")
+}
 
 func TestProduct_GCCRuntimeParallel(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "parallel.c") }
 func TestGCCRuntimeParallel(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "parallel.c") }
