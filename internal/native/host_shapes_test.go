@@ -102,6 +102,15 @@ func (row hostShapeRow) key() string {
 	return fmt.Sprintf("%s %s %s[%d]", row.file, row.scope, row.name, row.index)
 }
 
+// The pin of adamic_object_spread_with's plain shapes: the harness's run-time key read of each result, which
+// object_spread_test.go runs beside Node.
+const (
+	objectSpreadAnswer = "internal/native/testdata/object-spread/harness.c"
+	objectSpreadRow    = "adamic_dynamic_property_keyed(&object->heap, key, NULL, 0)"
+	objectSpreadRunner = "internal/native/object_spread_test.go"
+	objectSpreadRuns   = `filepath.Join("testdata", "object-spread", "harness.c")`
+)
+
 const (
 	hostShapeRuntime = "internal/native_runtime/c/"
 	plainFixture     = "prototype_runtime_plain.a"
@@ -192,6 +201,11 @@ var hostShapeTable = []hostShapeRow{
 	{file: hostShapeRuntime + "node_process.c", scope: "entry", name: "shape", verdict: hostShapeHost, stop: "stop_host_performance_mark.a"},
 	{file: hostShapeRuntime + "node_process.c", scope: "adamic_node_stdout_handle", name: "shape", verdict: hostShapeHost, stop: "stop_host_handle.a"},
 	{file: hostShapeRuntime + "node_process.c", scope: "adamic_node_performance", name: "shape", verdict: hostShapeUnreachable, refusal: "performance.a", refused: nullableRefusal},
+	// adamic_object_spread_with's results (#5c0z219): a spread's object is a plain one on Node, and so is its
+	// shape here, interned with NULL methods. No program lowers to the call until Emit's half of #7nhzq7h, so
+	// object_spread_test.go's harness is the pin: it reads each result by a run-time key beside Node.
+	{file: hostShapeRuntime + "object_spread.c", scope: "struct spread_shape", name: "shape", verdict: hostShapePlain, answer: objectSpreadAnswer, row: objectSpreadRow, runner: objectSpreadRunner, runs: objectSpreadRuns},
+	{file: hostShapeRuntime + "object_spread.c", scope: "intern_shape", verdict: hostShapePlain, answer: objectSpreadAnswer, row: objectSpreadRow, runner: objectSpreadRunner, runs: objectSpreadRuns},
 	{file: hostShapeRuntime + "process.c", scope: "valid_code", name: "shape", verdict: hostShapeHost, errorShape: true},
 	{file: hostShapeRuntime + "record.c", name: "record_number_shape", verdict: hostShapePlain, answer: "records.a", row: "show('count', "},
 	{file: hostShapeRuntime + "record.c", name: "record_boolean_shape", verdict: hostShapePlain, answer: "records.a", row: "show('on', "},
@@ -355,6 +369,8 @@ var hostShapeReaders = []struct {
 	{"object.c", "object_callee_slot", "a method call or truthiness read by a name the program's type declares", "", ""},
 	{"object.c", "adamic_object_optional_find", "a static read by a name the program's type declares", "", ""},
 	{"object.c", "adamic_object_view_write", "a static write by a name the program's type declares", "", ""},
+	{"object_spread.c", "adamic_object_spread_with", "refuses a host or groups source by adamic_host_shape, as it refuses a record, a tuple and an Error, before it reads a name", "", ""},
+	{"object_spread.c", "interned_shape", "compares the spread table's own interned shapes, never a program value's", "", ""},
 	{"regexp.c", "regex_storage", "the regular expression runtime reading its own objects", "", ""},
 	{"regexp.c", "adamic_regex_done", "the regular expression runtime reading its own objects", "", ""},
 	{"regexp.c", "adamic_regex_group_lookup", "the regular expression runtime reading its own objects", "", ""},
