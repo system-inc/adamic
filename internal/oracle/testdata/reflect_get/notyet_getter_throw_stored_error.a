@@ -1,0 +1,12 @@
+// The allocation of a stored Error is outside the direct throw exception.
+class Reader {
+	get messageValue(): string { const error = new Error('x'); throw error; }
+}
+function read(value: object, key: string): unknown {
+	return Reflect.get(Object(value), key, value);
+}
+try {
+	console.log(String(read(new Reader(), 'messageValue')));
+} catch (error) {
+	if (error instanceof Error) console.log(error.name + ': ' + error.message);
+}

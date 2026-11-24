@@ -1,0 +1,16 @@
+// A throw from the descriptor call reaches the surrounding try; the next read can still run.
+class Reader {
+	get failure(): number { throw new Error('caught getter'); }
+	get answer(): number { return 42; }
+}
+function read(value: object, key: string): unknown {
+	try {
+		return Reflect.get(Object(value), key, value);
+	} catch (error) {
+		if (error instanceof Error) console.log(error.message);
+		return undefined;
+	}
+}
+const reader = new Reader();
+read(reader, 'failure');
+console.log(String(read(reader, 'answer')));

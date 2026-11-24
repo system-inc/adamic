@@ -16,17 +16,47 @@ type DynamicProperty struct {
 
 func (DynamicProperty) Type() Type { return Union }
 
-// DynamicKeyedProperty is Reflect.get(Object(v), k, v), a read of an unknown by a key known only at
-// run time (lower/reflect_get.go). Lowering admits it only where the checker proved v neither null nor
-// undefined, so Object(v) is v and the receiver is moot. Each backend answers an own data slot, a
-// record's own key or a class getter, and stops loudly where the representation can't answer as Node
-// does (DynamicKeyedStops). The result is owned, as DynamicProperty's is.
+// DynamicKeyedProperty dispatches a read by runtime shape and name. Reflect marks
+// Reflect.get(Object(v), k, v), where the gate proves the target and receiver are the same
+// value. The getter is called with that receiver. The descriptor helper transfers an owned
+// getter result or retains a borrowed field for the caller. Readonly views keep their syntax guard.
 type DynamicKeyedProperty struct {
-	Object Expression
-	Key    Expression
+	Object  Expression
+	Key     Expression
+	Reflect bool
 }
 
 func (DynamicKeyedProperty) Type() Type { return Union }
+
+// DynamicKeyedGetterTargets bounds the callees of the runtime descriptor lookup. Static class
+// and object literal accessors stop before dispatch. A string constant can only select its name.
+func (p *Program) DynamicKeyedGetterTargets(read DynamicKeyedProperty) []int {
+	if !read.Reflect {
+		return nil
+	}
+	key, constant := read.Key.(StringConstant)
+	var targets []int
+	for _, class := range p.Classes {
+		if class.Static || class.Literal {
+			continue
+		}
+		for _, accessor := range class.Accessors {
+			if accessor.Getter >= 0 && (!constant || accessor.Name == p.Strings[key.Index]) {
+				targets = append(targets, accessor.Getter)
+			}
+		}
+	}
+	return targets
+}
+
+func (p *Program) DynamicKeyedMayThrow(read DynamicKeyedProperty) bool {
+	for _, target := range p.DynamicKeyedGetterTargets(read) {
+		if p.Functions[target].MayThrow {
+			return true
+		}
+	}
+	return false
+}
 
 // UnknownKind is what String(Value) needs to know of an unknown to dispatch it (lower/to_primitive.go):
 // one of the UnknownKind numbers below, numbered once here for lowering and both backends. It reads

@@ -1,0 +1,11 @@
+// A setter-only descriptor may override a setter-only base descriptor.
+class Base {
+	set value(next: string) {}
+}
+class Derived extends Base {
+	override set value(next: string) {}
+}
+function read(value: object, key: string): unknown {
+	return Reflect.get(Object(value), key, value);
+}
+console.log(typeof read(new Derived(), 'value'));

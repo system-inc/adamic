@@ -1,0 +1,8 @@
+// A standalone setter-only descriptor answers undefined by runtime key.
+class Standalone {
+	set value(next: string) {}
+}
+function read(value: object, key: string): unknown {
+	return Reflect.get(Object(value), key, value);
+}
+console.log(typeof read(new Standalone(), 'value'));

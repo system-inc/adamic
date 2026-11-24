@@ -13,9 +13,9 @@ import (
 // matches that one shape: the same identifier v in both places, held as a union and proven by the
 // checker neither null nor undefined there (propertyOf's guard narrows it to {}), and a key that is
 // a string written as an identifier or a string literal, which runs nothing, so v can't be rebound
-// between the target and the receiver (#m26ebzy). So the node never sees a nullish v, Object(v) is v,
-// and the receiver is moot: what's read is ir.DynamicKeyedProperty{v, key}. Every other Reflect.get is NotYet here, as is Reflect or
-// Object(x) as a value anywhere else (namespaceExpression, libraryGlobalValue), exactly as before.
+// between the target and the receiver (#m26ebzy). For a class instance, Object(v) returns v and
+// the getter receives that very instance as this. The runtime stops on primitive targets before
+// dispatch. Every other Reflect.get is NotYet here, as is Reflect or Object(x) as a value elsewhere.
 func (l *lowering) reflectGet(node *ast.Node) (ir.Expression, bool, error) {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
@@ -74,11 +74,11 @@ func (l *lowering) reflectGet(node *ast.Node) (ir.Expression, bool, error) {
 	if err := l.checkDynamicKeyedGetterSyntax(node); err != nil {
 		return nil, true, err
 	}
-	if l.dynamicKeyedSite == nil {
-		l.dynamicKeyedSite = node
+	if l.reflectKeyedSite == nil {
+		l.reflectKeyedSite = node
 	}
 	l.graphDynamicSite = node
-	return ir.DynamicKeyedProperty{Object: object, Key: key}, true, nil
+	return ir.DynamicKeyedProperty{Object: object, Key: key, Reflect: true}, true, nil
 }
 
 // dynamicKeyedGetterReturns are the representations a class getter's result can have where a
@@ -87,12 +87,9 @@ var dynamicKeyedGetterReturns = []ir.Type{
 	ir.Number, ir.Boolean, ir.String, ir.Object, ir.Array, ir.Map, ir.MaybeNumber, ir.Closure, ir.MaybeBoolean, ir.Union, ir.Record,
 }
 
-// A run-time key read calls whichever class getter its key names, from inside the runtime, where no
-// pass that follows calls (effects, exceptions, borrowing, purity, regions) sees the call. So where a
-// program reads by a run-time key, every class getter it has must be one none of them needs to see,
-// judged by its syntax alone: one return statement of literals and this.<field>, a data field, never
-// a getter or a method, joined by operators, with no call, no new and no assignment, which can't throw
-// either. An object literal's getter and a static one stop at run time instead, so they aren't asked.
+// Readonly views retain the syntax judgment for getters. Reflect.get has a possible getter call
+// in the IR, with a throw edge and an escaping receiver. Keep the separate refusal for implicit
+// object-to-primitive conversion.
 const (
 	dynamicKeyedGetterSyntax    = "in a program with a class getter that does more than return its fields and literals joined by operators (the getter runs inside the read, unseen by the passes that follow calls)"
 	dynamicKeyedGetterPrimitive = "in a program with a class getter that converts an object field to a primitive (its toString or valueOf would run inside the read, unseen)"
@@ -115,7 +112,7 @@ func (l *lowering) checkDynamicKeyedGetterSyntax(node *ast.Node) error {
 			if member.Kind != ast.KindGetAccessor || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 				continue
 			}
-			if reason := l.dynamicKeyedGetterBody(member); reason != "" {
+			if reason := l.dynamicKeyedGetterReason(node, member, -1); reason != "" {
 				return l.notYet(node, dynamicKeyedRead(node)+" "+reason)
 			}
 		}
@@ -123,12 +120,27 @@ func (l *lowering) checkDynamicKeyedGetterSyntax(node *ast.Node) error {
 	return nil
 }
 
+func (l *lowering) dynamicKeyedGetterReason(site, declaration *ast.Node, getter int) string {
+	reason := l.dynamicKeyedGetterBody(declaration)
+	// The early check has no IR. Defer this reason until the getter's
+	// lowered body and the bodies of its possible callees are available.
+	if site.Kind == ast.KindCallExpression && reason == dynamicKeyedGetterSyntax &&
+		(getter < 0 || l.keyedGetterReadsAndThrows(getter)) {
+		return ""
+	}
+	return reason
+}
+
 // checkDynamicKeyedGetters runs once every function is lowered, over every getter the program's
 // classes hold, those checkDynamicKeyedGetterSyntax couldn't reach among them. Each getter's result
 // must be one the runtime boxes, and null only as a union, since a reference held bare says null and
 // undefined alike as NULL.
 func (l *lowering) checkDynamicKeyedGetters() error {
-	if l.dynamicKeyedSite == nil {
+	site := l.dynamicKeyedSite
+	if site == nil {
+		site = l.reflectKeyedSite
+	}
+	if site == nil {
 		return nil
 	}
 	for _, class := range l.result.Classes {
@@ -140,18 +152,18 @@ func (l *lowering) checkDynamicKeyedGetters() error {
 				continue
 			}
 			if !slices.Contains(dynamicKeyedGetterReturns, l.result.Functions[accessor.Getter].Returns) {
-				return l.notYet(l.dynamicKeyedSite, dynamicKeyedRead(l.dynamicKeyedSite)+" in a program with a class getter whose result has no union form yet")
+				return l.notYet(site, dynamicKeyedRead(site)+" in a program with a class getter whose result has no union form yet")
 			}
 			declaration := l.getterDeclarations[accessor.Getter]
 			if declaration == nil {
-				return l.notYet(l.dynamicKeyedSite, dynamicKeyedRead(l.dynamicKeyedSite)+" "+dynamicKeyedGetterSyntax)
+				return l.notYet(site, dynamicKeyedRead(site)+" "+dynamicKeyedGetterSyntax)
 			}
-			if reason := l.dynamicKeyedGetterBody(declaration); reason != "" {
-				return l.notYet(l.dynamicKeyedSite, dynamicKeyedRead(l.dynamicKeyedSite)+" "+reason)
+			if reason := l.dynamicKeyedGetterReason(site, declaration, accessor.Getter); reason != "" {
+				return l.notYet(site, dynamicKeyedRead(site)+" "+reason)
 			}
 			result := l.checker.GetTypeAtLocation(declaration.Name())
 			if held, known := l.representation(result); l.includesNull(result) && (!known || held != ir.Union) {
-				return l.notYet(l.dynamicKeyedSite, dynamicKeyedRead(l.dynamicKeyedSite)+" in a program with a class getter that may give null held bare (null and undefined slot tags)")
+				return l.notYet(site, dynamicKeyedRead(site)+" in a program with a class getter that may give null held bare (null and undefined slot tags)")
 			}
 		}
 	}
