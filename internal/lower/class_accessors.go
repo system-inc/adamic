@@ -320,6 +320,10 @@ func (l *lowering) finishAccessors() error {
 	}
 	dispatchers := map[string]int{}
 	var failure error
+	copied, err := l.spreadCopiedGetters()
+	if err != nil {
+		return err
+	}
 	// A dispatcher's fallback, for an object that owns no accessor of the name, is the read or write it
 	// replaced, with only its receiver (and the written value) taken from the dispatcher's parameters, so
 	// every flag lowering put on it holds there too: Absent's optional own field, Readiness, Class, Method,
@@ -430,6 +434,17 @@ func (l *lowering) finishAccessors() error {
 					node = expression
 				}
 			case ir.Property:
+				// A read of a getter's name from a spread's copy stops before any road below can load the
+				// slot the copy doesn't have (spreadCopyRead, #7mjgxkc). A presence read the dispatcher takes
+				// is judged by checkOptionalMemberPresence instead, which stops every receiver a spread may
+				// have made (judgePresenceReceiver).
+				presence := expression.Absent && expression.Of == ir.Closure && expression.ViewWhere != ""
+				if names[expression.Name] && !(presence && reach.owner(reach.graph.ReachingAllocations(original.(ir.Property).Object), expression.Name)) {
+					if err := l.spreadCopyRead(reach, copied, original.(ir.Property), expression.Name); err != nil {
+						failure = err
+						return value
+					}
+				}
 				if names[expression.Name] && reach.owner(reach.graph.ReachingAllocations(original.(ir.Property).Object), expression.Name) {
 					if expression.Optional {
 						failure = &NotYet{Where: l.result.Source, What: "an optional accessor read"}
