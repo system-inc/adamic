@@ -74,6 +74,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_collection_iterator_is(%s)", e.value(expression.Value)))
 	case ir.IsRegExpGroups:
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_regexp_groups_is(%s)", e.value(expression.Value)))
+	case ir.ObjectTag:
+		// An immortal literal, so it's neither owned nor released, as BooleanToString's isn't.
+		return e.snapshot(ir.String, fmt.Sprintf("adamic_object_to_string((const void *)(%s))", e.value(expression.Value)))
 	case ir.RegExpNew:
 		for _, argument := range expression.Arguments {
 			e.value(argument)

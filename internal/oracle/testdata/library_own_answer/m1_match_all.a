@@ -1,0 +1,4 @@
+const iterator = 'a1b2'.matchAll(/[0-9]/g);
+console.log(iterator.toString());
+console.log(iterator.toLocaleString());
+console.log(Object.prototype.toString.call(iterator));

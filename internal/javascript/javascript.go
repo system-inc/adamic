@@ -1041,6 +1041,10 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 		// A match's groups object is V8's own, whose prototype is null, and no object this backend makes has a
 		// null prototype, so the prototype tells groups from a program's object of the same type.
 		return "(Object.getPrototypeOf(" + e.value(expression.Value) + ") === null)"
+	case ir.ObjectTag:
+		// Node's own answer for the real value: its own objects' tags, and the iterator wrappers' [Symbol.toStringTag]
+		// (library_map_set.go), so a program's own object of an iterator's type answers [object Object], as on Node.
+		return "Object.prototype.toString.call(" + e.value(expression.Value) + ")"
 	case ir.PromiseValue:
 		name := "resolve"
 		if expression.Reject {
@@ -1631,7 +1635,7 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 	case ir.StringIterator:
 		return "adamicStringIterator(" + e.value(expression.Value) + ")"
 	case ir.CollectionIterator:
-		return "adamicCollectionIterator(" + e.value(expression.Collection) + ", " + quote(expression.Part) + ")"
+		return "adamicCollectionIterator(" + e.value(expression.Collection) + ", " + quote(expression.Part) + ", " + strconv.FormatBool(expression.Set) + ")"
 	case ir.IntlCollatorCompareValue:
 		return "adamicIntlCollatorCompare(" + e.value(expression.Collator) + ")"
 	case ir.IntlCollatorNew:

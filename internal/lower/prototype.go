@@ -154,7 +154,8 @@ func (l *lowering) objectPrototypeCallArguments(node, receiver *ast.Node, name s
 	}
 	if name == "toString" || name == "toLocaleString" {
 		// valueOf answers the object itself on every library object with a prototype, an iterator and an Error
-		// alike, which the arm below already gives. A RegExp match's groups object is tested for at run time below.
+		// alike, which the arm below already gives. A RegExp match's groups object is tested for at run time below,
+		// and a library object with a tag of its own reads it at run time (libraryTagAtRunTime).
 		if library := l.libraryObjectOwnAnswer(receiver); library != "" && library != regexpGroupsAnswer {
 			return nil, true, l.notYet(node, name+" on "+library+", whose own answer isn't Object.prototype's")
 		}
@@ -268,12 +269,27 @@ func (l *lowering) objectPrototypeCallArguments(node, receiver *ast.Node, name s
 			}
 		}
 		text := ir.StringConstant{Index: l.constant(tag)}
+		// A receiver that may hold a library object with a tag of its own answers the tag the value has (ir.ObjectTag),
+		// never one its type names: a type proves no tag (#eksbz4c, head T).
+		answer := func(ir.Expression) ir.Expression { return text }
+		if of == ir.Object && l.libraryTagAtRunTime(receiver) {
+			answer = func(object ir.Expression) ir.Expression { return ir.ObjectTag{Value: object} }
+		}
 		if missing {
-			return l.regexpGroupsMissingMethod(node, name, []ir.Expression{value}, func([]ir.Expression) ir.Expression { return text })
+			return l.regexpGroupsMissingMethod(node, name, []ir.Expression{value}, func(reads []ir.Expression) ir.Expression { return answer(reads[0]) })
+		}
+		if _, constant := answer(value).(ir.StringConstant); !constant {
+			return answer(value), true, nil
 		}
 		// Both arms are the same, but the test evaluates the receiver exactly once, preserving its
 		// side effects and any narrowed-read check. No field is read to produce the constant tag.
 		return ir.Conditional{Condition: ir.IsUndefined{Value: value}, WhenTrue: text, WhenNot: text}, true, nil
+	case ir.WeakCollection, ir.Promise:
+		// A weak collection and a Promise each have an IR type of their own, so the value is one, and its kind says
+		// which: a WeakMap's or a WeakSet's tag, or a Promise's. valueOf reaches here too, and isn't answered.
+		if name != "valueOf" {
+			return ir.ObjectTag{Value: value}, true, nil
+		}
 	}
 	return nil, true, l.notYet(node, name+" on a "+typeName(of)+" (function source text and mixed value dispatch are not represented)")
 }
@@ -285,26 +301,73 @@ const regexpGroupsAnswer = "a RegExp match's groups"
 // libraryObjectOwnAnswer names a receiver whose toString or toLocaleString answers other than a plain object's on
 // Node, where lowering knows no answer of its own, or is empty. The constant tag Object.prototype's arm gives is
 // [object Object], and #20e4t06 found it printed for a Map or Set iterator, whose tag is Map Iterator or Set
-// Iterator, so the call stops at compile time for any named library interface (an iterator, a Promise, an Intl
-// object) unless it's Object itself or an iterator result, which next makes as a plain object. A Map or Set, an
-// array or a string is held as its own kind and keeps its own answer, and a program's own object or class keeps
-// Object.prototype's. Each library object's own tag is the real fix, owed with Runtime Library (#eksbz4c's head T).
-// A RegExp match's groups, an anonymous library type declared inside a RegExp result interface, is named
-// regexpGroupsAnswer only where no member stops, since it stops nothing: a groups object has no tag of its own, and
-// a direct call that would find no method on one is tested for it at run time (regexpGroupsAdmitted, #eksbz4c's
-// head G). Every member of the receiver's type is asked, failing closed.
+// Iterator, so the call stops at compile time for any named library interface (an array iterator, a generator, a
+// Date, an Intl object) unless it's Object itself or an iterator result, which next makes as a plain object. A Map
+// or Set, an array or a string is held as its own kind and keeps its own answer, and a program's own object or class
+// keeps Object.prototype's. A library object with a tag of its own that a program can hold, one of
+// ir.LibraryObjectTags (a Map's, a Set's, a string's or a matchAll iterator, a WeakMap, a WeakSet, a Promise), isn't
+// named: its tag is read from the value at run time (libraryTagAtRunTime, #eksbz4c's head T). A RegExp match's
+// groups, an anonymous library type declared inside a RegExp result interface, is named regexpGroupsAnswer only where
+// no member stops, since it stops nothing: a groups object has no tag of its own, and a direct call that would find
+// no method on one is tested for it at run time (regexpGroupsAdmitted, #eksbz4c's head G). Every member of the
+// receiver's type is asked, failing closed.
 func (l *lowering) libraryObjectOwnAnswer(receiver *ast.Node) string {
 	answer := ""
 	for _, member := range l.ownAnswerMembers(receiver) {
 		own := l.memberOwnAnswer(member)
-		if own != "" && own != regexpGroupsAnswer {
+		if own != "" && own != regexpGroupsAnswer && !l.memberTagged(member) {
 			return own
 		}
-		if own != "" {
+		if own == regexpGroupsAnswer {
 			answer = own
 		}
 	}
 	return answer
+}
+
+// libraryObjectTagged reports whether any member of receiver's type is a library object whose tag is its own, one of
+// ir.LibraryObjectTags, so a value it holds may answer that tag, or another the value has: a type proves no tag.
+func (l *lowering) libraryObjectTagged(receiver *ast.Node) bool {
+	for _, member := range l.ownAnswerMembers(receiver) {
+		if l.memberTagged(member) {
+			return true
+		}
+	}
+	return false
+}
+
+// memberTagged reports whether member is a library interface ir.LibraryObjectTags holds, whose values answer a tag of
+// their own (adamic_object_tag natively).
+func (l *lowering) memberTagged(member *checker.Type) bool {
+	if own := l.memberOwnAnswer(member); own == "" || own == regexpGroupsAnswer {
+		return false
+	}
+	return ir.LibraryObjectTag(l.unbranded(member).Symbol().Name) != ""
+}
+
+// libraryTagAtRunTime reports whether Object.prototype.toString of receiver, an object, is read from the value at
+// run time (ir.ObjectTag) rather than the constant [object Object]: where a member of its type is a library object
+// with a tag of its own, or where it's a view some such value in the program relates to (#eksbz4c, head T), as
+// v1_interface_map_tostring.a's Stepper holds a Map's iterator. A const made from a plain literal holds nothing
+// else, and where the program's values aren't known the value is asked, which is never wrong.
+func (l *lowering) libraryTagAtRunTime(receiver *ast.Node) bool {
+	if l.libraryObjectTagged(receiver) {
+		return true
+	}
+	if l.exactPlainObject(receiver) {
+		return false
+	}
+	values, known := l.programOwnAnswerValues()
+	if !known {
+		return true
+	}
+	view := l.concrete(l.checker.GetTypeAtLocation(receiver))
+	for _, value := range values {
+		if value.tagged && l.checker.IsTypeAssignableTo(value.shape, view) {
+			return true
+		}
+	}
+	return false
 }
 
 // regexpGroupsAdmitted reports whether any member of receiver's type is a RegExp match's groups, so a value it holds
@@ -363,18 +426,21 @@ func (l *lowering) memberOwnAnswer(member *checker.Type) string {
 	return ""
 }
 
-// ownAnswerValue is a type some expression in the program has that libraryObjectOwnAnswer names, and that name.
+// ownAnswerValue is a type some expression in the program has that libraryObjectOwnAnswer names, and that name, or
+// one that libraryObjectTagged holds, tagged, whose answer is read from the value at run time.
 type ownAnswerValue struct {
 	shape   *checker.Type
 	library string
+	tagged  bool
 }
 
 // programOwnAnswerValues is each distinct type a call, new, property or element read in the program has that
-// libraryObjectOwnAnswer names, a match's groups aside, first seen first: every library object with an answer of
-// its own that the program can hold, since each is made or reached by one of those. It's one walk per lowering,
-// kept as entriesProgramHasRecords keeps its, so a toString through a view asks only the relation (#v414yhr). A
-// type is named as the instance first asking it reads it, which a value's library type never depends on: a call
-// gives MapIterator<T> as a MapIterator whatever T is. It's false when the program's modules aren't known.
+// libraryObjectOwnAnswer names, a match's groups aside, or that libraryObjectTagged holds, first seen first: every
+// library object with an answer of its own that the program can hold, since each is made or reached by one of
+// those. It's one walk per lowering, kept as entriesProgramHasRecords keeps its, so a toString through a view asks
+// only the relation (#v414yhr). A type is named as the instance first asking it reads it, which a value's library
+// type never depends on: a call gives MapIterator<T> as a MapIterator whatever T is. It's false when the program's
+// modules aren't known.
 func (l *lowering) programOwnAnswerValues() ([]ownAnswerValue, bool) {
 	if l.ownAnswerValuesKnown {
 		return l.ownAnswerValues, true
@@ -393,6 +459,8 @@ func (l *lowering) programOwnAnswerValues() ([]ownAnswerValue, bool) {
 				seen[shape] = true
 				if library := l.libraryObjectOwnAnswer(node); library != "" && library != regexpGroupsAnswer {
 					l.ownAnswerValues = append(l.ownAnswerValues, ownAnswerValue{shape: shape, library: library})
+				} else if l.libraryObjectTagged(node) {
+					l.ownAnswerValues = append(l.ownAnswerValues, ownAnswerValue{shape: shape, tagged: true})
 				}
 			}
 		}
@@ -544,19 +612,22 @@ func (l *lowering) prototypeHazardWithErrorTable(receiver *ast.Node, name string
 	if !errorTable && name != "valueOf" && l.errorMayHide(receiver) {
 		return "an Error may be hidden by the view"
 	}
-	// A library object whose own answer isn't Object.prototype's, a Map or Set iterator, a Date, can be held by a
-	// program's own view ({ next(): unknown }), where its toString would print [object Object] and Node prints its
-	// tag (#v414yhr). Any expression whose type libraryObjectOwnAnswer names may be such a value, so a view it relates
-	// to stops. Those types are found once per lowering (programOwnAnswerValues), and only the relation is asked per
-	// view. A receiver libraryObjectOwnAnswer names itself has its own stop, a match's groups their own road, and a
-	// const made from a plain literal holds nothing else.
+	// A library object whose own answer isn't Object.prototype's and that lowering doesn't read at run time, a Date,
+	// a Stats, may be held by a program's own view, where its toString would print [object Object] and Node prints its
+	// own answer, a Date's text (#v414yhr). A view naming a Date's method stops at the view today, but this stop
+	// doesn't lean on that. Any expression whose type libraryObjectOwnAnswer names
+	// may be such a value, so a view it relates to stops. Those types are found once per lowering
+	// (programOwnAnswerValues), and only the relation is asked per view. A library object with a tag of its own, a Map
+	// or Set iterator, stops no view: its tag is read from the value (libraryTagAtRunTime, #eksbz4c head T). A
+	// receiver libraryObjectOwnAnswer names itself has its own stop, a match's groups their own road, and a const made
+	// from a plain literal holds nothing else.
 	if (name == "toString" || name == "toLocaleString") && l.libraryObjectOwnAnswer(receiver) == "" && !l.exactPlainObject(receiver) {
 		values, known := l.programOwnAnswerValues()
 		if !known {
 			return "the program's runtime shapes are not known"
 		}
 		for _, value := range values {
-			if l.checker.IsTypeAssignableTo(value.shape, view) {
+			if !value.tagged && l.checker.IsTypeAssignableTo(value.shape, view) {
 				return value.library + " may be hidden by the view"
 			}
 		}
@@ -578,7 +649,10 @@ func (l *lowering) prototypeHazardWithErrorTable(receiver *ast.Node, name string
 				related = l.checker.GetWidenedType(regularTypeOfObjectLiteral(l.checker, shape))
 			}
 			if l.checker.IsTypeAssignableTo(related, view) {
-				if l.isLibraryType(shape, "RegExp", "RegExpStringIterator") && !l.exactPlainObject(receiver) {
+				// A matchAll iterator's toString and toLocaleString are Object.prototype's, which answer its own tag, read
+				// from the value at run time (libraryTagAtRunTime, #eksbz4c head T), so only its other names stop here.
+				tagRead := (name == "toString" || name == "toLocaleString") && l.isLibraryType(shape, "RegExpStringIterator")
+				if l.isLibraryType(shape, "RegExp", "RegExpStringIterator") && !l.exactPlainObject(receiver) && !tagRead {
 					// Regex objects have intrinsic prototype behavior and metadata slots. A structural
 					// view cannot make those plain-object methods or own-property descriptors.
 					reason = "a RegExp or its iterator may be hidden by the view"

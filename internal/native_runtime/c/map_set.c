@@ -45,10 +45,18 @@ uint64_t adamic_map_number_hash(double number) {
 	return hash & 0x3fffffffu;
 }
 
+// A Map's, a Set's and a string's iterator each have a shape of their own, so adamic_object_tag knows which one a
+// value is by its shape's address alone, never by its type (#eksbz4c, head T). All three hold one next slot, so
+// their content is the same, which is what a linker's identical folding could merge. A name past a shape's count
+// would make them differ, but the field-layout proof (fields_test.go) holds every names array to its shape's count,
+// so the distinct addresses are proven in the shipped ThinLTO release binary instead, by
+// TestRuntimeIteratorShapesStayDistinctInRelease (Runtime's condition 1), which goes red the day a link folds them.
 static const char *const iterator_names[] = {"next"};
 static const bool iterator_references[] = {true};
 static const adamic_field_kind iterator_kinds[] = {adamic_field_reference};
-static const adamic_shape iterator_shape = {1, iterator_names, iterator_references, &adamic_host_methods, iterator_kinds};
+static const adamic_shape map_iterator_shape = {1, iterator_names, iterator_references, &adamic_host_methods, iterator_kinds};
+static const adamic_shape set_iterator_shape = {1, iterator_names, iterator_references, &adamic_host_methods, iterator_kinds};
+static const adamic_shape string_iterator_shape = {1, iterator_names, iterator_references, &adamic_host_methods, iterator_kinds};
 // planned says each entries() pair is adopted into a graph region of its own as it's made (#dps0kp6).
 static const char *const state_names[] = {"iterator", "part", "key", "value", "set", "planned"};
 static const bool state_references[] = {true, false, false, false, false, false};
@@ -172,7 +180,7 @@ bool adamic_collection_iterator_is(const void *value) {
 		return false;
 	}
 	const adamic_object *object = value;
-	if (object->shape != &iterator_shape) {
+	if (object->shape != &map_iterator_shape && object->shape != &set_iterator_shape) {
 		return false;
 	}
 	const adamic_closure *next = object->slots[0].reference;
@@ -198,7 +206,7 @@ static adamic_object *collection_iterator(adamic_map *collection, int part, int 
 		next->cells[0] = adamic_graph_adopt_owned(next->cells[0], sizeof(adamic_cell));
 		next = adamic_graph_adopt_owned(next, sizeof *next + sizeof(adamic_cell *));
 	}
-	adamic_object *object = adamic_object_new(&iterator_shape);
+	adamic_object *object = adamic_object_new(set ? &set_iterator_shape : &map_iterator_shape);
 	object->slots[0].reference = next;
 	if (adamic_graph_is(collection)) { object = adamic_graph_adopt_owned(object, adamic_object_size(object->shape->count)); }
 	return object;
@@ -239,7 +247,60 @@ adamic_object *adamic_string_iterator(adamic_string *string) {
 	state->slots[0].reference = string;
 	adamic_closure *next = adamic_closure_new(string_next, 1);
 	next->cells[0] = adamic_cell_new((adamic_value){.reference = state}, true);
-	adamic_object *object = adamic_object_new(&iterator_shape);
+	adamic_object *object = adamic_object_new(&string_iterator_shape);
 	object->slots[0].reference = next;
 	return object;
+}
+
+// Object.prototype.toString's whole answer for each library object adamic_object_tag knows, in object_tag's order,
+// and Object's for any other value. Each is an immortal literal (references 0), which retain and release leave as
+// it is, so it holds no mutable shared state.
+enum object_tag { object_tag_map_iterator, object_tag_set_iterator, object_tag_string_iterator, object_tag_regexp_string_iterator, object_tag_weak_map, object_tag_weak_set, object_tag_promise };
+static adamic_string object_tags[] = {
+	ADAMIC_STRING("[object Map Iterator]"),
+	ADAMIC_STRING("[object Set Iterator]"),
+	ADAMIC_STRING("[object String Iterator]"),
+	ADAMIC_STRING("[object RegExp String Iterator]"),
+	ADAMIC_STRING("[object WeakMap]"),
+	ADAMIC_STRING("[object WeakSet]"),
+	ADAMIC_STRING("[object Promise]"),
+};
+static adamic_string object_tag_object = ADAMIC_STRING("[object Object]");
+
+// It's here because the three iterator shapes it tells apart are this file's own. A shape is compared by its
+// address, a weak collection and a Promise by their kind, so a program's own object of an iterator's type, which
+// has neither, answers NULL.
+adamic_string *adamic_object_tag(const void *value) {
+	if (value == NULL) {
+		return NULL;
+	}
+	switch (((const adamic_heap *)value)->kind) {
+	case adamic_kind_object: {
+		const adamic_object *object = value;
+		if (object->shape == &map_iterator_shape) {
+			return &object_tags[object_tag_map_iterator];
+		}
+		if (object->shape == &set_iterator_shape) {
+			return &object_tags[object_tag_set_iterator];
+		}
+		if (object->shape == &string_iterator_shape) {
+			return &object_tags[object_tag_string_iterator];
+		}
+		if (adamic_regex_iterator_is(object)) {
+			return &object_tags[object_tag_regexp_string_iterator];
+		}
+		return NULL;
+	}
+	case adamic_kind_weak_map:
+		return &object_tags[adamic_weak_map_set_is(value) ? object_tag_weak_set : object_tag_weak_map];
+	case adamic_kind_async_promise:
+		return &object_tags[object_tag_promise];
+	default:
+		return NULL;
+	}
+}
+
+adamic_string *adamic_object_to_string(const void *value) {
+	adamic_string *tag = adamic_object_tag(value);
+	return tag == NULL ? &object_tag_object : tag;
 }
