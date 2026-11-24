@@ -974,6 +974,9 @@ func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, sour
 		}
 		return nil, test, nil
 	}
+	if parts, isTuple := l.nodeArrayTuple(target); isTuple {
+		return l.nodeArrayTupleMembership(node, value, source, parts, local, depth)
+	}
 	if l.isArrayType(target) && (source.Flags()&checker.TypeFlagsUndefined != 0 || value.Type() == ir.Number || value.Type() == ir.String || value.Type() == ir.Boolean) {
 		return nil, ir.BooleanConstant{Value: false}, nil
 	}
