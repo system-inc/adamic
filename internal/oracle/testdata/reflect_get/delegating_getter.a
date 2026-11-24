@@ -1,0 +1,9 @@
+// The getter calls no method but reads through its own Map, as IdentifierNameMap.size does.
+class Wrapper {
+	private readonly map = new Map<string, number>();
+	get size(): number { return this.map.size; }
+}
+function read(value: object, key: string): unknown {
+	return Reflect.get(Object(value), key, value);
+}
+console.log(String(read(new Wrapper(), 'size')));

@@ -76,6 +76,10 @@ func (e *emitter) semanticKey(value reflect.Value, visiting map[int]bool) string
 		for i := 0; i < value.NumField(); i++ {
 			field := value.Type().Field(i).Name
 			child := value.Field(i)
+			// DirectError is lowering evidence, independent of the helper's behavior.
+			if field == "DirectError" && value.Type() == reflect.TypeOf(ir.Throw{}) {
+				continue
+			}
 			// Zero nullish metadata leaves preexisting helper identities unchanged.
 			if (field == "Nullish" || field == "ElementNullish") && child.Int() == 0 {
 				continue

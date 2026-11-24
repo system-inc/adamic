@@ -87,7 +87,7 @@ func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
 	if err != nil {
 		return nil, err
 	}
-	return []ir.Statement{ir.Throw{Value: value}}, nil
+	return []ir.Statement{ir.Throw{Value: value, DirectError: isNewError}}, nil
 }
 
 // thrownCategory names a thrown value that isn't an Error by what JavaScript's typeof would call it, never
@@ -313,6 +313,8 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 		case ir.Read, ir.Assign:
 			// A read or write in its temporal dead zone throws JavaScript's ReferenceError (#bxmdk73).
 			found = found || l.result.DeadZoneMayThrow(node)
+		case ir.DynamicKeyedProperty:
+			found = found || l.result.DynamicKeyedMayThrow(node)
 		case ir.Call:
 			if l.result.CallMayThrow(node) {
 				found = true
@@ -357,6 +359,16 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 	callsClosures := false
 	walk(statements, func(node any) bool {
 		switch node := node.(type) {
+		case ir.DynamicKeyedProperty:
+			for _, target := range l.result.DynamicKeyedGetterTargets(node) {
+				if !visited[target] {
+					visited[target] = true
+					failing = l.libraryFailure(l.result.Functions[target].Body, visited)
+					if failing != "" {
+						break
+					}
+				}
+			}
 		case ir.Call:
 			for _, target := range l.result.CallTargets(node) {
 				if !visited[target] {

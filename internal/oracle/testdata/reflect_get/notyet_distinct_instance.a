@@ -1,0 +1,10 @@
+// Reflect.get by runtime key requires the target and receiver to spell one identifier.
+class Counter {
+	readonly value: number;
+	constructor(value: number) { this.value = value; }
+	get answer(): number { return this.value; }
+}
+function read(a: object, key: string, b: object): unknown {
+	return Reflect.get(Object(a), key, b);
+}
+console.log(String(read(new Counter(1), 'answer', new Counter(42))));
