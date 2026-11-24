@@ -60,7 +60,11 @@ func (l *lowering) finiteElementRead(node *ast.Node, object ir.Expression) (ir.E
 func (l *lowering) finiteKeyFields(node *ast.Node) ([]string, []ir.Expression, []*ast.Symbol, error) {
 	access := node.AsElementAccessExpression()
 	receiver := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))
-	keyType := l.checker.GetTypeAtLocation(access.ArgumentExpression)
+	// A key typed by a type parameter is read as the instance being lowered binds it (concrete), as every
+	// type in a generic body is: readPackageJsonField's K extends keyof PackageJson is one field's name in
+	// each instance, which this proof serves as any literal key (#e24qsqx). The receiver is read as written,
+	// so one generic in the key keeps its stop. Unbound, the key stays the type parameter and stops below.
+	keyType := l.concrete(l.checker.GetTypeAtLocation(access.ArgumentExpression))
 	members := []*checker.Type{keyType}
 	if keyType.Flags()&checker.TypeFlagsUnion != 0 {
 		members = keyType.Types()
