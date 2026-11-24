@@ -6,14 +6,17 @@
 #
 # It reads run.sh's status file, and only a run outcome.py calls submittable goes further: Succeeded, and OverBudget
 # or BudgetUnknown, a whole record whose relation budget isn't ok (#ny0c3gb), committed with the verdict in its first
-# line so the day lands on main. A failed run commits nothing and its logs stay on the box. The run directory, read
-# and never written, is copied to staging, where each .log is gzipped to .log.gz (the shape of the hand-committed
-# 20261020T014828Z.POASDN; the root .gitignore ignores raw .log). What git's ignore rules then keep is committed
-# alone on a fresh branch cut from origin/main's tip, nothing force-added: so stage3/meter/.gitignore's
-# census.jsonl.gz and latent.jsonl.gz stay out until that file says otherwise. It is pushed with a deploy key scoped
-# to adamic, and submitted for system_adamic_compiler_correctness with a submit-only token: the same POST /changes
-# that `ahra loom submit <branch> --owner <owner> --yes` makes with --base off, whose body carries the merge base of
-# the tip and origin/main. A write is never retried.
+# line so the day lands on main. A failed run commits nothing and its logs stay on the box. A record commits its
+# summary and the rows readers read, never raw files (#jnx6n47, Kirk's ruling of Nov 24): a whole run came to about
+# 13 MB a day, and stage3/meter/runs already held 256 MB that every clone pays for. slim.py, beside this script, reads
+# the run directory, never writing it, and stages README.md, report.md, main/report.md and area/report.md, a slim
+# report.json and kept.json, which names every file it leaves out with its bytes and sha256 and the job that kept it
+# (`ADAMIC_METER_JOB`, when set). The logs, raw streams and full reports stay with the job and on the box. slim.py
+# refuses a record holding a `.log` or `.log.gz` or any file over 1 MB. The staged record is committed alone on a
+# fresh branch cut from origin/main's tip, nothing force-added past git's ignore rules. It is pushed with a deploy
+# key scoped to adamic, and submitted for system_adamic_compiler_correctness with a submit-only token: the same
+# POST /changes that `ahra loom submit <branch> --owner <owner> --yes` makes with --base off, whose body carries the
+# merge base of the tip and origin/main. A write is never retried.
 #
 # Both secrets are paths named in /etc/adamic-meter/submit.env (ADAMIC_METER_SUBMIT_ENV overrides it):
 #
@@ -50,6 +53,8 @@ pushOrigin=git@github.com:system-inc/adamic.git
 status=$meterHome/status
 # outcome.py, beside this script (/srv/adamic-meter when installed), names which outcomes are committed.
 outcomes=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/outcome.py
+# slim.py, beside it too, writes what a run commits (#jnx6n47).
+slim=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/slim.py
 
 say() { echo "meter-daily-submit: $*"; }
 # field <key>: one line of run.sh's status file
@@ -120,8 +125,8 @@ if [ -f "$state/pushed/$stamp" ]; then
 	say "$branch was pushed already at $tip; submitting it"
 else
 	base=$(git rev-parse --verify 'refs/remotes/origin/main^{commit}')
-	# A work tree holding only the run and the ignore files on its path, as origin/main has them, so git add keeps
-	# exactly what git's rules keep. Copied whole first, then moved, so a rerun never adds a half-copied run.
+	# A work tree holding only the slim record and the ignore files on its path, as origin/main has them, so git add
+	# keeps exactly what git's rules keep. Written whole first, then moved, so a rerun never adds a half-written record.
 	staging=$state/staging/$stamp
 	target=$staging/stage3/meter/runs/$stamp
 	if [ ! -d "$target" ]; then
@@ -131,9 +136,10 @@ else
 				git show "$base:${prefix}.gitignore" > "$staging/${prefix}.gitignore"
 			fi
 		done
-		cp -R "$run" "$target.partial"
-		# -n keeps the name and time out of the header, so the same log always gzips to the same bytes.
-		find "$target.partial" -type f -name '*.log' -exec gzip -n -- {} +
+		# The record's Markdown, its slim report.json and kept.json, and nothing else. slim.py refuses a log or a file
+		# over 1 MB, and a partial an earlier attempt left, which wants reading before it is removed by hand.
+		python3 -I "$slim" "$run" "$target.partial" ${ADAMIC_METER_JOB:+--job "$ADAMIC_METER_JOB"} ||
+			{ say "slim.py refused $run. Nothing pushed, nothing submitted."; exit 1; }
 		mv "$target.partial" "$target"
 	fi
 	index=$state/staging/$stamp.index
