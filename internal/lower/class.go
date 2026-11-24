@@ -418,6 +418,10 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 	}
 	function := lowered.methods[l.fieldName(callee.Name())]
 	l.fitCallArguments(function, arguments, spread)
+	slots, rest := l.functionSlots(function)
+	if err := l.spreadPackStop(node.AsCallExpression().Arguments.Nodes, arguments, spread, 1, slots, rest); err != nil {
+		return nil, err
+	}
 	virtual := lowered.slots[l.fieldName(callee.Name())] + 1
 	if ast.SkipParentheses(receiver).Kind == ast.KindSuperKeyword {
 		virtual = 0
