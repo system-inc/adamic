@@ -47,3 +47,15 @@ Expected: oracle's `TestDictionaryViewStopsAtTheCast/number_record.ts` and `/boo
 `dictionaryViewUse` answers true for every use, its first line `return true`, so the cast's result may be returned, stored, written or handed to any callee and the view is still taken (#2v3xtgm, J-psxf2gy: the use test on the cast's own value replaced wave 2's program-wide write walk by type, which no tsc unit passed).
 
 Expected: lower's `TestDictionaryViewCasts/returned`, `/stored_in_a_const_then_written_by_key` and `/handed_to_a_helper_that_writes` go red, admitted where the NotYet at the cast is wanted, and so do `/handed_on_to_a_helper_that_writes`, `/handed_to_a_self-recursive_helper`, `/assigned_to_a_let`, `/written_through_a_dictionary` and `/deleted_through_a_dictionary`. Every admitted row stays green, and so do the rows a type keeps stopped (`/undefined_dropped`, `/number_values`, `/union-held_values`), whose stop comes before the use test is asked.
+
+## M8: a field refinement refused (#bbssdcy, item 19)
+
+`castStop` answers `castFieldRefinement` with a refusal in the NotYet's words, so the kind moves and the words don't.
+
+Expected: `TestCastStopNamesItsCause/field_refinement` goes red on the kind (want refused=false), and stays green on the rest; the words alone wouldn't catch it.
+
+## M9: a field refinement asked first (#bbssdcy, item 19)
+
+`objectCastCause` asks the field refinement's case above `castWidenedTarget`'s, so a target that reads one field narrower and widens another reads as a refinement.
+
+Expected: `TestCastStopNamesItsCause/widened_target` goes red on the kind (want refused=true, got the refinement's NotYet), and so does field_refinement_widening_another_field; the rest stay green.
