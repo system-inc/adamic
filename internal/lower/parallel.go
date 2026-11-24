@@ -78,6 +78,10 @@ func (l *lowering) parallelPreflight(module *ast.SourceFile) error {
 		if found != nil || ast.IsPartOfTypeNode(node) {
 			return false
 		}
+		if l.firstLinkTrapped[node] {
+			// A first-link lowering's trapped unit is past judging (first_link_refusals.go).
+			return false
+		}
 		if node.Kind == ast.KindCallExpression && l.isPreludeFunction(node.AsCallExpression().Expression, "parallelMap") {
 			found = l.checkParallelMap(node)
 			if found != nil {

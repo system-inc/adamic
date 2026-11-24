@@ -133,8 +133,8 @@ type Program struct {
 // Trap is one unit a first-link lowering couldn't lower, which it lowered as a Panic with Trap set instead:
 // what stopped it, where, and in which phase. A row is a measurement, never a verdict on the program.
 type Trap struct {
-	// Kind is "Refused" or "NotYet", the stop's own type, or "Panic" for a Go panic recovered while the unit
-	// lowered.
+	// Kind is "Refused" or "NotYet", the stop's own type, "Panic" for a Go panic recovered while the unit
+	// lowered, or "Gap" for a stretch of the program lowering couldn't judge, whose Reason says which.
 	Kind string
 	// Reason is the stop's What, as main would have stopped with it, or the recovered panic's value.
 	Reason string
@@ -142,11 +142,13 @@ type Trap struct {
 	Fix string
 	// Site is where the stop is, file:line:col, in load.Program's Where form.
 	Site string
-	// Unit is the unit trapped: its module's path and a space, then a function's declaration chain joined by
-	// dots, or "module" for one of the module's top-level statements.
+	// Unit is the unit trapped: its module's path and a space, then its declaration chain joined by dots, or
+	// "module" for a top-level statement that declares nothing. It's empty for a stop no unit holds, a file's
+	// directive's among them, which traps nothing and is a measurement gap.
 	Unit string
-	// Phase is the lowering phase the unit stopped in: "Body" for a function's body, or "Statement" for a
-	// module's top-level statement.
+	// Phase is the lowering phase the unit stopped in: "Refusal" for the refusal pass, "Signature" for a
+	// module function's signature, "Statics" for a class's statics, "Body" for a function's body, or
+	// "Statement" for a module's top-level statement.
 	Phase string
 	// Suspect says a recovered Go panic was trapped earlier in the same lowering. A panic can leave
 	// lowering's state part written, so this row may be that panic's echo rather than a wall of its own.

@@ -415,6 +415,12 @@ type lowering struct {
 	firstLinkTraps    bool
 	firstLinkPanicked bool
 	traps             []ir.Trap
+	// firstLinkTrapped is every unit trapped, by its node, and firstLinkStubs the trap each lowers as
+	// (first_link_units.go). signatureTraps is each module function whose signature trapped, by its symbol,
+	// with its trap's message, which a reference to it stops naming (signatureTrap).
+	firstLinkTrapped map[*ast.Node]bool
+	firstLinkStubs   map[*ast.Node]ir.Panic
+	signatureTraps   map[*ast.Symbol]string
 
 	// flowDead is every function a flow graph built during lowering took to never run (flowGraph,
 	// iterableViewFlowGraph), which checkFlowLiveness holds to that once lowering is done.

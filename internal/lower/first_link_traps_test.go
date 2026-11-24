@@ -25,6 +25,14 @@ const firstLinkTwoFunctions = "function first(): void {\n\tconsole.log('first ra
 // today, at main.a:4:10.
 const firstLinkNested = "function outer(): number {\n\tconsole.log('outer ran');\n\tfunction inner(): number {\n\t\treturn Math.random();\n\t}\n\treturn inner();\n}\nconsole.log(`${outer()}`);\n"
 
+// firstLinkRefused calls a function that prints, then one holding ==, which the refusal pass refuses, at
+// main.a:5:11.
+const firstLinkRefused = "function first(): void {\n\tconsole.log('first ran');\n}\nfunction second(n: number): boolean {\n\treturn n == 1;\n}\nfirst();\nconsole.log(`${second(1)}`);\n"
+
+// firstLinkSignature prints, then calls a function that calls one whose signature stops today: a rest
+// parameter of a union of arrays is NotYet at main.a:1:17 (TestRestParametersThatArentArraysAreNotYet).
+const firstLinkSignature = "function either(...args: string[] | number[]): number {\n\treturn 0;\n}\nfunction run(): void {\n\tconsole.log(`${either('a')}`);\n}\nconsole.log('before the call');\nrun();\n"
+
 // lowerFirstLink lowers a .a program, as a first-link lowering when traps is set.
 func lowerFirstLink(t *testing.T, source string, traps bool) (*ir.Program, error) {
 	t.Helper()
@@ -83,13 +91,13 @@ func firstLinkRuns(t *testing.T, program *ir.Program) []firstLinkRun {
 	return runs
 }
 
-// firstLinkTrapped holds a program's runs to its trap: each prints stdout, then exits 75 with the
-// first-link prefix and a NotYet naming its site.
-func firstLinkTrapped(t *testing.T, program *ir.Program, stdout, site string) {
+// firstLinkTrapped holds a program's runs to its trap: each prints stdout, then exits 75 with stderr
+// starting with the first-link prefix and then stop, and naming site.
+func firstLinkTrapped(t *testing.T, program *ir.Program, stdout, stop, site string) {
 	t.Helper()
 	for _, run := range firstLinkRuns(t, program) {
-		if run.code != 75 || run.stdout != stdout || !strings.HasPrefix(run.stderr, "adamic: first-link trap: NotYet: ") || !strings.Contains(run.stderr, site) {
-			t.Errorf("%s: exit %d stdout %q stderr %q; want 75, %q, and a first-link NotYet at %s", run.backend, run.code, run.stdout, run.stderr, stdout, site)
+		if run.code != 75 || run.stdout != stdout || !strings.HasPrefix(run.stderr, "adamic: first-link trap: "+stop) || !strings.Contains(run.stderr, site) {
+			t.Errorf("%s: exit %d stdout %q stderr %q; want 75, %q, and a first-link %s at %s", run.backend, run.code, run.stdout, run.stderr, stdout, stop, site)
 		}
 	}
 }
@@ -108,7 +116,7 @@ func TestFirstLinkTrapRunsUpToTheStop(t *testing.T) {
 	if len(program.Traps) != 1 || program.Traps[0] != want {
 		t.Fatalf("Traps: got %+v, want %+v", program.Traps, want)
 	}
-	firstLinkTrapped(t, program, "first ran\n", "main.a:5:9")
+	firstLinkTrapped(t, program, "first ran\n", "NotYet: ", "main.a:5:9")
 }
 
 // Without the option, the same program stops at lowering with the same NotYet, word for word as Lower stops it.
@@ -137,5 +145,45 @@ func TestFirstLinkTrapNestedStubsOnlyItself(t *testing.T) {
 	if len(program.Traps) != 1 || program.Traps[0] != want {
 		t.Fatalf("Traps: got %+v, want %+v", program.Traps, want)
 	}
-	firstLinkTrapped(t, program, "outer ran\n", "main.a:4:10")
+	firstLinkTrapped(t, program, "outer ran\n", "NotYet: ", "main.a:4:10")
+}
+
+// A unit the refusal pass refuses is trapped before anything lowers, and lowers as its stub: the first
+// function runs, then the second traps with the refusal's words. Without the option, the program is
+// refused at compile time, word for word as Lower refuses it.
+func TestFirstLinkTrapRefusedUnitStubs(t *testing.T) {
+	t.Parallel()
+	program, err := lowerFirstLink(t, firstLinkRefused, true)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := ir.Trap{Kind: "Refused", Reason: "==", Fix: "use ===, which doesn't coerce", Site: "main.a:5:11", Unit: "main.a second", Phase: "Refusal"}
+	if len(program.Traps) != 1 || program.Traps[0] != want {
+		t.Fatalf("Traps: got %+v, want %+v", program.Traps, want)
+	}
+	firstLinkTrapped(t, program, "first ran\n", "Refused: ==", "main.a:5:11")
+	_, off := lowerFirstLink(t, firstLinkRefused, false)
+	var refused *Refused
+	if !errors.As(off, &refused) || !strings.HasSuffix(off.Error(), "main.a:5:11: Adamic 0.1 refuses ==; use ===, which doesn't coerce") {
+		t.Fatalf("without the option: got %v, want the refusal of == at main.a:5:11", off)
+	}
+	if _, stop := lowerSource(t, firstLinkRefused); stop == nil || stop.Error() != off.Error() {
+		t.Fatalf("without the option: got %v, want Lower's stop %v", off, stop)
+	}
+}
+
+// A module function whose signature stops is trapped at its signature, and a reference to it stops where
+// it's met, naming that trap, so the function holding the call traps: what runs before that call runs.
+func TestFirstLinkTrapSignatureCascade(t *testing.T) {
+	t.Parallel()
+	program, err := lowerFirstLink(t, firstLinkSignature, true)
+	if err != nil {
+		t.Fatal(err)
+	}
+	signature := ir.Trap{Kind: "NotYet", Reason: "a rest parameter that isn't an array", Site: "main.a:1:17", Unit: "main.a either", Phase: "Signature"}
+	reference := ir.Trap{Kind: "NotYet", Reason: "a reference to either, whose signature trapped: NotYet: a rest parameter that isn't an array at main.a:1:17", Site: "main.a:5:17", Unit: "main.a run", Phase: "Body"}
+	if len(program.Traps) != 2 || program.Traps[0] != signature || program.Traps[1] != reference {
+		t.Fatalf("Traps: got %+v, want %+v then %+v", program.Traps, signature, reference)
+	}
+	firstLinkTrapped(t, program, "before the call\n", "NotYet: a reference to either, whose signature trapped", "main.a:1:17")
 }
