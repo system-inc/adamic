@@ -2469,6 +2469,10 @@ func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expr
 		return nil, err
 	}
 	l.fitCallArguments(function, arguments, spread)
+	slots, rest := l.functionSlots(function)
+	if err := l.spreadPackStop(call.Arguments.Nodes, arguments, spread, 0, slots, rest); err != nil {
+		return nil, err
+	}
 	return l.censusOverloadResult(call, ir.Call{Function: function, Arguments: arguments, Spread: spread, Returns: l.result.Functions[function].Returns})
 }
 
@@ -2796,6 +2800,22 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 				arguments[index] = fit(arguments[index], takes)
 			}
 			position++
+		}
+	}
+	// A spread through a function value packs as a direct call's does, so it's judged against the one
+	// signature its fixed arguments are fitted by; with more than one there's no single slot to judge
+	// against, and it stops (#p9zm9q5).
+	if len(spread) != 0 {
+		signatures := l.checker.GetSignaturesOfType(l.optionalChainOperandType(node.AsCallExpression().Expression), checker.SignatureKindCall)
+		if len(signatures) != 1 {
+			return nil, l.notYet(node, "a call with a spread through a function value with more than one signature")
+		}
+		slots, rest, err := l.signatureSlots(node, signatures[0])
+		if err != nil {
+			return nil, err
+		}
+		if err := l.spreadPackStop(node.AsCallExpression().Arguments.Nodes, arguments, spread, 0, slots, rest); err != nil {
+			return nil, err
 		}
 	}
 	for _, argument := range arguments {
