@@ -505,6 +505,7 @@ var irSpecFields = map[string]irFieldPolicy{
 	"Narrow.To":                          {"Type", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"Narrow.Checked":                     {"bool", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"Narrow.Message":                     {"string", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
+	"Narrow.ReferencesMessage":           {"string", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"NodeBufferCall.Function":            {"string", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"NodeBufferCall.Arguments":           {"[]Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"NodeBufferCall.Encoding":            {"int", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
