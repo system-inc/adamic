@@ -493,6 +493,7 @@ type foundShape struct {
 	file, scope, name string
 	index, line       int
 	host, errorShape  bool
+	errorSlots        []string
 }
 
 func (shape foundShape) key() string {
@@ -598,6 +599,46 @@ func fileShapes(file, source string) ([]foundShape, []string) {
 	if depth != 0 {
 		return nil, []string{fmt.Sprintf("%s: braces don't balance, as an #if branch that opens a function twice would leave them; the scanner can't follow this file's scopes", file)}
 	}
+	errorSlots := func(initializer []cToken, shapeIndex int) []string {
+		table := ""
+		for position, field := range initializerElements(initializer) {
+			if position == 1 && len(field) == 1 {
+				table = field[0].text
+			}
+			if len(field) == 4 && field[0].text == "." && field[1].text == "names" {
+				table = field[3].text
+			}
+		}
+		if !isIdentifier(table) {
+			return nil
+		}
+		for index := shapeIndex - 1; index >= 0; index-- {
+			if at(index) != table || at(index+1) != "[" || at(index+2) != "]" ||
+				at(index+3) != "=" || at(index+4) != "{" {
+				continue
+			}
+			if scopes[index] != "" && scopes[index] != scopes[shapeIndex] {
+				continue
+			}
+			end := closingBrace(tokens, index+4)
+			if end < 0 {
+				return nil
+			}
+			var names []string
+			for _, field := range initializerElements(tokens[index+5 : end]) {
+				if len(field) != 1 {
+					return nil
+				}
+				name, err := strconv.Unquote(field[0].text)
+				if err != nil {
+					return nil
+				}
+				names = append(names, name)
+			}
+			return names
+		}
+		return nil
+	}
 	var shapes []foundShape
 	// builders holds each function that builds a shape at run time, by name, with whether it marks it.
 	builders := map[string]*foundShape{}
@@ -672,7 +713,11 @@ func fileShapes(file, source string) ([]foundShape, []string) {
 				refuse(index, problem)
 				continue
 			}
-			shapes = append(shapes, foundShape{file: file, scope: scopes[index], name: after, line: line(index), host: host, errorShape: errorShape})
+			shape := foundShape{file: file, scope: scopes[index], name: after, line: line(index), host: host, errorShape: errorShape}
+			if errorShape {
+				shape.errorSlots = errorSlots(tokens[index+4:end], index)
+			}
+			shapes = append(shapes, shape)
 		case isIdentifier(after) && at(index+2) == "[":
 			equals := index + 3
 			for equals < len(tokens) && at(equals) != "]" {
@@ -697,7 +742,11 @@ func fileShapes(file, source string) ([]foundShape, []string) {
 					refuse(index, fmt.Sprintf("element %d of %s: %s", element, after, problem))
 					continue
 				}
-				shapes = append(shapes, foundShape{file: file, scope: scopes[index], name: after, index: element, line: line(index), host: host, errorShape: errorShape})
+				shape := foundShape{file: file, scope: scopes[index], name: after, index: element, line: line(index), host: host, errorShape: errorShape}
+				if errorShape {
+					shape.errorSlots = errorSlots(part[1:len(part)-1], index)
+				}
+				shapes = append(shapes, shape)
 			}
 		case isIdentifier(after) && at(index+2) == ";":
 			// Storage some builder fills: it reads as plain until one marks it.
@@ -1087,6 +1136,28 @@ func refusalProblem(path, refused string) string {
 		return fmt.Sprintf("%s lowers, so the refusal that kept its shape from a run-time key read is lifted: classify the shape anew", path)
 	}
 	return fmt.Sprintf("%s fails to lower otherwise: %v", path, err)
+}
+
+// TestErrorShapeNameAndMessageSlots catches an Error shape losing its message
+// or name slot, including the planted shape without message.
+func TestErrorShapeNameAndMessageSlots(t *testing.T) {
+	t.Parallel()
+	shapes, _ := scannedHostShapes(t)
+	count := 0
+	for _, shape := range shapes {
+		if !shape.errorShape {
+			continue
+		}
+		count++
+		if !slices.Contains(shape.errorSlots, "name") ||
+			(!slices.Contains(shape.errorSlots, "message") && !slices.Contains(shape.errorSlots, "#message")) {
+			t.Errorf("%s:%d: Error shape %s needs name and message slots, found %q", shape.file, shape.line, shape.name, shape.errorSlots)
+		}
+	}
+	if count == 0 {
+		t.Fatal("the scanner found no Error shapes")
+	}
+	t.Logf("checked %d Error shapes", count)
 }
 
 // Every runtime shape, and every one a generator writes, is in hostShapeTable, its C agrees with its

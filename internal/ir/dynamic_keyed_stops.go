@@ -205,6 +205,10 @@ var StatsFieldOperations = map[string]string{
 // a plain object's read hands out would be the wrong functions there.
 var DynamicKeyedErrorNames = []string{"stack", "cause", "errno", "syscall", "path", "dest", "toString", "constructor"}
 
+// ErrorOwnKeyStopNames keeps own-key tests aligned where Node and native Error shapes differ.
+// The own-key table answers stack before this list is consulted.
+var ErrorOwnKeyStopNames = []string{"cause", "errno", "syscall", "path", "dest", "toString", "constructor", "info", "requireStack"}
+
 // DynamicKeyedMethodNames are the names a class's method table holds, the inherited ones included, as
 // both backends judge a run-time key against them: Methods by MethodName, less a getter's or a
 // setter's own entry, which the class's accessors answer.
