@@ -869,6 +869,11 @@ type lowering struct {
 	entriesRecords             map[*ast.Node]bool
 	entriesProgramRecords      bool
 	entriesProgramRecordsKnown bool
+	// ownAnswerValues, once ownAnswerValuesKnown, is each type a call, new, property or element read in the
+	// program has that libraryObjectOwnAnswer names, a match's groups aside, with that name, first seen first
+	// (prototypeHazard, #v414yhr).
+	ownAnswerValues      []ownAnswerValue
+	ownAnswerValuesKnown bool
 	// entriesRecordTypes, once entriesRecordTypesKnown, are the types the program's records are held
 	// as, and recordGuardedReads the union and maybe field reads admitted beside them, each checked
 	// again once every view is registered (entries_records.go). emptyObject, once emptyObjectKnown, is
