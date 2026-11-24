@@ -161,9 +161,12 @@ func (l *lowering) provedMembers(condition *ast.Node, symbol, identity *ast.Symb
 		if right == nil {
 			return left
 		}
-		// Both sides hold at once, so only a member both name can be there. None is a branch that
-		// never runs, which writes nothing, so the empty set proves it.
-		both := []*checker.Type{}
+		// Both sides hold at once, so only a member both name can be there. An empty intersection proves
+		// nothing, never "a branch that never runs": over an open enum two members can share a value, as A
+		// and B do in `enum K { A = 1, B = 1, C = 2 }`, where `t === K.A && t === K.B` holds for 1. The
+		// checker gives such members one type (getEnumLiteralType keys it by enum and value), so they
+		// intersect here, but an empty set would fit any slot, K.C's included, so it's refused, not trusted.
+		var both []*checker.Type
 		for _, member := range left {
 			if slices.Contains(right, member) {
 				both = append(both, member)
