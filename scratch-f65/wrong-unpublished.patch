@@ -1,0 +1,13 @@
+diff --git a/internal/native/emit_objects.go b/internal/native/emit_objects.go
+index 239739ba15..31572d7429 100644
+--- a/internal/native/emit_objects.go
++++ b/internal/native/emit_objects.go
+@@ -522,7 +522,7 @@ func (e *emitter) prepareObjectMetadata() {
+ 			needs.records = needs.records || expression.Record
+ 			// A spread that may be undefined makes construction storage when it is (spreadCopy), so its
+ 			// literal's fields and every later write publish what they write.
+-			needs.construction = needs.construction || constructionFields(expression.Fields) || expression.SpreadMaybeUndefined
++			needs.construction = needs.construction || constructionFields(expression.Fields)
+ 		case ir.ArrayLiteral:
+ 			needs.construction = needs.construction || len(expression.Metadata) != 0
+ 		case ir.ObjectCall:

@@ -1,0 +1,15 @@
+diff --git a/internal/lower/unknown.go b/internal/lower/unknown.go
+index 98847350f0..97e07d4fe0 100644
+--- a/internal/lower/unknown.go
++++ b/internal/lower/unknown.go
+@@ -334,6 +334,10 @@ func (l *lowering) dynamicReadHazard(name string) bool {
+ // so it keeps presenceHazard's whole scan: the unknown half is held (Adamic's ruling on #bbssdcy, Nov 23 03:50Z).
+ func (l *lowering) typedPresenceReceiver(receiver *ast.Node) bool {
+ 	proven := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver))
++	if proven.Flags()&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0 {
++		// Wrong on purpose: an unknown or object receiver takes the typed road.
++		return true
++	}
+ 	if proven.Flags()&checker.TypeFlagsObject == 0 || l.isLibraryType(proven, "Object", "Function") {
+ 		return false
+ 	}
