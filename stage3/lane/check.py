@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import re
 import subprocess
+import time
 import tempfile
 import sys
 
@@ -89,7 +90,25 @@ def inspect(execution, oracle, log, expected, api_errors):
                 baseline_diffs=oracle.get('baseline_diffs'))
 
 
-def api_check(results, sanctioned):
+def method_signature_errors(tree, deadline):
+    name = '99-method-parameter-adaptations'
+    checker = LANE.parent / 'adapt' / name / 'signatures.cjs'
+    remaining = None if deadline is None else deadline - time.monotonic()
+    if remaining is not None and remaining <= 0:
+        return ['family 7 printer signatures: shard deadline expired']
+    try:
+        result = subprocess.run(['node', str(checker), str(tree), 'printer'],
+                                capture_output=True, text=True, timeout=remaining)
+    except subprocess.TimeoutExpired:
+        return ['family 7 printer signatures: shard deadline expired']
+    if result.returncode:
+        detail = next((line for line in result.stderr.splitlines() if line.startswith('AssertionError')),
+                      result.stderr.strip())
+        return [f'family 7 printer signatures: {detail}']
+    return []
+
+
+def api_check(results, sanctioned, *, pre_family7_replay=False, printer_deadline=None):
     tree = results / 'adapted-tree'
     relative = 'api/typescript.d.ts'
     pin = sanctioned['source_commit']
@@ -127,6 +146,8 @@ def api_check(results, sanctioned):
             errors.append(f'missing sanctioned API declaration: {key}')
         elif wanted[key] != observed[key]:
             errors.append(f'changed sanctioned API declaration: {key}')
+    if not pre_family7_replay:
+        errors.extend(method_signature_errors(tree, printer_deadline))
     return errors, dict(reference_declarations=len(normalized['reference_changes']),
                         composed_declarations=len(normalized['composed_changes']),
                         sanctioned_declarations=len(wanted),
@@ -137,7 +158,7 @@ def api_check(results, sanctioned):
 
 
 def check_results(results, expected_file=LANE / 'expected.json',
-                  sanctioned_file=LANE / 'sanctioned-api.json'):
+                  sanctioned_file=LANE / 'sanctioned-api.json', *, pre_family7_replay=False):
     try:
         expected = json.loads(expected_file.read_text())
         sanctioned = json.loads(sanctioned_file.read_text())
@@ -147,7 +168,7 @@ def check_results(results, expected_file=LANE / 'expected.json',
         if platform_key not in expected['platforms']:
             return dict(status='fail', errors=[f'unknown platform: {platform_key}; add measured expectations deliberately'])
         oracle = json.loads((results / 'oracle/report.json').read_text())
-        api_errors, api = api_check(results, sanctioned)
+        api_errors, api = api_check(results, sanctioned, pre_family7_replay=pre_family7_replay)
         report = inspect(execution, oracle, (results / 'oracle/tests.log').read_text(),
                          expected, api_errors)
         report['api'] = api
@@ -176,9 +197,11 @@ def write_verdict(results, report):
     report['verdict'] = message
     try:
         (results / 'failures.md').write_text(markdown(report.get('failures', [])))
-        (results / 'verdict.json').write_text(json.dumps(dict(verdict=message, status=report['status'],
-            failures=report.get('failures', []), cause_counts=report.get('cause_counts', {}),
-            baseline_previews=report.get('baseline_previews', [])), indent=2) + '\n')
+        verdict = dict(verdict=message, status=report['status'], failures=report.get('failures', []),
+                       cause_counts=report.get('cause_counts', {}), baseline_previews=report.get('baseline_previews', []))
+        if 'pre_family7_replay' in report:
+            verdict['pre_family7_replay'] = report['pre_family7_replay']
+        (results / 'verdict.json').write_text(json.dumps(verdict, indent=2) + '\n')
     except OSError as error:
         report['failure_details_error'] = str(error)
     (results / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
@@ -194,5 +217,9 @@ if __name__ == '__main__':
     parser.add_argument('results', type=Path)
     parser.add_argument('--expected', type=Path, default=LANE / 'expected.json')
     parser.add_argument('--sanctioned', type=Path, default=LANE / 'sanctioned-api.json')
+    parser.add_argument('--pre-family7-replay', action='store_true',
+                        help='replay evidence produced before the Family 7 adapter')
     args = parser.parse_args()
-    raise SystemExit(write_verdict(args.results, check_results(args.results, args.expected, args.sanctioned)))
+    report = check_results(args.results, args.expected, args.sanctioned, pre_family7_replay=args.pre_family7_replay)
+    report['pre_family7_replay'] = args.pre_family7_replay
+    raise SystemExit(write_verdict(args.results, report))

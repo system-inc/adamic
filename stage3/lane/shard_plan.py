@@ -27,7 +27,8 @@ PAIRED_CASE_FILES = {
 CASE_GROUPS = {file: 24 if label == 'project-reference-cases' else 3
                for file, label in CASE_PARTITIONS.items()}
 RUNTIME = ['run.py', '../oracle/run.py', '../oracle/profile-tasks.cjs', 'artifact.py', 'view.py', 'shard_plan.py', 'shard.py', 'merge_shards.py',
-           'prepare_shards.py', 'check.py', 'normalize-api.cjs', 'expected.json',
+           'prepare_shards.py', 'check.py', '../adapt/99-method-parameter-adaptations/signatures.cjs',
+           'normalize-api.cjs', 'expected.json',
            'sanctioned-api.json', '../oracle/run-prepared.mjs', '../oracle/run-tasks.cjs', '../oracle/observe-tests.cjs',
            '../oracle/observe-errors.cjs', '../oracle/failure_details.py']
 
