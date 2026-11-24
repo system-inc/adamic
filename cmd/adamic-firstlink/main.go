@@ -106,7 +106,7 @@ func run(arguments []string, stdout, stderr io.Writer) int {
 		fmt.Fprintf(stderr, "adamic-firstlink: lower: %v\n", err)
 		return 1
 	}
-	written, err := writeReport(output, relativeSites(filepath.Dir(asked.root), lowered.Traps))
+	written, err := writeReport(output, relativeSites(filepath.Dir(asked.root), lowered.Traps), lowered.TrapRewritesSkipped)
 	if err != nil {
 		fmt.Fprintf(stderr, "adamic-firstlink: report: %v\n", err)
 		return 1
@@ -137,11 +137,22 @@ func run(arguments []string, stdout, stderr io.Writer) int {
 	return 0
 }
 
-// relativeSites writes each trap's site relative to the root's directory, so a row reads the same on every box. A
-// site outside that directory, or one with no path, is kept as it came.
+// relativeSites writes each trap's site relative to the program's common directory: the deepest directory holding
+// the root and every site, so a row reads the same on every box. Rooted at src/tsc/tsc.ts, tsc's sites in
+// src/compiler read compiler/checker.ts:..., where the root's own directory would leave them absolute (Correctness on
+// #nm7z8fv). When the only directory they share is the filesystem's root, or a site has no path, sites stay as they
+// came.
 func relativeSites(rootDirectory string, traps []ir.Trap) []ir.Trap {
 	base, err := filepath.Abs(rootDirectory)
 	if err != nil {
+		return traps
+	}
+	for _, trap := range traps {
+		if path, _, found := strings.Cut(trap.Site, ":"); found && filepath.IsAbs(path) {
+			base = commonDirectory(base, filepath.Dir(path))
+		}
+	}
+	if filepath.Dir(base) == base {
 		return traps
 	}
 	placed := make([]ir.Trap, len(traps))
@@ -151,11 +162,25 @@ func relativeSites(rootDirectory string, traps []ir.Trap) []ir.Trap {
 		if !found || !filepath.IsAbs(path) {
 			continue
 		}
-		if relative, err := filepath.Rel(base, path); err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+		if relative, err := filepath.Rel(base, path); err == nil {
 			placed[index].Site = filepath.ToSlash(relative) + ":" + position
 		}
 	}
 	return placed
+}
+
+// commonDirectory is the deepest directory holding both of two clean absolute directories.
+func commonDirectory(first, second string) string {
+	for {
+		if relative, err := filepath.Rel(first, second); err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+			return first
+		}
+		parent := filepath.Dir(first)
+		if parent == first {
+			return first
+		}
+		first = parent
+	}
 }
 
 // writeUnder writes text to name under directory, making its directories, and says where it wrote. A name that
@@ -186,19 +211,29 @@ type report struct {
 	ByKind   map[string]int `json:"by_kind"`
 	ByReason map[string]int `json:"by_reason"`
 
-	// Unplaced counts the traps lower couldn't place in a unit: a pass stopped at a site with no unit, and was
-	// skipped from there on, so what it would have found after that site is a measurement gap.
+	// Unplaced counts the stops no unit holds, which trap nothing: a measurement gap.
 	Unplaced int `json:"unplaced"`
 
-	// Suspect counts the traps met after a recovered Go panic in the same lowering, which may be that panic's echo
-	// rather than walls of their own (ir.Trap.Suspect).
+	// Suspect counts the traps met after a recovered Go panic, or after a whole-program pass skipped a rewrite, in
+	// the same lowering: each may be lowering's own echo rather than a wall (ir.Trap.Suspect).
 	Suspect int `json:"suspect"`
+
+	// Echo counts a whole-program pass's stops inside a unit trapped already, whose leftover state may be what it
+	// stopped at, so they're no walls of their own (ir.Trap.Echo).
+	Echo int `json:"echo"`
+
+	// RewritesSkipped names each whole-program pass whose rewriting past a stop the lowering skipped, in order
+	// (ir.Program.TrapRewritesSkipped). Every trap after the first is Suspect.
+	RewritesSkipped []string `json:"rewrites_skipped"`
 }
 
-func summarize(traps []ir.Trap) report {
-	counted := report{Findings: findingsRule, Traps: traps, Total: len(traps), ByPhase: map[string]int{}, ByKind: map[string]int{}, ByReason: map[string]int{}}
+func summarize(traps []ir.Trap, skipped []string) report {
+	counted := report{Findings: findingsRule, RewritesSkipped: skipped, Traps: traps, Total: len(traps), ByPhase: map[string]int{}, ByKind: map[string]int{}, ByReason: map[string]int{}}
 	if counted.Traps == nil {
 		counted.Traps = []ir.Trap{}
+	}
+	if counted.RewritesSkipped == nil {
+		counted.RewritesSkipped = []string{}
 	}
 	for _, trap := range traps {
 		counted.ByPhase[trap.Phase]++
@@ -210,13 +245,16 @@ func summarize(traps []ir.Trap) report {
 		if trap.Suspect {
 			counted.Suspect++
 		}
+		if trap.Echo {
+			counted.Echo++
+		}
 	}
 	return counted
 }
 
 // writeReport writes traps.json and traps.md under directory and says where.
-func writeReport(directory string, traps []ir.Trap) ([]string, error) {
-	counted := summarize(traps)
+func writeReport(directory string, traps []ir.Trap, skipped []string) ([]string, error) {
+	counted := summarize(traps, skipped)
 	data, err := json.MarshalIndent(counted, "", "  ")
 	if err != nil {
 		return nil, err
@@ -237,12 +275,18 @@ func markdown(counted report) string {
 	var text strings.Builder
 	fmt.Fprintf(&text, "Findings: %s. A trap-mode run's output is a lead, never a miscompile finding, until it's reproduced as an ordinary program.\n\n# First-link traps\n\n%d traps", counted.Findings, counted.Total)
 	if counted.Unplaced > 0 {
-		fmt.Fprintf(&text, ", %d of them unplaced: a pass stopped where lower couldn't name a unit and was skipped from there on, so what it would have found after is a measurement gap", counted.Unplaced)
+		fmt.Fprintf(&text, ", %d of them unplaced: stops no unit holds, which trap nothing, a measurement gap", counted.Unplaced)
 	}
 	if counted.Suspect > 0 {
-		fmt.Fprintf(&text, ", %d of them suspect: met after a recovered Go panic in the same lowering, so each may be that panic's echo", counted.Suspect)
+		fmt.Fprintf(&text, ", %d of them suspect: met after a recovered Go panic or a skipped rewrite, so each may be lowering's own echo", counted.Suspect)
+	}
+	if counted.Echo > 0 {
+		fmt.Fprintf(&text, ", %d of them echoes: a pass's stop inside a unit trapped already, no wall of its own", counted.Echo)
 	}
 	text.WriteString(".\n")
+	if len(counted.RewritesSkipped) > 0 {
+		fmt.Fprintf(&text, "\nRewrites skipped past a stop, in order: %s. Every trap after the first is suspect.\n", strings.Join(counted.RewritesSkipped, ", "))
+	}
 	phases := make([]string, 0, len(counted.ByPhase))
 	for phase := range counted.ByPhase {
 		phases = append(phases, phase)
