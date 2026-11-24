@@ -41,6 +41,9 @@ const (
 	castKeepsNullish  // a target that keeps undefined or null, past keepsNullishCast's road
 	castSideways      // an object target the source isn't a supertype of
 	castMixedSource   // a union source holding primitives, cast to an object target
+	// NotYet under the same row by Adamic's ruling on #bbssdcy (item 19, Nov 24): a gap, not a lie, whose
+	// checked view is the untagged view road's to build.
+	castFieldRefinement // an object target the source is a supertype of, which reads a field of the source narrower
 	// NotYet in .ts by Adamic's principle, as Compiler applied it (R4 and R4b on #b5w3ycg, Nov 22): instanceof
 	// decides each at run time, and castProof's class road only wants every member a class.
 	castClassAncestry      // a class cast with no nominal ancestry between the two
@@ -63,7 +66,7 @@ const (
 // castStop words a cast castProof found no road for. In .a every cause keeps main's refusal word for word,
 // since item 8 refuses every checked downcast there and keptCheckDowncastRefusal names the narrowing. In
 // .ts each cause says what stopped it: a Refused names its own fix, and a NotYet names the check it needs.
-// source and target are the cast's as written; field is the field castUnionWrite names.
+// source and target are the cast's as written; field is the field castUnionWrite or castFieldRefinement names.
 func (l *lowering) castStop(node *ast.Node, cause castCause, source, target *checker.Type, field string) error {
 	if strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".a") || cause == castUnnamed {
 		return &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: l.castRepair(node)}
@@ -135,6 +138,8 @@ func (l *lowering) castStop(node *ast.Node, cause castCause, source, target *che
 		return l.notYet(node, "a checked cast from "+from+" to "+to+", which keeps "+l.castKeptNullish(target))
 	case castSideways:
 		return l.notYet(node, "a checked view of "+to+" over "+from+", which "+to+" doesn't extend")
+	case castFieldRefinement:
+		return l.notYet(node, "a checked view of "+to+" over "+from+", which reads the field "+field+" of "+from+" narrower")
 	case castFromObject:
 		return l.notYet(node, "a checked view of "+to+" over a value typed "+from+", which names no fields")
 	case castTargetTypeParameter:
@@ -284,8 +289,48 @@ func (l *lowering) objectCastCause(source, target *checker.Type) castCause {
 		return castWidenedTarget
 	case present.Flags()&checker.TypeFlagsObject != 0 && !l.checker.IsTypeAssignableTo(present, source):
 		return castSideways
+	case l.refinedField(source, present) != "":
+		return castFieldRefinement
 	}
 	return castUnnamed
+}
+
+// refinedField is the first field a field-refinement downcast reads narrower, or "" when the cast is none
+// (Adamic's item 19 on #bbssdcy): present, the target without its nullish members, is a plain object with no
+// index, call or construct signature; source is an object, or an intersection of objects, so it holds no
+// primitive, type parameter or nullish member; present is assignable to source; and some field of present holds a
+// type assignable to source's for that field, but not the reverse. That it widens none of source's writable fields
+// is objectCastCause's order, which asks castWidenedTarget first, and a target that does keeps that refusal: no
+// view can hold its claim once source writes the wider value. tsc's toBuilderStateFileInfoForMultiEmit
+// (builder.ts:2233 in TypeScript 6.0.3) is one: its source is an Omit<...> & { readonly signature } in the adapted
+// tree, which castRoad's structural view doesn't take, since that view wants a source that is one object.
+func (l *lowering) refinedField(source, present *checker.Type) string {
+	if present.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(present) || len(l.checker.GetIndexInfosOfType(present)) != 0 || l.castSignatures(present) {
+		return ""
+	}
+	if source.Flags()&checker.TypeFlagsIntersection != 0 {
+		for _, member := range source.Types() {
+			if member.Flags()&checker.TypeFlagsObject == 0 {
+				return ""
+			}
+		}
+	} else if source.Flags()&checker.TypeFlagsObject == 0 {
+		return ""
+	}
+	if !l.checker.IsTypeAssignableTo(present, source) {
+		return ""
+	}
+	for _, property := range l.checker.GetPropertiesOfType(present) {
+		inside := l.checker.GetPropertyOfType(source, property.Name)
+		if inside == nil {
+			continue
+		}
+		read, held := l.checker.GetTypeOfSymbol(property), l.checker.GetTypeOfSymbol(inside)
+		if l.checker.IsTypeAssignableTo(read, held) && !l.checker.IsTypeAssignableTo(held, read) {
+			return property.Name
+		}
+	}
+	return ""
 }
 
 // distinctTagField is whether some field holds a literal in every member, each apart from the others, as
