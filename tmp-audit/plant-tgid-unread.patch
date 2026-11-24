@@ -1,0 +1,13 @@
+diff --git a/stage3/verdict/compiler_process.py b/stage3/verdict/compiler_process.py
+--- a/stage3/verdict/compiler_process.py
++++ b/stage3/verdict/compiler_process.py
+@@ -35,9 +35,6 @@
+     except ProcessLookupError:
+         return None
+     except OSError as error:
+-        if allow_thread_reuse and error.errno in (errno.EINVAL, errno.ENOENT):
+-            prove_non_leader_thread(pid)
+-            return None
+         if error.errno == errno.ENOSYS:
+             raise ValueError('the host has no pidfds (ENOSYS)') from error
+         if error.errno == errno.EMFILE:
