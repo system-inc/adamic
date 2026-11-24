@@ -53,9 +53,10 @@ var castStopProbes = []struct {
 	{"node or real array", "interface Node { readonly kind: number } interface NodeArray<T> extends ReadonlyArray<T> { readonly end?: number } function f(x: Node | readonly Node[]): NodeArray<Node> { return x as NodeArray<Node>; }", false,
 		"a checked cast from Node | readonly Node[] to NodeArray<Node>, which needs Array.isArray to tell Node | readonly Node[]'s arrays from its other members"},
 	// A real dictionary, an interface with no base, keeps the dictionary view: the array test isn't so wide it
-	// takes every index signature.
-	{"map-like dictionary", "interface MapLike<T> { [index: string]: T } function f(x: object): MapLike<unknown> { return x as MapLike<unknown>; }", false,
-		"stage 0 can't lower a checked dictionary view of MapLike<unknown> over object yet"},
+	// takes every index signature. Its values are numbers, since a MapLike<unknown> over object is the view that's
+	// built now (cast_dictionary_view_test.go).
+	{"map-like dictionary", "interface MapLike<T> { [index: string]: T } function f(x: object): MapLike<number> { return x as MapLike<number>; }", false,
+		"stage 0 can't lower a checked dictionary view of MapLike<number> over object yet"},
 	{"intersection", "interface A { readonly a: number } interface B { readonly b: number } function f(x: A): A & B { return x as A & B; }", false,
 		"stage 0 can't lower a checked view of the intersection A & B over A yet"},
 	{"intersection with a callable", "interface A { readonly a: number } function f(x: A): A & (() => void) { return x as A & (() => void); }", true,
