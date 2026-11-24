@@ -112,6 +112,10 @@ var castStopProbes = []struct {
 		"a cast the runtime can't check: a cast from Encoded to Info, which Encoded can write string | number where number is read"},
 	{"field refinement from a primitive", "interface Info { readonly version: string; signature: string | undefined } type Encoded = Omit<Info, \"signature\"> & { readonly signature: string | false | undefined }; function f(x: Encoded | string): Info { return x as Info; }", false,
 		", which holds primitives, to Info, which needs a typeof test before its view yet"},
+	// Promise reads then narrower than PromiseLike, but then is a method, and item 19 rules a field: the cast keeps
+	// main's sentence, as TestRecordStoragePromiseArmMeetsNoThenable pins it.
+	{"promise from a thenable", "function f(x: PromiseLike<number>): Promise<number> { return x as Promise<number>; }", true,
+		"Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast"},
 }
 
 // TestCastStopNamesItsCause holds each cause's words and kind in .ts, and holds .a to main's one sentence,
