@@ -21,6 +21,19 @@ const refinementWorld = "interface Node { readonly kind: number; readonly pos: n
 const refinementSite = "function isNamedDeclaration(node: Node): node is NamedDeclaration & { name: DeclarationName } { return !!(node as NamedDeclaration).name; }\n" +
 	"function show(n: Node): void { if (isNamedDeclaration(n)) console.log(n.name.text); else console.log('no'); }\n"
 
+// Language's r05 (#em1vyta, her J-8bgv5n0): a refined field whose reduced type still holds an intersection
+// member, Identifier & Extra, takes predicateMembership's recursion on it, the compound-node road: its tag
+// at the call, and its view at every read, so a lie missing extra stops where extra is read.
+const refinementReduced = "interface Node { readonly kind: number; readonly pos: number }\n" +
+	"interface Declaration extends Node { readonly _declarationBrand: undefined }\n" +
+	"interface Identifier extends Node { readonly kind: 1; readonly text: string }\n" +
+	"interface StringLiteral extends Node { readonly kind: 2; readonly text: string }\n" +
+	"interface Extra { readonly extra: string }\n" +
+	"interface Wide extends Declaration { readonly name?: (Identifier & Extra) | StringLiteral }\n" +
+	"interface Plain extends Declaration { readonly name?: Node }\n" +
+	"function isNamed(node: Node): node is Wide & { name: Identifier | StringLiteral } { return !!(node as Wide).name; }\n" +
+	"function show(n: Node): string { return isNamed(n) && n.name.kind === 1 ? n.name.extra.toUpperCase() : 'no'; }\n"
+
 // A branded base with refined parts takes ruling 9's road: the base's road at the call, each refined
 // field's own membership beside it, and the views at every read. tsc's site agrees with Node on the
 // JavaScript backend and natively under the sanitizers, and so do the shapes the rule admits that aren't
@@ -37,6 +50,7 @@ func TestBrandedRefinementAgrees(t *testing.T) {
 			"function isTyped(node: Node): node is Typed & { name: DeclarationName; type: Identifier } { const t = node as Typed; return t.name !== undefined && t.type !== undefined; }\n" +
 			"function show(n: Node): void { if (isTyped(n)) console.log(n.name.text + ':' + n.type.text); else console.log('no'); }\n" +
 			"const both: Typed = { kind: 43, pos: 0, _declarationBrand: undefined, name: literal, type: id };\nconst half: Typed = { kind: 43, pos: 0, _declarationBrand: undefined, name: literal };\nshow(both);\nshow(half);\n", "literal:id\nno\n"},
+		{"reduced intersection member", refinementReduced + "const good: Wide = { kind: 40, pos: 0, _declarationBrand: undefined, name: { kind: 1, pos: 0, text: 't', extra: 'e' } };\nconsole.log(show(good));\n", "E\n"},
 		{"in a loop", refinementWorld + "function isNamedDeclaration(node: Node): node is NamedDeclaration & { name: DeclarationName } { return !!(node as NamedDeclaration).name; }\n" +
 			"const all: Node[] = [{ kind: 40, pos: 0, _declarationBrand: undefined, name: id } as NamedDeclaration, id, { kind: 41, pos: 0, _declarationBrand: undefined, name: literal } as NamedDeclaration];\n" +
 			"let index = 0;\nwhile (index < all.length) { const n = all[index]; if (n !== undefined && isNamedDeclaration(n)) console.log(n.name.text); index++; }\n", "id\nliteral\n"},
@@ -84,6 +98,7 @@ func TestBrandedRefinementLiesStop(t *testing.T) {
 			"function isNamed(node: Named): node is NamedDeclaration & { name: Identifier } { return node.name !== undefined; }\n" +
 			"function show(n: Named): void { if (isNamed(n)) console.log(n.name.text); else console.log('no'); }\n" +
 			"const quoted: NamedDeclaration = { kind: 41, pos: 0, _declarationBrand: undefined, name: literal };\nshow(quoted);\n", "adamic: panic: predicate isNamed at "},
+		{"reduced intersection member", refinementReduced + "const id: Identifier = { kind: 1, pos: 0, text: 'id' };\nconst lie: Plain = { kind: 40, pos: 0, _declarationBrand: undefined, name: id };\nconsole.log(show(lie));\n", "adamic: panic: field read failed: n.name.extra is not initialized"},
 		{"base field", refinementWorld + "interface Loose { readonly kind: number; readonly pos: number | string; readonly name?: Node }\n" +
 			"function isNamed(node: Loose): node is NamedDeclaration & { name: DeclarationName } { return node.name !== undefined; }\n" +
 			"function show(n: Loose): void { if (isNamed(n)) console.log(String(n.pos + 1)); else console.log('no'); }\n" +
