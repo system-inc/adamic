@@ -1478,6 +1478,18 @@
       "type_correct_sha256": "4dc7360b0696271ab2b0fce3a93a8ac5488deafbac51f2b6e8ae6581c3553ed4",
       "exit": 70,
       "stderr": "adamic: panic: field read failed: <write>.extra is not initialized; expected string, found missing\n"
+    },
+    "cb73520adb4d92bfe6bc9bc7143bc58445a1e2eafc13720178756200f78fd2e6": {
+      "form": "checked_boundary",
+      "ruling_task": "#b5w3ycg",
+      "ruling": "rulings.md:18: an untagged union's cast is a checked view with no test at the cast, its lie stopped at the read; applied to a union target through view()'s union contract (Lower, on #b5w3ycg)",
+      "declaration": "internal/oracle/testdata/cast_untagged_union_target/lie.ts:3",
+      "declared_type": "string",
+      "repair_from": "f({ c: true })",
+      "repair_to": "f({ a: 1, shared: \"s\" })",
+      "type_correct_sha256": "c0678cdc3776d81fc721bb726f55a76e7fcb49d0d9eb9afb7e967a54a90929fb",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: (x as A | B).shared is not initialized; expected string, found missing\n"
     }
   }
 }
