@@ -69,7 +69,9 @@ func TestJSONEncodeRefusals(t *testing.T) {
 		{"null", `encodeJson<null>(null);`, "containing null"},
 		{"undefined", `encodeJson<undefined>(undefined);`, "encodeJson cannot prove"},
 		{"optional_explicit_undefined", `encodeJson<{readonly n?:number|undefined}>({});`, "encodeJson cannot prove"},
-		{"widened_union_slot", `const full={value:42};const view:{readonly value:number|string}=full;encodeJson<{readonly value:number|string}>(view);`, "complete runtime slot metadata"},
+		// An object whose number field is widened so stops where the view is made, as the array below does,
+		// since a plain read through the view works the number as a box (element_fit.go's fieldsSeenAs, #6gwzmjx).
+		{"widened_union_slot", `const full={value:42};const view:{readonly value:number|string}=full;encodeJson<{readonly value:number|string}>(view);`, "held as a boxed union"},
 		// A widened array whose elements read as the view holds them, strings read as a union, reaches
 		// encodeJson's own refusal. A number[] widened so stops first, where the view is made, since its
 		// numbers would be read as boxes (element_fit.go, #3vsp1ds).
