@@ -306,11 +306,23 @@ func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 	if name != "valueOf" && l.errorMayHide(receiver) {
 		return "an Error may be hidden by the view"
 	}
+	// A library object whose own answer isn't Object.prototype's, a Map or Set iterator, a Date, can be held by a
+	// program's own view ({ next(): unknown }), where its toString would print [object Object] and Node prints its
+	// tag (#v414yhr). Any expression whose type libraryObjectOwnAnswer names may be such a value, so a view it relates
+	// to stops. A receiver libraryObjectOwnAnswer names itself has its own stop, a match's groups their own road, and
+	// a const made from a plain literal holds nothing else.
+	tagged := (name == "toString" || name == "toLocaleString") && l.libraryObjectOwnAnswer(receiver) == "" && !l.exactPlainObject(receiver)
 	reason := ""
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		if reason != "" {
 			return true
+		}
+		if tagged && (node.Kind == ast.KindCallExpression || node.Kind == ast.KindNewExpression || node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression) {
+			if library := l.libraryObjectOwnAnswer(node); library != "" && library != regexpGroupsAnswer && l.checker.IsTypeAssignableTo(l.checker.GetTypeAtLocation(node), view) {
+				reason = library + " may be hidden by the view"
+				return true
+			}
 		}
 		if node.Kind == ast.KindObjectLiteralExpression || node.Kind == ast.KindRegularExpressionLiteral || (node.Kind == ast.KindCallExpression && l.isLibraryType(l.checker.GetTypeAtLocation(node), "RegExp", "RegExpStringIterator")) || node.Kind == ast.KindNewExpression || node.Kind == ast.KindArrayLiteralExpression || node.Kind == ast.KindArrowFunction || node.Kind == ast.KindNumericLiteral || node.Kind == ast.KindStringLiteral || node.Kind == ast.KindTrueKeyword || node.Kind == ast.KindFalseKeyword {
 			shape := l.checker.GetTypeAtLocation(node)
