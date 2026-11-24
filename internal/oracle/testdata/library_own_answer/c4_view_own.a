@@ -1,0 +1,7 @@
+interface Stepper {
+	next(): unknown;
+}
+const own: Stepper = { next: (): unknown => 1 };
+console.log(own.toString());
+console.log(own.toLocaleString());
+console.log(Object.prototype.toString.call(own));
