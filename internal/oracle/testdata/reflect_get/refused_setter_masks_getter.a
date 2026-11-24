@@ -1,0 +1,12 @@
+// Row 116 refuses a setter-only override masking an inherited getter before the keyed read.
+class Base {
+	get value(): string { return 'base'; }
+	set value(next: string) {}
+}
+class Derived extends Base {
+	override set value(next: string) {}
+}
+function read(value: object, key: string): unknown {
+	return Reflect.get(Object(value), key, value);
+}
+console.log(typeof read(new Derived(), 'value'));

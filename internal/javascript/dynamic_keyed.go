@@ -125,7 +125,7 @@ func dynamicKeyedRuntime(program *ir.Program) string {
 		builder.WriteString("\t\tconst accessor = adamicDynamicAccessor(value, key);\n")
 		builder.WriteString("\t\tif (accessor !== undefined) {\n")
 		builder.WriteString("\t\t\tif (adamicClasses[id - 1].literal) return adamicDynamicStop('ObjectLiteralGetter', key);\n")
-		builder.WriteString("\t\t\tif (accessor.get === undefined) return adamicDynamicStop('SetterOnly', key);\n")
+		builder.WriteString("\t\t\tif (accessor.get === undefined) return undefined;\n")
 		builder.WriteString("\t\t\treturn adamicGetAccessor(value, key);\n")
 		builder.WriteString("\t\t}\n")
 		builder.WriteString("\t\tif (adamicDynamicMethodNames[id - 1].includes(key)) return adamicDynamicStop('Method', key);\n")

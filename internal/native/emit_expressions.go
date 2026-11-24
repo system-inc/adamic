@@ -3,6 +3,7 @@ package native
 
 import (
 	"fmt"
+	"github.com/system-inc/adamic/internal/flow"
 	"github.com/system-inc/adamic/internal/ir"
 	"strconv"
 	"strings"
@@ -32,7 +33,12 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		if rows := e.keyedClassRows(); len(rows) > 0 {
 			classes = fmt.Sprintf("adamic_keyed_classes, %d", len(rows))
 		}
-		return e.own(ir.Union, fmt.Sprintf("adamic_dynamic_property_keyed(%s, %s, %s)", value, key, classes))
+		result := e.own(ir.Union, fmt.Sprintf("adamic_dynamic_property_keyed(%s, %s, %s)", value, key, classes))
+		var statement ir.Statement = ir.Evaluate{Value: expression}
+		if flow.CanThrow(e.program, &flow.Instruction{At: &statement, Expression: expression}) {
+			e.checkThrown()
+		}
+		return result
 	case ir.ProcessCall:
 		return e.processCall(expression)
 	case ir.NodeHostCall:
