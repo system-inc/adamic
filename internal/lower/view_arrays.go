@@ -535,6 +535,15 @@ func (l *lowering) checkViewArrays() error {
 		road := viewArrayRoadOf(node)
 		switch value := node.(type) {
 		case ir.ViewElement:
+			if value.Position {
+				// A NodeArray tuple position's read is checked whatever the array reaches (nodeArrayTupleRead),
+				// so only a contract no load can check, or storage that can't tell its nullish values apart,
+				// stops it.
+				if program.ViewLegacyNullArrays || !elementContractCheckable(program, value.Contract, map[ir.ViewContractID]bool{}) {
+					stop(value.Where, road.member)
+				}
+				return node
+			}
 			element = value
 			array = value.Array
 			check = &ir.ViewElementCheck{Contract: value.Contract, Where: value.Where, View: value.View, ViewType: value.ViewType, Unrelated: value.Unrelated}
