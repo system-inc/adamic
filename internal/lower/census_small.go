@@ -310,7 +310,7 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 		}
 		// A callback the implementation takes wider than promised is still served when the body only tests
 		// it or calls it with what the overload's caller passed (overloadCallbackUse, #1w5bve2's block 3).
-		if !l.censusRelated(given, takes) && !l.overloadCallbackUse(implementation, overload, actual, given, takes) {
+		if !l.censusRelated(given, takes) && !l.overloadCallbackUse(implementation, overload, actual, given, takes, label, parameter) {
 			name := func(node *ast.Node) string {
 				if ast.IsIdentifier(node.Name()) {
 					return node.Name().Text()

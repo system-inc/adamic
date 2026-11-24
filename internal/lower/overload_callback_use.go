@@ -1,8 +1,11 @@
 package lower
 
 import (
+	"strings"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 )
 
@@ -23,15 +26,19 @@ import (
 //     in the implementation's own body, whose loop runs over exactly such a parameter that the body reads
 //     nowhere else but in presence tests, carries the element of the overload's type at that position,
 //     under the same flow check on the binding.
+//   - Rule 1 also follows #d4ja659's numeric element reads and single body forwards, including
+//     Compiler's 16:51:03Z const-local widening. Adamic's 18:04:19Z ruling widens presence and
+//     the confined array uses below. Under docs/rulings.md:133, every call passes an element of
+//     the array, and a use that calls nothing and writes nothing can't break that.
 //   - Rule 4: a use inside a nested function may only be a presence test, since a call there could run
 //     after the body has moved on, with values the overload never promised.
-//   - Rule 5: anything else, a pass to another function, a store, a return, .call, a spread, refuses.
+//   - Rule 5: an unproved pass, a store, a return of the callback, .call, or a spread refuses.
 
 // overloadCallbackUse is whether implementation's parameter actual serves overload's parameter at the same
 // position though censusRelated(given, takes) refused it, because the body uses the callback only by rules 1,
 // 2 and 4 above. given and takes arrive concrete from censusOverloadParameter, under the mapper censusOverload
 // set for this overload, so each overload is judged on its own. Every precondition fails closed.
-func (l *lowering) overloadCallbackUse(implementation, overload, actual *ast.Node, given, takes *checker.Type) bool {
+func (l *lowering) overloadCallbackUse(implementation, overload, actual *ast.Node, given, takes *checker.Type, label string, parameter *ast.Node) bool {
 	if !overloadCallbackPlainParameter(actual) || implementation.Body() == nil {
 		return false
 	}
@@ -47,6 +54,13 @@ func (l *lowering) overloadCallbackUse(implementation, overload, actual *ast.Nod
 	// The implementation's own presence tests are what let it take a missing callback, so undefined and
 	// null are taken away before its one signature is read.
 	acceptedSignatures := l.checker.GetSignaturesOfType(l.checker.GetNonNullableType(takes), checker.SignatureKindCall)
+	legacySignature := len(acceptedSignatures) == 1
+	if !legacySignature && takes.Flags()&checker.TypeFlagsUnion != 0 {
+		acceptedSignatures = nil
+		for _, member := range takes.Types() {
+			acceptedSignatures = append(acceptedSignatures, l.checker.GetSignaturesOfType(member, checker.SignatureKindCall)...)
+		}
+	}
 	if len(acceptedSignatures) != 1 {
 		return false
 	}
@@ -70,12 +84,47 @@ func (l *lowering) overloadCallbackUse(implementation, overload, actual *ast.Nod
 	}
 	// A default runs at the call with whatever the earlier parameters hold, so a use there is judged as
 	// one inside a nested function: a presence test at most.
+	legacy := legacySignature
 	for _, parameter := range implementation.Parameters() {
-		if initializer := parameter.AsParameterDeclaration().Initializer; initializer != nil && !l.overloadCallbackUses(implementation, overload, actual, symbol, promised, initializer, true) {
-			return false
+		if initializer := parameter.Initializer(); initializer != nil &&
+			!l.overloadCallbackUses(implementation, overload, actual, symbol, promised, initializer, true) {
+			legacy = false
+			break
 		}
 	}
-	return l.overloadCallbackUses(implementation, overload, actual, symbol, promised, implementation.Body(), false)
+	if legacy && l.overloadCallbackUses(implementation, overload, actual, symbol, promised, implementation.Body(), false) {
+		return true
+	}
+	frame := overloadCallbackFrame{function: implementation, callback: symbol, arrays: map[*ast.Symbol]*checker.Type{}}
+	for position, own := range implementation.Parameters() {
+		if !overloadCallbackPlainParameter(own) || position >= len(overload.Parameters()) ||
+			overload.Parameters()[position].AsParameterDeclaration().DotDotDotToken != nil {
+			continue
+		}
+		admitted := l.overloadCallbackAdmitted(overload, position)
+		if l.overloadCallbackArray(admitted) && l.overloadCallbackArray(l.checker.GetTypeAtLocation(own.Name())) &&
+			l.checker.GetIndexTypeOfType(l.checker.GetNonNullableType(admitted), l.checker.GetNumberType()) != nil &&
+			!l.overloadCallbackHoldsAny(admitted, 0, map[*checker.Type]bool{}) {
+			frame.arrays[l.symbol(own.Name())] = admitted
+		}
+	}
+	proof := overloadCallbackProof{l: l, root: overload, promised: promised, visiting: map[*ast.Node]bool{}}
+	if !proof.body(frame) || !proof.moved {
+		return false
+	}
+	if len(proof.reads) != 0 {
+		if !ast.IsIdentifier(parameter.Name()) {
+			return false
+		}
+		if l.callbackReadProofs == nil {
+			l.callbackReadProofs = map[*ast.Node][]overloadCallbackReadProof{}
+		}
+		refusal := &Refused{Where: l.program.Where(parameter),
+			What: label + " parameter " + parameter.Name().Text() + " cannot be served by implementation parameter " + actual.Name().Text(),
+			Fix:  "make the implementation accept every value admitted by this overload, without mutable widening or bivariance"}
+		l.callbackReadProofs[overload] = append(l.callbackReadProofs[overload], overloadCallbackReadProof{proof.reads, refusal})
+	}
+	return true
 }
 
 // overloadCallbackPlainParameter is whether parameter is a plain name, with no default and no rest, so the
@@ -126,7 +175,7 @@ func (l *lowering) overloadCallbackUses(implementation, overload, actual *ast.No
 			if nested {
 				return false
 			}
-			return l.overloadCallbackCall(implementation, overload, node, promised)
+			return l.overloadCallbackCall(implementation, overload, node, promised, nil)
 		}
 		inner := nested || ast.IsFunctionLike(node) || ast.IsClassLike(node)
 		every := true
@@ -172,7 +221,7 @@ func (l *lowering) overloadCallbackPresenceTest(reference *ast.Node) bool {
 // where `(value: T) => boolean` is promised, so the extra lands in a parameter the promise never showed
 // (Language's must on #8n7eet3). A rest in promised takes every argument from its position on, each judged
 // against the rest's element there, and a missing rest item is just a shorter array.
-func (l *lowering) overloadCallbackCall(implementation, overload, reference *ast.Node, promised *checker.Signature) bool {
+func (l *lowering) overloadCallbackCall(implementation, overload, reference *ast.Node, promised *checker.Signature, carried func(*ast.Node, *checker.Type) *checker.Type) bool {
 	callee := reference
 	for callee.Parent != nil && (callee.Parent.Kind == ast.KindParenthesizedExpression || callee.Parent.Kind == ast.KindNonNullExpression) {
 		callee = callee.Parent
@@ -197,11 +246,16 @@ func (l *lowering) overloadCallbackCall(implementation, overload, reference *ast
 		if position >= fixed && !promised.HasRestParameter() {
 			return false
 		}
+		parameter := l.callableParameterTypeAt(promised, position)
 		argument := l.checker.GetUndefinedType()
 		if position < len(call.Arguments.Nodes) {
-			argument = l.overloadCallbackArgument(implementation, overload, call.Arguments.Nodes[position])
+			node := call.Arguments.Nodes[position]
+			if carried == nil {
+				argument = l.overloadCallbackArgument(implementation, overload, node)
+			} else {
+				argument = carried(node, parameter)
+			}
 		}
-		parameter := l.callableParameterTypeAt(promised, position)
 		// A promised parameter that holds any promises nothing: tsc lets `(dog: Dog, label?: string)` stand
 		// where `(value: T, ...rest: any[])` or `(value: any)` is promised, and every argument relates to any,
 		// so the caller's function would get whatever the implementation passes (Compiler's road on #8n7eet3).
@@ -465,4 +519,578 @@ func (l *lowering) overloadCallbackHoldsAny(t *checker.Type, depth int, seen map
 		}
 	}
 	return false
+}
+
+// overloadCallbackProof carries the overload's rigid array types across direct
+// forwards. Array confinement is checked independently of callback uses so an
+// array-only hand-off cannot establish a new way to invoke the callback.
+type overloadCallbackProof struct {
+	l        *lowering
+	root     *ast.Node
+	promised *checker.Signature
+	visiting map[*ast.Node]bool
+	reads    []overloadCallbackRead
+	moved    bool
+}
+
+type overloadCallbackRead struct {
+	function *ast.Node
+	position int
+	name     string
+}
+
+type overloadCallbackFrame struct {
+	function *ast.Node
+	callback *ast.Symbol
+	arrays   map[*ast.Symbol]*checker.Type
+}
+
+func (p *overloadCallbackProof) body(frame overloadCallbackFrame) bool {
+	l := p.l
+	function := frame.function
+	if p.visiting[function] || !overloadCertificateFunction(function) ||
+		overloadThisParameter(function) || overloadCallbackReadsArguments(function) {
+		return false
+	}
+	p.visiting[function] = true
+	defer delete(p.visiting, function)
+	var visit func(*ast.Node, bool) bool
+	visit = func(node *ast.Node, nested bool) bool {
+		if ast.IsPartOfTypeNode(node) {
+			return false
+		}
+		if ast.IsIdentifier(node) && l.valueSymbol(node) == frame.callback {
+			if l.overloadCallbackPresenceTest(node) {
+				return false
+			}
+			if l.overloadCallbackTruthiness(frame.callback, node) {
+				p.moved = true
+				return false
+			}
+			if nested {
+				return true
+			}
+			if l.overloadCallbackCall(function, p.root, node, p.promised, func(argument *ast.Node, expected *checker.Type) *checker.Type {
+				if element := p.element(frame, argument, expected); element != nil {
+					p.moved = true
+					return element
+				}
+				if function == l.censusImplementation(p.root) {
+					return l.overloadCallbackArgument(function, p.root, argument)
+				}
+				return l.concrete(l.checker.GetTypeAtLocation(argument))
+			}) {
+				return false
+			}
+			return !p.forward(frame, node)
+		}
+		inner := nested || ast.IsFunctionLike(node) || ast.IsClassLike(node)
+		return node.ForEachChild(func(child *ast.Node) bool { return visit(child, inner) })
+	}
+	for _, parameter := range function.Parameters() {
+		if initializer := parameter.Initializer(); initializer != nil && visit(initializer, true) {
+			return false
+		}
+	}
+	return !visit(function.Body(), false)
+}
+
+func (l *lowering) overloadCallbackTruthiness(symbol *ast.Symbol, reference *ast.Node) bool {
+	operand := reference
+	for operand.Parent != nil && operand.Parent.Kind == ast.KindParenthesizedExpression {
+		operand = operand.Parent
+	}
+	if operand.Parent == nil {
+		return false
+	}
+	switch operand.Parent.Kind {
+	case ast.KindConditionalExpression:
+		if operand.Parent.AsConditionalExpression().Condition != operand {
+			return false
+		}
+	case ast.KindIfStatement:
+		if operand.Parent.AsIfStatement().Expression != operand {
+			return false
+		}
+	case ast.KindPrefixUnaryExpression:
+		if operand.Parent.AsPrefixUnaryExpression().Operator != ast.KindExclamationToken {
+			return false
+		}
+	default:
+		return false
+	}
+	declared := l.concrete(l.checker.GetTypeOfSymbol(symbol))
+	parts := []*checker.Type{declared}
+	if declared.Flags()&checker.TypeFlagsUnion != 0 {
+		parts = declared.Types()
+	}
+	for _, part := range parts {
+		if part.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) == 0 &&
+			(part.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0 ||
+				len(l.checker.GetSignaturesOfType(part, checker.SignatureKindCall)) == 0) {
+			return false
+		}
+	}
+	return true
+}
+
+func overloadCallbackUnwrap(node *ast.Node) *ast.Node {
+	for node != nil {
+		switch node.Kind {
+		case ast.KindParenthesizedExpression, ast.KindNonNullExpression:
+			node = node.Expression()
+		default:
+			return node
+		}
+	}
+	return nil
+}
+
+func (p *overloadCallbackProof) element(frame overloadCallbackFrame, argument *ast.Node, expected *checker.Type) *checker.Type {
+	l := p.l
+	read := overloadCallbackUnwrap(argument)
+	declared := (*checker.Type)(nil)
+	if ast.IsIdentifier(read) {
+		symbol := l.valueSymbol(read)
+		if symbol == nil {
+			return nil
+		}
+		binding := symbol.ValueDeclaration
+		if binding == nil || binding.Kind != ast.KindVariableDeclaration || !ast.IsIdentifier(binding.Name()) ||
+			!ast.IsVarConst(binding) || ast.GetContainingFunction(binding) != frame.function {
+			return nil
+		}
+		if frame.function.Body().ForEachChild(func(node *ast.Node) bool {
+			return p.captured(node, frame.function, symbol)
+		}) {
+			return nil
+		}
+		declared = l.concrete(l.checker.GetTypeAtLocation(binding.Name()))
+		read = overloadCallbackUnwrap(binding.Initializer())
+		if read == nil {
+			// Keep the existing own-body for-of road and its allowlist intact.
+			// A forwarded body instead uses the carried array at the new position.
+			if frame.function == l.censusImplementation(p.root) || binding.Parent == nil ||
+				binding.Parent.Kind != ast.KindVariableDeclarationList || binding.Parent.Parent == nil ||
+				binding.Parent.Parent.Kind != ast.KindForOfStatement ||
+				len(binding.Parent.AsVariableDeclarationList().Declarations.Nodes) != 1 {
+				return nil
+			}
+			loop := binding.Parent.Parent.AsForInOrOfStatement()
+			if loop.AwaitModifier != nil || loop.Initializer != binding.Parent {
+				return nil
+			}
+			read = loop.AsNode()
+		}
+	}
+	if read == nil || (read.Kind != ast.KindElementAccessExpression && read.Kind != ast.KindForOfStatement) {
+		return nil
+	}
+	receiver := ast.SkipParentheses(read.Expression())
+	if !ast.IsIdentifier(receiver) {
+		return nil
+	}
+	symbol := l.valueSymbol(receiver)
+	admitted := frame.arrays[symbol]
+	if admitted == nil || (read.Kind == ast.KindElementAccessExpression && !l.overloadFilterElementAccess(read, symbol)) {
+		return nil
+	}
+	element := l.checker.GetIndexTypeOfType(l.checker.GetNonNullableType(admitted), l.checker.GetNumberType())
+	if element == nil {
+		return nil
+	}
+	if declared == nil {
+		own := l.checker.GetNonNullableType(l.checker.GetTypeOfSymbol(symbol))
+		declared = l.concrete(l.checker.GetIndexTypeOfType(own, l.checker.GetNumberType()))
+		if declared == nil {
+			return nil
+		}
+		// A plain unchecked indexed read may yield undefined. Retain that arm.
+		if l.censusHasUndefined(l.checker.GetTypeAtLocation(read)) {
+			declared = l.checker.GetUnionType([]*checker.Type{declared, l.checker.GetUndefinedType()})
+			element = l.checker.GetUnionType([]*checker.Type{element, l.checker.GetUndefinedType()})
+		}
+	} else if l.censusHasUndefined(declared) {
+		element = l.checker.GetUnionType([]*checker.Type{element, l.checker.GetUndefinedType()})
+	}
+	flow := l.concrete(l.checker.GetTypeAtLocation(argument))
+	switch flow {
+	case declared:
+	case l.checker.GetNonNullableType(declared):
+		element = l.checker.GetNonNullableType(element)
+	default:
+		return nil
+	}
+	checked := len(p.reads)
+	if !l.censusRelated(element, expected) ||
+		!p.array(frame.function, symbol, frame.callback, true, map[*ast.Node]bool{}) {
+		p.reads = p.reads[:checked]
+		return nil
+	}
+	return element
+}
+
+func (p *overloadCallbackProof) captured(node, function *ast.Node, symbol *ast.Symbol) bool {
+	if ast.IsPartOfTypeNode(node) {
+		return false
+	}
+	return (ast.IsIdentifier(node) && p.l.valueSymbol(node) == symbol &&
+		ast.GetContainingFunction(node) != function) ||
+		node.ForEachChild(func(child *ast.Node) bool { return p.captured(child, function, symbol) })
+}
+
+func (p *overloadCallbackProof) target(reference *ast.Node) (*ast.CallExpression, *ast.Node, int) {
+	l := p.l
+	child, parent := reference, reference.Parent
+	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+		child, parent = parent, parent.Parent
+	}
+	if parent == nil || parent.Kind != ast.KindCallExpression {
+		return nil, nil, -1
+	}
+	call := parent.AsCallExpression()
+	if call.QuestionDotToken != nil || parent.Flags&ast.NodeFlagsOptionalChain != 0 {
+		return nil, nil, -1
+	}
+	position := -1
+	for index, argument := range call.Arguments.Nodes {
+		if argument.Kind == ast.KindSpreadElement {
+			return nil, nil, -1
+		}
+		if argument == child {
+			position = index
+			break
+		}
+	}
+	if position < 0 {
+		return nil, nil, -1
+	}
+	symbol := l.symbol(ast.SkipParentheses(call.Expression))
+	if symbol == nil || l.assignedSymbol(symbol) {
+		return nil, nil, -1
+	}
+	var target *ast.Node
+	for _, declaration := range symbol.Declarations {
+		if declaration.Kind != ast.KindFunctionDeclaration {
+			return nil, nil, -1
+		}
+		if declaration.Body() == nil {
+			continue
+		}
+		file := ast.GetSourceFileOfNode(declaration)
+		if target != nil || file == nil || load.IsLibrary(file) || load.IsPrelude(file) ||
+			!overloadCertificateFunction(declaration) || overloadThisParameter(declaration) ||
+			overloadCallbackReadsArguments(declaration) {
+			return nil, nil, -1
+		}
+		target = declaration
+	}
+	if target == nil || position >= len(target.Parameters()) ||
+		!overloadCallbackPlainParameter(target.Parameters()[position]) {
+		return nil, nil, -1
+	}
+	return call, target, position
+}
+
+func (p *overloadCallbackProof) forward(frame overloadCallbackFrame, reference *ast.Node) bool {
+	l := p.l
+	call, target, position := p.target(reference)
+	if target == nil {
+		return false
+	}
+	destination := overloadCallbackFrame{function: target,
+		callback: l.symbol(target.Parameters()[position].Name()), arrays: map[*ast.Symbol]*checker.Type{}}
+	if destination.callback == nil {
+		return false
+	}
+	for index, argument := range call.Arguments.Nodes {
+		if argument.Kind == ast.KindSpreadElement {
+			break
+		}
+		value := ast.SkipParentheses(argument)
+		if !ast.IsIdentifier(value) {
+			continue
+		}
+		symbol := l.valueSymbol(value)
+		if frame.arrays[symbol] == nil {
+			continue
+		}
+		if index >= len(target.Parameters()) || !overloadCallbackPlainParameter(target.Parameters()[index]) ||
+			!p.array(frame.function, symbol, frame.callback, true, map[*ast.Node]bool{}) {
+			return false
+		}
+		destination.arrays[l.symbol(target.Parameters()[index].Name())] = frame.arrays[symbol]
+	}
+	if len(destination.arrays) == 0 {
+		return false
+	}
+	p.moved = true
+	return p.body(destination)
+}
+
+func (p *overloadCallbackProof) array(function *ast.Node, symbol, callback *ast.Symbol, mayReturn bool, visiting map[*ast.Node]bool) bool {
+	l := p.l
+	if symbol == nil || visiting[function] || overloadCallbackReadsArguments(function) ||
+		l.overloadCallbackAssigned(function, symbol) {
+		return false
+	}
+	position := -1
+	for index, parameter := range function.Parameters() {
+		if l.symbol(parameter.Name()) == symbol {
+			position = index
+			break
+		}
+	}
+	if position < 0 || !overloadCallbackPlainParameter(function.Parameters()[position]) {
+		return false
+	}
+	visiting[function] = true
+	defer delete(visiting, function)
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if ast.IsPartOfTypeNode(node) {
+			return false
+		}
+		if ast.IsIdentifier(node) && l.valueSymbol(node) == symbol && node != function.Parameters()[position].Name() {
+			if ast.GetContainingFunction(node) != function {
+				return true
+			}
+			return !p.arrayUse(function, symbol, callback, position, node, mayReturn, visiting)
+		}
+		return node.ForEachChild(visit)
+	}
+	return !function.ForEachChild(visit)
+}
+
+func (p *overloadCallbackProof) arrayUse(function *ast.Node, symbol, callback *ast.Symbol, position int, reference *ast.Node, mayReturn bool, visiting map[*ast.Node]bool) bool {
+	l := p.l
+	if l.overloadCallbackPresenceTest(reference) {
+		return true
+	}
+	child, parent := reference, reference.Parent
+	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+		child, parent = parent, parent.Parent
+	}
+	if parent == nil {
+		return false
+	}
+	switch parent.Kind {
+	case ast.KindElementAccessExpression, ast.KindPropertyAccessExpression:
+		if parent.Expression() != child || parent.Flags&ast.NodeFlagsOptionalChain != 0 {
+			return false
+		}
+		for access := parent; access.Parent != nil; access = access.Parent {
+			if ast.IsAssignmentTarget(access) || access.Parent.Kind == ast.KindDeleteExpression {
+				return false
+			}
+			switch access.Parent.Kind {
+			case ast.KindParenthesizedExpression, ast.KindNonNullExpression, ast.KindAsExpression, ast.KindTypeAssertionExpression, ast.KindSatisfiesExpression:
+				continue
+			}
+			break
+		}
+		if parent.Kind == ast.KindElementAccessExpression {
+			return l.overloadFilterElementAccess(parent, symbol)
+		}
+		name := parent.Name().Text()
+		use := parent
+		for use.Parent != nil && use.Parent.Kind == ast.KindParenthesizedExpression {
+			use = use.Parent
+		}
+		if use.Parent != nil && use.Parent.Kind == ast.KindCallExpression && use.Parent.Expression() == use {
+			return name == "slice" && !l.overloadCallbackOwnSlice() &&
+				l.overloadFilterSlice(use.Parent, symbol)
+		}
+		if use.Parent != nil && use.Parent.Kind == ast.KindTaggedTemplateExpression {
+			return false
+		}
+		p.reads = append(p.reads, overloadCallbackRead{function, position, name})
+		return true
+	case ast.KindForOfStatement:
+		loop := parent.AsForInOrOfStatement()
+		return loop.Expression == child && loop.AwaitModifier == nil
+	}
+	// These wrappers preserve the array's identity. They never authorize using
+	// a cast array as the destination of a forward.
+	for parent != nil && (parent.Kind == ast.KindParenthesizedExpression ||
+		parent.Kind == ast.KindAsExpression || parent.Kind == ast.KindTypeAssertionExpression) {
+		child, parent = parent, parent.Parent
+	}
+	if parent == nil {
+		return false
+	}
+	if parent.Kind == ast.KindBinaryExpression {
+		binary := parent.AsBinaryExpression()
+		return (binary.Left == child || binary.Right == child) &&
+			(binary.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken ||
+				binary.OperatorToken.Kind == ast.KindExclamationEqualsEqualsToken)
+	}
+	if parent.Kind == ast.KindReturnStatement {
+		// An array-only callee would give the caller a new name for the array.
+		return parent.Expression() == child && mayReturn
+	}
+	call, target, index := p.target(reference)
+	if target == nil {
+		return false
+	}
+	var forwarded *ast.Symbol
+	for destination, argument := range call.Arguments.Nodes {
+		value := ast.SkipParentheses(argument)
+		if callback != nil && ast.IsIdentifier(value) && l.valueSymbol(value) == callback {
+			if destination >= len(target.Parameters()) || !overloadCallbackPlainParameter(target.Parameters()[destination]) {
+				return false
+			}
+			forwarded = l.symbol(target.Parameters()[destination].Name())
+		}
+	}
+	// The entire callback body walk checks every mention of the callback.
+	// Stores and unproved passes fail there, as do captures other than
+	// presence tests. The hand-off cannot obtain the callback through them.
+	return p.array(target, l.symbol(target.Parameters()[index].Name()), forwarded,
+		forwarded != nil && p.terminalForward(function, call.AsNode(), callback), visiting)
+}
+
+// Returning the array from a forward can create an alias in the caller.
+// Follow that return only when the forward is a direct body statement or
+// initializer and the caller never uses the callback again.
+func (p *overloadCallbackProof) terminalForward(function, call *ast.Node, callback *ast.Symbol) bool {
+	parent := call.Parent
+	if parent == nil {
+		return false
+	}
+	if parent.Kind == ast.KindVariableDeclaration && parent.Initializer() == call && parent.Parent != nil {
+		parent = parent.Parent.Parent
+	}
+	if parent == nil || parent.Parent != function.Body() {
+		return false
+	}
+	var later ast.Visitor
+	later = func(node *ast.Node) bool {
+		if ast.IsPartOfTypeNode(node) {
+			return false
+		}
+		return ast.IsIdentifier(node) && node.Pos() >= call.End() && p.l.valueSymbol(node) == callback ||
+			node.ForEachChild(later)
+	}
+	return !function.Body().ForEachChild(later)
+}
+
+// overloadCallbackOwnSlice searches the program's own declarations for a slice
+// member. SourceFiles already omits the prelude and standard library. Node's
+// bundled declarations and undici-types are compiler libraries too.
+func (l *lowering) overloadCallbackOwnSlice() bool {
+	if l.callbackSliceKnown {
+		return l.callbackOwnSlice
+	}
+	l.callbackSliceKnown = true
+	for _, file := range l.program.SourceFiles() {
+		if load.IsNodeLibrary(file) || strings.HasPrefix(file.FileName().AsString(), "bundled:///node/node_modules/undici-types/") {
+			continue
+		}
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			if parent := node.Parent; parent != nil &&
+				(ast.IsClassLike(parent) || parent.Kind == ast.KindInterfaceDeclaration || parent.Kind == ast.KindTypeLiteral) &&
+				node.Name() != nil {
+				name, known := memberKeyText(node)
+				if name == "slice" {
+					return true
+				}
+				if !known && node.Name().Kind == ast.KindComputedPropertyName {
+					key := l.checker.GetTypeAtLocation(node.Name().Expression())
+					if key == nil || key.Flags()&(checker.TypeFlagsESSymbolLike|checker.TypeFlagsNumberLike) == 0 {
+						return true
+					}
+				}
+			}
+			return node.ForEachChild(visit)
+		}
+		if file.AsNode().ForEachChild(visit) {
+			l.callbackOwnSlice = true
+			break
+		}
+	}
+	return l.callbackOwnSlice
+}
+
+// Only declarations with Array or ReadonlyArray ancestry carry an array's
+// element. A numeric index signature by itself can describe another object.
+func (l *lowering) overloadCallbackArray(t *checker.Type) bool {
+	if t.Flags()&checker.TypeFlagsTypeParameter != 0 {
+		bound := l.checker.GetBaseConstraintOfType(t)
+		if bound == nil || bound == t {
+			return false
+		}
+		t = bound
+	}
+	t = l.checker.GetNonNullableType(t)
+	return l.isArrayType(t) || l.nodeArrayBase(t, map[*checker.Type]bool{}) != nil
+}
+
+type overloadCallbackReadProof struct {
+	reads   []overloadCallbackRead
+	refusal *Refused
+}
+
+func (l *lowering) activateCallbackReads(overload *ast.Node) {
+	proofs := l.callbackReadProofs[overload]
+	if len(proofs) == 0 || l.callbackActivated[overload] || l.overloadVerdicts[overload] != nil {
+		return
+	}
+	if l.callbackActivated == nil {
+		l.callbackActivated = map[*ast.Node]bool{}
+	}
+	l.callbackActivated[overload] = true
+	l.callbackReadUses = append(l.callbackReadUses, proofs...)
+}
+
+func (l *lowering) activateCallbackSetReads(implementation *ast.Node) {
+	if len(l.callbackReadProofs) == 0 || implementation == nil {
+		return
+	}
+	if symbol := l.symbol(implementation.Name()); symbol != nil {
+		for _, declaration := range symbol.Declarations {
+			l.activateCallbackReads(declaration)
+		}
+	}
+}
+
+func (l *lowering) callbackOverloadSetStop(node *ast.Node, symbol *ast.Symbol) error {
+	err := l.overloadSetStop(node, symbol)
+	if err == nil && len(l.callbackReadProofs) != 0 {
+		l.activateCallbackSetReads(l.overloadSetImplementation(symbol))
+	}
+	return err
+}
+
+// refuseReachedCallbackReads asks the same whole-program graph as property
+// dispatch, on each lowered instance's unassigned parameter slot. It never
+// changes the graph or the dispatcher's judgment. Only overload uses that
+// relied on the new proof activate its obligations.
+func (l *lowering) refuseReachedCallbackReads(reach *accessorReach, names map[string]bool) error {
+	for _, proof := range l.callbackReadUses {
+		for _, read := range proof.reads {
+			if !names[read.name] {
+				continue
+			}
+			found := false
+			for index, function := range l.result.Functions {
+				if l.functionNodes[index] != read.function {
+					continue
+				}
+				if read.position >= len(function.Parameters) {
+					return proof.refusal
+				}
+				local := function.Parameters[read.position]
+				found = true
+				if reach.owner(reach.graph.ReachingAllocations(ir.Read{Local: local, Of: l.result.Locals[local].Type}), read.name) {
+					return proof.refusal
+				}
+			}
+			if !found {
+				return proof.refusal
+			}
+		}
+	}
+	return nil
 }

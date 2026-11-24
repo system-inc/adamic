@@ -939,7 +939,11 @@ type lowering struct {
 	accessorNames    map[string]bool
 	// contractGetters is each view's getters of a contract field's name, judged by reach in
 	// finishAccessors (class_accessors.go).
-	contractGetters []contractGetters
+	contractGetters                      []contractGetters
+	callbackReadProofs                   map[*ast.Node][]overloadCallbackReadProof
+	callbackReadUses                     []overloadCallbackReadProof
+	callbackActivated                    map[*ast.Node]bool
+	callbackSliceKnown, callbackOwnSlice bool
 
 	// spreadSources is the type each object literal's spread sees its source as, by the literal's
 	// SpreadSite less one, and classHolders each class's instance type by its one-based index, the

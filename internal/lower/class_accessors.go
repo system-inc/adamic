@@ -304,6 +304,9 @@ func (l *lowering) finishAccessors() error {
 		return nil
 	}
 	reach := l.newAccessorReach(l.result)
+	if err := l.refuseReachedCallbackReads(reach, names); err != nil {
+		return err
+	}
 	if err := l.refuseReachedContractGetters(reach, names); err != nil {
 		return err
 	}
