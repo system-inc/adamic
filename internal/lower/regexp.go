@@ -163,6 +163,10 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 			return nil, true, l.notYet(node, "RegExp."+name+" without exactly one string")
 		}
 	case l.isLibraryType(proven, "RegExpStringIterator"):
+		if (name == "toString" || name == "toLocaleString") && len(args) == 0 {
+			// Object.prototype's, which answer the iterator's own tag (objectPrototypeCall, #eksbz4c head T).
+			return nil, false, nil
+		}
 		if name != "next" || len(args) != 0 {
 			return nil, true, l.notYet(node, "RegExp iterator."+name)
 		}

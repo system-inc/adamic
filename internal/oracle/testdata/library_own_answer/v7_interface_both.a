@@ -1,0 +1,12 @@
+interface Stepper {
+	next(): unknown;
+}
+const map = new Map<string, number>([['a', 1]]);
+const set = new Set<number>([1]);
+function show(view: Stepper): void {
+	console.log(view.toString());
+	console.log(Object.prototype.toString.call(view));
+}
+show(map.keys());
+show(set.values());
+show({ next: (): unknown => 1 });

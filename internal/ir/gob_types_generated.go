@@ -113,6 +113,7 @@ var gobTypes = []any{
 	ObjectCall{},
 	ObjectKeys{},
 	ObjectLiteral{},
+	ObjectTag{},
 	OwnFunction{},
 	Panic{},
 	ParallelMap{},

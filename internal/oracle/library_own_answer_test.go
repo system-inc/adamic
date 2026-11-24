@@ -9,11 +9,14 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-// An explicit toString or toLocaleString on a library object whose own answer isn't Object.prototype's stops at
-// compile time (#20e4t06, Compiler's two-hour stop). On main each lowered to the constant "[object Object]" tag
+// An explicit toString or toLocaleString on a library object whose own answer isn't Object.prototype's stopped at
+// compile time (#20e4t06, Compiler's two-hour stop): each had lowered to the constant "[object Object]" tag
 // (prototype.go's objectPrototypeCallArguments) for a Map or Set iterator, where Node prints [object Map Iterator] or
-// [object Set Iterator]. The template and String() roads already stop on main, before ToPrimitive (J-d27ejbm). The
-// real fix, each object's own tag, follows with Runtime Library (#eksbz4c's head T).
+// [object Set Iterator]. Now a library object with a tag of its own that a program can hold (ir.LibraryObjectTags)
+// answers the tag its value has, read at run time, never the one its type names (#eksbz4c's head T): natively by its
+// shape's address or its kind (adamic_object_tag), and on the JavaScript backend by Object.prototype.toString.call of
+// the value, whose iterator wrappers carry their tag. Any other library interface still stops. The template and
+// String() roads stop before ToPrimitive (J-d27ejbm), as they did.
 //
 // A RegExp match's groups object has a null prototype, so on Node a direct call of toString, toLocaleString,
 // valueOf, hasOwnProperty or propertyIsEnumerable on one throws a TypeError naming the callee as written (exit 70
@@ -31,16 +34,13 @@ func libraryOwnAnswerFixture(t *testing.T, name string) string {
 	return path
 }
 
-// Each line main printed wrong stops at its own call, as NotYet naming the receiver, the Object.prototype.toString.call
-// road's iterator row (k1, Compiler's ask) among them. Mutant: the stop dropped
-// (scratch-ts), which lowers every row again.
+// A library object whose tag lowering doesn't read stops at its call, as NotYet naming the receiver: b1, a value
+// typed as an ArrayIterator, which no program makes yet, though Node prints [object Map Iterator] for the Map's
+// iterator it holds, so its type names no tag the value has.
 func TestLibraryObjectOwnAnswerStops(t *testing.T) {
 	t.Parallel()
 	for _, stop := range []struct{ name, position, receiver string }{
-		{"i1_entries.a", "2:13", "a library "},
-		{"i2_keys_locale.a", "2:13", "a library "},
-		{"i3_set_values.a", "2:13", "a library "},
-		{"k1_call_iterator.a", "2:13", "a library "},
+		{"b1_array_typed.a", "3:13", "a library ArrayIterator"},
 	} {
 		t.Run(stop.name, func(t *testing.T) {
 			t.Parallel()
@@ -69,27 +69,87 @@ func TestLibraryObjectOwnAnswerControlsAgree(t *testing.T) {
 	}
 }
 
-// A Map or Set iterator held by a program's own view, an interface or a type literal with next, stops at its
-// toString, toLocaleString or Object.prototype.toString.call (#v414yhr): on main each printed [object Object] on
-// every backend at exit 0, where Node prints [object Map Iterator] or [object Set Iterator] (J-a6w4knm). The view
-// is the program's own, so libraryObjectOwnAnswer didn't ask the iterator; prototypeHazard's scan now counts the
-// call that makes it. Mutant: the scan's new arm dropped (scratch-ts), which lowers every row again.
+// Each library object with a tag of its own answers it, natively, sanitized and on the JavaScript backend, and Node's
+// own run prints the tag, so a row can't pass with both printing [object Object]: a Map's and a Set's iterators
+// directly, through toLocaleString and by Object.prototype.toString.call (i1, i2, i3, k1, which stopped at compile time
+// before), a WeakMap, a WeakSet and a Promise by each road (w1, w2, p1), a matchAll iterator by each (m1), and b2, a
+// program's own class typed as a MapIterator, whose value has no tag, so it answers [object Object] beside Node. Mutants:
+// a tag changed in adamic_object_tag (a), the Map's and the Set's iterator shapes swapped in its answer (b), and the
+// JavaScript wrappers' [Symbol.toStringTag] dropped (c).
+func TestLibraryObjectsAnswerTheirOwnTag(t *testing.T) {
+	t.Parallel()
+	for _, row := range []struct{ name, tag string }{
+		{"i1_entries.a", "[object Map Iterator]"},
+		{"i2_keys_locale.a", "[object Map Iterator]"},
+		{"i3_set_values.a", "[object Set Iterator]"},
+		{"k1_call_iterator.a", "[object Map Iterator]"},
+		{"w1_weak_map.a", "[object WeakMap]"},
+		{"w2_weak_set.a", "[object WeakSet]"},
+		{"p1_promise.a", "[object Promise]"},
+		{"m1_match_all.a", "[object RegExp String Iterator]"},
+		{"b2_own_typed.a", "[object Object]"},
+	} {
+		t.Run(row.name, func(t *testing.T) {
+			t.Parallel()
+			libraryOwnTagAgrees(t, row.name, row.tag)
+		})
+	}
+}
+
+// A Map or Set iterator held by a program's own view, an interface or a type literal with next, answers its own tag
+// through the view's toString, toLocaleString or Object.prototype.toString.call, natively, sanitized and on the
+// JavaScript backend (#v414yhr's stop, lifted by #eksbz4c's head T): before #v414yhr each printed [object Object], and
+// then each stopped at compile time, since the view is the program's own and its type names no tag. v7 is one
+// parameter that sees a Map's iterator, a Set's and a program's own object in turn, each answering its own. Mutant (d),
+// prototypeHazard's program-wide view stop restored for these iterators, stops every row again.
+func TestLibraryObjectViewsAnswerTheValuesTag(t *testing.T) {
+	t.Parallel()
+	for _, row := range []struct{ name, tag string }{
+		{"v1_interface_map_tostring.a", "[object Map Iterator]"},
+		{"v2_interface_set_locale.a", "[object Set Iterator]"},
+		{"v3_interface_map_call.a", "[object Map Iterator]"},
+		{"v4_literal_set_tostring.a", "[object Set Iterator]"},
+		{"v5_literal_map_locale.a", "[object Map Iterator]"},
+		{"v6_literal_set_call.a", "[object Set Iterator]"},
+		{"v7_interface_both.a", "[object Set Iterator]"},
+	} {
+		t.Run(row.name, func(t *testing.T) {
+			t.Parallel()
+			libraryOwnTagAgrees(t, row.name, row.tag)
+		})
+	}
+}
+
+// libraryOwnTagAgrees holds a fixture to Node natively, sanitized and on the JavaScript backend, after checking that
+// Node's own run prints tag.
+func libraryOwnTagAgrees(t *testing.T, name, tag string) {
+	t.Helper()
+	if truth := onNode(t, libraryOwnAnswerFixture(t, name)); !strings.Contains(string(truth.stdout), tag+"\n") {
+		t.Fatalf("Node: want %s printed, got exit %d stdout %q stderr %q", tag, truth.exitCode, truth.stdout, truth.stderr)
+	}
+	loomViewsDAgrees(t, libraryOwnAnswerDirectory+name)
+}
+
+// prototypeHazard's program-wide view stop keeps counting every value libraryObjectOwnAnswer names whose answer
+// isn't read at run time, and drops only the tagged ones (a deliberate narrowing of Runtime's should on #eksbz4c, which
+// asked for the stop to come out whole): a Date's toString on Node is its own date text, never a tag, so a Date behind
+// a program's own view would print [object Object] without it. No Date view lowers today, since a view naming any
+// Date method stops at the view first (d1, J-9jt9xde's probes), so d1 pins that earlier stop, and the day it lifts d1
+// fails here and shows the arm's Date case. s1, a Stats behind a view of its size, is the arm's one live witness today:
+// it stops there (Node prints [object Object], so the arm is conservative for it). Mutant (e), the stop dropped
+// whole, lowers s1.
 func TestLibraryObjectViewStops(t *testing.T) {
 	t.Parallel()
-	for _, stop := range []struct{ name, position, library string }{
-		{"v1_interface_map_tostring.a", "6:13", "a library MapIterator"},
-		{"v2_interface_set_locale.a", "6:13", "a library SetIterator"},
-		{"v3_interface_map_call.a", "6:13", "a library MapIterator"},
-		{"v4_literal_set_tostring.a", "3:13", "a library SetIterator"},
-		{"v5_literal_map_locale.a", "3:13", "a library MapIterator"},
-		{"v6_literal_set_call.a", "3:13", "a library SetIterator"},
+	for _, stop := range []struct{ name, position, words string }{
+		{"d1_date_view.a", "4:22", "a view naming getTime, which lib declares on Date"},
+		{"s1_stats_view.a", "6:13", "a library Stats may be hidden by the view"},
 	} {
 		t.Run(stop.name, func(t *testing.T) {
 			t.Parallel()
 			_, err := lowered(t, libraryOwnAnswerFixture(t, stop.name))
 			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), stop.library+" may be hidden by the view") || !strings.Contains(err.Error(), stop.name+":"+stop.position) {
-				t.Fatalf("want a NotYet at %s:%s naming %s hidden by the view, got %v", stop.name, stop.position, stop.library, err)
+			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), stop.words) || !strings.Contains(err.Error(), stop.name+":"+stop.position) {
+				t.Fatalf("want a NotYet at %s:%s naming %q, got %v", stop.name, stop.position, stop.words, err)
 			}
 		})
 	}
