@@ -196,6 +196,14 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.PhantomMember:
 		return e.phantomMember(expression)
 	case ir.Property:
+		if expression.MethodTruthiness {
+			object := e.snapshot(ir.Object, e.value(expression.Object))
+			read := fmt.Sprintf("adamic_object_method_truthy(%s, %s, &%s)", object, cString(expression.Name), e.cache())
+			if expression.Optional {
+				read = fmt.Sprintf("(%s != NULL && (adamic_heap *)%s != &adamic_null && %s)", object, object, read)
+			}
+			return e.snapshot(ir.Boolean, read)
+		}
 		if expression.Object.Type() == ir.Array {
 			return e.nodeArrayProperty(expression)
 		}

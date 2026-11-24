@@ -321,6 +321,13 @@ static adamic_heap *dynamic_slot(const adamic_object *object, size_t index) {
 	adamic_panic("dynamic read of a host scalar without type metadata", sizeof "dynamic read of a host scalar without type metadata" - 1);
 }
 
+bool adamic_object_slot_truthy(const adamic_object *object, size_t index) {
+	adamic_heap *value = dynamic_slot(object, index);
+	bool truthy = adamic_census_to_boolean(value);
+	adamic_release(value);
+	return truthy;
+}
+
 // dynamic_property is a narrowed read past the guard, as has_property is an in test.
 static adamic_heap *dynamic_property(adamic_heap *value, const char *name) {
 	if (value != NULL && value->kind == adamic_kind_closure && strcmp(name, "length") == 0) {

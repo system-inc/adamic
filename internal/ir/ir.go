@@ -615,6 +615,8 @@ type (
 		// (docs/0.1.md), so only a callee is one: the CallClosure's Closure, or the field a narrowing's
 		// Defined holds there (MethodCallee).
 		Method bool
+		// MethodTruthiness observes a structural method slot as a boolean without detaching it.
+		MethodTruthiness bool
 		// NotRecord says the read runs where a storage test found neither a record nor a class instance
 		// (lower's weakFieldRead, in its fixed branch): its receiver is proven plain by its value, as
 		// PlainReceivers proves one by its type, so a bare-name entry doesn't check it (Program.CheckedRead).
@@ -1238,7 +1240,7 @@ func (c Conditional) Type() Type {
 }
 func (ObjectLiteral) Type() Type { return Object }
 func (p Property) Type() Type {
-	if p.Optional {
+	if p.Optional && !p.MethodTruthiness {
 		return Maybe(p.Of)
 	}
 	return p.Of
