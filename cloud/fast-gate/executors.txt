@@ -1616,16 +1616,11 @@ reads stage3/lane/adaptedtree .gitattributes
 # pins and holds the adapted product's performanceCore.ts to their bytes.
 reads stage3/lane/adaptedtree internal/lower/testdata/host_binding/performance_core_adapted.txt
 reads stage3/lane/adaptedtree internal/lower/testdata/host_binding/performance_core_hooks.txt
-# TestTheAdaptedTreeBuildReachesOnlyItsDeclaredFile's census (census_test.go:64) reads every .go file under the root for
-# a //go:linkname naming a reached package (internal/leancensus/leancensus.go:457, :749-781), skipping cohere and any
-# testdata, node_modules or hidden directory. A glob can't skip those, so *.go keys them too (118 files at 96a1291b),
-# and a file list would miss the next one added, which the census reads. Moving the census into its own package, as
-# compilercensus does, narrows this.
-# TestTheAdaptedTreeBuildReachesOnlyItsDeclaredFile via leancensus linknames: internal/leancensus/leancensus.go:765
-reads stage3/lane/adaptedtree *.go
-# The census moves into a package of its own, stage3/lane/adaptedtree/census (#4ps0v4x, adamic
-# keys/adaptedtree-census-own 3860f384), so it keys the same walk there. This line goes first, with adaptedtree's above
-# kept until main's move lands, so the walk is keyed on both sides of the landing; then adaptedtree's line goes.
+# The adapted tree's census, TestTheAdaptedTreeBuildReachesOnlyItsDeclaredFile, lives in a package of its own,
+# stage3/lane/adaptedtree/census (#4ps0v4x, landed on main as e307fad9), and reads every .go file under the root for a
+# //go:linkname naming a reached package (internal/leancensus/leancensus.go:457, :749-781), skipping cohere and any
+# testdata, node_modules or hidden directory. A glob can't skip those, so *.go keys them too, and a file list would miss
+# the next one added. adaptedtree's own units read no such walk now, so its key holds no other package's .go file.
 # TestTheAdaptedTreeBuildReachesOnlyItsDeclaredFile via leancensus linknames: internal/leancensus/leancensus.go:765
 reads stage3/lane/adaptedtree/census *.go
 # The adapted tree is a declared launcher whose build goes through internal/buildcache, a house package that launches,
