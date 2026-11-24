@@ -15,7 +15,7 @@ func TestAgreementClassesAFirstLinkTrapApart(t *testing.T) {
 	trapped := "stop: " + trap + "\nnative: echo '" + trap + "' >&2\nnative: exit 70\n"
 	dir, sha, head := agreementFixture(t, []agreementSource{{"corpus/agree.a", agreeingSource}, {"corpus/trapped.a", trapped}})
 	o, r := agreementCommand(t, dir, sha, head)
-	if o.Exit != 1 || r.Verdict != "fail" || r.FirstLinkTraps != 1 || r.Agreeing != 1 || r.CheckedStops != 0 || r.Compared != 1 {
+	if o.Exit != 1 || r.Verdict != "fail" || r.TrappedPrograms != 1 || r.Agreeing != 1 || r.CheckedStops != 0 || r.Compared != 1 {
 		t.Fatalf("exit %d, %+v, want exit 1 with the trapped program apart and the other agreeing: %s", o.Exit, r, o.Stderr)
 	}
 	judgments := map[string]string{}

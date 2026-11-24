@@ -90,10 +90,10 @@ type agreementReport struct {
 	Disagreeing  int `json:"disagreeing"`
 	MemoryUnsafe int `json:"memory_unsafe"`
 	Refused      int `json:"refused"`
-	// FirstLinkTraps counts the programs a run of which met a first-link trap: a program lowered in trap mode
+	// TrappedPrograms counts the programs a run of which met a first-link trap: a program lowered in trap mode
 	// (lower's Options.FirstLinkTraps), measurement and never a product. It's classed apart, never agreeing or a
 	// checked stop, and in none of Compared, and any fails the run.
-	FirstLinkTraps int `json:"first_link_traps"`
+	TrappedPrograms int `json:"trapped_programs"`
 	// TimedOutRuns, RetriedRuns and StillTimedOutRuns count runtime timeouts as the delta's report does (#pajbaba).
 	TimedOutRuns      int                        `json:"timed_out_runs"`
 	RetriedRuns       int                        `json:"retried_runs"`
@@ -324,7 +324,7 @@ func runAgreement(agreement agreementRun) error {
 			judged.Judgment = "void"
 		default:
 			if firstLinkTrapRun(*record.Node, *record.JavaScript, *record.Native) {
-				result.FirstLinkTraps++
+				result.TrappedPrograms++
 				judged.Judgment = "first-link trap"
 				lines = append(lines, fmt.Sprintf("first-link trap %s: a run wrote %q, so the program was lowered in trap mode and proves nothing", record.Path, firstLinkTrapPrefix))
 				break
@@ -384,7 +384,7 @@ func runAgreement(agreement agreementRun) error {
 	}
 	result.Compared = result.Agreeing + result.Ruled + result.CheckedStops + result.Pending + result.Disagreeing
 	result.TimedOutRuns, result.RetriedRuns, result.StillTimedOutRuns = runner.timedOutRuns, runner.retriedRuns, runner.stillTimedOutRuns
-	red := result.Disagreeing > 0 || len(result.CompilerFailures) > 0 || len(result.StaleRuntimeStops) > 0 || result.FirstLinkTraps > 0
+	red := result.Disagreeing > 0 || len(result.CompilerFailures) > 0 || len(result.StaleRuntimeStops) > 0 || result.TrappedPrograms > 0
 	result.VoidReason = strings.Join(voids, "; ")
 	switch {
 	case red:
