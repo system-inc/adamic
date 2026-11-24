@@ -46,4 +46,10 @@ if [ "$part" = 0 ]; then
 	sha256sum "$TMPDIR/step0"/*.ts | sed "s|$TMPDIR/step0/||"
 	table main "$TMPDIR/step0"
 fi
+if [ "$part" = i ]; then
+	mkdir -p "$TMPDIR/all/lib"
+	cp scratch-f65/programs/*.ts "$TMPDIR/all/"
+	cp scratch-f65/programs/lib/*.ts "$TMPDIR/all/lib/"
+	table main "$TMPDIR/all"
+fi
 [ $ok -eq 1 ] && echo PASS || { echo FAIL; exit 1; }
