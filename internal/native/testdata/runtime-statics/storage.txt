@@ -160,6 +160,7 @@
 # until library_intl.c's adamic_intl_collator_new publishes &collator_shape with a release store, every
 # publish the same address, read with an acquire load, as union.c's keyed_stats_shape is.
 `object.c:intl_collator_shape:1`
+`object.c:compare_cache:1`
 `parallel.c:changed:1`
 `parallel.c:created:1`
 `parallel.c:enabled:1`

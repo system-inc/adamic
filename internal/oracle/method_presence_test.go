@@ -68,3 +68,13 @@ func TestMethodPresenceThroughAViewIsNotYet(t *testing.T) {
 	generatorAgrees(t, relative)
 	t.Error("lowered, want a not-yet naming the unproven presence")
 }
+
+// Required method truthiness observes the real slot even through a checked view.
+func TestRequiredMethodPresenceAgreesWithNode(t *testing.T) {
+	t.Parallel()
+	for _, fixture := range []string{"present.ts", "absent.ts", "optional.ts", "nullable.ts"} {
+		t.Run(fixture, func(t *testing.T) {
+			generatorAgrees(t, "internal/oracle/testdata/method_presence/required/"+fixture)
+		})
+	}
+}

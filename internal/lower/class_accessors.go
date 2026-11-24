@@ -363,12 +363,16 @@ func (l *lowering) finishAccessors() error {
 			failure = &NotYet{Where: where, What: "reading a setter-only property or writing a getter-only property"}
 			return 0
 		}
+		getterType := of
+		if read.MethodTruthiness {
+			getterType = ir.Closure
+		}
 		for _, target := range targets {
 			actual := l.result.Functions[target].Returns
 			if setter {
 				actual = l.result.Locals[l.result.Functions[target].Parameters[1]].Type
 			}
-			if actual != of {
+			if actual != getterType {
 				failure = &NotYet{Where: where, What: "accessors sharing a name with different native representations"}
 				return 0
 			}
@@ -380,7 +384,7 @@ func (l *lowering) finishAccessors() error {
 		l.result.Locals = append(l.result.Locals, ir.Local{Name: "object", Type: ir.Object, Function: index})
 		function.Parameters = []int{self}
 		object := ir.Read{Local: self, Of: ir.Object}
-		call := ir.Call{Function: targets[0], Arguments: []ir.Expression{object}, Returns: of, Virtual: -1, Accessor: name}
+		call := ir.Call{Function: targets[0], Arguments: []ir.Expression{object}, Returns: getterType, Virtual: -1, Accessor: name}
 		l.result.MethodTargets[targets[0]] = targets
 		if setter {
 			function.Returns, call.Returns, call.Setter = 0, 0, true
@@ -395,7 +399,11 @@ func (l *lowering) finishAccessors() error {
 		} else {
 			fallback := read
 			fallback.Object = object
-			function.Body = []ir.Statement{ir.If{Condition: ir.HasAccessor{Object: object, Name: name}, Then: []ir.Statement{ir.Return{Value: call}}}, ir.Return{Value: fallback}}
+			var got ir.Expression = call
+			if read.MethodTruthiness {
+				got = ir.Truthy{Value: got}
+			}
+			function.Body = []ir.Statement{ir.If{Condition: ir.HasAccessor{Object: object, Name: name}, Then: []ir.Statement{ir.Return{Value: got}}}, ir.Return{Value: fallback}}
 		}
 		l.result.Functions = append(l.result.Functions, function)
 		return index

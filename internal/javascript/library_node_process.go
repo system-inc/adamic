@@ -23,7 +23,7 @@ const hostStdoutHandleRuntime = "let adamicStdoutHandleValue, adamicStdoutHandle
 
 // stdoutHandleCallee is adamicCallee's splice in a program that reads the handle: the handle's own
 // setBlocking, called off the handle, is Node's with the handle as its receiver.
-const stdoutHandleCallee = "if (object === adamicStdoutHandleValue && object !== undefined && object[name] instanceof AdamicClosure && object[name].code === adamicIllegalInvocation) return { code: (closure, values) => adamicStdoutHandleNode.setBlocking(...values) }; "
+const stdoutHandleCallee = "if (object === adamicStdoutHandleValue && object !== undefined && fn instanceof AdamicClosure && fn.code === adamicIllegalInvocation) return { code: (closure, values) => adamicStdoutHandleNode.setBlocking(...values) }; "
 
 // stdoutHandleOptionalCall is adamicOptionalMethodCall's splice, the same test on what its lookup found:
 // handle.setBlocking?.(true) doesn't go through adamicCallee, so without it the handle's own call reached

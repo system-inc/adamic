@@ -2,10 +2,12 @@ package lower
 
 import (
 	"errors"
+	"os"
 	"strconv"
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 )
 
@@ -31,6 +33,8 @@ func TestMethodPresenceTestsLower(t *testing.T) {
 		{"the test of do...while", presenceCounter + "do {\n\tif (counter.step() > 2) {\n\t\tbreak;\n\t}\n} while (counter.step);\n"},
 		{"in parentheses", presenceCounter + "console.log(typeof ((counter.step)));\n"},
 		{"through ?.", presenceCounter + "function pick(): Counter | undefined {\n\treturn counter;\n}\nconsole.log(typeof pick()?.step);\nconsole.log(String(!pick()?.step));\n"},
+		{"an interface condition", "interface Greeter {\n\tgreet(): string;\n}\nfunction probe(greeter: Greeter): string {\n\tif (greeter.greet) {\n\t\treturn greeter.greet();\n\t}\n\treturn 'none';\n}\nconsole.log(probe({ greet: () => 'hi' }));\n"},
+		{"a structural method on the left of && in a condition", "interface Greeter {\n\tgreet(): void;\n}\nfunction probe(greeter: Greeter, flag: boolean): void {\n\tif (greeter.greet && flag) {\n\t\tgreeter.greet();\n\t}\n}\nprobe({ greet: () => console.log(\"hi\") }, true);\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -83,11 +87,12 @@ func TestMethodPresenceTheReceiverDoesntProveIsNotYet(t *testing.T) {
 	const unproven = "stage 0 can't lower " + methodPresenceUnproven + " yet"
 	for _, probe := range []struct{ name, extension, source, want string }{
 		{"an object literal handed to an interface parameter", ".a", "interface Greeter {\n\tgreet(): string;\n}\nfunction probe(greeter: Greeter): string {\n\treturn typeof greeter.greet;\n}\nconsole.log(probe({ greet: () => 'hi' }));\n", "main.a:5:16: " + unproven},
-		{"an interface condition", ".a", "interface Greeter {\n\tgreet(): string;\n}\nfunction probe(greeter: Greeter): string {\n\tif (greeter.greet) {\n\t\treturn greeter.greet();\n\t}\n\treturn 'none';\n}\nconsole.log(probe({ greet: () => 'hi' }));\n", "main.a:5:6: " + unproven},
 		// .a refuses this downcast outright; .ts keeps it a checked cast, whose view is the receiver.
 		{"a cast receiver", ".ts", "interface Circle {\n\treadonly kind: 'circle';\n\tarea(): number;\n}\nfunction probe(raw: { readonly kind: string }): string {\n\treturn typeof (raw as Circle).area;\n}\nconsole.log(probe({ kind: 'circle' }));\n", "main.ts:6:16: " + unproven},
 		{"a host value's method", ".a", "import * as fs from 'node:fs';\nconst stats = fs.statSync('.');\nconsole.log(typeof stats.isFile);\n", "main.a:3:20: " + unproven},
 		{"a library method on a Map", ".a", "const counts = new Map<string, number>();\ncounts.set('a', 1);\nconsole.log(typeof counts.get);\n", "main.a:3:20: " + unproven},
+		{"a method name on Object.prototype", ".a", "interface Named { readonly tag: string; toString(): string }\nfunction probe(named: Named): string {\n return !named.toString ? 'absent' : 'present';\n}\nconsole.log(probe({tag: 'x', toString: () => \"own\"}));\n", "main.a:3:10: " + unproven},
+		{"a structural method on the left of && whose value is used", ".a", "interface Greeter {\n\tgreet(): string;\n}\nfunction probe(greeter: Greeter): void {\n\tconsole.log(String(greeter.greet && greeter.greet()));\n}\nprobe({ greet: () => \"hi\" });\n", "main.a:5:21: " + unproven},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -100,18 +105,68 @@ func TestMethodPresenceTheReceiverDoesntProveIsNotYet(t *testing.T) {
 	}
 }
 
+// The call checks its own read after the condition, at the call's member location.
+func TestMethodPresenceCallChecksItsOwnRead(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct {
+		name, source, message string
+		absent                bool
+	}{
+		{"required", "interface Greeter {\n\tgreet(): void;\n}\nfunction probe(greeter: Greeter): void {\n\tif (greeter.greet) {\n\t\tgreeter.greet();\n\t}\n}\nprobe({ greet: () => console.log(\"hi\") });\n", "main.a:6:3: method greet is absent", false},
+		{"optional", "interface Greeter {\n\tgreet?(): void;\n}\nfunction probe(greeter: Greeter): void {\n\tif (greeter.greet) {\n\t\tgreeter.greet();\n\t}\n}\nprobe({ greet: () => console.log(\"hi\") });\n", "undefined where the checker narrowed it away: a call since the narrowing put it back", true},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			program, err := lowerSource(t, probe.source)
+			if err != nil {
+				t.Fatal(err)
+			}
+			calls := 0
+			for _, function := range program.Functions {
+				walk(function.Body, func(node any) bool {
+					call, ok := node.(ir.CallClosure)
+					if !ok {
+						return true
+					}
+					calls++
+					defined, ok := call.Closure.(ir.Defined)
+					if !ok {
+						t.Fatalf("call closure is %T, want ir.Defined", call.Closure)
+					}
+					property, ok := defined.Value.(ir.Property)
+					if !ok || !property.Method || property.Name != "greet" || property.Absent != probe.absent {
+						t.Fatalf("checked read is %#v, want greet's method callee (Absent=%t)", defined.Value, probe.absent)
+					}
+					if defined.Message != probe.message {
+						t.Errorf("callee check says %q, want %q", defined.Message, probe.message)
+					}
+					return true
+				})
+			}
+			if calls != 1 {
+				t.Fatalf("got %d closure calls in lowered functions, want 1", calls)
+			}
+		})
+	}
+}
+
 // What the IR can't yet say through ?. is not yet, in its own words: the left of && whose missing
 // receiver would be the whole value, and a receiver held as a string, whose truthiness isn't its
 // presence ("" has repeat).
 func TestMethodPresenceThroughOptionalChainGaps(t *testing.T) {
 	t.Parallel()
-	for _, probe := range []struct{ name, source, want string }{
-		{"the left of &&", presenceCounter + "function pick(): Counter | undefined {\n\treturn counter;\n}\nconsole.log(String(pick()?.step && 1));\n", "main.a:12:20: stage 0 can't lower the left of && reading a method through ?., whose missing receiver would be the value yet"},
-		{"a string receiver", "function pick(): string | undefined {\n\treturn '';\n}\nconsole.log(typeof pick()?.repeat);\n", "main.a:4:20: stage 0 can't lower a presence test of a method read through ?. on a string yet"},
+	chain, err := os.ReadFile("../oracle/testdata/method_presence/required/chain.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, probe := range []struct{ name, source, extension, want string }{
+		{"the left of &&", presenceCounter + "function pick(): Counter | undefined {\n\treturn counter;\n}\nconsole.log(String(pick()?.step && 1));\n", ".a", "main.a:12:20: stage 0 can't lower the left of && reading a method through ?., whose missing receiver would be the value yet"},
+		{"a string receiver", "function pick(): string | undefined {\n\treturn '';\n}\nconsole.log(typeof pick()?.repeat);\n", ".a", "main.a:4:20: stage 0 can't lower a presence test of a method read through ?. on a string yet"},
+		// Node prints absent, present and 2. Adamic stops before the read at the end of the chain.
+		{"a required method after an optional step", string(chain), ".ts", "main.ts:11:9: stage 0 can't lower a presence test of a method at the end of an optional chain longer than one step yet"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			_, err := lowerSource(t, probe.source)
+			_, err := lowerSourceAs(t, probe.source, probe.extension)
 			var notYet *NotYet
 			if !errors.As(err, &notYet) || !strings.HasSuffix(err.Error(), probe.want) {
 				t.Errorf("got %v, want a not-yet ending %q", err, probe.want)
