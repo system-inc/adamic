@@ -1,0 +1,12 @@
+diff --git a/stage3/adapt/99-seats-build22-98-links-classes/adapt.cjs b/stage3/adapt/99-seats-build22-98-links-classes/adapt.cjs
+--- a/stage3/adapt/99-seats-build22-98-links-classes/adapt.cjs
++++ b/stage3/adapt/99-seats-build22-98-links-classes/adapt.cjs
+@@ -284,7 +284,7 @@
+             '};',
+         ],
+         replacement: [
+-            'class SymbolLinks implements SymbolLinksShape {}',
++            'class SymbolLinks implements SymbolLinksShape { constructor() { throw new Error("family98 planted constructor"); } }',
+             '',
+             'interface SymbolLinks { _symbolLinksBrand: undefined; }',
+         ],

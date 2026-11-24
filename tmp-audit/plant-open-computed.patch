@@ -1,0 +1,12 @@
+diff --git a/stage3/adapt/99-seats-build22-98-links-classes/adapt.cjs b/stage3/adapt/99-seats-build22-98-links-classes/adapt.cjs
+--- a/stage3/adapt/99-seats-build22-98-links-classes/adapt.cjs
++++ b/stage3/adapt/99-seats-build22-98-links-classes/adapt.cjs
+@@ -236,7 +236,7 @@
+             continue;
+         }
+         if (ts.isElementAccessExpression(parent) && parent.expression === value) {
+-            refuse(parent, 'computed access');
++            assert(true);
+             continue;
+         }
+         if (ts.isVariableDeclaration(parent) && parent.initializer === value) {

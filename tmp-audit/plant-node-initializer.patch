@@ -1,0 +1,12 @@
+diff --git a/stage3/adapt/99-seats-build22-98-links-classes/adapt.cjs b/stage3/adapt/99-seats-build22-98-links-classes/adapt.cjs
+--- a/stage3/adapt/99-seats-build22-98-links-classes/adapt.cjs
++++ b/stage3/adapt/99-seats-build22-98-links-classes/adapt.cjs
+@@ -299,7 +299,7 @@
+             '}',
+         ],
+         replacement: [
+-            'class NodeLinks implements NodeLinksShape { flags = NodeCheckFlags.None; calculatedFlags = NodeCheckFlags.None; jsxFlags = JsxFlags.None; }',
++            'class NodeLinks implements NodeLinksShape { flags = NodeCheckFlags.None; calculatedFlags = NodeCheckFlags.SuperInstance; jsxFlags = JsxFlags.None; }',
+             '',
+             'interface NodeLinks { _nodeLinksBrand: undefined; }',
+         ],

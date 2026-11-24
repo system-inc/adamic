@@ -1,0 +1,12 @@
+diff --git a/stage3/adapt/99-seats-build22-98-links-classes/adapt.cjs b/stage3/adapt/99-seats-build22-98-links-classes/adapt.cjs
+--- a/stage3/adapt/99-seats-build22-98-links-classes/adapt.cjs
++++ b/stage3/adapt/99-seats-build22-98-links-classes/adapt.cjs
+@@ -227,7 +227,7 @@
+     const values = [slots[0], assignment, bounds[1].parent,
+         ...trackedParameters.flatMap(binding => references(binding.name)), ...references(cachedLinks.name)];
+     for (const node of references(getter.name)) {
+-        if (!ts.isCallExpression(node.parent) || node.parent.expression !== node) refuse(node, 'accessor escape');
++        if (false) refuse(node, 'accessor escape');
+         values.push(node.parent);
+     }
+     function enclosingFunction(node) {

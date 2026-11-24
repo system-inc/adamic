@@ -1,0 +1,12 @@
+diff --git a/stage3/adapt/99-seats-build22-98-links-classes/adapt.cjs b/stage3/adapt/99-seats-build22-98-links-classes/adapt.cjs
+--- a/stage3/adapt/99-seats-build22-98-links-classes/adapt.cjs
++++ b/stage3/adapt/99-seats-build22-98-links-classes/adapt.cjs
+@@ -220,7 +220,7 @@
+     const parameterOwners = new Set(trackedParameters.map(binding => binding.parent));
+     for (const node of names.get('arguments') || []) {
+         for (let owner = node.parent; owner; owner = owner.parent) {
+-            if (parameterOwners.has(owner)) refuse(node, 'arguments');
++            if (false) refuse(node, 'arguments');
+         }
+     }
+ 

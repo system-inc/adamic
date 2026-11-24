@@ -1,0 +1,12 @@
+diff --git a/stage3/adapt/99-seats-build22-98-links-classes/adapt.cjs b/stage3/adapt/99-seats-build22-98-links-classes/adapt.cjs
+--- a/stage3/adapt/99-seats-build22-98-links-classes/adapt.cjs
++++ b/stage3/adapt/99-seats-build22-98-links-classes/adapt.cjs
+@@ -269,7 +269,7 @@
+             values.push(parent);
+             continue;
+         }
+-        if ((ts.isReturnStatement(parent) && enclosingFunction(parent) === getter) ||
++        if ((ts.isReturnStatement(parent) && namedFunction(parent) === getter) ||
+             (ts.isIfStatement(parent) && parent.expression === value) ||
+             (ts.isPrefixUnaryExpression(parent) && parent.operator === ts.SyntaxKind.ExclamationToken) ||
+             value === cachedValue || helperArguments.has(value)) continue;
