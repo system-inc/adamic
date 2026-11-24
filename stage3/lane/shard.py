@@ -234,7 +234,8 @@ def run_unit(name, results, plan=None, mutant_case=None, mutant_content=None, mu
         errors = []
         if name == 'stage3-lane-byte-comparisons':
             os.environ['TSC_ADAPT_TYPESCRIPT'] = str(api)
-            errors, report['api'] = api_check(output, json.loads((LANE / 'sanctioned-api.json').read_text()))
+            sanctioned = json.loads((LANE / 'sanctioned-api.json').read_text())
+            errors, report['api'] = api_check(output, sanctioned, printer_deadline=started + limit)
         errors += validate_observation(unit, counts, records, paths, failures, code)
         report.update(counts=counts, failed_tests=failures, baseline_diffs=paths,
                       upstream_exit=code, errors=errors, status='fail' if errors else 'pass',
