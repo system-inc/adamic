@@ -114,7 +114,9 @@ func TestKeepsNullishCastOutsideItsShapeStops(t *testing.T) {
 			"Adamic 0.1 refuses a cast the runtime can't check; "},
 		{"present classes", "class A { readonly n: number = 1; } class B extends A { readonly m: number = 2; } function f(x: A | undefined): B | undefined { return x as B | undefined; }", ".ts",
 			"stage 0 can't lower a checked cast from A | undefined to B | undefined, which keeps undefined yet"},
-		{"no present road", "interface A { readonly a: number } interface B { readonly b: string } function f(x: A | B | undefined): A | undefined { return x as A | undefined; }", ".ts",
+		// A has a literal field, so the untagged arm (#axqgdck) keeps its stop: with `a: number` the pair has a
+		// road, the arm's checked view, and the cast lowers.
+		{"no present road", "interface A { readonly a: 'x' } interface B { readonly b: string } function f(x: A | B | undefined): A | undefined { return x as A | undefined; }", ".ts",
 			"stage 0 can't lower a checked view of A | undefined over the union A | B | undefined, whose members no literal tag tells apart yet"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
