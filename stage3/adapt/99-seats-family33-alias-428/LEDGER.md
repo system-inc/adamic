@@ -1,0 +1,1 @@
+- **Family 33 conditional-key measurement (#bbssdcy, Adamic's Nov 22 ruling):** 99-seats-family33-alias-428 copies the existing node binding for the false-arm getNodeId read at transformers/utilities.ts:428:34, preserving the single && ternary and the original initializer call.
