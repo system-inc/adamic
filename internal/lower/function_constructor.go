@@ -746,6 +746,9 @@ func (l *lowering) checkFunctionConstructorRoads() error {
 		return 0
 	}
 	for index, record := range l.functionConstructorNews {
+		if l.firstLinkSkips(record.node) {
+			continue
+		}
 		candidates := map[int]bool{}
 		for _, candidate := range record.candidates {
 			candidates[candidate+1] = true

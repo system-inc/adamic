@@ -141,6 +141,9 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 			if ast.IsPartOfTypeNode(node) {
 				return false
 			}
+			if l.firstLinkSkips(node) {
+				return false
+			}
 			finder.libraryIteratorMade(node)
 			finder.looseEntry(node)
 			switch {
@@ -188,6 +191,9 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 	// can be proven fresh into, since Apple keeps it past the call: one that can reach back to its
 	// holder is a cycle.
 	for _, hold := range l.delegateHolds {
+		if l.firstLinkSkips(hold.node) {
+			continue
+		}
 		if finder.reaches(hold.delegate, cycleNode{proven: hold.holder}) {
 			holder := l.checker.TypeToString(hold.holder)
 			return &Refused{
@@ -202,6 +208,9 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 			continue
 		}
 		proven, node := l.localTypes[local], l.localNodes[local]
+		if l.firstLinkSkips(node) {
+			continue
+		}
 		if proven == nil || node == nil || finder.weak(proven) || !finder.appleObject(proven) {
 			continue
 		}

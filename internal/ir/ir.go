@@ -124,6 +124,46 @@ type Program struct {
 	// throws Node's TypeError, and which objects a freeze reaches isn't known across aliases and calls,
 	// so in such a program every object write can throw (FrozenWriteMayThrow); in one without, none does.
 	ObjectsMayFreeze bool
+
+	// Traps are the units a first-link lowering (lower's Options.FirstLinkTraps) lowered as traps, in the
+	// order it met them. A program lowered any other way has none.
+	Traps []Trap
+	// TrapRewritesSkipped names each whole-program pass that rewrites the IR whose work past a stop a
+	// first-link lowering skipped, in the order skipped. What runs after such a skip may be lowering's own
+	// echo rather than a wall, so every Trap recorded after the first is Suspect.
+	TrapRewritesSkipped []string
+}
+
+// Trap is one unit a first-link lowering couldn't lower, which it lowered as a Panic with Trap set instead:
+// what stopped it, where, and in which phase. A row is a measurement, never a verdict on the program.
+type Trap struct {
+	// Kind is "Refused" or "NotYet", the stop's own type, "Panic" for a Go panic recovered while the unit
+	// lowered, "Error" for any other error, a compiler bug among them, or "Gap" for a stretch of the
+	// program lowering couldn't judge, whose Reason says which.
+	Kind string
+	// Reason is the stop's What, as main would have stopped with it, or the recovered panic's value.
+	Reason string
+	// Fix is a Refused's Fix, and empty for any other kind.
+	Fix string
+	// Site is where the stop is, file:line:col, in load.Program's Where form.
+	Site string
+	// Unit is the unit trapped: its module's path and a space, then its declaration chain joined by dots, or
+	// "module" for a top-level statement that declares nothing. It's empty for a stop no unit holds, a file's
+	// directive's among them, which traps nothing and is a measurement gap.
+	Unit string
+	// Phase is the lowering phase the unit stopped in: "Refusal" for the refusal pass, "Signature" for a
+	// module function's signature, "Statics" for a class's statics, "Body" for a function's body,
+	// "Statement" for a module's top-level statement, or a whole-program step's name after the bodies
+	// lowered: a pass's Go name ("findCycles"), "unlowerable", "asyncPayloadFailures", "RelationOverflow"
+	// or "ProgramRegion".
+	Phase string
+	// Suspect says a recovered Go panic or an "Error" was trapped earlier in the same lowering. Either can
+	// leave lowering's state part written, so this row may be its echo rather than a wall of its own. A row
+	// recorded after a whole-program pass skipped a rewrite (Program.TrapRewritesSkipped) is Suspect too.
+	Suspect bool
+	// Echo says a whole-program pass stopped inside a unit trapped already, whose leftover state may be
+	// what it stopped at: no wall of its own, so the report counts it apart.
+	Echo bool
 }
 
 // PlaceholderCheck records one readiness or storage-arm boundary in the checked-sites report.
@@ -1496,8 +1536,13 @@ type (
 	// Evaluate evaluates an expression for its effects and discards the value: a call as a statement.
 	Evaluate struct{ Value Expression }
 
-	// Panic is the prelude's panic(message): write "adamic: panic: <message>" and exit 70.
-	Panic struct{ Message Expression }
+	// Panic is the prelude's panic(message): write "adamic: panic: <message>" and exit 70. With Trap set it's
+	// a first-link trap instead, a unit a first-link lowering couldn't lower (Program.Traps), which writes
+	// "adamic: first-link trap: <message>" and exits 75, so a run that reaches one is never a pass.
+	Panic struct {
+		Message Expression
+		Trap    bool
+	}
 
 	// SetIndex is array[index] = value, at an index the array has: anywhere else it panics, in both
 	// backends, where JavaScript would grow the array or leave a hole.
