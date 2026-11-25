@@ -29,7 +29,11 @@ func TestSpreadPackStops(t *testing.T) {
 		{"number beside a spread into a union parameter", "function show(first: A, ...rest: number[]): number { return rest.length; }\nconsole.log(String(show(7, ...nums)));\n", "a call with a spread passing a number where the callee reads a " + union},
 		{"number spread that can land in a union parameter", "function show(first: number, second?: A, ...rest: number[]): number { return rest.length; }\nconsole.log(String(show(1, ...nums)));\n", "a call with a spread of elements held as a number where the callee reads a " + union},
 		{"number spread through a function value into a union rest", "const show = (...rest: A[]): number => rest.length;\nconsole.log(String(show(...nums)));\n", "a call with a spread of elements held as a number where the callee reads a " + union},
+		// lead's type admits show, so its layout collects show's union rest from the pack its number spread is in
+		// (#wzr4atz, checkClosureSpreadLayouts), though lead's own signature reads the spread alike.
+		{"number spread through a function value whose layout holds another target's union rest", "const show = (...rest: A[]): void => { for (const value of rest) console.log(typeof value + \":\" + String(value)); };\nshow(\"a\", \"b\");\nconst lead = (first: A, ...rest: number[]): void => { console.log(typeof first + \":\" + String(first) + \":\" + String(rest.length)); };\nlead(7, ...nums);\n", "a call with a spread through a function value whose layout reads a " + union + " where the call packs a number"},
 		{"string spread through a function value into a union rest", "const show = (...rest: A[]): number => rest.length;\nconsole.log(String(show(...strs)));\n", ""},
+		{"number beside a spread where another target reads number | undefined", "const loose = (first?: number, ...rest: number[]): number => rest.length;\nconst strict = (first: number, ...rest: number[]): number => rest.length + first;\nconsole.log(String(loose(1, ...nums)) + String(strict(2, ...nums)));\n", ""},
 		{"string spread into a union rest", "function show(...rest: A[]): number { return rest.length; }\nconsole.log(String(show(...strs)));\n", ""},
 		{"number spread into a number rest", "function show(first: A, ...rest: number[]): number { return rest.length; }\nconsole.log(String(show(\"x\", ...nums)));\n", ""},
 	} {

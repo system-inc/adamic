@@ -16,7 +16,10 @@ records it as not run. `checkEnumerationReachViews`, after `checkSlotWrites`, ho
 each enumeration the accessor guard admitted against every checked view the whole
 program made (#1atvfp5); a body lowered on its own records it as not run. `checkArrayArmViews`, after `checkEnumerationReachViews`, holds each arm
 Array.isArray's brand decides against every checked view the whole program made
-(#9z2ksv7); a body lowered on its own records it as not run. `checkSourceSlotPending`, after `checkFlowLiveness`, gives
+(#9z2ksv7); a body lowered on its own records it as not run. `checkClosureSpreadLayouts`, after `checkViewLogicalWrites`,
+judges each call with a spread through a function value against every target its layout packs for, read from
+the target sets `findCycles` fills from the whole program's closure records (#wzr4atz); a body lowered on its own
+records it as not run. `checkSourceSlotPending`, after `checkFlowLiveness`, gives
 back Rule C's held NotYet for a write the view walk met wherever its statement was
 lowered (#5qx6qv4); a body lowered on its own records it as not run.
 `finishViewStaticsAdmitted`, after it, sets each view contract's `StaticsAdmitted`
