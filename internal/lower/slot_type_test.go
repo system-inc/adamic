@@ -152,6 +152,7 @@ func TestRefusalRulesReadTheirSlotThroughSlotType(t *testing.T) {
 // something other than the slot an argument goes into, each with what it reads instead. Any other reader
 // asks slotSet first (TestRefusalRulesReadTheirSlotThroughSlotType).
 var signatureReaders = map[string]string{
+	"relativePredicateMembership":       "the predicate claim's parameter index, only to name the argument's source text in a refined field's checked read; no argument slot is read",
 	"workerEnvironmentCheck":            "the original parameter declaration's nominal interface identity, not the instantiated argument slot; relationSite already judges that slot through slotType and honors slotSet",
 	"resolvedDeclaration":               "the Apple overload declaration, to select its foreign-call tag; no argument parameter slot is read",
 	"foreignNew":                        "the Apple constructor declaration, to select its init tag; native arguments are converted by that tag, not a contextual parameter slot",
