@@ -335,12 +335,6 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 	if callee.Kind == ast.KindSuperKeyword {
 		return l.superCall(node)
 	}
-	// `(object?.method)()` calls what the chain gives, undefined when object is, and throws, so neither the
-	// optional road below, which skips the call, nor the plain one, which reads the receiver as present,
-	// is it (optionalCallee, #492fbpd).
-	if parenthesizedOptionalCallee(node) {
-		return nil, l.notYet(node, "a call of a parenthesized optional chain, whose parentheses end the chain")
-	}
 	if callee.Kind != ast.KindPropertyAccessExpression {
 		return l.call(node)
 	}
@@ -365,6 +359,13 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 	}
 	if len(l.definedMembers(receiverType)) > 1 {
 		return nil, l.notYet(receiver, "a method call through a union of class types; narrow with instanceof first")
+	}
+	// `(object?.method)()` calls what the chain gives, undefined when object is, and throws, so neither the
+	// optional road below, which skips the call, nor the plain one after it, which reads the receiver as
+	// present, is it (optionalCallee, #492fbpd). A structural method took l.call above, the general road,
+	// which already holds the parentheses as the chain's end (grouped_call.a, #cdpxjmb).
+	if parenthesizedOptionalCallee(node) {
+		return nil, l.notYet(node, "a call of a parenthesized optional chain, whose parentheses end the chain")
 	}
 	if l.questionDot(callee) {
 		// object?.method(...), the object perhaps undefined: the class is instantiated for what the
