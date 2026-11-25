@@ -1,0 +1,19 @@
+# Family 155 patch 1 round 7, delta read (Performance): test.cjs, the four probes, and the fallback's statement pins
+# dropped as a mutant. Run after environment.sh, sandboxed-job.sh, sandboxed_typescript_source and
+# sandboxed_npm stage3/api stage3/typescript. Never merged.
+set -u
+K=proof/performance/r155
+A=stage3/adapt/99-seats-scout24-syntactic-result-member
+OUT=$TMPDIR/applied
+export NODE_PATH=$PWD/stage3/api/node_modules
+bash stage3/apply.sh "$OUT" > "$TMPDIR/apply.log" 2>&1; echo "apply exit=$?"
+git -C "$OUT" rev-parse "refs/stage3/99-seats-scout24-syntactic-result-member-before^{tree}" "refs/stage3/99-seats-scout24-syntactic-result-member-after^{tree}"
+node "$A/test.cjs" "$OUT" > "$TMPDIR/test.log" 2>&1; echo "test exit=$?"; grep -c '^PASS' "$TMPDIR/test.log" | sed 's/^/PASS lines: /'; grep -v '^PASS' "$TMPDIR/test.log" | head -5
+node "$K/probes.cjs" "$OUT" "$A" "$TMPDIR/probes" 2>&1 | grep PROBE
+echo "== mutant: the result-call statement pins dropped"
+cp "$A/adapt.cjs" "$TMPDIR/adapt.orig"
+node -e 'const fs=require("fs"),f=process.argv[1];let t=fs.readFileSync(f,"utf8");const a="    checkTypedPins(checkedSource, statements, pins.resultCallStatements, \"reviewed result call statement\");\n";if(t.split(a).length!==2){console.log("MUTANT NOT APPLIED");process.exit(1)}fs.writeFileSync(f,t.replace(a,""));console.log("mutant applied")' "$A/adapt.cjs"
+node --check "$A/adapt.cjs" && echo "mutant compiles"
+node "$A/test.cjs" "$OUT" > "$TMPDIR/test-m.log" 2>&1; echo "test under mutant exit=$?"; grep -v '^PASS' "$TMPDIR/test-m.log" | grep -E "Error|accepted|wrong guard" | head -4
+cp "$TMPDIR/adapt.orig" "$A/adapt.cjs"
+echo "VERDICT done"
