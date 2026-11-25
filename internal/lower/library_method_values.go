@@ -382,6 +382,40 @@ func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error
 var delayedArrayWriters = map[string]bool{"push": true, "fill": true, "splice": true, "concat": true}
 var delayedArrayReaders = map[string]bool{"slice": true, "join": true, "at": true, "reverse": true, "indexOf": true, "includes": true, "lastIndexOf": true}
 
+// delayedArrayLeavesReceiver names the delayed Array methods that leave their receiver as it was: concat and
+// slice make a new array, and the rest only read. Any other name changes the receiver (push, fill, splice,
+// reverse, and whatever adapter is added later), so it needs a receiver a write may go through
+// (delayedArrayReceiverWritable). The list is of what's safe, so a method it forgets fails closed.
+var delayedArrayLeavesReceiver = map[string]bool{"concat": true, "slice": true, "join": true, "at": true, "indexOf": true, "includes": true, "lastIndexOf": true}
+
+// delayedArrayReceiverWritable reports whether a delayed mutator may write its receiver. lib's Array.prototype
+// methods declare no this, so call and apply hand them a readonly array as readily as a mutable one, and a
+// readonly array's element type is a covariant view: a readonly Ident[] seen as readonly Node[] takes an Other,
+// which the Ident[] alias then reads as an Ident (#3cee4gb, Language's J-2rzaksa, natively a segfault). A
+// readonly view is never a write's slot (Adamic's ruling). So the receiver's type, past null and undefined, is
+// writable only as lib's mutable Array or a tuple that isn't readonly, each member of a union so; anything else,
+// ReadonlyArray, a readonly tuple, a NodeArray-shaped interface over ReadonlyArray, or a type this doesn't
+// classify, refuses.
+func (l *lowering) delayedArrayReceiverWritable(receiver *ast.Node) bool {
+	of := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver))
+	members := []*checker.Type{of}
+	if of.Flags()&checker.TypeFlagsUnion != 0 {
+		members = of.Types()
+	}
+	for _, member := range members {
+		switch {
+		case checker.IsTupleType(member):
+			if member.TargetTupleType().IsReadonly() {
+				return false
+			}
+		case l.checker.IsArrayType(member) && !l.isLibraryType(member, "ReadonlyArray"):
+		default:
+			return false
+		}
+	}
+	return true
+}
+
 // delayedArrayWritesFit is the check a delayed Array method's writes need. lib types Array.prototype as
 // any[], so a method value taken from it has any parameters, and the checker never checks what call or
 // apply hands it: push.call(names, { x: 1 }) writes an object into a string[], which native then reads
@@ -393,6 +427,9 @@ var delayedArrayReaders = map[string]bool{"slice": true, "join": true, "at": tru
 // the receiver's own array type. A reader stores nothing: slice's result goes through the delayed result
 // check, and the searches only compare.
 func (l *lowering) delayedArrayWritesFit(node, receiver *ast.Node, name string, written []*ast.Node) error {
+	if !delayedArrayLeavesReceiver[name] && !l.delayedArrayReceiverWritable(receiver) {
+		return &Refused{Where: l.program.Where(node), What: "a delayed Array " + name + " that changes a readonly array, " + l.checker.TypeToString(l.checker.GetTypeAtLocation(receiver)) + ", which a readonly view never gives a write: the array may be a narrower element type's, which another alias still reads", Fix: "call " + name + " on the array through a mutable type, where it's made, or build a new array"}
+	}
 	if delayedArrayReaders[name] {
 		return nil
 	}
