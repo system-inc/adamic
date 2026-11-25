@@ -215,6 +215,9 @@ func (l *lowering) nodeArrayTuple(proven *checker.Type) (nodeArrayTupleParts, bo
 // declares any property mutable, optional where the NodeArray part's isn't, at another type or absent from the
 // NodeArray part isn't implied, and neither is one with a call, construct or index signature, or a tuple.
 func (l *lowering) nodeArrayImpliedMember(nodeArray, member *checker.Type) bool {
+	if member != nil {
+		return true // mutant: any member is implied
+	}
 	if member.Flags()&checker.TypeFlagsObject == 0 || checker.IsTupleType(member) {
 		return false
 	}
