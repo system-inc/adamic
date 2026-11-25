@@ -84,6 +84,7 @@ timed door-build "$work/build.log" go build -o "$work/adamic-firstlink" ./cmd/ad
 code=0
 timed door "$work/door.log" timeout --foreground 60m "$work/adamic-firstlink" "$work/tree/src/tsc/tsc.ts" "$work/out" || code=$?
 if ((code)); then
+	grep -n -m1 -A20 -E '^(panic|fatal error|runtime error)' "$work/door.log" | sed 's/^/PANIC-HEAD /'
 	tail -n 60 "$work/door.log"
 	if ((code == 124)); then
 		stop "door exceeded 60 minutes, no completed report read"
