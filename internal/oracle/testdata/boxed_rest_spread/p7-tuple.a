@@ -1,0 +1,4 @@
+type A = number | string;
+const arr: [A, A, ...A[]] = [1, "two", 3];
+function target(first: A, second: A, ...rest: A[]): void { console.log(String(first) + String(second) + String(rest.length)); }
+target(...arr);
