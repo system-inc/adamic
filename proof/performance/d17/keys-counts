@@ -1,0 +1,11 @@
+# #d1chbm7 commit 1 (Performance): the fixture against Node on both backends, and its counts row measured on this
+# box's clang. Run after environment.sh, sandboxed-job.sh and sandboxed_npm stage3/api. Never merged.
+set -u
+F=internal/oracle/testdata/element_access_numeric_keys.ts
+go test -count=1 -v -run 'TestNativeAgreesWithNode_126$/internal/oracle/testdata/element_access_numeric_keys' ./internal/oracle > "$TMPDIR/agree.log" 2>&1; echo "agree exit=$?"
+grep -E -- '--- (PASS|FAIL|SKIP)|_test.go:[0-9]+:|^(ok|FAIL)' "$TMPDIR/agree.log" | head -20
+go test -count=1 -run 'TestCountsAreRecorded_030$' ./internal/oracle -args -update-counts > "$TMPDIR/counts.log" 2>&1; echo "counts exit=$?"
+grep -E -- '--- FAIL|_test.go:[0-9]+:|^(ok|FAIL)' "$TMPDIR/counts.log" | head -20
+R=internal/oracle/testdata/counts/runtime/$F.counts
+if [ -f "$R" ]; then echo "ROW_BEGIN"; cat "$R"; echo "ROW_END $(shasum -a 256 < "$R")"; else echo "NO ROW at $R"; fi
+git status --porcelain -- internal/oracle/testdata/counts | head -20
