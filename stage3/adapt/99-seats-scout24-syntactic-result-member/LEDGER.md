@@ -1,0 +1,1 @@
+- **Type-only, casts cause 4 (#bbssdcy, Adamic's Nov 24 16:4xZ ruling, Compiler under the split):** 99-seats-scout24-syntactic-result-member records the true default for the TypeNode arm of expressionToTypeNode.ts's private SyntacticResult. All result flag reads are guarded by an undefined type. The constructor and the other arms are unchanged.
