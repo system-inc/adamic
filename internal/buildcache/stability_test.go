@@ -329,3 +329,68 @@ func TestAReadThroughEveryToolsSpellingIsTheRootsRead(t *testing.T) {
 		t.Errorf("with ADAMIC_TOOLS unset, the probe through the link classed %q, want the home's as before", got)
 	}
 }
+
+// A kernel place holds a path only where no temporary place, home, user cache or system place sits deeper inside it and
+// holds the path too: a sealed job's scratch is under /run, its `TMPDIR`, `GOTMPDIR` and user cache with it, and every
+// test's TempDir under `GOTMPDIR` (#y70zzzw, J-8q1tavm on Pupa). A content read of a temporary file no process of the
+// run made refuses there as it does under /tmp, whether the place is `TMPDIR` or Go's own `GOTMPDIR`; a home read refuses
+// as the home's, content in the user cache refuses, and the rest of the kernel place stays nothing. The kernel place is
+// a directory of the test's own, so the pin reads alike on a house box and in a sealed job. Mutants: the kernel loop
+// without deeperPlaceHolds (every read under the scratch settles as nothing); `GOTMPDIR` left out of the temporary
+// places (its file classes as other); the user cache left out of deeperPlaceHolds (its file settles as nothing).
+// Not parallel: it sets HOME, `GOTMPDIR` and `XDG_CACHE_HOME`, which settleFacts reads.
+func TestAKernelPlaceYieldsToADeeperTemporaryPlaceOrHome(t *testing.T) {
+	quietHome(t)
+	cache := filepath.Join(t.TempDir(), "cache")
+	if err := os.MkdirAll(cache, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	tree := filepath.Join(t.TempDir(), "adamic")
+	kernel, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	scratch := filepath.Join(kernel, "loom-scratch")
+	temporary, goTemporary, home := filepath.Join(scratch, "tmp"), filepath.Join(scratch, "go-tmp"), filepath.Join(scratch, "home")
+	userCache := filepath.Join(scratch, "cache")
+	left, goLeft := filepath.Join(temporary, "left-by-someone"), filepath.Join(goTemporary, "TestElsewhere1", "001", "x.h")
+	kept, cached, bus := filepath.Join(home, "not-keyable"), filepath.Join(userCache, "adamic", "elsewhere", "x.h"), filepath.Join(kernel, "user", "1000", "bus")
+	for _, file := range []string{left, goLeft, kept, cached, bus} {
+		if err := os.MkdirAll(filepath.Dir(file), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(file, []byte("x\n"), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	t.Setenv("GOTMPDIR", goTemporary)
+	t.Setenv("XDG_CACHE_HOME", userCache)
+	facts, err := settleFacts(tree, cache, filepath.Join(cache, "trace-1"), "")
+	if err != nil {
+		t.Fatal(err)
+	}
+	listed := false
+	for _, place := range facts.temporary {
+		listed = listed || place == goTemporary
+	}
+	if !listed {
+		t.Errorf("the temporary places %q leave out `GOTMPDIR` %s", facts.temporary, goTemporary)
+	}
+	// The kernel place is under the box's own temporary directory, so those are set aside: what is under the kernel
+	// place is classed by the places inside it alone, alike on every box.
+	facts.kernel, facts.temporary, facts.home = []string{kernel}, []string{temporary, goTemporary}, home
+	for _, check := range []struct {
+		label, name string
+		want        classed
+	}{
+		{"a file under `TMPDIR` in the kernel place", left, classed{refusal + "temp not made by this run", left}},
+		{"a file under `GOTMPDIR` in the kernel place", goLeft, classed{refusal + "temp not made by this run", goLeft}},
+		{"a home file in the kernel place", kept, classed{refusal + "home", kept}},
+		{"content in the user cache in the kernel place", cached, classed{refusal + "other", cached}},
+		{"the kernel place's own runtime state", bus, classed{}},
+	} {
+		if got := facts.classifyPath(check.name, readContent); got != check.want {
+			t.Errorf("%s classed %q, want %q", check.label, got, check.want)
+		}
+	}
+}
