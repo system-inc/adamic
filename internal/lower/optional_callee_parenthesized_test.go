@@ -21,7 +21,10 @@ import (
 // compile time, or at exit 70 with nothing printed on the JavaScript backend and natively under the
 // sanitizers, where Node throws. Mutants: optionalCallee taking the callee through its parentheses, as main
 // did, and the string, map and join rows print undefined; class.go's stop dropped, and the class method row
-// prints undefined. The RegExp row stops at main's own NotYet for an optional RegExp call either way.
+// prints undefined. The RegExp row stops at main's own NotYet for an optional RegExp call either way. The
+// spread and continuing rows (J-g1zw2ta) are a library method whose call optionalIntrinsic once declined
+// before reaching its stop: mutant, the spread and continuing returns moved back above the stop, and push,
+// unshift and join lower and dereference the missing array natively, and toFixed fails at clang.
 func TestParenthesizedOptionalCalleeStops(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source string }{
@@ -30,6 +33,10 @@ func TestParenthesizedOptionalCalleeStops(t *testing.T) {
 		{"map get", "interface Box { table: Map<string, number> | undefined }\nconst box: Box = { table: new Map([[\"k\", 1]]) };\nfunction clear(): void { box.table = undefined; }\nif (box.table !== undefined) {\n    clear();\n    console.log(String((box.table?.get)(\"k\")));\n}\n"},
 		{"array join", "interface Box { items: string[] | undefined }\nconst box: Box = { items: [\"a\", \"b\"] };\nfunction clear(): void { box.items = undefined; }\nif (box.items !== undefined) {\n    clear();\n    console.log(String((box.items?.join)(\",\")));\n}\n"},
 		{"class method", "class Counter { count(): number { return 1; } }\ninterface Box { counter: Counter | undefined }\nconst box: Box = { counter: new Counter() };\nfunction clear(): void { box.counter = undefined; }\nif (box.counter !== undefined) {\n    clear();\n    console.log(String((box.counter?.count)()));\n}\n"},
+		{"array push spread", "interface Box { items: number[] | undefined }\nconst box: Box = { items: [1] };\nconst more: number[] = [2, 3];\nfunction clear(): void { box.items = undefined; }\nif (box.items !== undefined) {\n    clear();\n    console.log(String((box.items?.push)(...more)));\n}\n"},
+		{"array unshift spread", "interface Box { items: number[] | undefined }\nconst box: Box = { items: [1] };\nconst more: number[] = [2, 3];\nfunction clear(): void { box.items = undefined; }\nif (box.items !== undefined) {\n    clear();\n    console.log(String((box.items?.unshift)(...more)));\n}\n"},
+		{"array join continues", "interface Box { items: string[] | undefined }\nconst box: Box = { items: [\"a\", \"b\"] };\nfunction clear(): void { box.items = undefined; }\nif (box.items !== undefined) {\n    clear();\n    console.log(String((box.items?.join)(\",\").length));\n}\n"},
+		{"number toFixed continues", "interface Box { n: number | undefined }\nconst box: Box = { n: 1.5 };\nfunction clear(): void { box.n = undefined; }\nif (box.n !== undefined) {\n    clear();\n    console.log((box.n?.toFixed)(1).length.toString());\n}\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
