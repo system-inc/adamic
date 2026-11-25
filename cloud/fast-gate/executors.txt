@@ -217,6 +217,22 @@ reads internal/ir internal/native/*.go
 reads internal/ir internal/*.go
 # TestTypeScriptIsThePinnedCommit — internal/load/pin_test.go:19
 reads internal/load cohere
+# TestTheRootProjectsAreLoadsOwn — internal/load/projects/projects_test.go:17
+reads internal/load/projects tsconfig.json
+# TestTheRootProjectsAreLoadsOwn — internal/load/projects/projects_test.go:18
+reads internal/load/projects tsconfig.standalone.json
+# TestTheRootProjectsAreLoadsOwn — internal/load/projects/projects_test.go:19
+reads internal/load/projects tsconfig.node.json
+# TestTheRootProjectsAreLoadsOwn — internal/load/projects/projects_test.go:20
+reads internal/load/projects dedication/*
+# TestTheRootProjectsAreLoadsOwn — internal/load/projects/projects_test.go:21
+reads internal/load/projects bench/*
+# TestTheRootProjectsAreLoadsOwn — internal/load/projects/projects_test.go:22
+reads internal/load/projects stage1/*
+# TestTheRootProjectsAreLoadsOwn — internal/load/projects/projects_test.go:23
+reads internal/load/projects internal/load/testdata/*
+# TestTheRootProjectsAreLoadsOwn — internal/load/projects/projects_test.go:24
+reads internal/load/projects internal/oracle/testdata/*
 # TestClassFeaturesPrivateStorage — internal/lower/class_features_test.go:52
 reads internal/lower internal/oracle/testdata/class_features_private.a
 # TestGenericUnionFixtureHasSeparateInstances — internal/lower/generic_instance_key_test.go:28
