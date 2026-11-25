@@ -36,6 +36,12 @@ func renderWithChecks(backend, path string, format lower.ModuleFormat) int {
 }
 
 func explainPredicateChecks(output io.Writer, program *ir.Program) {
+	// A program lowered in first-link trap mode is measurement, never a product, and no road of adamic's
+	// lowers one (lower's Options.FirstLinkTraps), so this line is defense: a report of such a program says
+	// so first.
+	if len(program.Traps) > 0 {
+		fmt.Fprintf(output, "adamic: first-link traps: %d\n", len(program.Traps))
+	}
 	sites := append([]ir.PredicateCallCheck(nil), program.PredicateChecks.Sites...)
 	sort.SliceStable(sites, func(i, j int) bool { return sites[i].Where < sites[j].Where })
 	for _, site := range sites {
