@@ -140,7 +140,9 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 					}
 					continue
 				}
-				if ast.IsIdentifier(declaration.Name()) && !l.nodeStdoutAlias(declaration) {
+				// An admitted dispatch's fn is no global: it holds no value, and its uses read the kind its
+				// declaration holds (dispatch_lower.go).
+				if ast.IsIdentifier(declaration.Name()) && !l.nodeStdoutAlias(declaration) && l.dispatchCallee(declaration) == nil {
 					local, err := l.declareLocal(declaration.Name())
 					if err != nil {
 						return err

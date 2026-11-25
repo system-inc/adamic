@@ -37,6 +37,12 @@ func (l *lowering) refuseAnyRelation(node *ast.Node) error {
 	if found == nil {
 		return nil
 	}
+	// Ruling 17's dispatch cast (#d1chbm7): the operand of an admitted lookup's assertion is seen as a Record whose
+	// slots take any, and the dispatch's proof, not that view, holds each key to what tsc checked there
+	// (dispatch_cast.go). Every other site is judged as before.
+	if l.dispatchCastOperand(node) {
+		return nil
+	}
 	var stop error
 	if found.depthLimit {
 		stop = l.notYet(node, "a structural relation deeper than 64 type pairs while checking members typed any")
