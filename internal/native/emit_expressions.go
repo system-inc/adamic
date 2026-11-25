@@ -93,7 +93,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.Null:
 		return "NULL"
 	case ir.IsNull:
-		if expression.AlwaysFalse {
+		// A present/value pair represents a scalar or undefined.
+		if expression.AlwaysFalse || expression.Value.Type().IsMaybe() {
 			e.value(expression.Value)
 			return "false"
 		}

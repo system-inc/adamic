@@ -1445,13 +1445,14 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 	if err != nil {
 		return nil, err
 	}
+	nullishNumeric := l.nullishNumericSwitch(statement, value.Type())
 	storage, err := l.switchBindings(statement.CaseBlock)
 	if err != nil {
 		return nil, err
 	}
 	original := value
 	held := -1
-	if len(storage) > 0 {
+	if len(storage) > 0 || nullishNumeric {
 		// The discriminant runs outside the case block's lexical environment.
 		held = len(l.result.Locals)
 		l.result.Locals = append(l.result.Locals, ir.Local{Name: "switch_value", Type: value.Type(), Function: l.functionIndex})
@@ -1490,7 +1491,13 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 				return nil, err
 			}
 
-			if test.Type() != value.Type() {
+			// Adamic, Nov 24 2026, #bbssdcy item 15: numeric switches may hold nullish
+			// values and use numeric constants or undefined as labels. Other mixed storage stays out.
+			compatible := test.Type() == value.Type()
+			if nullishNumeric {
+				compatible = nullishNumericLabel(test)
+			}
+			if !compatible {
 				return nil, l.notYet(clause, "a case whose type differs from the switch's")
 			}
 			tests = append(tests, test)
@@ -1523,7 +1530,20 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 		groups = append(groups, switchGroup{tests: tests, isDefault: defaultPending})
 	}
 	result := []ir.Statement{lowered}
-	if checkedDefault {
+	if nullishNumeric {
+		guard := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "switch_nullish", Type: ir.Boolean, Function: l.functionIndex})
+		prefix = append(prefix, ir.Declare{Local: guard, Value: ir.Binary{
+			Operator: ir.Or, Left: ir.IsNull{Value: value}, Right: ir.IsUndefined{Value: value},
+		}})
+		nullish := ir.Read{Local: guard, Of: ir.Boolean}
+		for _, group := range groups {
+			for index, label := range group.tests {
+				group.tests[index] = nullishNumericTest(value, nullish, label)
+			}
+		}
+		result = l.fallthroughSwitch(ir.BooleanConstant{Value: true}, groups, neverCheck)
+	} else if checkedDefault {
 		result = l.fallthroughSwitch(value, groups, neverCheck)
 	} else {
 		for index, group := range groups {
