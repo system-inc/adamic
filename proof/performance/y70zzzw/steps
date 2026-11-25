@@ -1,0 +1,37 @@
+# #y70zzzw proof (Performance): buildcache's kernel places yield to a deeper temporary place, home or system place.
+# Source it in the job's shell after environment.sh and cloud/sandboxed-job.sh. Never merged.
+set -u
+fail=0
+echo "on $(hostname), $(nproc) cores; HOME=$HOME TMPDIR=$TMPDIR GOTMPDIR=${GOTMPDIR:-unset}"
+B=./internal/buildcache
+eight='TestAListingOfTheCachesParentsIsKeyedBesideTheCache|TestALookupBelowTheCachesChainUnderTheHomeIsKeyedBesideTheCache|TestAPathIsClassedByTheDeepestOfHomeAndTheTemporaryPlaces|TestAReadThroughASymbolicLinkKeysTheLinkAndItsTarget|TestAReadThroughEveryToolsSpellingIsTheRootsRead|TestATracedLookupValuesMachineFilesAsKeying|TestWhatABuildOnlyLooksForOrRunsThroughALinkIsKeyed|TestWhatABuildReadsOfTheMachineIsKeyed'
+pin='TestAKernelPlaceYieldsToADeeperTemporaryPlaceOrHome'
+echo "== gofmt"; out=$(gofmt -l internal/buildcache); [ -z "$out" ] && echo "PASS gofmt" || { echo "FAIL gofmt: $out"; fail=1; }
+echo "== vet"; go vet $B ./internal/buildcache/cmd/traced > "$TMPDIR/vet.log" 2>&1 && echo "PASS vet" || { echo "FAIL vet"; head -20 "$TMPDIR/vet.log"; fail=1; }
+echo "== the pin and the eight at the head"
+go test -count=1 -v -run "^(${pin}|${eight})\$" $B > "$TMPDIR/head.log" 2>&1; r=$?
+grep -E -- '^--- (PASS|FAIL)' "$TMPDIR/head.log"; grep -E '_test.go:[0-9]+:' "$TMPDIR/head.log" | cut -c1-300 | head -20
+[ $r = 0 ] && echo "PASS head" || { echo "FAIL head (exit $r)"; fail=1; }
+echo "== buildcache and traced whole"
+go test -count=1 -timeout 40m $B ./internal/buildcache/cmd/traced > "$TMPDIR/whole.log" 2>&1; r=$?
+grep -E -- '^(ok|FAIL)|^--- FAIL|panic:' "$TMPDIR/whole.log" | cut -c1-300 | head -30
+[ $r = 0 ] && echo "PASS whole" || { echo "FAIL whole (exit $r)"; grep -E '_test.go:[0-9]+:' "$TMPDIR/whole.log" | cut -c1-300 | head -20; fail=1; }
+cp internal/buildcache/settle.go "$TMPDIR/settle.go.keep"
+mutant() {
+	local label=$1 expression=$2
+	echo "== mutant: $label"
+	cp "$TMPDIR/settle.go.keep" internal/buildcache/settle.go
+	sed -i "$expression" internal/buildcache/settle.go
+	if cmp -s internal/buildcache/settle.go "$TMPDIR/settle.go.keep"; then echo "FAIL mutant $label: not applied"; fail=1; return; fi
+	if ! go vet $B > "$TMPDIR/mvet.log" 2>&1; then echo "FAIL mutant $label: doesn't compile"; head "$TMPDIR/mvet.log"; fail=1; return; fi
+	echo "compiles"
+	go test -count=1 -v -run "^(${pin}|${eight})\$" $B > "$TMPDIR/mutant.log" 2>&1
+	grep -E -- '^--- FAIL' "$TMPDIR/mutant.log"
+	grep -E 'stability_test.go:[0-9]+:' "$TMPDIR/mutant.log" | cut -c1-300 | head -6
+	if grep -qE -- "^--- FAIL: ${pin}" "$TMPDIR/mutant.log"; then echo "PASS mutant red: $label"; else echo "FAIL mutant survived: $label"; fail=1; fi
+}
+mutant "the kernel loop without deeperPlaceHolds" 's/if under(name, place) \&\& !facts.deeperPlaceHolds(name, place) {/if under(name, place) {/'
+mutant "GOTMPDIR left out of the temporary places" 's/\[\]string{os.TempDir(), os.Getenv("GOTMPDIR"), "\/tmp", "\/var\/tmp"}/[]string{os.TempDir(), "\/tmp", "\/var\/tmp"}/'
+mutant "the user cache left out of deeperPlaceHolds" 's/{facts.home, facts.userCache}/{facts.home}/'
+cp "$TMPDIR/settle.go.keep" internal/buildcache/settle.go
+[ $fail = 0 ] && echo "VERDICT PASS" || { echo "VERDICT FAIL"; false; }
