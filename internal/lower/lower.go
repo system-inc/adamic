@@ -757,6 +757,9 @@ type lowering struct {
 	functionConstructorScan *allocatorRoads
 	functionConstructorNews []functionConstructorNew
 	anyRoads                []anyRoad
+	// dispatchCastScan is the program's dispatch lookups under ruling 17, found once: each admitted one and each
+	// declined candidate's reason, by its assertion (dispatch_cast.go).
+	dispatchCastScan *dispatchCastRoads
 	// kindTagCarriers is every declared type carrying a literal on a tag field, by the field and the literal's
 	// runtime value, and kindTagFields the fields it holds (cast_kind_union_writes.go, #b5w3ycg head 2).
 	kindTagCarriers map[string][]*checker.Type
