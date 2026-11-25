@@ -24,3 +24,21 @@ The literal-method mutant used `return candidate.ForEachChild(visit)` in place
 of its stop and went red in both extensions; see `literal-first-mutant.log`
 in the same scratch directory. The unmutated literal-first probe stopped in
 both extensions. The pin file and conformance package passed after restoration.
+
+## Ruling 16 B
+
+These unapplied patches are for Loom after review. The rows identify the
+assertions expected to fail. Each uses the new provider proof at the head.
+
+| Patch | Change | Expected red |
+| --- | --- | --- |
+| wrong-function-declaration.patch | A declaration with no this reference counts as detachable. | TestMethodDestructuringProviderRefusals/function-declaration, method_destructuring_test.go:117 |
+| wrong-skip-views.patch | A function-typed alias hides its literal provider. | TestMethodDestructuringProviderRefusals/view, method_destructuring_test.go:117 |
+| wrong-library-member.patch | Ignore the inherited array providers. | TestMethodDestructuringProviderRefusals/library-to-string-push and /library-push-parameter, method_destructuring_test.go:117 |
+| wrong-class-method.patch | Count a class prototype as detachable. | TestMethodDestructuringFix and TestMethodDestructuringProviderRefusals/class-method, method_destructuring_test.go:30 and :117 |
+| wrong-getter-as-method.patch | Judge a getter's kind instead of its returned closure. | TestDetachableMethodDestructuringAgrees/getter, ../oracle/method_destructuring_test.go:26 |
+| wrong-declaration-symbol.patch | Resolve the declaration name with the shorthand-unaware symbol lookup. | TestReferenceWalksResolveShorthandNames, value_symbol_test.go:75 (read, unrun) |
+| wrong-generator-direct.patch | Read generator and async return statements as the result of the call. | TestDestructuredMethodDirectFunction, method_destructuring_test.go:140 |
+| wrong-this-parameter-index.patch | Count the explicit this parameter as a positional argument. | TestDestructuredMethodThisParameter, method_destructuring_test.go:160 |
+| wrong-write-scan-off.patch | Skip all modules in the write scan so a declaration can replace an arrow through a view. | TestMethodDestructuringProviderRefusals/write-through-view, /write-variable-source and /write-element-view, method_destructuring_test.go:117. The object-assign row stops earlier. |
+| wrong-element-key.patch | Ignore a string-key write naming the field. | TestMethodDestructuringProviderRefusals/write-element-view, method_destructuring_test.go:117 (read, unrun) |
