@@ -1,0 +1,8 @@
+type A = number | string;
+type B = A | boolean;
+const original: A[] = [1, "two"];
+function target(...rest: B[]): void {
+    rest.push(true);
+    for (const value of rest) console.log(String(value));
+}
+target(...original);

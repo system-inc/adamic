@@ -1,0 +1,10 @@
+interface P { value: number }
+interface Q { value: number }
+const values: (number | P)[] = [1, { value: 2 }];
+function target(...rest: (number | Q)[]): void {
+    for (const value of rest) {
+        if (typeof value === "number") console.log(String(value));
+        else console.log(String(value.value));
+    }
+}
+target(...values);
