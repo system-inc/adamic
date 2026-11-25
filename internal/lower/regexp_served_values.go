@@ -174,11 +174,17 @@ func (l *lowering) checkRegExpServedValues() error {
 		return nil
 	}
 	for _, read := range l.regexpServedReads {
+		if l.firstLinkSkips(read.node) {
+			continue
+		}
 		if !regexpServedReceiverIsRegExp(read.receiver) && (!read.allowed || read.class == 0) {
 			return l.notYet(read.node, regexpServedValueStop)
 		}
 	}
 	for _, whole := range l.wholeObjectCopies {
+		if l.firstLinkSkips(whole.node) {
+			continue
+		}
 		if l.regexpServedHasTest(whole.copied) && !regexpServedReceiverIsRegExp(whole.copied) {
 			return l.notYet(whole.node, regexpServedValueStop)
 		}

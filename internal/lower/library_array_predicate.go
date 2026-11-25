@@ -344,6 +344,9 @@ type arrayArmSite struct {
 // interface an array satisfies, or one a view of its own stands behind), failing closed.
 func (l *lowering) checkArrayArmViews() error {
 	for _, site := range l.arrayArmSites {
+		if l.firstLinkSkips(site.node) {
+			continue
+		}
 		for _, arm := range site.arms {
 			for _, view := range l.viewsReaching(arm) {
 				if !l.mayHoldArrayStored(view.source) {

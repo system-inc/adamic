@@ -75,6 +75,10 @@ func (l *lowering) predicateFalseReads(module *ast.SourceFile) error {
 		if found != nil {
 			return true
 		}
+		if l.firstLinkTrapped[node] {
+			// A first-link lowering's trapped unit is past judging (first_link_refusals.go).
+			return false
+		}
 		found = l.predicateFalse.read(node)
 		if found == nil {
 			node.ForEachChild(visit)

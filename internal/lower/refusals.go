@@ -34,6 +34,14 @@ var refusedOperators = map[ast.Kind]refusal{
 // refuse walks a module for what 0.1 refuses and returns the first, with where it is and the fix.
 func (l *lowering) refuse(module *ast.SourceFile) error {
 	l.notePlaceholderSlots()
+	// Declared here, ahead of its walk, so a first-link lowering's answer returns through it: the latent
+	// census's rewrite of refuse takes found as the walk's one error (stage3/census/latent/refusalrewrite).
+	var found error
+	if l.firstLinkTraps {
+		// A first-link lowering traps each refusal's unit and walks on (first_link_refusals.go).
+		found = l.firstLinkRefuse(module)
+		return found
+	}
 	// Use the parser's directives, which also recognize the block forms honored by the checker.
 	// Text in a string or a prose comment never enters this list.
 	if len(module.CommentDirectives) > 0 {
@@ -91,7 +99,6 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 	if contractError != nil {
 		return contractError
 	}
-	var found error
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		if found != nil {

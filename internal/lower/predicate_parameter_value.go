@@ -221,6 +221,9 @@ func (l *lowering) checkedPredicateParameterValue(node *ast.Node, value ir.Expre
 func (l *lowering) checkCheckedPredicateParameters(modules []*ast.SourceFile) error {
 	unbuilt := []*ast.Node{}
 	l.walkLoweredRegions(modules, func(node *ast.Node) {
+		if l.firstLinkSkips(node) {
+			return
+		}
 		if l.predicateParametersAdmitted[node] && !l.predicateParametersBuilt[node] {
 			unbuilt = append(unbuilt, node)
 		}
@@ -232,6 +235,9 @@ func (l *lowering) checkCheckedPredicateParameters(modules []*ast.SourceFile) er
 		return l.notYet(first, "a predicate parameter admitted for its checked closure that lowering passed another way")
 	}
 	for _, record := range l.closureRecords {
+		if l.firstLinkSkips(record.node) {
+			continue
+		}
 		function := l.result.Functions[record.function]
 		if function.Source.Role != "checked_predicate_parameter" {
 			continue
