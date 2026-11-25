@@ -5,6 +5,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"strconv"
+	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/leakcheck"
@@ -115,7 +116,8 @@ func TestCountWindow(t *testing.T) {
 			call := regexp.MustCompile(`(?m)^[ \t]*((?:\(void\))?` + regexp.QuoteMeta(symbol) + `\([^;\n]*\);)`)
 			calls := call.FindAllStringSubmatchIndex(code, -1)
 			if len(calls) != 1 {
-				t.Fatalf("want one call of %s, found %d", symbol, len(calls))
+				named := regexp.MustCompile(`(?m)^.*` + regexp.QuoteMeta(symbol) + `.*$`).FindAllString(code, -1)
+				t.Fatalf("want one call of %s, found %d; the lines naming it:\n%s", symbol, len(calls), strings.Join(named, "\n"))
 			}
 			start, end := calls[0][2], calls[0][3]
 			// Braced, so the snapshots are a block's own wherever the call stands.
