@@ -48,9 +48,13 @@ type cycleNode struct {
 type cycleFinder struct {
 	l *lowering
 
-	// seen is every type the program uses, in the order first met, with where it was met.
-	seen  []*checker.Type
-	where map[*checker.Type]*ast.Node
+	// seen is every type the program uses, in the order first met, with where it was met. A type can be
+	// met with no node (an instantiation lowering made whose type has no declaration, and what use derives
+	// from it), so where is read only through whereOf, which never hands a refusal a nil node (#ew207ss).
+	// whereFallback is the first module, where whereOf points when nothing nearer is known.
+	seen          []*checker.Type
+	where         map[*checker.Type]*ast.Node
+	whereFallback *ast.Node
 
 	// shapes is every seen object type that isn't an array, a map or a function: what a value seen as
 	// some object type may really be. shaped are the literals' own types among them.
@@ -140,6 +144,9 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 		}
 	}
 	finder := &cycleFinder{l: l, where: map[*checker.Type]*ast.Node{}}
+	if len(modules) > 0 {
+		finder.whereFallback = modules[0].AsNode()
+	}
 	for _, module := range modules {
 		var visit ast.Visitor
 		visit = func(node *ast.Node) bool {
@@ -407,6 +414,37 @@ func (f *cycleFinder) use(proven *checker.Type, where *ast.Node) {
 	}
 }
 
+// whereOf is where a refusal about these types is reported, and never nil: where the first of them that
+// was met with a node was met; else where the first that has a declaration is declared, a reference by its
+// target's; else the first module. findCycles' instantiations are used with classNodeFor's node, nil for a
+// type with no declaration, and what use derives from such a type inherits the nil, so on tsc a holder met
+// only that way reached Program.Where with no node and the compiler panicked (#ew207ss). The refusal's What
+// names the type, so this is only where it's reported. A finder built outside findCycles has no first module
+// stored, and falls back to the program's first file.
+func (f *cycleFinder) whereOf(types ...*checker.Type) *ast.Node {
+	for _, proven := range types {
+		if where := f.where[proven]; where != nil {
+			return where
+		}
+	}
+	for _, proven := range types {
+		if proven == nil {
+			continue
+		}
+		symbol := proven.Symbol()
+		if symbol == nil && proven.Flags()&checker.TypeFlagsObject != 0 && proven.ObjectFlags()&checker.ObjectFlagsReference != 0 && proven.Target() != nil {
+			symbol = proven.Target().Symbol()
+		}
+		if symbol != nil && len(symbol.Declarations) > 0 {
+			return symbol.Declarations[0]
+		}
+	}
+	if f.whereFallback != nil {
+		return f.whereFallback
+	}
+	return f.l.program.Files()[0].AsNode()
+}
+
 // declaredAt is where a field is declared, to point at what its type is made of, or otherwise.
 func declaredAt(field *ast.Symbol, otherwise *ast.Node) *ast.Node {
 	if len(field.Declarations) > 0 {
@@ -497,7 +535,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 			target := f.present(element)
 			return &Refused{
 				cycle: true,
-				Where: l.program.Where(f.where[holder]),
+				Where: l.program.Where(f.whereOf(holder)),
 				What:  name + ", an array whose elements can reach back to an array like it: a cycle reference counting can't free, and " + f.writtenAt(write) + " may close one (" + write.Why + ")",
 				Fix:   "declare the elements weak, Weak<" + target + ">[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly " + target + "[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)",
 			}
@@ -506,7 +544,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 		element := l.recordElement(holder)
 		if !f.weak(element) && f.reaches(element, cycleNode{proven: holder}) {
 			if write := f.cycleUnproven(fresh.WriteMapEntry, holder, ""); write != nil {
-				return &Refused{cycle: true, Where: l.program.Where(f.where[holder]), What: name + ", a record whose values can reach back to its holder: a cycle reference counting cannot free, and " + f.writtenAt(write) + " may close one", Fix: "use weak links or write only values proven unable to reach the record (adamic/cycle-capable)"}
+				return &Refused{cycle: true, Where: l.program.Where(f.whereOf(holder)), What: name + ", a record whose values can reach back to its holder: a cycle reference counting cannot free, and " + f.writtenAt(write) + " may close one", Fix: "use weak links or write only values proven unable to reach the record (adamic/cycle-capable)"}
 			}
 		}
 	case l.isLibraryType(holder, "ReadonlyMap"), l.isLibraryType(holder, "ReadonlySet"):
@@ -517,7 +555,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 				f.noteRecordSlot(arguments[0], holder, write)
 				return &Refused{
 					cycle: true,
-					Where: l.program.Where(f.where[holder]),
+					Where: l.program.Where(f.whereOf(holder)),
 					What:  name + ", a set whose elements can reach back to a set like it: a cycle reference counting can't free, and " + f.writtenAt(write) + " may close one (" + write.Why + ")",
 					Fix:   "make it a ReadonlySet, built whole when it's made; or add to such a set only values this function made, or only to one it made (adamic/cycle-capable)",
 				}
@@ -530,7 +568,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 				f.noteRecordSlot(arguments[0], holder, write)
 				return &Refused{
 					cycle: true,
-					Where: l.program.Where(f.where[holder]),
+					Where: l.program.Where(f.whereOf(holder)),
 					What:  name + ", a map whose keys can reach back to a map like it: a cycle reference counting can't free, and " + f.writtenAt(write) + " may close one (" + write.Why + ")",
 					Fix:   "make it a ReadonlyMap, built whole when it's made; or set in such a map only keys this function made, or only in one it made (adamic/cycle-capable)",
 				}
@@ -541,7 +579,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 				f.noteRecordSlot(arguments[1], holder, write)
 				return &Refused{
 					cycle: true,
-					Where: l.program.Where(f.where[holder]),
+					Where: l.program.Where(f.whereOf(holder)),
 					What:  name + ", a map whose values can reach back to a map like it: a cycle reference counting can't free, and " + f.writtenAt(write) + " may close one (" + write.Why + ")",
 					Fix:   "declare the values weak, Map<" + l.checker.TypeToString(arguments[0]) + ", Weak<" + f.present(arguments[1]) + ">> (import type { Weak } from 'adamic'), or make it a ReadonlyMap; or set in such a map only values this function made, or only in one it made (adamic/cycle-capable)",
 				}
@@ -563,7 +601,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 				continue
 			}
 			f.noteRecordSlot(proven, holder, write)
-			where := f.where[holder]
+			where := f.whereOf(holder)
 			if len(field.Declarations) > 0 {
 				where = field.Declarations[0]
 			}
