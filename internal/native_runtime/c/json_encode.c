@@ -27,6 +27,9 @@ static void append(encode_builder *w, const char *bytes, size_t length, size_t u
 			static const char message[] = "out of memory";
 			adamic_panic(message, sizeof message - 1);
 		}
+		// The builder starts with bytes of its own (adamic_json_encode), so every realloc here enlarges
+		// them: a growth (count.h).
+		ADAMIC_COUNT_GROWTH();
 		w->bytes = grown;
 		w->capacity = capacity;
 	}

@@ -47,6 +47,9 @@ static void append(json_writer *w, const char *bytes, size_t length, size_t unit
 			static const char message[] = "out of memory";
 			adamic_panic(message, sizeof message - 1);
 		}
+		// The writer starts with bytes of its own (adamic_json_stringify), so every realloc here enlarges
+		// them: a growth (count.h).
+		ADAMIC_COUNT_GROWTH();
 		w->bytes = grown;
 		w->capacity = capacity;
 	}

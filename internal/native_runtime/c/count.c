@@ -39,6 +39,14 @@ void adamic_count_report(void) {
 }
 
 #ifdef ADAMIC_COUNT
+adamic_count_window adamic_count_snapshot(void) {
+	return (adamic_count_window){
+		atomic_load_explicit(&adamic_counted.allocations, memory_order_relaxed),
+		atomic_load_explicit(&adamic_counted.frees, memory_order_relaxed),
+		atomic_load_explicit(&adamic_counted.growths, memory_order_relaxed),
+	};
+}
+
 // A finished program reports once main has returned, after it let go of its globals. A panic reports
 // from adamic_panic, since it leaves by _exit and runs no destructor.
 __attribute__((destructor)) static void report_at_exit(void) {
