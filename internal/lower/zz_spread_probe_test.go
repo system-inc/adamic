@@ -29,6 +29,11 @@ func TestZZSpreadProbe(t *testing.T) {
 		{"present push", absent + "console.log(String((box.items?.push)(...more)));\nconsole.log(String(box.items?.length));\n"},
 		{"present concat", absent + "console.log(String((box.items?.concat)(...more)));\n"},
 		{"present class method", absent + "console.log(String((box.counter?.count)(...more)));\n"},
+		{"absent join continues", absent + "if (box.items !== undefined) {\n    clear();\n    console.log(String((box.items?.join)(\",\").length));\n}\n"},
+		{"absent join non-null", absent + "if (box.items !== undefined) {\n    clear();\n    console.log(String((box.items?.join)(\",\")!));\n}\n"},
+		{"absent toFixed continues", "interface Box { n: number | undefined }\nconst box: Box = { n: 1.5 };\nfunction clear(): void { box.n = undefined; }\nif (box.n !== undefined) {\n    clear();\n    console.log((box.n?.toFixed)(1).length.toString());\n}\n"},
+		{"absent class method continues", absent + "if (box.counter !== undefined) {\n    clear();\n    console.log(String((box.counter?.count)().toFixed(0)));\n}\n"},
+		{"present join continues", absent + "console.log(String((box.items?.join)(\",\").length));\n"},
 		{"plain optional push", absent + "console.log(String(box.items?.push(...more)));\nclear();\nconsole.log(String(box.items?.push(...more)));\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
