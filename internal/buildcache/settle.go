@@ -648,7 +648,7 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 		}
 	}
 	for _, place := range facts.kernel {
-		if under(name, place) {
+		if under(name, place) && !facts.deeperPlaceHolds(name, place) {
 			return classed{}
 		}
 	}
@@ -732,6 +732,24 @@ func (facts *traceFacts) goCacheJoined(relative string) bool {
 	for _, cache := range facts.goCaches {
 		if strings.Contains("/"+relative+"/", "/"+cache+"/") {
 			return true
+		}
+	}
+	return false
+}
+
+// deeperPlaceHolds says whether a place the run classes on its own sits inside the kernel place and holds name too: a
+// temporary place, the home or a system place. A kernel place is the machine's runtime state, never an input, but a
+// sealed job's scratch is under /run (/run/loom-scratch holds its `TMPDIR`, Go's work directory and the user cache,
+// #7k79mkn), so a read there is the temporary place's or the home's, classed below as strictly as on a house box.
+// Taken first, every such read was nothing: a content read of a temporary file no process of the run made settled
+// unkeyed, where /tmp refuses it (#y70zzzw, J-8q1tavm on Pupa: eight buildcache tests whose fixtures sat under
+// /run/loom-scratch/go-tmp). Only deeper places count, so /run itself, /run/user and the rest stay the kernel's.
+func (facts *traceFacts) deeperPlaceHolds(name, kernel string) bool {
+	for _, places := range [][]string{facts.temporary, {facts.home}, facts.system} {
+		for _, place := range places {
+			if place != "" && place != kernel && under(place, kernel) && under(name, place) {
+				return true
+			}
 		}
 	}
 	return false

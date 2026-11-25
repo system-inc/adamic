@@ -329,3 +329,51 @@ func TestAReadThroughEveryToolsSpellingIsTheRootsRead(t *testing.T) {
 		t.Errorf("with ADAMIC_TOOLS unset, the probe through the link classed %q, want the home's as before", got)
 	}
 }
+
+// A kernel place holds a path only where no temporary place, home or system place sits deeper inside it and holds the
+// path too: a sealed job's scratch is under /run, its `TMPDIR` and its tests' temporary directories with it (#y70zzzw,
+// J-8q1tavm on Pupa). A content read of a temporary file no process of the run made refuses there as it does under
+// /tmp, a read of the home refuses as the home's, and the rest of the kernel place stays nothing. The kernel place is a
+// directory of the test's own, so the pin reads alike on a house box and in a sealed job. Mutant: the kernel loop
+// without deeperPlaceHolds, so both reads under the scratch settle as nothing.
+// Not parallel: quietHome sets HOME, which settleFacts reads.
+func TestAKernelPlaceYieldsToADeeperTemporaryPlaceOrHome(t *testing.T) {
+	quietHome(t)
+	cache := filepath.Join(t.TempDir(), "cache")
+	if err := os.MkdirAll(cache, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	facts, err := settleFacts(filepath.Join(t.TempDir(), "adamic"), cache, filepath.Join(cache, "trace-1"), "")
+	if err != nil {
+		t.Fatal(err)
+	}
+	kernel, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	temporary := filepath.Join(kernel, "loom-scratch", "tmp")
+	home := filepath.Join(kernel, "loom-scratch", "home")
+	runtime := filepath.Join(kernel, "user", "1000")
+	left, kept, bus := filepath.Join(temporary, "left-by-someone"), filepath.Join(home, "not-keyable"), filepath.Join(runtime, "bus")
+	for _, file := range []string{left, kept, bus} {
+		if err := os.MkdirAll(filepath.Dir(file), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(file, []byte("x\n"), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	facts.kernel, facts.temporary, facts.home = []string{kernel}, []string{temporary}, home
+	for _, check := range []struct {
+		label, name string
+		want        classed
+	}{
+		{"a temporary file under the kernel place", left, classed{refusal + "temp not made by this run", left}},
+		{"a home file under the kernel place", kept, classed{refusal + "home", kept}},
+		{"the kernel place's own runtime state", bus, classed{}},
+	} {
+		if got := facts.classifyPath(check.name, readContent); got != check.want {
+			t.Errorf("%s classed %q, want %q", check.label, got, check.want)
+		}
+	}
+}
