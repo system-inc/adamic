@@ -321,6 +321,9 @@ func (l *lowering) checkInspectorDoomedContracts() error {
 		walk(function.Body, scan)
 	}
 	for node, marker := range l.inspectorSkippedContracts {
+		if l.firstLinkSkips(node) {
+			continue
+		}
 		if marker == 0 || !present[marker] {
 			return fmt.Errorf("compiler bug: skipped inspector contract without its doomed-use Panic at %s", l.program.Where(node))
 		}

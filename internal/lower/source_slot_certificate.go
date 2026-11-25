@@ -246,6 +246,9 @@ var sourceSlotStatementKinds = map[ast.Kind]bool{
 // keeps its stop too. Rule C's scalar arm (sourceSlotScalarWrite) holds its stop the same way.
 func (l *lowering) checkSourceSlotPending() error {
 	for _, pending := range l.sourceSlotPending {
+		if l.firstLinkSkips(pending.target) {
+			continue
+		}
 		if pending.statement == nil || l.loweredStatements[pending.statement] {
 			return pending.stop
 		}

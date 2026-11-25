@@ -81,6 +81,9 @@ func (l *lowering) namespaceContainerLiteral(declaration *ast.Node) (ir.Expressi
 		if !found {
 			return nil, l.notYet(statement, "an exported function in a namespace used as a value, without a lowered function")
 		}
+		if err := l.signatureTrap(statement.Name(), l.symbol(statement.Name())); err != nil {
+			return nil, err
+		}
 		value, err := l.functionValue(statement.Name(), function)
 		if err != nil {
 			return nil, err

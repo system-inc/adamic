@@ -153,6 +153,9 @@ func (l *lowering) checkOptionalMemberPresence() error {
 	}
 	judged := map[optionalPresenceKey]bool{}
 	for _, read := range l.optionalPresenceReads {
+		if l.firstLinkSkips(read.node) {
+			continue
+		}
 		key := optionalPresenceKey{where: read.where, name: read.name}
 		if judged[key] {
 			continue

@@ -354,6 +354,12 @@ func (l *lowering) mayHoldNull(proven *checker.Type) bool {
 // expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
 // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
+	if l.firstLinkTraps {
+		// A trapped unit's code never lowers (first_link_units.go).
+		if err := l.firstLinkInside(node); err != nil {
+			return nil, err
+		}
+	}
 	// An allocator getter's admitted cast is its function constructor's identity object, before any slot
 	// judgment reads the any it's typed (#837zjkt, function_constructor.go).
 	if node.Kind == ast.KindAsExpression || node.Kind == ast.KindParenthesizedExpression {
@@ -1496,6 +1502,9 @@ func (l *lowering) unparenthesizedValue(node *ast.Node) (ir.Expression, error) {
 			return l.neverRestMarker(node, l.symbol(node)), nil
 		}
 		if function, isFunction := l.functions[l.symbol(node)]; !isLocal && isFunction {
+			if err := l.signatureTrap(node, l.symbol(node)); err != nil {
+				return nil, err
+			}
 			return l.functionValue(node, function)
 		}
 		if declaration, isGeneric := l.generics[l.symbol(node)]; !isLocal && isGeneric {
@@ -2455,6 +2464,9 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 			return l.callClosure(node)
 		}
 		return nil, l.notYet(node, "a call to "+describe(callee))
+	}
+	if err := l.signatureTrap(node, l.symbol(callee)); err != nil {
+		return nil, err
 	}
 	if l.result.Functions[function].Generator {
 		// The two consumers that keep a generator to themselves lower its call before this, and one
