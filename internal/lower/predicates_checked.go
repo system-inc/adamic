@@ -698,6 +698,14 @@ func (l *lowering) checkedPredicateResult(call *ast.CallExpression, value ir.Exp
 		if remainder = l.checkedPredicateClosedRemainder(call, index); remainder != nil {
 			falseToo = false
 		}
+	} else if falseToo && !assertion && claim.Type() != nil {
+		// An untagged claim judged relative to its source checks its false side by the remainder's view
+		// alone, at the false branch's first read (relativePredicateRemainder), so nothing is checked here.
+		taken, err := l.relativePredicateRemainder(declaration, call, index, source, claim.Type())
+		if err != nil {
+			return nil, err
+		}
+		falseToo = falseToo && !taken
 	}
 	check, err := l.checkedPredicateCheck(call.AsNode(), declaration, arguments[index], source, claim.Type(), returned, falseToo, local, message)
 	if err != nil {
@@ -709,7 +717,7 @@ func (l *lowering) checkedPredicateResult(call *ast.CallExpression, value ir.Exp
 	if remainder != nil && remainder.Flags()&checker.TypeFlagsNever == 0 {
 		falseBranch := ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: returned}}
 		failure := ir.Panic{Message: ir.StringConstant{Index: l.constant(message("false"))}}
-		setup, membership, err := l.predicateMembership(declaration, arguments[index], source, remainder, local, 0)
+		setup, membership, err := l.predicateMembershipHeld(call.AsNode(), declaration, arguments[index], source, remainder, local)
 		if err != nil {
 			return nil, err
 		}
@@ -786,7 +794,17 @@ func (l *lowering) checkedPredicateCheck(node, declaration *ast.Node, argument i
 	if falseToo && l.brandedMembership(target, map[*checker.Type]bool{}) {
 		return nil, l.notYet(node, "checked predicate membership of a branded supertype on its false branch")
 	}
-	setup, membership, err := l.predicateMembership(declaration, argument, source, target, local, 0)
+	// A false side tests the membership as a boolean, so an untagged target judged relative to its source,
+	// whose refined fields are read through checks that stop, is taken only where a failed check stops
+	// (relativePredicateMembership). With a false side it keeps predicateMembership's road.
+	var setup []ir.Statement
+	var membership ir.Expression
+	var err error
+	if falseToo {
+		setup, membership, err = l.predicateMembership(declaration, argument, source, target, local, 0)
+	} else {
+		setup, membership, err = l.predicateMembershipHeld(node, declaration, argument, source, target, local)
+	}
 	if err != nil {
 		return nil, err
 	}
