@@ -16,7 +16,9 @@ const spreadCopyReadStop = "stage 0 can't lower a read of weight from { ...built
 // checker types the copy with it when the source is seen as a type declaring it (#7mjgxkc). Main read the
 // slot the copy doesn't have: c13b printed garbage natively where Node prints undefined (ASan silent), and
 // c13c stopped on a compiler bug. By Compiler's ruling (B) each now stops at compile time at the read,
-// naming the field, the spread and the class, in .ts and .a; c13 stops earlier, at its predicate, as on main.
+// naming the field, the spread and the class, in .ts and .a. c13 reads it after an untagged predicate that skips
+// weight, since its source declares it (ruling 11, #4cvdkk3): the predicate's own view takes weight into its
+// contract, so a getter of that name reaching it stops first, as the tagged c13t does on main.
 // written_after, the getter's name written after the spread, stops at the literal, since natively the
 // copy has no slot for it (main stopped its read on the same compiler bug). own_field (the class's weight an
 // own data field) and method (a class's method, which the checker drops from the spread's type) lower and agree with
@@ -24,7 +26,7 @@ const spreadCopyReadStop = "stage 0 can't lower a read of weight from { ...built
 func TestSpreadPrototypeField(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, node, stop string }{
-		{"c13.ts", "number\ntarget undefined undefined\n", "c13.ts:9:1: stage 0 can't lower checked predicate overload target Target yet"},
+		{"c13.ts", "number\ntarget undefined undefined\n", "c13.ts:14:2: stage 0 can't lower a getter in a checked field contract yet"},
 		{"c13b.ts", "number\nundefined undefined\n", spreadCopyReadStop},
 		{"c13c.ts", "undefined undefined\n", spreadCopyReadStop},
 		{"c13b_a.a", "number\nundefined undefined\n", spreadCopyReadStop},
