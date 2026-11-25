@@ -75,12 +75,51 @@ console.log("made");
 	}
 }
 
-// A written any in a cast target never authorizes the view (rulings.md:37), under rule G as on main:
-// tsc's forEachChildTable, its per-kind generic functions cast to Record<SyntaxKind,
-// ForEachChildFunction<any>> (parser.ts:1253), stays NotYet at the cast by refuseAnyRelation
-// (any_relations.go), though rule G now relates <T>(node: any) against <T>(node: QualifiedName) without
-// refusing (Adamic's ruling on #7fd51gk).
+// A written any in a cast target never authorizes the view (rulings.md:37), under rule G as on main: a
+// table of per-kind generic functions cast to Record<Kind, Visit<any>>, tsc's forEachChildTable's shape
+// (parser.ts:1253), stays NotYet at the cast by refuseAnyRelation (any_relations.go), though rule G
+// relates <T>(node: any) against <T>(node: NodeA) without refusing (Adamic's ruling on #7fd51gk). The
+// table here is exported, so nothing proves it never written and ruling 17's dispatch declines it
+// (dispatch_cast.go's proof); TestAGenericTableDispatchIsRuling17s holds the unexported twin.
 func TestAGenericTableCastThroughAWrittenAnyStaysNotYet(t *testing.T) {
+	t.Parallel()
+	source := `enum Kind { A = 1, B = 2 }
+interface Node { readonly kind: Kind; }
+interface NodeA extends Node { readonly kind: Kind.A; readonly a: number; }
+interface NodeB extends Node { readonly kind: Kind.B; readonly b: string; }
+type Nodes = NodeA | NodeB;
+type Visit<TNode> = <T>(node: TNode, cb: (node: Node) => T | undefined) => T | undefined;
+type Table = { [TNode in Nodes as TNode["kind"]]: Visit<TNode>; };
+export const table: Table = {
+	[Kind.A]: function visitA<T>(node: NodeA, cb: (node: Node) => T | undefined): T | undefined { return node.a > 0 ? cb(node) : undefined; },
+	[Kind.B]: function visitB<T>(node: NodeB, cb: (node: Node) => T | undefined): T | undefined { return node.b.length > 0 ? cb(node) : undefined; },
+};
+function each<T>(node: Node, cb: (node: Node) => T | undefined): T | undefined {
+	const fn = (table as Record<Kind, Visit<any>>)[node.kind];
+	return fn === undefined ? undefined : fn(node, cb);
+}
+const a: NodeA = { kind: Kind.A, a: 1 };
+console.log(String(each(a, (node: Node): number => node.kind)));
+`
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, source, extension)
+			if err == nil {
+				t.Fatal("lowered, but the cast views the table's functions through a written any")
+			}
+			if !strings.Contains(err.Error(), ":13:14: ") || !strings.Contains(err.Error(), "a member typed any") {
+				t.Fatalf("got %v, want the cast at 13:14 stopped for its written any", err)
+			}
+		})
+	}
+}
+
+// The unexported twin of TestAGenericTableCastThroughAWrittenAnyStaysNotYet is ruling 17's dispatch, tsc's
+// forEachChild shape (#d1chbm7): the never-written proof holds the table, so the view's written any proves
+// nothing and needs to prove nothing, and the cast's stop goes. Its entries are generic function expressions, as
+// tsc's are, which stop next, at 9:12. Mutant, red: dispatchCastOperand answering false, so 13:14's stop comes back.
+func TestAGenericTableDispatchIsRuling17s(t *testing.T) {
 	t.Parallel()
 	source := `enum Kind { A = 1, B = 2 }
 interface Node { readonly kind: Kind; }
@@ -104,11 +143,8 @@ console.log(String(each(a, (node: Node): number => node.kind)));
 		t.Run(extension, func(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSourceAs(t, source, extension)
-			if err == nil {
-				t.Fatal("lowered, but the cast views the table's functions through a written any")
-			}
-			if !strings.Contains(err.Error(), ":13:14: ") || !strings.Contains(err.Error(), "a member typed any") {
-				t.Fatalf("got %v, want the cast at 13:14 stopped for its written any", err)
+			if err == nil || !strings.Contains(err.Error(), ":9:12: ") || !strings.Contains(err.Error(), "a generic function expression") {
+				t.Fatalf("got %v, want the dispatch admitted and the first generic entry, 9:12, stopping", err)
 			}
 		})
 	}

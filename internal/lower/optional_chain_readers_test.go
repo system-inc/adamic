@@ -209,4 +209,11 @@ var optionalChainReaders = map[string]optionalChainReader{
 	"overloadFilterSlice":             {2, readerProof},
 	"overloadFilterParameterRead":     {1, readerProof},
 	"calleeSourceText":                {3, "spells the callee as the source writes it for a TypeError's message, where V8 keeps a written ?. whatever optionalChain does with the step; it lowers nothing"},
+
+	// Ruling 17's dispatch (#d1chbm7) reads its own tokens raw, so its scan, run before any guard lowers, and its
+	// lowering agree: a ?. on the lookup or on x.kind declines the candidate, failing closed, and fn?.(x) is a bare
+	// name's call, the whole chain, which no guard runs as a plain step.
+	"dispatchCandidate": {2, "the lookup and its key: a ?. on either declines the dispatch, failing closed"},
+	"dispatchCalleeUse": {1, "fn?.(x): a call of a bare name, its ?. the whole chain, read as the scan records it"},
+	"dispatchCall":      {1, "fn?.(x): the same token the scan read, so the call's no-match arm is the one admitted"},
 }
