@@ -50,6 +50,12 @@
       "test": "internal/lower/predicates_function_type_test.go: TestFunctionTypeClaimIsCheckedAtTheCall"
     },
     {
+      "path": "internal/lower/testdata/ruling12a/narrower.ts",
+      "stderr": "adamic: panic: unreachable read of name at {root}/internal/lower/testdata/ruling12a/narrower.ts:10:21, never after the check isPrivateIdentifier(name) at {root}/internal/lower/testdata/ruling12a/narrower.ts:9:31\n",
+      "hatch": "predicate, line 6: function isPrivateIdentifier(node: Node): node is PrivateIdentifier { return node.kind === SyntaxKind.PrivateIdentifier && node.pos > 1; }",
+      "test": "internal/lower/predicates_remainder_never_test.go: TestClosedNeverRemainderNarrowerPredicateStops"
+    },
+    {
       "path": "internal/lower/testdata/scalar_union_views/misfit_boolean.ts",
       "stderr": "adamic: panic: field read failed: viewed.value matches no member of boolean | undefined; expected boolean | undefined, found string\n",
       "hatch": "cast, line 5: const viewed = base as View;",

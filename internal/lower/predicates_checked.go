@@ -90,9 +90,6 @@ func (l *lowering) checkedPredicateClosedRemainder(call *ast.CallExpression, ind
 	incoming := l.checker.GetTypeAtLocation(argument)
 	flow := &ast.FlowNode{Flags: ast.FlowFlagsFalseCondition, Node: call.AsNode(), Antecedent: &ast.FlowNode{Flags: ast.FlowFlagsStart}}
 	remainder := l.concrete(predicateFlowType(l.checker, argument, incoming, incoming, nil, flow))
-	if remainder.Flags()&checker.TypeFlagsNever != 0 {
-		return nil
-	}
 	// Every member of the argument's incoming type is judged, not just the remainder's: a remainder tag
 	// that a member the false side excludes also holds would pass the check for the excluded member.
 	incoming = l.concrete(incoming)
@@ -706,13 +703,18 @@ func (l *lowering) checkedPredicateResult(call *ast.CallExpression, value ir.Exp
 	if err != nil {
 		return nil, err
 	}
-	if remainder != nil {
+	// Ruling 12 A, Language's reading adopted at 20:44:38Z on #bbssdcy:
+	// evaluate and test the saved answer. On a never remainder, never_read.go
+	// stops at the false branch's first read. A continuation without a read runs on.
+	if remainder != nil && remainder.Flags()&checker.TypeFlagsNever == 0 {
+		falseBranch := ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: returned}}
+		failure := ir.Panic{Message: ir.StringConstant{Index: l.constant(message("false"))}}
 		setup, membership, err := l.predicateMembership(declaration, arguments[index], source, remainder, local, 0)
 		if err != nil {
 			return nil, err
 		}
-		failure := ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: membership}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message("false"))}}}}
-		check = append(check, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: returned}, Then: append(append([]ir.Statement{}, setup...), failure)})
+		falseBranch.Then = append(setup, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: membership}, Then: []ir.Statement{failure}})
+		check = append(check, falseBranch)
 	}
 	body = append(body, check...)
 	body = append(body, ir.Return{Value: returned})
