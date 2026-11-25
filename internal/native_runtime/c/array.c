@@ -24,6 +24,8 @@ adamic_array *adamic_array_make(size_t capacity, enum adamic_ir_type element) {
 			static const char message[] = "out of memory";
 			adamic_panic(message, sizeof message - 1);
 		}
+		// The elements' storage, made with the array: a buffer (count.h).
+		ADAMIC_COUNT_BUFFER();
 	}
 	return array;
 }
@@ -48,6 +50,9 @@ void adamic_array_push(adamic_array *array, adamic_value value) {
 			static const char message[] = "out of memory";
 			adamic_panic(message, sizeof message - 1);
 		}
+		// A buffer whether it makes the storage or enlarges it: an array made empty before a loop gets its
+		// storage on the first push inside the body (count.h).
+		ADAMIC_COUNT_BUFFER();
 		array->elements = grown;
 		array->capacity = capacity;
 	}
@@ -63,6 +68,8 @@ adamic_string *adamic_array_join(const adamic_array *array, const adamic_string 
 		static const char message[] = "out of memory";
 		adamic_panic(message, sizeof message - 1);
 	}
+	// The string being built: a buffer, as each realloc below that enlarges it is (count.h).
+	ADAMIC_COUNT_BUFFER();
 	ADAMIC_COUNT_JOIN_CAPACITY(capacity);
 	for (size_t index = 0; index < array->length; index++) {
 		char number[ADAMIC_NUMBER_FORMAT_MAX];
@@ -116,6 +123,8 @@ adamic_string *adamic_array_join(const adamic_array *array, const adamic_string 
 				adamic_panic(message, sizeof message - 1);
 			}
 			buffer = grown;
+			// Every realloc here enlarges the buffer made above: a buffer (count.h).
+			ADAMIC_COUNT_BUFFER();
 			ADAMIC_COUNT_JOIN_CAPACITY(capacity);
 		}
 		if (index > 0 && separator->length > 0) {
@@ -450,6 +459,8 @@ static void splice_into(adamic_array *array, double start, double count, bool ha
 			static const char message[] = "out of memory";
 			adamic_panic(message, sizeof message - 1);
 		}
+		// A buffer whether it makes the storage or enlarges it (count.h).
+		ADAMIC_COUNT_BUFFER();
 		array->elements = grown;
 		array->capacity = new_length;
 	}

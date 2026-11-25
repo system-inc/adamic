@@ -144,6 +144,8 @@ static void points_add(points *list, uint32_t point) {
 			static const char message[] = "out of memory";
 			adamic_panic(message, sizeof message - 1);
 		}
+		// A buffer whether it makes the items or enlarges them (count.h).
+		ADAMIC_COUNT_BUFFER();
 		list->items = grown;
 		list->capacity = capacity;
 	}
@@ -507,6 +509,8 @@ static normalization stream(const adamic_string *string, bool compatibility, boo
 				}
 				separate = !composed || composite(ordered.items[ordered.count - 1], expanded.items[0]) == 0;
 				if (expanded.count * 4 > capacity) {
+					// A buffer whether it makes the bytes or enlarges them (count.h).
+					ADAMIC_COUNT_BUFFER();
 					capacity = expanded.count * 4;
 					char *grown = realloc(bytes, capacity);
 					if (grown == NULL) {
