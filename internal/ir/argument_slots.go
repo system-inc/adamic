@@ -56,23 +56,48 @@ type ArgumentLayout struct {
 // ClosureArgumentLayout pads optional slots and collects rest tails at the
 // caller. A hidden count is selected only by an actual reader candidate.
 func (p *Program) ClosureArgumentLayout(call CallClosure) ArgumentLayout {
-	targets, resolved := p.FunctionTypeTargets[call.FunctionType]
-	if !resolved {
-		bounded := p.ClosureTargets(call)
-		targets = bounded.Functions
-		if bounded.Unknown {
-			for index := range p.Functions {
-				targets = append(targets, index)
-			}
+	targets, _ := p.closureLayoutTargets(call)
+	layout := p.closureArgumentSlots(call, targets)
+	for _, target := range targets {
+		layout.Count = layout.Count || p.PackedCountNeeded(target)
+	}
+	return layout
+}
+
+// ClosureArgumentSlots is ClosureArgumentLayout's fixed slots and rest tails without its count, read
+// from the same target set, and whether that set is every function because the call's targets aren't
+// bounded. It derives no program-wide facts (argumentFactsOf), so lowering can ask it before the
+// program is finished: checkClosureSpreadLayouts judges a spread's pack against it (#wzr4atz).
+func (p *Program) ClosureArgumentSlots(call CallClosure) (ArgumentLayout, bool) {
+	targets, unknown := p.closureLayoutTargets(call)
+	return p.closureArgumentSlots(call, targets), unknown
+}
+
+// closureLayoutTargets is the functions a closure call's layout packs for: a direct call's one, its
+// function type's targets (FunctionTypeTargets), or what ClosureTargets bounds, every function when
+// that's Unknown, which the second answer says.
+func (p *Program) closureLayoutTargets(call CallClosure) ([]int, bool) {
+	if call.Direct > 0 {
+		return []int{call.Direct - 1}, false
+	}
+	if targets, resolved := p.FunctionTypeTargets[call.FunctionType]; resolved {
+		return targets, false
+	}
+	bounded := p.ClosureTargets(call)
+	targets := bounded.Functions
+	if bounded.Unknown {
+		for index := range p.Functions {
+			targets = append(targets, index)
 		}
 	}
-	if call.Direct > 0 {
-		targets = []int{call.Direct - 1}
-	}
+	return targets, bounded.Unknown
+}
+
+// closureArgumentSlots is the fixed slots and rest tails targets read, as ClosureArgumentLayout lays them.
+func (p *Program) closureArgumentSlots(call CallClosure, targets []int) ArgumentLayout {
 	layout := ArgumentLayout{}
 	for _, target := range targets {
 		function := p.Functions[target]
-		layout.Count = layout.Count || p.PackedCountNeeded(target)
 		// Ordinary named functions bind their direct arguments elsewhere. Their
 		// value adapters, when the program makes one, are separate closure records.
 		if !function.Closure && !function.Receiver {

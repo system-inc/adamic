@@ -823,3 +823,24 @@ func TestArrayArmSitesStaySnapshotOwned(t *testing.T) {
 		t.Fatal("arrayArmSites must not be carried as a program fact")
 	}
 }
+
+// The calls with a spread through a function value checkClosureSpreadLayouts judges (#wzr4atz) are snapshot-owned: a
+// rollback that discards the IR a call was lowered into discards its site with it, and carrying one into another
+// program's lowering would judge that program's target sets by a call it never made.
+func TestClosureSpreadSitesStaySnapshotOwned(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs("../../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if loweringFieldPolicies["closureSpreadSites"] != speculativeState {
+		t.Fatal("closureSpreadSites' policy must stay snapshot-only")
+	}
+	text := string(generate(root, filepath.Join(root, "internal/lower/lower.go")))
+	if !strings.Contains(text, "result.closureSpreadSites = func(value []closureSpreadSite)") {
+		t.Fatal("closureSpreadSites lost its owned snapshot")
+	}
+	if strings.Contains(text, "closureSpreadSites: value.closureSpreadSites") {
+		t.Fatal("closureSpreadSites must not be carried as a program fact")
+	}
+}

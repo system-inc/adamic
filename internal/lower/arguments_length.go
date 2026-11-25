@@ -355,12 +355,104 @@ func (l *lowering) spreadElement(node *ast.Node, argument ir.Expression) ir.Type
 
 // packedAlike says a packed slot holding a value of type held reads back as type slot with nothing
 // converted, the rule copyRest's restHoldsAlike copies by: the same type, or a reference read as a
-// reference. A weak reference is made by adamic_weak_of, so it's alike only to itself.
+// reference. A weak reference is made by adamic_weak_of, so it's alike only to itself. A number read as
+// number | undefined is alike too: both are the slot's number member, and adamic_maybe_number_unpack reads
+// every double but ADAMIC_UNDEFINED_BITS, a NaN no arithmetic makes, as present. A boolean isn't: number |
+// undefined's twin, boolean | undefined, is its own member.
 func packedAlike(slot, held ir.Type) bool {
-	if slot == held {
+	if slot == held || slot == ir.MaybeNumber && held == ir.Number {
 		return true
 	}
 	return slot.IsReference() && held.IsReference() && slot != ir.Weak && held != ir.Weak
+}
+
+// closureSpreadSite is a call with a spread through a function value, as callClosure made it: its
+// argument nodes, the call whose layout the emitter packs for (ir.ClosureArgumentLayout), and what each
+// argument packs, a spread's elements as they're held and 0 for an empty array literal's, which packs
+// nothing (spreadPacks).
+type closureSpreadSite struct {
+	nodes []*ast.Node
+	call  ir.CallClosure
+	packs []ir.Type
+}
+
+// spreadPacks is how each argument of a call with a spread is packed: a fixed one as it's held, a
+// spread's elements as spreadElement says, and an empty array literal's spread as 0, packing nothing.
+func (l *lowering) spreadPacks(nodes []*ast.Node, arguments []ir.Expression, spread []bool) []ir.Type {
+	packs := []ir.Type{}
+	for index, argument := range arguments {
+		if len(spread) <= index || !spread[index] {
+			packs = append(packs, argument.Type())
+			continue
+		}
+		if literal, isLiteral := argument.(ir.ArrayLiteral); isLiteral && len(literal.Elements) == 0 {
+			packs = append(packs, 0)
+			continue
+		}
+		packs = append(packs, l.spreadElement(nodes[index], argument))
+	}
+	return packs
+}
+
+// checkClosureSpreadLayouts judges each call with a spread through a function value against every target
+// its layout packs for (#wzr4atz). spreadPackStop judged it against the function value's one signature,
+// but the emitter packs the arguments once and fills every slot of ir.ClosureArgumentLayout from that
+// pack: each fixed slot read as the layout's type, and each rest tail copied raw from its start (copyRest
+// with nothing converted). The layout's targets are every closure record its function type admits
+// (FunctionTypeTargets), so a rest the call never runs is still collected, and a number packed where
+// another target's rest of a union starts is its bits retained as a heap pointer. So each argument is
+// judged by packedAlike against each slot it can land in, read from the layout's own target set: a fixed
+// argument before the first spread, at position p, against the fixed slot p and every rest tail starting
+// at or before p; a spread's elements, and every argument after a spread, against every fixed slot from
+// p on and every rest tail. Targets that aren't bounded are every function, which may read anything, so
+// such a call stops wherever it packs something. FunctionTypeTargets is final once findCycles has run
+// resolveCountTypes, the one pass that fills it, so this runs after it. Stopping here fails closed;
+// packing each argument as every target its layout admits reads it is #wzr4atz's work.
+func (l *lowering) checkClosureSpreadLayouts() error {
+	for _, site := range l.closureSpreadSites {
+		layout, unknown := l.result.ClosureArgumentSlots(site.call)
+		from := func(position int) []ir.Type {
+			landing := slices.Clone(layout.Fixed[min(position, len(layout.Fixed)):])
+			for _, rest := range layout.Rest {
+				landing = append(landing, rest.Element)
+			}
+			return landing
+		}
+		position := 0
+		expanded := false
+		for index, held := range site.packs {
+			var landing []ir.Type
+			switch {
+			case len(site.call.Spread) > index && site.call.Spread[index]:
+				expanded = true
+				if held == 0 {
+					continue
+				}
+				landing = from(position)
+			case expanded:
+				landing = from(position)
+			default:
+				if position < len(layout.Fixed) {
+					landing = append(landing, layout.Fixed[position])
+				}
+				for _, rest := range layout.Rest {
+					if rest.Start <= position {
+						landing = append(landing, rest.Element)
+					}
+				}
+				position++
+			}
+			if unknown {
+				return l.notYet(site.nodes[index], "a call with a spread through a function value whose targets aren't bounded, so its layout may read anything where the call packs a "+typeName(held))
+			}
+			for _, slot := range landing {
+				if !packedAlike(slot, held) {
+					return l.notYet(site.nodes[index], "a call with a spread through a function value whose layout reads a "+typeName(slot)+" where the call packs a "+typeName(held))
+				}
+			}
+		}
+	}
+	return nil
 }
 
 // Optional method admission must account for the receiver, not just an assignable

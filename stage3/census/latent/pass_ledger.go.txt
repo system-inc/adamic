@@ -80,6 +80,11 @@ var latentPostLoweringSteps = []latent.PassStep{
 	{Name: "asyncPayloadFailures", Scoped: true, Production: "if len(lowering.asyncPayloadFailures) > 0 [calls:]"},
 	{Name: "checkPromiseConsumption"},
 	{Name: "checkViewLogicalWrites", Scoped: true},
+	// checkClosureSpreadLayouts judges each call with a spread through a function value against every target its
+	// layout packs for, read from FunctionTypeTargets, which findCycles fills from the whole program's closure
+	// records (#wzr4atz): it reads the lowering's records and rewrites nothing, and a body lowered on its own has
+	// no target sets to read, so it's recorded as not run, as checkArrayArmViews is.
+	{Name: "checkClosureSpreadLayouts"},
 	{Name: "programRegion", WholeProgram: true, Production: "if discovery || plan != nil [calls:result.HasAsync,program.Where,entry.AsNode]"},
 	{Name: "applyProgramMetadata", WholeProgram: true, Production: "if plan != nil [calls:applyProgramMetadata]"},
 	{Name: "ownershipQuery", WholeProgram: true, Production: "if len(ownershipQuery) > 0 && ownershipQuery[0] && lowering.hasMovedParallelMap [calls:fresh.QueryOwnershipTransfers,moveRefused,transfer.Answer.Verdict.String,fmt.Sprint]"},

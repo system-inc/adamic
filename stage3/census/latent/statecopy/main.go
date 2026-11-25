@@ -90,6 +90,10 @@ var loweringFieldPolicies = map[string]loweringFieldPolicy{
 	// The Array.isArray sites whose arms checkArrayArmViews holds (#9z2ksv7) roll back with the IR that built
 	// them, and are never carried into another program's lowering, whose views they don't judge.
 	"arrayArmSites": speculativeState,
+	// The calls with a spread through a function value checkClosureSpreadLayouts judges (#wzr4atz) roll back with
+	// the IR that made them, and are never carried into another program's lowering, whose target sets they don't
+	// name. Each holds its call's IR, deep-copied as any IR the lowering holds.
+	"closureSpreadSites": speculativeState,
 	// Scoped to one optionalIntrinsic invocation; snapshots preserve its immutable AST identity.
 	// It is not a carried program fact.
 	"optionalReceiverCall": scopedASTIdentity,

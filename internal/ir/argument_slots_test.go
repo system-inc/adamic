@@ -1,6 +1,9 @@
 package ir
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
 
 func TestArgumentLayouts(t *testing.T) {
 	t.Parallel()
@@ -37,5 +40,18 @@ func TestArgumentLayouts(t *testing.T) {
 	bounded := p.ClosureArgumentLayout(CallClosure{Closure: MakeClosure{Function: 0}})
 	if bounded.Count {
 		t.Fatal("a bounded unrelated function must not inherit a count")
+	}
+	// ClosureArgumentSlots reads the same targets as the layout, without the count, and says when they're every
+	// function because nothing bounds them (#wzr4atz).
+	for _, call := range []CallClosure{{FunctionType: 1}, {FunctionType: 2}, {FunctionType: 3}, {FunctionType: 4}, {Closure: Read{Local: 0}}, {Closure: MakeClosure{Function: 0}}} {
+		slots, unknown := p.ClosureArgumentSlots(call)
+		layout := p.ClosureArgumentLayout(call)
+		layout.Count = false
+		if !reflect.DeepEqual(slots, layout) {
+			t.Fatalf("%+v: slots %+v, layout %+v", call, slots, layout)
+		}
+		if _, isRead := call.Closure.(Read); unknown != isRead {
+			t.Fatalf("%+v: unknown %v", call, unknown)
+		}
 	}
 }
