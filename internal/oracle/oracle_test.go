@@ -802,7 +802,10 @@ func stderrCompared(stderr []byte) []byte {
 
 // disagreement says how two runs differ, or "" when they don't. A run that met a first-link trap is never an
 // agreement, whatever the other did: a program lowered in trap mode is measurement (lower's
-// Options.FirstLinkTraps), and two that trap alike would otherwise agree.
+// Options.FirstLinkTraps), and two that trap alike would otherwise agree. This is no whole seal: many of the
+// oracle's tests compare a run's exit and stdout themselves, never through here (graph_regions_test.go,
+// heap_quiet_test.go and function_rulings_main_test.go among them), and only TestFirstLinkTrapsOptionHasOneDoor
+// keeps trap mode out of the lowering they run.
 func disagreement(oracle run, native run) string {
 	switch {
 	case bytes.Contains(oracle.stderr, []byte("adamic: first-link trap:")) || bytes.Contains(native.stderr, []byte("adamic: first-link trap:")):
