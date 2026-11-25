@@ -18,5 +18,7 @@ function walk(node: Call, cb: (node: Call | Other, argument: Literal) => void): 
 const literal: Literal = { kind: "literal", text: "literal" };
 const dynamic: Dynamic = { kind: "dynamic", name: "name" };
 function run(node: Call): void { walk(node, (_call, arg) => { console.log(arg.text); }); }
-console.log(literal.text, dynamic.name, typeof run);
+console.log(literal.text);
+console.log(dynamic.name);
+console.log(typeof run);
 console.log("done");
