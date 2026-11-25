@@ -709,6 +709,10 @@ type lowering struct {
 	// numericEnums is numericEnum's answer per enum symbol, and numericEnumWalks how many times it was computed.
 	numericEnums     map[*ast.Symbol]bool
 	numericEnumWalks int
+	// numericKeyTables is numericKeyTableClosed's answer per const binding of a literal with numeric computed keys,
+	// and numericKeyTableWalks how many times the program was walked for one (numeric_keys.go).
+	numericKeyTables     map[*ast.Symbol]bool
+	numericKeyTableWalks int
 	// predicateProofs is every type predicate's proof, run once per verifier mode (predicates_proof.go).
 	predicateProofs *predicateProofs
 
