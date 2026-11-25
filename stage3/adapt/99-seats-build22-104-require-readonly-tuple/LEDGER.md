@@ -1,0 +1,1 @@
+- **Type-only, families 1 and 13 (#bbssdcy, ruling 3, Compiler accepts):** 99-seats-build22-104-require-readonly-tuple marks the single StringLiteralLike position in RequireOrImportCall.arguments readonly. It changes the internal type alias in types.ts, and its test reads the adapter's own snapshots.
