@@ -1,0 +1,7 @@
+# #d1chbm7 (Performance): ruling 17's scan over tsc's adapted program at commit 2a. Run after environment.sh,
+# sandboxed-job.sh, sandboxed_typescript_source and sandboxed_npm stage3/api. Never merged.
+set -u
+cp proof/performance/d17/zz_dispatch_tsc_test.go internal/lower/
+bash stage3/apply.sh "$TMPDIR/adapted" > "$TMPDIR/apply.log" 2>&1; echo "apply exit=$?"
+ADAMIC_DISPATCH_TSC="$TMPDIR/adapted/src/tsc/tsc.ts" go test -count=1 -v -timeout 40m -run 'TestZZDispatchScanOverTsc$' ./internal/lower > "$TMPDIR/scan.log" 2>&1; echo "scan exit=$?"
+grep -E 'ADMITTED|DECLINED|KEY |ACCESSORS|--- (PASS|FAIL|SKIP)|_test.go:[0-9]+: (Load|[A-Z][a-z])|panic|^(ok|FAIL)' "$TMPDIR/scan.log" | cut -c1-400 | head -40
