@@ -75,12 +75,9 @@ cohere      CohereSettings.json
 cohere      cohere-mirrors.json
 cohere      stage1/cohere/config/*
 # Read by path from outside a package's tree: the Node oracle runners the oracle's tests start, and
-# the root tsconfig.json, the compiler options internal/load gives every program. The root's other two projects are
-# what internal/load/projects generates from Load's own predicate, and its test holds them to it (#kyq0pyn).
+# the root tsconfig.json, the compiler options internal/load gives every program.
 package:internal/oracle  oracle/*
 package:internal/load    tsconfig.json
-package:internal/load/projects  tsconfig.node.json
-package:internal/load/projects  tsconfig.standalone.json
 # A .gitignore outside a package isn't inert: a line that matched a tracked file would hide it from every
 # walker that honors ignores. The gitignore port's test asks git and the port about the live tree's ignore
 # files (askedCases), so it is the executor (area/library 4a3880a7 added /logs/, Oct 8).
@@ -224,19 +221,15 @@ reads internal/load cohere
 reads internal/load .gitmodules
 # TestTheRootProjectsAreLoadsOwn — internal/load/projects/projects_test.go:17
 reads internal/load/projects tsconfig.json
-# TestTheRootProjectsAreLoadsOwn — internal/load/projects/projects_test.go:18
-reads internal/load/projects tsconfig.standalone.json
 # TestTheRootProjectsAreLoadsOwn — internal/load/projects/projects_test.go:19
-reads internal/load/projects tsconfig.node.json
-# TestTheRootProjectsAreLoadsOwn — internal/load/projects/projects_test.go:20
 reads internal/load/projects dedication/*
-# TestTheRootProjectsAreLoadsOwn — internal/load/projects/projects_test.go:21
+# TestTheRootProjectsAreLoadsOwn — internal/load/projects/projects_test.go:20
 reads internal/load/projects bench/*
-# TestTheRootProjectsAreLoadsOwn — internal/load/projects/projects_test.go:22
+# TestTheRootProjectsAreLoadsOwn — internal/load/projects/projects_test.go:21
 reads internal/load/projects stage1/*
-# TestTheRootProjectsAreLoadsOwn — internal/load/projects/projects_test.go:23
+# TestTheRootProjectsAreLoadsOwn — internal/load/projects/projects_test.go:22
 reads internal/load/projects internal/load/testdata/*
-# TestTheRootProjectsAreLoadsOwn — internal/load/projects/projects_test.go:24
+# TestTheRootProjectsAreLoadsOwn — internal/load/projects/projects_test.go:23
 reads internal/load/projects internal/oracle/testdata/*
 # TestClassFeaturesPrivateStorage — internal/lower/class_features_test.go:52
 reads internal/lower internal/oracle/testdata/class_features_private.a
