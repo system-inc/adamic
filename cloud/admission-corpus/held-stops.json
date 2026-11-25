@@ -236,6 +236,24 @@
       "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
     },
     {
+      "path": "internal/oracle/testdata/node_array_tuple/t01-alias-direct-write.ts",
+      "stderr": "adamic: panic: element read failed: list[0] at {root}/internal/oracle/testdata/node_array_tuple/t01-alias-direct-write.ts:25:32 is not a Ident; expected Ident, found object\n",
+      "hatch": "predicate (its readonly tuple claim, true when isOne returns, which line 17's writable MutableNodeArray alias, construction iv-a, writes element 0 beneath after the proof; readonly binds the view, never the array), line 13: function isOne(a: NodeArray<Node>): a is NodeArray<Node> & readonly [Ident] {",
+      "test": "internal/oracle/node_array_tuple_test.go: TestNodeArrayTupleAliasStops"
+    },
+    {
+      "path": "internal/oracle/testdata/node_array_tuple/t01-alias.ts",
+      "stderr": "adamic: panic: element read failed: list[0] at {root}/internal/oracle/testdata/node_array_tuple/t01-alias.ts:25:32 is not a Ident; expected Ident, found object\n",
+      "hatch": "predicate (its readonly tuple claim, true when isOne returns, which line 17's writable MutableNodeArray alias, construction iv-a, writes element 0 beneath after the proof; readonly binds the view, never the array), line 13: function isOne(a: NodeArray<Node>): a is NodeArray<Node> & readonly [Ident] {",
+      "test": "internal/oracle/node_array_tuple_test.go: TestNodeArrayTupleAliasStops"
+    },
+    {
+      "path": "internal/oracle/testdata/node_array_tuple/t01-kind-lie.ts",
+      "stderr": "adamic: panic: field read failed: list[0].text is not initialized; expected string, found missing\n",
+      "hatch": "predicate (in .ts a kind test over an open E proves the tag and only the tag, so the Ident view's own field check stops the read of text, which is the design; in .a line 17's downcast is refused under item 8 first, and a predicate that only tests a tag over an open supertype is refused at the predicate, docs/rulings.md:142, Adamic on #1g0sfr2), line 13: function isOne(a: NodeArray<Node>): a is NodeArray<Node> & readonly [Ident] {",
+      "test": "internal/oracle/node_array_tuple_test.go: TestNodeArrayTupleAliasStops"
+    },
+    {
       "path": "internal/oracle/testdata/non_null_array.ts",
       "stderr": "adamic: panic: non-null assertion failed at {root}/internal/oracle/testdata/non_null_array.ts:3:13: values[1]! is null or undefined\n",
       "hatch": "non-null, line 3: console.log(values[1]!);",
