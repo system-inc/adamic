@@ -1,0 +1,4 @@
+class Derived extends Array<number | string> {}
+const values = new Derived(3, "three");
+function target(...args: (number | string)[]): void { console.log(String(args.length)); }
+target(...values);

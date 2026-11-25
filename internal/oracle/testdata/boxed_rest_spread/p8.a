@@ -1,0 +1,4 @@
+type A = boolean | undefined;
+function target(...rest: (A | number)[]): string { return String(rest.length); }
+function relay(rest: A[]): string { return target(...rest); }
+console.log(relay([true, undefined]));
