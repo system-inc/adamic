@@ -179,13 +179,13 @@ static void rebuild(adamic_map *map, size_t entries_needed) {
 			static const char message[] = "out of memory";
 			adamic_panic(message, sizeof message - 1);
 		}
-		// One buffer for a rebuild that makes or enlarges the entries, a map's first table included,
-		// with its new buckets below riding along (count.h). A rebuild that compacts in place makes
-		// new buckets of the same size and enlarges nothing, so it isn't one.
-		ADAMIC_COUNT_BUFFER();
 		map->entries = grown;
 		map->capacity = capacity;
 	}
+	// One buffer for every rebuild: its buckets are allocated anew whether it enlarges the entries (a map's
+	// first table included) or only compacts them, and an enlarging rebuild's entries ride along with them
+	// (count.h). A compaction inside a loop's period is an allocation the probe must see.
+	ADAMIC_COUNT_BUFFER();
 	free(map->buckets);
 	map->bucket_count = 16;
 	while (map->bucket_count < map->capacity * 2) {

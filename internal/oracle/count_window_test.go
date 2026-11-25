@@ -82,8 +82,9 @@ function measured(): void {
 measured();
 console.log(String(pushed));
 `, countWindowUnpinned, countWindowUnpinned, 4},
-	// new Map() is adamic_map_new, with no table (map.c). A set into a full table rebuilds it, and a
-	// rebuild that allocates entries is one buffer, its buckets riding along. The first set finds 0 used of
+	// new Map() is adamic_map_new, with no table (map.c). A set into a full table rebuilds it, and every
+	// rebuild is one buffer, since its buckets are allocated anew, its entries riding along when it enlarges
+	// them; with no deletes, every rebuild here enlarges, so none only compacts. The first set finds 0 used of
 	// 0 and rebuilds into 8 entries from nothing; after it, a full table whose entries are all live doubles
 	// (adamic_map_set: count * 2 > capacity), at the ninth set (8 to 16) and the seventeenth (16 to 32), so
 	// seventeen keys are 3 buffers.
