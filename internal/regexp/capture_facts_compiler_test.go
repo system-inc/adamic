@@ -29,6 +29,7 @@ func TestCaptureFactsCompilerTable(t *testing.T) {
 	// The TypeScript submodule's path is read from the .gitmodules files by its name, never spelled here, since cohere
 	// moves TypeScript to libraries/typescript and keeps its name. A refusal stops the test in the reader's words: a
 	// guessed path would walk fixtures that aren't the ones cohere declares.
+	// Reads: .gitmodules
 	typeScript, err := submodules.Path("../..", "TypeScript")
 	if err != nil {
 		t.Fatal(err)
