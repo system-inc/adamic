@@ -1545,6 +1545,9 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 
 // arrayMethod lowers array.push(value) and array.join(separator).
 func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) (ir.Expression, bool, error) {
+	if name == "splice" && arraySpliceSpreads(node.AsCallExpression().Arguments.Nodes) {
+		return l.arraySpliceArguments(node, receiver, node.AsCallExpression().Arguments.Nodes)
+	}
 	return l.arrayMethodArguments(node, receiver, name, node.AsCallExpression().Arguments.Nodes)
 }
 
