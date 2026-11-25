@@ -71,6 +71,9 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			}
 			fieldName, known := l.methodName(property)
 			if !known {
+				fieldName, known = l.numericFieldName(node, property)
+			}
+			if !known {
 				return nil, l.notYet(name, "a computed field name")
 			}
 			if property.Kind == ast.KindPropertyAssignment && fieldName == "__proto__" {
