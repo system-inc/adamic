@@ -1,0 +1,1 @@
+internal/oracle/testdata/node_array_tuple/implied-extra-field-param.ts:25:21: stage 0 can't lower a value of type NodeArray<Node> & readonly [Ident, Ident | Literal, Shape] & FlaggedRange, an intersection whose member NodeArray<Node> isn't a plain object shape (a dictionary) yet
