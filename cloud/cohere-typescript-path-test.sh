@@ -5,11 +5,12 @@
 #
 #   bash cloud/cohere-typescript-path-test.sh
 #
-# The cases: cohere's shape at its pin as of Nov 23 (TypeScript), the shape after cohere moves it
-# (libraries/typescript/TypeScript), that move with the entry renamed and a decoy named TypeScript whose url names
-# another repository (the entry is chosen by its url, never its name), a url with no .git, the tree's root as the
-# default ., and the refusals: no .gitmodules, no entry whose url names TypeScript, two, a path with `..`, an absolute
-# path, and a path that is no directory in the tree.
+# The cases: cohere's shape at its pin as of Nov 25 (TypeScript), the shape after cohere moves it with the entry still
+# named TypeScript (libraries/typescript, and libraries/typescript/TypeScript as cohere's tools-typescript-move branch
+# lays it), an entry named TypeScript whose url is a local mirror (the url decides nothing), the tree's root as the
+# default ., and the refusals: no .gitmodules, no entry named TypeScript, the entry renamed with TypeScript's url kept
+# (the entry is chosen by its name, never its url), a name spelled typescript, two sections named TypeScript, a path
+# with `..`, an absolute path, and a path that is no directory in the tree.
 #
 # Mutant, run here after the real helper: cohere_typescript_path printing the hard-coded TypeScript, as the scripts read
 # it before. The moved-shape case must go red under it, and the test fails if it doesn't, so a suite that passes a
@@ -46,21 +47,28 @@ fixture today "[submodule \"TypeScript\"]
 	branch = adamic
 " TypeScript
 fixture moved "[submodule \"TypeScript\"]
+	path = libraries/typescript
+	url = $typescriptUrl
+	branch = adamic
+" libraries/typescript
+fixture nested "[submodule \"TypeScript\"]
 	path = libraries/typescript/TypeScript
 	url = $typescriptUrl
 	branch = adamic
 " libraries/typescript/TypeScript
-fixture renamed "[submodule \"TypeScript\"]
-	path = vendor/other
-	url = https://github.com/system-inc/other.git
-[submodule \"libraries/typescript/TypeScript\"]
-	path = libraries/typescript/TypeScript
-	url = $typescriptUrl
-" vendor/other libraries/typescript/TypeScript
-fixture bare "[submodule \"tsc\"]
-	path = libraries/typescript/TypeScript
+fixture mirror "[submodule \"TypeScript\"]
+	path = libraries/typescript
 	url = /var/lib/loom/mirrors/typescript/
-" libraries/typescript/TypeScript
+" libraries/typescript
+fixture renamed "[submodule \"libraries/typescript\"]
+	path = libraries/typescript
+	url = $typescriptUrl
+	branch = adamic
+" libraries/typescript
+fixture lowercase "[submodule \"typescript\"]
+	path = TypeScript
+	url = $typescriptUrl
+" TypeScript
 fixture missing - TypeScript
 fixture none "[submodule \"other\"]
 	path = other
@@ -69,10 +77,10 @@ fixture none "[submodule \"other\"]
 fixture two "[submodule \"TypeScript\"]
 	path = TypeScript
 	url = $typescriptUrl
-[submodule \"moved\"]
-	path = libraries/typescript/TypeScript
+[submodule \"TypeScript\"]
+	path = libraries/typescript
 	url = $typescriptUrl
-" TypeScript libraries/typescript/TypeScript
+" TypeScript libraries/typescript
 fixture parent "[submodule \"TypeScript\"]
 	path = ../TypeScript
 	url = $typescriptUrl
@@ -83,7 +91,7 @@ fixture absolute "[submodule \"TypeScript\"]
 	url = $typescriptUrl
 " TypeScript
 fixture absent "[submodule \"TypeScript\"]
-	path = libraries/typescript/TypeScript
+	path = libraries/typescript
 	url = $typescriptUrl
 " TypeScript
 
@@ -112,21 +120,23 @@ check() {
 # The default case runs from inside the tree with no root named.
 cases() {
 	check today TypeScript ''
-	check moved libraries/typescript/TypeScript ''
-	check renamed libraries/typescript/TypeScript ''
-	check bare libraries/typescript/TypeScript ''
+	check moved libraries/typescript ''
+	check nested libraries/typescript/TypeScript ''
+	check mirror libraries/typescript ''
 	check missing FAIL "$work/missing/cohere/.gitmodules isn't there"
-	check none FAIL 'has 0 submodules whose url names TypeScript, not one (it read: other https://github.com/system-inc/other.git)'
-	check two FAIL 'has 2 submodules whose url names TypeScript'
+	check none FAIL 'has 0 submodule paths named TypeScript, not one (it read: other at other from https://github.com/system-inc/other.git)'
+	check renamed FAIL "has 0 submodule paths named TypeScript, not one (it read: libraries/typescript at libraries/typescript from $typescriptUrl)"
+	check lowercase FAIL "has 0 submodule paths named TypeScript, not one (it read: typescript at TypeScript from $typescriptUrl)"
+	check two FAIL 'has 2 submodule paths named TypeScript, not one (it read: TypeScript at TypeScript'
 	check parent FAIL "the path '../TypeScript', which is no relative path inside cohere"
 	check absolute FAIL "the path '$work/absolute/cohere/TypeScript', which is no relative path inside cohere"
-	check absent FAIL "$work/absent/cohere/libraries/typescript/TypeScript is no directory of the tree's"
+	check absent FAIL "$work/absent/cohere/libraries/typescript is no directory of the tree's"
 	local out code=0
 	out=$(cd "$work/moved" && . "$helper" && cohere_typescript_path_under_test 2>&1) || code=$?
-	if [ "$code" = 0 ] && [ "$out" = libraries/typescript/TypeScript ]; then
+	if [ "$code" = 0 ] && [ "$out" = libraries/typescript ]; then
 		echo "ok   default root: $out"
 	else
-		echo "red  default root: wanted libraries/typescript/TypeScript from inside the moved tree, got exit $code, '$out'"
+		echo "red  default root: wanted libraries/typescript from inside the moved tree, got exit $code, '$out'"
 		failures=$((failures + 1))
 	fi
 }
