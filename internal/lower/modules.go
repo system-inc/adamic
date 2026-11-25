@@ -259,6 +259,7 @@ func (l *lowering) recordExports(entry *ast.SourceFile) error {
 				if err := l.overloadSetVerdict(implementation); err != nil {
 					return err
 				}
+				l.activateCallbackSetReads(implementation)
 			}
 			l.result.Exports = append(l.result.Exports, ir.Export{Name: exported.Name, Function: function})
 		} else if local, ok := l.locals[target]; ok && l.result.Locals[local].Type == ir.Closure {
