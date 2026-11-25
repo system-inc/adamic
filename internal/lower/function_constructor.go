@@ -798,6 +798,10 @@ func (l *lowering) layFunctionConstructorWindows() error {
 		if constructor.constructor < 0 {
 			continue
 		}
+		// A first-link lowering's trapped constructor lowers as its trap's stub, which allocates nothing.
+		if l.firstLinkSkips(constructor.declaration) {
+			continue
+		}
 		body := l.result.Functions[constructor.constructor].Body
 		allocation := slices.IndexFunc(body, func(statement ir.Statement) bool {
 			declared, isDeclare := statement.(ir.Declare)

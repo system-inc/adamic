@@ -1,15 +1,19 @@
 package lower
 
 import (
+	"errors"
+	"fmt"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
 // The whole-program passes after the bodies lower judge, and some rewrite, the IR the bodies made. In a
 // first-link lowering, a pass's stop traps the unit it lies in, in the IR already made, and the pass goes
-// on past it where it safely can (firstLinkPass). The stops lowering holds rather than returns where it
-// meets them are recorded the same way, once the bodies are lowered (firstLinkHeldStops), and a stop that
-// names the whole program, never a unit, is a row with no unit (firstLinkProgramStop).
+// on past it where it safely can (firstLinkPass), and a Go panic inside a pass is a row of its own rather
+// than the run's end (firstLinkRun). The stops lowering holds rather than returns where it meets them are
+// recorded the same way, once the bodies are lowered (firstLinkHeldStops), and a stop that names the whole
+// program, never a unit, is a row with no unit (firstLinkProgramStop).
 
 // firstLinkMainRange is where a top-level statement's IR lies in the program's Main, as moduleStatements
 // lowered it: length statements from start, counted before forwarderValues are put ahead of Main.
@@ -68,6 +72,26 @@ func (l *lowering) firstLinkPass(name string, rewrites bool, err error, run func
 			return nil
 		}
 	}
+}
+
+// firstLinkRun runs a whole-program pass and hands its stop to firstLinkPass. In a first-link lowering a Go
+// panic inside the pass, on its first run or any run again, is recovered as an error in the panic's words,
+// which firstLinkPass records as a row of kind "Error" with no unit: every row after it is Suspect, and the
+// rest of the pass is skipped, so a nil dereference or a bad index in one pass names a wall rather than
+// ending the run. Any other lowering runs the pass as it always has, and its panic reaches the caller.
+func (l *lowering) firstLinkRun(name string, rewrites bool, run func() error) error {
+	if !l.firstLinkTraps {
+		return run()
+	}
+	recovering := func() (err error) {
+		defer func() {
+			if recovered := recover(); recovered != nil {
+				err = errors.New(fmt.Sprint(recovered))
+			}
+		}()
+		return run()
+	}
+	return l.firstLinkPass(name, rewrites, recovering(), recovering)
 }
 
 // firstLinkRewriteSkip notes that a pass that rewrites the IR skipped its work past a stop.
@@ -145,6 +169,17 @@ func (l *lowering) firstLinkStubUnit(unit *ast.Node, stub ir.Panic) {
 			l.result.Main[index] = ir.Block{}
 		}
 	}
+}
+
+// firstLinkStubBody reports whether a function's body is a trap's stub alone, as firstLinkBody and
+// firstLinkStubUnit make it, for a pass over the IR that reads a table lowering filled beside it, the
+// program's Locals among them, which a trap leaves as the stopped lowering left them.
+func firstLinkStubBody(body []ir.Statement) bool {
+	if len(body) != 1 {
+		return false
+	}
+	stub, isPanic := body[0].(ir.Panic)
+	return isPanic && stub.Trap
 }
 
 // firstLinkHeldStops records, in a first-link lowering, the stops lowering held rather than returned where
