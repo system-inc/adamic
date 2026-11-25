@@ -101,7 +101,7 @@ stored:
 		// carries where).
 		source := l.concrete(l.checker.GetTypeAtLocation(node.Expression()))
 		target := l.concrete(l.checker.GetTypeAtLocation(node))
-		words = "cast failed: this " + l.checker.TypeToString(source) + " is not a " + l.checker.TypeToString(target)
+		words = l.castFailure(source, target)
 	}
 	message := ir.StringConstant{Index: l.constant(words)}
 	result := ir.Expression(ir.Coalesce{Value: value, Panic: message, Of: value.Type().Present()})

@@ -1397,6 +1397,11 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 // unparenthesizedValue is enumNeverValue's lowering of a node its parentheses are gone from, which
 // optionalChain asks for a chain's last step once its receiver is held.
 func (l *lowering) unparenthesizedValue(node *ast.Node) (ir.Expression, error) {
+	// Ruling 17's admitted dispatch: fn's presence tests and calls read the kind its declaration held, and never fn,
+	// which holds no value (dispatch_lower.go).
+	if value, handled, err := l.dispatchValue(node); handled {
+		return value, err
+	}
 	if value, handled, err := l.functionObservation(node); handled {
 		return value, err
 	}
