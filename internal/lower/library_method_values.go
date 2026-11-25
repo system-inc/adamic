@@ -382,6 +382,27 @@ func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error
 var delayedArrayWriters = map[string]bool{"push": true, "fill": true, "splice": true, "concat": true}
 var delayedArrayReaders = map[string]bool{"slice": true, "join": true, "at": true, "reverse": true, "indexOf": true, "includes": true, "lastIndexOf": true}
 
+// delayedArrayMutators are the delayed Array methods that change their receiver in place, so none may be
+// called on a readonly view (delayedReadonlyReceiver). concat writes only its result, never its receiver.
+var delayedArrayMutators = map[string]bool{"push": true, "fill": true, "splice": true, "reverse": true}
+
+// delayedReadonlyReceiver is the first member of a delayed call's receiver type that has no push, a readonly
+// view of an array (ReadonlyArray, a readonly tuple, a NodeArray-shaped layout), or nil when every member can
+// push. A member that isn't an array at all has no push either, so it fails closed.
+func (l *lowering) delayedReadonlyReceiver(receiver *ast.Node) *checker.Type {
+	held := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver))
+	members := []*checker.Type{held}
+	if held.Flags()&checker.TypeFlagsUnion != 0 {
+		members = held.Types()
+	}
+	for _, member := range members {
+		if l.checker.GetPropertyOfType(member, "push") == nil {
+			return member
+		}
+	}
+	return nil
+}
+
 // delayedArrayWritesFit is the check a delayed Array method's writes need. lib types Array.prototype as
 // any[], so a method value taken from it has any parameters, and the checker never checks what call or
 // apply hands it: push.call(names, { x: 1 }) writes an object into a string[], which native then reads
@@ -393,6 +414,18 @@ var delayedArrayReaders = map[string]bool{"slice": true, "join": true, "at": tru
 // the receiver's own array type. A reader stores nothing: slice's result goes through the delayed result
 // check, and the searches only compare.
 func (l *lowering) delayedArrayWritesFit(node, receiver *ast.Node, name string, written []*ast.Node) error {
+	// A readonly view is never a write's slot (#3cee4gb, Adamic's ruling on Language's J-2rzaksa): its
+	// declared element type is a covariant view, so the array it names may hold narrower elements another
+	// alias reads, and splice.call(nodes, 0, 1, other) on a readonly Ident[] seen as readonly Node[] put an
+	// Other where the Ident[] alias read an Ident, which native read past. A delayed mutator on a receiver
+	// some member of whose type can't push (ReadonlyArray, a readonly tuple, a NodeArray-shaped readonly
+	// layout) is refused as a direct write through a readonly view is. reverse reorders in place, so it's a
+	// mutator here though it writes nothing new.
+	if delayedArrayMutators[name] {
+		if readonly := l.delayedReadonlyReceiver(receiver); readonly != nil {
+			return &Refused{Where: l.program.Where(node), What: "a delayed Array.prototype." + name + " on a readonly array (" + l.checker.TypeToString(readonly) + "), a write through a view that can't be written", Fix: "write through the mutable array the program owns, or change a copy (slice() it first)"}
+		}
+	}
 	if delayedArrayReaders[name] {
 		return nil
 	}
