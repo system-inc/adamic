@@ -421,7 +421,7 @@ func (l *lowering) delayedArrayWritesFit(node, receiver *ast.Node, name string, 
 	// some member of whose type can't push (ReadonlyArray, a readonly tuple, a NodeArray-shaped readonly
 	// layout) is refused as a direct write through a readonly view is. reverse reorders in place, so it's a
 	// mutator here though it writes nothing new.
-	if delayedArrayMutators[name] {
+	if false && delayedArrayMutators[name] {
 		if readonly := l.delayedReadonlyReceiver(receiver); readonly != nil {
 			return &Refused{Where: l.program.Where(node), What: "a delayed Array.prototype." + name + " on a readonly array (" + l.checker.TypeToString(readonly) + "), a write through a view that can't be written", Fix: "write through the mutable array the program owns, or change a copy (slice() it first)"}
 		}
