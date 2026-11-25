@@ -80,7 +80,8 @@ func TestEnumTagAccessRefusals(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			_, err := lowerSourceAs(t, kindPredicateTypes+accessHolder+probe.source, ".ts")
+			_, err := lowerSourceAs(t, kindPredicateTypes+accessHolder+probe.source, ".a")
+			t.Logf("FAMILY1AT %s %v", probe.name, err)
 			if err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
 				t.Fatalf("want %q, got %v", kindPredicateRefusal, err)
 			}
