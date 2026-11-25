@@ -150,27 +150,42 @@ type nodeArrayTupleParts struct {
 // positions. nodeArrayLayoutOf itself still answers no for it, so every road that asks for an array's element
 // type (iteration, the array methods, spread, destructuring) and every write through it keeps the stop it had
 // before. Anything else the rule can't decide is no intersection of this kind, and stops where it did: a tuple
-// part that isn't readonly or has an optional, rest or variadic element, more than the two parts, a Ti that
-// doesn't extend E or is held otherwise, and an E or a Ti that admits undefined or null, whose absence a
-// position read couldn't tell from a missing element.
+// part that isn't readonly or has an optional, rest or variadic element, a third part that isn't implied by the
+// NodeArray part (nodeArrayImpliedMember), a Ti that doesn't extend E or is held otherwise, and an E or a Ti that
+// admits undefined or null, whose absence a position read couldn't tell from a missing element.
 func (l *lowering) nodeArrayTuple(proven *checker.Type) (nodeArrayTupleParts, bool) {
-	if proven == nil || proven.Flags()&checker.TypeFlagsIntersection == 0 || len(proven.Types()) != 2 {
+	if proven == nil || proven.Flags()&checker.TypeFlagsIntersection == 0 {
 		return nodeArrayTupleParts{}, false
 	}
 	parts := nodeArrayTupleParts{}
 	var tuple *checker.Type
+	var element *checker.Type
+	others := []*checker.Type{}
 	for _, part := range proven.Types() {
-		if checker.IsTupleType(part) {
+		switch {
+		case checker.IsTupleType(part) && tuple == nil:
 			tuple = part
-		} else {
-			parts.nodeArray = part
+		case checker.IsTupleType(part):
+			return nodeArrayTupleParts{}, false
+		case parts.nodeArray == nil:
+			if _, partElement, known := l.nodeArrayLayoutOf(part); known {
+				parts.nodeArray, element = part, partElement
+				continue
+			}
+			others = append(others, part)
+		default:
+			others = append(others, part)
 		}
 	}
 	if tuple == nil || parts.nodeArray == nil || !tuple.TargetTupleType().IsReadonly() || checker.TupleType_combinedFlags(tuple.TargetTupleType())&checker.ElementFlagsNonRequired != 0 {
 		return nodeArrayTupleParts{}, false
 	}
-	_, element, known := l.nodeArrayLayoutOf(parts.nodeArray)
-	if !known || l.includesUndefined(element) || l.includesNull(element) {
+	for _, member := range others {
+		if !l.nodeArrayImpliedMember(parts.nodeArray, member) {
+			return nodeArrayTupleParts{}, false
+		}
+	}
+	if l.includesUndefined(element) || l.includesNull(element) {
 		return nodeArrayTupleParts{}, false
 	}
 	held, _ := l.representation(element)
@@ -191,6 +206,31 @@ func (l *lowering) nodeArrayTuple(proven *checker.Type) (nodeArrayTupleParts, bo
 	}
 	parts.element = element
 	return parts, true
+}
+
+// nodeArrayImpliedMember is Adamic's answer on #tjfrgyq (Nov 25 00:20Z): a part of NodeArray<E> & readonly
+// [T1..Tn] beside those two adds no constraint and no slot when every property of it is the NodeArray part's own,
+// readonly on both sides and at an identical type, as tsc's Readonly<TextRange> is beside NodeArray's
+// ReadonlyTextRange pos and end (types.ts:3056, BindableObjectDefinePropertyCall's arguments). A member that
+// declares any property mutable, optional where the NodeArray part's isn't, at another type or absent from the
+// NodeArray part isn't implied, and neither is one with a call, construct or index signature, or a tuple.
+func (l *lowering) nodeArrayImpliedMember(nodeArray, member *checker.Type) bool {
+	if member.Flags()&checker.TypeFlagsObject == 0 || checker.IsTupleType(member) {
+		return false
+	}
+	if len(l.checker.GetSignaturesOfType(member, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(member, checker.SignatureKindConstruct)) != 0 || len(l.checker.GetIndexInfosOfType(member)) != 0 {
+		return false
+	}
+	for _, property := range l.checker.GetPropertiesOfType(member) {
+		own := l.checker.GetPropertyOfType(nodeArray, property.Name)
+		if own == nil || property.Flags&ast.SymbolFlagsOptional != own.Flags&ast.SymbolFlagsOptional || !l.checker.IsReadonlySymbol(property) || !l.checker.IsReadonlySymbol(own) {
+			return false
+		}
+		if !checker.Checker_isTypeIdenticalTo(l.checker, l.checker.GetTypeOfSymbol(property), l.checker.GetTypeOfSymbol(own)) {
+			return false
+		}
+	}
+	return true
 }
 
 // nodeArrayTupleRead is x[i] on NodeArray<E> & readonly [T1..Tn] (nodeArrayTuple), handled when x is one. Under
