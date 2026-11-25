@@ -19,7 +19,13 @@ func (l *lowering) moduleStatements(module *ast.SourceFile) ([]ir.Statement, err
 	if err := l.judgeBrandedCalls(module.AsNode()); err != nil {
 		return nil, err
 	}
-	body, err := l.statements(module.Statements.Nodes)
+	var body []ir.Statement
+	var err error
+	if l.firstLinkTraps {
+		body, err = l.firstLinkStatements(module)
+	} else {
+		body, err = l.statements(module.Statements.Nodes)
+	}
 	if err == nil {
 		l.result.MainModules = append(l.result.MainModules, ir.MainModule{Module: l.modulePath(module), Statements: len(body)})
 	}

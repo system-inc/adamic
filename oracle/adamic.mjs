@@ -61,6 +61,13 @@ export function panic(message) {
 	process.exit(70);
 }
 
+// firstLinkTrap ends a first-link program where it reached a unit lowering couldn't lower, as the native
+// runtime's adamic_first_link_trap does: one line to stderr, and exit 75, which is never a pass.
+export function firstLinkTrap(message) {
+	process.stderr.write(`adamic: first-link trap: ${message}\n`);
+	process.exit(75);
+}
+
 // isPanic is what the JavaScript backend's catch and finally ask of a value they caught, since a panic
 // is never the program's to catch. Here a panic exits the process where it stands (panic above, and the
 // uncaught handler), so no panic is ever a value a catch holds: false, for every value. The Workers
