@@ -1,0 +1,6 @@
+const unions: (number | string)[] = [1, "two"];
+const numbers: number[] = [3];
+function target(...rest: (number | string)[]): void {
+    for (const value of rest) console.log(String(value));
+}
+target(...unions, ...numbers);

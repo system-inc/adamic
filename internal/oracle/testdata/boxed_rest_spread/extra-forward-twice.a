@@ -1,0 +1,5 @@
+type A = number | string;
+function target(...rest: A[]): void { for (const value of rest) console.log(String(value)); }
+function relay(...rest: A[]): void { target(...rest); }
+function start(...rest: A[]): void { relay(...rest); }
+start("head", 1);
