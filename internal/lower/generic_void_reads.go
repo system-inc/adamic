@@ -2,6 +2,8 @@ package lower
 
 import (
 	"fmt"
+	"maps"
+	"reflect"
 	"sort"
 	"strings"
 
@@ -53,7 +55,7 @@ func (l *lowering) refuseGenericVoidReads(where, declaration *ast.Node, bound ma
 		// declared one is generic.
 		for _, parameter := range declaration.TypeParameters() {
 			parameterType := l.checker.GetTypeAtLocation(parameter.Name())
-			if concrete, known := bound[parameterType]; !known || concrete == nil {
+			if concrete, known := bound[parameterType]; (!known || concrete == nil) && !l.genericVoidProvenNonvoid(declaration, parameterType, target, resolved) {
 				voidBound[parameterType] = true
 				names = append(names, parameter.Name().Text()+" = void (read from the signature)")
 				identities = append(identities, parameter.Name().Text()+"=unmapped")
@@ -86,6 +88,123 @@ func (l *lowering) refuseGenericVoidReads(where, declaration *ast.Node, bound ma
 	}
 	l.genericVoidVerdicts[key] = verdict
 	return verdict
+}
+
+// genericVoidProvenNonvoid suppresses the fallback only for a binding this call's own
+// mapper proves closed, including signature metadata, and nonvoid. The separate
+// signature walk can hit its depth cap at 32
+// in a result even when the triggering node is not void. Reading the exact binding
+// there leaves the cap, instanceTypes and subsequent body lowering unchanged.
+func (l *lowering) genericVoidProvenNonvoid(declaration *ast.Node, binder *checker.Type, target, resolved *checker.Signature) bool {
+	if target == nil || resolved == nil || target.Declaration() != declaration || resolved.Target() != target {
+		return false
+	}
+	field := reflect.ValueOf(resolved).Elem().FieldByName("mapper")
+	if !field.IsValid() || field.Kind() != reflect.Pointer || field.IsNil() {
+		return false
+	}
+	concrete := l.concrete(instantiateType(l.checker, binder, (*typeMapper)(field.UnsafePointer())))
+	if concrete == nil || concrete == binder || concrete.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsTypeParameter|checker.TypeFlagsVoid) != 0 {
+		return false
+	}
+	return !l.voidReadBindingOpen(concrete, map[*checker.Type]bool{}, map[*checker.Type]bool{}) && !l.holdsVoid(concrete)
+}
+
+// voidReadBindingOpen owns the closure walk because relationSlotHolds chooses
+// its signature edges internally. Reusing that traversal would leave metadata
+// unchecked in nested signatures. Type identity keeps recursive revisits safe
+// across scopes as in relationSlotHolds.
+func (l *lowering) voidReadBindingOpen(slot *checker.Type, bound, visited map[*checker.Type]bool) bool {
+	if slot == nil {
+		return false
+	}
+	if slot.Flags()&checker.TypeFlagsTypeParameter != 0 {
+		return !bound[slot]
+	}
+	if slot.Flags()&checker.TypeFlagsInstantiable != 0 || slot.ObjectFlags()&checker.ObjectFlagsMapped != 0 {
+		return true
+	}
+	if visited[slot] {
+		return false
+	}
+	visited[slot] = true
+	var parts []*checker.Type
+	if slot.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		parts = append(parts, slot.Types()...)
+	}
+	if alias := slot.Alias(); alias != nil {
+		parts = append(parts, alias.TypeArguments()...)
+	}
+	if slot.Flags()&checker.TypeFlagsObject != 0 {
+		if slot.ObjectFlags()&checker.ObjectFlagsReference != 0 {
+			parts = append(parts, l.checker.GetTypeArguments(slot)...)
+		}
+		if slot.ObjectFlags()&checker.ObjectFlagsAnonymous != 0 {
+			for _, property := range l.checker.GetPropertiesOfType(slot) {
+				parts = append(parts, l.checker.GetTypeOfSymbol(property))
+			}
+			for _, info := range l.checker.GetIndexInfosOfType(slot) {
+				parts = append(parts, info.ValueType())
+			}
+			for _, kind := range []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct} {
+				for _, signature := range l.checker.GetSignaturesOfType(slot, kind) {
+					if l.voidReadSignatureOpen(signature, bound, visited) {
+						return true
+					}
+				}
+			}
+		}
+	}
+	for _, part := range parts {
+		if l.voidReadBindingOpen(part, bound, visited) {
+			return true
+		}
+	}
+	return false
+}
+
+// voidReadSignatureOpen checks the complete signature under its own binders.
+func (l *lowering) voidReadSignatureOpen(signature *checker.Signature, bound, visited map[*checker.Type]bool) bool {
+	declared := signature.TypeParameters()
+	if len(declared) != 0 {
+		bound = maps.Clone(bound)
+		for _, parameter := range declared {
+			bound[parameter] = true
+		}
+	}
+	if receiver := signature.ThisParameter(); receiver != nil &&
+		l.voidReadBindingOpen(l.checker.GetTypeOfSymbol(receiver), bound, visited) {
+		return true
+	}
+	for _, parameter := range declared {
+		constraint := l.checker.GetConstraintOfTypeParameter(parameter)
+		defaultType := l.checker.GetDefaultFromTypeParameter(parameter)
+		if l.voidReadBindingOpen(constraint, bound, visited) || l.voidReadBindingOpen(defaultType, bound, visited) {
+			return true
+		}
+		// The checker also returns nil for circular metadata. A declared edge
+		// with no resolved type cannot establish closure.
+		if symbol := parameter.Symbol(); symbol != nil {
+			for _, declaration := range symbol.Declarations {
+				if ast.IsTypeParameterDeclaration(declaration) {
+					node := declaration.AsTypeParameterDeclaration()
+					if constraint == nil && node.Constraint != nil || defaultType == nil && node.DefaultType != nil {
+						return true
+					}
+				}
+			}
+		}
+	}
+	for _, parameter := range signature.Parameters() {
+		if l.voidReadBindingOpen(l.checker.GetTypeOfSymbol(parameter), bound, visited) {
+			return true
+		}
+	}
+	if predicate := l.checker.GetTypePredicateOfSignature(signature); predicate != nil &&
+		l.voidReadBindingOpen(predicate.Type(), bound, visited) {
+		return true
+	}
+	return l.voidReadBindingOpen(l.checker.GetReturnTypeOfSignature(signature), bound, visited)
 }
 
 // signatureReachesVoid is whether a parameter or the result the declaration states generically is,
