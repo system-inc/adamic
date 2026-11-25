@@ -189,7 +189,7 @@ func (l *lowering) detachedOwnCall(node *ast.Node) (ir.Expression, bool, error) 
 	if err != nil {
 		return nil, true, err
 	}
-	key, err := l.recordKey(args[1], false)
+	key, err := l.recordKey(args[1], recordKeyUnchecked)
 	if err != nil {
 		return nil, true, err
 	}
