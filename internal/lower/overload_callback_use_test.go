@@ -1,7 +1,13 @@
 package lower
 
 import (
+	"context"
 	"errors"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 )
@@ -482,5 +488,875 @@ console.log("declared");
 				t.Fatalf("want %q at %s, got %v", probe.refusal, probe.where, err)
 			}
 		})
+	}
+}
+
+// TestOverloadCallbackArrayProof pins the new roads separately from the older
+// for-of tests. It uses only the JavaScript and source agreement helper.
+func TestOverloadCallbackArrayProof(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct {
+		name, source string
+		lowers       bool
+	}{
+		{"number-index", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+return cb === undefined || cb(nodes[0]!);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, true},
+		{"const-offset", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+const start = 0;
+for (let i = 0; i < nodes.length; i++) {
+    const node = nodes[i + start];
+    if (node !== undefined) {
+        return cb === undefined || cb(node);
+    }
+}
+return false;
+
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, true},
+		{"let-offset", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+const start = 0;
+for (let i = 0; i < nodes.length; i++) {
+    let node = nodes[i + start];
+    if (node !== undefined) {
+        return cb === undefined || cb(node);
+    }
+}
+return false;
+
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, false},
+		{"not-element", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+const other: N = { kind: 2 }; return cb === undefined || cb(other);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, false},
+		{"string-index", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+const key = "0"; return cb === undefined || cb(nodes[key]!);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, false},
+		{"array-reassigned", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+nodes = []; return cb === undefined || cb(nodes[0]!);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, false},
+		{"forward", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function worker(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+const start = 0;
+for (let i = 0; i < nodes.length; i++) {
+    const node = nodes[i + start];
+    if (node !== undefined) {
+        return cb === undefined || cb(node);
+    }
+}
+return false;
+}
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+return worker(nodes, cb);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, true},
+		{"forward-for-of", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function worker(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+for (const node of nodes) if (cb !== undefined) return cb(node); return false;
+}
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+return worker(nodes, cb);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, true},
+		{"forward-write", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function worker(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+(nodes as N[])[0] = {kind: 2}; return cb === undefined || cb(nodes[0]!);
+}
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+return worker(nodes, cb);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, false},
+		{"forward-push", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function worker(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+(nodes as N[]).push({kind: 2}); return cb === undefined || cb(nodes[0]!);
+}
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+return worker(nodes, cb);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, false},
+		{"forward-recursion", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function worker(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+return worker(nodes, cb);
+}
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+return worker(nodes, cb);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, false},
+		{"forward-spread", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function worker(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+return cb === undefined || cb(nodes[0]!);
+}
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+const pair: [readonly N[]] = [nodes]; return worker(...pair, cb);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, false},
+		{"callback-stored", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+const held = cb; return held === undefined || held(nodes[0]!);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, false},
+		{"truthiness", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+return cb ? cb(nodes[0]!) : false;
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, true},
+		{"false-member", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | false): boolean {
+return cb ? cb(nodes[0]!) : false;
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, false},
+		{"and-truthiness", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+if (cb && cb(nodes[0]!)) return true; return false;
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, false},
+		{"length", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+if (nodes.length === 0) return false; return cb === undefined || cb(nodes[0]!);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, true},
+		{"identity", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+const other: readonly N[] = []; if (other === (nodes as readonly N[])) return false; if (other !== nodes) { return cb === undefined || cb(nodes[0]!); } return false;
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, true},
+		{"loose-identity", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+const other: readonly N[] = []; if (other == nodes) return false; return cb === undefined || cb(nodes[0]!);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, false},
+		{"library-slice", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+const copy = nodes.slice(0, 1); if (copy.length === 0) return false; return cb === undefined || cb(nodes[0]!);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, true},
+		{"interface-slice", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+interface OwnSlice { slice(): number; }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+const copy = nodes.slice(0, 1); if (copy.length === 0) return false; return cb === undefined || cb(nodes[0]!);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, false},
+		{"class-slice", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+class OwnSlice extends Array<N> { slice(start?: number, end?: number): N[] { return []; } }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+const copy = nodes.slice(0, 1); if (copy.length === 0) return false; return cb === undefined || cb(nodes[0]!);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, false},
+		{"copy-element", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+const copy = nodes.slice(0, 1); return cb === undefined || cb(copy[0]!);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, false},
+		{"return-array", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): readonly N[];
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): readonly N[] {
+if (cb !== undefined) cb(nodes[0]!); return nodes;
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: readonly N[] = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(String(answer.length));
+`, true},
+		{"nested-return", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+const read = (): readonly N[] => nodes; if (read().length === 0) return false; return cb === undefined || cb(nodes[0]!);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, false},
+		{"handoff", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function observe(nodes: readonly N[], test: (node: N) => boolean): void {
+    for (const node of nodes) {
+        if (!test(node)) break;
+    }
+}
+function kindTest(node: N): boolean { return node.kind > 0; }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+observe(nodes, kindTest); return cb === undefined || cb(nodes[0]!);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, true},
+		{"handoff-push", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function observe(nodes: readonly N[], test: (node: N) => boolean): void {
+    (nodes as N[]).push({ kind: 2 });
+    for (const node of nodes) {
+        if (!test(node)) break;
+    }
+}
+function kindTest(node: N): boolean { return node.kind > 0; }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+observe(nodes, kindTest); return cb === undefined || cb(nodes[0]!);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, false},
+		{"handoff-recursion", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function observe(nodes: readonly N[], test: (node: N) => boolean): void {
+    observe(nodes, test);
+    for (const node of nodes) {
+        if (!test(node)) break;
+    }
+}
+function kindTest(node: N): boolean { return node.kind > 0; }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+observe(nodes, kindTest); return cb === undefined || cb(nodes[0]!);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, false},
+		// Rule 5 refuses storing the callback in a module variable.
+		{"handoff-stored", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function observe(nodes: readonly N[], test: (node: N) => boolean): void {
+    for (const node of nodes) {
+        if (!test(node)) break;
+    }
+}
+function kindTest(node: N): boolean { return node.kind > 0; }
+let saved: ((node: N) => boolean) | undefined;
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+saved = cb; observe(nodes, kindTest); return cb === undefined || cb(nodes[0]!);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, false},
+		// Rule 4 refuses invoking the callback from the handed-off closure.
+		{"handoff-captured", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function observe(nodes: readonly N[], test: (node: N) => boolean): void {
+    for (const node of nodes) {
+        if (!test(node)) break;
+    }
+}
+function kindTest(node: N): boolean { return node.kind > 0; }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+observe(nodes, (node: N): boolean => cb === undefined || cb(node)); return cb === undefined || cb(nodes[0]!);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, false},
+		{"worker-shape", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function observe(nodes: readonly N[], test: (node: N) => boolean): void {
+    for (const node of nodes) {
+        if (!test(node)) break;
+    }
+}
+function kindTest(node: N): boolean { return node.kind > 0; }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+let updated: N[] | undefined;
+const start = 0;
+const count = nodes.length;
+for (let i = 0; i < count; i++) {
+    const node = nodes[i + start];
+    const visited = node !== undefined ? (cb ? cb(node) : true) : false;
+    if (!visited && node !== undefined) {
+        if (updated === undefined) updated = nodes.slice(0, i);
+        updated.push(node);
+    }
+}
+if (updated !== undefined) return false;
+observe(nodes, kindTest);
+return true;
+
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, true},
+		{"visit-array-shape", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function observe(nodes: readonly N[], test: (node: N) => boolean): void {
+    for (const node of nodes) {
+        if (!test(node)) break;
+    }
+}
+function kindTest(node: N): boolean { return node.kind > 0; }
+function worker(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+let updated: N[] | undefined;
+const start = 0;
+const count = nodes.length;
+for (let i = 0; i < count; i++) {
+    const node = nodes[i + start];
+    const visited = node !== undefined ? (cb ? cb(node) : true) : false;
+    if (!visited && node !== undefined) {
+        if (updated === undefined) updated = nodes.slice(0, i);
+        updated.push(node);
+    }
+}
+if (updated !== undefined) return false;
+observe(nodes, kindTest);
+return true;
+}
+function visit<T extends N, A extends readonly T[] | undefined>(nodes: A, cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[] | undefined, cb: ((node: N) => boolean) | undefined): boolean {
+if (nodes === undefined) return false; const count = nodes.length; if (count === 0) return false; return worker(nodes, cb);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit<Id, readonly Id[]>(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, true},
+		{"visit-nodes-shape", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+interface NodeArray<T extends N> extends ReadonlyArray<T> { pos: number; end: number; hasTrailingComma: boolean; transformFlags: number }
+function worker(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): readonly N[] {
+    if (cb !== undefined && nodes.length !== 0) cb(nodes[0]!);
+    return nodes;
+}
+function visit<T extends N, A extends NodeArray<T> | undefined>(nodes: A, cb: (node: T) => boolean): readonly N[] | undefined;
+function visit(nodes: NodeArray<N> | undefined, cb: ((node: N) => boolean) | undefined): readonly N[] | undefined {
+if (nodes === undefined) return nodes;
+const length = nodes.length;
+const end = nodes.end;
+const start = nodes.pos;
+const trailing = nodes.hasTrailingComma;
+const updated = worker(nodes, cb);
+if (updated !== (nodes as readonly N[])) return updated;
+if (length === 0 || trailing || end < start) return updated;
+return nodes;
+
+}
+export function use(nodes: NodeArray<Id>): number {
+    const answer: readonly N[] | undefined = visit<Id, NodeArray<Id>>(nodes, (node: Id): boolean => node.text === "id");
+    return answer === undefined ? 0 : answer.length;
+}
+console.log("declared");
+`, true},
+		{"reduce-left", `function reduceLeft<T, U>(array: readonly T[], f: (memo: U, value: T, i: number) => U, initial: U): U;
+function reduceLeft<T>(array: readonly T[], f: (memo: T, value: T, i: number) => T): T | undefined;
+function reduceLeft<T>(array: readonly T[], f: (memo: T | undefined, value: T, i: number) => T, initial?: T): T | undefined {
+    if (array.length === 0) return undefined;
+    let memo: T | undefined = arguments.length <= 2 ? array[0]! : initial;
+    for (let i = 1; i < array.length; i++) memo = f(memo, array[i]!, i);
+    return memo;
+}
+const result: number | undefined = reduceLeft([1, 2, 3], (memo, value) => memo + value);
+if (result !== undefined) console.log(String(result));
+`, false},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			if probe.lowers {
+				lowersAndAgreesWithNodeAs(t, probe.source, ".ts")
+				return
+			}
+			switch probe.name {
+			case "reduce-left":
+				overloadVerdictRefused(t, probe.source, ".ts", "reduceLeft", 2,
+					"overload 2 of reduceLeft parameter f cannot be served by implementation parameter f")
+				return
+			case "forward-write", "forward-push", "handoff-push", "loose-identity", "class-slice":
+				// These programs can stop before the overload walk. Pin its
+				// own verdict and also require the ordinary program to stop.
+				checkArrayCallbackCensus(t, probe.source)
+				return
+			}
+			overloadVerdictRefused(t, probe.source, ".ts", "visit", 1,
+				"overload 1 of visit parameter cb cannot be served by implementation parameter cb")
+		})
+	}
+}
+
+// Some source restrictions run before overload census at a normal entry.
+// Ask that census directly to pin the reason this proof refuses as well.
+func checkArrayCallbackCensus(t *testing.T, source string) {
+	t.Helper()
+	checkArrayCallbackCensusEntry(t, writeAgreementSource(t, "main.ts", source))
+}
+
+func checkArrayCallbackCensusEntry(t *testing.T, path string) {
+	t.Helper()
+	program, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	entry := program.Files()[0]
+	err = func() error {
+		checked, release := program.Checker(context.Background(), entry)
+		defer release()
+		l := &lowering{program: program, checker: checked, entry: entry, result: &ir.Program{}}
+		var overload, implementation *ast.Node
+		for _, node := range entry.Statements.Nodes {
+			if node.Kind != ast.KindFunctionDeclaration || node.Name().Text() != "visit" {
+				continue
+			}
+			if node.Body() == nil {
+				overload = node
+			} else {
+				implementation = node
+			}
+		}
+		if implementation == nil || overload == nil {
+			t.Fatal("missing visit overload and implementation")
+		}
+		return l.censusOverload(implementation, overload, 1)
+	}()
+	var stopped *Refused
+	const refusal = "overload 1 of visit parameter cb cannot be served by implementation parameter cb"
+	if !errors.As(err, &stopped) || stopped.What != refusal {
+		t.Fatalf("want %q, got %v", refusal, err)
+	}
+	if _, err := Lower(context.Background(), program); err == nil {
+		t.Fatal("program unexpectedly lowered")
+	}
+}
+
+// The property obligation asks the same allocation graph as accessor
+// dispatch. The two edges differ only in where the owning allocation goes.
+func TestOverloadCallbackArrayProofGetterReach(t *testing.T) {
+	t.Parallel()
+	for _, owns := range []bool{false, true} {
+		function := &ast.Node{}
+		refusal := &Refused{What: "overload 1 of visit parameter cb cannot be served by implementation parameter cb"}
+		owner := ir.ObjectLiteral{Class: 1}
+		receiver := ir.ObjectLiteral{}
+		if owns {
+			receiver = owner
+		}
+		program := &ir.Program{
+			Locals:    []ir.Local{{Type: ir.Object}},
+			Classes:   []ir.Class{{Accessors: []ir.Accessor{{Name: "pos", Getter: -1, Setter: -1}}}},
+			Functions: []ir.Function{{Parameters: []int{0}}},
+			Main:      []ir.Statement{ir.Evaluate{Value: owner}, ir.Evaluate{Value: ir.Call{Function: 0, Arguments: []ir.Expression{receiver}}}},
+		}
+		l := &lowering{result: program, functionNodes: map[int]*ast.Node{0: function},
+			callbackReadUses: []overloadCallbackReadProof{{reads: []overloadCallbackRead{{function, 0, "pos"}}, refusal: refusal}}}
+		got := l.refuseReachedCallbackReads(l.newAccessorReach(program), map[string]bool{"pos": true})
+		if owns && got != refusal || !owns && got != nil {
+			t.Errorf("owning allocation reaches parameter %v, got %v", owns, got)
+		}
+	}
+}
+
+const overloadCallbackNodeSlice = `import { basename } from "node:path";
+interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: ((node: N) => boolean) | undefined): boolean {
+const copy = nodes.slice(0, 1); if (copy.length === 0) return false; return cb === undefined || cb(nodes[0]!);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+console.log(basename("folder/example"));
+`
+
+func TestOverloadCallbackArrayProofNodeSlice(t *testing.T) {
+	t.Parallel()
+	program, err := load.Load([]string{writeAgreementSource(t, "main.ts", overloadCallbackNodeSlice)})
+	if err != nil {
+		t.Fatal(err)
+	}
+	var declaresSlice ast.Visitor
+	declaresSlice = func(node *ast.Node) bool {
+		if node.Parent != nil && node.Parent.Kind == ast.KindInterfaceDeclaration && node.Name() != nil {
+			if name, _ := memberKeyText(node); name == "slice" {
+				return true
+			}
+		}
+		return node.ForEachChild(declaresSlice)
+	}
+	for _, file := range program.SourceFiles() {
+		if load.IsNodeLibrary(file) && file.AsNode().ForEachChild(declaresSlice) {
+			t.Logf("bundled slice declaration in %s", file.FileName().AsString())
+			lowersAndAgreesWithNodeAs(t, overloadCallbackNodeSlice, ".ts")
+			return
+		}
+	}
+	t.Fatal("the program did not load a bundled Node declaration of slice")
+}
+
+const overloadCallbackGetterFixture = `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+interface NodeArray<T extends N> extends Array<T> { pos: number; end: number; hasTrailingComma: boolean; transformFlags: number }
+class Holder { get pos(): number { return 7; } }
+function visit<T extends N>(nodes: NodeArray<T>, cb: (node: T) => boolean): boolean;
+function visit(nodes: NodeArray<N>, cb: ((node: N) => boolean) | undefined): boolean {
+    if (nodes.pos === 0) return false;
+    return cb === undefined || cb(nodes[0]!);
+}
+console.log(String(new Holder().pos));
+`
+
+func TestOverloadCallbackArrayProofDisjointGetter(t *testing.T) {
+	t.Parallel()
+	source := overloadCallbackGetterFixture + `
+const item: Id = { kind: 1, text: "id" };
+const nodes = [item] as NodeArray<Id>;
+nodes.pos = 1;
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`
+	lowersAndAgreesWithNodeAs(t, source, ".ts")
+}
+
+func TestOverloadCallbackArrayProofUnknownGetter(t *testing.T) {
+	t.Parallel()
+	source := overloadCallbackGetterFixture + `
+export function use(nodes: NodeArray<Id>): boolean {
+    return visit(nodes, (node: Id): boolean => node.text === "id");
+}
+`
+	if err := overloadVerdictOf(t, source, ".ts", "visit", 1); err != nil {
+		t.Fatalf("census must serve the overload: %v", err)
+	}
+	const want = "overload 1 of visit parameter cb cannot be served by implementation parameter cb"
+	var refused *Refused
+	_, err := lowerSourceAs(t, source, ".ts")
+	if !errors.As(err, &refused) || refused.What != want || !strings.HasSuffix(refused.Where, "main.ts:5:50") {
+		t.Fatalf("want %q at the overload parameter, got %v", want, err)
+	}
+}
+
+func TestOverloadCallbackArrayProofQualifiedTargets(t *testing.T) {
+	t.Parallel()
+	for _, row := range []struct {
+		name, source string
+		lowers       bool
+	}{
+		{"qualified-structural-forward-checked", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+namespace W {
+export function worker(nodes: readonly N[], cb: (node: N) => boolean): boolean {
+    return nodes.length !== 0 && cb(nodes[0]!);
+}
+}
+const fake: typeof W = { worker: (_nodes, cb) => cb({ kind: 2 }) };
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: (node: N) => boolean): boolean {
+    return fake.worker(nodes, cb);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, false},
+		{"qualified-structural-handoff", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+namespace W {
+    export function observe(nodes: readonly N[]): void {
+        console.log(String(nodes.length));
+    }
+}
+const fake: typeof W = { observe: (nodes) => { (nodes as N[]).push({ kind: 2 }); } };
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: (node: N) => boolean): boolean {
+    fake.observe(nodes); return cb(nodes[nodes.length - 1]!);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, false},
+		{"namespace-forward", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+namespace W {
+export function worker(nodes: readonly N[], cb: (node: N) => boolean): boolean {
+    return nodes.length !== 0 && cb(nodes[0]!);
+}
+}
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: (node: N) => boolean): boolean {
+    return W.worker(nodes, cb);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, true},
+		{"namespace-handoff", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+namespace W {
+    export function observe(nodes: readonly N[]): void {
+        console.log(String(nodes.length));
+    }
+}
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: (node: N) => boolean): boolean {
+    W.observe(nodes); return cb(nodes[0]!);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, true},
+		{"nested-namespace-forward", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+namespace W { export namespace Inner {
+export function worker(nodes: readonly N[], cb: (node: N) => boolean): boolean {
+    return nodes.length !== 0 && cb(nodes[0]!);
+}
+} }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: (node: N) => boolean): boolean {
+    return W.Inner.worker(nodes, cb);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, false},
+		{"parenthesized-namespace-forward", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+namespace W {
+export function worker(nodes: readonly N[], cb: (node: N) => boolean): boolean {
+    return nodes.length !== 0 && cb(nodes[0]!);
+}
+}
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: (node: N) => boolean): boolean {
+    return (W).worker(nodes, cb);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, false},
+		{"indexed-namespace-forward", `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+namespace W {
+export function worker(nodes: readonly N[], cb: (node: N) => boolean): boolean {
+    return nodes.length !== 0 && cb(nodes[0]!);
+}
+}
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: (node: N) => boolean): boolean {
+    return W["worker"](nodes, cb);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, false},
+	} {
+		t.Run(row.name, func(t *testing.T) {
+			t.Parallel()
+			if row.lowers {
+				lowersAndAgreesWithNodeAs(t, row.source, ".ts")
+			} else {
+				checkArrayCallbackCensus(t, row.source)
+			}
+		})
+	}
+}
+
+func TestOverloadCallbackArrayProofModuleTargets(t *testing.T) {
+	t.Parallel()
+	const worker = `interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+export function worker(nodes: readonly N[], cb: (node: N) => boolean): boolean {
+    return nodes.length !== 0 && cb(nodes[0]!);
+}
+`
+	for _, row := range []struct {
+		name, source string
+		lowers       bool
+	}{
+		{"module-forward", `import * as W from "./worker.ts";
+interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: (node: N) => boolean): boolean {
+    return W.worker(nodes, cb);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, true},
+		{"module-structural-forward", `import * as W from "./worker.ts";
+interface N { readonly kind: number }
+interface Id extends N { readonly kind: 1; readonly text: string }
+const fake: typeof W = { worker: (_nodes, cb) => cb({ kind: 2 }) };
+function visit<T extends N>(nodes: readonly T[], cb: (node: T) => boolean): boolean;
+function visit(nodes: readonly N[], cb: (node: N) => boolean): boolean {
+    return fake.worker(nodes, cb);
+}
+const nodes: readonly Id[] = [{ kind: 1, text: "id" }];
+const answer: boolean = visit(nodes, (node: Id): boolean => node.text === "id");
+console.log(answer ? "true" : "false");
+`, false},
+	} {
+		t.Run(row.name, func(t *testing.T) {
+			t.Parallel()
+			path := writeAgreementSource(t, "main.ts", row.source)
+			if err := os.WriteFile(filepath.Join(filepath.Dir(path), "worker.ts"), []byte(worker), 0o600); err != nil {
+				t.Fatal(err)
+			}
+			if row.lowers {
+				agreeEntry(t, path, nil, 0, nil, nil)
+			} else {
+				checkArrayCallbackCensusEntry(t, path)
+			}
+		})
+	}
+}
+
+// The original witness stops in TypeScript checking. The checked twin above
+// keeps its structural callee but reaches the overload census.
+func TestOverloadCallbackArrayProofLowerWitness(t *testing.T) {
+	t.Parallel()
+	const source = `interface Node { kind: string }
+interface Id extends Node { kind: "Id"; text: string }
+namespace W {
+  export function worker(nodes: readonly Node[], f: (n: Node) => Node): void {
+    for (let i = 0; i < nodes.length; i++) f(nodes[i]!);
+  }
+}
+const fake: typeof W = { worker: (nodes, f) => { f({ kind: "Other" }); } };
+function visit(nodes: readonly Id[], cb: (n: Id) => Node): void;
+function visit(nodes: readonly Node[], cb: (n: Node) => Node): void {
+  fake.worker(nodes, cb);
+}
+visit([{ kind: "Id", text: "abc" }], (n: Id): Node => { console.log(n.text.length); return n; });
+`
+	path := writeAgreementSource(t, "main.ts", source)
+	if _, err := load.Load([]string{path}); err == nil {
+		t.Fatal("the original witness unexpectedly passed TypeScript checking")
+	} else {
+		var checked *load.CheckError
+		if !errors.As(err, &checked) || !strings.Contains(checked.Error(), "TS2394") ||
+			!strings.Contains(checked.Error(), "TS2345") {
+			t.Fatalf("expected TS2394 and TS2345, got %v", err)
+		}
+	}
+	node := runAgreementNode(t, path)
+	if node.code != 70 || len(node.stdout) != 0 || !strings.Contains(string(node.stderr), "TypeError: Cannot read properties of undefined (reading 'length')") {
+		t.Fatalf("unexpected Node result: exit %d, stdout %q, stderr %q", node.code, node.stdout, node.stderr)
 	}
 }

@@ -197,6 +197,8 @@ var optionalChainReaders = map[string]optionalChainReader{
 	"neverRestReference":              {1, readerProof},
 	"neverRestUse":                    {1, readerProof},
 	"overloadCallbackCall":            {2, readerProof},
+	"overloadCallbackProof.target":    {3, readerProof + ": the cached overload verdict follows bodies and reads written calls and callees even while lowering guards their chain; these reads only refuse, so the written form is the conservative answer"},
+	"overloadCallbackProof.arrayUse":  {1, readerProof + ": the cached overload verdict follows bodies and reads written array accesses even while lowering guards their chain; these reads only refuse, so the written form is the conservative answer"},
 	"overloadParameterCall":           {1, readerProof},
 	"overloadMutatorCall":             {2, readerProof},
 	"overloadMapShapeOf":              {2, readerProof},
