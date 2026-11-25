@@ -1,0 +1,5 @@
+const values: (1 | "one")[] = [1, "one"];
+function target(...rest: (number | string)[]): void {
+    for (const value of rest) console.log(String(value));
+}
+target(...values);
