@@ -195,7 +195,19 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 		return nil, true, err
 	}
 	if callee.AsPropertyAccessExpression().QuestionDotToken != nil {
-		return nil, true, l.notYet(node, "an optional RegExp call")
+		// Rulings.md:212, family 121: test may consume the receiver already
+		// held by this intrinsic's guard. exec must keep null distinct from
+		// the undefined of a skipped call; its plain array result cannot.
+		// A parenthesized callee ends the optional chain, so its call is outside the receiver guard.
+		binding := l.optionalReceiverBinding
+		if callee != node.AsCallExpression().Expression || name != "test" || !l.isLibraryType(proven, "RegExp") ||
+			l.optionalReceiverCall != node || binding.call != node || binding.receiver != receiver {
+			return nil, true, l.notYet(node, "an optional RegExp call")
+		}
+		if value.Type() == ir.Union {
+			// Only the RegExp arm remains inside the guard's present branch.
+			value = ir.Narrow{Value: value, To: ir.Object}
+		}
 	}
 	var arguments []ir.Expression
 	for _, arg := range args {
