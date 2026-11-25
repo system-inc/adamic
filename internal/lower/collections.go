@@ -627,6 +627,12 @@ func (l *lowering) destructuredField(where *ast.Node, destructured *checker.Type
 		return nil, l.prototypeRead(where, field)
 	}
 	if property.Flags&ast.SymbolFlagsMethod != 0 {
+		// Ruling 16 B and Language's provider conditions preserve the detach and
+		// bind premises in rulings.md:122 and :123. A proven slot is already a
+		// closure, even when an unrelated compatible allocation owns a method.
+		if l.detachableDestructuredMethod(where, field) {
+			return property, nil
+		}
 		return nil, &Refused{Where: l.program.Where(where), What: "a method in object destructuring", Fix: "call " + field + " on its receiver or wrap that call in an arrow, since destructuring would lose this; if nothing that fills " + field + " reads this, declare it as a function-typed property (" + field + ": (...) => T) instead of a method"}
 	}
 	for _, root := range l.checker.GetRootSymbols(property) {
