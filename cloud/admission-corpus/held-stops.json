@@ -632,6 +632,42 @@
       "test": "internal/oracle/library_node_environment_test.go: TestProcessEnvironmentInheritedKeyPanics"
     },
     {
+      "path": "internal/oracle/testdata/record_boxed_keys/p4-prototype-miss.ts",
+      "stderr": "adamic: panic: record member 'toString' is missing; records hold own keys only\n",
+      "hatch": "language (docs/rulings.md:307, \"Records hold own enumerable string data keys only\"), line 3: console.log(typeof record[key]);",
+      "test": "internal/oracle/record_boxed_keys_test.go: TestRecordBoxedKeyPrototypeMiss"
+    },
+    {
+      "path": "internal/oracle/testdata/record_boxed_keys/p4-unboxed-twin.ts",
+      "stderr": "adamic: panic: record member 'toString' is missing; records hold own keys only\n",
+      "hatch": "language (docs/rulings.md:307, \"Records hold own enumerable string data keys only\"), line 3: console.log(typeof record[key]);",
+      "test": "internal/oracle/record_boxed_keys_test.go: TestRecordBoxedKeyPrototypeMiss"
+    },
+    {
+      "path": "internal/oracle/testdata/record_boxed_keys/s01-narrowed-local.ts",
+      "stderr": "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n",
+      "hatch": "language (docs/rulings.md:162, \"A narrowed read after a call whose write set reaches the narrowed variable\"), line 7: console.log(String(record[key]));",
+      "test": "internal/oracle/record_boxed_keys_test.go: TestRecordBoxedKeyNarrowedAwayStops"
+    },
+    {
+      "path": "internal/oracle/testdata/record_boxed_keys/s02-narrowed-field.ts",
+      "stderr": "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n",
+      "hatch": "language (docs/rulings.md:162, \"A narrowed read after a call whose write set reaches the narrowed variable\"), line 7: console.log(String(record[box.key]));",
+      "test": "internal/oracle/record_boxed_keys_test.go: TestRecordBoxedKeyNarrowedAwayStops"
+    },
+    {
+      "path": "internal/oracle/testdata/record_boxed_keys/s03-narrowed-boolean.ts",
+      "stderr": "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n",
+      "hatch": "language (docs/rulings.md:162, \"A narrowed read after a call whose write set reaches the narrowed variable\"), line 7: console.log(String(record[key]));",
+      "test": "internal/oracle/record_boxed_keys_test.go: TestRecordBoxedKeyNarrowedAwayStops"
+    },
+    {
+      "path": "internal/oracle/testdata/record_boxed_keys/s04-narrowed-null.ts",
+      "stderr": "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n",
+      "hatch": "language (docs/rulings.md:162, \"A narrowed read after a call whose write set reaches the narrowed variable\"), line 7: console.log(String(record[key]));",
+      "test": "internal/oracle/record_boxed_keys_test.go: TestRecordBoxedKeyNarrowedAwayStops"
+    },
+    {
       "path": "internal/oracle/testdata/records_checked_names/merged_field.ts",
       "stderr": "adamic: panic: field read failed: box.label is not initialized; expected string, found missing\n",
       "hatch": "language (docs/rulings.md:126, \"Declaration merging that adds members to a class\"), line 4: interface Box { readonly label: string }",
