@@ -83,6 +83,7 @@ timed door-build "$work/build.log" go build -o "$work/adamic-firstlink" ./cmd/ad
 
 code=0
 timed door "$work/door.log" timeout --foreground --signal=QUIT --kill-after=3m 55m "$work/adamic-firstlink" "$work/tree/src/tsc/tsc.ts" "$work/out" || code=$?
+grep -n 'FINDCYCLES' "$work/door.log" | sed 's/^/TRACE /'
 if ((code)); then
 	grep -n -m1 -A20 -E '^(panic|fatal error|runtime error)' "$work/door.log" | sed 's/^/PANIC-HEAD /'
 	tail -n 60 "$work/door.log"
