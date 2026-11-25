@@ -220,6 +220,8 @@ reads internal/ir internal/native/*.go
 reads internal/ir internal/*.go
 # TestTypeScriptIsThePinnedCommit — internal/load/pin_test.go:19
 reads internal/load cohere
+# TestTypeScriptIsThePinnedCommit — internal/load/pin_test.go:17: internal/submodules.Path opens the root .gitmodules and, by name, each one under the cohere pin (#g7nnryf)
+reads internal/load .gitmodules
 # TestTheRootProjectsAreLoadsOwn — internal/load/projects/projects_test.go:17
 reads internal/load/projects tsconfig.json
 # TestTheRootProjectsAreLoadsOwn — internal/load/projects/projects_test.go:18
@@ -1823,6 +1825,12 @@ reads internal/dry cohere
 # and reads every .ts there, which its Go imports never reach, so a cohere bump that edits a fixture moves its key
 # (Adamic Operations' find on #7pmja7p, Oct 20).
 reads internal/regexp cohere
+# TestCaptureFactsCompilerTable — internal/regexp/capture_facts_compiler_test.go:19: internal/submodules.Path opens the root .gitmodules and, by name, each one under the cohere pin (#g7nnryf)
+reads internal/regexp .gitmodules
+# TestES2024GlobalAudit — internal/apple/naming/naming_test.go:417: internal/submodules.Path opens the root .gitmodules and, by name, each one under the cohere pin (#g7nnryf)
+reads internal/apple/naming .gitmodules
+# TestES2024GlobalAudit — internal/apple/naming/naming_test.go:417: internal/submodules.Path opens the root .gitmodules and, by name, each one under the cohere pin (#g7nnryf)
+reads internal/apple/naming cohere
 # internal/dry's mirror tests (mirrors_test.go's sourceHeaders and goFiles) read every tracked file with these nine
 # extensions, wherever it is, as a strace of the whole suite on Cloud measured (Oct 18, #b5yzjhd): 4,172 files outside
 # cohere, nothing untracked, and no other extension but the package's own testdata. So an edit to any of them moves dry.
