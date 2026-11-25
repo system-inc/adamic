@@ -68,6 +68,9 @@ adamic_map *adamic_map_new_sized(bool string_keys, bool reference_values, size_t
 	}
 	map->entries = allocate_zeroed(capacity, sizeof *map->entries);
 	map->buckets = allocate_zeroed(capacity * 2, sizeof *map->buckets);
+	// The first table, made with the map: one buffer, its buckets riding along, as a rebuild's are
+	// (count.h).
+	ADAMIC_COUNT_BUFFER();
 	map->capacity = capacity;
 	map->bucket_count = capacity * 2;
 	return map;
@@ -179,6 +182,10 @@ static void rebuild(adamic_map *map, size_t entries_needed) {
 		map->entries = grown;
 		map->capacity = capacity;
 	}
+	// One buffer for every rebuild: its buckets are allocated anew whether it enlarges the entries (a map's
+	// first table included) or only compacts them, and an enlarging rebuild's entries ride along with them
+	// (count.h). A compaction inside a loop's period is an allocation the probe must see.
+	ADAMIC_COUNT_BUFFER();
 	free(map->buckets);
 	map->bucket_count = 16;
 	while (map->bucket_count < map->capacity * 2) {
