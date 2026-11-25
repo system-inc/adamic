@@ -28,6 +28,7 @@ var viewReceiverCallers = []struct {
 	{"collections.go destructureFrom viewFieldReceiverTypeID", 1, "read: a destructured binding's emitted field read"},
 	{"range_fields.go rangeDestructure viewFieldReceiverTypeID", 1, "read: a destructured binding's emitted field read through a range type's Union, the object arm of its read by kind, as destructureFrom's"},
 	{"assignments.go objectDestructuringAssignment viewFieldReceiverTypeID", 1, "read: an object pattern assignment's emitted field read, as a destructured binding's"},
+	{"predicates_relative.go relativePredicateMembership viewFieldReceiverTypeID", 1, "read: a refined field's checked read at a checked predicate's call, keyed by the target as its view registered the field (ruling 11)"},
 	{"view_widened.go viewLie viewFieldReceiverTypeID", 1, "read guard: whether a view's source holds a field honestly, or only as a checked read"},
 	{"view_copies.go checkedViewType viewFieldReceiverTypeID", 1, "read guard: a whole copy reads every field, NotYet when its type is a checked view's receiver"},
 	{"interface_cast.go checkedViewReceiverField viewFieldReceiverTypeID", 1, "read guard: the id the asked access is checked under, read or write by its node"},
