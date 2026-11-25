@@ -421,6 +421,9 @@ type enumerationReachSite struct {
 // its view, as the kind-alias rule names family 3's premise.
 func (l *lowering) checkEnumerationReachViews() error {
 	for _, site := range l.enumerationReachSites {
+		if l.firstLinkSkips(site.where) {
+			continue
+		}
 		reach := site.reach
 		reach.unknown, reach.types = l.enumerationViewedReadTypes(site.reach.types, site.reach.deep)
 		reached := false

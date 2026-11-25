@@ -415,6 +415,9 @@ func (l *lowering) relationViewValue(node *ast.Node, value ir.Expression) (ir.Ex
 func (l *lowering) checkRelationViewsTaken() error {
 	var untaken []*ast.Node
 	for key := range l.relationViews {
+		if l.firstLinkSkips(key) {
+			continue
+		}
 		if !l.relationViewsTaken[key] {
 			untaken = append(untaken, key)
 		}
