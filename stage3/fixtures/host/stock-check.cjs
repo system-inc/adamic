@@ -12,25 +12,29 @@ const nodeModules=fs.realpathSync(repo+(process.env.CENSUS_TYPESCRIPT?'/internal
 const ts=require(process.env.CENSUS_TYPESCRIPT||nodeModules+'/typescript');
 if(ts.version!=='6.0.3'||require(nodeModules+'/@types/node/package.json').version!=='25.3.3')throw Error('pin');
 const options={strict:true,noUncheckedIndexedAccess:true,exactOptionalPropertyTypes:true,erasableSyntaxOnly:false,verbatimModuleSyntax:true,allowImportingTsExtensions:true,noEmit:true,module:ts.ModuleKind.ESNext,moduleDetection:ts.ModuleDetectionKind.Force,moduleResolution:ts.ModuleResolutionKind.Bundler,target:ts.ScriptTarget.ES2024,lib:['lib.es2024.d.ts'],types:[]};
-let prelude=fs.readFileSync(repo+'/internal/load/prelude.d.ts','utf8');
-const source=ts.createSourceFile('prelude.d.ts',prelude,ts.ScriptTarget.Latest,true,ts.ScriptKind.TS);
-const consoles=[],processes=[];
-function visit(node){
- if(ts.isVariableStatement(node)){
-  for(const declaration of node.declarationList.declarations){
-   if(!ts.isIdentifier(declaration.name))continue;
-   if(declaration.name.text==='console')consoles.push(node);
-   if(declaration.name.text==='process')processes.push(node);
+// The loader's Node view of the prelude, as internal/load/source_fs.go serves it: prelude.d.ts, which declares no
+// console, and prelude_node.d.ts in the standalone console's place, Node's console and NodeJS.Process's recordreplay.
+const prelude=fs.readFileSync(repo+'/internal/load/prelude.d.ts','utf8');
+const nodePrelude=fs.readFileSync(repo+'/internal/load/prelude_node.d.ts','utf8');
+function declarations(name,text){
+ const source=ts.createSourceFile(name,text,ts.ScriptTarget.Latest,true,ts.ScriptKind.TS);
+ const consoles=[],processes=[];
+ function visit(node){
+  if(ts.isVariableStatement(node)){
+   for(const declaration of node.declarationList.declarations){
+    if(!ts.isIdentifier(declaration.name))continue;
+    if(declaration.name.text==='console')consoles.push(node);
+    if(declaration.name.text==='process')processes.push(node);
+   }
   }
+  ts.forEachChild(node,visit);
  }
- ts.forEachChild(node,visit);
+ visit(source);
+ return {consoles:consoles.length,processes:processes.length};
 }
-visit(source);
-if(consoles.length!==1)throw Error(`Stock prelude rewrite: expected exactly one console declaration, found ${consoles.length}`);
-if(processes.length!==0)throw Error("Stock prelude check: found a process declaration; the stock check would otherwise type-check against the prelude's process instead of Node's and the rewrite must come back");
-const statement=consoles[0];
-// Keep leading comments and whitespace, replacing the entire statement itself.
-prelude=prelude.slice(0,statement.getStart(source))+'declare var console: Console;'+prelude.slice(statement.end);
+const sharedDeclarations=declarations('prelude.d.ts',prelude),nodeDeclarations=declarations('prelude_node.d.ts',nodePrelude);
+if(sharedDeclarations.consoles!==0||nodeDeclarations.consoles!==1)throw Error(`Stock prelude check: expected prelude.d.ts to declare no console and prelude_node.d.ts exactly one, found ${sharedDeclarations.consoles} and ${nodeDeclarations.consoles}`);
+if(sharedDeclarations.processes!==0||nodeDeclarations.processes!==0)throw Error("Stock prelude check: found a process declaration; the stock check would otherwise type-check against the prelude's process instead of Node's");
 const mutant=process.argv.includes('--mutant');
 const all=[];
 for(const [index,row] of JSON.parse(fs.readFileSync(bucket+'/status.json')).entries()){
@@ -46,12 +50,12 @@ for(const [index,row] of JSON.parse(fs.readFileSync(bucket+'/status.json')).entr
   const recorded=JSON.parse(fs.readFileSync(logs+'/'+(mutant?'stock-mutant':'stock')+'.json'));
   all.push(...recorded.results);continue;
  }
- const real=bucket+'/'+row.file,alias=real+'.ts',pp='/adamic-prelude/adamic.d.ts';
+ const real=bucket+'/'+row.file,alias=real+'.ts',pp='/adamic-prelude/adamic.d.ts',np='/adamic-prelude/node.d.ts';
  const host=ts.createCompilerHost(options),read=host.readFile.bind(host),exists=host.fileExists.bind(host);
- host.fileExists=f=>f===alias||f===pp||exists(f);
- host.readFile=f=>f===alias?(fs.readFileSync(real,'utf8')+(mutant?'\nconst rerecordMutant: number = _os.EOL;\n':'')):f===pp?prelude:read(f);
+ host.fileExists=f=>f===alias||f===pp||f===np||exists(f);
+ host.readFile=f=>f===alias?(fs.readFileSync(real,'utf8')+(mutant?'\nconst rerecordMutant: number = _os.EOL;\n':'')):f===pp?prelude:f===np?nodePrelude:read(f);
  host.getSourceFile=(f,language)=>{const s=host.readFile(f);return s===undefined?undefined:ts.createSourceFile(f,s,language,true)};
- const program=ts.createProgram([alias,pp,nodeModules+'/@types/node/index.d.ts'],options,host);
+ const program=ts.createProgram([alias,np,pp,nodeModules+'/@types/node/index.d.ts'],options,host);
  const syntax=program.getSyntacticDiagnostics();const ds=syntax.length?syntax:ts.getPreEmitDiagnostics(program);
  function format(d){const pos=d.file?d.file.getLineAndCharacterOfPosition(d.start):null;const name=d.file?d.file.fileName.replace(alias,real).replace(bucket+'/', 'stage3/fixtures/host/').replace(repo+'/',''):null;return(name?`${name}:${pos.line+1}:${pos.character+1}: `:'')+`error TS${d.code}: `+ts.flattenDiagnosticMessageText(d.messageText,'\n');}
  const diagnostics=ds.map(d=>({code:d.code,file:d.file?.fileName.replace(alias,real).replace(bucket+'/', 'stage3/fixtures/host/').replace(repo+'/',''),start:d.start,text:format(d)}));
