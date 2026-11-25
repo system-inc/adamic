@@ -410,6 +410,9 @@ func (l *lowering) spreadPacks(nodes []*ast.Node, arguments []ir.Expression, spr
 // packing each argument as every target its layout admits reads it is #wzr4atz's work.
 func (l *lowering) checkClosureSpreadLayouts() error {
 	for _, site := range l.closureSpreadSites {
+		if len(site.nodes) > 0 && l.firstLinkSkips(site.nodes[0]) {
+			continue
+		}
 		layout, unknown := l.result.ClosureArgumentSlots(site.call)
 		from := func(position int) []ir.Type {
 			landing := slices.Clone(layout.Fixed[min(position, len(layout.Fixed)):])

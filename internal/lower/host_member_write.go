@@ -170,6 +170,9 @@ func (l *lowering) checkHostMemberWrites() error {
 	}
 	graph := l.flowGraph(l.result)
 	for _, write := range l.hostMemberWrites {
+		if l.firstLinkSkips(write.target) {
+			continue
+		}
 		// A write lowering never stored, as setProperty wrote it (another road lowered it, or a retried
 		// lowering left it out), or a store a later pass reshaped, can't be judged, so it fails closed.
 		store, lowered := stores[write.site]
