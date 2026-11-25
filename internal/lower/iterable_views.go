@@ -248,11 +248,17 @@ func (l *lowering) checkIterableViews() error {
 	// and may close it, in an interleaving nothing has held to Node, so it stops not yet.
 	hands := map[int]bool{}
 	for _, view := range l.iterableViews {
+		if l.firstLinkSkips(view.where) {
+			continue
+		}
 		if read, isRead := iterableViewRead(view.iterated); isRead && view.hand {
 			hands[read.Local] = true
 		}
 	}
 	for _, view := range l.iterableViews {
+		if l.firstLinkSkips(view.where) {
+			continue
+		}
 		if read, isRead := iterableViewRead(view.iterated); isRead && !view.hand && hands[read.Local] {
 			return l.notYet(view.where, "a for-of beside a hand-driven next() over the same parameter (#qk8rztp S2c-2a)")
 		}
@@ -290,6 +296,11 @@ func (l *lowering) checkIterableViews() error {
 		return site(iterableOrigin{name: "a value made by " + strings.TrimPrefix(fmt.Sprintf("%T", value), "ir.")})
 	}
 	for index, view := range l.iterableViews {
+		// A first-link lowering's trapped unit left its view here, its loop gone to the trap
+		// (first_link_units.go's firstLinkSkips).
+		if l.firstLinkSkips(view.where) {
+			continue
+		}
 		// A view read where the checker narrowed undefined out is ir.Defined over the read
 		// (narrowed.go's defined), which passes the value through or panics, so its origins are the
 		// read's (#qk8rztp S2c-3). view.iterated itself stays the Defined: the loop's holder is
@@ -379,6 +390,9 @@ func (l *lowering) checkIterableViews() error {
 func (l *lowering) checkGeneratorArguments() error {
 	views := map[int]int{}
 	for index, view := range l.iterableViews {
+		if l.firstLinkSkips(view.where) {
+			continue
+		}
 		if read, isRead := iterableViewRead(view.iterated); isRead && !view.hand {
 			views[read.Local] = index
 		}
