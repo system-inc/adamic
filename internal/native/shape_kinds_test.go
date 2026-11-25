@@ -517,6 +517,12 @@ func TestShapeProducerInventory(t *testing.T) {
 			// TestShapeKindsRuntimeCompiledGroups checks the actual dynamic descriptors.
 			continue
 		}
+		if path == "../native_runtime/c/object_spread.c" {
+			// Its shapes are made at run time, one per layout a spread meets, so there's no declaration to
+			// probe. TestObjectSpreadWith reads every slot's kind of each actual result, and
+			// TestObjectSpreadWithMutants' reference-bit-against-kind is this test's bitmap mutant.
+			continue
+		}
 		if hasShape && !known[path] {
 			t.Errorf("shape producer needs its own control and mutant: %s", path)
 		}
