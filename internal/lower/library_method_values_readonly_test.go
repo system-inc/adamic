@@ -74,7 +74,7 @@ func TestDelayedArrayMutatorOverANodeArrayStops(t *testing.T) {
 func TestDelayedArrayMutatorsKeepAMutableReceiver(t *testing.T) {
 	t.Parallel()
 	source := readonlyDelayedNodes +
-		"const idents: Ident[] = [a, b];\nArray.prototype.splice.call(idents, 0, 1, { kind: 1, text: \"c\" });\nconsole.log(idents.map((i) => i.text.toUpperCase()).join(\",\"));\n" +
+		"const c: Ident = { kind: 1, text: \"c\" };\nconst idents: Ident[] = [a, b];\nArray.prototype.splice.call(idents, 0, 1, c);\nconsole.log(idents.map((i) => i.text.toUpperCase()).join(\",\"));\n" +
 		"const nodes: Node[] = [a, b];\nArray.prototype.push.apply(nodes, [o]);\nconsole.log(nodes.map((n) => String(n.kind)).join(\",\"));\n" +
 		"const fixed: readonly string[] = [\"x\", \"y\"];\nconst joined: string = Array.prototype.join.call(fixed, \"|\");\nconsole.log(joined);\n"
 	const stdout = "C,B\n1,1,2\nx|y\n"

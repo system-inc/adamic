@@ -408,7 +408,7 @@ func (l *lowering) delayedArrayReceiverWritable(receiver *ast.Node) bool {
 			if member.TargetTupleType().IsReadonly() {
 				return false
 			}
-		case l.checker.IsArrayType(member) && !l.isLibraryType(member, "ReadonlyArray"):
+		case l.isArrayType(member) && !l.isLibraryType(member, "ReadonlyArray"):
 		default:
 			return false
 		}
