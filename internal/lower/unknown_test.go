@@ -25,7 +25,8 @@ func TestUnknownReflectionRefusals(t *testing.T) {
 		{`function box(value: unknown): unknown { return value; } box(JSON);`, "JSON as a value"},
 		{`class Code { static code = 'x'; } console.log(String('code' in Code));`, "class constructor"},
 		{`class Code { inspect(value: unknown): void {} } console.log(String('inspect' in new Code()));`, "dispatch table"},
-		{`function has(value: {code:number}|undefined): boolean { return 'code' in {...value}; }`, "presence descriptors"},
+		// 'code' in {...value} moved out with #2hzryxh: it agrees as typed_presence/65-fresh-spread.ts; seen as object, it's the held half.
+		{`function has(value: {code:number}|undefined): boolean { const copy: object = {...value}; return 'code' in copy; }`, "presence descriptors"},
 		{`class Code { declare code: string; } function has(value: unknown): boolean { return typeof value === 'object' && value !== null && 'code' in value; } has(new Code());`, "ambient class field"},
 	} {
 		t.Run(probe.reason+probe.source, func(t *testing.T) {

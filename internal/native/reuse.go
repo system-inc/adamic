@@ -659,6 +659,13 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 // spreadCopy is the object a spread that isn't reused starts from: a copy of the source's, or, when
 // the source may be undefined and is, a new object with the source type's other fields and the
 // literal's own, as JavaScript's { ...undefined } is {} with the literal's fields written in.
+//
+// A spread copies presence per slot (family 65, Adamic's ruling on #bbssdcy): the copy keeps the slots its
+// actual source has as own keys and leaves the rest absent (object.c's adamic_object_copy_checked), never
+// reading the source's type. An undefined source has no own keys, so its object is made as construction
+// storage with every slot reserved and none present; the literal's own fields are published as they are
+// written (objectLiteral, reused), and the type's other fields stay absent, so in, keys and JSON find only
+// what { ...undefined } holds on Node.
 func (e *emitter) spreadCopy(literal ir.ObjectLiteral, source string) string {
 	copy := fmt.Sprintf("adamic_object_copy(%s)", source)
 	if literal.SpreadReadiness != "" {
@@ -667,14 +674,14 @@ func (e *emitter) spreadCopy(literal ir.ObjectLiteral, source string) string {
 	if !literal.SpreadMaybeUndefined {
 		return copy
 	}
-	return fmt.Sprintf("(%s != NULL ? %s : adamic_object_new(&%s))", source, copy, e.shape(emptyFields(literal)))
+	return fmt.Sprintf("(%s != NULL ? %s : adamic_object_construct(&%s))", source, copy, e.shape(emptyFields(literal)))
 }
 
 // emptySpread gives the fields of the object spreadCopy made for an undefined source the value
-// undefined has in each: a new object's slots are zero, which is undefined only for a reference. In
-// a program that reads by a run-time key, each also gets the representation byte a literal's field
-// gets (objectLiteral), since dynamic_slot reads that byte first and a zero one names no storage
-// (#2ncah99).
+// undefined has in each, absent as they stay: a new object's slots are zero, which is undefined only
+// for a reference. In a program that reads by a run-time key, each also gets the representation byte
+// a literal's field gets (objectLiteral), since dynamic_slot reads that byte first and a zero one
+// names no storage (#2ncah99).
 func (e *emitter) emptySpread(literal ir.ObjectLiteral, source string, object string) {
 	if !literal.SpreadMaybeUndefined {
 		return
