@@ -16,8 +16,9 @@ import (
 // the insertion index before it removes. Each .ts program but the stop is held to Node on the release
 // build, the sanitized build under the leak check and the JavaScript backend, and must lower through
 // array_splice_arguments: the site's shape, called with objects; a negative start, a start and a count
-// past the end; an empty spread beside the old roads; the array spread into itself; and plain items
-// mixed with several spreads of numbers, strings and objects, in JavaScript's order. stop_representation.ts
+// past the end; an empty spread beside the old roads; the array spread into itself; plain items mixed
+// with several spreads of numbers, strings and objects, in JavaScript's order; and an item that throws
+// after a spread, which leaves the array as it was and releases what was packed. stop_representation.ts
 // spreads functions into objects and stops in push's words. The mutants are in
 // testdata/splice_spread/mutants.md.
 func TestSpliceSpread(t *testing.T) {
@@ -83,7 +84,7 @@ func TestSpliceSpread(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 6 {
-		t.Fatalf("found %d programs, want 6", programs)
+	if programs != 7 {
+		t.Fatalf("found %d programs, want 7", programs)
 	}
 }
