@@ -1652,6 +1652,7 @@ reads stage3/lane/adaptedtree/census *.go
 # The lane, a declared launcher once the lever head lands (adamic keys/lane-closures-off, #9vrgnd1), imports its adapted
 # tree, a house package that launches, for the product alone: every shard reads the tree it holds.
 # allow-launch: stage3/lane stage3/lane/adaptedtree.Product: the adapted tree's product, which every shard runs over; J-crks9vh traced TestProduct_Stage3AdaptedTree, whose Product built it whole, its every exec git, node, python3 or esbuild, none of go, clang or adamic
+# allow-launch: stage3/lane internal/childguard.Capture: starts the command its caller built and waits on it and its process group, launching nothing of its own; lane hands it python_test.go's literal sh, and J-jpx1mts traced TestPythonWrapperDeadlineWithInheritedStderr's every exec: the test binary, sh and sleep, none of go, clang or adamic
 # TestAGoProductsBuildReadsNoStateButItsInitializers (internal/buildcache/makecensus_test.go:207) runs the same census
 # from the checkout's root (repositoryRootForTest, make_relative.go:492), so the same walk reads every .go file
 # (internal/leancensus/leancensus.go:457, :749-781). Moving the census into its own package, as compilercensus does,
