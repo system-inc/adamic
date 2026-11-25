@@ -219,10 +219,8 @@ func TestSubmodulePathRefusesAnAbsentName(t *testing.T) {
 	}
 }
 
-// A name twice at the depth that would answer is refused, naming each place it was found: twice in one file, and once
-// in each of two submodules' files at one depth. A name at two depths is no duplicate: the shallowest answers. Mutants:
-// the first of two kept (no refusal in one file); depth ignored (the shallowest refused as a duplicate); the deepest
-// answering (the nested path returned).
+// A name twice at one depth is refused, naming each place it was found: twice in one file, and once in each of two
+// submodules' files at one depth. Mutant: the first of two kept (no refusal in one file).
 func TestSubmodulePathRefusesANameTwiceAtOneDepth(t *testing.T) {
 	t.Parallel()
 	oneFile := t.TempDir()
@@ -242,8 +240,8 @@ func TestSubmodulePathRefusesANameTwiceAtOneDepth(t *testing.T) {
 		root, name string
 		says       []string
 	}{
-		{oneFile, "TypeScript", []string{`"TypeScript" appears 2 times at depth 1`, "at cohere/TypeScript (cohere/.gitmodules)", "at cohere/libraries/typescript (cohere/.gitmodules)"}},
-		{twoFiles, "shared", []string{`"shared" appears 2 times at depth 1`, "at cohere/shared (cohere/.gitmodules)", "at other/vendor/shared (other/.gitmodules)"}},
+		{oneFile, "TypeScript", []string{`"TypeScript" appears 2 times`, "at cohere/TypeScript (cohere/.gitmodules, depth 1)", "at cohere/libraries/typescript (cohere/.gitmodules, depth 1)"}},
+		{twoFiles, "shared", []string{`"shared" appears 2 times`, "at cohere/shared (cohere/.gitmodules, depth 1)", "at other/vendor/shared (other/.gitmodules, depth 1)"}},
 	} {
 		got, err := Path(test.root, test.name)
 		if err == nil {
@@ -255,18 +253,27 @@ func TestSubmodulePathRefusesANameTwiceAtOneDepth(t *testing.T) {
 			}
 		}
 	}
-	twoDepths := t.TempDir()
-	writeTree(t, twoDepths, map[string]string{
+}
+
+// A name at two depths is refused too, since answering with either would be a guess: TypeScript in cohere's
+// .gitmodules at depth 1 and again in TypeScript's own at depth 2. The refusal names both places, each with the file
+// that declares it and its depth. Mutant: the shallowest depth answering (cohere/TypeScript returned, no refusal).
+func TestSubmodulePathRefusesANameAtTwoDepths(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	writeTree(t, root, map[string]string{
 		".gitmodules":                   adamicGitmodules,
 		"cohere/.gitmodules":            cohereTodayGitmodules,
 		"cohere/TypeScript/.gitmodules": "[submodule \"TypeScript\"]\n\tpath = _submodules/TypeScript\n\turl = https://github.com/microsoft/TypeScript.git\n",
 	})
-	got, err := Path(twoDepths, "TypeScript")
-	if err != nil {
-		t.Fatalf("a name at two depths: %v", err)
+	got, err := Path(root, "TypeScript")
+	if err == nil {
+		t.Fatalf("a name at two depths answers %q, want a refusal", got)
 	}
-	if got != "cohere/TypeScript" {
-		t.Fatalf("a name at two depths answers %q, want the shallowest, cohere/TypeScript", got)
+	for _, says := range []string{`"TypeScript" appears 2 times`, "at cohere/TypeScript (cohere/.gitmodules, depth 1)", "at cohere/TypeScript/_submodules/TypeScript (cohere/TypeScript/.gitmodules, depth 2)"} {
+		if !strings.Contains(err.Error(), says) {
+			t.Errorf("Path(%q) refuses with %q, which doesn't say %s", "TypeScript", err, says)
+		}
 	}
 }
 
