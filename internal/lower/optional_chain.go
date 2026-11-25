@@ -78,6 +78,27 @@ func (l *lowering) questionDot(node *ast.Node) bool {
 	return node.QuestionDotToken() != nil && !l.optionalChainGuarded(node)
 }
 
+// optionalCallee is the property access a call's callee is, as written, when that access tests its own
+// receiver with a ?. (questionDot), or nil. Parentheses end an optional chain in JavaScript, so
+// `(x?.m)()` calls the value `x?.m` is, undefined when x is, and throws, where `x?.m()` skips the call
+// (#492fbpd, live on main: optionalIntrinsic took the callee through the parentheses and lowered the
+// first as the second). So a parenthesized callee is never this one, and every binder that guards an
+// optional receiver asks this instead of skipping the parentheses before it tests the ?..
+func (l *lowering) optionalCallee(call *ast.Node) *ast.Node {
+	callee := call.AsCallExpression().Expression
+	if callee.Kind != ast.KindPropertyAccessExpression || !l.questionDot(callee) {
+		return nil
+	}
+	return callee
+}
+
+// parenthesizedOptionalCallee is whether a call's callee is an optional chain written in parentheses,
+// `(x?.m)()`, which calls whatever the chain gives, undefined included (optionalCallee).
+func parenthesizedOptionalCallee(call *ast.Node) bool {
+	callee := call.AsCallExpression().Expression
+	return callee.Kind == ast.KindParenthesizedExpression && ast.IsOptionalChain(ast.SkipParentheses(callee))
+}
+
 // inOptionalChain reports whether node is a step of an optional chain no guard has taken: the parser's
 // NodeFlagsOptionalChain, which a guarded chain's steps keep, though there they run as plain steps.
 func (l *lowering) inOptionalChain(node *ast.Node) bool {

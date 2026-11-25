@@ -335,6 +335,12 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 	if callee.Kind == ast.KindSuperKeyword {
 		return l.superCall(node)
 	}
+	// `(object?.method)()` calls what the chain gives, undefined when object is, and throws, so neither the
+	// optional road below, which skips the call, nor the plain one, which reads the receiver as present,
+	// is it (optionalCallee, #492fbpd).
+	if parenthesizedOptionalCallee(node) {
+		return nil, l.notYet(node, "a call of a parenthesized optional chain, whose parentheses end the chain")
+	}
 	if callee.Kind != ast.KindPropertyAccessExpression {
 		return l.call(node)
 	}

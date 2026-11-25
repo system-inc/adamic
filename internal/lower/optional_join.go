@@ -9,13 +9,14 @@ import (
 // inside the present branch, and the receiver must be held before that branch.
 // A guarded optional chain's join is plain: its guard holds the receiver.
 func (l *lowering) isOptionalJoin(node *ast.Node) bool {
-	call := node.AsCallExpression()
-	callee := ast.SkipParentheses(call.Expression)
-	if l.questionDot(node) || callee.Kind != ast.KindPropertyAccessExpression {
+	// The callee as written: `(a?.join)(s)` calls what a?.join gives, and throws when a is missing
+	// (optionalCallee, #492fbpd).
+	callee := l.optionalCallee(node)
+	if l.questionDot(node) || callee == nil {
 		return false
 	}
 	access := callee.AsPropertyAccessExpression()
-	if !l.questionDot(callee) || access.Name().Text() != "join" {
+	if access.Name().Text() != "join" {
 		return false
 	}
 	of, known := l.representation(l.checker.GetTypeAtLocation(access.Expression))
