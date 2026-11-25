@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Correctness: the harness's own suite, then each wrong version applied in turn, each expected red.
 set -u
-source /opt/adamic-block/environment.sh && source cloud/sandboxed-job.sh || { echo "FAIL setup"; exit 1; }
+source /opt/adamic-block/environment.sh && source cloud/sandboxed-job.sh && sandboxed_repositories || { echo "FAIL setup"; exit 1; }
 f=0
-run_suite() { (cd stage3/firstlink && python3 -I -B -m unittest test_report) > "$TMPDIR/suite.log" 2>&1; }
+run_suite() { (cd stage3/firstlink && python3 -E -S -B -m unittest test_report) > "$TMPDIR/suite.log" 2>&1; }
 if run_suite; then echo "PASS suite $(tail -1 "$TMPDIR/suite.log")"; else tail -30 "$TMPDIR/suite.log"; echo "FAIL suite"; f=1; fi
 if go test -count=1 -run '^TestFirstLinkReportPython$' ./stage3/lane/ > "$TMPDIR/wrap.log" 2>&1; then echo "PASS wrapper"; else tail -20 "$TMPDIR/wrap.log"; echo "FAIL wrapper"; f=1; fi
 for p in tmp-audit/wrong-*.patch; do
