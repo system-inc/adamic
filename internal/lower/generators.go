@@ -406,6 +406,9 @@ func (l *lowering) generatorCallee(node *ast.Node) (int, bool, error) {
 		return index, l.result.Functions[index].Generator, nil
 	}
 	index, isFunction := l.functions[l.symbol(named)]
+	if err := l.signatureTrap(named, l.symbol(named)); isFunction && err != nil {
+		return 0, false, err
+	}
 	if !isFunction || !l.result.Functions[index].Generator {
 		return 0, false, nil
 	}
