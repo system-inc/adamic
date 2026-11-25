@@ -36,6 +36,16 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 		if !ast.IsIdentifier(name) {
 			return nil, l.notYet(name, "a destructuring declaration")
 		}
+		if site := l.dispatchCallee(declaration); site != nil {
+			// Ruling 17's admitted dispatch: fn holds no value and has no local, only the kind its uses read, held
+			// once here (dispatch_lower.go).
+			held, err := l.dispatchDeclaration(site)
+			if err != nil {
+				return nil, err
+			}
+			statements = append(statements, held...)
+			continue
+		}
 		if initializer := declaration.AsVariableDeclaration().Initializer; initializer != nil && l.function != nil && !l.function.Suspends() {
 			// A generator's direct call stored in a local of a function (#qk8rztp S2c-4-1). At a
 			// module's top level, or in a function that suspends, the call stops where it's lowered

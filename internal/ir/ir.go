@@ -28,6 +28,9 @@ type Program struct {
 	// BrandMints lists every erased cast, and every overload's promised result, that adds only phantom brand
 	// members, for the checked report (rulings.md:29, #yth65gz, #z1qkw7d).
 	BrandMints []BrandMint
+	// DispatchChecks lists every dispatch lookup ruling 17 admits, each checking x's tag against the key its call
+	// takes, for the checked report (lower's dispatch_lower.go, #d1chbm7).
+	DispatchChecks []DispatchCheck
 
 	// argumentFacts caches PackedCountNeeded's whole-program derivation (argument_slots.go).
 	argumentFacts *argumentFacts
@@ -137,6 +140,13 @@ type BrandMint struct {
 	Where, Target string
 	Members       []string
 	Overload      string
+}
+
+// DispatchCheck is one admitted dispatch lookup under ruling 17: where it is, its source text, and how many keys
+// its table has, each an arm whose tag check compares the kind the lookup read once with that key.
+type DispatchCheck struct {
+	Where, Lookup string
+	Keys          int
 }
 
 type PlaceholderUse struct {
