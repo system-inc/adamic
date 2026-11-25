@@ -26,5 +26,5 @@ function readDefine(define: NodeArray<Node> & readonly [Ident, Literal | Ident, 
 	return define[0].text + " " + define[2].kind + " " + define.pos + " " + define.end + " " + define.length;
 }
 if (isDefine(list)) {
-	console.log("param " + readDefine(list));
+	console.log("define " + list[0].text + " " + list[2].kind + " " + list.length);
 }

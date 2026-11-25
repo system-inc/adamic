@@ -13,7 +13,7 @@ function makeArray(elements: MutableNodeArray<Node>): NodeArray<Node> {
 	elements.transformFlags = 0;
 	return elements;
 }
-function isDefine(a: NodeArray<Node>): a is NodeArray<Node> & readonly [Ident, Literal | Ident, Shape] {
+function isDefine(a: NodeArray<Node>): a is NodeArray<Node> & readonly [Ident, Literal | Ident, Shape] & Readonly<TextRange> {
 	return a.length === 3 && a[0]?.kind === 1 && (a[1]?.kind === 2 || a[1]?.kind === 1) && a[2]?.kind === 3;
 }
 const first: Node = { kind: 1, text: "name" } as Ident;
