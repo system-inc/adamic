@@ -40,6 +40,7 @@ var targetReaders = map[string]targetReader{
 	"internal/lower/exceptions.go:libraryFailure:ArraySort.Comparator":                                  {"compiler", "MayThrow and library failure propagation, routed in step 2"},
 	"internal/lower/exceptions.go:throwsOut:ArraySort.Comparator":                                       {"compiler", "MayThrow and library failure propagation, routed in step 2"},
 	"internal/lower/class_static_guard_test.go:TestClassStaticInitializerCallIsEmitted:Call.Function":   {"compiler", "names the function under test"},
+	"internal/lower/boxed_rest_spread_test.go:TestBoxedRestSpreadKeepsOneOperand:Call.Function":         {"compiler", "names the function under test"},
 	"internal/lower/dispatch_lower_test.go:dispatchArms:CallClosure.Closure":                            {"compiler", "finds each dispatch arm's call by the table field it reads, the key it was lowered for, not its function targets (#d1chbm7)"},
 	"internal/lower/method_presence_test.go:TestMethodPresenceCallChecksItsOwnRead:CallClosure.Closure": {"compiler", "inspects the required and optional callee check's representation and located message, not its function targets"},
 	"internal/lower/view_widened.go:checkViewWidenedReads:Call.Function":                                {"compiler", "asks whether a direct call is lowering's own overload result check, whose call is a view entry (overloadCheckCalls), not its function targets"},
