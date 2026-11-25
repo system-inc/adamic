@@ -332,7 +332,9 @@ void adamic_write_line(enum adamic_stream stream, const adamic_string *string) {
 	pthread_mutex_unlock(&output_lock);
 }
 
-_Noreturn void adamic_panic(const char *message, size_t length) {
+// stop_with_message ends the program with one line on stderr, the prefix and the message, and the
+// status: adamic_panic's ending, and adamic_first_link_trap's.
+static _Noreturn void stop_with_message(const char *prefix, size_t prefix_length, const char *message, size_t length, int status) {
 #ifndef ADAMIC_TARGET_WASI
 	// Losing panics must not terminate the process before the winner finishes its one message.
 	if (atomic_flag_test_and_set_explicit(&panicking, memory_order_relaxed)) {
@@ -342,15 +344,25 @@ _Noreturn void adamic_panic(const char *message, size_t length) {
 	(void)panicking;
 #endif
 	pthread_mutex_lock(&output_lock);
-	static const char prefix[] = "adamic: panic: ";
 	// Everything the program printed comes first, as on Node.
 	flush();
 	// Best effort: stderr may be what failed.
-	(void)write_all(adamic_stderr, prefix, sizeof prefix - 1);
+	(void)write_all(adamic_stderr, prefix, prefix_length);
 	write_text(adamic_stderr, message, length);
 	(void)write_all(adamic_stderr, "\n", 1);
 	ADAMIC_COUNT_REPORT();
-	_exit(70);
+	_exit(status);
+}
+
+_Noreturn void adamic_panic(const char *message, size_t length) {
+	static const char prefix[] = "adamic: panic: ";
+	stop_with_message(prefix, sizeof prefix - 1, message, length, 70);
+}
+
+_Noreturn void adamic_first_link_trap(const char *bytes, size_t length) {
+	static const char prefix[] = "adamic: first-link trap: ";
+	// 75 is EX_TEMPFAIL: the run met a unit lowering hasn't lowered yet, which is never a pass.
+	stop_with_message(prefix, sizeof prefix - 1, bytes, length, 75);
 }
 
 _Noreturn void adamic_unreachable(void) {

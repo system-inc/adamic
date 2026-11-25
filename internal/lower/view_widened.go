@@ -223,6 +223,9 @@ func (l *lowering) checkViewWidenedReads() error {
 		// the program as itself, or a dispatched read of its own. A getter answers its name, so where it's demanded
 		// it stops NotYet by the getter rule above and is never marked.
 		for _, read := range l.dispatchedReads {
+			if l.firstLinkSkipsAt(read.ViewWhere) {
+				continue
+			}
 			inspect(read)
 		}
 		if refused != nil {
@@ -243,6 +246,9 @@ func (l *lowering) checkViewWidenedReads() error {
 	// A whole-value reader reads every field of the value and of what it holds, through no view and
 	// no type the source vouched for, so nothing a view claimed may be anywhere in it.
 	for _, whole := range l.wholeObjectCopies {
+		if l.firstLinkSkips(whole.node) {
+			continue
+		}
 		if whole.reader == "" {
 			continue
 		}

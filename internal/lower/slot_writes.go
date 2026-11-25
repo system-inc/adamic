@@ -95,6 +95,9 @@ type slotReach struct {
 func (l *lowering) checkSlotWrites() error {
 	var writes []slotWrite
 	for _, write := range l.slotWrites {
+		if l.firstLinkSkips(write.part) {
+			continue
+		}
 		// A view lowered after the write can still make its field checked, so the view is asked only now.
 		if !write.viewed || l.result.CheckedField(write.view, write.name) {
 			writes = append(writes, write)

@@ -30,6 +30,11 @@ type Options struct {
 	OwnershipQuery bool
 	// ModuleFormat is the module format the build declares its program in. Default ModuleFormatEcmaScript.
 	ModuleFormat ModuleFormat
+	// FirstLinkTraps lowers each unit that stops as a trap, which ends the program when it runs, instead of
+	// stopping the lowering, so one run of the first link names every wall (first_link_traps.go). It's
+	// measurement only: a program lowered so is never a product, and cmd/adamic-firstlink is its one reader.
+	// environmentOptions never sets it. Default off.
+	FirstLinkTraps bool
 }
 
 // ModuleFormat is a module format a build can declare: what Node would run the program as, and so
@@ -98,13 +103,13 @@ func lowerTarget(ctx context.Context, program *load.Program, options Options, wo
 
 	var plan *programMembership
 	if options.ProgramRegion {
-		discovery, err := lowerCheckedWithCycleTypes(program, typeChecker, entry, nil, true, false, options.ModuleFormat, nil)
+		discovery, err := lowerCheckedWithCycleTypes(program, typeChecker, entry, nil, true, false, options.ModuleFormat, options.FirstLinkTraps, nil)
 		if err != nil {
 			return nil, err
 		}
 		plan = discovery.programPlan
 	}
-	built, err := lowerCheckedWithCycleTypes(program, typeChecker, entry, plan, false, options.Debug, options.ModuleFormat, nil, options.OwnershipQuery)
+	built, err := lowerCheckedWithCycleTypes(program, typeChecker, entry, plan, false, options.Debug, options.ModuleFormat, options.FirstLinkTraps, nil, options.OwnershipQuery)
 	if err != nil {
 		return nil, err
 	}
@@ -114,18 +119,18 @@ func lowerTarget(ctx context.Context, program *load.Program, options Options, wo
 
 // lowerChecked lowers a program as an ES module, the format every caller but LowerWithOptions lowers in.
 func lowerChecked(program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery, debug bool, ownershipQuery ...bool) (*lowering, error) {
-	return lowerCheckedWithCycleTypes(program, typeChecker, entry, plan, discovery, debug, ModuleFormatEcmaScript, nil, ownershipQuery...)
+	return lowerCheckedWithCycleTypes(program, typeChecker, entry, plan, discovery, debug, ModuleFormatEcmaScript, false, nil, ownershipQuery...)
 }
 
 // Tests retain transient checker types before lazy queries replace them. A checked view's
 // element reads are keyed by what the program views (viewElementKey). An array contract the key's
 // pre-pass didn't see would leave a read it should check raw, so the key fails closed: the program
 // is lowered again with every element read checked.
-func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery, debug bool, moduleFormat ModuleFormat, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (*lowering, error) {
+func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery, debug bool, moduleFormat ModuleFormat, firstLinkTraps bool, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (*lowering, error) {
 	key := &viewElementKey{}
-	built, err := lowerWithElementKey(key, program, typeChecker, entry, plan, discovery, debug, moduleFormat, cycleTypes, ownershipQuery...)
+	built, err := lowerWithElementKey(key, program, typeChecker, entry, plan, discovery, debug, moduleFormat, firstLinkTraps, cycleTypes, ownershipQuery...)
 	if len(key.misses) != 0 {
-		built, err = lowerWithElementKey(&viewElementKey{every: true}, program, typeChecker, entry, plan, discovery, debug, moduleFormat, cycleTypes, ownershipQuery...)
+		built, err = lowerWithElementKey(&viewElementKey{every: true}, program, typeChecker, entry, plan, discovery, debug, moduleFormat, firstLinkTraps, cycleTypes, ownershipQuery...)
 	}
 	if err != nil {
 		return built, err
@@ -134,17 +139,23 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 	// as a fact, so a program whose checker holds one is NotYet (#apyq5ve). Checked here, after the
 	// lowering, so every caller gets it; a refusal or a NotYet already fails closed.
 	if overflow := program.RelationOverflow(typeChecker); overflow != "" {
-		return nil, &NotYet{Where: built.result.Source, What: "a type relation the checker gave up on as too complex, whose answer lowering read (" + overflow + ")"}
+		stop := &NotYet{Where: built.result.Source, What: "a type relation the checker gave up on as too complex, whose answer lowering read (" + overflow + ")"}
+		if !built.firstLinkProgramStop("RelationOverflow", stop) {
+			return nil, stop
+		}
 	}
 	return built, nil
 }
 
-func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery, debug bool, moduleFormat ModuleFormat, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (built *lowering, err error) {
+func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery, debug bool, moduleFormat ModuleFormat, firstLinkTraps bool, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (built *lowering, err error) {
 	lowering := &lowering{cycleTypes: cycleTypes, program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1, entry: entry, programPlan: plan, programDiscovery: discovery, elementKey: key}
 	// A stop before checkHostMemberWrites judges a deferred host member write is main's stop at that write.
 	defer func() { err = lowering.hostMemberPending(lowering.regexpServedPending(err)) }()
+	// The program hands back every trap the lowering recorded, wherever it returns (first_link_traps.go).
+	defer func() { lowering.result.Traps = lowering.traps }()
 	lowering.debug = debug
 	lowering.moduleFormat = moduleFormat
+	lowering.firstLinkTraps = firstLinkTraps
 	lowering.result.ProgramRegion = discovery || plan != nil
 	if plan != nil {
 		lowering.result.ProgramTypes = plan.types
@@ -200,50 +211,74 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 		}
 		lowering.result.Main = append(lowering.result.Main, body...)
 	}
+	// A first-link lowering records the stops lowering held where it met them (first_link_passes.go).
+	lowering.firstLinkHeldStops()
 	if lowering.unlowerable != nil {
 		return nil, lowering.unlowerable
 	}
 	lowering.checkOverloadResults(modules)
 	if err := lowering.checkOverloadVerdictCalls(modules); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("checkOverloadVerdictCalls", false, err, func() error { return lowering.checkOverloadVerdictCalls(modules) }); err != nil {
+			return nil, err
+		}
 	}
 	lowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)
 	lowering.finishClassCalls()
 	// Before the accessors' dispatchers: a read this makes checked can't go through a dispatcher's
 	// unchecked fallback, which finishAccessors stops by asking CheckedField.
 	if err := lowering.certifySourceSlots(); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("certifySourceSlots", true, err, lowering.certifySourceSlots); err != nil {
+			return nil, err
+		}
 	}
 	if err := lowering.finishAccessors(); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("finishAccessors", true, err, lowering.finishAccessors); err != nil {
+			return nil, err
+		}
 	}
 	lowering.finishToPrimitive()
 	// Before exceptions: a view a generator feeds is rewritten into its dispatch here, and the
 	// dispatch's steps are throws the fixed point must see, each its own generator's ResumeMayThrow.
 	if err := lowering.checkIterableViews(); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("checkIterableViews", true, err, lowering.checkIterableViews); err != nil {
+			return nil, err
+		}
 	}
 	if err := lowering.exceptions(); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("exceptions", true, err, lowering.exceptions); err != nil {
+			return nil, err
+		}
 	}
 	if err := lowering.checkLibrarySpreads(modules); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("checkLibrarySpreads", false, err, func() error { return lowering.checkLibrarySpreads(modules) }); err != nil {
+			return nil, err
+		}
 	}
 	// All relations are recorded before judging whether a served method escapes as a value.
 	if err := lowering.checkRegExpServedValues(); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("checkRegExpServedValues", false, err, lowering.checkRegExpServedValues); err != nil {
+			return nil, err
+		}
 	}
 	if err := lowering.checkAccessorSpreads(); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("checkAccessorSpreads", false, err, lowering.checkAccessorSpreads); err != nil {
+			return nil, err
+		}
 	}
 	if err := lowering.checkRecordGuardedReads(); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("checkRecordGuardedReads", false, err, lowering.checkRecordGuardedReads); err != nil {
+			return nil, err
+		}
 	}
 	if err := lowering.checkDynamicKeyedGetters(); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("checkDynamicKeyedGetters", false, err, lowering.checkDynamicKeyedGetters); err != nil {
+			return nil, err
+		}
 	}
 	if err := checkGeneratorRoads(lowering.result); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("checkGeneratorRoads", false, err, func() error { return checkGeneratorRoads(lowering.result) }); err != nil {
+			return nil, err
+		}
 	}
 	if err := flow.NormalizeAsync(lowering.result); err != nil {
 		where := entry.AsNode()
@@ -251,7 +286,10 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 		if errors.As(err, &located) && located.Site > 0 && located.Site <= len(lowering.asyncSites) {
 			where = lowering.asyncSites[located.Site-1]
 		}
-		return nil, &NotYet{Where: lowering.program.Where(where), What: err.Error()}
+		stop := &NotYet{Where: lowering.program.Where(where), What: err.Error()}
+		if err = lowering.firstLinkPass("NormalizeAsync", true, stop, nil); err != nil {
+			return nil, err
+		}
 	}
 	if lowering.result.AsyncEntry > 0 {
 		// NormalizeAsync moved module bodies into one scheduler entry. Main now
@@ -261,78 +299,115 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 		lowering.result.MainModules = []ir.MainModule{{Module: source.Module, Statements: len(lowering.result.Main)}}
 	}
 	if err := lowering.findCycles(modules); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("findCycles", false, err, func() error { return lowering.findCycles(modules) }); err != nil {
+			return nil, err
+		}
 	}
 	if err := lowering.checkBoundArguments(); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("checkBoundArguments", false, err, lowering.checkBoundArguments); err != nil {
+			return nil, err
+		}
 	}
 	if err := lowering.checkSlotWrites(); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("checkSlotWrites", false, err, lowering.checkSlotWrites); err != nil {
+			return nil, err
+		}
 	}
 	// Once every checked view is made: no view puts a getter-bearing object, unread, at a type an enumeration
 	// the accessor guard admitted reads (#1atvfp5).
 	if err := lowering.checkEnumerationReachViews(); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("checkEnumerationReachViews", false, err, lowering.checkEnumerationReachViews); err != nil {
+			return nil, err
+		}
 	}
 	// Once every checked view is made: no view puts a value stored as an array behind an arm Array.isArray's brand
 	// decides, unread (#9z2ksv7).
 	if err := lowering.checkArrayArmViews(); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("checkArrayArmViews", false, err, lowering.checkArrayArmViews); err != nil {
+			return nil, err
+		}
 	}
 	// Each admitted allocator getter road, by the seal, the uses and the reach of every new it feeds (#837zjkt).
 	if err := lowering.checkFunctionConstructorRoads(); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("checkFunctionConstructorRoads", false, err, lowering.checkFunctionConstructorRoads); err != nil {
+			return nil, err
+		}
 	}
 	// Each built function constructor's instance laid by its construction window, once the program's exceptions
 	// are known (#w8nanzw (B)).
 	if err := lowering.layFunctionConstructorWindows(); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("layFunctionConstructorWindows", true, err, lowering.layFunctionConstructorWindows); err != nil {
+			return nil, err
+		}
 	}
 	if err := lowering.checkCheckedPredicateParameters(modules); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("checkCheckedPredicateParameters", false, err, func() error { return lowering.checkCheckedPredicateParameters(modules) }); err != nil {
+			return nil, err
+		}
 	}
 	// After findCycles, whose lazy view rule keeps a checked view's read of an optional callable its own
 	// stop, and after finishAccessors, whose dispatcher a presence test mustn't have become.
 	if err := lowering.checkOptionalMemberPresence(); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("checkOptionalMemberPresence", false, err, lowering.checkOptionalMemberPresence); err != nil {
+			return nil, err
+		}
 	}
 	if err := lowering.checkViewCopies(); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("checkViewCopies", false, err, lowering.checkViewCopies); err != nil {
+			return nil, err
+		}
 	}
 	// Before checkViewWidenedReads weighs the views: a relation rule 3300 let cross that no lowering viewed
 	// is refused in that rule's words, never read raw.
 	if err := lowering.checkRelationViewsTaken(); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("checkRelationViewsTaken", false, err, lowering.checkRelationViewsTaken); err != nil {
+			return nil, err
+		}
 	}
 	if err := lowering.checkViewWidenedReads(); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("checkViewWidenedReads", false, err, lowering.checkViewWidenedReads); err != nil {
+			return nil, err
+		}
 	}
 	// Every road that reads an object operand's layout raw, by range_unions.go's table, where that operand
 	// may be a range type's Union a NodeArray stands for (#hae423v, Lower's Must 2).
 	if err := lowering.checkRangeUnionReads(); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("checkRangeUnionReads", false, err, lowering.checkRangeUnionReads); err != nil {
+			return nil, err
+		}
 	}
 	if err := lowering.checkHostMemberWrites(); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("checkHostMemberWrites", false, err, lowering.checkHostMemberWrites); err != nil {
+			return nil, err
+		}
 	}
 	if len(lowering.asyncPayloadFailures) > 0 {
 		return nil, lowering.asyncPayloadFailures[0]
 	}
 	if err := lowering.checkPromiseConsumption(); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("checkPromiseConsumption", false, err, lowering.checkPromiseConsumption); err != nil {
+			return nil, err
+		}
 	}
 	if err := lowering.checkViewLogicalWrites(); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("checkViewLogicalWrites", false, err, lowering.checkViewLogicalWrites); err != nil {
+			return nil, err
+		}
 	}
 	// After findCycles, whose resolveCountTypes fills FunctionTypeTargets, the target set each closure call's
 	// layout packs for: a spread through a function value is judged against every target its layout admits
 	// (#wzr4atz).
 	if err := lowering.checkClosureSpreadLayouts(); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("checkClosureSpreadLayouts", false, err, lowering.checkClosureSpreadLayouts); err != nil {
+			return nil, err
+		}
 	}
 	if discovery || plan != nil {
 		if lowering.result.HasAsync() {
-			return nil, &Refused{Where: program.Where(entry.AsNode()), What: "Program region with async work", Fix: "keep Program members in the one-shot synchronous CLI"}
+			stop := &Refused{Where: program.Where(entry.AsNode()), What: "Program region with async work", Fix: "keep Program members in the one-shot synchronous CLI"}
+			if !lowering.firstLinkProgramStop("ProgramRegion", stop) {
+				return nil, stop
+			}
 		}
 		// A program with generators may have a Program region (#8xcz03h), since no generator frame
 		// can join one or reach a member by a road the cycle walk doesn't see:
@@ -377,20 +452,28 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 	// Last, once nothing more changes the program: its walk of the method tables is the one the
 	// emitter reads too (ir.Program's MethodsNamed).
 	if err := lowering.voidDiscards(); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("voidDiscards", false, err, lowering.voidDiscards); err != nil {
+			return nil, err
+		}
 	}
 	if err := lowering.checkInspectorDoomedContracts(); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("checkInspectorDoomedContracts", false, err, lowering.checkInspectorDoomedContracts); err != nil {
+			return nil, err
+		}
 	}
 	// After the last pass: no function reference is added past here, so every function a flow graph
 	// took to never run must still be named by nothing (view_flow.go's runningFunctions).
 	if err := checkFlowLiveness(lowering.result, lowering.flowDead); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("checkFlowLiveness", false, err, func() error { return checkFlowLiveness(lowering.result, lowering.flowDead) }); err != nil {
+			return nil, err
+		}
 	}
 	// Last, after every pass that lowers a body or makes IR: a write Rule C held at the view walk stops only
 	// where its statement was lowered, and none is lowered past here (source_slot_certificate.go, #5qx6qv4).
 	if err := lowering.checkSourceSlotPending(); err != nil {
-		return nil, err
+		if err = lowering.firstLinkPass("checkSourceSlotPending", false, err, lowering.checkSourceSlotPending); err != nil {
+			return nil, err
+		}
 	}
 	// Once no pass builds or changes a view contract: each admission reads its fields' finished
 	// contracts, and only the emitters read it (finishViewStaticsAdmitted).
@@ -410,6 +493,26 @@ type lowering struct {
 	// moduleFormat is the module format the build declares (Options.ModuleFormat). A lowering a test
 	// builds by hand leaves it ModuleFormatEcmaScript.
 	moduleFormat ModuleFormat
+
+	// firstLinkTraps is Options.FirstLinkTraps: a unit that stops lowers as a trap instead
+	// (first_link_traps.go). traps are the rows its traps recorded, in the order met, which the lowering
+	// hands back as its program's Traps, and firstLinkSuspect says one of them was a recovered Go panic or
+	// an error that's neither a NotYet nor a Refused, either of which may leave lowering's state part
+	// written, so each row after it is Suspect.
+	firstLinkTraps   bool
+	firstLinkSuspect bool
+	traps            []ir.Trap
+	// firstLinkTrapped is every unit trapped, by its node, and firstLinkStubs the trap each lowers as
+	// (first_link_units.go). signatureTraps is each module function whose signature trapped, by its symbol,
+	// with its trap's message, which a reference to it stops naming (signatureTrap).
+	firstLinkTrapped map[*ast.Node]bool
+	firstLinkStubs   map[*ast.Node]ir.Panic
+	signatureTraps   map[*ast.Symbol]string
+	// firstLinkMain is where each top-level statement's IR lies in Main (firstLinkStatements), which a
+	// whole-program pass's trap stubs, and firstLinkRewriteSkipped says such a pass that rewrites the IR
+	// skipped its work past a stop, so each row after it is Suspect (first_link_passes.go).
+	firstLinkMain           map[*ast.Node]firstLinkMainRange
+	firstLinkRewriteSkipped bool
 
 	// flowDead is every function a flow graph built during lowering took to never run (flowGraph,
 	// iterableViewFlowGraph), which checkFlowLiveness holds to that once lowering is done.
