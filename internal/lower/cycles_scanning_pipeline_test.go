@@ -5,6 +5,7 @@ import (
 	"go/parser"
 	"go/token"
 	"slices"
+	"strings"
 	"testing"
 )
 
@@ -93,6 +94,14 @@ func pipelineCalls(t *testing.T, path, function string) []string {
 			}
 			switch callee := call.Fun.(type) {
 			case *goast.SelectorExpr:
+				// A first-link lowering's steps (first_link_passes.go) are left out, with what they're handed: the
+				// reference never lowers in that mode, and off it each does nothing, firstLinkPass handing back the
+				// stop it was given, firstLinkHeldStops returning, firstLinkProgramStop answering false. The run a
+				// firstLinkPass is handed is the pass it follows, called again only in that mode, so the pass's own
+				// call stands for it, as it does in the reference.
+				if receiver, isIdentifier := callee.X.(*goast.Ident); isIdentifier && receiver.Name == "lowering" && strings.HasPrefix(callee.Sel.Name, "firstLink") {
+					return false
+				}
 				if receiver, isIdentifier := callee.X.(*goast.Ident); isIdentifier && (receiver.Name == "lowering" || receiver.Name == "flow" || receiver.Name == "fresh") {
 					calls = append(calls, receiver.Name+"."+callee.Sel.Name)
 				}

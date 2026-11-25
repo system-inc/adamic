@@ -229,7 +229,12 @@ func (e *emitter) statement(statement ir.Statement) {
 	case ir.Panic:
 		// The program ends here, so nothing it holds needs letting go.
 		message := e.value(statement.Message)
-		e.line("adamic_panic((%s)->bytes, (%s)->length);", message, message)
+		if statement.Trap {
+			// A first-link trap: a unit the lowering couldn't lower was reached, so the run is never a pass.
+			e.line("adamic_first_link_trap((%s)->bytes, (%s)->length);", message, message)
+		} else {
+			e.line("adamic_panic((%s)->bytes, (%s)->length);", message, message)
+		}
 		e.owned = nil
 	case ir.If:
 		condition := e.decide(statement.Condition)
