@@ -145,6 +145,10 @@ func (l *lowering) representationReason(proven *checker.Type) (ir.Type, bool, st
 			}
 			return l.representationReason(primitive)
 		}
+		// NodeArray<E> & readonly [T1..Tn] is its NodeArray part, in that part's layout (ruling 3, nodeArrayTuple).
+		if _, isTuple := l.nodeArrayTuple(proven); isTuple {
+			return ir.Array, true, ""
+		}
 		return l.objectIntersection(proven)
 	}
 	switch {
