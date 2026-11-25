@@ -28,7 +28,20 @@ func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error
 			return nil, true, l.notYet(node, "a call of a parenthesized optional chain, whose parentheses end the chain")
 		}
 	}
-	if hasSpread(node) || optionalIntrinsicContinues(node) {
+	if optionalIntrinsicContinues(node) {
+		return nil, false, nil
+	}
+	// The callee as written: `(x?.m)()` isn't x?.m(), since the parentheses end the chain (optionalCallee).
+	callee := l.optionalCallee(node)
+	spread := hasSpread(node)
+	// Rulings.md:212, family 92: only the library array insertions already pack
+	// spread arguments. Keep that packing inside the guard's present branch.
+	// The gate sits after #492fbpd's stop, as Compiler ruled (0aecda65), and reads optionalCallee's
+	// callee, so a parenthesized callee has already stopped with that stop's words and is never admitted.
+	if spread && (callee == nil ||
+		(callee.Name().Text() != "push" && callee.Name().Text() != "unshift") ||
+		!l.libraryMember(callee) ||
+		!l.isArrayType(l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeAtLocation(callee.Expression()))))) {
 		return nil, false, nil
 	}
 	// join already owns its receiver guard and effect-local lifetime.
@@ -38,8 +51,6 @@ func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error
 	if value, handled, err := l.optionalMapGet(node); handled {
 		return value, true, err
 	}
-	// The callee as written: `(x?.m)()` isn't x?.m(), since the parentheses end the chain (optionalCallee).
-	callee := l.optionalCallee(node)
 	if callee == nil || (!l.libraryMember(callee) && !l.nodeFSEntryMethod(callee)) {
 		return nil, false, nil
 	}
@@ -54,11 +65,16 @@ func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error
 	}
 	local := len(l.result.Locals)
 	read := ir.Read{Local: local, Of: receiver.Type()}
+	bound := ir.Expression(read)
+	if spread && receiver.Type() == ir.Union {
+		// The type check above leaves only the array after the nullish test.
+		bound = ir.Narrow{Value: read, To: ir.Array}
+	}
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "optional_intrinsic_receiver", Type: receiver.Type(), Function: function, ExpressionAssigned: true})
 	lowered, known, uses, err := func() (ir.Expression, bool, int, error) {
 		previousCall, previousBinding := l.optionalReceiverCall, l.optionalReceiverBinding
 		l.optionalReceiverCall = node
-		l.optionalReceiverBinding = optionalReceiverBinding{call: node, receiver: access.Expression, read: read}
+		l.optionalReceiverBinding = optionalReceiverBinding{call: node, receiver: access.Expression, read: bound}
 		defer func() {
 			l.optionalReceiverCall, l.optionalReceiverBinding = previousCall, previousBinding
 		}()
@@ -102,7 +118,7 @@ func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error
 // nested optional call restores the enclosing binding when its builtin returns.
 type optionalReceiverBinding struct {
 	call, receiver *ast.Node
-	read           ir.Read
+	read           ir.Expression
 	uses           int
 }
 
