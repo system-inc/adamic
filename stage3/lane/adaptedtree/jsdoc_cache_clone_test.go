@@ -14,14 +14,10 @@ import (
 // Mutant: key the adapted table by the node, and the clone's tag read is empty.
 func TestJSDocTagsAreSharedByClones(t *testing.T) {
 	t.Parallel()
-	node, err := exec.LookPath("node")
-	if err != nil {
-		t.Fatal(err)
-	}
 	product := Product(t)
 	tags := func(compiler string) []byte {
 		t.Helper()
-		command := exec.Command(node, "adaptedtree/testdata/jsdoc-cache/clone-test.cjs", compiler)
+		command := exec.Command("node", "adaptedtree/testdata/jsdoc-cache/clone-test.cjs", compiler)
 		var stderr bytes.Buffer
 		command.Stderr = &stderr
 		output, err := command.Output()
