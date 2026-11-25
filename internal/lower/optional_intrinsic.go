@@ -11,19 +11,25 @@ import (
 // different guard and ABI, and a chain that continues past the call is
 // optionalChain's (optional_chain.go).
 func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error) {
-	if l.questionDot(node) || hasSpread(node) || optionalIntrinsicContinues(node) {
+	if l.questionDot(node) {
 		return nil, false, nil
 	}
 	// `(x?.m)()` with m a library method calls what the chain gives, undefined when x is, and throws. The
 	// binders below don't take it (optionalCallee), and declining isn't enough: the general road lowers a
 	// library method's call with its receiver read as present, which natively dereferences the missing
 	// receiver (J-nhq8bve, a string, a Map and an array). So it stops here (#492fbpd). A program method
-	// keeps the general road, which calls what the chain gives (grouped_call.a, #cdpxjmb).
+	// keeps the general road, which calls what the chain gives (grouped_call.a, #cdpxjmb). The stop comes
+	// before the spread and continuing returns below, since those decline to the same general road:
+	// `(x?.push)(...more)` and `(x?.join)(",").length` dereferenced the missing receiver natively too
+	// (J-g1zw2ta).
 	if parenthesizedOptionalCallee(node) {
 		inner := ast.SkipParentheses(node.AsCallExpression().Expression)
 		if inner.Kind == ast.KindPropertyAccessExpression && (l.libraryMember(inner) || l.nodeFSEntryMethod(inner)) {
 			return nil, true, l.notYet(node, "a call of a parenthesized optional chain, whose parentheses end the chain")
 		}
+	}
+	if hasSpread(node) || optionalIntrinsicContinues(node) {
+		return nil, false, nil
 	}
 	// join already owns its receiver guard and effect-local lifetime.
 	if l.isOptionalJoin(node) {
