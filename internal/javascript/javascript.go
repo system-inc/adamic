@@ -46,10 +46,19 @@ type Options struct {
 	Enter           func(function int) string
 	Leave           func(function int) string
 	Suspend, Resume func() string
+
+	// FirstLinkTraps lets a program lowered in first-link trap mode (lower's Options.FirstLinkTraps, the
+	// same name on purpose, so its one-door test guards this one too) be emitted. Without it, a program
+	// whose Traps isn't empty is refused: it's measurement, never a product.
+	FirstLinkTraps bool
 }
 
-// JavaScriptWith is JavaScript with options.
+// JavaScriptWith is JavaScript with options. It panics on a program lowered in first-link trap mode unless
+// options.FirstLinkTraps is set, so such a program builds only through cmd/adamic-firstlink.
 func JavaScriptWith(program *ir.Program, options Options) string {
+	if len(program.Traps) > 0 && !options.FirstLinkTraps {
+		panic(fmt.Sprintf("a first-link program, lowered in trap mode, builds only through cmd/adamic-firstlink (first trap: %s %s)", program.Traps[0].Site, program.Traps[0].Reason))
+	}
 	emitter := &emitter{program: program, options: options}
 	var builder strings.Builder
 	runtimeImport := "'adamic'"

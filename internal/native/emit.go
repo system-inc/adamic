@@ -25,8 +25,8 @@ import (
 // the memory model's work, measured against this.
 func C(program *ir.Program) string { return cProgram(program, -1, mainLines) }
 
-// EmitOptions say how to write a program's C: the build's Options, of which the emitter reads Debug alone, and the
-// emitter's own knobs, which are no input of the runtime's archive and so stay out of its key.
+// EmitOptions say how to write a program's C: the build's Options, of which the emitter reads Debug and FirstLinkTraps
+// alone, and the emitter's own knobs, which are no input of the runtime's archive and so stay out of its key.
 type EmitOptions struct {
 	// Options are the build's, the ones its C is compiled with.
 	Options native_runtime.Options
@@ -43,7 +43,13 @@ func CWithOptions(program *ir.Program, options EmitOptions) string {
 	return cProgram(program, -1, mainLines, options)
 }
 
+// cProgram is every road from an ir.Program to C: C, CWithOptions, WASI, WASIExports and TSGoC through C. It panics on
+// a program lowered in first-link trap mode unless its options set FirstLinkTraps, which only CWithOptions can, so
+// such a program builds only through cmd/adamic-firstlink.
 func cProgram(program *ir.Program, handler, lines int, options ...EmitOptions) string {
+	if len(program.Traps) > 0 && (len(options) == 0 || !options[0].Options.FirstLinkTraps) {
+		panic(fmt.Sprintf("a first-link program, lowered in trap mode, builds only through cmd/adamic-firstlink (first trap: %s %s)", program.Traps[0].Site, program.Traps[0].Reason))
+	}
 	// The emit phase's line on $ADAMIC_BUILD_LOG, once a program: a split build divides this one translation unit after
 	// it's emitted (splitC), so a program in units still emits here once.
 	defer buildlog.Phase("emit", time.Now())
