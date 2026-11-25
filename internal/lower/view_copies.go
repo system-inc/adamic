@@ -50,6 +50,9 @@ func (l *lowering) checkViewCopies() error {
 	var viewed map[int]bool
 	unknown := len(l.result.ViewOrigins) == 0
 	for _, copied := range l.wholeObjectCopies {
+		if l.firstLinkSkips(copied.node) {
+			continue
+		}
 		if copied.reader != "" {
 			continue
 		}

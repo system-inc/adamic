@@ -2153,6 +2153,9 @@ func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
 	local, isLocal := l.locals[symbol]
 	if !isLocal {
 		if target, isFunction := l.functions[symbol]; isFunction {
+			if err := l.signatureTrap(property, symbol); err != nil {
+				return nil, err
+			}
 			return l.functionValue(property, target)
 		}
 		return nil, l.notYet(property, "reading "+property.Name().Text())
@@ -2257,6 +2260,9 @@ func (l *lowering) arraySort(node *ast.Node, array ir.Expression, element ir.Typ
 	}
 	comparator := ast.SkipParentheses(arguments[0])
 	function, isFunction := l.functions[l.symbol(comparator)]
+	if err := l.signatureTrap(comparator, l.symbol(comparator)); ast.IsIdentifier(comparator) && isFunction && err != nil {
+		return nil, true, err
+	}
 	if !ast.IsIdentifier(comparator) || !isFunction {
 		// A function value: an arrow, or a variable holding one.
 		callback, err := l.expression(comparator)

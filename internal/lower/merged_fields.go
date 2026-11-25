@@ -78,6 +78,10 @@ func (l *lowering) mergedFieldRulings(module *ast.SourceFile) error {
 		if found != nil {
 			return true
 		}
+		if l.firstLinkTrapped[node] {
+			// A first-link lowering's trapped unit is past judging (first_link_refusals.go).
+			return false
+		}
 		found = l.mergedFieldRead(node)
 		if found != nil {
 			return true
