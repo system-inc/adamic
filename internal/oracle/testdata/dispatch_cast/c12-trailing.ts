@@ -1,0 +1,16 @@
+enum Kind { A, B, C = A }
+interface NodeA { readonly kind: Kind.A; readonly a: string }
+interface NodeB { readonly kind: Kind.B; readonly b: number }
+interface NodeC { readonly kind: Kind.C; readonly c: number }
+type Node = NodeA | NodeB | NodeC;
+type Fn<T> = (node: T) => string;
+type Table = { [N in Node as N["kind"]]: Fn<N> };
+const table: Table = {
+	[Kind.A]: (_node: NodeA | NodeC, other?: NodeA) => other === undefined ? "none" : "a:" + other.a.toUpperCase(),
+	[Kind.B]: (node: NodeB) => "b:" + String(node.b + 1),
+};
+function visit(node: Node): string {
+	const fn = (table as Record<Kind, (node: any, other?: Node) => string>)[node.kind];
+	return fn === undefined ? "none" : fn(node, node);
+}
+console.log(visit({ kind: Kind.C, c: 1 }));
