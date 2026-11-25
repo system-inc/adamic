@@ -66,7 +66,8 @@ func TestRulesRefuseMistakes(t *testing.T) {
 		{"door null", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "door": null}`, "an object of bounds"},
 		{"door a list", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "door": [2]}`, "cannot unmarshal array"},
 		{"builders twice", `{"blocks": {"on": true, "budget": 2, "builders": ["Adam", "Adam"]}, "restack": {"on": false}}`, `each once, not "Adam"`},
-		{"builders past the queue's", `{"blocks": {"on": true, "budget": 2, "builders": ["a", "b", "c", "d", "e", "f", "g", "h", "i"]}, "restack": {"on": false}}`, "names 9 boxes, and it names at most 8"},
+		{"builders past the queue's", `{"blocks": {"on": true, "budget": 2, "builders": ["a", "b", "c", "d", "e", "f", "g", "h", "i"]}, "restack": {"on": false}}`, "names 9 boxes, and it names 1 to 8 host names"},
+		{"builders empty", `{"blocks": {"on": true, "budget": 2, "builders": []}, "restack": {"on": false}}`, "names 0 boxes, and it names 1 to 8 host names"},
 		{"builders a path", `{"blocks": {"on": true, "budget": 2, "builders": ["Adam", "Eve/0"]}, "restack": {"on": false}}`, `not "Eve/0"`},
 		{"builders a leading dash", `{"blocks": {"on": true, "budget": 2, "builders": ["-Adam"]}, "restack": {"on": false}}`, `not "-Adam"`},
 		{"builders empty name", `{"blocks": {"on": true, "budget": 2, "builders": [""]}, "restack": {"on": false}}`, `not ""`},
@@ -84,6 +85,23 @@ func TestRulesRefuseMistakes(t *testing.T) {
 		{"lanes null", `{"blocks": {"on": true, "budget": 2, "lanes": null}, "restack": {"on": false}}`, "true or false"},
 		{"lanes a string", `{"blocks": {"on": true, "budget": 2, "lanes": "true"}, "restack": {"on": false}}`, "cannot unmarshal string"},
 		{"lanes a number", `{"blocks": {"on": true, "budget": 2, "lanes": 1}, "restack": {"on": false}}`, "cannot unmarshal number"},
+		{"heavyMaximum zero", `{"blocks": {"on": true, "budget": 2, "heavyMaximum": 0}, "restack": {"on": false}}`, "a whole number from 1 to 16"},
+		{"heavyMaximum past the queue's", `{"blocks": {"on": true, "budget": 2, "heavyMaximum": 17}, "restack": {"on": false}}`, "a whole number from 1 to 16"},
+		{"heavyMaximum null", `{"blocks": {"on": true, "budget": 2, "heavyMaximum": null}, "restack": {"on": false}}`, "a whole number from 1 to 16"},
+		{"rentedGrants null", `{"blocks": {"on": true, "budget": 2, "rentedGrants": null}, "restack": {"on": false}}`, "true or false"},
+		{"rentedGrants a number", `{"blocks": {"on": true, "budget": 2, "rentedGrants": 0}, "restack": {"on": false}}`, "cannot unmarshal number"},
+		{"measure null", `{"blocks": {"on": true, "budget": 2, "measure": null}, "restack": {"on": false}}`, "true or false"},
+		{"measure a string", `{"blocks": {"on": true, "budget": 2, "measure": "true"}, "restack": {"on": false}}`, "cannot unmarshal string"},
+		{"liveHoleHands a capital", `{"blocks": {"on": true, "budget": 2, "liveHoleHands": ["System_adamic"]}, "restack": {"on": false}}`, `not "System_adamic"`},
+		{"liveHoleHands empty", `{"blocks": {"on": true, "budget": 2, "liveHoleHands": []}, "restack": {"on": false}}`, "1 to 8 hand names"},
+		{"liveHoleHands twice", `{"blocks": {"on": true, "budget": 2, "liveHoleHands": ["system_adamic", "system_adamic"]}, "restack": {"on": false}}`, `each once, not "system_adamic"`},
+		{"liveHoleHands nine", `{"blocks": {"on": true, "budget": 2, "liveHoleHands": ["a", "b", "c", "d", "e", "f", "g", "h", "i"]}, "restack": {"on": false}}`, "1 to 8 hand names"},
+		{"liveHoleHands null", `{"blocks": {"on": true, "budget": 2, "liveHoleHands": null}, "restack": {"on": false}}`, "1 to 8 hand names"},
+		{"rentedImages not a digest", `{"blocks": {"on": true, "budget": 2, "rentedImages": ["` + strings.Repeat("A", 64) + `"]}, "restack": {"on": false}}`, "image digests of 64 lowercase hex, each once, not"},
+		{"rentedImages empty", `{"blocks": {"on": true, "budget": 2, "rentedImages": []}, "restack": {"on": false}}`, "1 to 16 image digests"},
+		{"rentedImages seventeen", `{"blocks": {"on": true, "budget": 2, "rentedImages": [` + strings.TrimSuffix(strings.Repeat(`"`+strings.Repeat("a", 64)+`",`, 17), ",") + `]}, "restack": {"on": false}}`, "1 to 16 image digests"},
+		{"buildAhead not a box", `{"blocks": {"on": true, "budget": 2, "buildAhead": ["9box"]}, "restack": {"on": false}}`, `not "9box"`},
+		{"buildAhead empty", `{"blocks": {"on": true, "budget": 2, "buildAhead": []}, "restack": {"on": false}}`, "1 to 8 box names"},
 		{"witness null", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": null}`, "an object {every, hours, machines}"},
 		{"witness empty", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {}}`, "whole number from 1 to"},
 		{"witness unknown field", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Home-f3279c"], "on": true}}`, `unknown field "on"`},
@@ -176,9 +194,10 @@ func TestRulesTakeACensusWithin(t *testing.T) {
 	}
 }
 
-// Builders the lander takes read here too (Loom 0.8.375, the one-box loop, #mxbymz5): host names each once, at most 8,
-// an empty list as no box leased, and absent as absent, so today's file reads as it does. Mutant: the duplicate check
-// dropped (TestRulesRefuseMistakes' "builders twice").
+// Builders the lander takes read here too (Loom 0.8.375, the one-box loop, #mxbymz5): 1 to 8 host names, each once, and
+// absent as absent, so today's file reads as it does. An empty list is refused, as the queue and the lander refuse it
+// (#hp18dwz). Mutants: the duplicate check dropped (TestRulesRefuseMistakes' "builders twice"); an empty list taken
+// ("builders empty").
 func TestRulesTakeBuilders(t *testing.T) {
 	t.Parallel()
 	rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "builders": ["Adam", "Eve"]}, "restack": {"on": false}}`))
@@ -187,10 +206,6 @@ func TestRulesTakeBuilders(t *testing.T) {
 	}
 	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "builders": ["a", "b", "c", "d", "e", "f", "g", "h"]}, "restack": {"on": false}}`))
 	if err != nil || len(rules.Blocks.Builders) != 8 {
-		t.Fatalf("%+v, %v", rules.Blocks, err)
-	}
-	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "builders": []}, "restack": {"on": false}}`))
-	if err != nil || rules.Blocks.Builders == nil || len(rules.Blocks.Builders) != 0 {
 		t.Fatalf("%+v, %v", rules.Blocks, err)
 	}
 	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
@@ -315,5 +330,44 @@ func TestRulesTakeAFullBlockAlone(t *testing.T) {
 	}
 	if witness.FullBlock == nil || witness.FullBlock.Box != "Eve" || witness.FullBlock.Hours != 24 {
 		t.Fatalf("fullBlock read as %+v, want {Eve, 24}", witness.FullBlock)
+	}
+}
+
+// Every blocks key the queue took since stacked reads here as the lander takes it (#hp18dwz), so a rules.json naming one
+// lands: heavyMaximum, rentedImages, rentedGrants, buildAhead, measure and liveHoleHands, each at its bounds, and each
+// absent as absent. Mutants: liveHoleHands dropped from BlocksRule (this file refused as an unknown field); the hand
+// pattern dropped (TestRulesRefuseMistakes' "liveHoleHands a capital" taken); an empty list taken ("liveHoleHands empty").
+func TestRulesTakeTheBlocksKeysSinceStacked(t *testing.T) {
+	t.Parallel()
+	image := strings.Repeat("a", 64)
+	rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "heavyMaximum": 16, "rentedImages": ["` + image + `"], "rentedGrants": false, "buildAhead": ["Eve"], "measure": true, "liveHoleHands": ["system_adamic", "system_adamic_loom", "system_adamic_loom_landing"]}, "restack": {"on": false}}`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	blocks := rules.Blocks
+	if blocks.HeavyMaximum == nil || *blocks.HeavyMaximum != 16 || len(blocks.RentedImages) != 1 || blocks.RentedImages[0] != image || blocks.RentedGrants == nil || *blocks.RentedGrants || len(blocks.BuildAhead) != 1 || blocks.BuildAhead[0] != "Eve" || blocks.Measure == nil || !*blocks.Measure || len(blocks.LiveHoleHands) != 3 || blocks.LiveHoleHands[2] != "system_adamic_loom_landing" {
+		t.Fatalf("blocks read as %+v", blocks)
+	}
+	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "heavyMaximum": 1}, "restack": {"on": false}}`))
+	if err != nil || *rules.Blocks.HeavyMaximum != 1 {
+		t.Fatalf("%+v, %v", rules.Blocks, err)
+	}
+	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
+	if err != nil || rules.Blocks.HeavyMaximum != nil || rules.Blocks.RentedImages != nil || rules.Blocks.RentedGrants != nil || rules.Blocks.BuildAhead != nil || rules.Blocks.Measure != nil || rules.Blocks.LiveHoleHands != nil {
+		t.Fatalf("a file without them read %+v, %v", rules.Blocks, err)
+	}
+}
+
+// The landed rules.json names the hands that may mark a live-hole fix (#hp18dwz step 3, Adamic Loom's order), so the
+// queue's join can be turned on.
+func TestRulesFileNamesTheLiveHoleHands(t *testing.T) {
+	t.Parallel()
+	rules, err := ReadRules()
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := []string{"system_adamic", "system_adamic_loom", "system_adamic_loom_landing"}
+	if strings.Join(rules.Blocks.LiveHoleHands, ",") != strings.Join(want, ",") {
+		t.Fatalf("rules.json names live-hole hands %q, want %q", rules.Blocks.LiveHoleHands, want)
 	}
 }
