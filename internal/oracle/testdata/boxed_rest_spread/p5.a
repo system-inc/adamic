@@ -1,0 +1,9 @@
+type A = string | number;
+let saved: A[] = [];
+function target(...rest: A[]): void { saved = rest; }
+const original: A[] = ["kept", 12];
+target(...original);
+original.push("only original");
+saved.push("only rest");
+for (const value of original) console.log(String(value));
+for (const value of saved) console.log(String(value));
