@@ -111,12 +111,13 @@ func TestCountWindow(t *testing.T) {
 			}
 			code := native.C(program)
 			symbol := emittedFunctionSymbol(t, code, "measured")
-			// The one call is a statement of its own, the line's first: the definition and its prototype
-			// start with their return type.
-			call := regexp.MustCompile(`(?m)^[ \t]*((?:\(void\))?` + regexp.QuoteMeta(symbol) + `\([^;\n]*\);)`)
+			// The one call is a statement of its own, after a line's start or another statement's end (the
+			// emitter can write a global's ready flag on the same line, as it does here): the definition and
+			// its prototype start with their return type, so neither matches.
+			call := regexp.MustCompile(`(?m)(?:^|[;{}])[ \t]*((?:\(void\))?` + regexp.QuoteMeta(symbol) + `\([^;\n]*\);)`)
 			calls := call.FindAllStringSubmatchIndex(code, -1)
 			if len(calls) != 1 {
-				named := regexp.MustCompile(`(?m)^.*` + regexp.QuoteMeta(symbol) + `.*$`).FindAllString(code, -1)
+				named := regexp.MustCompile(`(?m)^.*`+regexp.QuoteMeta(symbol)+`.*$`).FindAllString(code, -1)
 				t.Fatalf("want one call of %s, found %d; the lines naming it:\n%s", symbol, len(calls), strings.Join(named, "\n"))
 			}
 			start, end := calls[0][2], calls[0][3]
