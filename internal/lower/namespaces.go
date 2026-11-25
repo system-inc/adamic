@@ -116,6 +116,9 @@ func (l *lowering) namespaceExpression(node *ast.Node) (ir.Expression, bool, err
 		return nil, true, l.notYet(node, "an optional namespace read; use a qualified name after initialization")
 	}
 	if function, found := l.functions[l.symbol(node)]; found {
+		if err := l.signatureTrap(node, l.symbol(node)); err != nil {
+			return nil, true, err
+		}
 		value, err := l.functionValue(node, function)
 		if err == nil {
 			value = l.namespaceReadyValue(node, value)

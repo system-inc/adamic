@@ -17,6 +17,10 @@ func (l *lowering) functionAnnotations(module *ast.SourceFile) error {
 		if found != nil {
 			return true
 		}
+		if l.firstLinkTrapped[node] {
+			// A first-link lowering's trapped unit is past judging (first_link_refusals.go).
+			return false
+		}
 		if node.Kind == ast.KindTypeReference && l.isLibraryType(l.checker.GetTypeAtLocation(node), "Function") {
 			found = &Refused{Where: l.program.Where(node), What: "the Function annotation in .a", Fix: "write a call signature with its parameters and result, like (value: number) => number"}
 			return true
