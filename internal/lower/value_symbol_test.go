@@ -256,6 +256,7 @@ var symbolComparers = map[string]symbolComparer{
 	"classView":                         {1, "a type's symbol against a class declaration's own name"},
 	"detachedOwnObjectParameter":        {1, "a shorthand storing the parameter is refused at :218, before :221 compares the rest"},
 	"directBindMethodRead":              {1, "a bind call's receiver and its first argument, both expressions"},
+	"directOnlyNeverFunction":           {1, "the key is the function declaration's own name, never a shorthand"},
 	"directPredicateCallee":             {1, "a call's callee, against the predicate declaration's own name"},
 	"enumMemberOrigin":                  {1, "an enum member's enum declaration name, against the enum it must belong to"},
 	"identityMember":                    {1, "an enum member's enum declaration name, against the enum it must belong to, as enumMemberOrigin's"},

@@ -208,8 +208,12 @@ func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *
 	return nil
 }
 
-// Match signature lowering, including the incoming optional form of a defaulted parameter.
-// The signature's symbol carries the instantiated type; its declaration carries the default.
+// Compare the incoming optional form of a defaulted parameter. The symbol
+// carries the instantiated type and the declaration carries the default.
+// A plain never method parameter compares as Union even though signature
+// lowering does not hold a method's never parameter. This lets contravariance
+// refuse an override that narrows a Union base. A compatible override of a
+// never base still stops at the base method's parameter storage check.
 func (l *lowering) overrideParameterRepresentation(parameter *ast.Symbol) (ir.Type, bool) {
 	if len(parameter.Declarations) != 1 || parameter.Declarations[0].Kind != ast.KindParameter {
 		return 0, false
@@ -223,7 +227,11 @@ func (l *lowering) overrideParameterRepresentation(parameter *ast.Symbol) (ir.Ty
 	if name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern {
 		return ir.Object, declared.Initializer == nil && declared.QuestionToken == nil
 	}
-	representation, known := l.representation(l.checker.GetTypeOfSymbol(parameter))
+	proven := l.checker.GetTypeOfSymbol(parameter)
+	if neverParameter(declaration, proven) {
+		return ir.Union, true
+	}
+	representation, known := l.representation(proven)
 	if declared.Initializer != nil || declared.QuestionToken != nil {
 		representation = ir.Maybe(representation)
 	}
