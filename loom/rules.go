@@ -90,8 +90,12 @@ type BlocksRule struct {
 	// Depth: the most blocks in flight, each pipelined on the last prefix of the one below it, from DefaultBlocksDepth to
 	// MaximumBlocksDepth. Optional, and never null; absent reads as 2 (Loom 0.8.71, #wpcbqpd).
 	Depth *int `json:"depth"`
-	// Builders: the boxes the queue leases whole blocks to, host names each once, at most MaximumBlocksBuilders. Optional,
-	// and never null; absent reads as no box leased (Loom 0.8.375, the one-box loop, #mxbymz5).
+	// HeavyMaximum: the most changes a block of heavy changes holds, below what sizing gives, from 1 to
+	// MaximumBlocksHeavyMaximum. Optional, and never null; absent reads as sizing alone (#heavymax).
+	HeavyMaximum *int `json:"heavyMaximum"`
+	// Builders: the boxes the queue leases whole blocks to, 1 to MaximumBlocksBuilders host names, each once. Optional, and
+	// never null or empty, as the queue refuses both; absent reads as no box leased (Loom 0.8.375, the one-box loop,
+	// #mxbymz5; empty refused on #hp18dwz).
 	Builders []string `json:"builders"`
 	// TipFirst: a leased block plans its tip first, a green tip landing the whole block and a red one bisecting. Optional,
 	// and never null; absent reads as off (Loom 0.8.375, #fz4vetb).
@@ -103,6 +107,21 @@ type BlocksRule struct {
 	// lanes' landings only where every prefix cleared over them. Optional, and never null; absent reads as off (#sera6j6,
 	// #6jrhgp7).
 	Lanes *bool `json:"lanes"`
+	// RentedImages: the images a rented machine's row may name for the queue to grant it blocks, 1 to
+	// MaximumBlocksRentedImages digests of 64 lowercase hex, each once. Optional, and never null or empty (#gpvqwbx).
+	RentedImages []string `json:"rentedImages"`
+	// RentedGrants: the queue's grants to rented machines, on or off. Optional, and never null (#gpvqwbx).
+	RentedGrants *bool `json:"rentedGrants"`
+	// BuildAhead: the boxes that build ahead, 1 to MaximumBlocksBuilders box names, each once, as builders. Optional, and
+	// never null or empty (#ky92dq4).
+	BuildAhead []string `json:"buildAhead"`
+	// Measure: a block's measure, Performance.jsonc written into its landing. Optional, and never null; absent reads as
+	// off (#bkg8c0h).
+	Measure *bool `json:"measure"`
+	// LiveHoleHands: the hands whose first list may be marked live-hole, taking the lowest unleased block's place, 1 to
+	// MaximumBlocksLiveHoleHands hand names, each once. Optional, and never null or empty; absent reads as no hand
+	// (#rgwwnrr, #hp18dwz).
+	LiveHoleHands []string `json:"liveHoleHands"`
 }
 
 // DefaultBlocksDepth and MaximumBlocksDepth are the queue's: one standing block and one on it, and the deepest tower;
@@ -111,6 +130,11 @@ const (
 	DefaultBlocksDepth    = 2
 	MaximumBlocksDepth    = 32
 	MaximumBlocksBuilders = 8
+	// MaximumBlocksHeavyMaximum, MaximumBlocksRentedImages and MaximumBlocksLiveHoleHands are the queue's
+	// MaximumBlocksHeavyMaximum, MaximumRentedImages and maximumLiveHoleHands (QueueRules.ts), and the lander's.
+	MaximumBlocksHeavyMaximum  = 16
+	MaximumBlocksRentedImages  = 16
+	MaximumBlocksLiveHoleHands = 8
 )
 
 // SizingRule is a block-size policy: the largest block whose chance of coming back all green, at the red rate of the last
@@ -135,8 +159,10 @@ func ReadRules() (Rules, error) {
 }
 
 // ParseRules reads a rules file strictly: a rule the queue doesn't know, a field a rule doesn't take, a missing field,
-// a budget that isn't a whole number of 1 or more, a sizing, a depth, builders, a tipFirst, a stacked, a lanes, a door or a witness
-// the lander would refuse, or anything after the object is refused, so a typo can't land as a rule nobody meant.
+// a budget that isn't a whole number of 1 or more, any blocks key, a door or a witness the lander would refuse, or anything
+// after the object is refused, so a typo can't land as a rule nobody meant. Every blocks key the queue's checkLandedRules
+// takes is read here, with the lander's bounds and words (#hp18dwz): the queue takes a key first, the lander second, and
+// this package third, and only then may rules.json name it.
 func ParseRules(data []byte) (Rules, error) {
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
@@ -182,8 +208,8 @@ func ParseRules(data []byte) (Rules, error) {
 		if bytes.Equal(bytes.TrimSpace(builders), []byte("null")) {
 			return Rules{}, errors.New("rules.json: blocks' builders is null, and it's a list of host names")
 		}
-		if len(rules.Blocks.Builders) > MaximumBlocksBuilders {
-			return Rules{}, fmt.Errorf("rules.json: blocks' builders names %d boxes, and it names at most %d", len(rules.Blocks.Builders), MaximumBlocksBuilders)
+		if len(rules.Blocks.Builders) == 0 || len(rules.Blocks.Builders) > MaximumBlocksBuilders {
+			return Rules{}, fmt.Errorf("rules.json: blocks' builders names %d boxes, and it names 1 to %d host names", len(rules.Blocks.Builders), MaximumBlocksBuilders)
 		}
 		seen := map[string]bool{}
 		for _, box := range rules.Blocks.Builders {
@@ -199,8 +225,42 @@ func ParseRules(data []byte) (Rules, error) {
 	if stacked, present := raw.Blocks["stacked"]; present && (bytes.Equal(bytes.TrimSpace(stacked), []byte("null")) || rules.Blocks.Stacked == nil) {
 		return Rules{}, fmt.Errorf("rules.json: blocks' stacked is %s, and it's true or false", stacked)
 	}
-	if lanes, present := raw.Blocks["lanes"]; present && (bytes.Equal(bytes.TrimSpace(lanes), []byte("null")) || rules.Blocks.Lanes == nil) {
-		return Rules{}, fmt.Errorf("rules.json: blocks' lanes is %s, and it's true or false", lanes)
+	for name, flag := range map[string]*bool{"lanes": rules.Blocks.Lanes, "rentedGrants": rules.Blocks.RentedGrants, "measure": rules.Blocks.Measure} {
+		if value, present := raw.Blocks[name]; present && (bytes.Equal(bytes.TrimSpace(value), []byte("null")) || flag == nil) {
+			return Rules{}, fmt.Errorf("rules.json: blocks' %s is %s, and it's true or false", name, value)
+		}
+	}
+	if heavyMaximum, present := raw.Blocks["heavyMaximum"]; present {
+		if bytes.Equal(bytes.TrimSpace(heavyMaximum), []byte("null")) || rules.Blocks.HeavyMaximum == nil || *rules.Blocks.HeavyMaximum < 1 || *rules.Blocks.HeavyMaximum > MaximumBlocksHeavyMaximum {
+			return Rules{}, fmt.Errorf("rules.json: blocks' heavyMaximum is %s, and it's a whole number from 1 to %d", heavyMaximum, MaximumBlocksHeavyMaximum)
+		}
+	}
+	// The lists the queue took since stacked, as the lander reads them: 1 to their most names, each matching its pattern,
+	// each once, never null or empty.
+	for _, list := range []struct {
+		name, what string
+		names      []string
+		most       int
+		pattern    *regexp.Regexp
+	}{
+		{"rentedImages", "image digests of 64 lowercase hex", rules.Blocks.RentedImages, MaximumBlocksRentedImages, imageDigestPattern},
+		{"buildAhead", "box names", rules.Blocks.BuildAhead, MaximumBlocksBuilders, builderPattern},
+		{"liveHoleHands", "hand names", rules.Blocks.LiveHoleHands, MaximumBlocksLiveHoleHands, handPattern},
+	} {
+		value, present := raw.Blocks[list.name]
+		if !present {
+			continue
+		}
+		if bytes.Equal(bytes.TrimSpace(value), []byte("null")) || len(list.names) == 0 || len(list.names) > list.most {
+			return Rules{}, fmt.Errorf("rules.json: blocks' %s is %s, and it's 1 to %d %s, each once", list.name, value, list.most, list.what)
+		}
+		seen := map[string]bool{}
+		for _, name := range list.names {
+			if !list.pattern.MatchString(name) || seen[name] {
+				return Rules{}, fmt.Errorf("rules.json: blocks' %s names %s, each once, not %q", list.name, list.what, name)
+			}
+			seen[name] = true
+		}
 	}
 	if raw.Door != nil {
 		var bounds map[string]json.RawMessage
@@ -298,3 +358,10 @@ var changeIDPattern = regexp.MustCompile(`^chg_[0-9a-hjkmnp-tv-z]{26}$`)
 // builderPattern is a box name as a coordinator token's box claim carries it, the Loom Worker's Token.ts BoxPattern and
 // the lander's own (Node on #kqsehcq), so a rules name no token can carry is refused rather than never leased.
 var builderPattern = regexp.MustCompile(`^[A-Za-z][A-Za-z0-9-]{0,31}$`)
+
+// handPattern is a hand's name, the Loom Worker's Token.ts HandPattern and the lander's.
+var handPattern = regexp.MustCompile(`^[a-z][a-z0-9_]{0,63}$`)
+
+// imageDigestPattern is an image digest as the queue reads one, 64 lowercase hex (Blobs.ts Sha256Pattern), and the
+// lander's.
+var imageDigestPattern = regexp.MustCompile(`^[0-9a-f]{64}$`)
