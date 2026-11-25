@@ -74,9 +74,10 @@ type cycleFinder struct {
 	// queries and compatible views once, rather than deriving them for every slot.
 	// These caches are sound only while what reachLinks reads stays fixed once the first query
 	// runs: shapes (whose length resets reachCache, reachEdges and shapeIndex), and also statics,
-	// closureRecords, accessorCaptures, localTypes, localAlso and, for functionCache, staticGlobals.
-	// All are complete before findCycles today, and each lowering makes a new finder. A pass that
-	// adds to any of them mid-walk must reset these caches too.
+	// closureRecords (whose length resets closures), each function value's Environment, accessorCaptures,
+	// localTypes, localAlso and, for functionCache, staticGlobals. All are complete before findCycles
+	// today, and each lowering makes a new finder. A pass that adds to any of them mid-walk must reset
+	// these caches too.
 	fieldCache     map[*checker.Type][]*ast.Symbol
 	functionCache  map[*checker.Type]bool
 	templateCache  map[*checker.Type]bool
@@ -93,6 +94,10 @@ type cycleFinder struct {
 	writeIndex     map[cycleWriteKey][]int
 	writeCache     map[cycleWriteSlot]*fresh.Write
 	unknownWrite   int
+	// closures is closureRecords grouped by type for the closure arm (closureLinksTo), and closureQueries
+	// how many relation queries that arm has asked, which TestClosureArmRelatesEachCapturingTypeOnce reads.
+	closures       *closureGroups
+	closureQueries int
 
 	// recordSlots are the seeds slotsOf found whose written value may be a record (noteRecordSlot), and
 	// recordCells the captured cells graphTypes seeds, each judged once the graph types are selected
@@ -852,14 +857,7 @@ func (f *cycleFinder) reachLinks(node cycleNode) []cycleNode {
 		}
 		// What a function value holds is what it captured: the cells of every function value the
 		// program makes that can be seen as this type.
-		for _, closure := range f.l.closureRecords {
-			if !f.l.checker.IsTypeAssignableTo(closure.proven, proven) {
-				continue
-			}
-			for _, local := range f.l.closureLinks(closure) {
-				links = append(links, cycleNode{cell: local + 1})
-			}
-		}
+		links = append(links, f.closureLinksTo(proven)...)
 	case f.l.recordElement(proven) != nil:
 		links = append(links, cycleNode{proven: f.l.recordElement(proven)})
 	case f.l.isArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
@@ -893,6 +891,72 @@ func (f *cycleFinder) reachLinks(node cycleNode) []cycleNode {
 			if shape != proven && f.l.checker.IsTypeAssignableTo(shape, proven) {
 				links = append(links, cycleNode{proven: shape})
 			}
+		}
+	}
+	return links
+}
+
+// closureGroups is closureRecords grouped by type, for the closure arm of reachLinks and graphLinks
+// (closureLinksTo). That arm related every function value the program makes to every function type a walk
+// met: on tsc, 6,378 values times 8,318 types, 18 million queries, which spent the checker's relation
+// budget inside 30 seconds (#c0eypws). A value that captured nothing adds no link, so it's never related,
+// and values of one type are related once, by their type.
+type closureGroups struct {
+	// types are the distinct types of the function values that captured something, in the order first met.
+	types []*checker.Type
+	// captures are those values in closureRecords' order, so the links come out in the order relating
+	// each value on its own added them.
+	captures []closureCapture
+	// records is how many closureRecords these were grouped from.
+	records int
+}
+
+// closureCapture is one function value that captured something: its type's index in closureGroups.types,
+// and the locals it captured (closureLinks).
+type closureCapture struct {
+	group  int
+	locals []int
+}
+
+// groupClosures groups the lowering's closureRecords by type (closureGroups).
+func groupClosures(l *lowering) *closureGroups {
+	groups := &closureGroups{records: len(l.closureRecords)}
+	groupOf := map[*checker.Type]int{}
+	for _, closure := range l.closureRecords {
+		locals := l.closureLinks(closure)
+		if len(locals) == 0 {
+			continue
+		}
+		group, grouped := groupOf[closure.proven]
+		if !grouped {
+			group = len(groups.types)
+			groupOf[closure.proven] = group
+			groups.types = append(groups.types, closure.proven)
+		}
+		groups.captures = append(groups.captures, closureCapture{group: group, locals: locals})
+	}
+	return groups
+}
+
+// closureLinksTo is the cells captured by every function value the program makes that can be seen as
+// proven, which is what a value of that function type holds, in closureRecords' order. Each distinct type
+// of a value that captured something is related to proven once (closureGroups).
+func (f *cycleFinder) closureLinksTo(proven *checker.Type) []cycleNode {
+	if f.closures == nil || f.closures.records != len(f.l.closureRecords) {
+		f.closures = groupClosures(f.l)
+	}
+	assignable := make([]bool, len(f.closures.types))
+	for group, closureType := range f.closures.types {
+		f.closureQueries++
+		assignable[group] = f.l.checker.IsTypeAssignableTo(closureType, proven)
+	}
+	links := []cycleNode{}
+	for _, capture := range f.closures.captures {
+		if !assignable[capture.group] {
+			continue
+		}
+		for _, local := range capture.locals {
+			links = append(links, cycleNode{cell: local + 1})
 		}
 	}
 	return links
