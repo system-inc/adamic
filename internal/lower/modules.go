@@ -221,18 +221,36 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 		}
 	}
 	for _, declaration := range declarations {
+		if l.firstLinkTraps {
+			// A signature that stops traps its function instead (first_link_traps.go).
+			if err := l.firstLinkSignature(l.functions[l.symbol(declaration.Name())], declaration); err != nil {
+				return err
+			}
+			continue
+		}
 		if err := l.signature(l.functions[l.symbol(declaration.Name())], declaration, -1); err != nil {
 			return err
 		}
 	}
 	for _, statement := range statements {
 		if statement.Kind == ast.KindClassDeclaration && l.needsStatics(statement) {
+			if l.firstLinkTraps {
+				// Statics that stop trap their class's statement instead (first_link_traps.go).
+				if err := l.firstLinkStatics(statement); err != nil {
+					return err
+				}
+				continue
+			}
 			if _, err := l.staticInstance(statement); err != nil {
 				return err
 			}
 		}
 	}
 	for _, declaration := range declarations {
+		if _, trapped := l.signatureTraps[l.symbol(declaration.Name())]; trapped {
+			// Its signature trapped, so its body is the trap already, and nothing lowers it.
+			continue
+		}
 		if err := l.functionBody(declaration); err != nil {
 			return err
 		}

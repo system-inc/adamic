@@ -583,6 +583,9 @@ func (l *lowering) mergedClassInstanceTypes() []*checker.Type {
 // record reaches a fixed type the checker can't otherwise see.
 func (l *lowering) checkRecordGuardedReads() error {
 	for _, read := range l.recordGuardedReads {
+		if l.firstLinkSkips(read.node) {
+			continue
+		}
 		if l.recordReachedField(read.receiverTypeID, read.name) {
 			return l.notYet(read.node, "a union or optional field read in a program with record storage")
 		}
