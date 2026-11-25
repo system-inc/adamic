@@ -1,0 +1,271 @@
+{
+	"about": "Every type diagnostic cohere reports in the root's two projects, tsconfig.standalone.json and tsconfig.node.json: the file, the code, how many, and why it's expected rather than a finding to fix. Load checks some programs in a view no file holds: the host axioms correct @types/node (internal/load/host_axioms.json), the regexp library corrects lib.es5.d.ts (internal/load/regexp_library.go), and Apple's bindings are served from the binary (internal/load/apple.go). Those stay where Load applies them, so what they decide differently is listed here, as are the true findings: deliberate refusals and files no test loads. cohere isn't run inside a Go test, since that would build cohere from its submodule and check the whole tree in one unit, so a job holds cohere's output equal to this list (the count job on #kyq0pyn), and TestTheExpectedDiagnosticsNameTheProjects holds each row to a real file in the project it names.",
+	"diagnostics": [
+		{
+			"project": "tsconfig.node.json",
+			"file": "internal/oracle/testdata/node_error_stack_trace_limit_refused/delete.a",
+			"code": "TS2790",
+			"count": 1,
+			"cause": "a deliberate refusal: the checker refuses this program, and the test that holds the fixture expects it (TestNodeErrorStackTraceLimitRefusals)"
+		},
+		{
+			"project": "tsconfig.node.json",
+			"file": "internal/oracle/testdata/process_env/mutations.a",
+			"code": "TS2790",
+			"count": 1,
+			"cause": "not yet explained: Load checks this program clean (library_node_environment_test.go runs it), and cohere reported TS2790 here in the measured split (J-95prens); read on the first run of the split"
+		},
+		{
+			"project": "tsconfig.node.json",
+			"file": "internal/oracle/testdata/timers_source/clear_held.a",
+			"code": "TS2345",
+			"count": 3,
+			"cause": "the host axiom on clearTimeout: Load serves web-globals/timers.d.ts:41's parameter as unknown (internal/load/host_axioms.json), stock declares NodeJS.Timeout | string | number | undefined"
+		},
+		{
+			"project": "tsconfig.node.json",
+			"file": "internal/oracle/testdata/timers_source/clear_kinds.a",
+			"code": "TS2345",
+			"count": 4,
+			"cause": "the host axiom on clearTimeout: Load serves web-globals/timers.d.ts:41's parameter as unknown (internal/load/host_axioms.json), stock declares NodeJS.Timeout | string | number | undefined"
+		},
+		{
+			"project": "tsconfig.node.json",
+			"file": "internal/oracle/testdata/timers_source/clear_kinds.a",
+			"code": "TS2353",
+			"count": 1,
+			"cause": "the host axiom on clearTimeout: Load serves web-globals/timers.d.ts:41's parameter as unknown (internal/load/host_axioms.json), stock declares NodeJS.Timeout | string | number | undefined"
+		},
+		{
+			"project": "tsconfig.node.json",
+			"file": "internal/oracle/testdata/timers_source/stop_foreign_generic.a",
+			"code": "TS2345",
+			"count": 1,
+			"cause": "the host axiom on clearTimeout: Load serves web-globals/timers.d.ts:41's parameter as unknown (internal/load/host_axioms.json), stock declares NodeJS.Timeout | string | number | undefined"
+		},
+		{
+			"project": "tsconfig.node.json",
+			"file": "internal/oracle/testdata/timers_source/stop_foreign_handle.a",
+			"code": "TS2345",
+			"count": 1,
+			"cause": "the host axiom on clearTimeout: Load serves web-globals/timers.d.ts:41's parameter as unknown (internal/load/host_axioms.json), stock declares NodeJS.Timeout | string | number | undefined"
+		},
+		{
+			"project": "tsconfig.node.json",
+			"file": "internal/oracle/testdata/timers_source/stop_foreign_intersection.a",
+			"code": "TS2345",
+			"count": 1,
+			"cause": "the host axiom on clearTimeout: Load serves web-globals/timers.d.ts:41's parameter as unknown (internal/load/host_axioms.json), stock declares NodeJS.Timeout | string | number | undefined"
+		},
+		{
+			"project": "tsconfig.node.json",
+			"file": "internal/oracle/testdata/timers_source/stop_foreign_record.a",
+			"code": "TS2345",
+			"count": 1,
+			"cause": "the host axiom on clearTimeout: Load serves web-globals/timers.d.ts:41's parameter as unknown (internal/load/host_axioms.json), stock declares NodeJS.Timeout | string | number | undefined"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "bench/apple/testdata/crossing.a",
+			"code": "TS2307",
+			"count": 2,
+			"cause": "Apple bindings: Load serves the apple/ modules from its own view (internal/load/apple.go), and the project names no path to them"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "bench/apple/testdata/frame.a",
+			"code": "TS2307",
+			"count": 3,
+			"cause": "Apple bindings: Load serves the apple/ modules from its own view (internal/load/apple.go), and the project names no path to them"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/array_slice_refused/null_end.a",
+			"code": "TS2345",
+			"count": 1,
+			"cause": "a deliberate refusal: the checker refuses this program, and the test that holds the fixture expects it"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/array_union_refused/mutate.a",
+			"code": "TS2339",
+			"count": 1,
+			"cause": "a deliberate refusal: the checker refuses this program, and the test that holds the fixture expects it"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/array_union_refused/write.a",
+			"code": "TS2542",
+			"count": 1,
+			"cause": "a deliberate refusal: the checker refuses this program, and the test that holds the fixture expects it"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/cast_split_type_error/octal_escape.a",
+			"code": "TS1534",
+			"count": 1,
+			"cause": "a deliberate refusal: the checker refuses this program, and the test that holds the fixture expects it"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/cast_split_type_error/octal_escape_sets.a",
+			"code": "TS1534",
+			"count": 1,
+			"cause": "a deliberate refusal: the checker refuses this program, and the test that holds the fixture expects it"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/cast_split_type_error/octal_escape_unicode.a",
+			"code": "TS1534",
+			"count": 1,
+			"cause": "a deliberate refusal: the checker refuses this program, and the test that holds the fixture expects it"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/cast_split_type_error/quantified_lookbehind.a",
+			"code": "TS1507",
+			"count": 1,
+			"cause": "a deliberate refusal: the checker refuses this program, and the test that holds the fixture expects it"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/enum_views/stop_class_instance.a",
+			"code": "TS2352",
+			"count": 1,
+			"cause": "a deliberate refusal: the checker refuses this program, and the test that holds the fixture expects it"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/enum_views/stop_const_key_union.a",
+			"code": "TS2476",
+			"count": 1,
+			"cause": "a deliberate refusal: the checker refuses this program, and the test that holds the fixture expects it"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/enum_views/stop_key_class.a",
+			"code": "TS2352",
+			"count": 1,
+			"cause": "a deliberate refusal: the checker refuses this program, and the test that holds the fixture expects it"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/enum_views/stop_key_function.a",
+			"code": "TS2352",
+			"count": 1,
+			"cause": "a deliberate refusal: the checker refuses this program, and the test that holds the fixture expects it"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/enum_views/stop_key_index.a",
+			"code": "TS2352",
+			"count": 1,
+			"cause": "a deliberate refusal: the checker refuses this program, and the test that holds the fixture expects it"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/enum_views/stop_number_view.a",
+			"code": "TS2352",
+			"count": 1,
+			"cause": "a deliberate refusal: the checker refuses this program, and the test that holds the fixture expects it"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/enum_views/stop_string_view.a",
+			"code": "TS2352",
+			"count": 1,
+			"cause": "a deliberate refusal: the checker refuses this program, and the test that holds the fixture expects it"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/generic_slot_hiding/infers_source.ts",
+			"code": "TS2339",
+			"count": 1,
+			"cause": "a deliberate refusal: the checker refuses this program, and the test that holds the fixture expects it"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/library_array_is_array_refused/typed_read.a",
+			"code": "TS2571",
+			"count": 1,
+			"cause": "a deliberate refusal: the checker refuses this program, and the test that holds the fixture expects it"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/library_array_is_array_refused/typed_read.a",
+			"code": "TS4104",
+			"count": 1,
+			"cause": "a deliberate refusal: the checker refuses this program, and the test that holds the fixture expects it"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/node_process_runtime/node_process_directory_mutation.a",
+			"code": "TS2591",
+			"count": 10,
+			"cause": "never loaded: no test loads this file, and it names Node without importing a builtin, so Load would check it standalone"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/node_process_runtime/node_process_environment_mutation.a",
+			"code": "TS2591",
+			"count": 8,
+			"cause": "never loaded: no test loads this file, and it names Node without importing a builtin, so Load would check it standalone"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/node_source_map/enum_tab_throw.ts",
+			"code": "TS2532",
+			"count": 1,
+			"cause": "never loaded: no test loads this file, and it names Node without importing a builtin, so Load would check it standalone"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/node_source_map/enum_tab_throw.ts",
+			"code": "TS2591",
+			"count": 2,
+			"cause": "never loaded: no test loads this file, and it names Node without importing a builtin, so Load would check it standalone"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/node_source_map/enum_tab_throw.ts",
+			"code": "TS7006",
+			"count": 1,
+			"cause": "never loaded: no test loads this file, and it names Node without importing a builtin, so Load would check it standalone"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/regexp_replace/callback.a",
+			"code": "TS2769",
+			"count": 6,
+			"cause": "the regexp library correction: Load serves lib.es5.d.ts's replacer as returning unknown (internal/load/regexp_library.go), stock declares string"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/regexp_served_values/receiver_unknown.a",
+			"code": "TS18046",
+			"count": 1,
+			"cause": "a deliberate refusal: the checker refuses this program, and the test that holds the fixture expects it"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/regexp_structural_side/copy.a",
+			"code": "TS2375",
+			"count": 1,
+			"cause": "a deliberate refusal: the checker refuses this program, and the test that holds the fixture expects it"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/regexp_structural_side/impostor.a",
+			"code": "TS2353",
+			"count": 1,
+			"cause": "a deliberate refusal: the checker refuses this program, and the test that holds the fixture expects it"
+		},
+		{
+			"project": "tsconfig.standalone.json",
+			"file": "internal/oracle/testdata/views_v3/console.ts",
+			"code": "TS2345",
+			"count": 1,
+			"cause": "a deliberate refusal: the checker refuses this program, and the test that holds the fixture expects it"
+		}
+	]
+}
