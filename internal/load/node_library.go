@@ -10,9 +10,6 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/compiler"
-	"github.com/microsoft/TypeScript/tsc/shim/core"
-	"github.com/microsoft/TypeScript/tsc/shim/parser"
-	"github.com/microsoft/TypeScript/tsc/shim/scanner"
 	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 )
 
@@ -47,7 +44,12 @@ func nodeTypesIndexFromFS(files fs.FS) (tspath.RootedFilePath, error) {
 	return tspath.RootedDirectoryPathFromNormalized(nodeTypesDirectory).ResolveFile("index.d.ts"), nil
 }
 
-func usesNodeModules(program *compiler.Program) bool {
+// UsesNodeModules reports whether a program is given Node's declarations: it names the node type library, or one of its
+// files imports or exports from a node: specifier, requires a builtin by one string, or imports a builtin's types. Load
+// asks it of every program's first build (load.go), and the root's tsconfig.node.json lists the files whose first
+// build it answers yes for (internal/load/projects), so the project cohere checks a file in and the program Load builds
+// for it have the same declarations.
+func UsesNodeModules(program *compiler.Program) bool {
 	// A project may request Node globals without importing a node: module.
 	// The caller package is hidden in favor of our pinned embedded declarations,
 	// so an explicit type-library request needs the same bundled root setup.
@@ -120,70 +122,4 @@ var nodeBuiltinModules = sync.OnceValue(func() map[string]bool {
 // Unit lowerers use declaration identity, not the spelling of an imported name.
 func IsNodeLibrary(file *ast.SourceFile) bool {
 	return file != nil && strings.HasPrefix(file.FileName().AsString(), nodeTypesDirectory+"/") && strings.HasSuffix(file.FileName().AsString(), ".d.ts")
-}
-
-// nodeProcessAugmentation is what the Node prelude adds to @types/node's NodeJS.Process: recordreplay, which tsc's
-// sys.ts reads and Node's process doesn't have (#b7phwab). Adamic on #b5w3ycg, Nov 7 2026: it reads as undefined on
-// every target, as the absent member lowering folds (hostBindingAbsentMembers), and every write or install of it stays
-// refused. Optional and unknown, so it promises nothing. It lives here, never in the standalone prelude, because a
-// NodeJS namespace there would let a program with no Node types name NodeJS.Process (TS2503 is its promise,
-// stage3/drivers/parser/native-nodejs-process-type.a).
-const nodeProcessAugmentation = "\ndeclare namespace NodeJS {\n\tinterface Process {\n\t\trecordreplay?: unknown;\n\t}\n}\n"
-
-// Match top-level declarations, not console method signatures. The standalone
-// prelude has only console; the project overlay adds Console and process together.
-func nodePrelude(source string, requiredOverlay ...string) (string, error) {
-	file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: tspath.RootedFilePathFromAbsolute(preludePath), PathKey: tspath.CaseSensitive.PathKey(tspath.RootedPathFromAbsolute(preludePath))}, source, core.ScriptKindTS)
-	if len(file.Diagnostics()) != 0 {
-		return "", fmt.Errorf("load: cannot adapt malformed Node prelude")
-	}
-	declarations := make(map[string]*ast.Node)
-	for _, statement := range file.Statements.Nodes {
-		names := []string{}
-		switch statement.Kind {
-		case ast.KindInterfaceDeclaration:
-			if statement.Name().Text() == "Console" {
-				names = append(names, "Console")
-			}
-		case ast.KindVariableStatement:
-			list := statement.AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes
-			for _, declaration := range list {
-				name := declaration.Name()
-				if name.Kind == ast.KindIdentifier && (name.Text() == "console" || name.Text() == "process") {
-					if len(list) != 1 {
-						return "", fmt.Errorf("load: Node prelude %s must have its own declaration", name.Text())
-					}
-					names = append(names, name.Text())
-				}
-			}
-		}
-		for _, name := range names {
-			if declarations[name] != nil {
-				return "", fmt.Errorf("load: duplicate %s declaration in Node prelude", name)
-			}
-			declarations[name] = statement
-		}
-	}
-	required := append([]string{"console"}, requiredOverlay...)
-	if declarations["Console"] != nil || declarations["process"] != nil {
-		required = append(required, "Console", "process")
-	}
-	for _, name := range required {
-		if declarations[name] == nil {
-			return "", fmt.Errorf("load: Node prelude is missing the %s declaration", name)
-		}
-	}
-	replacements := map[string]string{"console": "declare var console: Console;", "Console": "", "process": "declare var process: NodeJS.Process;"}
-	// Work backwards so the original parser spans remain valid. Keep leading
-	// comments and whitespace: Pos includes trivia before the declaration.
-	for index := len(file.Statements.Nodes) - 1; index >= 0; index-- {
-		statement := file.Statements.Nodes[index]
-		for name, declaration := range declarations {
-			if declaration == statement {
-				start := scanner.GetTokenPosOfNode(statement, file, false)
-				source = source[:start] + replacements[name] + source[statement.End():]
-			}
-		}
-	}
-	return source + nodeProcessAugmentation, nil
 }
