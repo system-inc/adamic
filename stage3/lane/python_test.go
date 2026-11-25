@@ -418,6 +418,11 @@ func TestFirstStopsDiffPython(t *testing.T) {
 	runPython(t, "stage3/census/firststops", "test_fsdiff")
 }
 
+func TestFirstLinkReportPython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "stage3/firstlink", "test_report")
+}
+
 // The census replay's entry reach keeps the entry first, read from its source (#4ft3dyf). The replay's integration
 // suite builds the census products and isn't wrapped yet (#pn630c6).
 func TestReplayOrderPython(t *testing.T) {
