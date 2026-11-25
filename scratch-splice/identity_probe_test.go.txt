@@ -1,0 +1,76 @@
+package oracle
+
+import (
+	"context"
+	"crypto/sha256"
+	"fmt"
+	"os"
+	"path/filepath"
+	"runtime"
+	"strings"
+	"sync"
+	"testing"
+
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
+)
+
+// Scratch, never landing (#p1qw4kf): each listed program lowered, and the sha256 of its emitted C and
+// JavaScript, or of its stop, printed one line a program in the list's order, so two trees compare by diff.
+func TestZZSpliceIdentityProbe(t *testing.T) {
+	list, err := os.ReadFile(os.Getenv("SPLICE_IDENTITY_LIST"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	paths := strings.Fields(string(list))
+	lines := make([]string, len(paths))
+	work := make(chan int)
+	var group sync.WaitGroup
+	for range min(runtime.NumCPU(), 8) {
+		group.Add(1)
+		go func() {
+			defer group.Done()
+			for index := range work {
+				path := paths[index]
+				lines[index] = "PROBE " + path + " panicked"
+				absolute, err := filepath.Abs(filepath.Join(repository, path))
+				if err != nil {
+					lines[index] = "PROBE " + path + " path-error"
+					continue
+				}
+				program, err := load.Load([]string{absolute})
+				if err != nil {
+					lines[index] = fmt.Sprintf("PROBE %s load %x", path, sha256.Sum256([]byte(err.Error())))
+					continue
+				}
+				for _, file := range program.Files() {
+					rememberImports(absolute, file.Text(), program)
+				}
+				result, err := func() (result *ir.Program, err error) {
+					defer func() {
+						if recovered := recover(); recovered != nil {
+							err = fmt.Errorf("panic: %v", recovered)
+						}
+					}()
+					return lower.Lower(context.Background(), program)
+				}()
+				if err != nil {
+					lines[index] = fmt.Sprintf("PROBE %s stop %x", path, sha256.Sum256([]byte(err.Error())))
+					continue
+				}
+				lines[index] = fmt.Sprintf("PROBE %s c %x js %x", path, sha256.Sum256([]byte(native.C(result))), sha256.Sum256([]byte(javascript.JavaScript(result))))
+			}
+		}()
+	}
+	for index := range paths {
+		work <- index
+	}
+	close(work)
+	group.Wait()
+	for _, line := range lines {
+		fmt.Println(line)
+	}
+}
