@@ -644,6 +644,12 @@
       "test": "internal/oracle/predicates_qualified_test.go: TestQualifiedPredicateGenericTypeAssertions"
     },
     {
+      "path": "internal/oracle/testdata/predicate_relative/p02.ts",
+      "stderr": "adamic: panic: field read failed: loose.name is not initialized; expected string, found missing\n",
+      "hatch": "predicate, line 3: function isNamed(x: Loose): x is Named {",
+      "test": "internal/oracle/predicate_relative_test.go: TestPredicateRelativeTarget"
+    },
+    {
       "path": "internal/oracle/testdata/process_env/prototype.a",
       "stderr": "adamic: panic: node:process.Process.env inherited key: toString\n",
       "hatch": "library-claim (process.env index signature types string | undefined, Node reads inherited toString), line 3: console.log(process.env[\"toString\"]);",
