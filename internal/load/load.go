@@ -27,6 +27,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/scanner"
 	"github.com/microsoft/TypeScript/tsc/shim/tsoptions"
 	"github.com/microsoft/TypeScript/tsc/shim/tspath"
+	"github.com/microsoft/TypeScript/tsc/shim/vfs"
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/cachedvfs"
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
 	"github.com/system-inc/adamic/internal/buildlog"
@@ -103,6 +104,63 @@ func LoadOverlay(paths []string, overlay map[string]string) (*Program, error) {
 func load(paths []string, overlay map[string]string, display func(string) string) (*Program, error) {
 	// The load phase's line on $ADAMIC_BUILD_LOG, once a program, whichever of Load's forms called.
 	defer buildlog.Phase("load", time.Now())
+	built, err := firstProgram(paths, overlay, display)
+	if err != nil {
+		return nil, err
+	}
+
+	if UsesNodeModules(built.program) {
+		index, err := nodeTypesIndex()
+		if err != nil {
+			return nil, err
+		}
+		// Node's console and NodeJS.Process's recordreplay in the standalone console's place (source_fs.go).
+		built.roots[len(paths)] = preludeNodePath
+		built.roots = append(built.roots, index)
+		built.fileSystem = cachedvfs.From(&regexpLibraryFS{FS: &nodeLibraryFS{FS: bundled.WrapFS(built.fs)}})
+		options := compilerOptions()
+		options.TypeRoots = []tspath.RootedDirectoryPath{tspath.RootedDirectoryPathFromNormalized(nodeTypesRoot)}
+		config := tsoptions.NewParsedCommandLine(options, built.roots, nil, built.currentDirectory, built.fileSystem.CaseSensitivity())
+		host := compiler.NewCachedFSCompilerHost(built.fileSystem, bundled.LibPath(), nil, nil, nil)
+		built.program = compiler.NewProgram(compiler.ProgramOptions{Config: config, Host: host, SingleThreaded: core.TSTrue})
+		if built.program == nil {
+			return nil, errors.New("load: the compiler built no Node program")
+		}
+	}
+
+	loaded := &Program{compiler: built.program, fs: built.fs}
+	if diagnostics := loaded.diagnostics(context.Background()); len(diagnostics) > 0 {
+		return nil, &CheckError{Diagnostics: diagnostics}
+	}
+
+	// Every root must be in the program. One that is not would be a file silently left unchecked.
+	byPath := make(map[tspath.PathKey]*ast.SourceFile)
+	for _, sourceFile := range built.program.GetSourceFiles() {
+		byPath[sourceFile.PathKey()] = sourceFile
+	}
+	for _, root := range built.roots[:len(paths)] {
+		sourceFile, isLoaded := byPath[built.fileSystem.CaseSensitivity().PathKey(root.AsPath())]
+		if !isLoaded {
+			return nil, fmt.Errorf("load: %s was named but the compiler did not load it", built.fs.displayName(root))
+		}
+		loaded.files = append(loaded.files, sourceFile)
+	}
+	return loaded, nil
+}
+
+// programBuild is a program load built, with what it built it from: its source view, roots, directory and file system.
+type programBuild struct {
+	fs               *sourceFS
+	roots            []tspath.RootedFilePath
+	currentDirectory tspath.RootedDirectoryPath
+	fileSystem       vfs.FS
+	program          *compiler.Program
+}
+
+// firstProgram is the program of the given files, whatever they import, the prelude with its standalone console, and
+// Apple's binding files they need, parsed and resolved but not checked. Its roots are the files in the order given,
+// then the console, then the prelude, then Apple's.
+func firstProgram(paths []string, overlay map[string]string, display func(string) string) (*programBuild, error) {
 	if len(paths) == 0 {
 		return nil, errors.New("load: no files given")
 	}
@@ -117,7 +175,7 @@ func load(paths []string, overlay map[string]string, display func(string) string
 		normalizedOverlay[currentDirectory.ResolveFile(name)] = source
 	}
 	fs := &sourceFS{FS: osvfs.FS(), overlay: normalizedOverlay, display: display}
-	roots := make([]tspath.RootedFilePath, 0, len(paths)+1)
+	roots := make([]tspath.RootedFilePath, 0, len(paths)+2)
 	for _, path := range paths {
 		root, err := rootFileName(fs, currentDirectory, path)
 		if err != nil {
@@ -125,7 +183,9 @@ func load(paths []string, overlay map[string]string, display func(string) string
 		}
 		roots = append(roots, root)
 	}
-	roots = append(roots, preludePath)
+	// The console first, then the rest of the prelude: the order their declarations had when they were one file, the
+	// console its first statement. A Node program puts Node's console in the console's place.
+	roots = append(roots, preludeConsolePath, preludePath)
 	// Apple's binding files, for the apple/ modules the program imports (apple.go).
 	apple, err := appleRoots(fs, roots[:len(paths)], normalizedOverlay)
 	if err != nil {
@@ -146,48 +206,19 @@ func load(paths []string, overlay map[string]string, display func(string) string
 	if program == nil {
 		return nil, errors.New("load: the compiler built no program")
 	}
+	return &programBuild{fs: fs, roots: roots, currentDirectory: currentDirectory, fileSystem: fileSystem, program: program}, nil
+}
 
-	if usesNodeModules(program) {
-		index, err := nodeTypesIndex()
-		if err != nil {
-			return nil, err
-		}
-		adaptedPrelude, err := nodePrelude(prelude)
-		if err != nil {
-			return nil, err
-		}
-		fs.nodePreludeText = adaptedPrelude
-		fs.nodeTypes = true
-		roots = append(roots, index)
-		fileSystem = cachedvfs.From(&regexpLibraryFS{FS: &nodeLibraryFS{FS: bundled.WrapFS(fs)}})
-		options := compilerOptions()
-		options.TypeRoots = []tspath.RootedDirectoryPath{tspath.RootedDirectoryPathFromNormalized(nodeTypesRoot)}
-		config = tsoptions.NewParsedCommandLine(options, roots, nil, currentDirectory, fileSystem.CaseSensitivity())
-		host = compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
-		program = compiler.NewProgram(compiler.ProgramOptions{Config: config, Host: host, SingleThreaded: core.TSTrue})
-		if program == nil {
-			return nil, errors.New("load: the compiler built no Node program")
-		}
+// Unchecked is the program Load builds from paths before it asks UsesNodeModules whether Node's declarations join it:
+// the files, whatever they import, the prelude with its standalone console and Apple's binding files, parsed and
+// resolved but never checked, so a file the checker would refuse still has one. It is the generator's road to the
+// Node project's files (internal/load/projects/node/tsconfig.json), so that list and Load answer from one predicate.
+func Unchecked(paths []string) (*compiler.Program, error) {
+	first, err := firstProgram(paths, nil, nil)
+	if err != nil {
+		return nil, err
 	}
-
-	loaded := &Program{compiler: program, fs: fs}
-	if diagnostics := loaded.diagnostics(context.Background()); len(diagnostics) > 0 {
-		return nil, &CheckError{Diagnostics: diagnostics}
-	}
-
-	// Every root must be in the program. One that is not would be a file silently left unchecked.
-	byPath := make(map[tspath.PathKey]*ast.SourceFile)
-	for _, sourceFile := range program.GetSourceFiles() {
-		byPath[sourceFile.PathKey()] = sourceFile
-	}
-	for _, root := range roots[:len(paths)] {
-		sourceFile, isLoaded := byPath[fileSystem.CaseSensitivity().PathKey(root.AsPath())]
-		if !isLoaded {
-			return nil, fmt.Errorf("load: %s was named but the compiler did not load it", fs.displayName(root))
-		}
-		loaded.files = append(loaded.files, sourceFile)
-	}
-	return loaded, nil
+	return first.program, nil
 }
 
 // Files is the program's own source files, in the order Load was given them: no prelude, no lib.
@@ -246,9 +277,10 @@ func (p *Program) Line(node *ast.Node) int {
 }
 
 // IsPrelude reports whether a declaration comes from Adamic's prelude rather than from the program,
-// so a local named console is never mistaken for the real one.
+// so a local named console is never mistaken for the real one. The prelude is every file its directory
+// serves (source_fs.go): prelude.d.ts and the console its program has, standalone or Node's.
 func IsPrelude(sourceFile *ast.SourceFile) bool {
-	return sourceFile != nil && sourceFile.FileName() == preludePath
+	return sourceFile != nil && strings.HasPrefix(sourceFile.FileName().AsString(), preludeDirectory+"/")
 }
 
 // IsLibrary reports whether a declaration comes from TypeScript's bundled library (lib.es2024.d.ts and
