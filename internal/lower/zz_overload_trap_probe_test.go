@@ -1,18 +1,24 @@
 package lower
 
 import (
-	"fmt"
+	"context"
+	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/load"
 )
 
-const overloadTrapPick = "function pick(value: number): number;\nfunction pick(value: string): string;\nfunction pick(value: number | string): number | string {\n\treturn value;\n}\n"
+func overloadTrapProbeShape() string {
+	return strings.Replace(overloadLiteralShape, "BODY", "true", 1)
+}
 
 func TestOverloadTrapProbe(t *testing.T) {
+	base := overloadTrapProbeShape()
 	for _, row := range []struct{ name, source string }{
-		{"lowered_then_stopped", overloadTrapPick + "function second(): number {\n\tconst n = pick(1);\n\treturn n + Math.random();\n}\nconsole.log('before');\nconsole.log(`${second()}`);\n"},
-		{"refused_unit", overloadTrapPick + "function second(): boolean {\n\tconst n = pick(1);\n\treturn n == 1;\n}\nconsole.log('before');\nconsole.log(`${second()}`);\n"},
-		{"refused_statement", overloadTrapPick + "console.log('before');\nconst flag = pick(1) == 1;\nconsole.log(`${flag}`);\n"},
-		{"control_no_stop", overloadTrapPick + "function second(): number {\n\treturn pick(1);\n}\nconsole.log(`${second()}`);\n"},
+		{"lowered_then_stopped", base + "function second(): number {\n\tconst ok = canDecorate(true, declaration);\n\tconsole.log(String(ok));\n\treturn Math.random();\n}\nconsole.log('before');\nconsole.log(`${second()}`);\n"},
+		{"refused_unit", base + "function second(n: number): boolean {\n\tconst ok = canDecorate(true, declaration);\n\treturn ok == true;\n}\nconsole.log('before');\nconsole.log(`${second(1)}`);\n"},
+		{"refused_statement", base + "console.log('before');\nconst flag = canDecorate(true, declaration) == true;\nconsole.log(`${flag}`);\n"},
+		{"control_no_stop", base + "console.log(String(canDecorate(true, declaration)));\n"},
 	} {
 		func() {
 			defer func() {
@@ -20,16 +26,21 @@ func TestOverloadTrapProbe(t *testing.T) {
 					t.Logf("PROBE %s: panic: %v", row.name, recovered)
 				}
 			}()
-			program, err := lowerFirstLink(t, row.source, true)
-			traps := 0
-			if program != nil {
-				traps = len(program.Traps)
+			program, err := load.Load([]string{writeAgreementSource(t, "main.ts", row.source)})
+			if err != nil {
+				t.Logf("PROBE %s: load: %v", row.name, err)
+				return
 			}
-			t.Logf("PROBE %s: err=%v traps=%d %s", row.name, err, traps, fmt.Sprint(firstLinkLocalSitesOrNil(program)))
+			lowered, err := LowerWithOptions(context.Background(), program, Options{FirstLinkTraps: true})
+			if err != nil {
+				t.Logf("PROBE %s: err=%v", row.name, err)
+				return
+			}
+			rows := []string{}
+			for _, trap := range lowered.Traps {
+				rows = append(rows, trap.Kind+" "+trap.Phase+" "+trap.Unit+" "+trap.Reason)
+			}
+			t.Logf("PROBE %s: traps=%d checked=%+v %v", row.name, len(lowered.Traps), lowered.OverloadResultChecks, rows)
 		}()
 	}
-}
-
-func firstLinkLocalSitesOrNil(program any) string {
-	return fmt.Sprintf("%v", program != nil)
 }
