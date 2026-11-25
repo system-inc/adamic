@@ -28,6 +28,9 @@ func (l *lowering) checkLibrarySpreads(modules []*ast.SourceFile) error {
 	candidates := l.librarySpreadCandidates(modules)
 	graph := l.flowGraph(l.result)
 	for _, spread := range l.librarySpreads {
+		if l.firstLinkSkips(spread.node) {
+			continue
+		}
 		// A complete producer proof preserves ordinary record and Adamic class
 		// spreads even when an unrelated compatible library object exists elsewhere.
 		if graph.plainSpreadSources(spread.source, map[int]bool{}) {

@@ -56,6 +56,9 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 	}
 	pending := l.signed[index]
 	delete(l.signed, index)
+	if l.firstLinkTraps {
+		return l.firstLinkBody(index, declaration, pending)
+	}
 	return l.lowerBody(index, declaration, pending.this, pending.defaults, pending.patterns)
 }
 
