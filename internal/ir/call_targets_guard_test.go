@@ -40,6 +40,7 @@ var targetReaders = map[string]targetReader{
 	"internal/lower/exceptions.go:libraryFailure:ArraySort.Comparator":                                  {"compiler", "MayThrow and library failure propagation, routed in step 2"},
 	"internal/lower/exceptions.go:throwsOut:ArraySort.Comparator":                                       {"compiler", "MayThrow and library failure propagation, routed in step 2"},
 	"internal/lower/class_static_guard_test.go:TestClassStaticInitializerCallIsEmitted:Call.Function":   {"compiler", "names the function under test"},
+	"internal/lower/boxed_rest_spread_test.go:TestBoxedRestSpreadKeepsOneOperand:Call.Function":         {"compiler", "names the function under test"},
 	"internal/lower/method_presence_test.go:TestMethodPresenceCallChecksItsOwnRead:CallClosure.Closure": {"compiler", "inspects the required and optional callee check's representation and located message, not its function targets"},
 	"internal/lower/view_widened.go:checkViewWidenedReads:Call.Function":                                {"compiler", "asks whether a direct call is lowering's own overload result check, whose call is a view entry (overloadCheckCalls), not its function targets"},
 	"internal/native/class_inheritance.go:callCode:Call.Function":                                       {"runtime", "names the function to call"},
