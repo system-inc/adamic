@@ -6,6 +6,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/core"
 	tsparser "github.com/microsoft/TypeScript/tsc/shim/parser"
 	"github.com/microsoft/TypeScript/tsc/shim/tspath"
+	"github.com/system-inc/adamic/internal/submodules"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -25,8 +26,15 @@ func TestCaptureFactsCompilerTable(t *testing.T) {
 	if err = json.Unmarshal(data, &table); err != nil {
 		t.Fatal(err)
 	}
+	// The TypeScript submodule's path is read from the .gitmodules files by its name, never spelled here, since cohere
+	// moves TypeScript to libraries/typescript and keeps its name. A refusal stops the test in the reader's words: a
+	// guessed path would walk fixtures that aren't the ones cohere declares.
+	typeScript, err := submodules.Path("../..", "TypeScript")
+	if err != nil {
+		t.Fatal(err)
+	}
 	// Reads: cohere
-	root := "../../cohere/TypeScript/tsc/testdata/fixtures/compiler"
+	root := filepath.Join("../..", filepath.FromSlash(typeScript), "tsc", "testdata", "fixtures", "compiler")
 	var actual []captureLiteral
 	err = filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
 		if err != nil {
