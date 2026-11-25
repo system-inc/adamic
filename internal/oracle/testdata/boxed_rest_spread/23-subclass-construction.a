@@ -1,0 +1,3 @@
+class Derived extends Array<number | string> {}
+new Derived(3, "three");
+console.log("constructed");

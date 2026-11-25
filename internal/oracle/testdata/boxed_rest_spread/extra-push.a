@@ -1,0 +1,5 @@
+type A = number | string;
+const arr: A[] = [];
+for (let i = 0; i < 3; i++) { arr.push(i); arr.push("next"); }
+function target(...rest: A[]): void { for (const value of rest) console.log(String(value)); }
+target(...arr);

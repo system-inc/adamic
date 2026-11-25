@@ -1,0 +1,12 @@
+type A = number | string;
+const values: A[] = [1, "old", 3];
+let calls = 0;
+function spread(): A[] { console.log("spread"); calls++; return values; }
+function before(): string { console.log("before"); return "first"; }
+function after(): string { console.log("after"); values.push(4); return "last"; }
+function target(...rest: A[]): void {
+    console.log(String(arguments.length));
+    for (const value of rest) console.log(String(value));
+}
+target(before(), ...spread(), after());
+console.log(String(calls));
