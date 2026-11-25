@@ -544,6 +544,11 @@ func (l *lowering) overloadCallVerdict(node, overload *ast.Node) error {
 		l.overloadVerdictCalls = map[*ast.Node]bool{}
 	}
 	l.overloadVerdictCalls[node] = true
+	if l.overloadCertificateEntry(node, overload) {
+		l.activateCallbackReads(overload)
+	} else {
+		l.activateCallbackSetReads(l.censusImplementation(overload))
+	}
 	return nil
 }
 

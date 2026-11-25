@@ -1481,7 +1481,7 @@ func (l *lowering) unparenthesizedValue(node *ast.Node) (ir.Expression, error) {
 			// identifier reads as values, so every value read of such a function comes here, and its
 			// direct calls never do. A marker is the set as a value, so an overload set with an unserved
 			// overload stops here in its whole set's words (#4czdn4q).
-			if err := l.overloadSetStop(node, l.symbol(node)); err != nil {
+			if err := l.callbackOverloadSetStop(node, l.symbol(node)); err != nil {
 				return nil, err
 			}
 			return l.neverRestMarker(node, l.symbol(node)), nil
@@ -2549,7 +2549,7 @@ func (l *lowering) overloadSetValueStop(node *ast.Node, symbol *ast.Symbol) erro
 	if symbol == nil {
 		return nil
 	}
-	if err := l.overloadSetStop(node, symbol); err != nil {
+	if err := l.callbackOverloadSetStop(node, symbol); err != nil {
 		return err
 	}
 	for _, declaration := range symbol.Declarations {
