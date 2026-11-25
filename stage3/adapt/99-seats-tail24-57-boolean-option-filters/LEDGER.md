@@ -1,0 +1,1 @@
+- **JavaScript-changing, tail pass family 57 (#bbssdcy, Adamic accepts):** The private config-dir option filters return an explicit boolean while preserving the predicate reads and the kept objects in order.
