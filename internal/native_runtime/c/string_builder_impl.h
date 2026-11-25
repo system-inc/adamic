@@ -18,10 +18,9 @@ static void builder_add(builder *build, const char *bytes, size_t size) {
 			static const char message[] = "out of memory";
 			adamic_panic(message, sizeof message - 1);
 		}
-		// From no bytes, this realloc is the buffer's first allocation, not a growth (count.h).
-		if (build->capacity != 0) {
-			ADAMIC_COUNT_GROWTH();
-		}
+		// A buffer whether it makes the bytes or enlarges them: every builder starts with none, so its
+		// first allocation is counted here (count.h).
+		ADAMIC_COUNT_BUFFER();
 		build->bytes = grown;
 		build->capacity = capacity;
 	}

@@ -28,10 +28,8 @@ static void codes_add(codes *buffer, const char *bytes, size_t size) {
 			static const char message[] = "out of memory";
 			adamic_panic(message, sizeof message - 1);
 		}
-		// From no bytes, this realloc is the buffer's first allocation, not a growth (count.h).
-		if (buffer->capacity != 0) {
-			ADAMIC_COUNT_GROWTH();
-		}
+		// A buffer whether it makes the bytes or enlarges them (count.h).
+		ADAMIC_COUNT_BUFFER();
 		buffer->bytes = grown;
 		buffer->capacity = capacity;
 	}

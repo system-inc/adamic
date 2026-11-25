@@ -48,8 +48,8 @@ static void append(json_writer *w, const char *bytes, size_t length, size_t unit
 			adamic_panic(message, sizeof message - 1);
 		}
 		// The writer starts with bytes of its own (adamic_json_stringify), so every realloc here enlarges
-		// them: a growth (count.h).
-		ADAMIC_COUNT_GROWTH();
+		// them: a buffer (count.h).
+		ADAMIC_COUNT_BUFFER();
 		w->bytes = grown;
 		w->capacity = capacity;
 	}
@@ -378,6 +378,9 @@ adamic_string *adamic_json_stringify_runtime(adamic_value value, const adamic_js
 		}
 	}
 	json_writer writer = {json_memory(64), 0, 64, 0, gap, NULL, 0, false, pretty, runtime, NULL, false};
+	// The string being built: a buffer, as each realloc in append that enlarges it is (count.h). The
+	// replacer's key list, made by keys, is the stringify's own bookkeeping and isn't one.
+	ADAMIC_COUNT_BUFFER();
 	keys(&writer, replacer, replacer_schema);
 	bool present = write_value(&writer, value, schema, 0, &empty);
 	adamic_string *result = NULL;

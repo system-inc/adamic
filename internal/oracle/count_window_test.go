@@ -16,25 +16,34 @@ import (
 // A loop's body must not allocate inside its period, and the counted build's one tally at exit can't say
 // whether one does. adamic_count_snapshot (count.h) can: these splice two snapshots around the one call of
 // a program's measured, as TestStringLengthJoinMemory splices its read before main returns, and print the
-// difference, the allocations, frees and growths that call made (#42q54q5). It's a measurement, never a
+// difference, the allocations, frees and buffers that call made (#42q54q5). It's a measurement, never a
 // proof; the bounded marker (#td8v3ve) is the proof. Every number pinned here is exact, derived from the
 // runtime beside it, and each program runs as it's built, untouched, agreeing with Node, and spliced, still
 // printing what Node prints and letting go of everything.
 //
-// Mutant: count.h's ADAMIC_COUNT_GROWTH defined as ((void)0) under ADAMIC_COUNT, so no growth is ever
-// counted. "push" and "map" go red, each reading 0 growths; "objects" and "arithmetic", whose growths are
-// 0 either way, stay green (measure/42q54q5/proof.sh plants it).
+// A buffer is a malloc, calloc or realloc that makes or enlarges storage a value owns, its first allocation
+// included (count.h): "made before" is a loop body's case, an array made empty outside the window whose
+// first push inside it is a realloc from nothing, and a probe that skipped first allocations read 0 there.
+//
+// Mutants (measure/42q54q5/proof.sh plants each):
+//   - M1, count.h's ADAMIC_COUNT_BUFFER defined as ((void)0) under ADAMIC_COUNT, so no buffer is ever
+//     counted. "push", "map" and "made before" go red, each reading 0 buffers; "objects" and "arithmetic",
+//     whose buffers are 0 either way, stay green.
+//   - M2, push's first allocation skipped again: if (array->capacity != 0) put back around push's count
+//     (array.c). "made before" goes red reading 0 and "push" reading 3; "map", "objects" and "arithmetic"
+//     stay green.
 
 // countWindowUnpinned is a column a case doesn't pin: its derivation would lean on more than the runtime.
 const countWindowUnpinned = -1
 
 var countWindowCases = []struct {
 	name, source                string
-	allocations, frees, growths int
+	allocations, frees, buffers int
 }{
 	// Each pass makes one Point, one adamic_object_new and so one adamic_allocate (object.c), and a literal
 	// is reused in place only from a spread (reuse.go), so five passes are five allocations. An object's
-	// slots are inline, with no buffer to grow. Its frees aren't pinned: when each is let go is lowering's.
+	// slots are inline, in the one allocation adamic_object_size sizes, so a literal owns no buffer and
+	// the buffers are 0. Its frees aren't pinned: when each is let go is lowering's.
 	{"objects", `interface Point { x: number; y: number }
 let sum = 0;
 function measured(): void {
@@ -46,7 +55,8 @@ function measured(): void {
 measured();
 console.log(String(sum));
 `, 5, countWindowUnpinned, 0},
-	// Numbers held in globals, a number loop counter, and arithmetic: nothing is made, let go of or grown.
+	// Numbers held in globals, a number loop counter, and arithmetic: nothing is made, let go of or given
+	// a buffer.
 	{"arithmetic", `let total = 0;
 const factor = 3;
 function measured(): void {
@@ -57,10 +67,10 @@ function measured(): void {
 measured();
 console.log(String(total));
 `, 0, 0, 0},
-	// [] is adamic_array_make(0, ...), with no storage (emit_expressions.go's ArrayLiteral). push grows a
-	// full array to 4 from nothing and doubles it after (array.c): the first push's realloc is the buffer's
-	// first allocation, not a growth, and the fifth (4 to 8), the ninth (8 to 16) and the seventeenth (16
-	// to 32) are, so twenty pushes are 3 growths.
+	// [] is adamic_array_make(0, ...), with no storage and so no buffer (emit_expressions.go's
+	// ArrayLiteral). push reallocs a full array, to 4 from nothing and doubled after (array.c), each one a
+	// buffer: the first push (nothing to 4), the fifth (4 to 8), the ninth (8 to 16) and the seventeenth
+	// (16 to 32), so twenty pushes are 4 buffers.
 	{"push", `let pushed = 0;
 function measured(): void {
   const values: number[] = [];
@@ -71,11 +81,12 @@ function measured(): void {
 }
 measured();
 console.log(String(pushed));
-`, countWindowUnpinned, countWindowUnpinned, 3},
-	// new Map() is adamic_map_new, with no table (map.c). The first set rebuilds into 8 entries from
-	// nothing, the table's first allocation and not a growth. A set into a full table whose entries are all
-	// live doubles it (adamic_map_set: count * 2 > capacity), one growth per rebuild: the ninth set (8 to
-	// 16) and the seventeenth (16 to 32), so seventeen keys are 2 growths.
+`, countWindowUnpinned, countWindowUnpinned, 4},
+	// new Map() is adamic_map_new, with no table (map.c). A set into a full table rebuilds it, and a
+	// rebuild that allocates entries is one buffer, its buckets riding along. The first set finds 0 used of
+	// 0 and rebuilds into 8 entries from nothing; after it, a full table whose entries are all live doubles
+	// (adamic_map_set: count * 2 > capacity), at the ninth set (8 to 16) and the seventeenth (16 to 32), so
+	// seventeen keys are 3 buffers.
 	{"map", `let size = 0;
 function measured(): void {
   const squares = new Map<number, number>();
@@ -86,10 +97,21 @@ function measured(): void {
 }
 measured();
 console.log(String(size));
-`, countWindowUnpinned, countWindowUnpinned, 2},
+`, countWindowUnpinned, countWindowUnpinned, 3},
+	// A loop body's case: values is made empty at the top level, before measured is called, as
+	// adamic_array_make(0, ...) with no storage. measured's one push reallocs it from nothing to 4
+	// (array.c), its first allocation and so 1 buffer, inside the window. Nothing is made and nothing is let
+	// go of: a number goes in, so the allocations and frees are 0.
+	{"made before", `const values: number[] = [];
+function measured(): void {
+  values.push(7);
+}
+measured();
+console.log(String(values.length));
+`, 0, 0, 1},
 }
 
-var countWindowLine = regexp.MustCompile(`(?m)^count window: allocations (\d+) frees (\d+) growths (\d+)$`)
+var countWindowLine = regexp.MustCompile(`(?m)^count window: allocations (\d+) frees (\d+) buffers (\d+)$`)
 
 func TestCountWindow(t *testing.T) {
 	t.Parallel()
@@ -125,10 +147,10 @@ func TestCountWindow(t *testing.T) {
 			code = "#include <stdio.h>\n" + code[:start] +
 				"{ adamic_count_window count_window_before = adamic_count_snapshot(); " + code[start:end] +
 				" adamic_count_window count_window_after = adamic_count_snapshot();" +
-				" fprintf(stderr, \"count window: allocations %zu frees %zu growths %zu\\n\"," +
+				" fprintf(stderr, \"count window: allocations %zu frees %zu buffers %zu\\n\"," +
 				" count_window_after.allocations - count_window_before.allocations," +
 				" count_window_after.frees - count_window_before.frees," +
-				" count_window_after.growths - count_window_before.growths); }" + code[end:]
+				" count_window_after.buffers - count_window_before.buffers); }" + code[end:]
 			binary := filepath.Join(t.TempDir(), "counted")
 			if err := native.Build(code, binary, native_runtime.Options{Count: true}); err != nil {
 				t.Fatal(err)
@@ -147,7 +169,7 @@ func TestCountWindow(t *testing.T) {
 			for index, column := range []struct {
 				name string
 				want int
-			}{{"allocations", c.allocations}, {"frees", c.frees}, {"growths", c.growths}} {
+			}{{"allocations", c.allocations}, {"frees", c.frees}, {"buffers", c.buffers}} {
 				measured, err := strconv.Atoi(string(windows[0][index+1]))
 				if err != nil {
 					t.Fatalf("%s %q: %v", column.name, windows[0][index+1], err)

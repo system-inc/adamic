@@ -43,7 +43,7 @@ adamic_count_window adamic_count_snapshot(void) {
 	return (adamic_count_window){
 		atomic_load_explicit(&adamic_counted.allocations, memory_order_relaxed),
 		atomic_load_explicit(&adamic_counted.frees, memory_order_relaxed),
-		atomic_load_explicit(&adamic_counted.growths, memory_order_relaxed),
+		atomic_load_explicit(&adamic_counted.buffers, memory_order_relaxed),
 	};
 }
 

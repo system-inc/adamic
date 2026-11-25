@@ -68,6 +68,9 @@ adamic_map *adamic_map_new_sized(bool string_keys, bool reference_values, size_t
 	}
 	map->entries = allocate_zeroed(capacity, sizeof *map->entries);
 	map->buckets = allocate_zeroed(capacity * 2, sizeof *map->buckets);
+	// The first table, made with the map: one buffer, its buckets riding along, as a rebuild's are
+	// (count.h).
+	ADAMIC_COUNT_BUFFER();
 	map->capacity = capacity;
 	map->bucket_count = capacity * 2;
 	return map;
@@ -176,11 +179,10 @@ static void rebuild(adamic_map *map, size_t entries_needed) {
 			static const char message[] = "out of memory";
 			adamic_panic(message, sizeof message - 1);
 		}
-		// One growth for the rebuild, its new buckets below included; a map's first table, from no
-		// entries, is its first allocation, not a growth (count.h).
-		if (map->capacity != 0) {
-			ADAMIC_COUNT_GROWTH();
-		}
+		// One buffer for a rebuild that makes or enlarges the entries, a map's first table included,
+		// with its new buckets below riding along (count.h). A rebuild that compacts in place makes
+		// new buckets of the same size and enlarges nothing, so it isn't one.
+		ADAMIC_COUNT_BUFFER();
 		map->entries = grown;
 		map->capacity = capacity;
 	}
