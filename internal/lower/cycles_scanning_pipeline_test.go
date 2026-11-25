@@ -87,31 +87,47 @@ func pipelineCalls(t *testing.T, path, function string) []string {
 			continue
 		}
 		found = true
-		goast.Inspect(declared.Body, func(node goast.Node) bool {
+		// named is a callee's name as the list holds it, and whether the list holds it at all.
+		named := func(callee goast.Expr) (string, bool) {
+			switch callee := callee.(type) {
+			case *goast.SelectorExpr:
+				if receiver, isIdentifier := callee.X.(*goast.Ident); isIdentifier && (receiver.Name == "lowering" || receiver.Name == "flow" || receiver.Name == "fresh") {
+					return receiver.Name + "." + callee.Sel.Name, true
+				}
+			case *goast.Ident:
+				return callee.Name, !builtins[callee.Name]
+			}
+			return "", false
+		}
+		var visit func(node goast.Node) bool
+		visit = func(node goast.Node) bool {
 			call, isCall := node.(*goast.CallExpr)
 			if !isCall {
 				return true
 			}
-			switch callee := call.Fun.(type) {
-			case *goast.SelectorExpr:
-				// A first-link lowering's steps (first_link_passes.go) are left out, with what they're handed: the
-				// reference never lowers in that mode, and off it each does nothing, firstLinkPass handing back the
-				// stop it was given, firstLinkHeldStops returning, firstLinkProgramStop answering false. The run a
-				// firstLinkPass is handed is the pass it follows, called again only in that mode, so the pass's own
-				// call stands for it, as it does in the reference.
-				if receiver, isIdentifier := callee.X.(*goast.Ident); isIdentifier && receiver.Name == "lowering" && strings.HasPrefix(callee.Sel.Name, "firstLink") {
+			// A first-link lowering's steps (first_link_passes.go) are left out, with what they're handed: the
+			// reference never lowers in that mode, and off it each does nothing, firstLinkPass handing back the
+			// stop it was given, firstLinkHeldStops returning, firstLinkProgramStop answering false. firstLinkRun
+			// runs the pass it's handed, once, as the reference calls it, so its run stands for the pass: a method
+			// value or a function by its name, a function literal by the calls inside it.
+			if selector, isSelector := call.Fun.(*goast.SelectorExpr); isSelector {
+				if receiver, isIdentifier := selector.X.(*goast.Ident); isIdentifier && receiver.Name == "lowering" && strings.HasPrefix(selector.Sel.Name, "firstLink") {
+					if selector.Sel.Name == "firstLinkRun" && len(call.Args) == 3 {
+						if run, isLiteral := call.Args[2].(*goast.FuncLit); isLiteral {
+							goast.Inspect(run.Body, visit)
+						} else if name, listed := named(call.Args[2]); listed {
+							calls = append(calls, name)
+						}
+					}
 					return false
 				}
-				if receiver, isIdentifier := callee.X.(*goast.Ident); isIdentifier && (receiver.Name == "lowering" || receiver.Name == "flow" || receiver.Name == "fresh") {
-					calls = append(calls, receiver.Name+"."+callee.Sel.Name)
-				}
-			case *goast.Ident:
-				if !builtins[callee.Name] {
-					calls = append(calls, callee.Name)
-				}
+			}
+			if name, listed := named(call.Fun); listed {
+				calls = append(calls, name)
 			}
 			return true
-		})
+		}
+		goast.Inspect(declared.Body, visit)
 	}
 	if !found {
 		t.Fatalf("%s has no function %s", path, function)
