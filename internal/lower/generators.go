@@ -909,11 +909,27 @@ func checkGeneratorRoads(program *ir.Program) error {
 		}
 	}
 	for local, declared := range program.Locals {
+		// A first-link lowering's function that stopped partway lowers as its trap's stub alone, so a
+		// generator local its lowering made has no Declare left to hold it. Main's locals, Function -1,
+		// have no body of their own to read that from.
+		if declared.Function >= 0 && declared.Function < len(program.Functions) && firstLinkStubBody(program.Functions[declared.Function].Body) {
+			continue
+		}
 		if declared.Type == ir.Generator && (!held[local] || declared.Global || declared.Captured) {
 			return fmt.Errorf("lower: compiler bug: the generator local %s is held outside its consuming loop", declared.Name)
 		}
 	}
 	return nil
+}
+
+// firstLinkStubBody reports whether a function's body is a first-link trap's stub alone, as firstLinkBody and
+// firstLinkStubUnit make it (first_link_traps.go, first_link_passes.go), which no other lowering makes.
+func firstLinkStubBody(body []ir.Statement) bool {
+	if len(body) != 1 {
+		return false
+	}
+	stub, isPanic := body[0].(ir.Panic)
+	return isPanic && stub.Trap
 }
 
 // makesGenerator is a generator's own call, the one expression that makes its frame: a module
