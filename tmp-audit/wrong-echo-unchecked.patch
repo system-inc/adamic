@@ -1,0 +1,10 @@
+--- a/stage3/firstlink/report.py
++++ b/stage3/firstlink/report.py
+@@ -89,7 +89,6 @@
+         "by_reason": dict(Counter(f'{row["Kind"]}: {row["Reason"]}' for row in rows)),
+         "unplaced": sum(not row["Unit"] for row in rows),
+         "suspect": sum(row["Suspect"] for row in rows),
+-        "echo": sum(row["Echo"] for row in rows),
+     }
+     for key, expected in counts.items():
+         actual = source.get(key)

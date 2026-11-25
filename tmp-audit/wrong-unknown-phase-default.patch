@@ -1,0 +1,21 @@
+--- a/stage3/firstlink/report.py
++++ b/stage3/firstlink/report.py
+@@ -78,9 +78,6 @@
+                 or type(row.get("Suspect")) is not bool
+                 or type(row.get("Echo")) is not bool):
+             raise ValueError(f"invalid recorded stop at index {index}")
+-        phase = row["Phase"]
+-        if phase not in BODY_PHASES and phase not in WHOLE_PROGRAM_PHASES:
+-            raise ValueError(f"unknown phase {json.dumps(phase)} in record {index}")
+ 
+     counts = {
+         "total": len(rows),
+@@ -146,7 +143,7 @@
+             key: sum(phase[key] for phase in phases.values())
+             for key in ("echo", "suspect", "without_flags")
+         },
+-        "has_whole_program_pass_stops": bool(WHOLE_PROGRAM_PHASES.intersection(phases)),
++        "has_whole_program_pass_stops": any(phase not in BODY_PHASES for phase in phases),
+         "absolute_sites": sum(Path(row["Site"]).is_absolute() for row in rows),
+         "empty_sites": sum(row["Site"] == "" for row in rows),
+         "unknown_top_level_keys": sorted(source.keys() - {

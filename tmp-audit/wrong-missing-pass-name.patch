@@ -1,0 +1,10 @@
+--- a/stage3/firstlink/report.py
++++ b/stage3/firstlink/report.py
+@@ -22,7 +22,6 @@
+ # The names come from each first argument of a firstLinkPass call at ea68172c
+ # (33 calls), plus the two firstLinkProgramStop calls.
+ WHOLE_PROGRAM_PHASES = {
+-    "NormalizeAsync",
+     "ProgramRegion",
+     "RelationOverflow",
+     "asyncPayloadFailures",

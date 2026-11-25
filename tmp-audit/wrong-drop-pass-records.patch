@@ -1,0 +1,11 @@
+--- a/stage3/firstlink/report.py
++++ b/stage3/firstlink/report.py
+@@ -107,6 +107,8 @@
+     rows = validate(source)
+     placed = {}
+     for row in rows:
++        if row["Phase"] == "checkBoundArguments":
++            continue
+         reason = POSITION.sub(r"\1", row["Reason"])
+         placed.setdefault(row["Phase"], []).append({
+             "record": row,
