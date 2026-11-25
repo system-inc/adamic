@@ -1,8 +1,10 @@
 package load
 
 import (
+	"path/filepath"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/submodules"
 	"github.com/system-inc/adamic/internal/tracked"
 )
 
@@ -16,8 +18,15 @@ const typeScriptCommit = "d92d9bfee114c80be2c375d72edae966176e3a4f"
 
 func TestTypeScriptIsThePinnedCommit(t *testing.T) {
 	t.Parallel()
+	// The path is read from the .gitmodules files by the submodule's name, never spelled here, since cohere moves
+	// TypeScript to libraries/typescript and keeps its name. A refusal stops the test in the reader's words: a
+	// guessed path would answer for a checkout that isn't the one cohere declares.
+	path, err := submodules.Path("../..", "TypeScript")
+	if err != nil {
+		t.Fatal(err)
+	}
 	// git where the submodule has .git, else the tree's manifest, as a Loom runner's unpacked source has.
-	got, err := tracked.Head("../../cohere/TypeScript")
+	got, err := tracked.Head(filepath.Join("../..", filepath.FromSlash(path)))
 	if err != nil {
 		t.Fatalf("reading the TypeScript submodule's commit: %v (run git submodule update --init --recursive)", err)
 	}
