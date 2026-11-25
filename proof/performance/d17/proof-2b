@@ -1,0 +1,26 @@
+# #d1chbm7 commit 2b proof (Performance): ruling 17's dispatch lowered. Run after environment.sh, sandboxed-job.sh,
+# sandboxed_typescript_source and sandboxed_npm stage3/api. Never merged.
+set -u
+fail=0
+step() { echo "== $1"; }
+step gofmt; gofmt -l internal/lower/dispatch_cast.go internal/lower/dispatch_lower.go internal/lower/dispatch_cast_test.go internal/lower/dispatch_lower_test.go internal/lower/cast.go internal/lower/interface_cast.go internal/lower/non_null.go internal/lower/locals.go internal/lower/modules.go internal/lower/expression.go internal/ir/ir.go cmd/adamic/checks.go stage3/census/latent/statecopy/ir_fields.go internal/oracle/dispatch_cast_test.go
+step vet; go vet ./internal/lower ./internal/oracle ./internal/ir ./cmd/adamic ./stage3/census/latent/statecopy > "$TMPDIR/vet.log" 2>&1; r=$?; echo "vet exit=$r"; [ $r = 0 ] || { head -30 "$TMPDIR/vet.log"; fail=1; }
+step "lower: dispatch, numeric keys, casts"
+go test -count=1 -run 'Dispatch|NumericKey|Cast|NonNull' ./internal/lower > "$TMPDIR/lower.log" 2>&1; r=$?; echo "lower exit=$r"
+grep -E -- '^(ok|FAIL)|--- FAIL|_test.go:[0-9]+:|panic' "$TMPDIR/lower.log" | cut -c1-300 | head -60; [ $r = 0 ] || fail=1
+step statecopy; go test -count=1 ./stage3/census/latent/statecopy > "$TMPDIR/sc.log" 2>&1; r=$?; echo "statecopy exit=$r"; grep -E -- '^(ok|FAIL)|--- FAIL|_test.go:[0-9]+:' "$TMPDIR/sc.log" | head -20; [ $r = 0 ] || fail=1
+step "oracle: the seven fixtures against Node, and today's stops"
+go test -count=1 -v -run 'TestNativeAgreesWithNode_(031|078|003|001|085|056)$/internal/oracle/testdata/dispatch_cast|TestDispatchCastKeepsTodaysStops' ./internal/oracle > "$TMPDIR/oracle.log" 2>&1; r=$?; echo "oracle exit=$r"
+grep -E -- '--- (PASS|FAIL)|_test.go:[0-9]+:|^(ok|FAIL)|panic' "$TMPDIR/oracle.log" | grep -v 'gate cache' | cut -c1-400 | head -80; [ $r = 0 ] || fail=1
+step "counts rows"
+go test -count=1 -run 'TestCountsAreRecorded_(031|014|003|001|021|024)$' ./internal/oracle -args -update-counts > "$TMPDIR/counts.log" 2>&1; echo "counts exit=$?"; grep -E -- '--- FAIL|_test.go:[0-9]+:|^(ok|FAIL)' "$TMPDIR/counts.log" | head -10
+for f in internal/oracle/testdata/counts/runtime/internal/oracle/testdata/dispatch_cast/*.counts; do [ -f "$f" ] && echo "ROW $(basename "$f") $(cat "$f")"; done
+git status --porcelain -- internal/oracle/testdata/counts | head -20
+step "tsc: the scan and family 19's replay"
+cp proof/performance/d17/zz_dispatch_tsc_test.go internal/lower/
+bash stage3/apply.sh "$TMPDIR/adapted" > "$TMPDIR/apply.log" 2>&1; echo "apply exit=$?"
+ADAMIC_DISPATCH_TSC="$TMPDIR/adapted/src/tsc/tsc.ts" go test -count=1 -v -timeout 40m -run 'TestZZDispatchScanOverTsc$' ./internal/lower > "$TMPDIR/scan.log" 2>&1; echo "scan exit=$?"
+grep -E 'ADMITTED|DECLINED|KEY |ACCESSORS|--- FAIL|panic' "$TMPDIR/scan.log" | cut -c1-300 | head -20
+rm internal/lower/zz_dispatch_tsc_test.go
+go run ./stage3/census/latent/replay -project "$TMPDIR/adapted/src/tsc/tsc.ts" -where "$TMPDIR/adapted/src/compiler/parser.ts:1254:17" -kind NotYet -reason 'a member typed any' > "$TMPDIR/replay.log" 2>&1; echo "replay exit=$?"; tail -15 "$TMPDIR/replay.log" | cut -c1-300
+[ $fail = 0 ] && echo "VERDICT PASS" || echo "VERDICT FAIL"
