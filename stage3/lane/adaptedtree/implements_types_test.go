@@ -16,14 +16,10 @@ import (
 // `class Both implements B`).
 func TestTwoImplementsTagsKeepBothInTheDeclaration(t *testing.T) {
 	t.Parallel()
-	node, err := exec.LookPath("node")
-	if err != nil {
-		t.Fatal(err)
-	}
 	product := Product(t)
 	declaration := func(compiler string) []byte {
 		t.Helper()
-		command := exec.Command(node, "adaptedtree/testdata/implements/declaration.cjs", compiler, "adaptedtree/testdata/implements/fixture.js")
+		command := exec.Command("node", "adaptedtree/testdata/implements/declaration.cjs", compiler, "adaptedtree/testdata/implements/fixture.js")
 		var stderr bytes.Buffer
 		command.Stderr = &stderr
 		output, err := command.Output()
