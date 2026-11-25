@@ -183,3 +183,14 @@ func (l *lowering) firstLinkProgramStop(phase string, stop error) bool {
 	l.result.Traps = l.traps
 	return true
 }
+
+// firstLinkSuspectEvery marks every row recorded so far Suspect, and every row after it (firstLinkSuspect),
+// for a stop that may have changed what lowering read anywhere in the program, before its row as well as
+// after: a relation the checker gave up on (RelationOverflow).
+func (l *lowering) firstLinkSuspectEvery() {
+	l.firstLinkSuspect = true
+	for index := range l.traps {
+		l.traps[index].Suspect = true
+	}
+	l.result.Traps = l.traps
+}

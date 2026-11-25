@@ -469,13 +469,7 @@ func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 				}
 			}
 		}
-		for _, closure := range f.l.closureRecords {
-			if f.l.checker.IsTypeAssignableTo(closure.proven, proven) {
-				for _, local := range f.l.closureLinks(closure) {
-					links = append(links, cycleNode{cell: local + 1})
-				}
-			}
-		}
+		links = append(links, f.closureLinksTo(proven)...)
 	case f.l.recordElement(proven) != nil:
 		// A record holds its values, as reachLinks follows them (#1vb0x5s).
 		links = append(links, cycleNode{proven: f.l.recordElement(proven)})
