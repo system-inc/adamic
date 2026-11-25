@@ -1,0 +1,90 @@
+{
+  "findings": "leads only; reproduce without FirstLinkTraps before filing",
+  "traps": [
+    {
+      "Kind": "NotYet",
+      "Reason": "a value of type example.ts:19:3",
+      "Fix": "",
+      "Site": "/fixture/tree/src/compiler/example.ts:19:3",
+      "Unit": "example.ts first",
+      "Phase": "Body",
+      "Suspect": false,
+      "FutureDetail": {
+        "note": [
+          1,
+          "kept"
+        ]
+      },
+      "Echo": false
+    },
+    {
+      "Kind": "NotYet",
+      "Reason": "a value of type example.ts:22:1",
+      "Fix": "",
+      "Site": "entry.ts:22:1",
+      "Unit": "entry.ts second",
+      "Phase": "Body",
+      "Suspect": false,
+      "Echo": false
+    },
+    {
+      "Kind": "Refused",
+      "Reason": "already recorded | in this unit",
+      "Fix": "",
+      "Site": "/elsewhere/shared.ts:4:2",
+      "Unit": "example.ts first",
+      "Phase": "findCycles",
+      "Suspect": false,
+      "Echo": true
+    },
+    {
+      "Kind": "Gap",
+      "Reason": "remaining work could not be judged",
+      "Fix": "",
+      "Site": "",
+      "Unit": "",
+      "Phase": "findCycles",
+      "Suspect": true,
+      "Echo": false
+    },
+    {
+      "Kind": "Panic",
+      "Reason": "second pass",
+      "Fix": "",
+      "Site": "/fixture/tree-other/outside.ts:6:8",
+      "Unit": "example.ts first",
+      "Phase": "unlowerable",
+      "Suspect": true,
+      "Echo": true
+    }
+  ],
+  "total": 5,
+  "by_phase": {
+    "Body": 2,
+    "findCycles": 2,
+    "unlowerable": 1
+  },
+  "by_kind": {
+    "NotYet": 2,
+    "Refused": 1,
+    "Gap": 1,
+    "Panic": 1
+  },
+  "by_reason": {
+    "NotYet: a value of type example.ts:19:3": 1,
+    "NotYet: a value of type example.ts:22:1": 1,
+    "Refused: already recorded | in this unit": 1,
+    "Gap: remaining work could not be judged": 1,
+    "Panic: second pass": 1
+  },
+  "unplaced": 1,
+  "suspect": 2,
+  "echo": 2,
+  "rewrites_skipped": [
+    "layFunctionConstructorWindows",
+    "certifySourceSlots"
+  ],
+  "FutureReport": {
+    "kept": true
+  }
+}
