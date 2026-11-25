@@ -82,10 +82,12 @@ timed door-build "$work/build.log" go build -o "$work/adamic-firstlink" ./cmd/ad
 	|| { tail -n 60 "$work/build.log"; stop "build the door"; }
 
 code=0
-timed door "$work/door.log" timeout --foreground 60m "$work/adamic-firstlink" "$work/tree/src/tsc/tsc.ts" "$work/out" || code=$?
+timed door "$work/door.log" timeout --foreground --signal=QUIT --kill-after=3m 55m "$work/adamic-firstlink" "$work/tree/src/tsc/tsc.ts" "$work/out" || code=$?
 if ((code)); then
 	grep -n -m1 -A20 -E '^(panic|fatal error|runtime error)' "$work/door.log" | sed 's/^/PANIC-HEAD /'
 	tail -n 60 "$work/door.log"
+	grep -n -m1 -A40 -E '^goroutine 1 ' "$work/door.log" | sed 's/^/GOROUTINE-1 /'
+	grep -c -E '^goroutine ' "$work/door.log" | sed 's/^/GOROUTINES /'
 	if ((code == 124)); then
 		stop "door exceeded 60 minutes, no completed report read"
 	fi
