@@ -56,6 +56,11 @@ type neverMaking struct {
 // is never itself, the flow can't reach the read, or a never value was assigned whole.
 func (l *lowering) neverRead(node *ast.Node) (*neverMaking, error) {
 	node = ast.SkipParentheses(node)
+	if ast.IsIdentifier(node) && l.neverReadPosition(node) {
+		if local, ok := l.locals[l.valueSymbol(node)]; ok && l.heldNeverParameter(local) {
+			return &neverMaking{}, nil
+		}
+	}
 	if !l.neverReadPosition(node) || l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsNever == 0 || l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil {
 		return nil, nil
 	}

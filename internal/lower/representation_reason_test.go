@@ -18,8 +18,8 @@ const representationReasonWeak = "import type { Weak } from 'adamic'; interface 
 func TestRepresentationReasonStops(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct {
-		name, prelude, parameters, typ, displayed, reason string
-		direct                                            bool
+		name, prelude, arrowParameters, typ, displayed, reason string
+		direct                                                 bool
 	}{
 		{"array_member", representationReasonArray, "", "JSDocArray", "JSDocArray", "an array type with its own member jsDocCache, held as neither an array nor an object", false},
 		{"index_signature", "interface BareArray extends Array<string> {}", "", "BareArray", "BareArray", "a type with an index signature that isn't a string record", false},
@@ -40,7 +40,7 @@ func TestRepresentationReasonStops(t *testing.T) {
 		{"weak_union", representationReasonWeak + "; type Target = Weak<Item> | number;", "", "Target", "Target", "a union of a weak reference and other members", false},
 		{"phantom_union", "type Target = (void & { readonly first: void }) | (void & { readonly second: void });", "", "Target", "Target", "a union with no member that holds a value", false},
 		{"type_parameter", "", "<T>", "T", "T", "a type parameter this instantiation doesn't fix", false},
-		{"never", "", "", "never", "never", "never (no value has it)", false},
+		{"never", "", "()", "never", "never", "never (no value has it)", false},
 		{"symbol", "", "", "symbol", "symbol", "a symbol", false},
 		{"bigint", "", "", "bigint", "bigint", "a bigint", false},
 		{"indexed_access", "", "<T, K extends keyof T>", "T[K]", "T[K]", "an unresolved indexed access", false},
@@ -51,8 +51,8 @@ func TestRepresentationReasonStops(t *testing.T) {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			source := probe.prelude + "\nfunction probe(value: " + probe.typ + "): void {}"
-			if probe.parameters != "" {
-				source = probe.prelude + "\nconst probe = " + probe.parameters + "(value: " + probe.typ + "): void => {};"
+			if probe.arrowParameters != "" {
+				source = probe.prelude + "\nconst probe = " + strings.TrimSuffix(probe.arrowParameters, "()") + "(value: " + probe.typ + "): void => {};"
 			}
 			l, node := representationReasonParameter(t, source)
 			proven := l.checker.GetTypeAtLocation(node)
@@ -74,6 +74,14 @@ func TestRepresentationReasonStops(t *testing.T) {
 			_, err := lowerSourceAs(t, source, ".ts")
 			checkRepresentationStop(t, err, want)
 		})
+	}
+}
+
+func TestUncalledNeverParameterLowers(t *testing.T) {
+	t.Parallel()
+	// Ruling 1 holds the parameter because there is no call site that can fail its condition.
+	if _, err := lowerSourceAs(t, "function probe(value: never): void {}", ".ts"); err != nil {
+		t.Fatal(err)
 	}
 }
 
