@@ -9,6 +9,8 @@ typedef struct pieces {
 
 static void pieces_add(pieces *list, adamic_string *piece) {
 	if (list->count == list->capacity) {
+		// A buffer whether it makes the items or enlarges them (count.h).
+		ADAMIC_COUNT_BUFFER();
 		list->capacity = list->capacity == 0 ? 8 : list->capacity * 2;
 		adamic_string **grown = realloc(list->items, list->capacity * sizeof *grown);
 		if (grown == NULL) {
