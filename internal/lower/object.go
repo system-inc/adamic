@@ -1043,6 +1043,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	isMath := l.isLibraryGlobal(receiver, "Math")
 	receiverType, _ := l.representation(l.optionalChainOperandType(receiver))
+	if l.optionalReceiverCall == node && hasSpread(node) {
+		receiverType, _ = l.representation(l.intrinsicReceiverType(receiver))
+	}
 	isToFixed := name == "toFixed" && receiverType == ir.Number
 	if receiverType == ir.Array && name == "pop" && len(node.AsCallExpression().Arguments.Nodes) == 0 {
 		element, err := l.elementType(receiver)
