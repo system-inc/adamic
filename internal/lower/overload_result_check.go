@@ -175,7 +175,7 @@ func (l *lowering) overloadResultCheck(node *ast.Node, value ir.Expression) (ir.
 	result := local("result", value.Type())
 	l.result.Functions[check].Parameters = []int{result}
 	read := ir.Read{Local: result, Of: value.Type()}
-	setup, membership, err := l.predicateMembership(node, read, produced, promised, local, 0)
+	setup, membership, err := l.predicateMembershipHeld(node, node, read, produced, promised, local)
 	if err != nil {
 		return nil, err
 	}
