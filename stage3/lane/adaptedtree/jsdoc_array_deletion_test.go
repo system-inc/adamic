@@ -12,17 +12,13 @@ import (
 // any writes. Accepting the orphaned span makes the probe fail.
 func TestJSDocArrayDeletionKeepsLocalsContainer(t *testing.T) {
 	t.Parallel()
-	node, err := exec.LookPath("node")
-	if err != nil {
-		t.Fatal(err)
-	}
 	modules, err := filepath.Abs(filepath.Join(repositoryFromLane, "stage3/api/node_modules"))
 	if err != nil {
 		t.Fatal(err)
 	}
 	tree := filepath.Join(Product(t), "tree")
 	probe := filepath.Join(repositoryFromLane, "stage3/adapt/99-correctness-tags-cache-table/deletion-test.cjs")
-	command := exec.Command(node, probe, tree)
+	command := exec.Command("node", probe, tree)
 	command.Env = append(command.Environ(), "NODE_PATH="+modules)
 	output, err := command.CombinedOutput()
 	if err != nil {
