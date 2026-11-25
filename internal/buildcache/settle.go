@@ -253,6 +253,9 @@ type traceFacts struct {
 	root, cache, trace, goRoot, goCache, goModules, goTelemetry, nativeRuntimes, tools, home string
 	roots, caches, temporary, kernel, system, buildLogs                                      []string
 	searched, executables                                                                    map[string]bool
+	// userCache is the user cache directory (os.UserCacheDir), a place of its own where the job puts it outside the
+	// home: a sealed job's is /run/loom-scratch/cache (#7k79mkn), so deeperPlaceHolds holds it apart from /run.
+	userCache string
 	// toolsSpellings are the tools root's other spellings (toolsPlaces less the root itself, longest first): a read
 	// through one is the root's read, so a probe under ~/.adamic-tools keys as one under the root whatever home the run
 	// had (#zxq3k08, Node's ruling on shape 4).
@@ -312,6 +315,7 @@ func settleFacts(root, cache, trace, report string) (*traceFacts, error) {
 	// Go's build cache addresses an action, so what a build reads there is no entry.
 	if user, err := os.UserCacheDir(); err == nil {
 		facts.nativeRuntimes = filepath.Join(user, "adamic", "runtime")
+		facts.userCache = user
 	}
 	facts.home, _ = os.UserHomeDir()
 	for _, spelling := range toolsPlaces(facts.home) {
@@ -331,8 +335,13 @@ func settleFacts(root, cache, trace, report string) (*traceFacts, error) {
 			facts.buildLogs = append(facts.buildLogs, variants(filepath.Clean(log))...)
 		}
 	}
-	for _, place := range []string{os.TempDir(), "/tmp", "/var/tmp"} {
-		facts.temporary = append(facts.temporary, variants(place)...)
+	// GOTMPDIR is Go's own temporary place, its work directory and every test's TempDir (testing.go:1613 in go1.27.1):
+	// a sealed job sets it on its scratch, apart from `TMPDIR` (#7k79mkn), and a read there is temp's as one under /tmp
+	// is (#y70zzzw). Unset, as on a house box, it adds nothing.
+	for _, place := range []string{os.TempDir(), os.Getenv("GOTMPDIR"), "/tmp", "/var/tmp"} {
+		if place != "" {
+			facts.temporary = append(facts.temporary, variants(place)...)
+		}
 	}
 	facts.kernel = []string{"/proc", "/sys", "/dev", "/run"}
 	for _, place := range systemPlaces {
@@ -648,7 +657,7 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 		}
 	}
 	for _, place := range facts.kernel {
-		if under(name, place) {
+		if under(name, place) && !facts.deeperPlaceHolds(name, place) {
 			return classed{}
 		}
 	}
@@ -732,6 +741,25 @@ func (facts *traceFacts) goCacheJoined(relative string) bool {
 	for _, cache := range facts.goCaches {
 		if strings.Contains("/"+relative+"/", "/"+cache+"/") {
 			return true
+		}
+	}
+	return false
+}
+
+// deeperPlaceHolds says whether a place the run classes on its own sits inside the kernel place and holds name too: a
+// temporary place, the home, the user cache or a system place. A kernel place is the machine's runtime state, never an
+// input, but a sealed job's scratch is under /run (/run/loom-scratch holds its `TMPDIR`, Go's work directory and the
+// user cache, #7k79mkn), so a read there is the temporary place's or the home's, classed below as strictly as on a
+// house box. Taken first, every such read was nothing: a content read of a temporary file no process of the run made
+// settled unkeyed, where /tmp refuses it (#y70zzzw, J-8q1tavm on Pupa: eight buildcache tests whose fixtures sat under
+// /run/loom-scratch/go-tmp), and content beside the runtime cache in a user cache under /run settled where ~/.cache
+// refuses it. Only deeper places count, so /run itself, /run/user and the rest stay the kernel's.
+func (facts *traceFacts) deeperPlaceHolds(name, kernel string) bool {
+	for _, places := range [][]string{facts.temporary, {facts.home, facts.userCache}, facts.system} {
+		for _, place := range places {
+			if place != "" && place != kernel && under(place, kernel) && under(name, place) {
+				return true
+			}
 		}
 	}
 	return false
