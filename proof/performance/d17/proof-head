@@ -1,0 +1,35 @@
+# #d1chbm7 head proof (Performance): numeric keys and ruling 17's dispatch. Run after environment.sh,
+# sandboxed-job.sh and sandboxed_npm stage3/api. Never merged.
+set -u
+fail=0
+step() { echo "== $1"; }
+L=internal/lower
+step gofmt; gofmt -l $L/numeric_keys.go $L/numeric_keys_test.go $L/dispatch_cast.go $L/dispatch_lower.go $L/dispatch_cast_test.go $L/dispatch_lower_test.go $L/rule_g_test.go $L/cast.go $L/interface_cast.go $L/non_null.go $L/locals.go $L/modules.go $L/expression.go $L/any_relations.go $L/lower.go $L/object.go internal/ir/ir.go cmd/adamic/checks.go stage3/census/latent/statecopy/ir_fields.go internal/oracle/dispatch_cast_test.go internal/oracle/element_access_numeric_keys_test.go
+step vet; go vet ./$L ./internal/oracle ./internal/ir ./cmd/adamic ./stage3/census/latent/statecopy > "$TMPDIR/vet.log" 2>&1; r=$?; echo "vet exit=$r"; [ $r = 0 ] || { head -30 "$TMPDIR/vet.log"; fail=1; }
+step "lower"
+go test -count=1 -run 'Dispatch|NumericKey|DistinctFieldKeys|Cast|NonNull|AGenericTable|ComputedField|ElementAccess|Finite' ./$L > "$TMPDIR/lower.log" 2>&1; r=$?; echo "lower exit=$r"
+grep -E -- '^(ok|FAIL)|--- FAIL|_test.go:[0-9]+:|panic' "$TMPDIR/lower.log" | cut -c1-300 | head -40; [ $r = 0 ] || fail=1
+step statecopy; go test -count=1 ./stage3/census/latent/statecopy > "$TMPDIR/sc.log" 2>&1; r=$?; echo "statecopy exit=$r"; [ $r = 0 ] || { grep -E -- '--- FAIL|_test.go' "$TMPDIR/sc.log" | head; fail=1; }
+step "cmd/adamic checks"; go test -count=1 -run 'Check|Explain' ./cmd/adamic > "$TMPDIR/cmd.log" 2>&1; r=$?; echo "cmd exit=$r"; [ $r = 0 ] || { grep -E -- '--- FAIL|_test.go' "$TMPDIR/cmd.log" | head; fail=1; }
+step "oracle: the fixtures' shards against Node, the stops, the pin, the counts"
+go test -count=1 -v -run '^TestNativeAgreesWithNode_(031|078|003|001|085|056|126)$' ./internal/oracle > "$TMPDIR/agree.log" 2>&1; r=$?; echo "agree exit=$r"
+grep -E -- '--- (PASS|FAIL|SKIP): TestNativeAgreesWithNode_[0-9]+/internal/oracle/testdata/(dispatch_cast|element_access_numeric)' "$TMPDIR/agree.log" | cut -c1-200
+grep -E -- '--- FAIL' "$TMPDIR/agree.log" | head; [ $r = 0 ] || fail=1
+go test -count=1 -run 'TestDispatchCastKeepsTodaysStops|TestComputedFieldsWriteRefusalPin|^TestCountsAreRecorded_(031|014|003|001|021|024|030)$' ./internal/oracle > "$TMPDIR/oracle.log" 2>&1; r=$?; echo "oracle exit=$r"
+grep -E -- '^(ok|FAIL)|--- FAIL|_test.go:[0-9]+:' "$TMPDIR/oracle.log" | cut -c1-300 | head -30; [ $r = 0 ] || fail=1
+step "mutants"
+mutant() { # name, file, from, to, test pattern
+  cp "$2" "$TMPDIR/orig.go"
+  python3 -I -c 'import sys; p,f,t=sys.argv[1:4]; s=open(p).read(); n=s.count(f); open(p,"w").write(s.replace(f,t,1)); print("applied" if n==1 else "NOT APPLIED (%d matches)"%n)' "$2" "$3" "$4"
+  go test -count=1 -run '^$' ./$L > /dev/null 2>&1 && echo "compiles" || echo "DOES NOT COMPILE"
+  go test -count=1 -run "$5" ./$L > "$TMPDIR/m.log" 2>&1; r=$?
+  if [ $r != 0 ]; then echo "MUTANT $1 red: $(grep -E -- '--- FAIL' "$TMPDIR/m.log" | head -3 | tr '\n' ' ')"; else echo "MUTANT $1 SURVIVED"; fail=1; fi
+  cp "$TMPDIR/orig.go" "$2"
+}
+mutant exemption-everywhere $L/dispatch_cast.go '	_, admitted := l.dispatchCasts().sites[assertion]
+	return admitted' '	_, admitted := l.dispatchCasts().sites[assertion]
+	return admitted || true' 'TestDispatchCastLeavesItsAssertionToTheProof'
+mutant no-check $L/dispatch_lower.go '	return ir.Effects{Body: []ir.Statement{check}, Result: called}, nil' '	_ = check
+	return called, nil' 'TestDispatchArmsHoldTheCheck'
+mutant kind-twice $L/dispatch_lower.go '		Condition: ir.Binary{Operator: ir.NotEqual, Left: dispatchHeldKind(site), Right: ir.NumberConstant{Value: key.value}},' '		Condition: ir.Binary{Operator: ir.NotEqual, Left: func() ir.Expression { again, _ := l.expression(site.subjectKind); return again }(), Right: ir.NumberConstant{Value: key.value}},' 'TestDispatchReadsKindOnce'
+[ $fail = 0 ] && echo "VERDICT PASS" || echo "VERDICT FAIL"
