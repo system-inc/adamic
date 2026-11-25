@@ -58,6 +58,9 @@ func TestPredicateRelativeTarget(t *testing.T) {
 		{"x1_three_members.ts", "two three \n", agree, "", ""},
 		{"x2_two_refined.ts", "p1 6\nloose q\n", agree, "", ""},
 		{"x3_filter.ts", "2 3\n", agree, "", ""},
+		// A lying false whose branch reads a field every source member holds reads it true, as Node does
+		// (Language's should on #4cvdkk3): beside r5, which stops at a refined field, it pins both halves.
+		{"x4_lying_false_held.ts", "missing at /a\n", agree, "", ""},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
