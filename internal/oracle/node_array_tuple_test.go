@@ -92,8 +92,11 @@ func TestNodeArrayTupleAliasStops(t *testing.T) {
 // alias and read in a function of their own (checked, since no proof is in that function). Then five programs that
 // aren't tsc's shape: a two-position tuple part, the NodeArray part's fields and length read through the
 // intersection, the intersection passed to a function and read there, the predicate in a conditional's condition,
-// and a NodeArray of a union narrowed to one member. Last, family 13's form: a function whose result is the
-// intersection, read at its call (checked, since a call is no proof), through signature's own storage.
+// and a NodeArray of a union narrowed to one member. Then family 13's form: a function whose result is the
+// intersection, read at its call (checked, since a call is no proof), through signature's own storage. Last, tsc's
+// own three-member shape (types.ts:3056, utilities.ts:3974 and :4182): NodeArray<Node> & readonly [Ident, Literal
+// | Ident, Shape] & Readonly<TextRange>, whose third member every property of which the NodeArray part already
+// declares readonly at an identical type is implied (nodeArrayImpliedMember, Adamic's yes on #tjfrgyq).
 var nodeArrayTupleAgreeing = []struct{ name, node string }{
 	{"t01-alias-no-swap.ts", "text string\n"},
 	{"t01-alias-call.ts", "before read\ntext string\n"},
@@ -106,6 +109,7 @@ var nodeArrayTupleAgreeing = []struct{ name, node string }{
 	{"conditional.ts", "conditional name\n"},
 	{"union-element.ts", "union name\n"},
 	{"returned.ts", "returned name\n"},
+	{"implied-textrange.ts", "define name value 3 4 9 3\n"},
 }
 
 // Each admitted program agrees with Node natively, sanitized and on JavaScript, and leaks nothing.
@@ -164,6 +168,36 @@ func TestNodeArrayTupleStaticBlockStops(t *testing.T) {
 	}
 }
 
+// implied-textrange.ts's twins, each a third member nodeArrayImpliedMember refuses, so the intersection is no
+// NodeArray tuple and each stops where implied-textrange.ts stopped before the rule: at its predicate's declaration,
+// the predicate's target being no shape the membership test knows. FlaggedRange adds a field NodeArray lacks,
+// TextRange declares pos and end writable where NodeArray's ReadonlyTextRange holds them readonly (the member's
+// side is the mutable one), and StringRange declares pos a string.
+//
+// Mutant (unapplied, beside the head's report): nodeArrayImpliedMember answering true for any member, which lowers
+// implied-extra-field.ts and implied-writable.ts and turns their rows red.
+func TestNodeArrayTupleImpliedMemberStops(t *testing.T) {
+	t.Parallel()
+	for _, stop := range []struct{ name, node, at string }{
+		{"implied-extra-field.ts", "define name value 3 4 9 3\n", ":17:1: "},
+		{"implied-writable.ts", "define name value 3 4 9 3\n", ":16:1: "},
+		{"implied-string-pos.ts", "define name value 3 9 3\n", ":17:1: "},
+	} {
+		t.Run(stop.name, func(t *testing.T) {
+			t.Parallel()
+			path := nodeArrayTuplePath(t, stop.name)
+			if truth := onNode(t, path); truth.exitCode != 0 || string(truth.stdout) != stop.node {
+				t.Fatalf("Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
+			}
+			_, err := lowered(t, path)
+			want := stop.name + stop.at + "stage 0 can't lower checked predicate overload target"
+			if err == nil || !strings.Contains(err.Error(), want) {
+				t.Fatalf("got %v, want a stop saying %q", err, want)
+			}
+		})
+	}
+}
+
 // Every program in the directory is a row above, so one added without its row can't go unheld. Beside each is its
 // expected outcome (.stop, `lowers` or the stop), and beside each stop where Node runs its .pending: the two run-time
 // stops' await Adamic's ruling on their held-stops rows, which the admission delta reads.
@@ -173,7 +207,7 @@ func TestNodeArrayTupleProgramsArePinned(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	pinned := map[string]bool{"t01.ts": true, "t01-alias.ts": true, "t01-alias-direct-write.ts": true, "t01-kind-lie.ts": true, "static-block.ts": true, "shrunk.ts": true}
+	pinned := map[string]bool{"t01.ts": true, "t01-alias.ts": true, "t01-alias-direct-write.ts": true, "t01-kind-lie.ts": true, "static-block.ts": true, "shrunk.ts": true, "implied-extra-field.ts": true, "implied-writable.ts": true, "implied-string-pos.ts": true}
 	for _, pin := range nodeArrayTupleAgreeing {
 		pinned[pin.name] = true
 	}
