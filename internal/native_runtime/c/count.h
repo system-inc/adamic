@@ -57,6 +57,10 @@ typedef struct adamic_counts {
 	// (ADAMIC_COUNT_BUFFER at each site). A harness reads it through adamic_count_snapshot, never a
 	// counts line, so every line keeps its columns.
 	_Atomic size_t buffers;
+	// spread_shapes is how many shapes adamic_object_spread_with has interned (object_spread.c), each made
+	// once for its content and kept until the program ends, so a loop over one layout makes one (#5c0z219,
+	// Runtime's condition). A harness reads it, never a counts line.
+	_Atomic size_t spread_shapes;
 } adamic_counts;
 
 extern adamic_counts adamic_counted;
