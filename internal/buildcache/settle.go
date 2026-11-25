@@ -40,7 +40,10 @@ import (
 // A read set is valued when the build settles, not when it read, so the tree must be the tree it read: before is
 // TreeState when the run began, and a run whose tree state differs at its end (a commit, a checkout, an edit, a
 // submodule moved) refuses every build, as does a run any of whose processes wrote into the tree.
-func Settle(directory string, trace io.Reader, before string) (Settlement, error) {
+//
+// report is the file cmd/traced writes its report to (ADAMIC_TRACE_REPORT), or "": traced takes the variable out of
+// its environment before the command starts, so it is passed here rather than read again.
+func Settle(directory string, trace io.Reader, before, report string) (Settlement, error) {
 	root, err := repositoryRoot()
 	if err != nil {
 		return Settlement{}, err
@@ -49,7 +52,7 @@ func Settle(directory string, trace io.Reader, before string) (Settlement, error
 	if err != nil {
 		return Settlement{}, err
 	}
-	facts, err := settleFacts(root, cache, directory)
+	facts, err := settleFacts(root, cache, directory, report)
 	if err != nil {
 		return Settlement{}, err
 	}
@@ -61,7 +64,9 @@ func Settle(directory string, trace io.Reader, before string) (Settlement, error
 	if err != nil {
 		return Settlement{}, err
 	}
-	if after, err := TreeState(); err != nil || after != before {
+	if after, err := TreeState(); err != nil {
+		state.lost = append(state.lost, "the tree's state after the run: "+err.Error())
+	} else if after != before {
 		state.lost = append(state.lost, "the tree changed during the run (git HEAD, status or a submodule), so its reads can't be valued now")
 	}
 	for _, relative := range slices.Sorted(maps.Keys(state.treeWrites)) {
@@ -78,12 +83,28 @@ func Settle(directory string, trace io.Reader, before string) (Settlement, error
 // (untracked ones too, but go.work.sum, which go writes as it runs), each submodule's HEAD and status, the content of
 // every modified and untracked file in each (status names a dirty file, never what it holds, so a file dirty before the
 // run and edited again during it would read the same), and dpkg's record of what is installed (an upgrade during the
-// run). cmd/traced takes it before and after a run.
+// run). cmd/traced takes it before and after a run. A source unpacked from the tree's tracked files, with no .git, is
+// recorded from its manifest instead, and only when proven closed to this process (unpackedTreeState).
 func TreeState() (string, error) {
 	root, err := repositoryRoot()
 	if err != nil {
 		return "", err
 	}
+	return treeStateAt(root)
+}
+
+// treeStateAt is TreeState for the tree at root. Only a .git that doesn't exist makes root no checkout: any other
+// error looking for it is returned, never read as an unpacked source's absent .git.
+func treeStateAt(root string) (string, error) {
+	var gitError error
+	keying(func() { _, gitError = statGit(filepath.Join(root, ".git")) })
+	if gitError != nil && !errors.Is(gitError, fs.ErrNotExist) {
+		return "", fmt.Errorf("looking for %s's .git: %v", root, gitError)
+	}
+	if unpackedSource(root) {
+		return unpackedTreeState(root, closedProof)
+	}
+	var err error
 	var state strings.Builder
 	keying(func() {
 		git := func(directory string, arguments ...string) string {
@@ -132,12 +153,19 @@ func TreeState() (string, error) {
 				}
 			}
 		}
-		if status, readError := os.ReadFile(filepath.Join(dpkgDirectory, "status")); readError == nil {
-			sum := sha256.Sum256(status)
-			state.WriteString("dpkg status " + hex.EncodeToString(sum[:]) + "\n")
-		}
+		state.WriteString(dpkgState())
 	})
 	return state.String(), err
+}
+
+// dpkgState is TreeState's line for dpkg's record of what is installed, or nothing where dpkg keeps none.
+func dpkgState() string {
+	status, err := os.ReadFile(filepath.Join(dpkgDirectory, "status"))
+	if err != nil {
+		return ""
+	}
+	sum := sha256.Sum256(status)
+	return "dpkg status " + hex.EncodeToString(sum[:]) + "\n"
 }
 
 // A Settlement is what Settle did with each build, in the order the builds ended: a line each for people, and a
@@ -192,6 +220,10 @@ const (
 	// ReportReadSet is the run's test read set (#sfqdxvy), recorded under NameKey (ADAMIC_TRACE_TEST_KEY) with its
 	// marker under Key: Loom vouches for the test with it only when cmd/find finds it under that very key.
 	ReportReadSet = "readSet"
+	// ReportNeverStarted is a report's only line when cmd/traced never started the command, with no product: the source
+	// is unpacked and not proven closed (ErrSourceNotClosed), its Reason the refusal's words. With traced's exit 4 it is
+	// Loom's sourceUnrunnable; traced writes it only before any command of the run could write the report.
+	ReportNeverStarted = "neverStarted"
 )
 
 // WriteReport writes reports to file, one JSON line each, replacing what it held.
@@ -236,8 +268,9 @@ type traceFacts struct {
 	cacheRoots map[string]string
 }
 
-// settleFacts are the places a read can be in, as this machine (the one that ran the trace) spells them.
-func settleFacts(root, cache, trace string) (*traceFacts, error) {
+// settleFacts are the places a read can be in, as this machine (the one that ran the trace) spells them; report is
+// the trace's report file, or "" (Settle).
+func settleFacts(root, cache, trace, report string) (*traceFacts, error) {
 	tools, err := toolsRoot()
 	if err != nil {
 		return nil, err
@@ -293,8 +326,8 @@ func settleFacts(root, cache, trace string) (*traceFacts, error) {
 	// The trace's report (ADAMIC_TRACE_REPORT) is the same kind of bookkeeping, and a path every run names afresh: a
 	// build that looks at the ADAMIC_ locations (Relative) looked at it (#n9jc61n, Planner's skip proof on Home, Oct 11:
 	// markdown-list-layout-shared-v3 keyed its own run's logs/product-388.trace.jsonl).
-	for _, variable := range []string{"ADAMIC_BUILD_LOG", "ADAMIC_TRACE_REPORT"} {
-		if log := os.Getenv(variable); log != "" {
+	for _, log := range []string{os.Getenv("ADAMIC_BUILD_LOG"), report} {
+		if log != "" {
 			facts.buildLogs = append(facts.buildLogs, variants(filepath.Clean(log))...)
 		}
 	}
