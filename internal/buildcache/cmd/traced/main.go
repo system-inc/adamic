@@ -28,6 +28,15 @@
 // placed. It exits with the command's status, or 3 when the command passed and a product was refused. Linux only:
 // strace 6 with --seccomp-bpf and --decode-fds=path.
 //
+// 4: the source is unpacked and not proven closed to this process (buildcache.ErrSourceNotClosed), so it can't be run
+// traced; Loom reads it as a void, sourceUnrunnable, never retried. Exit 4 means that only together with the report's
+// one line saying the command never started (outcome neverStarted, the refusal's words its reason), since the command
+// can exit 4 itself. traced writes that line before starting anything, from -tree-state or from a run's tree state
+// before its command, and exits 4 only once it is written: with no report, or one it can't write, it exits 2. The command is never told where the report is (ADAMIC_TRACE_REPORT is unset before it starts),
+// and a run that started its command writes the report whole after the command and every process it started has
+// ended, over anything written to it meanwhile, and exits 2 when it can't, so a command never leaves that line beside
+// traced's exit 4.
+//
 // With ADAMIC_TRACE_REPORT naming a file, it also writes there one JSON line per product (buildcache.Report: name,
 // nameKey, key and reads when settled, reason when refused), for Loom's tree builder. A run that can't be keyed at all
 // writes one line more, outcome lost, first; one that can't trace or settle (exit 2) writes only that line; one strace
@@ -85,6 +94,9 @@ func main() {
 	if *treeState != "" && flag.NArg() == 0 {
 		if err := writeTreeState(*treeState); err != nil {
 			fmt.Fprintln(os.Stderr, "traced:", err)
+			if errors.Is(err, buildcache.ErrSourceNotClosed) {
+				exitNeverStarted(traceReport(), err)
+			}
 			os.Exit(2)
 		}
 		return
@@ -93,11 +105,8 @@ func main() {
 		flag.Usage()
 		os.Exit(2)
 	}
-	report := os.Getenv("ADAMIC_TRACE_REPORT")
+	report := traceReport()
 	if report != "" {
-		if absolute, err := filepath.Abs(report); err == nil {
-			report = absolute
-		}
 		if err := os.WriteFile(report, nil, 0o644); err != nil {
 			fmt.Fprintln(os.Stderr, "traced: ADAMIC_TRACE_REPORT:", err)
 			os.Exit(2)
@@ -106,6 +115,11 @@ func main() {
 	status, err := run(flag.Args(), report)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "traced:", err)
+		// Only the tree's state before the run is TreeState's own error (Settle words the state after it as a lost
+		// line), so a refusal here is one from before strace started anything.
+		if errors.Is(err, buildcache.ErrSourceNotClosed) {
+			exitNeverStarted(report, err)
+		}
 		if report != "" {
 			buildcache.WriteReport(report, []buildcache.Report{{Outcome: buildcache.ReportLost, Reason: "traced: " + err.Error()}})
 		}
@@ -157,7 +171,7 @@ func run(command []string, report string) (int, error) {
 	}
 	before, err := treeStateBefore(buildcache.TreeState)
 	if err != nil {
-		return 0, fmt.Errorf("the tree's state before the run: %v", err)
+		return 0, fmt.Errorf("the tree's state before the run: %w", err)
 	}
 	// Settle sees the environment the command runs in: the same cache, the same store, the same trace.
 	os.Setenv("ADAMIC_BUILD_TRACE", directory)
@@ -177,7 +191,7 @@ func run(command []string, report string) (int, error) {
 			return
 		}
 		defer reader.Close()
-		settlement, err := buildcache.Settle(directory, reader, before)
+		settlement, err := buildcache.Settle(directory, reader, before, report)
 		done <- settled{settlement, err}
 	}()
 	strace := exec.Command("strace", append(append(append([]string{}, straceArguments...), "-o", pipe, "--"), command...)...)
@@ -242,13 +256,48 @@ func run(command []string, report string) (int, error) {
 func writeTreeState(path string) error {
 	state, err := buildcache.TreeState()
 	if err != nil {
-		return fmt.Errorf("the tree's state: %v", err)
+		return fmt.Errorf("the tree's state: %w", err)
 	}
 	partial := path + ".partial"
 	if err = os.WriteFile(partial, []byte(state), 0o644); err != nil {
 		return err
 	}
 	return os.Rename(partial, path)
+}
+
+// traceReport is the file ADAMIC_TRACE_REPORT names, made absolute, or "". The variable is unset, so nothing the command
+// runs sees it, or can find the report traced writes its verdict to; traced passes the path on (Settle) rather than
+// read the variable again.
+func traceReport() string {
+	report := os.Getenv("ADAMIC_TRACE_REPORT")
+	os.Unsetenv("ADAMIC_TRACE_REPORT")
+	if report != "" {
+		if absolute, err := filepath.Abs(report); err == nil {
+			report = absolute
+		}
+	}
+	return report
+}
+
+// exitNeverStarted ends traced before it started any command, the source being unpacked and not proven closed
+// (buildcache.ErrSourceNotClosed), with neverStarted's status.
+func exitNeverStarted(report string, err error) {
+	os.Exit(neverStarted(report, err))
+}
+
+// neverStarted writes report's one line, outcome neverStarted with err's words, and is 4, which together with that
+// line is Loom's sourceUnrunnable. With no report, or one it can't write, it is 2, traced's own failure, with why on
+// stderr: exit 4 never stands without the line that says the command never started.
+func neverStarted(report string, err error) int {
+	if report == "" {
+		fmt.Fprintln(os.Stderr, "traced: no ADAMIC_TRACE_REPORT to say the command never started")
+		return 2
+	}
+	if writeError := buildcache.WriteReport(report, []buildcache.Report{{Outcome: buildcache.ReportNeverStarted, Reason: "traced: " + err.Error()}}); writeError != nil {
+		fmt.Fprintln(os.Stderr, "traced: ADAMIC_TRACE_REPORT:", writeError)
+		return 2
+	}
+	return 4
 }
 
 // treeStateBefore is the tree's state before the run: the one ADAMIC_TRACE_TREE_STATE's file holds, taken by -tree-state
