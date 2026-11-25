@@ -303,6 +303,10 @@ func (l *lowering) certifySourceSlots() error {
 	}
 	slots := map[string]*sourceSlot{}
 	for _, write := range l.sourceSlotWrites {
+		// A first-link lowering's trapped unit never writes the slot: the trap replaced its code.
+		if l.firstLinkSkips(write.target) {
+			continue
+		}
 		if slots[write.name] == nil {
 			slots[write.name] = &sourceSlot{}
 		}

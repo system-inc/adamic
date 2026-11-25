@@ -909,6 +909,12 @@ func checkGeneratorRoads(program *ir.Program) error {
 		}
 	}
 	for local, declared := range program.Locals {
+		// A first-link lowering's function that stopped partway lowers as its trap's stub alone, so a
+		// generator local its lowering made has no Declare left to hold it. Main's locals, Function -1,
+		// have no body of their own to read that from.
+		if declared.Function >= 0 && declared.Function < len(program.Functions) && firstLinkStubBody(program.Functions[declared.Function].Body) {
+			continue
+		}
 		if declared.Type == ir.Generator && (!held[local] || declared.Global || declared.Captured) {
 			return fmt.Errorf("lower: compiler bug: the generator local %s is held outside its consuming loop", declared.Name)
 		}

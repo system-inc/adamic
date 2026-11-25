@@ -108,6 +108,28 @@ func passPrinted(node ast.Node) string {
 	return buffer.String()
 }
 
+// firstLinkRunCall is the pass a lowering.firstLinkRun(name, rewrites, run) call runs: run's own call when
+// run names the pass, or the first call in run when it's a function literal; nil when it's neither.
+func firstLinkRunCall(call *ast.CallExpr) *ast.CallExpr {
+	if len(call.Args) != 3 {
+		return nil
+	}
+	switch run := call.Args[2].(type) {
+	case *ast.SelectorExpr, *ast.Ident:
+		return &ast.CallExpr{Fun: run}
+	case *ast.FuncLit:
+		var first *ast.CallExpr
+		ast.Inspect(run.Body, func(node ast.Node) bool {
+			if inner, ok := node.(*ast.CallExpr); ok && first == nil {
+				first = inner
+			}
+			return first == nil
+		})
+		return first
+	}
+	return nil
+}
+
 // Follow LowerWithOptions's local function calls, so a production wrapper or
 // helper rename cannot silently disconnect the guard from the actual tail.
 func productionPassKeys(source []byte) ([]string, error) {
@@ -181,6 +203,10 @@ func productionPassKeys(source []byte) ([]string, error) {
 				case *ast.AssignStmt:
 					keys = append(keys, passPrinted(node))
 					continue
+				}
+				// A pass run through firstLinkRun is the pass its run calls.
+				if call != nil && passPrinted(call.Fun) == "lowering.firstLinkRun" {
+					call = firstLinkRunCall(call)
 				}
 				if call == nil {
 					return fmt.Errorf("unclassified production tail step: %s", passPrinted(tail))
@@ -317,5 +343,18 @@ func TestLatentPassLedgerNestedCallDriftPb47(t *testing.T) {
 	}
 	if err := checkPassLedgerTail(table, mutant); err == nil {
 		t.Fatal("nested pass rename was not detected")
+	}
+}
+
+func TestLatentPassLedgerFirstLinkRunDriftPb47(t *testing.T) {
+	t.Parallel()
+	// Reads: internal/lower/lower.go
+	table, main := readPassLedgerMain(t)
+	mutant := bytes.Replace(main, []byte(`firstLinkRun("checkSlotWrites", false, lowering.checkSlotWrites)`), []byte(`firstLinkRun("checkSlotWrites", false, lowering.unlistedPass)`), 1)
+	if bytes.Equal(main, mutant) {
+		t.Fatal("production checkSlotWrites run missing")
+	}
+	if err := checkPassLedgerTail(table, mutant); err == nil {
+		t.Fatal("a pass renamed inside firstLinkRun was not detected")
 	}
 }
