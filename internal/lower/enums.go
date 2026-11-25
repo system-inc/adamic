@@ -543,6 +543,12 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 					reference = parent
 				}
 				if hazard != enumTagNoHazard && !l.enumTagRefinementProven(reference, declared) {
+					// Probe for Adamic's question on #x2cjvy9 (Nov 24, 19:02Z), never for landing: in .ts, the
+					// refined value is read through each narrowed object member's checked view instead, as an
+					// open-enum predicate's true branch is (#k1t2wp9), so the census counts what stops next.
+					if !strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".a") {
+						return l.enumTagViewProbe(node, declared, observed)
+					}
 					if hazard == enumTagSharedValueHazard {
 						return &Refused{Where: l.program.Where(node), What: "an object refinement by tags from different numeric enums that share a value", Fix: "give the members tags from one enum, or tags with distinct values (adamic/enum-tag)"}
 					}
@@ -817,3 +823,36 @@ func (l *lowering) enumSwitchCovered(node *ast.Node) bool {
 	}
 	return true
 }
+
+// enumTagViewProbe registers each object member of observed as a checked view of declared, once per
+// pair, so reads narrowed to it are named, type-checked reads (probe for #x2cjvy9, never for landing).
+func (l *lowering) enumTagViewProbe(node *ast.Node, declared, observed *checker.Type) error {
+	members := []*checker.Type{observed}
+	if observed.Flags()&checker.TypeFlagsUnion != 0 {
+		members = observed.Types()
+	}
+	if l.enumTagViewProbes == nil {
+		l.enumTagViewProbes = map[enumTagViewKey]error{}
+	}
+	for _, member := range members {
+		if member.Flags()&checker.TypeFlagsPrimitive != 0 {
+			continue
+		}
+		key := enumTagViewKey{declared, member}
+		err, done := l.enumTagViewProbes[key]
+		if !done {
+			_, err = l.view(node, nil, declared, member)
+			if err == nil {
+				l.viewSources[len(l.viewSources)-1].narrows = true
+			}
+			l.enumTagViewProbes[key] = err
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// enumTagViewKey is a probe registration's source and member, a named struct as brandedViewKey is.
+type enumTagViewKey struct{ source, target *checker.Type }
