@@ -464,13 +464,13 @@ func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 		if len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
 			for symbol := range f.l.statics {
 				actual := f.l.checker.GetTypeOfSymbol(symbol)
-				if f.l.checker.IsTypeAssignableTo(actual, proven) {
+				if f.assignable(findCyclesArmGraphStatics, actual, proven) {
 					links = append(links, cycleNode{proven: actual})
 				}
 			}
 		}
 		for _, closure := range f.l.closureRecords {
-			if f.l.checker.IsTypeAssignableTo(closure.proven, proven) {
+			if f.assignable(findCyclesArmGraphClosures, closure.proven, proven) {
 				for _, local := range f.l.closureLinks(closure) {
 					links = append(links, cycleNode{cell: local + 1})
 				}
@@ -493,12 +493,12 @@ func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 			links = append(links, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)})
 		}
 		for _, shape := range f.shapes {
-			if shape != proven && f.l.checker.IsTypeAssignableTo(f.l.relatedShape(shape), proven) {
+			if shape != proven && f.assignable(findCyclesArmGraphShapes, f.l.relatedShape(shape), proven) {
 				links = append(links, cycleNode{proven: shape})
 			}
 		}
 		for _, accessor := range f.l.accessorCaptures {
-			if f.l.checker.IsTypeAssignableTo(accessor.holder, proven) {
+			if f.assignable(findCyclesArmGraphAccessorCaptures, accessor.holder, proven) {
 				for _, local := range f.l.result.Functions[accessor.function].Environment {
 					links = append(links, cycleNode{cell: local + 1})
 				}
@@ -786,7 +786,7 @@ func (f *cycleFinder) viewPairMembers(present, viewed *checker.Type, follow func
 		// stop a graph program. Lower's exception: a field the view can write, typed so its source's
 		// field can't hold what the view writes, takes a closure no flow into the source's slot names.
 		if f.viewPairFunction(nestedSource) || f.viewPairFunction(nestedTarget) {
-			if !f.l.checker.IsReadonlySymbol(field) && field.Flags&ast.SymbolFlagsMethod == 0 && !f.l.checker.IsTypeAssignableTo(nestedTarget, nestedSource) {
+			if !f.l.checker.IsReadonlySymbol(field) && field.Flags&ast.SymbolFlagsMethod == 0 && !f.assignable(findCyclesArmViewPairFunction, nestedTarget, nestedSource) {
 				return &viewPairFailure{function: field.Name}
 			}
 			continue
@@ -1035,7 +1035,7 @@ func (f *cycleFinder) unplannedPair() *graphPairSite {
 		}
 		judged[site.pair] = true
 		for _, held := range f.selected {
-			if f.l.checker.IsTypeAssignableTo(site.pair, held) {
+			if f.assignable(findCyclesArmUnplannedPair, site.pair, held) {
 				return site
 			}
 		}
@@ -1111,7 +1111,7 @@ func (f *cycleFinder) unplannedNodeArray() *graphNodeArraySite {
 			return site
 		}
 		for _, held := range f.selected {
-			if f.l.checker.IsTypeAssignableTo(site.array, held) {
+			if f.assignable(findCyclesArmUnplannedNodeArray, site.array, held) {
 				return site
 			}
 		}
