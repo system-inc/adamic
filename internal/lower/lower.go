@@ -143,6 +143,10 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 		if !built.firstLinkProgramStop("RelationOverflow", stop) {
 			return nil, stop
 		}
+		// A first-link lowering goes on, but past the budget every relation lowering asked answered not
+		// related, wherever it was asked, a cycle the finder then didn't follow among them (#c0eypws). So no
+		// row is a measurement of the program, this one's included, and every row is Suspect.
+		built.firstLinkSuspectEvery()
 	}
 	return built, nil
 }
