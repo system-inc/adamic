@@ -113,7 +113,7 @@ func TestDispatchCastsAdmitOnlyTheRuledShape(t *testing.T) {
 			return dispatchTwin(t, shortened, 13, "\treturn fn === undefined ? \"none\" : fn(node);", false)
 		}, "the third clause: a call passes 1 argument, key 0's call signature requires 2"},
 		{"t10 passed", func(t *testing.T) string {
-			return dispatchTwin(t, dispatchT00, 10, "console.log(Object.keys(table).length);", true)
+			return dispatchTwin(t, dispatchT00, 10, "console.log(String(Object.keys(table).length));", true)
 		}, "the proof: the table is passed"},
 		{"t11 stored", func(t *testing.T) string { return dispatchTwin(t, dispatchT00, 10, "const kept = table;", true) }, "the proof: the table is stored"},
 		{"t12 re-exported", func(t *testing.T) string { return dispatchTwin(t, dispatchT00, 10, "export { table };", true) }, "the proof: the table is re-exported"},
@@ -135,6 +135,9 @@ func TestDispatchCastsAdmitOnlyTheRuledShape(t *testing.T) {
 			annotated := strings.Replace(dispatchG04, "const table: { [K in Kind]: Fn<Extract<Node, { kind: K }>> } = {", "const table: Table = {", 1)
 			return dispatchTwin(t, annotated, 5, "type Table = { [N in Node as N[\"kind\"]]: Fn<N> };", true)
 		}, "entries: a spread element"},
+		{"a plain call no presence test guards", func(t *testing.T) string {
+			return dispatchTwin(t, dispatchT00, 13, "\treturn fn(node);", false)
+		}, "escapes: a call of fn no presence test guards"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()

@@ -56,7 +56,7 @@ func (l *lowering) castValue(node *ast.Node) (ir.Expression, error) {
 	target := l.concrete(l.checker.GetTypeAtLocation(node))
 	// The message names the source as written, undefined included; everything after the absent check
 	// reads the present members (absentArm).
-	message := "cast failed: this " + l.checker.TypeToString(source) + " is not a " + l.checker.TypeToString(target)
+	message := l.castFailure(source, target)
 	if proof.arrayArm != nil {
 		return l.arrayArmValue(node, proof.arrayArm, source, target, message)
 	}
@@ -83,6 +83,13 @@ func (l *lowering) castValue(node *ast.Node) (ir.Expression, error) {
 		value = ir.Coalesce{Value: value, Panic: ir.StringConstant{Index: l.constant(message)}, Of: ir.Object}
 	}
 	return l.castRoadValue(node, proof, value, source, target, message)
+}
+
+// castFailure is row 9's message (docs/rulings.md:9), the words every tag check panics with where a value isn't the
+// type it's claimed as: `cast failed: this <source> is not a <target>`, each type as the checker prints it. A cast's
+// check, a non-null assertion written as a cast, and ruling 17's dispatch check (dispatch_lower.go) all say it.
+func (l *lowering) castFailure(source, target *checker.Type) string {
+	return "cast failed: this " + l.checker.TypeToString(source) + " is not a " + l.checker.TypeToString(target)
 }
 
 // keepsNullishValue lowers a cast that keeps its source's undefined or null (keepsNullishCast): the operand

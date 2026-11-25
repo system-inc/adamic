@@ -75,6 +75,16 @@ func explainPredicateChecks(output io.Writer, program *ir.Program) {
 		}
 		fmt.Fprintf(output, "adamic: brand mints: %d\n", len(mints))
 	}
+	// A dispatch under ruling 17 checks x's tag in the arm its call takes, on the kind its lookup read once: one line
+	// and one count per admitted lookup, however many calls it has (lower's dispatch_lower.go, #d1chbm7).
+	if len(program.DispatchChecks) > 0 {
+		dispatches := append([]ir.DispatchCheck(nil), program.DispatchChecks...)
+		sort.SliceStable(dispatches, func(i, j int) bool { return dispatches[i].Where < dispatches[j].Where })
+		for _, dispatch := range dispatches {
+			fmt.Fprintf(output, "%s: dispatch %s: checked, x's tag against the key its call takes, of %d\n", relative(dispatch.Where), dispatch.Lookup, dispatch.Keys)
+		}
+		fmt.Fprintf(output, "adamic: dispatch checks: %d\n", len(dispatches))
+	}
 	counts := program.PredicateChecks
 	fmt.Fprintf(output, "adamic: predicate checks: proven %d checked %d unobservable %d\n", counts.Proven, counts.Checked, counts.Unobservable)
 	explainNonNullChecks(output, program)

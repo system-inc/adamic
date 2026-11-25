@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"slices"
 	"strconv"
 	"strings"
 	_ "unsafe"
@@ -54,9 +55,12 @@ import (
 //   - Language's condition 1: x is a const or a parameter its function never assigns (kindUnionFixedBinding), read
 //     by the same name for the lookup and every call, so nothing repoints it between them (r01.ts, t01.ts)
 //     (dispatchSubjectFixed);
-//   - Language's condition 3: x's kind is a plain data field on every member (plainDataLink), no getter or setter
-//     the program writes may be named kind (accessorName), and nothing can install one (propertyWritesOf's
-//     accessors), so the one read the lookup and its check share answers once (r03.ts) (dispatchPlainKind);
+//   - Language's condition 3: kind is read once, into the local the lookup and its check share (dispatch_lower.go),
+//     and x's kind is a plain data field on every member (plainDataLink) with no getter or setter the program writes
+//     named kind (accessorName), judged by name over the program and failing closed, as the house judges a tag read
+//     (enum_tag_flow.go's accessLocalTests). The program-wide install flag (propertyWritesOf's accessors) is for a
+//     narrowing a later write can change (narrowed_nullish.go), not a tag read once; tsc's own site declined on it
+//     alone, with no getter named kind anywhere (J-sgqs2np) (r03.ts) (dispatchPlainKind);
 //   - the escapes, Language's and ruling 17's own pins: the lookup's value is the whole initializer of a const fn,
 //     and every reference to fn is `fn === undefined` (fn on either side of ===) or the callee of a call, or an
 //     optional call fn?.(...), whose first argument is x by the same name. fn.call, .apply, .bind, a spread
@@ -66,7 +70,11 @@ import (
 //     key's one call signature declares and at least its required count, and each argument after x is assignable
 //     to that signature's own parameter at its position, the signature's own type parameters inferred from the
 //     call as tsc infers them at a call (dispatchSlotAtCall). So the call is bounded both ways by the slot tsc
-//     checked each entry against, and each entry's parameter holds what it's handed (dispatchCallCondition).
+//     checked each entry against, and each entry's parameter holds what it's handed (dispatchCallCondition);
+//   - the lowering's guard (#d1chbm7, commit 2b): a plain call of fn is the false arm of a conditional expression
+//     whose condition is one of fn's presence tests, `fn === undefined ? A : fn(x, ...)`, parentheses aside, so a
+//     kind no entry names never reaches it. An optional call answers undefined there by itself. A plain call
+//     anywhere else keeps the stop (dispatchCallGuarded).
 //
 // Her 20:46:47Z rule is what the call hands x as: the union of every member the mapped type gives the key, the
 // key's call signature's first parameter, read from the checker's mapped property for the key, never from the
@@ -74,7 +82,8 @@ import (
 // comparison, and for a one-member key it reads as the member.
 //
 // The scan runs once a lowering (dispatchCasts), the way functionConstructorRoads is the allocator road's, and
-// refuseAnyRelation leaves an admitted lookup's assertion to it (dispatchCastOperand).
+// refuseAnyRelation leaves an admitted lookup's assertion to it (dispatchCastOperand). An admitted lookup is lowered
+// by dispatch_lower.go, at fn's declaration and at each of fn's uses.
 
 // dispatchSite is one dispatch lookup the scan found: everything the conditions read, filled as they're asked, and
 // whole once the lookup is admitted.
@@ -95,6 +104,9 @@ type dispatchSite struct {
 	calls         []dispatchCall
 	// keys are the table's entries, in the literal's order.
 	keys []dispatchKey
+	// kind is the local the lowering holds x's kind in, plus one, set where fn's declaration is lowered and 0 before
+	// (dispatchDeclaration). Every use of fn reads it, never x's kind again.
+	kind int
 }
 
 // dispatchCall is one call of fn: its call expression, and whether it's an optional call, fn?.(...).
@@ -118,10 +130,13 @@ type dispatchKey struct {
 }
 
 // dispatchCastRoads is the program's dispatch lookups, found once: each admitted one by its as-expression, and the
-// reason each declined candidate gives, by its as-expression too.
+// reason each declined candidate gives, by its as-expression too. An admitted one is also found by fn's symbol
+// (callees) and by each of fn's presence tests and calls (uses), where the lowering meets them.
 type dispatchCastRoads struct {
 	sites    map[*ast.Node]*dispatchSite
 	declines map[*ast.Node]string
+	callees  map[*ast.Symbol]*dispatchSite
+	uses     map[*ast.Node]*dispatchSite
 }
 
 // The checker's own inference at a call, as chooseOverload runs it for a generic candidate
@@ -145,7 +160,7 @@ func (l *lowering) dispatchCasts() *dispatchCastRoads {
 	if l.dispatchCastScan != nil {
 		return l.dispatchCastScan
 	}
-	roads := &dispatchCastRoads{sites: map[*ast.Node]*dispatchSite{}, declines: map[*ast.Node]string{}}
+	roads := &dispatchCastRoads{sites: map[*ast.Node]*dispatchSite{}, declines: map[*ast.Node]string{}, callees: map[*ast.Symbol]*dispatchSite{}, uses: map[*ast.Node]*dispatchSite{}}
 	l.dispatchCastScan = roads
 	modules, err := l.moduleOrder(l.program.Files()[0])
 	if err != nil {
@@ -189,6 +204,13 @@ func (l *lowering) dispatchCasts() *dispatchCastRoads {
 			continue
 		}
 		roads.sites[site.assertion] = site
+		roads.callees[site.callee] = site
+		for _, test := range site.presenceTests {
+			roads.uses[test] = site
+		}
+		for _, call := range site.calls {
+			roads.uses[call.node] = site
+		}
 	}
 	return roads
 }
@@ -246,7 +268,7 @@ func (l *lowering) dispatchTableReason(site *dispatchSite) string {
 // dispatchUseReason is the first of the conditions after the proof to fail, in their order, "" where all hold. Each
 // may fill site as it holds: the entries its keys, the escapes its callee and uses.
 func (l *lowering) dispatchUseReason(site *dispatchSite) string {
-	for _, condition := range []func(*dispatchSite) string{l.dispatchFunctionType, l.dispatchSingleSignature, l.dispatchEntries, l.dispatchNoAny, l.dispatchEntriesCount, l.dispatchSubjectFixed, l.dispatchPlainKind, l.dispatchEscapes, l.dispatchCallCondition} {
+	for _, condition := range []func(*dispatchSite) string{l.dispatchFunctionType, l.dispatchSingleSignature, l.dispatchEntries, l.dispatchNoAny, l.dispatchEntriesCount, l.dispatchSubjectFixed, l.dispatchPlainKind, l.dispatchEscapes, l.dispatchCallCondition, l.dispatchCallGuarded} {
 		if reason := condition(site); reason != "" {
 			return reason
 		}
@@ -637,7 +659,7 @@ func (l *lowering) dispatchSubjectFixed(site *dispatchSite) string {
 }
 
 // dispatchPlainKind is Language's condition 3: x's kind is a data field on every member its read can see, and no
-// getter the program writes or could install may answer it.
+// getter the program writes by that name may answer it.
 func (l *lowering) dispatchPlainKind(site *dispatchSite) string {
 	field := site.subjectKind.Name().Text()
 	if !l.plainDataLink(site.subjectKind) {
@@ -645,9 +667,6 @@ func (l *lowering) dispatchPlainKind(site *dispatchSite) string {
 	}
 	if l.accessorName(field) {
 		return "condition 3: the program writes a getter or setter that may be named " + field
-	}
-	if l.propertyWritesOf().accessors {
-		return "condition 3: the program can install a getter by a descriptor or a prototype"
 	}
 	return ""
 }
@@ -807,6 +826,27 @@ func (l *lowering) dispatchSlotAtCall(call *ast.Node, signature *checker.Signatu
 	context := dispatchInferenceContext(l.checker, signature.TypeParameters(), signature, flags, nil)
 	inferred := dispatchInferTypeArguments(l.checker, call, signature, arguments, checker.CheckModeNormal, context)
 	return dispatchSignatureInstantiation(l.checker, signature, inferred, ast.IsInJSFile(signature.Declaration()), nil)
+}
+
+// dispatchCallGuarded is the lowering's guard: every plain call of fn, parentheses aside, is the false arm of a
+// conditional expression whose condition, parentheses aside, is one of fn's presence tests, so the call runs only
+// where some entry's key is x's kind, and the lowering's arms cover every kind that reaches it. An optional call
+// lowers its own undefined for a kind no entry names, so it needs no guard. It's asked once the escapes hold.
+func (l *lowering) dispatchCallGuarded(site *dispatchSite) string {
+	for _, call := range site.calls {
+		if call.optional {
+			continue
+		}
+		outer := call.node
+		for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
+			outer = outer.Parent
+		}
+		conditional := outer.Parent
+		if conditional == nil || conditional.Kind != ast.KindConditionalExpression || conditional.AsConditionalExpression().WhenFalse != outer || !slices.Contains(site.presenceTests, ast.SkipParentheses(conditional.AsConditionalExpression().Condition)) {
+			return "escapes: a call of fn no presence test guards"
+		}
+	}
+	return ""
 }
 
 // dispatchLibrarySymbol is whether symbol is declared in the bundled library or the prelude, as librarySignature
