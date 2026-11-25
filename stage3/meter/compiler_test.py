@@ -126,6 +126,12 @@ class CompilerSelectionTests(unittest.TestCase):
             self.write('stage3/census/latent/' + name, (source.parent / 'census/latent' / name).read_text())
         script = Path(os.environ.get('METER_SCRIPT_UNDER_TEST', source / 'twice-daily.sh'))
         self.write('stage3/meter/twice-daily.sh', script.read_text())
+        # twice-daily.sh sources cloud's one reader of cohere's TypeScript path, and per-ref mode reads it from this
+        # repository's cohere/.gitmodules, so the probe carries both: the reader as adamic holds it, and a .gitmodules
+        # naming TypeScript at its pinned path, with that path a directory of the tree.
+        self.write('cloud/cohere-typescript-path.sh', (source.parent.parent / 'cloud/cohere-typescript-path.sh').read_text())
+        self.write('cohere/.gitmodules', '[submodule "TypeScript"]\n\tpath = TypeScript\n\turl = https://github.com/system-inc/TypeScript.git\n')
+        self.write('cohere/TypeScript/README', 'the probe\'s stand-in for cohere\'s TypeScript submodule\n')
         self.write('go.mod', 'module meterprobe\n\ngo 1.21\n')
         self.write('stage3/apply.sh', 'set -eu\nmkdir -p "$1/src/compiler" "$1/src/tsc"\nprintf "const x: number = 1;\\n" > "$1/src/compiler/input.a"\nprintf "const y: number = 2;\\n" > "$1/src/compiler/other.a"\nprintf "export {};\\n" > "$1/src/tsc/tsc.ts"\nprintf "export {};\\n" > "$1/src/executeCommandLine.a"\n')
         self.write('stage3/census/tool/main.go', DRIVER.replace('if LATENT {', 'if false {'))
