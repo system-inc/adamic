@@ -53,6 +53,12 @@ type Options struct {
 	// Slabs keeps the size-class allocator on in a sanitized build (-DADAMIC_SLABS, heap.c), where every value
 	// otherwise comes from malloc. Tests set it, to show a use after a free is still caught with it on.
 	Slabs bool
+
+	// FirstLinkTraps lets internal/native's emitter write the C of a program lowered in first-link trap mode
+	// (lower's Options.FirstLinkTraps, the same name on purpose, so its one-door test guards this one too).
+	// Without it, a program whose Traps isn't empty is refused: it's measurement, never a product. No flag or
+	// key reads it, since the C it allows is a program's like any other.
+	FirstLinkTraps bool
 }
 
 // Flags are what clang compiles a program and the runtime with. The fuzzer (internal/fuzz) compiles
