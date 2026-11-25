@@ -23,7 +23,7 @@ type Submodule struct {
 	// superproject's remote, which a source with no .git doesn't have.
 	URL string
 	// Depth is how many submodules enclose the file that declares this one: 0 for the root's own .gitmodules, 1 for
-	// a submodule's, and so on. A lookup answers from the shallowest depth that holds its name.
+	// a submodule's, and so on.
 	Depth int
 	// Declared is the .gitmodules that declares this one, slash-separated from the root Read began at, so an error
 	// can say which file to read. From Parse it is ".gitmodules".
@@ -290,19 +290,15 @@ func Read(root string) ([]Submodule, error) {
 	return all, nil
 }
 
-// Find is the submodule named name among submodules, as Read returns them. The shallowest depth holding the name
-// answers, since an outer repository's submodule is the one it pins, and one of the same name deeper down belongs to
-// a submodule's own dependencies. A name at no depth is refused, and so is a name twice at the depth that answers,
-// whether one file declares it twice or two files at that depth each declare it: either way the answer would be a
-// guess. Each refusal names what was found, so the reader can see what moved.
+// Find is the submodule named name among submodules, as Read returns them. The name must be declared exactly once
+// across every depth: a name at no depth is refused, and so is a name declared more than once, whether one file
+// declares it twice, two files at one depth each declare it, or it appears at two depths, since choosing among them
+// would be a guess. Each refusal names every place it found, with its path and the .gitmodules that declares it, so
+// the reader can see what moved.
 func Find(submodules []Submodule, name string) (Submodule, error) {
 	var matches []Submodule
 	for _, submodule := range submodules {
-		switch {
-		case submodule.Name != name:
-		case len(matches) == 0 || submodule.Depth < matches[0].Depth:
-			matches = []Submodule{submodule}
-		case submodule.Depth == matches[0].Depth:
+		if submodule.Name == name {
 			matches = append(matches, submodule)
 		}
 	}
@@ -322,9 +318,9 @@ func Find(submodules []Submodule, name string) (Submodule, error) {
 	}
 	var found []string
 	for _, submodule := range matches {
-		found = append(found, fmt.Sprintf("at %s (%s)", submodule.Path, submodule.Declared))
+		found = append(found, fmt.Sprintf("at %s (%s, depth %d)", submodule.Path, submodule.Declared, submodule.Depth))
 	}
-	return Submodule{}, fmt.Errorf("the submodule name %q appears %d times at depth %d: %s", name, len(matches), matches[0].Depth, strings.Join(found, ", "))
+	return Submodule{}, fmt.Errorf("the submodule name %q appears %d times: %s", name, len(matches), strings.Join(found, ", "))
 }
 
 // Path is the path, slash-separated from root, of the submodule named name, declared by root's .gitmodules or any
