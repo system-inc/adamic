@@ -162,7 +162,8 @@ the test harness to judge (`internal/leakcheck/leakcheck.go:Unbalanced`).
 `oracle/adamic.mjs:34-55`), which only the oracle's loader arranges (`oracle/node.mjs`). Under plain
 `node` the import doesn't resolve.
 
-A wasm32-wasi panic leaves through the same `_exit(70)` (`internal/native_runtime/c/adamic.c:334-343`);
+A wasm32-wasi panic leaves through the same `_exit(70)`: `adamic_panic`
+(`internal/native_runtime/c/adamic.c:357-360`) hands 70 to `stop_with_message`'s `_exit` (`:354`);
 `TestWASIRequestThrows` sees 70 and `adamic: panic: Error: boundary` from the request host
 (`cmd/adamic/request_test.go:TestWASIRequestThrows`).
 

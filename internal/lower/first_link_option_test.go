@@ -12,20 +12,26 @@ import (
 	"testing"
 )
 
-// firstLinkOptionDoors are the directories, from the repository's root, whose Go files may name
-// Options.FirstLinkTraps: internal/lower, which reads it, and cmd/adamic-firstlink, the one command that sets
-// it. A trap-mode program is measurement and never a product, so a reader anywhere else is how one would leak
-// into a build, an oracle run or a gate.
+// firstLinkOptionDoors are the directories, from the repository's root, whose Go files may name any field called
+// FirstLinkTraps, lower's Options' and the two backends' of the same name: internal/lower, which reads its own,
+// and cmd/adamic-firstlink, the one command that sets them. A trap-mode program is measurement and never a
+// product, so a setter anywhere else is how one would leak into a build, an oracle run or a gate.
 var firstLinkOptionDoors = []string{"internal/lower", "cmd/adamic-firstlink"}
 
-// firstLinkOptionReaders is every Go file under root outside firstLinkOptionDoors that names FirstLinkTraps, as
-// a composite literal's key or a selector, by its path from root. override, by path from root, is read in place
-// of a file's text, so a mutant needs no tree of its own. Test data, the TypeScript checkout under cohere and
-// node_modules hold no reader of ours, so they aren't walked. A file that doesn't parse is a reader if its text
-// names FirstLinkTraps at all, so it fails closed.
-func firstLinkOptionReaders(t *testing.T, root string, override map[string]string) []string {
+// firstLinkOptionBackends are the directories whose Go files may read a FirstLinkTraps but never set one: the
+// backends, each refusing a trap-mode program unless its own field is set (native_runtime.Options and
+// javascript.Options), and native_runtime, which declares native's.
+var firstLinkOptionBackends = []string{"internal/native", "internal/javascript", "internal/native_runtime"}
+
+// firstLinkOptionLeaks is every Go file under root outside firstLinkOptionDoors that sets FirstLinkTraps, by its
+// path from root, or, outside firstLinkOptionBackends too, names it at all. A setter is a composite literal's key,
+// an assignment to the selector, or the selector's address taken, which a write could go through. override, by
+// path from root, is read in place of a file's text, so a mutant needs no tree of its own. Test data, the
+// TypeScript checkout under cohere and node_modules hold no Go of ours, so they aren't walked. A file that doesn't
+// parse is a leak if its text names FirstLinkTraps at all, so it fails closed.
+func firstLinkOptionLeaks(t *testing.T, root string, override map[string]string) []string {
 	t.Helper()
-	var readers []string
+	var leaks []string
 	err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
@@ -41,9 +47,11 @@ func firstLinkOptionReaders(t *testing.T, root string, override map[string]strin
 			}
 			return nil
 		}
-		if !strings.HasSuffix(relative, ".go") || slices.Contains(firstLinkOptionDoors, filepath.ToSlash(filepath.Dir(relative))) {
+		directory := filepath.ToSlash(filepath.Dir(relative))
+		if !strings.HasSuffix(relative, ".go") || slices.Contains(firstLinkOptionDoors, directory) {
 			return nil
 		}
+		reads := slices.Contains(firstLinkOptionBackends, directory)
 		text, overridden := override[relative]
 		if !overridden {
 			contents, err := os.ReadFile(path)
@@ -57,37 +65,44 @@ func firstLinkOptionReaders(t *testing.T, root string, override map[string]strin
 		}
 		file, err := parser.ParseFile(token.NewFileSet(), relative, text, parser.SkipObjectResolution)
 		if err != nil {
-			readers = append(readers, relative+" (doesn't parse, and names FirstLinkTraps)")
+			leaks = append(leaks, relative+" (doesn't parse, and names FirstLinkTraps)")
 			return nil
 		}
-		named := false
+		named := func(expression ast.Expr) bool {
+			selector, isSelector := ast.Unparen(expression).(*ast.SelectorExpr)
+			return isSelector && selector.Sel.Name == "FirstLinkTraps"
+		}
+		leaked := false
 		ast.Inspect(file, func(node ast.Node) bool {
 			switch node := node.(type) {
 			case *ast.KeyValueExpr:
 				if key, isName := node.Key.(*ast.Ident); isName && key.Name == "FirstLinkTraps" {
-					named = true
+					leaked = true
 				}
+			case *ast.AssignStmt:
+				leaked = leaked || slices.ContainsFunc(node.Lhs, named)
+			case *ast.UnaryExpr:
+				leaked = leaked || node.Op == token.AND && named(node.X)
 			case *ast.SelectorExpr:
-				if node.Sel.Name == "FirstLinkTraps" {
-					named = true
-				}
+				leaked = leaked || !reads && named(node)
 			}
-			return !named
+			return !leaked
 		})
-		if named {
-			readers = append(readers, relative)
+		if leaked {
+			leaks = append(leaks, relative)
 		}
 		return nil
 	})
 	if err != nil {
 		t.Fatal(err)
 	}
-	return readers
+	return leaks
 }
 
 // Options.FirstLinkTraps has one door: no Go file in the repository outside internal/lower and
-// cmd/adamic-firstlink names it, so no environment variable, flag or gate of adamic's can lower a program in
-// trap mode. Mutant: cmd/adamic's loweringOptions sets FirstLinkTraps: true, and the test names cmd/adamic/main.go.
+// cmd/adamic-firstlink sets it or either backend's field of the same name, and none outside them and the backends
+// reads one, so no environment variable, flag or gate of adamic's can lower or build a program in trap mode.
+// Mutant: cmd/adamic's loweringOptions sets FirstLinkTraps: true, and the test names cmd/adamic/main.go.
 func TestFirstLinkTrapsOptionHasOneDoor(t *testing.T) {
 	t.Parallel()
 	// Reads: every Go file in the repository
@@ -95,8 +110,8 @@ func TestFirstLinkTrapsOptionHasOneDoor(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if readers := firstLinkOptionReaders(t, root, nil); len(readers) != 0 {
-		t.Fatalf("FirstLinkTraps is named outside %v: %v", firstLinkOptionDoors, readers)
+	if leaks := firstLinkOptionLeaks(t, root, nil); len(leaks) != 0 {
+		t.Fatalf("FirstLinkTraps is set outside %v, or read outside them and %v: %v", firstLinkOptionDoors, firstLinkOptionBackends, leaks)
 	}
 	main, err := os.ReadFile(filepath.Join(root, "cmd/adamic/main.go"))
 	if err != nil {
@@ -107,14 +122,15 @@ func TestFirstLinkTrapsOptionHasOneDoor(t *testing.T) {
 		t.Fatalf("cmd/adamic/main.go's loweringOptions no longer ends %q; the mutant can't be planted", options)
 	}
 	mutant := strings.Replace(string(main), options, "Debug: debug, ModuleFormat: format, FirstLinkTraps: true}", 1)
-	if readers := firstLinkOptionReaders(t, root, map[string]string{"cmd/adamic/main.go": mutant}); !slices.Equal(readers, []string{"cmd/adamic/main.go"}) {
-		t.Fatalf("with loweringOptions setting FirstLinkTraps: got %v, want cmd/adamic/main.go named", readers)
+	if leaks := firstLinkOptionLeaks(t, root, map[string]string{"cmd/adamic/main.go": mutant}); !slices.Equal(leaks, []string{"cmd/adamic/main.go"}) {
+		t.Fatalf("with loweringOptions setting FirstLinkTraps: got %v, want cmd/adamic/main.go named", leaks)
 	}
 }
 
 // The door's directory may be there or not: on a tree without cmd/adamic-firstlink the guard still finds no
-// reader, and one there that sets the option is let through, while the same line in cmd/adamic is named, as a
-// selector or a key.
+// leak, and one there that sets the option is let through, while the same line in cmd/adamic is named, as an
+// assignment or a key. A backend may read its own field but never set it, by a key, an assignment or the field's
+// address, and anywhere else a plain read is named too.
 func TestFirstLinkTrapsOptionDoorMayBeAbsent(t *testing.T) {
 	t.Parallel()
 	root := t.TempDir()
@@ -128,16 +144,23 @@ func TestFirstLinkTrapsOptionDoorMayBeAbsent(t *testing.T) {
 		}
 	}
 	write("internal/lower/lower.go", "package lower\n\ntype Options struct{ FirstLinkTraps bool }\n\nfunc read(options Options) bool { return options.FirstLinkTraps }\n")
-	if readers := firstLinkOptionReaders(t, root, nil); len(readers) != 0 {
-		t.Fatalf("without cmd/adamic-firstlink: got %v, want no reader", readers)
+	write("internal/native/emit.go", "package native\n\nfunc refuses(options EmitOptions) bool { return !options.Options.FirstLinkTraps }\n")
+	write("internal/javascript/javascript.go", "package javascript\n\nfunc refuses(options Options) bool { return !(options).FirstLinkTraps }\n")
+	if leaks := firstLinkOptionLeaks(t, root, nil); len(leaks) != 0 {
+		t.Fatalf("without cmd/adamic-firstlink, the backends reading theirs: got %v, want no leak", leaks)
 	}
 	write("cmd/adamic-firstlink/main.go", "package main\n\nvar options = lower.Options{FirstLinkTraps: true}\n")
-	if readers := firstLinkOptionReaders(t, root, nil); len(readers) != 0 {
-		t.Fatalf("with cmd/adamic-firstlink setting it: got %v, want no reader", readers)
+	if leaks := firstLinkOptionLeaks(t, root, nil); len(leaks) != 0 {
+		t.Fatalf("with cmd/adamic-firstlink setting it: got %v, want no leak", leaks)
 	}
 	write("cmd/adamic/main.go", "package main\n\nfunc set(options *lower.Options) { options.FirstLinkTraps = true }\n")
 	write("cmd/adamic/options.go", "package main\n\nvar options = lower.Options{FirstLinkTraps: true}\n")
-	if readers := firstLinkOptionReaders(t, root, nil); !slices.Equal(readers, []string{"cmd/adamic/main.go", "cmd/adamic/options.go"}) {
-		t.Fatalf("cmd/adamic naming it: got %v, want both of its files", readers)
+	write("cmd/adamic/read.go", "package main\n\nfunc read(options lower.Options) bool { return options.FirstLinkTraps }\n")
+	write("internal/javascript/set.go", "package javascript\n\nfunc set(options *Options) { (options.FirstLinkTraps), _ = true, 0 }\n")
+	write("internal/native/key.go", "package native\n\nvar options = EmitOptions{Options: native_runtime.Options{FirstLinkTraps: true}}\n")
+	write("internal/native_runtime/address.go", "package native_runtime\n\nfunc set(options *Options) { flag := &options.FirstLinkTraps; *flag = true }\n")
+	want := []string{"cmd/adamic/main.go", "cmd/adamic/options.go", "cmd/adamic/read.go", "internal/javascript/set.go", "internal/native/key.go", "internal/native_runtime/address.go"}
+	if leaks := firstLinkOptionLeaks(t, root, nil); !slices.Equal(leaks, want) {
+		t.Fatalf("setters, and a read outside the backends: got %v, want %v", leaks, want)
 	}
 }
