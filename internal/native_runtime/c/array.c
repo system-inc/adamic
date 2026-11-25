@@ -48,6 +48,10 @@ void adamic_array_push(adamic_array *array, adamic_value value) {
 			static const char message[] = "out of memory";
 			adamic_panic(message, sizeof message - 1);
 		}
+		// From no storage, this realloc is the buffer's first allocation, not a growth (count.h).
+		if (array->capacity != 0) {
+			ADAMIC_COUNT_GROWTH();
+		}
 		array->elements = grown;
 		array->capacity = capacity;
 	}
@@ -116,6 +120,8 @@ adamic_string *adamic_array_join(const adamic_array *array, const adamic_string 
 				adamic_panic(message, sizeof message - 1);
 			}
 			buffer = grown;
+			// The buffer was made above, so every realloc here enlarges it: a growth (count.h).
+			ADAMIC_COUNT_GROWTH();
 			ADAMIC_COUNT_JOIN_CAPACITY(capacity);
 		}
 		if (index > 0 && separator->length > 0) {
@@ -449,6 +455,10 @@ static void splice_into(adamic_array *array, double start, double count, bool ha
 		if (grown == NULL) {
 			static const char message[] = "out of memory";
 			adamic_panic(message, sizeof message - 1);
+		}
+		// From no storage, this realloc is the buffer's first allocation, not a growth (count.h).
+		if (array->capacity != 0) {
+			ADAMIC_COUNT_GROWTH();
 		}
 		array->elements = grown;
 		array->capacity = new_length;

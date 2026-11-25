@@ -9,6 +9,10 @@ typedef struct pieces {
 
 static void pieces_add(pieces *list, adamic_string *piece) {
 	if (list->count == list->capacity) {
+		// From no items, this realloc is the list's first allocation, not a growth (count.h).
+		if (list->capacity != 0) {
+			ADAMIC_COUNT_GROWTH();
+		}
 		list->capacity = list->capacity == 0 ? 8 : list->capacity * 2;
 		adamic_string **grown = realloc(list->items, list->capacity * sizeof *grown);
 		if (grown == NULL) {

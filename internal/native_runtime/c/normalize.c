@@ -144,6 +144,10 @@ static void points_add(points *list, uint32_t point) {
 			static const char message[] = "out of memory";
 			adamic_panic(message, sizeof message - 1);
 		}
+		// From no items, this realloc is the list's first allocation, not a growth (count.h).
+		if (list->capacity != 0) {
+			ADAMIC_COUNT_GROWTH();
+		}
 		list->items = grown;
 		list->capacity = capacity;
 	}
@@ -507,6 +511,10 @@ static normalization stream(const adamic_string *string, bool compatibility, boo
 				}
 				separate = !composed || composite(ordered.items[ordered.count - 1], expanded.items[0]) == 0;
 				if (expanded.count * 4 > capacity) {
+					// From no bytes, this realloc is the buffer's first allocation, not a growth (count.h).
+					if (capacity != 0) {
+						ADAMIC_COUNT_GROWTH();
+					}
 					capacity = expanded.count * 4;
 					char *grown = realloc(bytes, capacity);
 					if (grown == NULL) {

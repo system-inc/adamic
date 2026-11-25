@@ -176,6 +176,11 @@ static void rebuild(adamic_map *map, size_t entries_needed) {
 			static const char message[] = "out of memory";
 			adamic_panic(message, sizeof message - 1);
 		}
+		// One growth for the rebuild, its new buckets below included; a map's first table, from no
+		// entries, is its first allocation, not a growth (count.h).
+		if (map->capacity != 0) {
+			ADAMIC_COUNT_GROWTH();
+		}
 		map->entries = grown;
 		map->capacity = capacity;
 	}
