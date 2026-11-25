@@ -678,6 +678,7 @@ func TestFunctionReferenceFieldsAreEveryFunctionField(t *testing.T) {
 		"CallClosure.FunctionType":  typeID,
 		"FunctionTargets.Functions": "ClosureTargets' answer, which no program holds",
 		// Every integer field of the structs a program holds outside its statements and expressions.
+		"DispatchCheck.Keys":                "how many keys a ruling 17 dispatch's table has, for --explain-checks (#d1chbm7)",
 		"Class.Definition":                  "the class's erased identity, its definition's first layout plus one",
 		"Class.Base":                        "the base class's index plus one",
 		"Class.OwnStart":                    "the first of the class's own field slots",
