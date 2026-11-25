@@ -421,6 +421,8 @@ func TestES2024GlobalAudit(t *testing.T) {
 	// The path is read from the .gitmodules files by the submodule's name, never spelled here, since cohere moves
 	// TypeScript to libraries/typescript and keeps its name. A refusal stops the test in the reader's words: a
 	// guessed path would audit libraries that aren't the ones cohere declares.
+	// Reads: .gitmodules
+	// Reads: cohere
 	typeScript, err := submodules.Path("../../..", "TypeScript")
 	if err != nil {
 		t.Fatal(err)
