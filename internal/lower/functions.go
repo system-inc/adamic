@@ -206,7 +206,13 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		if parameter.Name().Text() == "this" && position < len(declaration.Parameters())-1 {
 			return l.notYet(parameter, "a function or method with a this parameter followed by another parameter (dynamic receivers are not implemented)")
 		}
-		local, err := l.declareLocal(parameter.Name())
+		held := ir.Type(0)
+		if neverParameter(parameter, l.checker.GetTypeAtLocation(parameter.Name())) &&
+			!constructs && !function.Closure && !function.Generator && l.directOnlyNeverFunction(declaration) &&
+			!l.neverParameterWritten(declaration, parameter) {
+			held = ir.Union
+		}
+		local, err := l.declareLocalHeld(parameter.Name(), held)
 		if err != nil {
 			return err
 		}

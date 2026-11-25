@@ -123,13 +123,19 @@ func skipped(binding *ast.Node) bool {
 
 // declareLocal makes a new local for a declared name, typed by what the checker proved for it.
 func (l *lowering) declareLocal(name *ast.Node) (int, error) {
+	return l.declareLocalHeld(name, 0)
+}
+
+func (l *lowering) declareLocalHeld(name *ast.Node, held ir.Type) (int, error) {
 	symbol := l.symbol(name)
 	if symbol == nil {
 		return 0, l.notYet(name, "the checker gave a declaration no symbol")
 	}
 	valueType := ir.Object
 	inferred := l.evolvingObject(name)
-	if l.detachedOwnAlias(name) != nil {
+	if held != 0 {
+		valueType = held
+	} else if l.detachedOwnAlias(name) != nil {
 		valueType = ir.Boolean
 	} else if l.detachedOwnObjectParameter(name) {
 		valueType = ir.Object

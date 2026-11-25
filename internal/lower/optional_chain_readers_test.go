@@ -121,6 +121,8 @@ var optionalChainReaders = map[string]optionalChainReader{
 	"typedArrayExpression":            {2, readerChainShape},
 	"optionalIndexContinuation":       {1, readerChainShape + ": its callers ask inOptionalChain first"},
 	"optionalIntrinsicContinues":      {3, readerChainShape + ": whether the chain goes on past a call, which a guarded chain's inner call does"},
+	"neverFrameMarker":                {1, readerDeclines + ": a flagged call, guarded or not, cannot carry a frame marker"},
+	"directOnlyNeverFunction":         {1, readerDeclines + ": a flagged call, guarded or not, keeps the parameter storage stop"},
 	"optionalCall":                    {2, readerChainShape + ": read after inOptionalChain, so only an unguarded chain's call reaches them"},
 	"optionalMethodSignature":         {1, readerChainShape + ": a receiver in a chain keeps optionalCall's stop, and optionalChainEntry turns down a root that's a method's optional call"},
 	"acceptsUndefined":                {2, readerBeforeGuard},
