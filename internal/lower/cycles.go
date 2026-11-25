@@ -124,6 +124,9 @@ type cycleFinder struct {
 	nesting   typeNesting
 	deepest   *checker.Type
 	deepestAt *ast.Node
+
+	// trace is #c0eypws's scratch instrument (findcycles_trace.go), nil unless ADAMIC_FINDCYCLES_TRACE is set.
+	trace *findCyclesTrace
 }
 
 // findCycles refuses the first cycle-capable slot that isn't declared Weak and has a write that isn't
@@ -139,7 +142,8 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 			}
 		}
 	}
-	finder := &cycleFinder{l: l, where: map[*checker.Type]*ast.Node{}}
+	finder := &cycleFinder{l: l, where: map[*checker.Type]*ast.Node{}, trace: startFindCyclesTrace(l)}
+	defer finder.trace.finish()
 	for _, module := range modules {
 		var visit ast.Visitor
 		visit = func(node *ast.Node) bool {
@@ -186,6 +190,7 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 		return l.notYet(where, "finding cycles through a type that instantiates itself deeper at each level ("+l.checker.TypeToString(finder.deepest)+")")
 	}
 	// Program membership changes ownership only after every ordinary graph check passes.
+	finder.trace.phase(finder, "graphTypes")
 	if err := finder.graphTypes(modules); err != nil {
 		return err
 	}
@@ -592,6 +597,7 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 		f.reachEdges = map[cycleNode][]cycleNode{}
 		f.reachCache = map[cycleReach]bool{}
 		f.reachShapes = len(f.shapes)
+		f.trace.reachEdgesReset()
 	}
 	key := cycleReach{from, target}
 	if value, ok := f.reachCache[key]; ok {
@@ -789,6 +795,7 @@ func (f *cycleFinder) deriveWeak(proven *checker.Type) bool {
 }
 
 func (f *cycleFinder) reachLinks(node cycleNode) []cycleNode {
+	f.trace.reachLinksCalled(node)
 	if node.objc != "" {
 		return f.appleHolds(node.objc)
 	}
@@ -850,7 +857,7 @@ func (f *cycleFinder) reachLinks(node cycleNode) []cycleNode {
 		if f.l.isLibraryType(proven, "Function") || len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
 			for symbol := range f.l.statics {
 				actual := f.l.checker.GetTypeOfSymbol(symbol)
-				if f.l.checker.IsTypeAssignableTo(actual, proven) {
+				if f.assignable(findCyclesArmReachStatics, actual, proven) {
 					links = append(links, cycleNode{proven: actual})
 				}
 			}
@@ -871,7 +878,7 @@ func (f *cycleFinder) reachLinks(node cycleNode) []cycleNode {
 			}
 		}
 		for _, accessor := range f.l.accessorCaptures {
-			if f.l.checker.IsTypeAssignableTo(accessor.holder, proven) {
+			if f.assignable(findCyclesArmReachAccessorCaptures, accessor.holder, proven) {
 				for _, local := range f.l.result.Functions[accessor.function].Environment {
 					links = append(links, cycleNode{cell: local + 1})
 				}
@@ -888,7 +895,7 @@ func (f *cycleFinder) reachLinks(node cycleNode) []cycleNode {
 		// A value seen as this type may be any object type the program has that can be seen as
 		// it, with fields this type doesn't show.
 		for _, shape := range f.shapeCandidates(proven) {
-			if shape != proven && f.l.checker.IsTypeAssignableTo(shape, proven) {
+			if shape != proven && f.assignable(findCyclesArmReachShapes, shape, proven) {
 				links = append(links, cycleNode{proven: shape})
 			}
 		}
@@ -948,7 +955,7 @@ func (f *cycleFinder) closureLinksTo(proven *checker.Type) []cycleNode {
 	assignable := make([]bool, len(f.closures.types))
 	for group, closureType := range f.closures.types {
 		f.closureQueries++
-		assignable[group] = f.l.checker.IsTypeAssignableTo(closureType, proven)
+		assignable[group] = f.assignable(findCyclesArmReachClosures, closureType, proven)
 	}
 	links := []cycleNode{}
 	for _, capture := range f.closures.captures {
@@ -973,7 +980,7 @@ func (f *cycleFinder) deriveRelated(one *checker.Type, other *checker.Type) bool
 	// (the census): the relation judges a fresh type for excess properties, so { name, back } as Named would
 	// otherwise never be what a value seen as Named reaches (#sbvnh96).
 	one, other = f.l.relatedShape(one), f.l.relatedShape(other)
-	return f.l.checker.IsTypeAssignableTo(one, other) || f.l.checker.IsTypeAssignableTo(other, one)
+	return f.assignable(findCyclesArmRelatedForward, one, other) || f.assignable(findCyclesArmRelatedBack, other, one)
 }
 
 // viewAlsoOf is the source types a checked view can hand out as proven that the finder doesn't relate to it
