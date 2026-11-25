@@ -20,7 +20,7 @@ func TestShardsMatchManifest(t *testing.T) {
 	root := repositoryRoot(t)
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
-	command := boundedCommand(ctx, root, "python3", "-B", "stage3/lane/generate_shards.py", "--check")
+	command := boundedPython(ctx, root, "-B", "stage3/lane/generate_shards.py", "--check")
 	if output, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("manifest generation: %v: %s", err, output)
 	}
