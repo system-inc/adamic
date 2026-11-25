@@ -236,6 +236,24 @@
       "test": "internal/oracle/oracle_test.go: TestNativeAgreesWithNode"
     },
     {
+      "path": "internal/oracle/testdata/node_array_tuple/t01-alias-direct-write.ts",
+      "stderr": "adamic: panic: element read failed: list[0] at {root}/internal/oracle/testdata/node_array_tuple/t01-alias-direct-write.ts:25:32 is not a Ident; expected Ident, found object\n",
+      "hatch": "predicate, line 13: function isOne(a: NodeArray<Node>): a is NodeArray<Node> & readonly [Ident] {",
+      "test": "internal/oracle/node_array_tuple_test.go: TestNodeArrayTupleAliasStops"
+    },
+    {
+      "path": "internal/oracle/testdata/node_array_tuple/t01-alias.ts",
+      "stderr": "adamic: panic: element read failed: list[0] at {root}/internal/oracle/testdata/node_array_tuple/t01-alias.ts:25:32 is not a Ident; expected Ident, found object\n",
+      "hatch": "predicate, line 13: function isOne(a: NodeArray<Node>): a is NodeArray<Node> & readonly [Ident] {",
+      "test": "internal/oracle/node_array_tuple_test.go: TestNodeArrayTupleAliasStops"
+    },
+    {
+      "path": "internal/oracle/testdata/node_array_tuple/t01-kind-lie.ts",
+      "stderr": "adamic: panic: field read failed: list[0].text is not initialized; expected string, found missing\n",
+      "hatch": "predicate, line 13: function isOne(a: NodeArray<Node>): a is NodeArray<Node> & readonly [Ident] {",
+      "test": "internal/oracle/node_array_tuple_test.go: TestNodeArrayTupleAliasStops"
+    },
+    {
       "path": "internal/oracle/testdata/non_null_array.ts",
       "stderr": "adamic: panic: non-null assertion failed at {root}/internal/oracle/testdata/non_null_array.ts:3:13: values[1]! is null or undefined\n",
       "hatch": "non-null, line 3: console.log(values[1]!);",
