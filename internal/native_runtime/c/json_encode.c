@@ -27,6 +27,9 @@ static void append(encode_builder *w, const char *bytes, size_t length, size_t u
 			static const char message[] = "out of memory";
 			adamic_panic(message, sizeof message - 1);
 		}
+		// The builder starts with bytes of its own (adamic_json_encode), so every realloc here enlarges
+		// them: a buffer (count.h).
+		ADAMIC_COUNT_BUFFER();
 		w->bytes = grown;
 		w->capacity = capacity;
 	}
@@ -287,6 +290,8 @@ adamic_string *adamic_json_encode(adamic_value value, const adamic_encode_schema
 	if (builder.bytes == NULL) {
 		adamic_panic("out of memory", sizeof "out of memory" - 1);
 	}
+	// The string being built: a buffer, as each realloc in append that enlarges it is (count.h).
+	ADAMIC_COUNT_BUFFER();
 	encode_write(&builder, value, schema, schema->root, 0);
 	if (builder.too_long) {
 		// Node's RangeError on the pending word, and an empty string the caller lets go.
