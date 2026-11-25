@@ -11,6 +11,8 @@ if [[ ${STAGE3_METER_OPEN_TASKS+x} ]]; then
 fi
 repository=$(cd "$(dirname "$0")/../.." && pwd)
 cd "$repository"
+# shellcheck disable=SC1091
+. "$repository/cloud/cohere-typescript-path.sh"
 for prerequisite in stage3/apply.sh stage3/census/tool/main.go stage3/census/latent/make_overlay.py; do
     [[ -f $prerequisite ]] || { echo "missing prerequisite: $prerequisite (merge stage3-base/tsc-census)" >&2; exit 1; }
 done
@@ -84,9 +86,12 @@ for label in main; do
     if [[ $compiler_mode == per-ref ]]; then
         # Detached worktrees retain each compiler's exact sources and submodule pins.
         git worktree add --detach "$scratch/$label-source" "$commit" > "$run/$label/checkout.log" 2>&1
+        # The local TypeScript clone is wherever this checkout's cohere/.gitmodules puts it, read by the one reader
+        # cloud/ shares, so the insteadOf still names a repository once cohere moves the submodule.
+        cohere_typescript=$(cohere_typescript_path "$repository") || { echo "cannot read cohere's TypeScript submodule path from $repository/cohere/.gitmodules" >&2; exit 1; }
         if ! git -C "$scratch/$label-source" -c protocol.file.allow=always \
             -c "url.file://$repository/cohere.insteadOf=https://github.com/system-inc/cohere.git" \
-            -c "url.file://$repository/cohere/TypeScript.insteadOf=https://github.com/system-inc/TypeScript.git" \
+            -c "url.file://$repository/cohere/$cohere_typescript.insteadOf=https://github.com/system-inc/TypeScript.git" \
             submodule update --init --recursive --depth 1 > "$run/$label/submodules.log" 2>&1; then
             # A later main may pin dependencies absent from this worker's cache.
             # Retry their recorded origins; Git still checks out each exact gitlink.
