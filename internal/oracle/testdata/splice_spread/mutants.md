@@ -75,3 +75,9 @@ if false && name == "splice" && arraySpliceSpreads(node.AsCallExpression().Argum
 Red: `TestSpliceSpread/site_shape.ts`, and every other program with a spread, as a stop: the old per-item lowering
 reaches the spread and stops with NotYet "a SpreadElement" (site_shape.ts:20:31). `stop_representation.ts` goes red
 too, stopping at the same words, not push's.
+
+## M5: the removal before the packing
+
+The helper's count argument becomes the removal itself, `ir.ArraySplice{Array: array, Start: arguments[0], Count: arguments[1], ...}`, evaluated before the packed items, so the array changes before every item has run, as JavaScript never does.
+
+Red (J-61pzv5y): `TestSpliceSpread/throwing.ts`, `self.ts`, `bounds.ts` and `mixed.ts`. In throwing.ts the removal has run when `boom()` throws, so the array the catch prints has lost its count where Node's hasn't. M3 leaves throwing.ts green: it unpacks a sole spread only, and each throwing call holds a spread and a plain item, so M5 is the mutant Compiler's throwing pin turns red, and M2 (insertion before the removal) reds it too.
