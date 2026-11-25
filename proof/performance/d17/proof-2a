@@ -1,0 +1,9 @@
+# #d1chbm7 commit 2a proof (Performance): ruling 17's dispatch proof and its exemption. Run after environment.sh,
+# sandboxed-job.sh and sandboxed_npm stage3/api. Never merged.
+set -u
+L=internal/lower
+gofmt -l $L/dispatch_cast.go $L/dispatch_cast_test.go $L/any_relations.go $L/lower.go; echo "gofmt done (empty above is clean)"
+go vet ./$L > "$TMPDIR/vet.log" 2>&1; echo "vet exit=$?"; head -40 "$TMPDIR/vet.log"
+go test -count=1 -v -run 'TestDispatch|TestNumericKey|AnyRelation|TestAny' ./$L > "$TMPDIR/t.log" 2>&1; echo "test exit=$?"
+grep -E -- '^(ok|FAIL)|--- FAIL|_test.go:[0-9]+:|panic' "$TMPDIR/t.log" | head -60
+grep -c -- '--- PASS' "$TMPDIR/t.log" | sed 's/^/passed: /'
