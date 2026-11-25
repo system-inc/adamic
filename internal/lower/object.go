@@ -2327,6 +2327,9 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		}
 		return ir.RegExpGroup{Object: object, Name: index.Text(), Of: of, Optional: optional}, nil
 	}
+	if value, handled, err := l.nodeArrayTupleRead(node, object, optional); handled {
+		return value, err
+	}
 	if optional && (object.Type() == ir.Array || object.Type() == ir.String || object.Type().IsTypedArray()) {
 		return l.optionalIndex(node, object)
 	}

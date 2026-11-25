@@ -20,6 +20,10 @@ type ViewElement struct {
 	// holds, so it can't hand out a viewed element: lowering's array check puts it back as the raw
 	// ArrayIndex it was, Optional included, and never stops it.
 	Unrelated, Optional bool
+	// Position is a read of a position of NodeArray<E> & readonly [T1..Tn] (Adamic's ruling 3 on #bbssdcy):
+	// checked wherever it's lowered, whatever views the array reaches, since a mutable alias the view graph
+	// never sees can rewrite the backing array beneath it. Lowering's array check never puts it back raw.
+	Position bool
 }
 
 func (read ViewElement) Type() Type { return read.Of }
