@@ -1,0 +1,30 @@
+# #d1chbm7 commit 1 proof (Performance): numeric computed keys, Adamic's ruling (A). Run after environment.sh,
+# sandboxed-job.sh and sandboxed_npm stage3/api. Never merged.
+set -u
+L=internal/lower
+fail=0
+step() { echo "== $1"; }
+step "gofmt and vet"
+gofmt -l $L/numeric_keys.go $L/numeric_keys_test.go $L/object.go $L/lower.go internal/oracle/element_access_numeric_keys_test.go; echo "gofmt listed the above (empty is clean)"
+go vet ./$L ./internal/oracle > "$TMPDIR/vet.log" 2>&1; v=$?; echo "vet exit=$v"; [ $v = 0 ] || { head -30 "$TMPDIR/vet.log"; fail=1; }
+step "lower, the new tests and the element access neighbors"
+go test -count=1 -run 'TestNumericKey|TestDistinctFieldKeys|ElementAccess|Finite|ComputedField' ./$L > "$TMPDIR/lower.log" 2>&1; r=$?
+echo "lower exit=$r"; grep -E '^(ok|FAIL|--- FAIL|panic)|_test.go:[0-9]+:' "$TMPDIR/lower.log" | head -40; [ $r = 0 ] || fail=1
+step "oracle, the fixture against Node on both backends, and the computed fields pin"
+go test -count=1 -run 'TestNativeAgreesWithNode_element_access_numeric_keys$|TestComputedFieldsWriteRefusalPin$' -v ./internal/oracle > "$TMPDIR/oracle.log" 2>&1; r=$?
+echo "oracle exit=$r"; grep -E -- '^(ok|FAIL)|--- (PASS|FAIL)|_test.go:[0-9]+:|panic' "$TMPDIR/oracle.log" | head -40; [ $r = 0 ] || { fail=1; tail -30 "$TMPDIR/oracle.log"; }
+step "mutants: each must compile and turn its test red"
+mutant() { # name, file, from, to, test pattern
+  cp "$2" "$TMPDIR/orig.go"
+  python3 -I -c 'import sys; p,f,t=sys.argv[1:4]; s=open(p).read(); n=s.count(f); open(p,"w").write(s.replace(f,t,1)); print("applied" if n==1 else "NOT APPLIED (%d matches)"%n)' "$2" "$3" "$4"
+  go test -count=1 -run "^\$" ./$L > /dev/null 2>&1 && echo "compiles" || echo "DOES NOT COMPILE"
+  go test -count=1 -run "$5" ./$L > "$TMPDIR/m.log" 2>&1; r=$?
+  if [ $r != 0 ]; then echo "MUTANT $1 red: $(grep -E -- '--- FAIL' "$TMPDIR/m.log" | head -4 | tr '\n' ' ')"; else echo "MUTANT $1 SURVIVED"; fail=1; fi
+  cp "$TMPDIR/orig.go" "$2"
+}
+mutant let-admitted $L/numeric_keys.go ' || list.Flags&ast.NodeFlagsBlockScoped != ast.NodeFlagsConst' '' 'TestNumericKeysKeepTheirStop'
+mutant any-reference $L/numeric_keys.go '	object := numericKeyOuter(reference)' '	return true
+	object := numericKeyOuter(reference)' 'TestNumericKeysKeepTheirStop'
+mutant write-admitted $L/numeric_keys.go '	if ast.IsAssignmentTarget(read) {' '	if false {' 'TestNumericKeysKeepTheirStop'
+mutant memo-dropped $L/numeric_keys.go 'held := l.numericKeyTables[symbol]; held {' 'held := l.numericKeyTables[symbol]; held && false {' 'TestNumericKeyTableIsWalkedOncePerBinding'
+[ $fail = 0 ] && echo "VERDICT PASS" || echo "VERDICT FAIL"
