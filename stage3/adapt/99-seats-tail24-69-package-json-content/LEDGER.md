@@ -1,0 +1,1 @@
+- **JavaScript-changing presence test, tail family 69 (#bbssdcy, Adamic's Nov 24 21:50:15Z answer, Compiler accepts under Adamic's widened split of Nov 24 19:29:49Z):** `loadModuleFromSpecificNodeModulesDirectory` tests the root package JSON content for `undefined` before asking for its own `exports` key. Unit 1, `loadModuleFromExportsOrImports`, stays stopped.
