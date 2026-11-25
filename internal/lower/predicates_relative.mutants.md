@@ -25,3 +25,9 @@ Not planted: **index-as-declared**. A source member with an index signature is h
 declares (p03u keeps main's stop). Counting an index signature's answer as declared changes nothing a program can
 reach today; condition (b) is held by the representation test and by `GetPropertyOfType`, which answers declared
 properties alone.
+
+- **undefined-raw** (Lower's must on #4cvdkk3, the arm this head had and dropped): a refined field held as undefined
+  alone, read raw and tested undefined. Red: `v_cast_view.ts` and `v_param_view.ts`, which reach the call through a
+  checked view and keep main's stop, where the raw read let JavaScript print `tail` and native stop or panic on a
+  compiler bug (J-wb50y6y). Not planted as a job: restoring the arm is the whole of the dropped code, and the two
+  rows' pending words are what it would turn.

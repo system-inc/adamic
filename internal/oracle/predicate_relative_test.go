@@ -42,7 +42,11 @@ func TestPredicateRelativeTarget(t *testing.T) {
 		{"s1_package_info.ts", "info /info/a a@1\nmissing /b false\nmissing /c true\nnot info\n", agree, "", ""},
 		{"s2_missing_info.ts", "imports of a\nnone\nnone\nexists false\n", agree, "", ""},
 		{"s3_source_mapping.ts", "1,2 none undefined undefined\n3,4 0:5:6 0 7\n1\n", agree, "", ""},
-		{"s4b_detached_required.ts", "detached f.ts 7\nrelated 0\n", agree, "", ""},
+		// A field held as undefined alone has no checked read, so its target keeps main's road (Lower's must on
+		// #4cvdkk3): a raw read would trust a value a checked view admitted (v_cast_view, v_param_view).
+		{"s4b_detached_required.ts", "detached f.ts 7\nrelated 0\n", pending, "", "s4b_detached_required.ts:4:1: stage 0 can't lower checked predicate overload target Detached yet"},
+		{"v_cast_view.ts", "tail\n", pending, "", "v_cast_view.ts:4:1: stage 0 can't lower checked predicate overload target Tail yet"},
+		{"v_param_view.ts", "tail\nmore\n", pending, "", "v_param_view.ts:4:1: stage 0 can't lower checked predicate overload target Tail yet"},
 		{"s5_custom_option.ts", "1\n", pending, "", "s5_custom_option.ts:3:1: stage 0 can't lower checked predicate overload target Custom yet"},
 		{"s5b_set_field.ts", "set 1\n", pending, "", "s5b_set_field.ts:3:1: stage 0 can't lower checked predicate overload target WithSet yet"},
 		{"r1_refined_absent.ts", "dst number\n", stops, "", "adamic: panic: field read failed: v.name is not a string; expected string, found number\n"},

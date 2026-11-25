@@ -9,12 +9,11 @@ import (
 
 // relativeRefinedField is a field of an untagged predicate target that its source doesn't already
 // guarantee (relativePredicateFields), checked at the call: of is the representation its checked read
-// takes, and undefined says the target holds it as undefined alone.
+// takes.
 type relativeRefinedField struct {
-	name      string
-	declared  *checker.Type
-	of        ir.Type
-	undefined bool
+	name     string
+	declared *checker.Type
+	of       ir.Type
 }
 
 // relativePredicateFields judges an untagged checked predicate target relative to its source, by Adamic's
@@ -31,12 +30,13 @@ type relativeRefinedField struct {
 // number, a string or a boolean, its literals included, is read through the view's checked read, which
 // checks its presence, its representation and its literals. A required field holding a plain untagged
 // record is read the same way, which checks that it's an object and reads none of its structure: its
-// structure is checked as a view at its read. A required field held as undefined alone is read where
-// every source member declares it as a reference, and tested undefined.
+// structure is checked as a view at its read.
 //
 // A refined field whose membership the compiler can't express leaves its target where it was, with the
 // words it had: ok is false, and the caller takes checkedPredicateTargetCause's road, by Adamic's road (a)
-// (#bbssdcy, 19:54:35Z). An optional field, a union of representations, null, an array, a class instance,
+// (#bbssdcy, 19:54:35Z). An optional field, a union of representations, undefined or null alone or in a
+// union (no checked read takes one, and a raw read would trust a value a checked view admitted, Lower's must
+// on #4cvdkk3), an array, a class instance,
 // a callable, a dictionary, and a Map, a ReadonlyMap, a Set or a ReadonlySet, which share one
 // representation (expression.go's representation), so no read of it can tell one from another. That is
 // decided by what a membership can express, never by a name, and no collection-kind test stands in for
@@ -73,20 +73,17 @@ func (l *lowering) relativePredicateFields(source, target *checker.Type) ([]rela
 	for _, property := range l.checker.GetPropertiesOfType(target) {
 		optional := property.Flags&ast.SymbolFlagsOptional != 0
 		declared := l.checker.GetTypeOfSymbol(property)
-		held, references := true, true
+		held := true
 		for _, member := range members {
 			// GetPropertyOfType answers a declared property alone, never an index signature's.
 			field := l.checker.GetPropertyOfType(member, property.Name)
 			if field == nil {
-				held, references = false, false
+				held = false
 				continue
 			}
 			of := l.checker.GetTypeOfSymbol(field)
 			if !optional && field.Flags&ast.SymbolFlagsOptional != 0 || !l.castAssignable(of, declared) {
 				held = false
-			}
-			if represented, known := l.representation(of); field.Flags&ast.SymbolFlagsOptional != 0 || !known || represented != ir.Object {
-				references = false
 			}
 		}
 		if held {
@@ -98,8 +95,6 @@ func (l *lowering) relativePredicateFields(source, target *checker.Type) ([]rela
 		field := relativeRefinedField{name: property.Name, declared: declared}
 		of, known := l.representation(declared)
 		switch {
-		case declared.Flags()&checker.TypeFlagsUndefined != 0 && references:
-			field.undefined = true
 		case !known || declared.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0:
 			return nil, false
 		case of == ir.Number || of == ir.String || of == ir.Boolean:
@@ -146,19 +141,14 @@ func (l *lowering) relativePredicateMembership(site, node *ast.Node, value ir.Ex
 	}
 	membership := censusCondition(value)
 	for _, field := range refined {
-		var test ir.Expression
-		if field.undefined {
-			test = ir.IsUndefined{Value: ir.Property{Object: value, Name: field.name, Of: ir.Object}}
-		} else {
-			// Keyed by the target, as the view registered its fields (viewSchema), so the read is checked
-			// natively too (Program.CheckedRead) though no read in the program names the field.
-			read := ir.Property{Object: value, Name: field.name, Of: field.of, View: subject + "." + field.name, ViewType: l.checker.TypeToString(field.declared), ViewWhere: l.program.Where(site), ViewAllowed: l.viewLiterals(field.declared), ViewReceiverTypeID: l.viewFieldReceiverTypeID(nil, target), ViewTypeID: l.viewTypeID(field.declared)}
-			read.ViewContract = l.result.ViewContractTypes[read.ViewTypeID]
-			if !l.result.CheckedRead(read) {
-				return nil, nil, true, l.notYet(node, "a checked predicate target's refined field "+field.name+" its view doesn't check")
-			}
-			test = ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: read}, Right: ir.StringConstant{Index: l.constant(relativeTypeOf[field.of])}}
+		// Keyed by the target, as the view registered its fields (viewSchema), so the read is checked natively
+		// too (Program.CheckedRead) though no read in the program names the field.
+		read := ir.Property{Object: value, Name: field.name, Of: field.of, View: subject + "." + field.name, ViewType: l.checker.TypeToString(field.declared), ViewWhere: l.program.Where(site), ViewAllowed: l.viewLiterals(field.declared), ViewReceiverTypeID: l.viewFieldReceiverTypeID(nil, target), ViewTypeID: l.viewTypeID(field.declared)}
+		read.ViewContract = l.result.ViewContractTypes[read.ViewTypeID]
+		if !l.result.CheckedRead(read) {
+			return nil, nil, true, l.notYet(node, "a checked predicate target's refined field "+field.name+" its view doesn't check")
 		}
+		test := ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: read}, Right: ir.StringConstant{Index: l.constant(relativeTypeOf[field.of])}}
 		membership = ir.Binary{Operator: ir.And, Left: membership, Right: test}
 	}
 	return nil, membership, true, nil
