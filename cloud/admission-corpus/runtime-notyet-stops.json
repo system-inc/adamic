@@ -85,6 +85,12 @@
       "lifting_task": "#zhrjf2t",
       "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'next')\n"
     },
+    "7396f919b46d71b5d3a2de381b1788d0575bd098f58b6b41c2636a753fc0a470": {
+      "path": "internal/oracle/testdata/reflect_get/stop_host_set_iterator_next.a",
+      "ruling_task": "#0sps03r",
+      "lifting_task": "#zhrjf2t",
+      "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'next')\n"
+    },
     "69e9c3d041929407ad1357a6b13941c75e1871803d77884f0a4a13311473d845": {
       "path": "internal/oracle/testdata/reflect_get/stop_host_memory_field.a",
       "ruling_task": "#0sps03r",
