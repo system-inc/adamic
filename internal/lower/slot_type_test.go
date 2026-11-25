@@ -175,6 +175,7 @@ var signatureReaders = map[string]string{
 	"generatorCallee":                   "the callee's declaration, to route a generator called other than by its name by its origin",
 	"instantiateFunction":               "the callee's instantiation, to lower a generic function",
 	"kindPredicateStep":                 "the callee's type predicate, to read the type an exact kind predicate claims for its narrowing; no argument is judged against a parameter's slot",
+	"nodeArrayPositionProven":           "the callee's type predicate, to see that a call proves NodeArray<E> & readonly [T1..Tn] for the read's receiver; no argument parameter slot is read",
 	"libraryCallOnPrimitives":           "the callee's declaration, whether the library or the prelude declares it, to judge a call that can't reach program code",
 	"libraryCallResult":                 "the callee's declaration, whether the library declares it",
 	"objectAssignCall":                  "the callee's declaration, whether it is lib's ObjectConstructor.assign; each source is judged by its own type, never by a parameter's slot",
