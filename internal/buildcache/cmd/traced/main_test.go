@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"os"
 	"path/filepath"
 	"strings"
@@ -72,6 +73,49 @@ func TestARunStartsFromTheWavesTreeState(t *testing.T) {
 		}
 		if _, set := os.LookupEnv("ADAMIC_TRACE_TREE_STATE"); set {
 			t.Errorf("%s: ADAMIC_TRACE_TREE_STATE is still set for the command", each.name)
+		}
+	}
+}
+
+// The report's file is read once, made absolute, and taken out of the environment the command inherits, so the command
+// can't find the report traced writes its verdict to (a neverStarted line beside exit 4 is traced's alone).
+// Mutants: the variable left set; the path left relative.
+// Not parallel: t.Setenv(ADAMIC_TRACE_REPORT), which is process-wide.
+func TestTheReportsFileNeverReachesTheCommand(t *testing.T) {
+	t.Setenv("ADAMIC_TRACE_REPORT", "logs/product-1.trace.jsonl")
+	report := traceReport()
+	if !filepath.IsAbs(report) || !strings.HasSuffix(report, filepath.Join("logs", "product-1.trace.jsonl")) {
+		t.Errorf("the report's file read as %q", report)
+	}
+	if _, set := os.LookupEnv("ADAMIC_TRACE_REPORT"); set {
+		t.Error("ADAMIC_TRACE_REPORT is still set for the command")
+	}
+}
+
+// traced exits 4 for a source never started only once the report holds the neverStarted line with the refusal's
+// words; with no report, or one it can't write, it is 2, traced's own.
+// Mutant: the write error ignored: "a report it can't write" goes red.
+func TestNeverStartedIsFourOnlyOnceTheReportSaysSo(t *testing.T) {
+	t.Parallel()
+	refusal := errors.New("the tree's state before the run: not closed")
+	directory := t.TempDir()
+	for _, each := range []struct {
+		name, report string
+		status       int
+		line         string
+	}{
+		{"a report it writes", filepath.Join(directory, "report.jsonl"), 4,
+			`{"outcome":"neverStarted","reason":"traced: the tree's state before the run: not closed"}` + "\n"},
+		{"no report", "", 2, ""},
+		{"a report it can't write", filepath.Join(directory, "missing", "report.jsonl"), 2, ""},
+	} {
+		if status := neverStarted(each.report, refusal); status != each.status {
+			t.Errorf("%s: status %d, want %d", each.name, status, each.status)
+		}
+		if each.line != "" {
+			if content, err := os.ReadFile(each.report); err != nil || string(content) != each.line {
+				t.Errorf("%s: the report holds %q (%v), want %q", each.name, content, err, each.line)
+			}
 		}
 	}
 }
