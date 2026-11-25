@@ -1,0 +1,663 @@
+{
+    "producers": [
+        "const notImplemented: SyntacticResult = syntacticResult(/*type*/ undefined, /*reportFallback*/ false);",
+        "const alreadyReported: SyntacticResult = syntacticResult(/*type*/ undefined, /*reportFallback*/ false);",
+        "const failed: SyntacticResult = syntacticResult(/*type*/ undefined, /*reportFallback*/ true);",
+        "resultType = syntacticResult(serializeTypeAnnotationOfDeclaration(declaredType, context, node, symbol));",
+        "resultType = syntacticResult(serializeTypeAnnotationOfDeclaration(declaredType, context, node, symbol, addUndefined));",
+        "resultType = syntacticResult(serializeTypeAnnotationOfDeclaration(declaredType, context, node, symbol, requiresAddingUndefined));",
+        "return syntacticResult(serializeExistingTypeNodeWithFallback(type, context, requiresAddingUndefined));",
+        "return syntacticResult(createUndefinedTypeNode());",
+        "return syntacticResult(addUndefinedIfNeeded(factory.createLiteralTypeNode(factory.createNull()), requiresAddingUndefined, node, context));",
+        "return syntacticResult(factory.createKeywordTypeNode(SyntaxKind.AnyKeyword));",
+        "return syntacticResult(inferExpressionType(node as ClassExpression, context, /*reportFallback*/ true, requiresAddingUndefined));",
+        "return syntacticResult(factory.createKeywordTypeNode(SyntaxKind.StringKeyword));",
+        "return syntacticResult(\r\n            factory.createFunctionTypeNode(\r\n                typeParameters,\r\n                parameters,\r\n                returnType,\r\n            ),\r\n        );",
+        "return syntacticResult(inferExpressionType(arrayLiteral, context, /*reportFallback*/ false, requiresAddingUndefined));",
+        "return syntacticResult(inferExpressionType(objectLiteral, context, /*reportFallback*/ false, requiresAddingUndefined));",
+        "return syntacticResult(addUndefinedIfNeeded(result, requiresAddingUndefined, node, context));",
+        "returnType = syntacticResult(serializeTypeAnnotationOfDeclaration(returnTypeNode, context, fn, symbol));",
+        "return syntacticResult(serializeExistingTypeNode(type, context));"
+    ],
+    "readers": [
+        "result.type !== undefined ? result.type : inferExpressionType(expr, context, result.reportFallback)",
+        "resultType.type !== undefined ? resultType.type : inferTypeOfDeclaration(node, symbol, context, resultType.reportFallback)",
+        "resultType.type !== undefined ? resultType.type : inferTypeOfDeclaration(node, symbol, context, resultType.reportFallback)",
+        "resultType.type !== undefined ? resultType.type : inferTypeOfDeclaration(node, symbol, context, resultType.reportFallback)",
+        "expressionType.type !== undefined ? expressionType.type : inferExpressionType(element, context, expressionType.reportFallback)",
+        "expressionResult.type !== undefined ? expressionResult.type : inferTypeOfDeclaration(prop, /*symbol*/ undefined, context, expressionResult.reportFallback)",
+        "returnType.type !== undefined ? returnType.type : inferReturnTypeOfSignatureSignature(fn, context, symbol, reportFallback && returnType.reportFallback && !returnTypeNode)"
+    ],
+    "counts": {
+        "SyntacticResult/Identifier/TypeAliasDeclaration": 1,
+        "SyntacticResult/Identifier/TypeReference": 10,
+        "reportFallback/Identifier/BinaryExpression": 1,
+        "reportFallback/Identifier/CallExpression": 2,
+        "reportFallback/Identifier/IfStatement": 4,
+        "reportFallback/Identifier/Parameter": 7,
+        "reportFallback/Identifier/PropertyAccessExpression": 7,
+        "reportFallback/Identifier/PropertySignature": 3,
+        "reportFallback/Identifier/ShorthandPropertyAssignment": 1,
+        "syntacticResult/Identifier/CallExpression": 18,
+        "syntacticResult/Identifier/FunctionDeclaration": 3,
+        "object spread": 0,
+        "Object.assign": 0
+    },
+    "resultNames": [
+        "alreadyReported",
+        "expressionResult",
+        "expressionType",
+        "failed",
+        "notImplemented",
+        "result",
+        "resultType",
+        "returnType"
+    ],
+    "resultReferences": [
+        [
+            "notImplemented",
+            "VariableDeclaration",
+            "notImplemented: SyntacticResult = syntacticResult(/*type*/ undefined, /*reportFallback*/ false)"
+        ],
+        [
+            "alreadyReported",
+            "VariableDeclaration",
+            "alreadyReported: SyntacticResult = syntacticResult(/*type*/ undefined, /*reportFallback*/ false)"
+        ],
+        [
+            "failed",
+            "VariableDeclaration",
+            "failed: SyntacticResult = syntacticResult(/*type*/ undefined, /*reportFallback*/ true)"
+        ],
+        [
+            "result",
+            "VariableDeclaration",
+            "result = visitExistingNodeTreeSymbolsWorker(node)"
+        ],
+        [
+            "result",
+            "ConditionalExpression",
+            "result ? resolver.markNodeReuse(context, result, node) : undefined"
+        ],
+        [
+            "result",
+            "CallExpression",
+            "resolver.markNodeReuse(context, result, node)"
+        ],
+        [
+            "result",
+            "VariableDeclaration",
+            "result = tryVisitIndexedAccess(node)"
+        ],
+        [
+            "result",
+            "PrefixUnaryExpression",
+            "!result"
+        ],
+        [
+            "result",
+            "ReturnStatement",
+            "return result;"
+        ],
+        [
+            "result",
+            "VariableDeclaration",
+            "result = tryVisitTypeReference(node)"
+        ],
+        [
+            "result",
+            "IfStatement",
+            "if (result) {\r\n                    return result;\r\n                }"
+        ],
+        [
+            "result",
+            "ReturnStatement",
+            "return result;"
+        ],
+        [
+            "result",
+            "VariableDeclaration",
+            "result = tryVisitTypeQuery(node)"
+        ],
+        [
+            "result",
+            "PrefixUnaryExpression",
+            "!result"
+        ],
+        [
+            "result",
+            "ReturnStatement",
+            "return result;"
+        ],
+        [
+            "result",
+            "BindingElement",
+            "node: result"
+        ],
+        [
+            "result",
+            "CallExpression",
+            "factory.updateComputedPropertyName(node, result)"
+        ],
+        [
+            "result",
+            "BindingElement",
+            "node: result"
+        ],
+        [
+            "result",
+            "BinaryExpression",
+            "parameterName = result"
+        ],
+        [
+            "result",
+            "VariableDeclaration",
+            "result = tryVisitKeyOf(node)"
+        ],
+        [
+            "result",
+            "PrefixUnaryExpression",
+            "!result"
+        ],
+        [
+            "result",
+            "ReturnStatement",
+            "return result;"
+        ],
+        [
+            "result",
+            "VariableDeclaration",
+            "result = visitNodes(nodes, visitor, test, start, count)"
+        ],
+        [
+            "result",
+            "IfStatement",
+            "if (result) {\r\n                    if (result.pos !== -1 || result.end !== -1) {\r\n                        if (result === nodes) {\r\n                            result = factory.createNodeArray(nodes.slice(), nodes.hasTrailingComma);\r\n                        }\r\n                        setTextRangePosEnd(result, -1, -1);\r\n                    }\r\n                }"
+        ],
+        [
+            "result",
+            "PropertyAccessExpression",
+            "result.pos"
+        ],
+        [
+            "result",
+            "PropertyAccessExpression",
+            "result.end"
+        ],
+        [
+            "result",
+            "BinaryExpression",
+            "result === nodes"
+        ],
+        [
+            "result",
+            "BinaryExpression",
+            "result = factory.createNodeArray(nodes.slice(), nodes.hasTrailingComma)"
+        ],
+        [
+            "result",
+            "CallExpression",
+            "setTextRangePosEnd(result, -1, -1)"
+        ],
+        [
+            "result",
+            "ReturnStatement",
+            "return result;"
+        ],
+        [
+            "result",
+            "VariableDeclaration",
+            "result"
+        ],
+        [
+            "result",
+            "BinaryExpression",
+            "result = tryReuseExistingTypeNode(context, typeNode)"
+        ],
+        [
+            "result",
+            "BinaryExpression",
+            "result !== undefined"
+        ],
+        [
+            "result",
+            "BinaryExpression",
+            "result = addUndefinedIfNeeded(result, addUndefined, /*owner*/ undefined, context)"
+        ],
+        [
+            "result",
+            "CallExpression",
+            "addUndefinedIfNeeded(result, addUndefined, /*owner*/ undefined, context)"
+        ],
+        [
+            "result",
+            "ReturnStatement",
+            "return result;"
+        ],
+        [
+            "result",
+            "VariableDeclaration",
+            "result"
+        ],
+        [
+            "result",
+            "BinaryExpression",
+            "result = serializeExistingTypeNode(declaredType, context, requiresAddingUndefined)"
+        ],
+        [
+            "result",
+            "BinaryExpression",
+            "result !== undefined"
+        ],
+        [
+            "result",
+            "ReturnStatement",
+            "return result;"
+        ],
+        [
+            "result",
+            "VariableDeclaration",
+            "result = serializeExistingTypeNode(typeNode, context, addUndefined)"
+        ],
+        [
+            "result",
+            "BinaryExpression",
+            "result !== undefined"
+        ],
+        [
+            "result",
+            "ReturnStatement",
+            "return result;"
+        ],
+        [
+            "result",
+            "VariableDeclaration",
+            "result = typeFromExpression(expr, context, /*isConstContext*/ false, addUndefined, preserveLiterals)"
+        ],
+        [
+            "result",
+            "PropertyAccessExpression",
+            "result.type"
+        ],
+        [
+            "result",
+            "PropertyAccessExpression",
+            "result.type"
+        ],
+        [
+            "result",
+            "PropertyAccessExpression",
+            "result.reportFallback"
+        ],
+        [
+            "result",
+            "VariableDeclaration",
+            "result"
+        ],
+        [
+            "result",
+            "BinaryExpression",
+            "result = serializeExistingTypeNode(typeAnnotation, context)"
+        ],
+        [
+            "result",
+            "PrefixUnaryExpression",
+            "!result"
+        ],
+        [
+            "result",
+            "BinaryExpression",
+            "result = serializeExistingTypeNode(assertionNode, context)"
+        ],
+        [
+            "result",
+            "BinaryExpression",
+            "result ?? inferTypeOfDeclaration(node, symbol, context, /*reportFallback*/ false)"
+        ],
+        [
+            "resultType",
+            "VariableDeclaration",
+            "resultType = failed"
+        ],
+        [
+            "failed",
+            "VariableDeclaration",
+            "resultType = failed"
+        ],
+        [
+            "resultType",
+            "BinaryExpression",
+            "resultType = syntacticResult(serializeTypeAnnotationOfDeclaration(declaredType, context, node, symbol))"
+        ],
+        [
+            "resultType",
+            "BinaryExpression",
+            "resultType = typeFromExpression(node.initializer, context, /*isConstContext*/ undefined, /*requiresAddingUndefined*/ undefined, isVarConstLike(node))"
+        ],
+        [
+            "resultType",
+            "PropertyAccessExpression",
+            "resultType.type"
+        ],
+        [
+            "resultType",
+            "PropertyAccessExpression",
+            "resultType.type"
+        ],
+        [
+            "resultType",
+            "PropertyAccessExpression",
+            "resultType.reportFallback"
+        ],
+        [
+            "resultType",
+            "VariableDeclaration",
+            "resultType = failed"
+        ],
+        [
+            "failed",
+            "VariableDeclaration",
+            "resultType = failed"
+        ],
+        [
+            "resultType",
+            "BinaryExpression",
+            "resultType = syntacticResult(serializeTypeAnnotationOfDeclaration(declaredType, context, node, symbol, addUndefined))"
+        ],
+        [
+            "resultType",
+            "BinaryExpression",
+            "resultType = typeFromExpression(node.initializer, context, /*isConstContext*/ undefined, addUndefined)"
+        ],
+        [
+            "resultType",
+            "PropertyAccessExpression",
+            "resultType.type"
+        ],
+        [
+            "resultType",
+            "PropertyAccessExpression",
+            "resultType.type"
+        ],
+        [
+            "resultType",
+            "PropertyAccessExpression",
+            "resultType.reportFallback"
+        ],
+        [
+            "result",
+            "VariableDeclaration",
+            "result"
+        ],
+        [
+            "result",
+            "BinaryExpression",
+            "result = serializeTypeAnnotationOfDeclaration(declaredType, context, node, symbol)"
+        ],
+        [
+            "resultType",
+            "VariableDeclaration",
+            "resultType = result ?? inferTypeOfDeclaration(node, symbol, context, /*reportFallback*/ false)"
+        ],
+        [
+            "result",
+            "BinaryExpression",
+            "result ?? inferTypeOfDeclaration(node, symbol, context, /*reportFallback*/ false)"
+        ],
+        [
+            "resultType",
+            "ReturnStatement",
+            "return resultType;"
+        ],
+        [
+            "resultType",
+            "VariableDeclaration",
+            "resultType = failed"
+        ],
+        [
+            "failed",
+            "VariableDeclaration",
+            "resultType = failed"
+        ],
+        [
+            "resultType",
+            "BinaryExpression",
+            "resultType = syntacticResult(serializeTypeAnnotationOfDeclaration(declaredType, context, node, symbol, requiresAddingUndefined))"
+        ],
+        [
+            "resultType",
+            "BinaryExpression",
+            "resultType = typeFromExpression(initializer, context, /*isConstContext*/ undefined, requiresAddingUndefined, isReadonly)"
+        ],
+        [
+            "resultType",
+            "PropertyAccessExpression",
+            "resultType.type"
+        ],
+        [
+            "resultType",
+            "PropertyAccessExpression",
+            "resultType.type"
+        ],
+        [
+            "resultType",
+            "PropertyAccessExpression",
+            "resultType.reportFallback"
+        ],
+        [
+            "result",
+            "VariableDeclaration",
+            "result = allAccessors.getAccessor && createReturnFromSignature(allAccessors.getAccessor, symbol, context, reportFallback)"
+        ],
+        [
+            "result",
+            "BinaryExpression",
+            "result ?? resolver.serializeTypeOfDeclaration(context, node, symbol)"
+        ],
+        [
+            "result",
+            "VariableDeclaration",
+            "result = fn()"
+        ],
+        [
+            "result",
+            "ReturnStatement",
+            "return result;"
+        ],
+        [
+            "failed",
+            "ReturnStatement",
+            "return failed;"
+        ],
+        [
+            "returnType",
+            "VariableDeclaration",
+            "returnType = createReturnFromSignature(fnNode, /*symbol*/ undefined, context)"
+        ],
+        [
+            "returnType",
+            "CallExpression",
+            "factory.createFunctionTypeNode(\r\n                typeParameters,\r\n                parameters,\r\n                returnType,\r\n            )"
+        ],
+        [
+            "alreadyReported",
+            "ReturnStatement",
+            "return alreadyReported;"
+        ],
+        [
+            "expressionType",
+            "VariableDeclaration",
+            "expressionType = typeFromExpression(element, context, isConstContext)"
+        ],
+        [
+            "expressionType",
+            "PropertyAccessExpression",
+            "expressionType.type"
+        ],
+        [
+            "expressionType",
+            "PropertyAccessExpression",
+            "expressionType.type"
+        ],
+        [
+            "expressionType",
+            "PropertyAccessExpression",
+            "expressionType.reportFallback"
+        ],
+        [
+            "notImplemented",
+            "ReturnStatement",
+            "return notImplemented;"
+        ],
+        [
+            "result",
+            "VariableDeclaration",
+            "result = true"
+        ],
+        [
+            "result",
+            "BinaryExpression",
+            "result = false"
+        ],
+        [
+            "result",
+            "BinaryExpression",
+            "result = false"
+        ],
+        [
+            "result",
+            "BinaryExpression",
+            "result = false"
+        ],
+        [
+            "result",
+            "BinaryExpression",
+            "result = false"
+        ],
+        [
+            "result",
+            "BinaryExpression",
+            "result = false"
+        ],
+        [
+            "result",
+            "ReturnStatement",
+            "return result;"
+        ],
+        [
+            "alreadyReported",
+            "ReturnStatement",
+            "return alreadyReported;"
+        ],
+        [
+            "notImplemented",
+            "ReturnStatement",
+            "return notImplemented;"
+        ],
+        [
+            "expressionResult",
+            "VariableDeclaration",
+            "expressionResult = typeFromExpression(prop.initializer, context, isConstContext)"
+        ],
+        [
+            "expressionResult",
+            "PropertyAccessExpression",
+            "expressionResult.type"
+        ],
+        [
+            "expressionResult",
+            "PropertyAccessExpression",
+            "expressionResult.type"
+        ],
+        [
+            "expressionResult",
+            "PropertyAccessExpression",
+            "expressionResult.reportFallback"
+        ],
+        [
+            "returnType",
+            "VariableDeclaration",
+            "returnType = createReturnFromSignature(method, /*symbol*/ undefined, context)"
+        ],
+        [
+            "returnType",
+            "CallExpression",
+            "factory.createFunctionTypeNode(\r\n                    typeParameters,\r\n                    parameters,\r\n                    returnType,\r\n                )"
+        ],
+        [
+            "returnType",
+            "CallExpression",
+            "factory.createMethodSignature(\r\n                [],\r\n                reuseNode(context, name),\r\n                reuseNode(context, method.questionToken),\r\n                typeParameters,\r\n                parameters,\r\n                returnType,\r\n            )"
+        ],
+        [
+            "result",
+            "VariableDeclaration",
+            "result"
+        ],
+        [
+            "result",
+            "BinaryExpression",
+            "result = factory.createLiteralTypeNode(reuseNode(context, node.operand))"
+        ],
+        [
+            "result",
+            "BinaryExpression",
+            "result = factory.createLiteralTypeNode(reuseNode(context, node))"
+        ],
+        [
+            "result",
+            "BinaryExpression",
+            "result = factory.createKeywordTypeNode(baseType)"
+        ],
+        [
+            "result",
+            "CallExpression",
+            "addUndefinedIfNeeded(result, requiresAddingUndefined, node, context)"
+        ],
+        [
+            "returnType",
+            "VariableDeclaration",
+            "returnType = failed"
+        ],
+        [
+            "failed",
+            "VariableDeclaration",
+            "returnType = failed"
+        ],
+        [
+            "returnType",
+            "BinaryExpression",
+            "returnType = syntacticResult(serializeTypeAnnotationOfDeclaration(returnTypeNode, context, fn, symbol))"
+        ],
+        [
+            "returnType",
+            "BinaryExpression",
+            "returnType = typeFromSingleReturnExpression(fn, context)"
+        ],
+        [
+            "returnType",
+            "PropertyAccessExpression",
+            "returnType.type"
+        ],
+        [
+            "returnType",
+            "PropertyAccessExpression",
+            "returnType.type"
+        ],
+        [
+            "returnType",
+            "PropertyAccessExpression",
+            "returnType.reportFallback"
+        ],
+        [
+            "failed",
+            "ReturnStatement",
+            "return failed;"
+        ],
+        [
+            "failed",
+            "ReturnStatement",
+            "return failed;"
+        ]
+    ]
+}
