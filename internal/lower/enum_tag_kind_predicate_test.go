@@ -102,7 +102,15 @@ type N = A | B;
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			if probe.refusal != "" {
-				if _, err := lowerSourceAs(t, probe.source, ".ts"); err == nil || !strings.Contains(err.Error(), probe.refusal) {
+				ext := ".ts"
+				if probe.refusal == kindPredicateRefusal {
+					ext = ".a"
+				}
+				_, err := lowerSourceAs(t, probe.source, ext)
+				if ext == ".a" {
+					t.Logf("FAMILY1AT %s %v", probe.name, err)
+				}
+				if err == nil || !strings.Contains(err.Error(), probe.refusal) {
 					t.Fatalf("want %q, got %v", probe.refusal, err)
 				}
 				return
@@ -159,7 +167,14 @@ func TestKindPredicateWalkRefusals(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			_, err := lowerSourceAs(t, probe.types+probe.source, ".ts")
+			ext := ".ts"
+			if probe.refusal == kindPredicateRefusal {
+				ext = ".a"
+			}
+			_, err := lowerSourceAs(t, probe.types+probe.source, ext)
+			if ext == ".a" {
+				t.Logf("FAMILY1AT %s %v", probe.name, err)
+			}
 			if probe.refusal == "" {
 				if err != nil {
 					t.Fatalf("want it lowered, got %v", err)

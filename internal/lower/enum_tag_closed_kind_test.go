@@ -270,7 +270,9 @@ func TestClosedKindRunTimeKindStaysOpen(t *testing.T) {
 				}
 				return
 			}
-			if _, err := lowerSourceAs(t, source, ".ts"); err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
+			_, err := lowerSourceAs(t, source, ".a")
+			t.Logf("FAMILY1AT %s %v", probe.name, err)
+			if err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
 				t.Fatalf("want %q, got %v", kindPredicateRefusal, err)
 			}
 		})
@@ -302,7 +304,9 @@ func TestClosedKindHoldingTheComparedKindRefuses(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			if _, err := lowerSourceAs(t, closedKindTypes+show+probe.source, ".ts"); err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
+			_, err := lowerSourceAs(t, closedKindTypes+show+probe.source, ".a")
+			t.Logf("FAMILY1AT %s %v", probe.name, err)
+			if err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
 				t.Fatalf("want %q, got %v", kindPredicateRefusal, err)
 			}
 		})

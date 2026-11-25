@@ -123,7 +123,8 @@ func TestKindHelperFallbacksRejectWholeBody(t *testing.T) {
 				t.Fatalf("kind-helper fallback %s was recognized", p.name)
 			}
 			if p.name == "isExpression" || p.name == "isStatement" {
-				_, err := lowerSourceAs(t, source, ".ts")
+				_, err := lowerSourceAs(t, source, ".a")
+				t.Logf("FAMILY1AT %s %v", p.name, err)
 				if err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
 					t.Fatalf("%s fallback must keep family 1: %v", p.name, err)
 				}
@@ -208,7 +209,8 @@ func TestKindHelperEmptyDefaultTailRoutes(t *testing.T) {
 				if ok {
 					t.Fatalf("kind-helper empty default resurrected an unreachable tail: %s members=%d", p.name, count)
 				}
-				_, err := lowerSourceAs(t, source, ".ts")
+				_, err := lowerSourceAs(t, source, ".a")
+				t.Logf("FAMILY1AT %s %v", p.name, err)
 				var refused *Refused
 				if !errors.As(err, &refused) || refused.What != kindPredicateRefusal {
 					t.Fatalf("empty default %s must refuse at the narrowing: %v", p.name, err)

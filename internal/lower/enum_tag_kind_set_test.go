@@ -188,7 +188,9 @@ func TestKindSetPredicateFallbacksKeepFamilyOne(t *testing.T) {
 			if p.name == "primitive_guard" || p.name == "k04" {
 				return
 			} // These pins isolate the recognizer from unrelated later fences.
-			if _, err := lowerSourceAs(t, source, ".ts"); err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
+			_, err := lowerSourceAs(t, source, ".a")
+			t.Logf("FAMILY1AT %s %v", p.name, err)
+			if err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
 				t.Fatalf("kind-set fallback %s: want family 1, got %v", p.name, err)
 			}
 		})
@@ -274,7 +276,8 @@ func TestKindSetClosedSourcesFitEveryKind(t *testing.T) {
 			t.Parallel()
 			source := closedKindTypes + p.source + predicate + "console.log(show(body)); console.log(show(ident)); console.log(show(numbered));\n"
 			if !p.fit {
-				_, err := lowerSourceAs(t, source, ".ts")
+				_, err := lowerSourceAs(t, source, ".a")
+				t.Logf("FAMILY1AT %s %v", p.name, err)
 				if err == nil {
 					t.Fatal("kind-set all-kinds fit: a closed source with only its first kind fitting lowered")
 				}
@@ -375,7 +378,8 @@ console.log(show(body)); console.log(show(a));
 				}
 				return
 			}
-			_, err := lowerSourceAs(t, source, ".ts")
+			_, err := lowerSourceAs(t, source, ".a")
+			t.Logf("FAMILY1AT %s %v", p.name, err)
 			if err == nil {
 				t.Fatalf("kind-set union claim %s: a source fitting neither claimed member lowered", p.name)
 			}

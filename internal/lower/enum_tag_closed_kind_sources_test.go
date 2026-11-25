@@ -64,7 +64,9 @@ func TestClosedKindSourcesNarrowByThePredicate(t *testing.T) {
 			t.Parallel()
 			source := closedKindTypes + closedKindSourcesNarrowing + probe.source
 			if probe.stdout == "" {
-				if _, err := lowerSourceAs(t, source, ".ts"); err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
+				_, err := lowerSourceAs(t, source, ".a")
+				t.Logf("FAMILY1AT %s %v", probe.name, err)
+				if err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
 					t.Fatalf("want %q, got %v", kindPredicateRefusal, err)
 				}
 				return

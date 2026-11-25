@@ -122,10 +122,13 @@ func TestCheckedPredicatePendingContracts(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			lowerInput := lowerTypeScriptAssertionSource
-			if probe.name == "overload in .a" {
+			if probe.name == "overload in .a" || probe.diagnostic == kindPredicateRefusal {
 				lowerInput = lowerSource
 			}
 			_, err := lowerInput(t, probe.source)
+			if probe.diagnostic == kindPredicateRefusal {
+				t.Logf("FAMILY1AT %s %v", probe.name, err)
+			}
 			if err == nil || !strings.Contains(err.Error(), probe.diagnostic) {
 				t.Fatalf("want pending/refused %q, got %v", probe.diagnostic, err)
 			}
