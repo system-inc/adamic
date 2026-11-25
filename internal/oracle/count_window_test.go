@@ -43,7 +43,7 @@ function measured(): void {
   }
 }
 measured();
-console.log(sum);
+console.log(String(sum));
 `, 5, countWindowUnpinned, 0},
 	// Numbers held in globals, a number loop counter, and arithmetic: nothing is made, let go of or grown.
 	{"arithmetic", `let total = 0;
@@ -54,7 +54,7 @@ function measured(): void {
   }
 }
 measured();
-console.log(total);
+console.log(String(total));
 `, 0, 0, 0},
 	// [] is adamic_array_make(0, ...), with no storage (emit_expressions.go's ArrayLiteral). push grows a
 	// full array to 4 from nothing and doubles it after (array.c): the first push's realloc is the buffer's
@@ -69,7 +69,7 @@ function measured(): void {
   pushed = values.length;
 }
 measured();
-console.log(pushed);
+console.log(String(pushed));
 `, countWindowUnpinned, countWindowUnpinned, 3},
 	// new Map() is adamic_map_new, with no table (map.c). The first set rebuilds into 8 entries from
 	// nothing, the table's first allocation and not a growth. A set into a full table whose entries are all
@@ -84,7 +84,7 @@ function measured(): void {
   size = squares.size;
 }
 measured();
-console.log(size);
+console.log(String(size));
 `, countWindowUnpinned, countWindowUnpinned, 2},
 }
 
