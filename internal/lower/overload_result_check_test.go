@@ -273,8 +273,17 @@ func TestOverloadNarrowAsAValueStops(t *testing.T) {
 		{"bind", "const bound = one.bind(undefined);\nconsole.log(String(bound(0)));\n", "bind without one declared function signature"},
 		// A nested set passed into a narrower function type: h(0) resolves to h's own signature, never
 		// the overload, so nothing would check the 2 that lands in a slot typed 1 (Compiler's must on
-		// 19ab1c58). Mutant: nestedReference without overloadSetValueStop, and this lowers.
+		// 19ab1c58). Mutant: nestedReference without overloadSetValueStop, and this lowers. Overload 1
+		// is served only per call, by narrowOverload's result check, so lever 1 on #ytagqs5, restated as
+		// served outright, must never lift the value stop for it: probe J-y7gs7v1 dropped the stop and
+		// this printed 2 on Node and natively. OverloadValueStop's mutant turns it red, lowered.
 		{"nested into a narrower slot", "function apply(h: (x: number) => 1): 1 { return h(0); }\nfunction host(): void {\n    function f(x: number): 1;\n    function f(x: number): number;\n    function f(x: number): number { return x + 2; }\n    const one: 1 = apply(f);\n    console.log(String(one));\n}\nhost();\n", "an overloaded function as a value"},
+		// The same set at module level, held in a const of the narrower type: g(0) resolves to g's own
+		// signature, so the 2 would land in a slot typed 1 unchecked (probe J-y7gs7v1 printed false 2 on
+		// Node and both natives with the stop dropped). Adamic's ruling on #ytagqs5 keeps it refused,
+		// word for word, so lever 1, restated as served outright, never lifts the value stop for an
+		// overload served per call. OverloadValueStop's mutant turns it red, lowered.
+		{"module const into a narrower slot", "function f(x: number): 1;\nfunction f(x: number): number;\nfunction f(x: number): number { return x + 2; }\nconst g: (x: number) => 1 = f;\nconst held: 1 = g(0);\nconsole.log(String(held === 1) + \" \" + String(held));\n", "main.ts:10:29: stage 0 can't lower an overloaded function as a value yet"},
 		{"nested in a shorthand", "function apply(h: (x: number) => 1): 1 { return h(0); }\nfunction host(): void {\n    function f(x: number): 1;\n    function f(x: number): number;\n    function f(x: number): number { return x + 2; }\n    const o = { f };\n    const one: 1 = apply(o.f);\n    console.log(String(one));\n}\nhost();\n", "an overloaded function as a value"},
 		{"nested in a const", "function host(): void {\n    function f(x: number): 1;\n    function f(x: string): number;\n    function f(x: number | string): number { return 1; }\n    const g = f;\n    console.log(String(g(0)));\n}\nhost();\n", "an overloaded function as a value"},
 	} {
