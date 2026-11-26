@@ -1,0 +1,34 @@
+# #r1ef873 proof (Performance): the open-receiver guard in the projection. Source after environment.sh,
+# cloud/sandboxed-job.sh, sandboxed_npm stage3/api and sandboxed_products internal/lower. Never merged.
+set -u
+fail=0
+P=./internal/lower
+pins='^(TestShapeFlowReceiverCycleFinishes|TestShapeFlowCastRecursionFinishes)$'
+echo "on $(hostname), $(nproc) cores"
+out=$(gofmt -l internal/lower); [ -z "$out" ] && echo "PASS gofmt" || { echo "FAIL gofmt: $out"; fail=1; }
+go vet $P > "$TMPDIR/vet.log" 2>&1 && echo "PASS vet" || { echo "FAIL vet"; head -20 "$TMPDIR/vet.log"; fail=1; }
+echo "== pins at the head"
+go test -count=1 -v -run "$pins" $P > "$TMPDIR/pins.log" 2>&1; r=$?
+grep -E -- '^--- (PASS|FAIL)|_test.go:[0-9]+:' "$TMPDIR/pins.log" | cut -c1-300
+[ $r = 0 ] && echo "PASS pins" || { echo "FAIL pins"; fail=1; }
+cp internal/lower/shape_flow.go "$TMPDIR/shape_flow.go.keep"
+cp internal/lower/shape_flow_receiver_cycle_test.go "$TMPDIR/cycle_test.go.keep"
+echo "== mutant: the open-receiver guard dropped"
+sed -i 's/if graph.projectionOpen\[receiver\] {/if false \&\& graph.projectionOpen[receiver] {/' internal/lower/shape_flow.go
+if cmp -s internal/lower/shape_flow.go "$TMPDIR/shape_flow.go.keep"; then echo "FAIL mutant not applied"; fail=1; else
+	go vet $P > "$TMPDIR/mvet.log" 2>&1 && echo "compiles" || { echo "FAIL mutant doesn't compile"; head "$TMPDIR/mvet.log"; fail=1; }
+	go test -count=1 -v -run '^TestShapeFlowReceiverCycleFinishes$' $P > "$TMPDIR/mutant.log" 2>&1
+	grep -E -- '^--- (PASS|FAIL)|_test.go:[0-9]+:' "$TMPDIR/mutant.log" | cut -c1-300
+	grep -qE -- '^--- FAIL: TestShapeFlowReceiverCycleFinishes' "$TMPDIR/mutant.log" && echo "PASS mutant red" || { echo "FAIL mutant survived"; fail=1; }
+	echo "== the mutant's whole count, bound lifted, 10 minutes at most"
+	sed -i 's/^const receiverCycleFrameBound = .*/const receiverCycleFrameBound = 1 << 40/' internal/lower/shape_flow_receiver_cycle_test.go
+	timeout 10m go test -count=1 -v -run '^TestShapeFlowReceiverCycleFinishes$' $P > "$TMPDIR/count.log" 2>&1; echo "count exit=$?"
+	grep -E 'opened [0-9]+|^--- ' "$TMPDIR/count.log" | cut -c1-300
+fi
+cp "$TMPDIR/shape_flow.go.keep" internal/lower/shape_flow.go
+cp "$TMPDIR/cycle_test.go.keep" internal/lower/shape_flow_receiver_cycle_test.go
+echo "== internal/lower whole"
+go test -count=1 -timeout 100m $P > "$TMPDIR/whole.log" 2>&1; r=$?
+grep -E -- '^(ok|FAIL)|--- FAIL|panic:' "$TMPDIR/whole.log" | cut -c1-300 | head -20
+[ $r = 0 ] && echo "PASS whole" || { echo "FAIL whole"; grep -E '_test.go:[0-9]+:' "$TMPDIR/whole.log" | cut -c1-300 | head -20; fail=1; }
+[ $fail = 0 ] && echo "VERDICT PASS" || { echo "VERDICT FAIL"; false; }
