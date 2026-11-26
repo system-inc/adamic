@@ -1,0 +1,14 @@
+// a7 (#snypn8c, c1): a number && left under ! and as a conditional's test, each of which reads only the &&'s truth,
+// so the left's 0 and NaN reach no slot.
+enum Ternary { False = 0, Unknown = 1, Maybe = 3, True = -1 }
+function compare(a: number, b: number): Ternary {
+	return a === b ? Ternary.True : a < b ? Ternary.Maybe : Ternary.False;
+}
+enum Mode { None = 0, Strict = 1 }
+function unrelated(mode: Mode, a: number, b: number): boolean {
+	return !(mode & Mode.Strict && compare(a, b));
+}
+function tested(mode: Mode, a: number, b: number): string {
+	return mode & Mode.Strict && compare(a, b) ? "related" : "unrelated";
+}
+console.log(String(unrelated(Mode.None, 1, 1)) + ", " + String(unrelated(Mode.Strict, 1, 1)) + ", " + String(unrelated(Mode.Strict, 2, 1)) + ", " + tested(Mode.None, 1, 2) + ", " + tested(Mode.Strict, 1, 2) + ", " + tested(Mode.Strict, 2, 1));

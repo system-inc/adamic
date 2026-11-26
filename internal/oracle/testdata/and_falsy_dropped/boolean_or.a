@@ -1,0 +1,12 @@
+// a1 (#snypn8c, c1): a boolean && left under ||, as compareSignaturesRelated's `!strictVariance &&
+// compareTypes(...) || compareTypes(...)` (checker.ts:21987): the || drops a false && result and evaluates its
+// right, so only the Ternary the && right returns reaches the result.
+enum Ternary { False = 0, Unknown = 1, Maybe = 3, True = -1 }
+function compare(a: number, b: number): Ternary {
+	return a === b ? Ternary.True : a < b ? Ternary.Maybe : Ternary.False;
+}
+function related(strict: boolean, a: number, b: number): Ternary {
+	const result = !strict && compare(a, b) || compare(b, a);
+	return result;
+}
+console.log(String(related(false, 1, 1)) + ", " + String(related(true, 1, 2)) + ", " + String(related(false, 2, 1)) + ", " + String(related(false, 1, 2)));

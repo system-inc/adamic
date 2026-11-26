@@ -1,0 +1,11 @@
+// s2 (#snypn8c, c1): an && on an ||'s right, whose result the || hands on whole, falsy or not.
+enum Ternary { False = 0, Unknown = 1, Maybe = 3, True = -1 }
+function compare(a: number, b: number): Ternary {
+	return a === b ? Ternary.True : a < b ? Ternary.Maybe : Ternary.False;
+}
+enum Mode { None = 0, BivariantCallback = 1 }
+function returns(mode: Mode, a: number, b: number): Ternary {
+	const result = compare(b, a) || (mode & Mode.BivariantCallback && compare(a, b));
+	return result;
+}
+console.log(String(returns(Mode.None, 2, 1)) + ", " + String(returns(Mode.BivariantCallback, 2, 1)));

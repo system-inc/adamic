@@ -923,8 +923,12 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 			return nil
 		}
 		own = l.checker.GetTypeAtLocation(node)
-		if andLeftOperand(node) {
-			// Only the left's falsy arms reach an &&'s result: one that can only be an object never does.
+		if and := andOfLeft(node); and != nil {
+			// Only the left's falsy arms reach an &&'s result, and none reaches a slot when the &&'s consumer
+			// drops a falsy result (andFalsyDropped, the one helper both walks ask).
+			if andFalsyDropped(and) {
+				return nil
+			}
 			if own = l.falsyArms(own); own == nil {
 				return nil
 			}
@@ -1847,21 +1851,25 @@ func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual 
 			return nil
 		case ast.KindAmpersandAmpersandToken:
 			// Only the right is the value, and the left reaches the result only by its falsy arms
-			// (andLeftOperand, falsyArms), so the left is judged by those, and not at all when it has none,
-			// and the right as itself, as || judges each operand: a fresh one keeps its freshness (#k8ed1f2,
-			// applying #7n03qzg). moduleNameResolver.ts's `resolved && { ... }` is a literal made right
-			// there, or undefined. It's consulted only where today's walk of the whole value refuses: judging each
-			// operand on its own reaches operands that walk never judged (an enum literal, a field read), so an
-			// && the walk lets through is let through as before.
+			// (andOfLeft, falsyArms), so the left is judged by those, and not at all when it has none or when
+			// the &&'s consumer drops a falsy result (andFalsyDropped, the one helper both walks ask: the left of
+			// an ||, whose own operands are judged here one by one, a ! or a condition), and the right as itself,
+			// as || judges each operand: a fresh one keeps its freshness (#k8ed1f2, applying #7n03qzg).
+			// moduleNameResolver.ts's `resolved && { ... }` is a literal made right there, or undefined. It's
+			// consulted only where today's walk of the whole value refuses: judging each operand on its own
+			// reaches operands that walk never judged (an enum literal, a field read), so an && the walk lets
+			// through is let through as before.
 			if l.widened(own, contextual, map[[2]*checker.Type]bool{}) == nil {
 				return nil
 			}
-			if falsy := l.falsyArms(l.checker.GetTypeAtLocation(binary.Left)); falsy != nil {
-				if found := l.freshOrWidened(binary.Left, falsy, contextual); found != nil {
-					if found.viewed == nil {
-						found.viewed = falsy
+			if !andFalsyDropped(node) {
+				if falsy := l.falsyArms(l.checker.GetTypeAtLocation(binary.Left)); falsy != nil {
+					if found := l.freshOrWidened(binary.Left, falsy, contextual); found != nil {
+						if found.viewed == nil {
+							found.viewed = falsy
+						}
+						return found
 					}
-					return found
 				}
 			}
 			if found := l.freshOrWidened(binary.Right, l.checker.GetTypeAtLocation(binary.Right), contextual); found != nil {
