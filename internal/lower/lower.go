@@ -527,6 +527,9 @@ type lowering struct {
 	firstLinkMain              map[*ast.Node]firstLinkMainRange
 	firstLinkRewriteSkipped    bool
 	firstLinkJudgmentAbandoned bool
+	// firstLinkHelperUnits is the unit whose lowering made each helper, a function with no declaration, by its
+	// index (firstLinkNoteHelpers), which a trap stubs once every unit owning it is trapped (first_link_helpers.go).
+	firstLinkHelperUnits map[int]*ast.Node
 
 	// flowDead is every function a flow graph built during lowering took to never run (flowGraph,
 	// iterableViewFlowGraph), which checkFlowLiveness holds to that once lowering is done.
