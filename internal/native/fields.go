@@ -7,8 +7,11 @@ import (
 )
 
 // uniformFieldSlot skips shape lookup when every layout containing name puts it in the same slot.
-// The checker has already proved the field exists; unlike a class tag, that proof also holds for
-// structural literals and generic instantiations. Conflicting layouts keep the existing checks.
+// Unlike a class tag, that holds for structural literals and generic instantiations too. It trusts
+// the checker that the field exists, a proof a narrowing kept across a call can leave stale (#8nj5pn4),
+// so every read that loads through the slot, and every write, takes it behind uniformFieldGuard's shape
+// check (emit_objects.go).
+// Conflicting layouts keep the existing checks.
 func (e *emitter) uniformFieldSlot(object, name string) string {
 	if !cName.MatchString(object) {
 		return ""
