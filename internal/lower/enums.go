@@ -851,9 +851,12 @@ func (l *lowering) enumTagCheckedViews(node *ast.Node, declared, observed *check
 		key := enumTagCheckedViewKey{declared, member}
 		err, done := l.enumTagCheckedViewsDone[key]
 		if !done {
+			// view appends its own entry first and may append nested contracts' after it, so the entry to
+			// mark is the one at the length before the call, as relativeView marks it.
+			views := len(l.viewSources)
 			_, err = l.view(node, nil, declared, member)
 			if err == nil {
-				l.viewSources[len(l.viewSources)-1].narrows = true
+				l.viewSources[views].narrows = true
 			}
 			l.enumTagCheckedViewsDone[key] = err
 		}
