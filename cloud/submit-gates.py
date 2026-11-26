@@ -61,7 +61,7 @@ import sys
 
 
 MapPath = "cloud/gates/diff-to-gates.json"
-MapVersion = 6
+MapVersion = 7
 ShaPattern = re.compile(r"[0-9a-f]{40}\Z")
 
 # The map's definitions this script reads, word for word. A changed definition is a changed rule, so the script refuses
@@ -88,7 +88,7 @@ DefinitionsRead = {
                   "to the union of each head's own added sites, and any unit in two heads' cleared lists or holding an "
                   "extra site censused for those heads alone. If lower moves during the combined job it is re-asked "
                   "once, then the set submits on that green",
-    # Only the accepter can read the operands and types of a newly stopping lowering-phase unit in unit-census-pair.
+    # Only the accepter can read the operands and types of a newly stopping lowering-phase unit in a unit census gate.
     "exposure": "a lowering-phase stop the head's census newly lists is an exposure when the adapter neither wrote "
                 "nor changed the expression's operands or their types, only moved them; otherwise it's new",
 }
@@ -99,7 +99,7 @@ FreshDirectories = ("internal/lower", "internal/ir", "internal/flow", "internal/
 
 # Gates compared against a base: their recipe reads HEAD^ and ends on its verdict line naming it, which fresh holds to
 # main's tip.
-PairedGates = ("admission-delta", "unit-census-pair")
+PairedGates = ("admission-delta", "unit-census-entry", "unit-census-directory")
 # Outcomes that are no verdict on the head: Loom's or the machine's failure, an end someone asked for, a job replaced,
 # and a job not ended yet. Every other outcome is a verdict, and only Exit 0 is green.
 NotVerdicts = ("Infrastructure", "Cancelled", "Superseded", None)
@@ -136,8 +136,8 @@ ByHandRows = {
                                "its tests read its own -after snapshot, never the final applied tree or a constant "
                                "digest: whether it is a node is its receiver's type, which the script can't read",
     "gates-changed": "the change to the judging code the head's own jobs run (a recipe, steps.sh, units-compare.py, the "
-                     "map, sandboxed-job.sh, this script, or the census tooling unit-census-pair.sh runs), read whole, "
-                     "since a green of them is the head judging itself",
+                     "map, sandboxed-job.sh, this script, or the census tooling the unit census recipes run), read "
+                     "whole, since a green of them is the head judging itself",
 }
 # The mutants-red recipe names its mutant on a line the script writes into the command it asks, so each mutant's
 # command, and its sha256, is its own. The recipe holds the placeholder once.
@@ -151,16 +151,17 @@ MutantRunCell = re.compile(r"[^`\n]+\Z")
 # The judging code: what the recipes source from the tree they run in, and this script. A head that changes any of it
 # owes gates-changed by hand, since a job at the head runs the head's copy whatever recipe it was asked with.
 JudgePaths = (
-    "cloud/gates/",  # the map, every recipe, steps.sh and units-compare.py, which unit-census-pair.sh sources and runs
+    "cloud/gates/",  # the map, every recipe, steps.sh and units-compare.py, which the unit census recipes run
     "cloud/submit-gates.py",
-    "cloud/sandboxed-job.sh",  # every recipe sources it; unit-census-pair.sh calls its sandboxed_npm and sandboxed_typescript_source
+    "cloud/sandboxed-job.sh",  # every recipe sources it; the unit census recipes call its sandboxed_npm and
+                               # sandboxed_typescript_source
     # The census tooling: a head that changes what the census measures changes the judge's evidence (Seats, round 6)
     "stage3/census/",  # make_overlay.py and the go run tools it calls (statecopy, statementrewrite, refusalrewrite,
-                       # importclean), and ./stage3/census/latent/tool, which unit-census-pair.sh builds and runs
-    "stage3/apply.sh",  # unit-census-pair.sh runs it on each side
+                       # importclean), and ./stage3/census/latent/tool, which the unit census recipes build and run
+    "stage3/apply.sh",  # the unit census recipes run it on each side
     "stage3/apply.py",  # apply.sh execs it
     "stage3/caches.py",  # apply.py imports it
-    "stage3/meter/entry_overlay.py",  # unit-census-pair.sh runs it for the entry pass's overlay
+    "stage3/meter/entry_overlay.py",  # unit-census-entry.sh runs it for the entry pass's overlay
     "stage3/api/package.json",  # sandboxed_npm stage3/api runs npm ci there, which installs from these two
     "stage3/api/package-lock.json",
     # stage3/apply.py also runs stage3/adapt/00-setup/adapt.cjs and every adapter, but those are what an adaptation
@@ -875,12 +876,13 @@ def recipe_hash(text):
 
 
 def ask_flags(text):
-    """The flags a recipe's `# ask:` line adds to its ask (a machine size, a ceiling)."""
+    """The flags a recipe's `# ask:` line adds to its ask (a machine size, a ceiling, what its machine must hold)."""
     found = re.search(r"^# ask: (.*)$", text, re.MULTILINE)
     flags = shlex.split(found.group(1)) if found else []
     for index in range(0, len(flags), 2):
-        if flags[index] not in ("--size", "--ceiling", "--about") or index + 1 >= len(flags):
-            raise Unreadable(f"a recipe's ask line {found.group(0)!r} holds {flags[index]!r}; it takes --size, --ceiling and --about")
+        if flags[index] not in ("--size", "--ceiling", "--about", "--needs") or index + 1 >= len(flags):
+            raise Unreadable(f"a recipe's ask line {found.group(0)!r} holds {flags[index]!r}; it takes --size, --ceiling, "
+                             "--about and --needs")
     return flags
 
 
