@@ -1,0 +1,1 @@
+- **JavaScript-changing, tail pass family 90 (#bbssdcy, Adamic accepts):** 99-seats-tail24-90-guarded-symlink-pair guards the optional fixed tuple after the file-cache write. The existing directory-cache condition and writes retain their bytes. Temporary under docs/rulings.md:410.
