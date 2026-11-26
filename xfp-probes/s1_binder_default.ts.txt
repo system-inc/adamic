@@ -40,4 +40,4 @@ function moduleState(children: number[]): ModuleInstanceState {
 	return state;
 }
 console.log("before");
-console.log(moduleState([0, 7]));
+console.log("" + moduleState([0, 7]));

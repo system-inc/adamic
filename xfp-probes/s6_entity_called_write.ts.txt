@@ -1,0 +1,65 @@
+// #xfpsqtn site 6 with the predicate calling a function that writes .name of a fresh node, utilities.ts:2404: name.name in the else of if (isIdentifier(name.name) || isPrivateIdentifier(name.name)), a type-predicate narrowing of a property.
+enum SyntaxKind {
+	Identifier,
+	PrivateIdentifier,
+	PropertyAccessExpression,
+	ThisKeyword,
+}
+interface Identifier {
+	readonly kind: SyntaxKind.Identifier;
+	readonly text: string;
+}
+interface PrivateIdentifier {
+	readonly kind: SyntaxKind.PrivateIdentifier;
+	readonly text: string;
+}
+type MemberName = Identifier | PrivateIdentifier;
+interface ThisExpression {
+	readonly kind: SyntaxKind.ThisKeyword;
+}
+interface PropertyAccessExpression {
+	readonly kind: SyntaxKind.PropertyAccessExpression;
+	readonly expression: EntityName;
+	readonly name: MemberName;
+}
+type EntityName = Identifier | PrivateIdentifier | PropertyAccessExpression | ThisExpression;
+function assertNever(value: never): never {
+	throw new Error("Illegal value: " + value);
+}
+interface Scratch {
+	name: MemberName;
+}
+function touch(): number {
+	const scratch: Scratch = { name: { kind: SyntaxKind.Identifier, text: "s" } };
+	scratch.name = { kind: SyntaxKind.PrivateIdentifier, text: "#s" };
+	return scratch.name.kind;
+}
+function isIdentifier(node: MemberName): node is Identifier {
+	if (touch() < 0) return false;
+	return node.kind === SyntaxKind.Identifier;
+}
+function isPrivateIdentifier(node: MemberName): node is PrivateIdentifier {
+	return node.kind === SyntaxKind.PrivateIdentifier;
+}
+function entityNameToString(name: EntityName): string {
+	switch (name.kind) {
+		case SyntaxKind.ThisKeyword:
+			return "this";
+		case SyntaxKind.PrivateIdentifier:
+		case SyntaxKind.Identifier:
+			return name.text;
+		case SyntaxKind.PropertyAccessExpression:
+			if (isIdentifier(name.name) || isPrivateIdentifier(name.name)) {
+				return entityNameToString(name.expression) + "." + entityNameToString(name.name);
+			}
+			else {
+				return assertNever(name.name);
+			}
+	}
+}
+const self: ThisExpression = { kind: SyntaxKind.ThisKeyword };
+const field: Identifier = { kind: SyntaxKind.Identifier, text: "field" };
+const secret: PrivateIdentifier = { kind: SyntaxKind.PrivateIdentifier, text: "#secret" };
+const inner: PropertyAccessExpression = { kind: SyntaxKind.PropertyAccessExpression, expression: self, name: field };
+const outer: PropertyAccessExpression = { kind: SyntaxKind.PropertyAccessExpression, expression: inner, name: secret };
+console.log(entityNameToString(outer) + " " + entityNameToString(field));

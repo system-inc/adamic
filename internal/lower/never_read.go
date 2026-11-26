@@ -2,6 +2,7 @@ package lower
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 	"strings"
 
@@ -390,9 +391,15 @@ func (l *lowering) enumSwitchScrutineeGap(scrutinee *ast.Node) error {
 		return nil
 	}
 	stop := l.notYet(node, "a switch's unmatched case on a value the checker narrowed across code that may write it")
+	defer func() { xfpTracing = false }()
+	if os.Getenv("XFP_LIFT") == "1" {
+		stop = nil
+	}
 	declared := l.enumStoredType(node)
 	data := node.FlowNodeData()
 	if declared == nil || data == nil || data.FlowNode == nil {
+		xfpTracing = true
+		l.xfp("never_read.go:369 scrutinee gap: declared or flow nil", node, fmt.Sprintf("declaredNil=%v dataNil=%v storedType=%s", declared == nil, data == nil || data.FlowNode == nil, xfpReceiverType(l, node)))
 		return stop
 	}
 	if l.checker.IsTypeAssignableTo(declared, l.checker.GetTypeAtLocation(node)) {
@@ -405,6 +412,8 @@ func (l *lowering) enumSwitchScrutineeGap(scrutinee *ast.Node) error {
 	}
 	making := l.neverMakingAlong(node, declared, data.FlowNode, 0, map[*ast.FlowNode]*neverMaking{})
 	if making == nil || making.placeholder || l.neverPlaceWrittenBetween(node, making.earliest.from, making.earliest.observed) {
+		xfpTracing = true
+		l.xfp("never_read.go:381 scrutinee gap: making", node, fmt.Sprintf("makingNil=%v", making == nil))
 		return stop
 	}
 	return nil

@@ -19,3 +19,10 @@ func (l *lowering) xfp(tag string, node *ast.Node, detail string) {
 	}
 	fmt.Fprintf(os.Stderr, "XFP %s at %s: %q %s\n", tag, l.program.Where(node), strings.Join(strings.Fields(sourceExpression(node)), " "), detail)
 }
+
+func xfpReceiverType(l *lowering, node *ast.Node) string {
+	if node.Kind != ast.KindElementAccessExpression {
+		return ""
+	}
+	return l.checker.TypeToString(l.checker.GetTypeAtLocation(node.Expression()))
+}

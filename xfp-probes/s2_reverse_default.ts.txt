@@ -21,4 +21,4 @@ function reverseAccessKind(a: AccessKind): AccessKind {
 }
 const raw: number = 7;
 console.log("before");
-console.log(reverseAccessKind(raw as AccessKind));
+console.log("" + reverseAccessKind(raw as AccessKind));
