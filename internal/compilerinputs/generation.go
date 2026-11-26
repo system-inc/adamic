@@ -14,12 +14,12 @@ var admissionRoots = []string{"./internal/load", "./internal/lower"}
 // Generate derives each root set independently. The projections retain their
 // existing directory coverage, but all use orderedSet's lexical order. No list of
 // linked packages is maintained here: prefixes only coarsen paths actually derived.
-func Generate(repositoryRoot string) (table, admissionFile []byte, err error) {
+func Generate(repositoryRoot string) (table []byte, err error) {
 	var sets []inputSet
 	for _, roots := range [][]string{loweringRoots, printerRoots, admissionRoots} {
 		inputs, err := Derive(repositoryRoot, roots)
 		if err != nil {
-			return nil, nil, err
+			return nil, err
 		}
 		sets = append(sets, inputSet{orderedSet(roots), inputs})
 	}
@@ -56,9 +56,9 @@ func Generate(repositoryRoot string) (table, admissionFile []byte, err error) {
 	}
 	table, err = format.Source(source.Bytes())
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
-	return table, admissionText(admission), nil
+	return table, nil
 }
 
 // project coarsens named directory prefixes and removes entries already covered
