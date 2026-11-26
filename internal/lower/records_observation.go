@@ -173,7 +173,11 @@ func (l *lowering) recordScalarComparison(node *ast.Node) (ir.Expression, bool, 
 	if proven.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike) == 0 || l.includesUndefined(proven) {
 		return nil, false, nil
 	}
-	r, k, element, err := l.recordAccess(access, recordKeyUnchecked)
+	if _, element := l.recordOptionalChain(ast.SkipParentheses(access)); element != nil {
+		// The ordinary comparison must receive the result of the whole chain.
+		return nil, false, nil
+	}
+	r, k, element, err := l.recordAccess(access, recordKeyUnchecked, nil)
 	if err != nil {
 		return nil, true, err
 	}

@@ -257,7 +257,7 @@ func recordBoxedKeyType(proven *checker.Type) bool {
 	return true
 }
 
-func (l *lowering) recordAccess(node *ast.Node, mode recordKeyMode) (ir.Expression, ir.Expression, ir.Type, error) {
+func (l *lowering) recordAccess(node *ast.Node, mode recordKeyMode, optionalElement *checker.Type) (ir.Expression, ir.Expression, ir.Type, error) {
 	read := mode != recordKeyUnchecked
 	n := ast.SkipParentheses(node)
 	var receiver, keyNode *ast.Node
@@ -270,17 +270,27 @@ func (l *lowering) recordAccess(node *ast.Node, mode recordKeyMode) (ir.Expressi
 		receiver, keyNode = a.Expression, a.ArgumentExpression
 	} else {
 		a := n.AsPropertyAccessExpression()
-		if a.QuestionDotToken != nil {
+		if a.QuestionDotToken != nil && optionalElement == nil {
 			return nil, nil, 0, l.notYet(node, "optional record property access")
 		}
 		receiver = a.Expression
 		name = a.Name().Text()
 	}
-	of, err := l.recordSlot(receiver)
-	if element := l.recordUnionElement(l.checker.GetTypeAtLocation(receiver), name); err != nil && element != nil && read {
-		// Only recordReadTarget's reads reach here with a union; writes and deletes ask recordTarget.
-		of, _ = l.recordStorageType(element)
-		err = nil
+	var of ir.Type
+	var err error
+	if optionalElement != nil {
+		var known bool
+		of, known = l.recordStorageType(optionalElement)
+		if !known {
+			return nil, nil, 0, l.notYet(receiver, "a record value of type "+l.checker.TypeToString(optionalElement))
+		}
+	} else {
+		of, err = l.recordSlot(receiver)
+		if element := l.recordUnionElement(l.checker.GetTypeAtLocation(receiver), name); err != nil && element != nil && read {
+			// Only recordReadTarget's reads reach here with a union; writes and deletes ask recordTarget.
+			of, _ = l.recordStorageType(element)
+			err = nil
+		}
 	}
 	if err != nil {
 		return nil, nil, 0, err
@@ -300,7 +310,110 @@ func (l *lowering) recordAccess(node *ast.Node, mode recordKeyMode) (ir.Expressi
 	}
 	return r, key, of, err
 }
+func (l *lowering) recordReadValue(node *ast.Node, read ir.Expression, here *checker.Type) (ir.Expression, error) {
+	read, err := l.recordReadType(node, read, here)
+	if err != nil {
+		return nil, err
+	}
+	if !l.includesUndefined(here) && !recordTagObservation(node) {
+		// Under a ?. a reference's Defined would throw where Node reads undefined, and a catch
+		// would take that throw, a branch Node never takes (#70kdt66); a scalar's Unwrap would
+		// stop where Node reads undefined. A call TypeScript's narrowing doesn't see can delete
+		// the key, so the read can be missing here. Until the ?. parent's own test reads it, it
+		// stops. A union carries its own undefined to that test, with neither check.
+		if read.Type() != ir.Union && optionalChainOperand(node) {
+			return nil, l.notYet(node, "a record's value narrowed present and read under ?. (a call since the narrowing can delete its key, and the ?. would see it missing only after a TypeError)")
+		}
+		if narrowed, known := l.representation(here); known && read.Type().IsMaybe() && !narrowed.IsMaybe() {
+			read = ir.Unwrap{Value: read}
+		}
+		if read.Type().IsReference() && read.Type() != ir.Union {
+			message := "undefined where the checker narrowed it away: a call since the narrowing put it back"
+			if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == node {
+				message = "TypeError: Cannot read properties of undefined (reading '" + parent.Name().Text() + "')"
+			}
+			read = ir.Defined{Value: read, Message: message}
+		}
+	}
+	return read, nil
+}
+
+// recordOptionalChain recognizes a named read whose own ?. tests its receiver.
+// In a continuing chain the shared guard hides that token from questionDot.
+func (l *lowering) recordOptionalChain(node *ast.Node) (*ast.Node, *checker.Type) {
+	if node.Kind != ast.KindPropertyAccessExpression || !l.questionDot(node) {
+		return nil, nil
+	}
+	if _, environment := l.nodeEnvironmentAccess(node); environment {
+		return nil, nil
+	}
+	access := node.AsPropertyAccessExpression()
+	receiver := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))
+	element := l.recordElement(receiver)
+	if element == nil {
+		element = l.recordUnionElement(receiver, access.Name().Text())
+	}
+	return node, element
+}
+
+func (l *lowering) recordOptionalRead(root *ast.Node, element *checker.Type) (ir.Expression, error) {
+	receiver, key, slot, err := l.recordAccess(root, recordKeyValueRead, element)
+	if err != nil {
+		return nil, err
+	}
+	if receiver.Type() != ir.Record && receiver.Type() != ir.Union {
+		return nil, l.notYet(root, "optional property access on a record without record storage")
+	}
+	function := -1
+	if l.function != nil {
+		function = l.functionIndex
+	}
+	local := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "optional_record_receiver", Type: receiver.Type(), Function: function, ExpressionAssigned: true})
+	saved := ir.Read{Local: local, Of: receiver.Type()}
+	var record ir.Expression = saved
+	if saved.Type() == ir.Union {
+		record = ir.Narrow{Value: saved, To: ir.Record}
+	}
+	lookup := ir.RecordCall{Method: "get", Arguments: []ir.Expression{record, key}, Element: slot, Returns: ir.Maybe(slot)}
+	here := l.checker.GetTypeAtLocation(root)
+	var read ir.Expression = lookup
+	var entry ir.Read
+	// The checker can type a direct optional read as present even when a
+	// write through the index signature deleted its key. Keep absence
+	// distinct from a present value that violates the declared field type.
+	checkMissingKey := !l.includesUndefined(here) && !recordTagObservation(root)
+	if checkMissingKey {
+		entry = ir.Read{Local: len(l.result.Locals), Of: lookup.Type()}
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "optional_record_entry", Type: entry.Of, Function: function, ExpressionAssigned: true})
+		read = entry
+	}
+	value, err := l.recordReadValue(root, read, here)
+	if err != nil {
+		return nil, err
+	}
+	if checkMissingKey {
+		of := ir.Maybe(value.Type())
+		own := ir.RecordCall{Method: "hasOwn", Arguments: []ir.Expression{record, key}, Returns: ir.Boolean}
+		missing := ir.Binary{Operator: ir.And, Left: ir.IsUndefined{Value: entry}, Right: ir.Unary{Operator: ir.Not, Operand: own}}
+		absent := fit(ir.Undefined{}, of)
+		value = ir.Effects{Body: []ir.Statement{ir.Declare{Local: entry.Local, Value: lookup}}, Result: ir.Conditional{
+			Condition: missing,
+			WhenTrue:  absent, WhenNot: fit(value, of), Of: of,
+		}}
+	}
+	of := ir.Maybe(value.Type())
+	return ir.Effects{Body: []ir.Statement{ir.Declare{Local: local, Value: receiver}}, Result: ir.Conditional{
+		Condition: ir.Unary{Operator: ir.Not, Operand: ir.Binary{Operator: ir.Or, Left: ir.IsUndefined{Value: saved}, Right: ir.IsNull{Value: saved}}},
+		WhenTrue:  fit(value, of), WhenNot: fit(ir.Undefined{}, of), Of: of,
+	}}, nil
+}
+
 func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error) {
+	if root, element := l.recordOptionalChain(node); element != nil {
+		value, err := l.recordOptionalRead(root, element)
+		return value, true, err
+	}
 	if l.recordTarget(node) || l.recordReadTarget(node) && !l.recordReadDiscarded(node) && !l.recordReadOwnGuarded(node) {
 		discarded := l.recordReadDiscarded(node)
 		guarded := l.recordReadOwnGuarded(node)
@@ -308,7 +421,7 @@ func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error)
 		if !discarded && !guarded {
 			mode = recordKeyValueRead
 		}
-		r, k, of, err := l.recordAccess(node, mode)
+		r, k, of, err := l.recordAccess(node, mode, nil)
 		if err != nil {
 			return nil, true, err
 		}
@@ -319,35 +432,11 @@ func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error)
 		if guarded {
 			read = l.recordOwnRead(r, k, of)
 		}
-		here := l.checker.GetTypeAtLocation(node)
-		read, err = l.recordReadType(node, read, here)
-		if err != nil {
-			return nil, true, err
-		}
-		if !l.includesUndefined(here) && !recordTagObservation(node) {
-			// Under a ?. a reference's Defined would throw where Node reads undefined, and a catch
-			// would take that throw, a branch Node never takes (#70kdt66); a scalar's Unwrap would
-			// stop where Node reads undefined. A call TypeScript's narrowing doesn't see can delete
-			// the key, so the read can be missing here. Until the ?. parent's own test reads it, it
-			// stops. A union carries its own undefined to that test, with neither check.
-			if read.Type() != ir.Union && optionalChainOperand(node) {
-				return nil, true, l.notYet(node, "a record's value narrowed present and read under ?. (a call since the narrowing can delete its key, and the ?. would see it missing only after a TypeError)")
-			}
-			if narrowed, known := l.representation(here); known && read.Type().IsMaybe() && !narrowed.IsMaybe() {
-				read = ir.Unwrap{Value: read}
-			}
-			if read.Type().IsReference() && read.Type() != ir.Union {
-				message := "undefined where the checker narrowed it away: a call since the narrowing put it back"
-				if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == node {
-					message = "TypeError: Cannot read properties of undefined (reading '" + parent.Name().Text() + "')"
-				}
-				read = ir.Defined{Value: read, Message: message}
-			}
-		}
-		return read, true, nil
+		read, err = l.recordReadValue(node, read, l.checker.GetTypeAtLocation(node))
+		return read, true, err
 	}
 	if node.Kind == ast.KindDeleteExpression && l.recordTarget(node.AsDeleteExpression().Expression) {
-		r, k, of, err := l.recordAccess(node.AsDeleteExpression().Expression, recordKeyUnchecked)
+		r, k, of, err := l.recordAccess(node.AsDeleteExpression().Expression, recordKeyUnchecked, nil)
 		return ir.RecordCall{Method: "delete", Arguments: []ir.Expression{r, k}, Element: of, Returns: ir.Boolean}, true, err
 	}
 	if value, handled, err := l.recordScalarComparison(node); handled {
@@ -370,7 +459,7 @@ func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error)
 		if b.OperatorToken.Kind == ast.KindQuestionQuestionEqualsToken {
 			mode = recordKeyPrototypeCheck
 		}
-		r, k, of, err := l.recordAccess(b.Left, mode)
+		r, k, of, err := l.recordAccess(b.Left, mode, nil)
 		if err != nil {
 			return nil, true, err
 		}

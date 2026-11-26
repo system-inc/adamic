@@ -185,7 +185,7 @@ var optionalChainReaders = map[string]optionalChainReader{
 	"namespaceValueMember":            {3, readerDeclines + ": a namespace is never missing"},
 	"namespaceValueNamed":             {2, readerDeclines + ": a namespace is never missing"},
 	"namespaceExpression":             {2, readerDeclines + ": a namespace is never missing"},
-	"recordAccess":                    {2, readerDeclines + ": ?. on a record stays stopped (#15kcz6y)"},
+	"recordAccess":                    {2, readerDeclines + ": optional record indexing and optional record property reads outside the one-step path stay stopped"},
 	"recordDefineShape":               {2, readerDeclines},
 	"reflectGet":                      {3, readerDeclines},
 	"dynamicKeyedGetterExpression":    {1, readerDeclines},

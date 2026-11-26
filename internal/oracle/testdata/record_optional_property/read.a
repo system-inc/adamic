@@ -1,0 +1,14 @@
+interface Options {
+    readonly name?: string;
+    [key: string]: string | undefined;
+}
+
+function show(value: Options | undefined): void {
+    console.log(value?.name ?? "missing");
+}
+
+const missing: Options = {};
+missing["other"] = "entry";
+show(missing);
+show({ name: "set" });
+show(undefined);

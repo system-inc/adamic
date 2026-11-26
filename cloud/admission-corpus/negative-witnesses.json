@@ -321,6 +321,18 @@
       "exit": 70,
       "stderr": "adamic: panic: element read failed: view._children's element, in find is not a Node; expected Node, found number\n"
     },
+    "c4c86abd144df10cea0e5cc725aa4c05e54840a595e4f53172c48ff3ccab292d": {
+      "form": "checked_boundary",
+      "ruling_task": "#bbssdcy",
+      "ruling": "Adamic, Nov 23 (docs/rulings.md:303, under :302; be850795)",
+      "declaration": "internal/oracle/testdata/records_options_base/lib_road_optional_chain.ts:9",
+      "declared_type": "string",
+      "repair_from": "substitute(options, libKey(), wide);",
+      "repair_to": "options.lib = [\"dom\", \"esnext\"];",
+      "type_correct_sha256": "b3d79849285a0ea46d6384f532ade55a1e392409b9ff4328341f3ff604666167",
+      "exit": 70,
+      "stderr": "adamic: panic: element read failed: lib[1] is not a string; expected string, found number\n"
+    },
     "c79a8b54abcba47a7d057df00273c5ef55a6450e4448e7d3177ee7d2210360eb": {
       "form": "checked_boundary",
       "ruling_task": "#6wfvfhm",
@@ -356,6 +368,18 @@
       "type_correct_sha256": "2875106559e8f928988eea875aec061113aff5bd14a24182b771de9f8aeb754b",
       "exit": 70,
       "stderr": "adamic: panic: element read failed: view._children's element, in findLast is not a Node; expected Node, found number\n"
+    },
+    "5a1526b8035d67bed7eadcd2e84e887a64d924a4b583cd8f735db99f3e728347": {
+      "form": "checked_boundary",
+      "ruling_task": "#bbssdcy",
+      "ruling": "Adamic, Nov 22",
+      "declaration": "internal/oracle/testdata/records_options_base/written_chain.ts:9",
+      "declared_type": "boolean",
+      "repair_from": "options[name] = [\"y\", \"es\"].join(\"\");",
+      "repair_to": "options[name] = true;",
+      "type_correct_sha256": "531c193e1f3f94d12aacfe7ab01e25ff3ec3d8f6df4630235f3e5031c8fa66a3",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: maybe?.strict is not a boolean; expected boolean, found string, which a computed-key or index-signature write may have stored\n"
     },
     "5af9628440a657892952f2569d0ebedf3c6f8bc555be0c9b6684b827bdc98241": {
       "form": "checked_boundary",

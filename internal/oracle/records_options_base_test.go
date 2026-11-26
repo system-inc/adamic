@@ -71,7 +71,7 @@ func TestOptionsBaseReadsAgreeWithNode(t *testing.T) {
 // through OptionsBase puts "yes" under strict, declared boolean, in the object the program holds as CompilerOptions,
 // and each read form there checks it: Node prints it, and both backends stop on it with the read check's own words,
 // after the line before it. The forms lowering can't read off a record yet stop not yet where they read, as they do
-// on main whatever wrote the value: a destructuring, a ??= into a slot boxed as a union, and an optional chain.
+// on main whatever wrote the value: a destructuring and a ??= into a slot boxed as a union.
 func TestOptionsBaseWrittenReadsStop(t *testing.T) {
 	t.Parallel()
 	const found = " is not a boolean; expected boolean, found string, which a computed-key or index-signature write may have stored"
@@ -80,7 +80,7 @@ func TestOptionsBaseWrittenReadsStop(t *testing.T) {
 		"written_plain.ts":       {read: "options.strict"},
 		"written_destructure.ts": {notYet: "destructuring a value", at: ":23:7"},
 		"written_coalesce.ts":    {notYet: "record ??= with a tagged optional value", at: ":23:1"},
-		"written_chain.ts":       {notYet: "optional record property access", at: ":24:20"},
+		"written_chain.ts":       {read: "maybe?.strict"},
 		"written_parameter.ts":   {read: "compilerOptions.strict"},
 	} {
 		t.Run(name, func(t *testing.T) {
@@ -342,9 +342,9 @@ func TestOptionsBaseArrayFieldLiesStop(t *testing.T) {
 // Runtime's road proof (#6c4swvt, 17:11Z): the head rests on every road that reads a named array member back out of
 // the record reaching recordReadSlotView's origin, or stopping. Each fixture writes a (string | number)[] holding a
 // 1 at index 1 under lib through OptionsBase, and reads it back another way. Node reads the 1, and no backend may:
-//   - a literal key and a spread copy reach the origin, and stop at the element read on both backends alike;
-//   - a destructuring, a destructured parameter and an optional chain stop not yet where they read, as they do on main
-//     whatever wrote the value (TestOptionsBaseWrittenReadsStop's destructure and chain);
+//   - a literal key, a spread copy and an optional chain reach the origin and stop at the element read on both backends;
+//   - a destructuring and a destructured parameter stop not yet where they read, as they do on main
+//     whatever wrote the value (as in TestOptionsBaseWrittenReadsStop's destructure);
 //   - for...in and Object.entries read the value through the index, as the slot union, and seeing it as string[] is a
 //     cast the runtime can't check, refused;
 //   - Language's library roads (o03, o04, o07 on #6c4swvt): join and slice read elements inside the runtime and hand
@@ -363,7 +363,7 @@ func TestOptionsBaseArrayMemberRoadsStop(t *testing.T) {
 		"spread":                {stderr: elementStop},
 		"destructure":           {notYet: "destructuring a value", at: ":26:7"},
 		"destructure_parameter": {notYet: "destructuring a value", at: ":26:17"},
-		"optional_chain":        {notYet: "optional record property access", at: ":27:13"},
+		"optional_chain":        {stderr: elementStop},
 		"for_in":                {refused: castRefused, at: ":29:21"},
 		"entries":               {refused: castRefused, at: ":28:21"},
 		"join":                  {node: "before\ndom,1\n", notYet: "a checked view's array read through join (not checked yet)"},
