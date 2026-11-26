@@ -1,0 +1,9 @@
+// Scratch probe for #snypn8c c1, never landed: `true && <a number>` into a number slot, no enum anywhere, which c1
+// doesn't change. Does native's emitter panic on it as it did on truthy_literal's `true && checked(n)`?
+function next(n: number): number {
+	return n + 1;
+}
+function bumped(n: number): number {
+	return true && next(n);
+}
+console.log(String(bumped(1)));
