@@ -122,12 +122,8 @@ func TestKindHelperFallbacksRejectWholeBody(t *testing.T) {
 			if ok, _ := kindHelperRecognized(t, source); ok {
 				t.Fatalf("kind-helper fallback %s was recognized", p.name)
 			}
-			if p.name == "isExpression" || p.name == "isStatement" {
-				_, err := lowerSourceAs(t, source, ".ts")
-				if err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
-					t.Fatalf("%s fallback must keep family 1: %v", p.name, err)
-				}
-			}
+			// isExpression: .a stops earlier at a type predicate whose return is not proven; its .ts side is enumTagSwingRows' "TestKindHelperFallbacksRejectWholeBody/isExpression".
+			// isStatement: .a stops earlier at a type predicate whose return is not proven; its .ts side is enumTagSwingRows' "TestKindHelperFallbacksRejectWholeBody/isStatement".
 		})
 	}
 }
@@ -208,11 +204,8 @@ func TestKindHelperEmptyDefaultTailRoutes(t *testing.T) {
 				if ok {
 					t.Fatalf("kind-helper empty default resurrected an unreachable tail: %s members=%d", p.name, count)
 				}
-				_, err := lowerSourceAs(t, source, ".ts")
-				var refused *Refused
-				if !errors.As(err, &refused) || refused.What != kindPredicateRefusal {
-					t.Fatalf("empty default %s must refuse at the narrowing: %v", p.name, err)
-				}
+				// empty_false: .a stops earlier at a type predicate whose return is not proven; its .ts side is enumTagSwingRows' "TestKindHelperEmptyDefaultTailRoutes/empty_false".
+				// empty_true: .a stops earlier at a type predicate whose return is not proven; its .ts side is enumTagSwingRows' "TestKindHelperEmptyDefaultTailRoutes/empty_true".
 				return
 			}
 			if !ok || count != 2 {
