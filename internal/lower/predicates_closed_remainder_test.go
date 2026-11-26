@@ -202,8 +202,10 @@ function textOf(node: Identifier | Expression): string { return isIdentifier(nod
 console.log(textOf(id));
 `
 	// .a stops earlier at isIdentifier under rulings.md:142, so it's judged in .ts, where the open refinement takes
-	// the swing's checked view (enumTagSwingSites) before this rule could see it.
-	if _, sites, err := lowerSourceSwung(t, source); err != nil || len(sites) == 0 {
-		t.Fatalf("want the open refinement taken by the swing, got sites %v and %v", sites, err)
+	// the swing's checked view (enumTagSwingSites) before this rule could see it. The program then stops at
+	// isIdentifier's call, R-T80's false side over the open domain, never at the closed remainder's rule.
+	_, sites, err := lowerSourceSwung(t, source)
+	if len(sites) == 0 || err == nil || !strings.Contains(err.Error(), "checked predicate membership over an open tag domain") {
+		t.Fatalf("want the open refinement taken by the swing and the stop at R-T80's open domain, got sites %v and %v", sites, err)
 	}
 }
