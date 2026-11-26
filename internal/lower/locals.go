@@ -348,7 +348,12 @@ func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 				// other member, or one whose holding isn't known, stops here. Arrays use their
 				// own brand check; a class beside an array also excludes that brand below, and so
 				// does an interface arm Array.isArray's domain admits, whose required property no
-				// array can have (arrayExcludedArm, Adamic's ruling on #s8gy89r).
+				// array can have (arrayExcludedArm, Adamic's ruling on #s8gy89r). A read narrowed to
+				// a record held as ir.Record excludes its array members by the same brand where the
+				// domain admits the record (arrayExcludedIndexArm, rulings.md:260's amendment on
+				// #gcec0bx), and null by its own test; every other member held as an object or a
+				// record keeps the stop, since typeof says object for a dictionary and a class
+				// instance alike (narrowed_union_record_test.go).
 				declared := l.concrete(l.checker.GetTypeOfSymbol(l.symbol(node)))
 				members := []*checker.Type{declared}
 				if declared.Flags()&checker.TypeFlagsUnion != 0 {
@@ -368,7 +373,7 @@ func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 						}
 						continue
 					}
-					if narrowed == ir.Object && known && held == ir.Array && l.admitArrayPredicate(node, observed) {
+					if (narrowed == ir.Object || narrowed == ir.Record) && known && held == ir.Array && l.admitArrayPredicate(node, observed) {
 						excludesArray = true
 						continue
 					}
@@ -379,6 +384,12 @@ func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 					}
 					if known && held == narrowed && member.Flags()&checker.TypeFlagsNull != 0 {
 						nullable = true
+						continue
+					}
+					if narrowed == ir.Record && known && held == ir.Object && member.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0 {
+						// null and undefined are held as a missing object beside a record too: typeof says
+						// undefined for undefined, as at an object narrowing, and null is tested for below.
+						nullable = nullable || member.Flags()&checker.TypeFlagsNull != 0
 						continue
 					}
 					if known {

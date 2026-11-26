@@ -11,7 +11,8 @@ import (
 // ways. Each program is tsc's readJson test over an object, an array, a string, a number, true, null and undefined, and
 // agrees with Node on the sanitized native build, the release build and the JavaScript backend:
 //   - json_record: readJson's own spelling, `... && !Array.isArray(value) ? value : {}`, printing each record's key
-//     count and its read of a;
+//     count and its read of a; `? value` is a read narrowed to the record, checked as an object, not null and not an
+//     array, the array members excluded by the brand since the domain admits the record (locals.go);
 //   - json_record_test: the test alone, printing its answer, so the arm's admission is held apart from the read of the
 //     narrowed record after it;
 //   - json_recovery_record and json_recovery_record_test: the same two over the record as stage3's adaptation 52
