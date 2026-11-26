@@ -14,15 +14,16 @@ import (
 // layout the constructor's object literal has, for an object of that shape: a compare and a load,
 // inline. Any other object is looked up by name through the field cache, as is every other field:
 // an object literal can be seen through a class's type, since tsc lets one through and only cohere's
-// adamic/nominal-class refuses it, so the shape is checked. A uniform slot fields.go proves is checked
-// too, against the literal layouts that hold the name (uniformFieldGuard).
+// adamic/nominal-class refuses it, so the shape is checked unless fields.go proves a uniform slot.
+// That slot is bare here, with no shape check: a read that loads through it asks readFieldSlot and a
+// write asks writeFieldSlot, each of which puts it behind uniformFieldGuard.
 func (e *emitter) fieldSlot(object string, name string, class int) string {
 	// Uniform offsets describe own storage; static names may instead read live parent data.
 	if e.staticFieldName(name) {
 		return fmt.Sprintf("adamic_object_field(%s, %s, &%s)", object, cString(name), e.cache())
 	}
 	if slot := e.uniformFieldSlot(object, name); slot != "" {
-		return e.uniformFieldGuard(object, name, slot, fmt.Sprintf("adamic_object_data_field(%s, %s, &%s)", object, cString(name), e.cache()))
+		return slot
 	}
 	lookup := fmt.Sprintf("adamic_object_data_field(%s, %s, &%s)", object, cString(name), e.cache())
 	if class == 0 || !cName.MatchString(object) {
@@ -46,6 +47,17 @@ func (e *emitter) fieldSlot(object string, name string, class int) string {
 		}
 	}
 	return lookup
+}
+
+// readFieldSlot is fieldSlot for a read that loads through the slot: a uniform slot is taken only
+// behind uniformFieldGuard, whose miss is the by-name road and its field cache.
+func (e *emitter) readFieldSlot(object string, name string, class int) string {
+	if !e.staticFieldName(name) {
+		if slot := e.uniformFieldSlot(object, name); slot != "" {
+			return e.uniformFieldGuard(object, name, slot, fmt.Sprintf("adamic_object_data_field(%s, %s, &%s)", object, cString(name), e.cache()))
+		}
+	}
+	return e.fieldSlot(object, name, class)
 }
 
 // staticFieldName is conservative across all constructor layouts, including inherited
@@ -80,15 +92,8 @@ func (e *emitter) writeFieldSlot(object, name string, class int) string {
 	if !static {
 		fallback = fmt.Sprintf("adamic_object_data_field(%s, %s, &%s)", object, cString(name), e.cache())
 	}
-	slot := e.uniformFieldSlot(object, name)
-	data := ""
-	if slot == "" || static {
-		// A uniform name's fieldSlot is a guarded read whose field cache this write would never use, so it
-		// isn't asked. A static name's is its static road, asked as it always was: the guard below takes its
-		// place, but the cache it declares stays in the C.
-		data = e.fieldSlot(object, name, class)
-	}
-	if slot != "" {
+	data := e.fieldSlot(object, name, class)
+	if slot := e.uniformFieldSlot(object, name); slot != "" {
 		data = e.uniformFieldGuard(object, name, slot, fallback)
 	}
 	if !static {
