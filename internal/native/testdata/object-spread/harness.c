@@ -82,8 +82,12 @@ static adamic_value getter(adamic_object *self) {
 	(void)self;
 	return (adamic_value){.number = 1};
 }
+// A class with a field k and a getter g on its prototype (oracle.js's Getter), which a spread passes over.
 static const adamic_accessor accessors[] = {{"g", getter, NULL, adamic_ir_Number}};
 static const adamic_class accessor_class = {.public_shape = &k_number, .accessors = accessors, .accessor_count = 1};
+// One whose accessor is named as its public field k, which TypeScript refuses and the spread stops on.
+static const adamic_accessor field_accessors[] = {{"k", getter, NULL, adamic_ir_Number}};
+static const adamic_class field_accessor_class = {.public_shape = &k_number, .accessors = field_accessors, .accessor_count = 1};
 
 // text is a string made at run time, so the counts see it and ASan sees a read of a freed one.
 static adamic_string *text(const char *bytes) {
@@ -406,6 +410,19 @@ int main(int argc, char **argv) {
 		if (strcmp(mode, "width_method") == 0) k = (adamic_spread_overwrite){"k", adamic_field_reference, adamic_ir_Closure, {.reference = adamic_closure_new(five, 0)}};
 		adamic_release(witness(source, &k, 1, NULL));
 		adamic_release(source);
+	} else if (strcmp(mode, "prototype_getter") == 0 || strcmp(mode, "prototype_getter_past") == 0) {
+		// #vjvcnnj's written_after: { ...new Getter(), g: 21 } keeps the write, and { ...new Getter(), w: 2 }
+		// holds no g. Getter's g is its prototype's, so neither copy runs it or holds it as its own.
+		adamic_object *source = number_source(1);
+		source->class = &accessor_class;
+		adamic_spread_overwrite written = {"g", adamic_field_number, adamic_ir_Number, {.number = 21}};
+		if (strcmp(mode, "prototype_getter_past") == 0) written = (adamic_spread_overwrite){"w", adamic_field_number, adamic_ir_Number, {.number = 2}};
+		adamic_object *result = adamic_object_spread_with(source, &written, 1);
+		print("result", result);
+		has(result, "g");
+		layout(result);
+		adamic_release(result);
+		adamic_release(source);
 	} else if (strcmp(mode, "p01") == 0 || strcmp(mode, "p01_true") == 0) {
 		adamic_object *source = adamic_object_new(&p01_shape);
 		source->slots[0].reference = text("Holder");
@@ -531,9 +548,9 @@ int main(int argc, char **argv) {
 		else if (strcmp(mode, "refuse_tuple") == 0) {
 			source = adamic_object_new(&k_number);
 			source->tuple = true;
-		} else if (strcmp(mode, "refuse_accessor") == 0) {
+		} else if (strcmp(mode, "refuse_accessor_field") == 0) {
 			source = adamic_object_new(&k_number);
-			source->class = &accessor_class;
+			source->class = &field_accessor_class;
 		} else if (strcmp(mode, "refuse_value") == 0) source = (adamic_object *)(void *)text("s");
 		else return 3;
 		adamic_release(adamic_object_spread_with(source, &undefined_k, 1));
