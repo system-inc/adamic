@@ -1,0 +1,22 @@
+# #r1ef873, Performance's read of Lower's 2a97945f: both fixtures' frame counts at her head and with her cut
+# dropped. Source after environment.sh, cloud/sandboxed-job.sh, sandboxed_npm stage3/api and sandboxed_products
+# internal/lower. Never merged.
+set -u
+P=./internal/lower
+pins='^(TestShapeFlowReceiverPairFinishes|TestShapeFlowReceiverCycleFinishes|TestShapeFlowCastRecursionFinishes)$'
+echo "on $(hostname), $(nproc) cores"
+lift() { sed -i 's/^const receiverPairFrameBound = .*/const receiverPairFrameBound = 1 << 40/; s/^const receiverCycleFrameBound = .*/const receiverCycleFrameBound = 1 << 40/; s/^const castRecursionFrameBound = .*/const castRecursionFrameBound = 1 << 40/' internal/lower/shape_flow_receiver_pair_test.go internal/lower/shape_flow_receiver_cycle_test.go internal/lower/shape_flow_cast_recursion_test.go; }
+echo "== at the head, bounds as written"
+go test -count=1 -v -run "$pins" $P > "$TMPDIR/head.log" 2>&1; echo "head exit=$?"
+grep -E -- '^--- (PASS|FAIL)|_test.go:[0-9]+:' "$TMPDIR/head.log" | cut -c1-300
+cp internal/lower/shape_flow.go "$TMPDIR/keep.go"
+echo "== her cut dropped, bounds lifted, 10 minutes at most each"
+sed -i 's/if graph.projectionOpen\[open\] {/if false \&\& graph.projectionOpen[open] {/' internal/lower/shape_flow.go
+cmp -s internal/lower/shape_flow.go "$TMPDIR/keep.go" && echo "FAIL mutant not applied"
+lift
+for test in TestShapeFlowReceiverPairFinishes TestShapeFlowReceiverCycleFinishes; do
+	timeout 10m go test -count=1 -v -run "^${test}\$" $P > "$TMPDIR/m.log" 2>&1; echo "$test mutant exit=$?"
+	grep -E 'opened [0-9]+|^--- ' "$TMPDIR/m.log" | cut -c1-300
+done
+cp "$TMPDIR/keep.go" internal/lower/shape_flow.go
+echo "VERDICT OK (read the counts)"
