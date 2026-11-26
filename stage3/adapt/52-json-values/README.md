@@ -134,3 +134,13 @@ For #k8ed1f2 cause 43, the existing `parseConfig` rule emits
 `parseConfig`. The original `parseConfig` input pin still expects
 `string[]` at this stage. See [Premises](../99-readonly-family3-views-3/README.md#premises)
 for the readonly view and its forwarding calls.
+
+### Family 12 candidate
+
+`JsonConversionNotifier` and its config callback carry the JSON recovery domain. The callback keeps the converted compiler option separate from the raw extends input. The named-option write checks that the extends descriptor has stayed on its own path.
+
+`readJsonOrUndefined` returns `AdamicJsonRecoveryValue | undefined`. `readJson` tests the value inline with `typeof value === "object" && value !== null && !Array.isArray(value) ? value : {}` before its six callers read fields. This is the one copy of the object test allowed as an exception to "never a second copy". A checked predicate needs a field to check at run time, and `isAdamicJsonObject`'s target `{ [key: string]: unknown; }` has only an index. A JSON recovery value's kind is tested with the language's own checks (`typeof`, `!== null`, `Array.isArray`), never through a tsc wrapper that takes the value at `unknown`. `readJson` doesn't lower yet: it stops as NotYet at its `Array.isArray(value)`, "Array.isArray on a tuple or an erased object/any/unknown view", because the language can't yet tell this union's arrays from its record at run time. That is #gcec0bx's to lift; it lowered on main through a cast, and Compiler traded that one unit for the 11 this adaptation clears (#kbcj5nr, Nov 26). The public `parseConfigFileTextToJson.config` exemption retains its declaration.
+
+The existing `as BuildInfo | undefined` in `emitter.ts:1146` remains as #vwwqnnq's counted stop pending its own ruling. The solution builder observes truthiness at `compiler/tsbuildPublic.ts:1452` through line 1454 and at line 1532. The watch reader does so at `compiler/watchPublic.ts:118`, and the harness spreads the payload at `testRunner/unittests/helpers/baseline.ts:237`.
+
+The proof checks the parsed binding's recovery type and the empty record at the conversion boundary. The `parsed-result-any` control changes only the binding annotation.

@@ -10,7 +10,15 @@ const walk = d => fs.readdirSync(d, {withFileTypes: true}).flatMap(e => e.isDire
 const rules = require('./rules.json');
 const file = rules[0].file, original = fs.readFileSync(path.join(before, file), 'utf8'), adapted = fs.readFileSync(path.join(after, file), 'utf8');
 const nl = text => text.replace(/\r?\n/g, original.includes('\r\n') ? '\r\n' : '\n');
-let expected = original;
+const predicate = require('./predicate.json');
+const reviewedSites = ['S02', ...rules.map(rule => rule.id)];
+function reconcileSites(sites, applied) {
+    assert.equal(new Set(sites).size, sites.length, 'reviewed sites are unique');
+    assert.equal(sites.length, applied, 'reviewed site inventory must match stage edits');
+}
+
+assert.equal(original.split(nl(predicate.text)).length, 2);
+let expected = original.replace(nl(predicate.text), nl(predicate.after));
 for (const r of rules) { assert.equal(expected.split(nl(r.before)).length, 2, r.id); expected = expected.replace(nl(r.before), nl(r.after)); }
 assert.equal(adapted, expected, 'only reviewed type edits in converter file');
 const sourceFiles = walk(path.join(before, 'src')).filter(f => f.endsWith('.ts'));
@@ -25,7 +33,7 @@ function functions(text) {
     return {source, result};
 }
 const oldFunctions = functions(original), newFunctions = functions(adapted);
-assert.equal(newFunctions.result.isCompilerOptionsValue.getText(newFunctions.source), oldFunctions.result.isCompilerOptionsValue.getText(oldFunctions.source), 'predicate remains exactly written');
+assert.equal(newFunctions.result.isCompilerOptionsValue.getText(newFunctions.source), nl(predicate.after), 'predicate matches the approved input widening');
 for (const name of ['parseJsonConfigFileContent', 'convertCompilerOptionsFromJson', 'convertTypeAcquisitionFromJson', 'convertToObject']) {
     assert.equal(newFunctions.result[name].getText(newFunctions.source), oldFunctions.result[name].getText(oldFunctions.source), 'public owner unchanged: ' + name);
 }
@@ -56,11 +64,18 @@ for (const r of rules) {
     mutants.push({site: r.id, mutation: token.includes('any') ? 'raw any to unreviewed unknown' : 'copy list before mapping', caughtBy: 'exact reviewed source guard', exit: result.status});
 }
 const predicateToken = require('./predicate.json').text.replaceAll('\n', original.includes('\r\n') ? '\r\n' : '\n');
-fs.writeFileSync(target, original.replace(predicateToken, predicateToken.replace('value: any', 'value: unknown')));
+fs.writeFileSync(target, original.replace(predicateToken, predicateToken.replace('return false;', 'return true;')));
 const predicateMutant = apply(); assert.notEqual(predicateMutant.status, 0); assert(predicateMutant.stderr.includes('protected predicate changed: S02'));
 fs.writeFileSync(path.join(output, 'S02-mutant.log'), predicateMutant.stderr);
-mutants.push({site: 'S02', mutation: 'predicate input any to unknown', caughtBy: 'protected predicate exact text guard', exit: predicateMutant.status});
-fs.writeFileSync(target, original); assert.equal(apply().status, 0); assert.equal(fs.readFileSync(target, 'utf8'), adapted);
+mutants.push({site: 'S02', mutation: 'predicate fallback false to true', caughtBy: 'protected predicate exact text guard', exit: predicateMutant.status});
+fs.writeFileSync(target, original);
+const clean = apply();
+assert.equal(clean.status, 0, clean.stderr);
+const appliedSites = JSON.parse(clean.stdout).sites;
+reconcileSites(reviewedSites, appliedSites);
+assert.throws(() => reconcileSites(reviewedSites.filter(site => site !== 'S02'), appliedSites),
+    /reviewed site inventory must match stage edits/);
+assert.equal(fs.readFileSync(target, 'utf8'), adapted);
 const second = apply(); assert.equal(second.status, 0); assert(second.stdout.includes('"sites":0')); assert.equal(fs.readFileSync(target, 'utf8'), adapted);
 fs.writeFileSync(target, original.replaceAll('\r\n', '\n')); assert.equal(apply().status, 0); assert.equal(fs.readFileSync(target, 'utf8'), adapted.replaceAll('\r\n', '\n'));
 const artifactMutants = [];
@@ -110,6 +125,6 @@ function runtime(tree) {
 }
 const oldRuntime = runtime(before), newRuntime = runtime(after); assert.equal(newRuntime, oldRuntime, 'actual API entrypoints through internal converters');
 fs.writeFileSync(path.join(output, 'runtime.json'), oldRuntime + '\n');
-const report = {base: oldLane.execution.commit, node: process.version, typescript: ts.version, reviewedSites: rules.map(r => r.id), sourceFiles: sourceFiles.length, sourceJavaScriptIdentical: true, idempotent: true, LFReconstruction: true, predicateExact: true, runtime: {fixtures: 'falsy and primitive raw inputs, bad list elements, normalized options, defaults, inherited keys, one-read accessor, cyclic object, compileOnSave mutation, watch/typeAcquisition diagnostics', sha256: hash(oldRuntime)}, outputs: current, jsFiles: Object.keys(current).filter(f => /\.(js|mjs|cjs)$/.test(f)).length, publicAPIFiles: Object.keys(current).filter(f => /typescript\.d\.(ts|mts|cts)$/.test(f)), lane: {status: newLane.status, counts: newLane.counts, failed_tests: newLane.failed_tests, baseline_diffs: newLane.baseline_diffs}, mutants, artifactMutants, laneCountMutant: 'caught', runtimeMutant: {site: 'convertOptionsFromJson', mutation: 'return defaults for falsy input', caughtBy: 'actual extracted converter return equality'}};
+const report = {base: oldLane.execution.commit, node: process.version, typescript: ts.version, reviewedSites, appliedSites, sourceFiles: sourceFiles.length, sourceJavaScriptIdentical: true, idempotent: true, LFReconstruction: true, predicateExact: true, runtime: {fixtures: 'falsy and primitive raw inputs, bad list elements, normalized options, defaults, inherited keys, one-read accessor, cyclic object, compileOnSave mutation, watch/typeAcquisition diagnostics', sha256: hash(oldRuntime)}, outputs: current, jsFiles: Object.keys(current).filter(f => /\.(js|mjs|cjs)$/.test(f)).length, publicAPIFiles: Object.keys(current).filter(f => /typescript\.d\.(ts|mts|cts)$/.test(f)), lane: {status: newLane.status, counts: newLane.counts, failed_tests: newLane.failed_tests, baseline_diffs: newLane.baseline_diffs}, mutants, artifactMutants, laneCountMutant: 'caught', runtimeMutant: {site: 'convertOptionsFromJson', mutation: 'return defaults for falsy input', caughtBy: 'actual extracted converter return equality'}};
 fs.writeFileSync(path.join(output, 'proof.json'), JSON.stringify(report, null, 2) + '\n');
-console.log(JSON.stringify({sites: rules.length, jsFiles: report.jsFiles, publicAPIFiles: report.publicAPIFiles, mutants: mutants.length, lane: report.lane}));
+console.log(JSON.stringify({sites: report.reviewedSites.length, jsFiles: report.jsFiles, publicAPIFiles: report.publicAPIFiles, mutants: mutants.length, lane: report.lane}));
