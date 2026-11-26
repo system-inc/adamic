@@ -1089,6 +1089,10 @@ type lowering struct {
 	spreadNodes   []*ast.Node
 	classHolders  map[int]*checker.Type
 
+	// spreadWithCopied is spreadCopiedGetters' copied for SpreadWith literals alone: each getter name one may
+	// leave out of its copy, with the class holding it (spreadWithSourceGetter).
+	spreadWithCopied map[string]string
+
 	// toPrimitive is the program's to_string_hint helper plus one, or zero before a String of a union
 	// that may hold an object needs it (to_primitive.go).
 	toPrimitive int

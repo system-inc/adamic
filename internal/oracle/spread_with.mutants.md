@@ -18,12 +18,9 @@ plain literal's slot 0 and the result's k is read there. Red: `TestSpreadWithAgr
 **W4, no copy before a value that runs code.** The emitter always holds the source and builds from it after the values, so
 a value that writes the source shows in the result. Red: `TestSpreadWithAgrees/spread_with/effect_order.ts`.
 
-**W5, the accessor stops dropped.** The registry's stop (finishAccessors) and the type's (objectLiteral) are skipped, so a
-class instance with an accessor reaches adamic_object_spread_with, which refuses it at run time. Red:
-`TestSpreadWithStops/spread_with/accessor_getter.ts`, `accessor_setter.ts`, `accessor_literal.ts` and `accessor_type.ts`.
-
-**W5b, the type's stop alone dropped.** The registry still stops the class, in its own words, so the row tells them apart.
-Red: `TestSpreadWithStops/spread_with/accessor_type.ts`.
+**W5, the accessor stop dropped.** The registry's stop (finishAccessors, spreadAccessorClass) is skipped, so an
+object literal's own getter reaches adamic_object_spread_with, which passes over it where Node's spread runs it and
+copies its value. Red: `TestSpreadWithStops/spread_with/accessor_literal.ts`.
 
 **W6, an overwrite value counted twice.** Each reference value is retained once more on its way into the call. Red, on the
 counted build: `TestSpreadWithAgrees/spread_with/resolver_279.ts` and `graph_fresh.ts` (fresh arrays and a fresh literal).
@@ -31,8 +28,17 @@ counted build: `TestSpreadWithAgrees/spread_with/resolver_279.ts` and `graph_fre
 **W7, a graph value held after adoption too.** Today's copy arm's hold is added on top of the primitive's count, after the
 adoption (Memory's mutant). Red, on the counted build: `TestSpreadWithAgrees/spread_with/graph_member.ts` and `graph_fresh.ts`.
 
-**W8, the JavaScript backstop dropped.** The JavaScript backend spreads the source as it is, so a tuple's indices are
-copied where native stops. Red: `TestSpreadWithSourceBackstop` (its javascript row exits 0). Native's check is the
-primitive's, in Library's C.
+**W8, the native storage check dropped.** Library's positive test in object_spread.c (`if (!plain)`) never stops, her
+`storage-check-dropped`, planted on this stacked tree, so a tuple is copied as a plain object's slots and a closure's
+storage is read as an object's. Red: `TestSpreadWithSourceBackstop/backstop_tuple.ts` and `backstop_closure.ts`, on
+their native rows.
 
-Must stay green under each: `TestSpreadOverwriteNeighborsAgree` and `TestSpreadWithLeavesNeighbors`.
+**W9, the JavaScript mirror dropped.** The JavaScript backend spreads the source as it is, so a tuple's indices are
+copied where native stops. Red: `TestSpreadWithSourceBackstop/backstop_tuple.ts`, on its javascript row.
+
+**W10, the getter walk blind to a SpreadWith literal.** spreadCopyRead judges `{ ...inner }` by its own spread's type
+alone, which holds inner's `extra` and so no Sized, and the read of weight lowers and loads a slot the copy lacks
+(Memory's mutant). Red: `TestSpreadWithGetterReads/getter_copy_of_copy.ts`.
+
+Must stay green under each: `TestSpreadOverwriteNeighborsAgree` and `TestSpreadWithLeavesNeighbors`. A pin row the C's
+own mutant turns red is Library's to name in object_spread_test.go; W8 is hers planted here to show the backend rows.

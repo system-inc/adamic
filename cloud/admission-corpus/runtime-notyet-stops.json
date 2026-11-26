@@ -431,7 +431,13 @@
       "path": "internal/oracle/testdata/spread_with/backstop_tuple.ts",
       "ruling_task": "#k7g6f9h",
       "lifting_task": "#n0744ek",
-      "stderr": "adamic: panic: a spread of a value stored as an array or a host value into an object literal isn't built yet (#k7g6f9h)\n"
+      "stderr": "adamic: panic: a spread of a value not stored as a plain object into an object literal isn't built yet (#k7g6f9h)\n"
+    },
+    "1fbfd97037a7fdee0e8bb1acfbe9a596f356853752105b498428d1f22cbf25ca": {
+      "path": "internal/oracle/testdata/spread_with/backstop_closure.ts",
+      "ruling_task": "#k7g6f9h",
+      "lifting_task": "#n0744ek",
+      "stderr": "adamic: panic: a spread of a value not stored as a plain object into an object literal isn't built yet (#k7g6f9h)\n"
     }
   }
 }

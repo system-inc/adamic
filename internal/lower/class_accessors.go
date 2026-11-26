@@ -434,8 +434,8 @@ func (l *lowering) finishAccessors() error {
 				if expression.Spread != nil {
 					expression.NoReuse = true
 					expression.SpreadGetters = l.spreadGetters(expression)
-					// adamic_object_spread_with refuses a source with an accessor on its class chain, so a SpreadWith
-					// literal one may reach stops here, before the run would (spreadAccessorClass).
+					// A SpreadWith literal whose source may hold an accessor adamic_object_spread_with doesn't copy as
+					// Node does stops here (spreadAccessorClass).
 					if expression.SpreadWith {
 						if class := l.spreadAccessorClass(expression); class != "" {
 							where := l.result.Source
@@ -608,12 +608,15 @@ func (l *lowering) spreadGetters(literal ir.ObjectLiteral) []int {
 	return getters
 }
 
-// spreadAccessorClass is the name of a registered class a SpreadWith literal's source may be an instance of
-// whose chain holds an accessor, a getter or a setter alike, or "" when there's none: adamic_object_spread_with
-// refuses a source whose class chain has any (object_spread.c), and an object literal's own accessors make it a
-// registered class too. It asks what spreadGetters asks, every class whose instances are assignable to the type
-// the spread sees, all of them when that type isn't known, so it fails closed, and a fresh data literal has none.
-// An object literal's synthetic class is named "an object literal with accessors".
+// spreadAccessorClass is what a SpreadWith literal's source may be that adamic_object_spread_with doesn't copy as
+// Node's spread does, or "" when there's none: an object literal with accessors, whose accessors are own enumerable
+// keys Node's spread runs and copies, and a class instance with an accessor named as one of its public fields, which
+// would put a getter on a copied name (object_spread.c's backstop). A class whose accessors are all on its prototype
+// passes, the narrowing of #vjvcnnj's write half: Node's spread copies own enumerable keys only, so a prototype
+// accessor is never copied, on Node or natively, and a read of its name from the copy stays #7mjgxkc's stop
+// (spreadCopyRead, which sees through a SpreadWith literal to its source). It asks what spreadGetters asks, every
+// registered class whose instances are assignable to the type the spread sees, all of them when that type isn't
+// known, so it fails closed, and a fresh data literal has none.
 func (l *lowering) spreadAccessorClass(literal ir.ObjectLiteral) string {
 	if plainDataSpreadSource(literal.Spread) {
 		return ""
@@ -627,14 +630,25 @@ func (l *lowering) spreadAccessorClass(literal ir.ObjectLiteral) string {
 		if viewed != nil && holder != nil && !l.checker.IsTypeAssignableTo(holder, viewed) {
 			continue
 		}
+		public := map[string]bool{}
+		if l.result.Classes[index].Literal {
+			for _, field := range l.result.Classes[index].PublicFields {
+				public[field.Name] = true
+			}
+		} else {
+			for _, field := range l.result.Classes[index].Fields {
+				public[field.Name] = public[field.Name] || !field.Private
+			}
+		}
 		for class := index + 1; class != 0; class = l.result.Classes[class-1].Base {
-			if len(l.result.Classes[class-1].Accessors) == 0 {
-				continue
+			for _, accessor := range l.result.Classes[class-1].Accessors {
+				if l.result.Classes[index].Literal {
+					return "an object literal with accessors"
+				}
+				if public[accessor.Name] {
+					return l.result.Classes[index].Name + ", whose " + accessor.Name + " is an accessor named as a public field,"
+				}
 			}
-			if l.result.Classes[index].Literal || l.result.Classes[index].Name == "" {
-				return "an object literal with accessors"
-			}
-			return l.result.Classes[index].Name
 		}
 	}
 	return ""

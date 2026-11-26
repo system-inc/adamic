@@ -1,4 +1,5 @@
-// A class with only a setter may reach a SpreadWith literal's source, so it stops too (#k7g6f9h, #vjvcnnj).
+// A class with only a setter, on its prototype, reaches a SpreadWith literal's source and copies as Node's spread
+// does (#k7g6f9h, #vjvcnnj's narrowing).
 class Gate {
     label = "g";
     set open(value: boolean) {

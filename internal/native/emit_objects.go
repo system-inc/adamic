@@ -291,11 +291,20 @@ func (e *emitter) spreadWith(literal ir.ObjectLiteral) string {
 	source := e.value(literal.Spread)
 	base := ""
 	if literal.SpreadReadiness != "" || !spreadWithValuesInert(literal) {
-		base = e.own(ir.Object, e.spreadCopy(literal, source))
+		// The copy of a source that may be undefined is undefined when it is: the primitive makes that an empty
+		// source, as Node's { ...undefined } is, so no Empty layout is reserved.
+		present := literal
+		present.SpreadMaybeUndefined = false
+		copied := e.spreadCopy(present, source)
+		if literal.SpreadMaybeUndefined {
+			copied = fmt.Sprintf("(%s != NULL ? %s : NULL)", source, copied)
+		}
+		base = e.own(ir.Object, copied)
 		if e.program.ObjectSpreadMayThrow(literal) {
 			e.checkThrown()
 		}
 	} else {
+		// A retain of an undefined source is nothing, and the primitive copies nothing of it.
 		base = e.own(ir.Object, fmt.Sprintf("adamic_retain(%s)", source))
 	}
 	values := make([]string, 0, len(literal.Fields))

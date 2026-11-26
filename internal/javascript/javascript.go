@@ -1221,9 +1221,9 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 		if expression.Spread != nil {
 			spread := e.value(expression.Spread)
 			if expression.SpreadWith {
-				// Native builds this literal with adamic_object_spread_with, which stops on a source stored as an
-				// array, a tuple or a host value, so the same source stops here, with the same words, rather than
-				// copying the indices Node copies (ir.SpreadWithSourceStop).
+				// Native builds this literal with adamic_object_spread_with, which stops on a source not stored as a
+				// plain object or a class instance, so the same source stops here, with the same words, rather than
+				// copying the keys Node copies (ir.SpreadWithSourceStop).
 				spread = "adamicSpreadWithSource(" + spread + ")"
 			}
 			if expression.SpreadReadiness != "" {

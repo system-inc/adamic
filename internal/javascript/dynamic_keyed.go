@@ -166,9 +166,10 @@ func dynamicHostRuntime(program *ir.Program) string {
 			message = stop.Message
 		}
 	}
-	instance := ""
+	instance, spreadClassInstance := "", ""
 	if len(program.Classes) > 0 {
 		instance = " && adamicClassIdentities.get(value) === undefined"
+		spreadClassInstance = " || adamicClassIdentities.get(value) !== undefined"
 	}
 	var builder strings.Builder
 	builder.WriteString("const adamicHostValue = value => typeof value === 'object' && value !== null && !Array.isArray(value) && !(value instanceof Map || value instanceof Set) && !ArrayBuffer.isView(value) && !(value instanceof AdamicClosure) && !(value instanceof Promise) && !(value instanceof Error) && Object.getPrototypeOf(value) !== Object.prototype" + instance + ";\n")
@@ -178,9 +179,10 @@ func dynamicHostRuntime(program *ir.Program) string {
 	builder.WriteString("const adamicHostKeys = value => adamicHostValue(value) ? panic(" + quote(ir.DynamicKeysStop) + ") : Object.keys(value);\n")
 	builder.WriteString("const adamicHostHasOwn = (value, key) => adamicHostValue(value) ? adamicHostStop(key) : value.hasOwnProperty(key);\n")
 	builder.WriteString("const adamicHostCheck = (value, key) => adamicHostValue(value) ? adamicHostStop(key) : true;\n")
-	// A SpreadWith literal's source stored as an array (a tuple among them, an array here) or a host value
-	// stops as native's adamic_object_spread_with does, decided by the value's storage alone: a plain object
-	// or a record passes, and so does undefined or null, which a spread copies nothing of.
-	builder.WriteString("const adamicSpreadWithSource = value => Array.isArray(value) || adamicHostValue(value) ? panic(" + quote(ir.SpreadWithSourceStop) + ") : value;\n")
+	// A SpreadWith literal's source passes only when it's stored as a plain object or a program class's instance,
+	// as native's adamic_object_spread_with decides (a positive test, Adamic on #k7g6f9h), and undefined or null,
+	// which a spread copies nothing of. Anything else, an array or a tuple, a typed array, a Map, a Set, a
+	// function, a host value or a storage added later, stops with the same words.
+	builder.WriteString("const adamicSpreadWithSource = value => value === undefined || value === null || (typeof value === 'object' && !Array.isArray(value) && Object.getPrototypeOf(value) === Object.prototype)" + spreadClassInstance + " ? value : panic(" + quote(ir.SpreadWithSourceStop) + ");\n")
 	return builder.String()
 }

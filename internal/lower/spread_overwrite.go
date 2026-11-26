@@ -56,9 +56,7 @@ func (l *lowering) spreadOverwrite(literal *ast.Node, name string, value ir.Expr
 // copy: by width the actual source may hold it anyway, in a slot laid out for its own value.
 const spreadAddsField = "a spread that adds a field the source doesn't have"
 
-// spreadWithAccessorStop is what a SpreadWith literal says when its source may be a class instance with an
-// accessor, a getter or a setter, on its chain, an object literal's own accessors among them, which lowering
-// registers as a class: adamic_object_spread_with refuses one at run time (a getter would run at the copy,
-// in its public shape's order), so lowering stops it first wherever it can see one may reach the spread.
-// #vjvcnnj narrows both sides.
-const spreadWithAccessorStop = "a spread with an overwrite its source's slots can't hold, of a source that may be a class instance with an accessor, which adamic_object_spread_with doesn't copy yet (#vjvcnnj)"
+// spreadWithAccessorStop is what a SpreadWith literal says when its source may hold an accessor Node's spread
+// copies as an own key, an object literal's own, or one named as a class's public field (spreadAccessorClass):
+// adamic_object_spread_with passes over an accessor, so lowering stops the spread first wherever one may reach it.
+const spreadWithAccessorStop = "a spread with an overwrite its source's slots can't hold, of a source that may hold an accessor as an own key, which adamic_object_spread_with doesn't copy yet (#vjvcnnj)"

@@ -63,19 +63,16 @@ func TestTypedPresenceAgrees(t *testing.T) {
 	}
 }
 
-// What the typed half leaves stopped, each where and in the words it stopped at main. The optional form of the
-// overwrite { ...source, k: undefined }, and the copied {} reaching an optional source, build their own shape now
-// and agree (spread_with_test.go, #k7g6f9h). The number form keeps #xy74m5x's stop (Adamic's 19:32:48Z ruling)
-// because its source may be undefined, which #k7g6f9h's first cut leaves stopped (typed_presence/README.md). The
-// unknown half is held, so an in on a receiver narrowed to object keeps the family's stop though every copy now
-// carries its bits. Lowering stops before either backend, so one check covers both. If a stop goes missing, the
-// program is run natively under the sanitizers and its run is part of the failure.
+// What the typed half leaves stopped, each where and in the words it stopped at main. Both forms of the overwrite {
+// ...source, k: undefined }, and the copied {} reaching an optional source, build their own shape now and agree
+// (spread_with_test.go's TestSpreadWithAgrees, #k7g6f9h; typed_presence/README.md). The unknown half is held, so an
+// in on a receiver narrowed to object keeps the family's stop though every copy now carries its bits. Lowering
+// stops before either backend, so one check covers both. If a stop goes missing, the program is run natively under
+// the sanitizers and its run is part of the failure.
 func TestTypedPresenceStops(t *testing.T) {
 	t.Parallel()
-	const held = "an overwrite of k with value after a spread whose source holds k as number, so the write would take a scalar slot for a reference or a reference for a scalar"
 	const family = "stage 0 can't lower in when a possibly absent spread has no property presence descriptors yet"
 	for _, pin := range []struct{ file, node, at, words string }{
-		{"typed_presence/65-leading-overwrite.ts", "true\nundefined\ntrue\nundefined\n", "k: undefined", held},
 		{"typed_presence/65-unknown-presence.ts", "false\ntrue\n", `"code" in value`, family},
 	} {
 		t.Run(pin.file, func(t *testing.T) {

@@ -1,5 +1,5 @@
-// An object literal's own getter makes it a class with an accessor, which may reach a SpreadWith literal's
-// source, so it stops (#k7g6f9h, #vjvcnnj).
+// An object literal's own getter is an own enumerable key, which Node's spread runs and copies and
+// adamic_object_spread_with passes over, so a SpreadWith literal it may reach stops (#k7g6f9h, #vjvcnnj).
 const sized = {
     label: "l",
     get size(): number {

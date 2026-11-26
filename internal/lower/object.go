@@ -65,9 +65,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				if value, reason, err = l.spreadOverwrite(node, name, value); err != nil {
 					return nil, err
 				}
-				if err := l.spreadWith(&literal, property, reason); err != nil {
-					return nil, err
-				}
+				l.spreadWith(&literal, reason)
 			}
 			literal.Fields = append(literal.Fields, ir.Field{Name: name, Value: value})
 		case ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment:
@@ -131,9 +129,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				return nil, err
 			}
 			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
-				if err := l.spreadWith(&literal, property, spreadAddsField); err != nil {
-					return nil, err
-				}
+				l.spreadWith(&literal, spreadAddsField)
 			}
 			if l.placeholderOrigin(property.Name()) != "" {
 				value = fit(value, placeholderStorage(value.Type()))
@@ -147,9 +143,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				if value, reason, err = l.spreadOverwrite(node, fieldName, value); err != nil {
 					return nil, err
 				}
-				if err := l.spreadWith(&literal, property, reason); err != nil {
-					return nil, err
-				}
+				l.spreadWith(&literal, reason)
 			}
 			if censusFieldSlotless(value.Type()) {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
@@ -171,11 +165,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			field.Value = fit(field.Value, ir.Union)
 		}
 	}
-	if literal.SpreadWith && l.hasAccessorStorage(l.checker.GetTypeAtLocation(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression)) {
-		// The type says so here; finishAccessors asks the accessor registry for the rest (spreadAccessorClass).
-		return nil, l.notYet(node.AsObjectLiteralExpression().Properties.Nodes[0], spreadWithAccessorStop)
-	}
-	if literal.SpreadMaybeUndefined {
+	if literal.SpreadMaybeUndefined && !literal.SpreadWith {
 		empty, err := l.emptySpread(node, literal.Fields)
 		if err != nil {
 			return nil, err
@@ -188,18 +178,14 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 // spreadWith makes literal a SpreadWith one when a field's reason, from spreadOverwrite, says the field can't
 // land in the slot its spread brings for it: the result is built by adamic_object_spread_with, a fresh object
 // whose shape is the actual source's own keys plus every field the literal writes, so it's never the source
-// taken over (NoReuse). A source that may be undefined keeps the stop, in the reason's words (#k7g6f9h's first
-// cut). An empty reason changes nothing.
-func (l *lowering) spreadWith(literal *ir.ObjectLiteral, property *ast.Node, reason string) error {
+// taken over (NoReuse). A source that may be undefined needs no Empty layout, since the primitive makes an
+// undefined source an empty one, as Node's { ...undefined } is. An empty reason changes nothing.
+func (l *lowering) spreadWith(literal *ir.ObjectLiteral, reason string) {
 	if reason == "" {
-		return nil
-	}
-	if literal.SpreadMaybeUndefined {
-		return l.notYet(property, reason)
+		return
 	}
 	literal.SpreadWith = true
 	literal.NoReuse = true
-	return nil
 }
 
 // emptySpread is the object { ...source, fields } makes when source is undefined: JavaScript's is

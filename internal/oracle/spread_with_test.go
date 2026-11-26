@@ -30,6 +30,7 @@ var spreadWithAgreeing = []struct {
 	{"spread_with/uniform.ts", "10 0 7 1\n", false},
 	{"spread_with/effect_order.ts", "1 2 5\n", false},
 	{"spread_with/backstop_plain.ts", "{\"length\":2,\"k\":1}\nend\n", false},
+	{"spread_with/backstop_class.ts", "x,y,k\n{\"x\":1,\"y\":2,\"k\":1}\nend\n", false},
 	{"spread_with/graph_member.ts", "b a b a\n", true},
 	{"spread_with/graph_fresh.ts", "b fresh b\n", true},
 	// #xy74m5x's own rows, which its stop held until a spread built its own layout.
@@ -39,6 +40,14 @@ var spreadWithAgreeing = []struct {
 	{"spread_overwrite/width.ts", "1 5\n", false},
 	{"spread_overwrite/width_method.ts", "1 5\n", false},
 	{"typed_presence/copied-empty-object.ts", "undefined\nundefined\n", false},
+	// A source that may be undefined: the primitive makes undefined an empty source, as Node's { ...undefined } is.
+	{"spread_overwrite/number_source.ts", "undefined\nundefined\n", false},
+	{"typed_presence/65-leading-overwrite.ts", "true\nundefined\ntrue\nundefined\n", false},
+	// A class whose accessors are all on its prototype: Node's spread copies own enumerable keys only, so the
+	// accessor is never copied, natively either (#vjvcnnj's narrowing).
+	{"spread_with/accessor_type.ts", "t 1\n", false},
+	{"spread_with/accessor_getter.ts", "t 1\n20\n", false},
+	{"spread_with/accessor_setter.ts", "true\ng 1\n", false},
 }
 
 // Each SpreadWith literal lowers and agrees with Node natively, released and sanitized with the leak check, on the
@@ -117,25 +126,28 @@ func TestSpreadWithAgrees(t *testing.T) {
 	}
 }
 
-// What keeps its stop, each where and in the words it stops: a SpreadWith literal whose source may be undefined
-// keeps #xy74m5x's (#k7g6f9h's first cut; typed_presence_test.go pins 65-leading-overwrite.ts the same), and one whose source may be a class instance with an accessor, a
-// getter, a setter or an object literal's own, stops before adamic_object_spread_with would refuse it at run time,
-// by the source's type or by the accessor registry (#vjvcnnj narrows both). If a stop goes missing, the program
-// is run natively under the sanitizers and its run is part of the failure.
+// What keeps its stop, each where and in the words it stops: a SpreadWith literal whose source may hold an accessor
+// as an own key, an object literal's, stops by the accessor registry, since adamic_object_spread_with passes over
+// an accessor that Node's spread runs and copies (spreadAccessorClass); and one whose source's view may hold a
+// library type's storage, an array, a typed array, a Map, a Set or a Node host value, is refused by
+// checkLibrarySpreads, so those storages never reach the run-time stop (TestSpreadWithSourceBackstop). If a stop
+// goes missing, the program is run natively under the sanitizers and its run is part of the failure.
 func TestSpreadWithStops(t *testing.T) {
 	t.Parallel()
-	const held = "after a spread whose source holds k as"
 	const accessor = "which adamic_object_spread_with doesn't copy yet (#vjvcnnj)"
-	// An accessor row's words end the stop's, so the type's stop and the registry's are told apart.
+	const library = "an object spread through a view that may hold library class "
+	// An accessor row's words end the stop's, naming what reaches it. A refused row is checkLibrarySpreads' Refused,
+	// every other a NotYet.
 	for _, pin := range []struct {
 		file, node, at, words string
-		ends                  bool
+		ends, refused         bool
 	}{
-		{"spread_overwrite/number_source.ts", "undefined\nundefined\n", "k: undefined", held, false},
-		{"spread_with/accessor_type.ts", "t 1\n", "...source", accessor, true},
-		{"spread_with/accessor_getter.ts", "t 1\n20\n", "...source", accessor + ", Sized among them", true},
-		{"spread_with/accessor_setter.ts", "true\ng 1\n", "...source", accessor + ", Gate among them", true},
-		{"spread_with/accessor_literal.ts", "l 1\n3\n", "...source", accessor + ", an object literal with accessors among them", true},
+		{"spread_with/accessor_literal.ts", "l 1\n3\n", "...source", accessor + ", an object literal with accessors among them", true, false},
+		{"spread_with/backstop_array.ts", "{\"length\":2,\"k\":1}\n{\"0\":1,\"1\":2,\"k\":1}\n", "...source", library + "Array", false, true},
+		{"spread_with/backstop_typed_array.ts", "{\"length\":2,\"k\":1}\n{\"0\":0,\"1\":0,\"k\":1}\n", "...source", library + "Uint8Array", false, true},
+		{"spread_with/backstop_map.ts", "{\"size\":2,\"k\":1}\n{\"k\":1}\n", "...source", library + "Map", false, true},
+		{"spread_with/backstop_set.ts", "{\"size\":2,\"k\":1}\n{\"k\":1}\n", "...source", library + "Set", false, true},
+		{"spread_with/backstop_host.ts", "number\nnumber\n", "...source", library, false, true},
 	} {
 		t.Run(pin.file, func(t *testing.T) {
 			t.Parallel()
@@ -156,6 +168,13 @@ func TestSpreadWithStops(t *testing.T) {
 				native, _ := natively(t, program)
 				t.Fatalf("lowered; want a stop at %s saying %q. Sanitized native: exit %d, stdout %q, stderr %q", want, pin.words, native.exitCode, native.stdout, native.stderr)
 			}
+			if pin.refused {
+				var refused *lower.Refused
+				if !errors.As(err, &refused) || refused.Where != want || !strings.Contains(err.Error(), pin.words) {
+					t.Fatalf("got %v; want a refusal saying %q at %s", err, pin.words, want)
+				}
+				return
+			}
 			var notYet *lower.NotYet
 			if !errors.As(err, &notYet) {
 				t.Fatalf("want a NotYet, got %v", err)
@@ -167,32 +186,77 @@ func TestSpreadWithStops(t *testing.T) {
 	}
 }
 
-// A SpreadWith literal's source stored as an array, a tuple here, seen through { readonly length: number }, is the
-// ruled run-time NotYet (Adamic on #k7g6f9h, under #7fg2fp3's form): Node copies its indices and runs on, and both
-// backends print exactly Node's output up to the spread, then stop, exit 70, with ir.SpreadWithSourceStop whole.
-// Native runs sanitized, ASan with UBSan, so a source read as an object's storage fails there loudly instead.
-// backstop_plain.ts, a plain object through the same type, agrees (TestSpreadWithAgrees).
+// A SpreadWith literal's source stored as anything but a plain object or a class instance is the ruled run-time
+// NotYet (Adamic on #k7g6f9h, under #7fg2fp3's form, a positive test on both backends): Node copies its own
+// enumerable keys and runs on, and both backends print exactly Node's output up to the spread, then stop, exit 70,
+// with ir.SpreadWithSourceStop whole. These are the storages lowering can't see at the spread, a tuple (no library
+// type names one) and a closure (its type is its own signature's), each through { readonly length: number }; the
+// rest are refused at compile time (TestSpreadWithStops). Native runs sanitized, ASan with UBSan, so a source read
+// as an object's storage fails there loudly instead. backstop_plain.ts and backstop_class.ts, a plain object and an
+// accessor-free class instance through such a type, agree (TestSpreadWithAgrees).
 func TestSpreadWithSourceBackstop(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/spread_with/backstop_tuple.ts"))
-	if err != nil {
-		t.Fatal(err)
-	}
 	const before = "{\"length\":2,\"k\":1}\n"
-	truth := onNode(t, path)
-	if truth.exitCode != 0 || string(truth.stdout) != before+"{\"0\":1,\"1\":2,\"k\":1}\nend\n" {
-		t.Fatalf("Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
+	for _, pin := range []struct{ file, node string }{
+		{"backstop_tuple.ts", before + "{\"0\":1,\"1\":2,\"k\":1}\nend\n"},
+		{"backstop_closure.ts", before + "{\"k\":1}\nend\n"},
+	} {
+		t.Run(pin.file, func(t *testing.T) {
+			t.Parallel()
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/spread_with", pin.file))
+			if err != nil {
+				t.Fatal(err)
+			}
+			truth := onNode(t, path)
+			if truth.exitCode != 0 || string(truth.stdout) != pin.node {
+				t.Fatalf("Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatalf("Lower: %v", err)
+			}
+			sanitized, _ := natively(t, program)
+			stop := "adamic: panic: " + ir.SpreadWithSourceStop + "\n"
+			for name, got := range map[string]run{"native": sanitized, "javascript": onJavaScriptBackend(t, program)} {
+				if got.exitCode != 70 || string(got.stdout) != before || string(got.stderr) != stop {
+					t.Errorf("%s: exit %d, stdout %q, stderr %q; want exit 70, stdout %q, stderr %q", name, got.exitCode, got.stdout, got.stderr, before, stop)
+				}
+			}
+		})
 	}
-	program, err := lowered(t, path)
-	if err != nil {
-		t.Fatalf("Lower: %v", err)
-	}
-	sanitized, _ := natively(t, program)
-	stop := "adamic: panic: " + ir.SpreadWithSourceStop + "\n"
-	for name, got := range map[string]run{"native": sanitized, "javascript": onJavaScriptBackend(t, program)} {
-		if got.exitCode != 70 || string(got.stdout) != before || string(got.stderr) != stop {
-			t.Errorf("%s: exit %d, stdout %q, stderr %q; want exit 70, stdout %q, stderr %q", name, got.exitCode, got.stdout, got.stderr, before, stop)
-		}
+}
+
+// A read of a prototype getter's name from a SpreadWith literal's copy, or from a copy of that copy, stops as
+// #7mjgxkc's copy reads do (spreadCopyRead): built is a Sized seen as Source, so inner = { ...built, extra: 1 } and
+// { ...inner } each hold no weight though Source says they do (Memory's pin on #k7g6f9h). The copy of the copy is
+// judged through its source, since its own spread sees inner's type, which holds extra and so no Sized
+// (spreadWithSourceGetter). Mutant: the walk through a SpreadWith literal dropped lowers getter_copy_of_copy.ts.
+func TestSpreadWithGetterReads(t *testing.T) {
+	t.Parallel()
+	for _, pin := range []struct{ file, stop string }{
+		{"getter_spread_with.ts", "a read of weight from { ...built, extra: 1 }, a spread's copy of a Sized instance, whose weight is a getter on its prototype"},
+		{"getter_copy_of_copy.ts", "a read of weight from { ...inner }, a spread's copy of a spread that copied a Sized instance, whose weight is a getter on its prototype"},
+	} {
+		t.Run(pin.file, func(t *testing.T) {
+			t.Parallel()
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/spread_with", pin.file))
+			if err != nil {
+				t.Fatal(err)
+			}
+			truth := onNode(t, path)
+			if disagreement(run{stdout: []byte("number\nundefined undefined\n")}, truth) != "" {
+				t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
+			}
+			program, err := lowered(t, path)
+			if err == nil {
+				native, _ := natively(t, program)
+				t.Fatalf("lowered; want a stop saying %q. Sanitized native: exit %d, stdout %q, stderr %q", pin.stop, native.exitCode, native.stdout, native.stderr)
+			}
+			var notYet *lower.NotYet
+			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), pin.stop) {
+				t.Fatalf("want a NotYet saying %q, got %v", pin.stop, err)
+			}
+		})
 	}
 }
 
