@@ -6,6 +6,21 @@
       "suffix": ".counts",
       "command": ["go", "test", "./internal/oracle", "-run", "TestCountsAreRecorded", "-count=1", "-timeout", "30m", "-args", "-update-counts"],
       "maxBytes": 65536
+    },
+    {
+      "path": "internal/compilerinputs/compilerinputs_table.go",
+      "command": ["go", "run", "./internal/compilerinputs/generate"],
+      "maxBytes": 65536
+    },
+    {
+      "path": "internal/load/projects/node/tsconfig.json",
+      "command": ["go", "run", "./internal/load/projects"],
+      "maxBytes": 131072
+    },
+    {
+      "path": "tsconfig.json",
+      "command": ["go", "run", "./internal/load/projects"],
+      "maxBytes": 131072
     }
   ]
 }

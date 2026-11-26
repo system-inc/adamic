@@ -13,8 +13,10 @@ import (
 
 // generatedList is cloud/fast-gate/generated.json, the files a restack may regenerate instead of parking (#5a224hp,
 // #6qwspb9). Loom's lander reads it from the tip's tree, runs each command in a unit, and writes only these paths,
-// each capped at its maxBytes, at most maxFiles at once. Each file's own test (counts.md's TestCountsAreRecorded) reds
-// bytes that don't match a fresh run, so a regenerated restack's bytes are checked, not believed.
+// each capped at its maxBytes, at most maxFiles at once. Each file's own test reds bytes that don't match a fresh run
+// (counts.md's TestCountsAreRecorded, compilerinputs' TestLoweringIsWhatTheCompilerLinks for the table, and
+// load/projects' TestTheRootProjectsAreLoadsOwn for both tsconfigs, #w5zzdjp), so a regenerated restack's bytes are
+// checked, not believed.
 type generatedList struct {
 	MaxFiles int             `json:"maxFiles"`
 	Files    []generatedFile `json:"files"`
