@@ -630,11 +630,17 @@ func (l *lowering) propertyRead(node *ast.Node, object ir.Expression, name strin
 	if object.Type() == ir.Union && questionDot && l.nullableObjectUnion(l.checker.GetTypeAtLocation(access.Expression)) {
 		object = l.optionalNullableObject(object)
 	}
+	// A read by run-time key under ?. tests its receiver for null and undefined first, which the key read
+	// doesn't (optionalDynamicProperty); a plain read keeps the key read alone.
+	keyRead := l.dynamicProperty
+	if questionDot {
+		keyRead = l.optionalDynamicProperty
+	}
 	if object.Type() == ir.Union {
-		return l.dynamicProperty(node, object, name)
+		return keyRead(node, object, name)
 	}
 	if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil && l.checker.GetTypeOfSymbol(field).Flags()&checker.TypeFlagsUnknown != 0 {
-		return l.dynamicProperty(node, fit(object, ir.Union), name)
+		return keyRead(node, fit(object, ir.Union), name)
 	}
 	if object.Type() == ir.Object && l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)), "RegExp") {
 		switch name {
