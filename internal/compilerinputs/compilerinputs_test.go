@@ -33,7 +33,7 @@ func TestLoweringIsWhatTheCompilerLinks(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	table, _, err := Generate(root)
+	table, err := Generate(root)
 	if err != nil {
 		t.Fatal(err)
 	}

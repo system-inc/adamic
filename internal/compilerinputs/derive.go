@@ -57,7 +57,7 @@ func Derive(repositoryRoot string, roots []string) ([]string, error) {
 	return orderedSet(inputs), nil
 }
 
-// One order holds every generated root set and projection, including inputs.txt.
+// One order holds every generated root set and projection.
 func orderedSet(paths []string) []string {
 	seen := make(map[string]bool, len(paths))
 	var result []string

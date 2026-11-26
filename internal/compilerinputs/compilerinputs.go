@@ -11,7 +11,6 @@ package compilerinputs
 import (
 	"fmt"
 	"slices"
-	"strings"
 )
 
 //go:generate go run ./generate -root ../..
@@ -33,11 +32,6 @@ func Markdownblocks() []string { return slices.Clone(markdownblocks) }
 
 // Admission is the lowering companion's inputs, including cmd/adamic's adapter site.
 func Admission() []string { return slices.Clone(admission) }
-
-// AdmissionText is the generator's inputs.txt representation of the committed projection.
-func AdmissionText() []byte { return admissionText(Admission()) }
-
-func admissionText(inputs []string) []byte { return []byte(strings.Join(inputs, "\n") + "\n") }
 
 // InputsFor returns the committed dependency set for roots, not a new go list run.
 // Consumer guards judge their projections against this snapshot; the exact-output

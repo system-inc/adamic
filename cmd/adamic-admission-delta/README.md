@@ -152,8 +152,10 @@ on an unrun program. `admitted: 0` is explicit for equal admission sets.
 where the judgment is `agrees with Node`, `disagrees with Node`, a ruled negative witness, run-time stop or
 backend divergence, `void, <why>`, or `not run on Node, omitted by the budget` (#1zscjp1).
 
-`inputs.txt` names the repository paths whose change can move a candidate's
-admission set, one per line, sorted: the lowering companion's Go import closure.
+The admission projection, `compilerinputs.Admission()` in
+`internal/compilerinputs/compilerinputs_table.go`, names the repository paths whose
+change can move a candidate's admission set, sorted: the lowering companion's Go
+import closure.
 `admission-lower` calls cmd/adamic's `compile`, which loads and lowers and stops,
 so the list is cmd/adamic, every in-repository package internal/load and
 internal/lower link on Linux and macOS, each module file pinning one, and go.work.
