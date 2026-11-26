@@ -1,6 +1,8 @@
 package lower
 
 import (
+	"fmt"
+	"os"
 	"slices"
 	"strconv"
 	"strings"
@@ -214,8 +216,21 @@ func (l *lowering) checkViewWidenedReads() error {
 		entered.entry = entry
 		marked := len(l.result.WidenedReads)
 		walk(l.result.Main, inspect)
-		for _, function := range l.result.Functions {
+		if refused != nil {
+			fmt.Fprintf(os.Stderr, "WVR-SITE firstlink=%v where=%v in=Main\n", l.firstLinkTraps, refused)
+		}
+		for index, function := range l.result.Functions {
+			before := refused
 			walk(function.Body, inspect)
+			if before == nil && refused != nil {
+				declaration := l.functionNodes[index]
+				at, skips := "nil", false
+				if declaration != nil {
+					at = l.program.Where(declaration)
+					skips = l.firstLinkSkips(declaration)
+				}
+				fmt.Fprintf(os.Stderr, "WVR-SITE firstlink=%v err=%v in=function index=%d name=%s declaration=%s skips=%v body0=%T\n", l.firstLinkTraps, refused, index, function.Name, at, skips, firstStatement(function.Body))
+			}
 		}
 		// A read finishAccessors made a dispatcher's call isn't a Property in the program any more, and its
 		// dispatcher's fallback reads the slot unchecked, so it's weighed here as it was lowered, its receiver as
@@ -458,4 +473,11 @@ func viewVouched(lies []viewLie, name string, read *checker.Type, inside bool, t
 		vouched = vouched || inside && lie.honest[name]
 	}
 	return vouched
+}
+
+func firstStatement(body []ir.Statement) any {
+	if len(body) == 0 {
+		return nil
+	}
+	return body[0]
 }
