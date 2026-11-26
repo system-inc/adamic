@@ -1529,6 +1529,18 @@
       "type_correct_sha256": "c0678cdc3776d81fc721bb726f55a76e7fcb49d0d9eb9afb7e967a54a90929fb",
       "exit": 70,
       "stderr": "adamic: panic: field read failed: (x as A | B).shared is not initialized; expected string, found missing\n"
+    },
+    "14269aa3e2f998b2b15c3876882c7ddaeb727d2494ababd71c59df4254f13535": {
+      "form": "checked_boundary",
+      "ruling_task": "#2msw6t8",
+      "ruling": "Adamic, Nov 14, rulings.md:17; its for-of road on #rm22wzv, Nov 26",
+      "declaration": "internal/oracle/testdata/source_slot_certificate/road_destructure_for_of.ts:4",
+      "declared_type": "number",
+      "repair_from": "const view = held as Box;\nview.child = { ready: false };",
+      "repair_to": "const view = raw;\nview.child = { ready: false, other: 7 };",
+      "type_correct_sha256": "6d4c6506160ded2ae1f35c217f1e41a492d287b8628ff7c953d634a63302f27c",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: child.other is not initialized; expected number, found missing\n"
     }
   }
 }
