@@ -29,7 +29,7 @@ var spreadWithAgreeing = []struct {
 	{"spread_with/resolver_279.ts", "resolvedModule,failedLookupLocations,affectingLocations,resolutionDiagnostics\n{\"resolvedModule\":{\"resolvedFileName\":\"/a.ts\"},\"failedLookupLocations\":[\"/x\",\"/y\"],\"resolutionDiagnostics\":[{\"messageText\":\"m\"}]}\nresolvedModule,alternateResult,failedLookupLocations,affectingLocations,resolutionDiagnostics\n{\"alternateResult\":\"/alt\",\"failedLookupLocations\":[\"/y\"],\"resolutionDiagnostics\":[{\"messageText\":\"m\"}]}\nmissing\n", false},
 	{"spread_with/uniform.ts", "10 0 7 1\n", false},
 	{"spread_with/effect_order.ts", "1 2 5\n", false},
-	{"spread_with/backstop_plain.ts", "{\"0\":2,\"k\":1}\nend\n", false},
+	{"spread_with/backstop_plain.ts", "{\"tag\":2,\"k\":1}\nend\n", false},
 	{"spread_with/backstop_class.ts", "x,y,k\n{\"x\":1,\"y\":2,\"k\":1}\nend\n", false},
 	{"spread_with/graph_member.ts", "b a b a\n", true},
 	{"spread_with/graph_fresh.ts", "b fresh b\n", true},
@@ -130,8 +130,10 @@ func TestSpreadWithAgrees(t *testing.T) {
 // What keeps its stop, each where and in the words it stops: a SpreadWith literal whose source may hold an accessor
 // as an own key, an object literal's, stops by the accessor registry, since adamic_object_spread_with passes over
 // an accessor that Node's spread runs and copies (spreadAccessorClass); and one whose source's view may hold a
-// library type's storage, an array, a typed array or a Node host value, is refused by checkLibrarySpreads, and a
-// Map or a Set stops earlier, where it's passed to a plain object type, so those storages never reach the run-time stop (TestSpreadWithSourceBackstop). If a stop
+// library type's storage, an array, a typed array, or a function (whose own members are Function's, which
+// console.log's type shares), is refused by checkLibrarySpreads, and a Map, a Set or a Node host value stops earlier,
+// where it's passed to a plain object type, so those storages never reach the run-time stop
+// (TestSpreadWithSourceBackstop). If a stop
 // goes missing, the program is run natively under the sanitizers and its run is part of the failure.
 func TestSpreadWithStops(t *testing.T) {
 	t.Parallel()
@@ -149,7 +151,8 @@ func TestSpreadWithStops(t *testing.T) {
 		{"spread_with/backstop_typed_array.ts", "{\"length\":2,\"k\":1}\n{\"0\":0,\"1\":0,\"k\":1}\n", "...source", library + "Uint8Array", false, true},
 		{"spread_with/backstop_map.ts", "{\"size\":2,\"k\":1}\n{\"k\":1}\n", "new Map<", collection, false, false},
 		{"spread_with/backstop_set.ts", "{\"size\":2,\"k\":1}\n{\"k\":1}\n", "new Set<", collection, false, false},
-		{"spread_with/backstop_host.ts", "number\nnumber\n", "...source", library, false, true},
+		{"spread_with/backstop_host.ts", "number\nnumber\n", "process.memoryUsage()", "a host object of type MemoryUsage seen as", false, false},
+		{"spread_with/backstop_closure.ts", "{\"length\":2,\"k\":1}\n{\"k\":1}\nend\n", "...source", library + "log", false, true},
 	} {
 		t.Run(pin.file, func(t *testing.T) {
 			t.Parallel()
@@ -191,17 +194,15 @@ func TestSpreadWithStops(t *testing.T) {
 // A SpreadWith literal's source stored as anything but a plain object or a class instance is the ruled run-time
 // NotYet (Adamic on #k7g6f9h, under #7fg2fp3's form, a positive test on both backends): Node copies its own
 // enumerable keys and runs on, and both backends print exactly Node's output up to the spread, then stop, exit 70,
-// with ir.SpreadWithSourceStop whole. These are the storages lowering can't see at the spread, a tuple (no library
-// type names one) and a function (its type is its own), each through a view naming a field no library type has,
-// { readonly 0: number } and { readonly tag: number }, since a length view would fit console.log's function type
-// and be refused; the rest are refused at compile time (TestSpreadWithStops). Native runs sanitized, ASan with UBSan, so a source read
+// with ir.SpreadWithSourceStop whole. The storage lowering can't see at the spread is a tuple (no library type names
+// one), through { readonly 0: number }, a view no library type has, since a length view would fit console.log's
+// function type and be refused; the rest stop at compile time (TestSpreadWithStops). Native runs sanitized, ASan with UBSan, so a source read
 // as an object's storage fails there loudly instead. backstop_plain.ts and backstop_class.ts, a plain object and an
 // accessor-free class instance through such a type, agree (TestSpreadWithAgrees).
 func TestSpreadWithSourceBackstop(t *testing.T) {
 	t.Parallel()
 	for _, pin := range []struct{ file, before, node string }{
-		{"backstop_tuple.ts", "{\"0\":5,\"k\":1}\n", "{\"0\":1,\"1\":2,\"k\":1}\nend\n"},
-		{"backstop_closure.ts", "{\"tag\":1,\"k\":1}\n", "{\"tag\":2,\"k\":1}\n3\n"},
+		{"backstop_tuple.ts", "", "{\"0\":1,\"1\":2,\"k\":1}\nend\n"},
 	} {
 		t.Run(pin.file, func(t *testing.T) {
 			t.Parallel()

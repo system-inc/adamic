@@ -33,9 +33,8 @@ member, a fresh string, the hold retains it (graph_regions.c:672-678), one count
 `TestSpreadWithAgrees/spread_with/graph_string.ts`.
 
 **W8, the native storage check dropped.** Library's positive test in object_spread.c (`if (!plain)`) never stops, her
-`storage-check-dropped`, planted on this stacked tree, so a tuple is copied as a plain object's slots and a closure's
-storage is read as an object's. Red: `TestSpreadWithSourceBackstop/backstop_tuple.ts` and `backstop_closure.ts`, on
-their native rows.
+`storage-check-dropped`, planted on this stacked tree, so a tuple is copied as a plain object's slots. Red:
+`TestSpreadWithSourceBackstop/backstop_tuple.ts`, on its native row.
 
 **W9, the JavaScript mirror dropped.** The JavaScript backend spreads the source as it is, so a tuple's indices are
 copied where native stops. Red: `TestSpreadWithSourceBackstop/backstop_tuple.ts`, on its javascript row.
