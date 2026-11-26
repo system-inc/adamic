@@ -151,7 +151,7 @@ func TestSpreadWithStops(t *testing.T) {
 		{"spread_with/backstop_typed_array.ts", "{\"length\":2,\"k\":1}\n{\"0\":0,\"1\":0,\"k\":1}\n", "...source", library + "Uint8Array", false, true},
 		{"spread_with/backstop_map.ts", "{\"size\":2,\"k\":1}\n{\"k\":1}\n", "new Map<", collection, false, false},
 		{"spread_with/backstop_set.ts", "{\"size\":2,\"k\":1}\n{\"k\":1}\n", "new Set<", collection, false, false},
-		{"spread_with/backstop_host.ts", "number\nnumber\n", "process.memoryUsage()", "a host object of type MemoryUsage seen as", false, false},
+		{"spread_with/backstop_host.ts", "number\nnumber\n", "process.memoryUsage())", "a host object of type MemoryUsage seen as", false, false},
 		{"spread_with/backstop_closure.ts", "{\"length\":2,\"k\":1}\n{\"k\":1}\nend\n", "...source", library + "log", false, true},
 	} {
 		t.Run(pin.file, func(t *testing.T) {
@@ -194,15 +194,15 @@ func TestSpreadWithStops(t *testing.T) {
 // A SpreadWith literal's source stored as anything but a plain object or a class instance is the ruled run-time
 // NotYet (Adamic on #k7g6f9h, under #7fg2fp3's form, a positive test on both backends): Node copies its own
 // enumerable keys and runs on, and both backends print exactly Node's output up to the spread, then stop, exit 70,
-// with ir.SpreadWithSourceStop whole. The storage lowering can't see at the spread is a tuple (no library type names
-// one), through { readonly 0: number }, a view no library type has, since a length view would fit console.log's
-// function type and be refused; the rest stop at compile time (TestSpreadWithStops). Native runs sanitized, ASan with UBSan, so a source read
+// with ir.SpreadWithSourceStop whole. The storage lowering can't see at the spread is a tuple held in a union with a
+// plain object type: seen alone as a plain object type a tuple stops where it's passed, and a length view would fit
+// console.log's function type and be refused; the rest stop at compile time (TestSpreadWithStops). Native runs sanitized, ASan with UBSan, so a source read
 // as an object's storage fails there loudly instead. backstop_plain.ts and backstop_class.ts, a plain object and an
 // accessor-free class instance through such a type, agree (TestSpreadWithAgrees).
 func TestSpreadWithSourceBackstop(t *testing.T) {
 	t.Parallel()
 	for _, pin := range []struct{ file, before, node string }{
-		{"backstop_tuple.ts", "", "{\"0\":1,\"1\":2,\"k\":1}\nend\n"},
+		{"backstop_tuple.ts", "a,k 1\n", "0,1,k 1\nend\n"},
 	} {
 		t.Run(pin.file, func(t *testing.T) {
 			t.Parallel()
