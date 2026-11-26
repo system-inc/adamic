@@ -15,6 +15,29 @@ function fn(root, file, name) {
     return found[0].getText(source).replace(/^export /, '');
 }
 const js = text => ts.transpileModule(text, {compilerOptions: {target: ts.ScriptTarget.ES2020, module: ts.ModuleKind.CommonJS}}).outputText;
+const utilitiesFile = 'src/compiler/utilities.ts';
+let utilities = read(after, utilitiesFile);
+if (mutant === 'parsed-result-any') {
+    const binding = 'let result: AdamicJsonRecoveryValue | undefined = tryParseJson(jsonText);';
+    assert.equal(utilities.split(binding).length, 2, 'parsed result mutant anchor');
+    utilities = utilities.replace(binding, 'let result: any = tryParseJson(jsonText);');
+}
+const utilitiesSource = ts.createSourceFile(utilitiesFile, utilities, ts.ScriptTarget.Latest, true);
+const jsonReaders = utilitiesSource.statements.filter(node =>
+    ts.isFunctionDeclaration(node) && node.name?.text === 'readJsonOrUndefined');
+assert.equal(jsonReaders.length, 1, 'readJsonOrUndefined declaration');
+const parseResults = jsonReaders[0].body.statements.filter(ts.isVariableStatement)
+    .flatMap(node => [...node.declarationList.declarations])
+    .filter(node => node.name.getText(utilitiesSource) === 'result');
+assert.equal(parseResults.length, 1, 'readJsonOrUndefined result binding');
+assert.equal(parseResults[0].initializer?.getText(utilitiesSource), 'tryParseJson(jsonText)');
+assert.equal(parseResults[0].type?.getText(utilitiesSource), 'AdamicJsonRecoveryValue | undefined', 'parsed result must use the JSON recovery type');
+
+const readJson = utilitiesSource.statements.find(node => ts.isFunctionDeclaration(node) && node.name?.text === 'readJson');
+const conversion = readJson.body.statements.find(ts.isReturnStatement).expression;
+assert(ts.isConditionalExpression(conversion) && ts.isObjectLiteralExpression(conversion.whenFalse) &&
+    conversion.whenFalse.properties.length === 0, 'readJson must convert the rejected JSON type to an empty record');
+
 const commandFile = 'src/compiler/commandLineParser.ts';
 let objectCode = fn(after, commandFile, 'isAdamicJsonObject') + '\n' + fn(after, commandFile, 'checkedAdamicJsonObject');
 if (mutant === 'object') objectCode = objectCode.replace('typeof value === "object"', 'typeof value === "string"');
@@ -184,4 +207,4 @@ for (const manifest of [{}, {name: null}, {name: false}, {name: 0}, {name: ''}, 
 assert.throws(() => packageRead(packageCheck, {name: 1}), TypeError);
 assert.throws(() => packageRead(packageCheck, {name: 'pkg', types: {}}), TypeError);
 
-console.log(JSON.stringify({classes: ['object', 'inherited', 'location', 'response', 'plugin', 'localized', 'echo', 'full-reply-string', 'full-reply-invalid', 'typing-string-map', 'typing-dependency-keys', 'typing-name', 'typing-types'], beforeAfter: 'pass', mutant: mutant || null}));
+console.log(JSON.stringify({classes: ['parsed-result-any', 'object', 'inherited', 'location', 'response', 'plugin', 'localized', 'echo', 'full-reply-string', 'full-reply-invalid', 'typing-string-map', 'typing-dependency-keys', 'typing-name', 'typing-types'], beforeAfter: 'pass', mutant: mutant || null}));

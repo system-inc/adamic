@@ -65,11 +65,23 @@ const witnesses = path.join(__dirname, 'witnesses.cjs');
 let result = spawnSync(process.execPath, [witnesses, before, after], {encoding: 'utf8'});
 fs.writeFileSync(path.join(evidence, 'witnesses.log'), result.stdout + result.stderr);
 assert.equal(result.status, 0, result.stderr);
+function checkMutant(result, check) {
+    assert.ifError(result.error);
+    assert.equal(result.signal, null, `${check} mutant was interrupted`);
+    assert(Number.isInteger(result.status) && result.status > 0, `${check} mutant must exit with a failure`);
+    if (check === 'parsed-result-any') {
+        assert.equal(result.status, 1, 'parsed-result-any assertion exit');
+        assert.match(result.stderr, /AssertionError \[ERR_ASSERTION\]: parsed result must use the JSON recovery type/);
+        assert.match(result.stderr, /actual: 'any'/);
+        assert.match(result.stderr, /expected: 'AdamicJsonRecoveryValue \| undefined'/);
+        assert.match(result.stderr, /witnesses\.cjs:\d+:\d+/);
+    }
+}
 const mutants = [];
-for (const check of ['object', 'inherited', 'location', 'response', 'plugin', 'localized', 'echo', 'full-reply-string', 'full-reply-invalid', 'typing-string-map', 'typing-dependency-keys', 'typing-name', 'typing-types']) {
+for (const check of ['parsed-result-any', 'object', 'inherited', 'location', 'response', 'plugin', 'localized', 'echo', 'full-reply-string', 'full-reply-invalid', 'typing-string-map', 'typing-dependency-keys', 'typing-name', 'typing-types']) {
     result = spawnSync(process.execPath, [witnesses, before, after, check], {encoding: 'utf8'});
     fs.writeFileSync(path.join(evidence, `mutant-${check}.log`), result.stdout + result.stderr);
-    assert.notEqual(result.status, 0, `${check} mutant passed`);
+    checkMutant(result, check);
     mutants.push({class: check, exit: result.status});
 }
 const baseline = fs.readFileSync(path.join(before, 'built/local/typescript.d.ts'), 'utf8');

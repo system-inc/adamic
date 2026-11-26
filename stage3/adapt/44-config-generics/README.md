@@ -1,5 +1,7 @@
 # Config conversion carries caller types
 
+Family 12 (#kbcj5nr) widens the protected `isCompilerOptionsValue` input from `any` to `unknown`. Its existing nullish, array and `typeof` tests keep their exact bytes. The planner accepts the two reviewed predicate snapshots.
+
 TypeScript 6.0.3, source pin `050880ce59e30b356b686bd3144efe24f875ebc8`.
 Main baseline: `45487a809f89885a3fc651cd590e7dabf31362dc`.
 Ruling: October 8, 12:00, internal caller-specific generics; the existing

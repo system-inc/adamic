@@ -1,0 +1,82 @@
+[
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "isNullOrUndefined",
+    "kind": "Parameter",
+    "binding": "x",
+    "before": "x: any",
+    "after": "x: unknown"
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "startsWithConfigDirTemplate",
+    "kind": "Parameter",
+    "binding": "value",
+    "before": "value: any",
+    "after": "value: OptionsBase[string]"
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "getOptionValueWithEmptyStrings",
+    "kind": "Parameter",
+    "binding": "value",
+    "before": "value: any",
+    "after": "value: unknown"
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "owner": "getCommonSourceDirectory",
+    "kind": "VariableDeclaration",
+    "binding": "commonSourceDirectory",
+    "before": "commonSourceDirectory",
+    "after": "commonSourceDirectory: string"
+  },
+  {
+    "file": "src/compiler/moduleNameResolver.ts",
+    "owner": "nodeModuleNameResolver",
+    "kind": "VariableDeclaration",
+    "binding": "extensions",
+    "before": "extensions",
+    "after": "extensions: Extensions"
+  },
+  {
+    "file": "src/compiler/moduleNameResolver.ts",
+    "owner": "nodeModuleNameResolverWorker",
+    "kind": "VariableDeclaration",
+    "binding": "result",
+    "before": "result",
+    "after": "result: SearchResult<{ resolved: Resolved; readonly isExternalLibraryImport: boolean; }>"
+  },
+  {
+    "file": "src/compiler/moduleSpecifiers.ts",
+    "owner": "getAllRuntimeDependencies",
+    "kind": "VariableDeclaration",
+    "binding": "result",
+    "before": "result",
+    "after": "result: string[] | undefined"
+  },
+  {
+    "file": "src/compiler/path.ts",
+    "owner": "getNormalizedAbsolutePath",
+    "kind": "VariableDeclaration",
+    "binding": "normalized",
+    "before": "normalized",
+    "after": "normalized: string | undefined"
+  },
+  {
+    "file": "src/compiler/sourcemap.ts",
+    "owner": "isStringOrNull",
+    "kind": "Parameter",
+    "binding": "x",
+    "before": "x: any",
+    "after": "x: unknown"
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "owner": "compareMessageChainContent",
+    "kind": "VariableDeclaration",
+    "binding": "res",
+    "before": "res",
+    "after": "res: Comparison"
+  }
+]
