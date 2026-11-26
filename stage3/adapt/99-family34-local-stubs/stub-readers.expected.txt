@@ -1,0 +1,418 @@
+
+Shared function noop
+src/compiler/core.ts:<coordinate> [declaration/write] export function noop(_?: unknown): void {}
+src/harness/incrementalUtils.ts:<coordinate> [BinaryExpression] compilerHost.trace = ts.noop; // We dont want to update host just because of trace
+src/harness/incrementalUtils.ts:<coordinate> [PropertyAssignment] onInvalidatedResolution: ts.noop,
+src/harness/incrementalUtils.ts:<coordinate> [PropertyAssignment] onChangedAutomaticTypeDirectiveNames: ts.noop,
+src/harness/incrementalUtils.ts:<coordinate> [PropertyAssignment] scheduleInvalidateResolutionsOfFailedLookupLocations: ts.noop,
+src/harness/incrementalUtils.ts:<coordinate> [PropertyAssignment] writeLog: ts.noop,
+src/harness/tsserverLogger.ts:<coordinate> [PropertyAssignment] close: ts.noop,
+src/harness/tsserverLogger.ts:<coordinate> [PropertyAssignment] perftrc: ts.noop,
+src/harness/tsserverLogger.ts:<coordinate> [PropertyAssignment] info: ts.noop,
+src/harness/tsserverLogger.ts:<coordinate> [PropertyAssignment] msg: ts.noop,
+src/harness/tsserverLogger.ts:<coordinate> [PropertyAssignment] startGroup: ts.noop,
+src/harness/tsserverLogger.ts:<coordinate> [PropertyAssignment] endGroup: ts.noop,
+src/harness/tsserverLogger.ts:<coordinate> [PropertyAssignment] log: ts.noop,
+src/harness/harnessLanguageService.ts:<coordinate> [FirstNode] log: typeof ts.noop = ts.noop;
+src/harness/harnessLanguageService.ts:<coordinate> [PropertyDeclaration] log: typeof ts.noop = ts.noop;
+src/harness/harnessLanguageService.ts:<coordinate> [FirstNode] trace: typeof ts.noop = ts.noop;
+src/harness/harnessLanguageService.ts:<coordinate> [PropertyDeclaration] trace: typeof ts.noop = ts.noop;
+src/harness/harnessLanguageService.ts:<coordinate> [FirstNode] error: typeof ts.noop = ts.noop;
+src/harness/harnessLanguageService.ts:<coordinate> [PropertyDeclaration] error: typeof ts.noop = ts.noop;
+src/harness/harnessLanguageService.ts:<coordinate> [FirstNode] onMessage: typeof ts.noop = ts.noop;
+src/harness/harnessLanguageService.ts:<coordinate> [PropertyDeclaration] onMessage: typeof ts.noop = ts.noop;
+src/harness/harnessLanguageService.ts:<coordinate> [FirstNode] writeMessage: typeof ts.noop = ts.noop;
+src/harness/harnessLanguageService.ts:<coordinate> [PropertyDeclaration] writeMessage: typeof ts.noop = ts.noop;
+src/harness/harnessLanguageService.ts:<coordinate> [PropertyDeclaration] onMessage = ts.noop;
+src/harness/harnessLanguageService.ts:<coordinate> [PropertyDeclaration] writeMessage = ts.noop; // overridden
+src/harness/harnessLanguageService.ts:<coordinate> [PropertyDeclaration] writeFile = ts.noop;
+src/testRunner/parallel/shared.ts:<coordinate> [BinaryExpression] global.before = ts.noop;
+src/testRunner/parallel/shared.ts:<coordinate> [BinaryExpression] global.after = ts.noop;
+src/testRunner/parallel/shared.ts:<coordinate> [BinaryExpression] global.beforeEach = ts.noop;
+src/testRunner/parallel/shared.ts:<coordinate> [BinaryExpression] global.afterEach = ts.noop;
+src/testRunner/parallel/shared.ts:<coordinate> [AsExpression] global.describe.skip = global.xdescribe = global.xcontext = ts.noop as Mocha.PendingSuiteFunction;
+src/testRunner/parallel/shared.ts:<coordinate> [AsExpression] global.describe.only = ts.noop as Mocha.ExclusiveSuiteFunction;
+src/testRunner/parallel/shared.ts:<coordinate> [AsExpression] global.it.skip = global.xit = global.xspecify = ts.noop as Mocha.PendingTestFunction;
+src/testRunner/parallel/shared.ts:<coordinate> [AsExpression] global.it.only = ts.noop as Mocha.ExclusiveTestFunction;
+src/testRunner/unittests/debugDeprecation.ts:<coordinate> [CallExpression] const deprecation = deprecate(ts.noop, {
+src/testRunner/unittests/debugDeprecation.ts:<coordinate> [CallExpression] const deprecation = deprecate(ts.noop, {
+src/testRunner/unittests/debugDeprecation.ts:<coordinate> [CallExpression] const deprecation = deprecate(ts.noop, {
+src/testRunner/unittests/debugDeprecation.ts:<coordinate> [CallExpression] const deprecation = deprecate(ts.noop, {
+src/testRunner/unittests/debugDeprecation.ts:<coordinate> [CallExpression] const deprecation = deprecate(ts.noop, {
+src/testRunner/unittests/debugDeprecation.ts:<coordinate> [CallExpression] const deprecation = deprecate(ts.noop, {
+src/testRunner/unittests/helpers/tsc.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/helpers/tscWatch.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/helpers/tscWatch.ts:<coordinate> [PropertyAssignment] timeouts: ts.noop,
+src/testRunner/unittests/helpers/tscWatch.ts:<coordinate> [BinaryExpression] compilerHost.trace = ts.noop;
+src/testRunner/unittests/helpers/tscWatch.ts:<coordinate> [PropertyAssignment] onInvalidatedResolution: ts.noop,
+src/testRunner/unittests/helpers/tscWatch.ts:<coordinate> [PropertyAssignment] onChangedAutomaticTypeDirectiveNames: ts.noop,
+src/testRunner/unittests/helpers/tscWatch.ts:<coordinate> [PropertyAssignment] scheduleInvalidateResolutionsOfFailedLookupLocations: ts.noop,
+src/testRunner/unittests/helpers/tscWatch.ts:<coordinate> [PropertyAssignment] writeLog: ts.noop,
+src/testRunner/unittests/reuseProgramStructure.ts:<coordinate> [CallExpression] const program2 = updateProgram(program1, ["a.ts"], { types: ["b"] }, ts.noop);
+src/testRunner/unittests/reuseProgramStructure.ts:<coordinate> [CallExpression] const program2 = updateProgram(program1, ["a.ts"], { types: ["a"] }, ts.noop);
+src/testRunner/unittests/reuseProgramStructure.ts:<coordinate> [CallExpression] const program2 = updateProgram(program1, ["a.ts"], { target, module: ts.ModuleKind.AMD }, ts.noop);
+src/testRunner/unittests/reuseProgramStructure.ts:<coordinate> [CallExpression] const program2 = updateProgram(program1, ["a.ts"], { target, module: ts.ModuleKind.CommonJS, rootDir: "/home/src/workspaces/project/a/c" }, ts.noop);
+src/testRunner/unittests/reuseProgramStructure.ts:<coordinate> [CallExpression] const program2 = updateProgram(program1, ["a.ts"], { target, module: ts.ModuleKind.CommonJS, configFilePath: "/home/src/workspaces/project/a/c/tsconfig.json" }, ts.noop);
+src/testRunner/unittests/reuseProgramStructure.ts:<coordinate> [CallExpression] const program2 = updateProgram(program1, ["a.ts"], options, ts.noop);
+src/testRunner/unittests/reuseProgramStructure.ts:<coordinate> [CallExpression] const program2 = updateProgram(program1, ["a.ts"], options, ts.noop, newTexts);
+src/testRunner/unittests/reuseProgramStructure.ts:<coordinate> [CallExpression] const afterNpmInstallProgram = updateProgram(initialProgram, rootFiles.map(f => f.name), options, ts.noop, filesAfterNpmInstall);
+src/testRunner/unittests/services/extract/helpers.ts:<coordinate> [PropertyAssignment] cancellationToken: { throwIfCancellationRequested: ts.noop, isCancellationRequested: ts.returnFalse },
+src/testRunner/unittests/services/extract/helpers.ts:<coordinate> [PropertyAssignment] cancellationToken: { throwIfCancellationRequested: ts.noop, isCancellationRequested: ts.returnFalse },
+src/testRunner/unittests/services/convertToAsyncFunction.ts:<coordinate> [PropertyAssignment] cancellationToken: { throwIfCancellationRequested: ts.noop, isCancellationRequested: ts.returnFalse },
+src/testRunner/unittests/services/languageService.ts:<coordinate> [PropertyAssignment] onUnRecoverableConfigFileDiagnostic: ts.noop,
+src/testRunner/unittests/tsbuild/commandLine.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tsbuild/commandLine.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tsbuild/commandLine.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tsbuild/commandLine.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tsbuild/commandLine.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tsbuild/commandLine.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tsbuild/commandLine.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tsbuild/moduleResolution.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tsbuild/outputPaths.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tsbuild/outputPaths.ts:<coordinate> [CallExpression] ts.noop,
+src/testRunner/unittests/tsbuildWatch/programUpdates.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tsbuildWatch/programUpdates.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tsbuildWatch/programUpdates.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tsbuildWatch/programUpdates.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tsbuildWatch/programUpdates.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tsbuildWatch/programUpdates.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tsbuildWatch/projectsBuilding.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tsbuildWatch/watchEnvironment.ts:<coordinate> [PropertyAssignment] timeouts: ts.noop,
+src/testRunner/unittests/tsc/cancellationToken.ts:<coordinate> [CallExpression] applyEdit(sys, baseline, ts.noop, caption);
+src/testRunner/unittests/tsc/incremental.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tscWatch/incremental.ts:<coordinate> [CallExpression] const command = ts.parseConfigFileWithSystem("tsconfig.json", { target: ts.ScriptTarget.ES5, module: ts.ModuleKind.AMD }, /*extendedConfigCache*/ undefined, /*watchOptionsToExtend*/ undefined, system, ts.noop)!;
+src/testRunner/unittests/tscWatch/programUpdates.ts:<coordinate> [PropertyAssignment] timeouts: ts.noop,
+src/testRunner/unittests/tscWatch/resolutionCache.ts:<coordinate> [PropertyAssignment] timeouts: ts.noop,
+src/testRunner/unittests/tscWatch/resolutionCache.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tscWatch/watchApi.ts:<coordinate> [PropertyAssignment] onUnRecoverableConfigFileDiagnostic: ts.noop,
+src/testRunner/unittests/tscWatch/watchApi.ts:<coordinate> [PropertyAssignment] timeouts: ts.noop,
+src/testRunner/unittests/tscWatch/watchApi.ts:<coordinate> [PropertyAssignment] timeouts: ts.noop,
+src/testRunner/unittests/tscWatch/watchApi.ts:<coordinate> [PropertyAssignment] timeouts: ts.noop,
+src/testRunner/unittests/tscWatch/watchApi.ts:<coordinate> [PropertyAssignment] timeouts: ts.noop,
+src/testRunner/unittests/tscWatch/watchApi.ts:<coordinate> [PropertyAssignment] timeouts: ts.noop,
+src/testRunner/unittests/tscWatch/watchApi.ts:<coordinate> [PropertyAssignment] timeouts: ts.noop,
+src/testRunner/unittests/tscWatch/watchApi.ts:<coordinate> [PropertyAssignment] timeouts: ts.noop,
+src/testRunner/unittests/tscWatch/watchApi.ts:<coordinate> [PropertyAssignment] onUnRecoverableConfigFileDiagnostic: ts.noop,
+src/testRunner/unittests/tscWatch/watchEnvironment.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tscWatch/watchEnvironment.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tscWatch/watchEnvironment.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tscWatch/watchEnvironment.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tscWatch/watchEnvironment.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tscWatch/watchEnvironment.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tscWatch/watchEnvironment.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tscWatch/watchEnvironment.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tscWatch/watchEnvironment.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tscWatch/watchEnvironment.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tscWatch/watchEnvironment.ts:<coordinate> [PropertyAssignment] timeouts: ts.noop, // To update folder structure
+src/testRunner/unittests/tscWatch/watchEnvironment.ts:<coordinate> [PropertyAssignment] timeouts: ts.noop, // To update folder structure
+src/testRunner/unittests/tscWatch/watchEnvironment.ts:<coordinate> [PropertyAssignment] timeouts: ts.noop, // To update folder structure
+src/testRunner/unittests/tscWatch/watchEnvironment.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tscWatch/watchEnvironment.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tscWatch/watchEnvironment.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tscWatch/watchEnvironment.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tscWatch/watchEnvironment.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tscWatch/watchEnvironment.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tscWatch/watchEnvironment.ts:<coordinate> [PropertyAssignment] timeouts: ts.noop,
+src/testRunner/unittests/tscWatch/watchEnvironment.ts:<coordinate> [PropertyAssignment] timeouts: ts.noop,
+src/testRunner/unittests/tscWatch/watchEnvironment.ts:<coordinate> [PropertyAssignment] edit: ts.noop,
+src/testRunner/unittests/tscWatch/watchEnvironment.ts:<coordinate> [PropertyAssignment] timeouts: ts.noop,
+src/testRunner/unittests/tsserver/extends.ts:<coordinate> [CallExpression] forEachTscWatchEdit(session, edits(), ts.noop);
+src/testRunner/unittests/tsserver/session.ts:<coordinate> [PropertyAssignment] const noopFileWatcher: ts.FileWatcher = { close: ts.noop };
+src/testRunner/unittests/tsserver/session.ts:<coordinate> [PropertyAssignment] writeFile: ts.noop,
+src/testRunner/unittests/tsserver/session.ts:<coordinate> [PropertyAssignment] createDirectory: ts.noop,
+src/testRunner/unittests/tsserver/session.ts:<coordinate> [PropertyAssignment] clearTimeout: ts.noop,
+src/testRunner/unittests/tsserver/session.ts:<coordinate> [PropertyAssignment] clearImmediate: ts.noop,
+src/testRunner/unittests/tsserver/symlinkCache.ts:<coordinate> [CallExpression] cache.setSymlinksFromResolutions(ts.noop, ts.noop, map);
+src/testRunner/unittests/tsserver/symlinkCache.ts:<coordinate> [CallExpression] cache.setSymlinksFromResolutions(ts.noop, ts.noop, map);
+src/testRunner/unittests/tsserver/textStorage.ts:<coordinate> [PropertyAssignment] return { fileName, closeSourceMapFileWatcher: ts.noop, isDynamicOrHasMixedContent: ts.returnFalse } as ts.server.ScriptInfo;
+src/testRunner/runner.ts:<coordinate> [BinaryExpression] (global as any).describe = ts.noop;
+src/tsc/tsc.ts:<coordinate> [CallExpression] ts.executeCommandLine(ts.sys, ts.noop, ts.sys.args);
+src/compiler/core.ts:<coordinate> [BinaryExpression] unchanged ??= noop;
+src/compiler/performance.ts:<coordinate> [ImportSpecifier] noop,
+src/compiler/performance.ts:<coordinate> [PropertyAssignment] export const nullTimer: Timer = { enter: noop, exit: noop };
+src/compiler/performance.ts:<coordinate> [PropertyAssignment] export const nullTimer: Timer = { enter: noop, exit: noop };
+src/compiler/sys.ts:<coordinate> [ImportSpecifier] noop,
+src/compiler/sys.ts:<coordinate> [VariableDeclaration] let curSysLog: (s: string) => void = noop;
+
+Alias curSysLog
+src/compiler/sys.ts:<coordinate> [declaration/write] let curSysLog: (s: string) => void = noop;
+src/compiler/sys.ts:<coordinate> [direct call] return curSysLog(s);
+src/compiler/sys.ts:<coordinate> [BinaryExpression] curSysLog = logger;
+src/compiler/utilities.ts:<coordinate> [ImportSpecifier] noop,
+src/compiler/utilities.ts:<coordinate> [PropertyAssignment] increaseIndent: noop,
+src/compiler/utilities.ts:<coordinate> [PropertyAssignment] decreaseIndent: noop,
+src/compiler/parser.ts:<coordinate> [ImportSpecifier] noop,
+src/compiler/parser.ts:<coordinate> [CallExpression] result = Parser.parseSourceFile(fileName, sourceText, languageVersion, /*syntaxCursor*/ undefined, setParentNodes, ScriptKind.JSON, noop, jsDocParsingMode);
+src/compiler/parser.ts:<coordinate> [CallExpression] const sourceFile = createSourceFile(fileName, ScriptTarget.ES2015, ScriptKind.JSON, /*isDeclarationFile*/ false, statements, endOfFileToken, sourceFlags, noop);
+src/compiler/parser.ts:<coordinate> [CallExpression] const sourceFile = createSourceFile("file.js", ScriptTarget.Latest, ScriptKind.JS, /*isDeclarationFile*/ false, [], factory.createToken(SyntaxKind.EndOfFileToken), NodeFlags.None, noop);
+src/compiler/moduleNameResolver.ts:<coordinate> [ImportSpecifier] noop,
+src/compiler/moduleNameResolver.ts:<coordinate> [PropertyAssignment] reportDiagnostic: noop,
+src/compiler/moduleNameResolver.ts:<coordinate> [PropertyAssignment] reportDiagnostic: noop,
+src/compiler/moduleNameResolver.ts:<coordinate> [PropertyAssignment] reportDiagnostic: noop,
+src/compiler/transformer.ts:<coordinate> [ImportSpecifier] noop,
+src/compiler/watchUtilities.ts:<coordinate> [ImportSpecifier] noop,
+src/compiler/watchUtilities.ts:<coordinate> [ConditionalExpression] setSysLog(watchLogLevel === WatchLogLevel.Verbose ? log : noop);
+src/compiler/program.ts:<coordinate> [ImportSpecifier] noop,
+src/compiler/program.ts:<coordinate> [CallExpression] return ts_getDeclarationDiagnostics(getEmitHost(noop), resolver, sourceFile) || emptyArray;
+src/compiler/program.ts:<coordinate> [PropertyAssignment] if (!host.useSourceOfProjectReferenceRedirect) return { onProgramCreateComplete: noop, fileExists };
+src/compiler/builder.ts:<coordinate> [ImportSpecifier] noop,
+src/compiler/builder.ts:<coordinate> [PropertyAssignment] releaseProgram: noop,
+src/compiler/builder.ts:<coordinate> [PropertyAssignment] close: noop,
+src/compiler/builder.ts:<coordinate> [PropertyAssignment] close: noop,
+src/compiler/watch.ts:<coordinate> [ImportSpecifier] noop,
+src/compiler/watch.ts:<coordinate> [PropertyAssignment] export const noopFileWatcher: FileWatcher = { close: noop };
+src/compiler/watch.ts:<coordinate> [BinaryExpression] setTimeout: system.setTimeout?.bind(system) || noop,
+src/compiler/watch.ts:<coordinate> [BinaryExpression] clearTimeout: system.clearTimeout?.bind(system) || noop,
+src/compiler/watch.ts:<coordinate> [ConditionalExpression] const writeLog: (s: string) => void = watchLogLevel !== WatchLogLevel.None ? (s => host.trace!(s)) : noop;
+src/compiler/watchPublic.ts:<coordinate> [ImportSpecifier] noop,
+src/compiler/watchPublic.ts:<coordinate> [BinaryExpression] parseConfigFileHost.onUnRecoverableConfigFileDiagnostic = noop;
+src/compiler/tsbuildPublic.ts:<coordinate> [ImportSpecifier] noop,
+src/compiler/tsbuildPublic.ts:<coordinate> [ConditionalExpression] host.setModifiedTime = system.setModifiedTime ? (path, date) => system.setModifiedTime!(path, date) : noop;
+src/compiler/tsbuildPublic.ts:<coordinate> [ConditionalExpression] host.deleteFile = system.deleteFile ? path => system.deleteFile!(path) : noop;
+src/compiler/tsbuildPublic.ts:<coordinate> [BinaryExpression] parseConfigFileHost.onUnRecoverableConfigFileDiagnostic = noop;
+src/compiler/tsbuildPublic.ts:<coordinate> [PropertyAssignment] const noopOnDelete = { onDeleteValue: noop };
+src/deprecatedCompat/deprecate.ts:<coordinate> [ImportSpecifier] noop,
+src/deprecatedCompat/deprecate.ts:<coordinate> [ConditionalExpression] noop;
+src/server/project.ts:<coordinate> [ImportSpecifier] noop,
+src/server/project.ts:<coordinate> [CallExpression] if (enumerateInsertsAndDeletes<string, string>(typingFiles, this.typingFiles, getStringComparer(!this.useCaseSensitiveFileNames()), /*inserted*/ noop, removed => this.detachScriptInfoFromProject(removed))) {
+src/server/editorServices.ts:<coordinate> [ImportSpecifier] noop,
+src/server/editorServices.ts:<coordinate> [PropertyAssignment] enqueueInstallTypingsRequest: noop,
+src/server/editorServices.ts:<coordinate> [PropertyAssignment] attach: noop,
+src/server/editorServices.ts:<coordinate> [PropertyAssignment] onProjectClosed: noop,
+src/server/editorServices.ts:<coordinate> [PropertyAssignment] const noopConfigFileWatcher: FileWatcher = { close: noop };
+src/server/editorServices.ts:<coordinate> [PropertyDeclaration] /** @internal */ baseline: (title?: string) => void = noop;
+src/server/editorServices.ts:<coordinate> [TypeQuery] /** @internal */ verifyDocumentRegistry: typeof noop = noop;
+src/server/editorServices.ts:<coordinate> [PropertyDeclaration] /** @internal */ verifyDocumentRegistry: typeof noop = noop;
+src/server/editorServices.ts:<coordinate> [PropertyDeclaration] /** @internal */ verifyProgram: (project: Project) => void = noop;
+src/server/editorServices.ts:<coordinate> [PropertyDeclaration] /** @internal */ onProjectCreation: (project: Project) => void = noop;
+src/server/editorServices.ts:<coordinate> [ConditionalExpression] const log: (s: string) => void = watchLogLevel !== WatchLogLevel.None ? (s => this.logger.info(s)) : noop;
+src/harness/projectServiceStateLogger.ts:<coordinate> [ImportSpecifier] noop,
+src/harness/projectServiceStateLogger.ts:<coordinate> [BinaryExpression] if (service.baseline !== noop) return; // Already patched
+src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:<coordinate> [ImportSpecifier] noop,
+src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:<coordinate> [BinaryExpression] result.on = noop;
+src/testRunner/unittests/tsbuild/clean.ts:<coordinate> [ImportSpecifier] import { noop } from "../../_namespaces/ts.js";
+src/testRunner/unittests/tsbuild/clean.ts:<coordinate> [PropertyAssignment] edit: noop,
+src/testRunner/unittests/helpers/noEmit.ts:<coordinate> [ImportSpecifier] noop,
+src/testRunner/unittests/helpers/noEmit.ts:<coordinate> [PropertyAssignment] edit: noop,
+src/testRunner/unittests/helpers/noEmit.ts:<coordinate> [PropertyAssignment] edit: noop,
+src/testRunner/unittests/helpers/noEmit.ts:<coordinate> [PropertyAssignment] edit: noop,
+src/testRunner/unittests/helpers/noEmit.ts:<coordinate> [PropertyAssignment] edit: noop,
+src/testRunner/unittests/helpers/noEmit.ts:<coordinate> [PropertyAssignment] edit: noop,
+src/testRunner/unittests/helpers/noEmit.ts:<coordinate> [PropertyAssignment] edit: noop,
+src/testRunner/unittests/helpers/noEmit.ts:<coordinate> [PropertyAssignment] edit: noop,
+src/testRunner/unittests/tsbuild/referencesWithRootDirInParent.ts:<coordinate> [ImportSpecifier] import { noop } from "../../_namespaces/ts.js";
+src/testRunner/unittests/tsbuild/referencesWithRootDirInParent.ts:<coordinate> [PropertyAssignment] edit: noop,
+src/testRunner/unittests/tscWatch/projectsWithReferences.ts:<coordinate> [ImportSpecifier] import { noop } from "../../_namespaces/ts.js";
+src/testRunner/unittests/tscWatch/projectsWithReferences.ts:<coordinate> [PropertyAssignment] timeouts: noop,
+src/testRunner/unittests/helpers/monorepoSymlinkedSiblingPackages.ts:<coordinate> [ImportSpecifier] noop,
+src/testRunner/unittests/helpers/monorepoSymlinkedSiblingPackages.ts:<coordinate> [PropertyAssignment] edit: noop,
+src/testRunner/unittests/tsserver/libraryResolution.ts:<coordinate> [ImportSpecifier] import { noop } from "../../_namespaces/ts.js";
+src/testRunner/unittests/tsserver/libraryResolution.ts:<coordinate> [CallExpression] forEachTscWatchEdit(session, edits(), noop);
+src/testRunner/unittests/tsserver/projectRootFiles.ts:<coordinate> [ImportSpecifier] import { noop } from "../../_namespaces/ts.js";
+src/testRunner/unittests/tsserver/projectRootFiles.ts:<coordinate> [CallExpression] forEachTscWatchEdit(session, edits(), noop);
+src/tsserver/nodeServer.ts:<coordinate> [ImportSpecifier] noop,
+src/tsserver/nodeServer.ts:<coordinate> [CallExpression] fs.close(this.fd, noop);
+src/services/preProcess.ts:<coordinate> [ImportSpecifier] noop,
+src/services/preProcess.ts:<coordinate> [CallExpression] processPragmasIntoFields(pragmaContext, noop);
+src/services/services.ts:<coordinate> [ImportSpecifier] noop,
+src/services/services.ts:<coordinate> [PropertyAssignment] throwIfCancellationRequested: noop,
+src/services/services.ts:<coordinate> [PropertyAssignment] writeFile: noop,
+src/services/services.ts:<coordinate> [PropertyAssignment] onUnRecoverableConfigFileDiagnostic: noop,
+src/typingsInstallerCore/typingsInstaller.ts:<coordinate> [ImportSpecifier] noop,
+src/typingsInstallerCore/typingsInstaller.ts:<coordinate> [PropertyAssignment] writeLine: noop,
+
+Changed slot nullTransformationContext.setLexicalEnvironmentFlags
+src/compiler/types.ts:<coordinate> [MethodSignature] /** @internal */ setLexicalEnvironmentFlags(flags: LexicalEnvironmentFlags, value: boolean): void;
+src/compiler/visitorPublic.ts:<coordinate> [direct call] context.setLexicalEnvironmentFlags(LexicalEnvironmentFlags.InParameters, true);
+src/compiler/visitorPublic.ts:<coordinate> [direct call] context.setLexicalEnvironmentFlags(LexicalEnvironmentFlags.InParameters, false);
+src/compiler/transformer.ts:<coordinate> [ShorthandPropertyAssignment] setLexicalEnvironmentFlags,
+src/compiler/transformer.ts:<coordinate> [declaration/write] setLexicalEnvironmentFlags: (_flags: number, _value: boolean = false): void => {},
+
+Object carrying the slot nullTransformationContext
+src/compiler/transformer.ts:<coordinate> [declaration/write] export const nullTransformationContext: TransformationContext = {
+src/compiler/visitorPublic.ts:<coordinate> [ImportSpecifier] nullTransformationContext,
+src/compiler/visitorPublic.ts:<coordinate> [Parameter] export function visitEachChild<T extends Node>(node: T | undefined, visitor: Visitor, context = nullTransformationContext, nodesVisitor = visitNodes, tokenVisitor?: Visitor, nodeVisitor: NodeVisitor = visitNode): T | undefined {
+src/services/textChanges.ts:<coordinate> [ImportSpecifier] nullTransformationContext,
+src/services/textChanges.ts:<coordinate> [SpreadAssignment] ...nullTransformationContext,
+src/services/textChanges.ts:<coordinate> [PropertyAccessExpression] nullTransformationContext.factory.flags | NodeFactoryFlags.NoParenthesizerRules,
+src/services/textChanges.ts:<coordinate> [PropertyAccessExpression] nullTransformationContext.factory.baseFactory,
+noop shared length = 1
+noop local length = 1
+
+Shared function notImplemented
+src/compiler/core.ts:<coordinate> [declaration/write] export function notImplemented(): never {
+src/harness/fakesHosts.ts:<coordinate> [direct call] if (this._executingFilePath === undefined) return ts.notImplemented();
+src/harness/harnessLanguageService.ts:<coordinate> [FirstNode] installPackage: typeof ts.notImplemented = ts.notImplemented;
+src/harness/harnessLanguageService.ts:<coordinate> [PropertyDeclaration] installPackage: typeof ts.notImplemented = ts.notImplemented;
+src/harness/harnessLanguageService.ts:<coordinate> [direct call] return ts.notImplemented();
+src/testRunner/unittests/helpers.ts:<coordinate> [PropertyAssignment] writeFile: ts.notImplemented,
+src/testRunner/unittests/moduleResolution.ts:<coordinate> [PropertyAssignment] writeFile: ts.notImplemented,
+src/testRunner/unittests/moduleResolution.ts:<coordinate> [PropertyAssignment] readFile: ts.notImplemented,
+src/testRunner/unittests/moduleResolution.ts:<coordinate> [PropertyAssignment] writeFile: ts.notImplemented,
+src/testRunner/unittests/moduleResolution.ts:<coordinate> [PropertyAssignment] readFile: ts.notImplemented,
+src/testRunner/unittests/moduleResolution.ts:<coordinate> [PropertyAssignment] readFile: ts.notImplemented,
+src/testRunner/unittests/moduleResolution.ts:<coordinate> [PropertyAssignment] fileExists: ts.notImplemented,
+src/testRunner/unittests/moduleResolution.ts:<coordinate> [PropertyAssignment] writeFile: ts.notImplemented,
+src/testRunner/unittests/moduleResolution.ts:<coordinate> [PropertyAssignment] writeFile: ts.notImplemented,
+src/testRunner/unittests/moduleResolution.ts:<coordinate> [PropertyAssignment] resolveModuleNames: ts.notImplemented,
+src/testRunner/unittests/moduleResolution.ts:<coordinate> [PropertyAssignment] writeFile: ts.notImplemented,
+src/testRunner/unittests/helpers/tscWatch.ts:<coordinate> [BinaryExpression] compilerHost.writeFile = ts.notImplemented;
+src/testRunner/unittests/helpers/tsserver.ts:<coordinate> [BinaryExpression] host.baselineHost = ts.notImplemented;
+src/testRunner/unittests/reuseProgramStructure.ts:<coordinate> [CallExpression] const { fileNames, options } = ts.parseConfigFileWithSystem(configFileName, {}, /*extendedConfigCache*/ undefined, /*watchOptionsToExtend*/ undefined, system, ts.notImplemented)!; // TODO: GH#18217
+src/testRunner/unittests/services/extract/helpers.ts:<coordinate> [PropertyAssignment] getCompilationSettings: ts.notImplemented,
+src/testRunner/unittests/services/extract/helpers.ts:<coordinate> [PropertyAssignment] getScriptFileNames: ts.notImplemented,
+src/testRunner/unittests/services/extract/helpers.ts:<coordinate> [PropertyAssignment] getScriptVersion: ts.notImplemented,
+src/testRunner/unittests/services/extract/helpers.ts:<coordinate> [PropertyAssignment] getScriptSnapshot: ts.notImplemented,
+src/testRunner/unittests/services/extract/helpers.ts:<coordinate> [PropertyAssignment] getDefaultLibFileName: ts.notImplemented,
+src/testRunner/unittests/services/extract/helpers.ts:<coordinate> [PropertyAssignment] getCurrentDirectory: ts.notImplemented,
+src/testRunner/unittests/services/extract/helpers.ts:<coordinate> [PropertyAssignment] readFile: ts.notImplemented,
+src/testRunner/unittests/services/extract/helpers.ts:<coordinate> [PropertyAssignment] fileExists: ts.notImplemented,
+src/testRunner/unittests/tscWatch/resolutionCache.ts:<coordinate> [BinaryExpression] host.fileExists = ts.notImplemented;
+src/compiler/factory/nodeConverters.ts:<coordinate> [ImportSpecifier] notImplemented,
+src/compiler/factory/nodeConverters.ts:<coordinate> [PropertyAssignment] convertToFunctionBlock: notImplemented,
+src/compiler/factory/nodeConverters.ts:<coordinate> [PropertyAssignment] convertToFunctionExpression: notImplemented,
+src/compiler/factory/nodeConverters.ts:<coordinate> [PropertyAssignment] convertToClassExpression: notImplemented,
+src/compiler/factory/nodeConverters.ts:<coordinate> [PropertyAssignment] convertToArrayAssignmentElement: notImplemented,
+src/compiler/factory/nodeConverters.ts:<coordinate> [PropertyAssignment] convertToObjectAssignmentElement: notImplemented,
+src/compiler/factory/nodeConverters.ts:<coordinate> [PropertyAssignment] convertToAssignmentPattern: notImplemented,
+src/compiler/factory/nodeConverters.ts:<coordinate> [PropertyAssignment] convertToObjectAssignmentPattern: notImplemented,
+src/compiler/factory/nodeConverters.ts:<coordinate> [PropertyAssignment] convertToArrayAssignmentPattern: notImplemented,
+src/compiler/factory/nodeConverters.ts:<coordinate> [PropertyAssignment] convertToAssignmentElementTarget: notImplemented,
+src/compiler/transformer.ts:<coordinate> [ImportSpecifier] notImplemented,
+src/compiler/transformer.ts:<coordinate> [direct call] getEmitResolver: (): EmitResolver => notImplemented(),
+src/compiler/transformer.ts:<coordinate> [direct call] getEmitHost: (): EmitHost => notImplemented(),
+src/compiler/transformer.ts:<coordinate> [direct call] getEmitHelperFactory: (): import("./factory/emitHelpers.js").EmitHelperFactory => notImplemented(),
+src/compiler/transformer.ts:<coordinate> [direct call] readEmitHelpers: (): EmitHelper[] | undefined => notImplemented(),
+src/compiler/transformer.ts:<coordinate> [direct call] isSubstitutionEnabled: (_node: Node | undefined = undefined): boolean => notImplemented(),
+src/compiler/transformer.ts:<coordinate> [direct call] isEmitNotificationEnabled: (_node: Node | undefined = undefined): boolean => notImplemented(),
+src/compiler/emitter.ts:<coordinate> [ImportSpecifier] notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] hasGlobalName: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] getReferencedExportContainer: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] getReferencedImportDeclaration: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] getReferencedDeclarationWithCollidingName: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] isDeclarationWithCollidingName: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] isValueAliasDeclaration: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] isReferencedAliasDeclaration: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] isTopLevelValueImportEqualsWithEntityName: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] hasNodeCheckFlag: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] isDeclarationVisible: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] collectLinkedAliases: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] markLinkedReferences: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] isImplementationOfOverload: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] requiresAddingImplicitUndefined: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] isExpandoFunctionDeclaration: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] getPropertiesOfContainerFunction: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] createTypeOfDeclaration: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] createReturnTypeOfSignatureDeclaration: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] createTypeOfExpression: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] createLiteralConstValue: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] isSymbolAccessible: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] isEntityNameVisible: notImplemented,
+src/compiler/emitter.ts:<coordinate> [direct call] getConstantValue: (): string | number | undefined => notImplemented(),
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] getEnumMemberValue: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] getReferencedValueDeclaration: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] getReferencedValueDeclarations: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] getTypeReferenceSerializationKind: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] isOptionalParameter: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] isArgumentsLocalBinding: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] getExternalModuleFileFromDeclaration: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] isLiteralConstDeclaration: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] getJsxFactoryEntity: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] getJsxFragmentFactoryEntity: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] isBindingCapturedByNode: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] getDeclarationStatementsForSourceFile: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] isImportRequiredByAugmentation: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] isDefinitelyReferenceToGlobalSymbolObject: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] createLateBoundIndexSignatures: notImplemented,
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] symbolToDeclarations: notImplemented,
+src/compiler/builder.ts:<coordinate> [ImportSpecifier] notImplemented,
+src/compiler/builder.ts:<coordinate> [direct call] notImplemented();
+src/compiler/builder.ts:<coordinate> [PropertyAssignment] getProgram: notImplemented,
+src/compiler/builder.ts:<coordinate> [PropertyAssignment] getSourceFile: notImplemented,
+src/compiler/builder.ts:<coordinate> [PropertyAssignment] getSourceFiles: notImplemented,
+src/compiler/builder.ts:<coordinate> [PropertyAssignment] getOptionsDiagnostics: notImplemented,
+src/compiler/builder.ts:<coordinate> [PropertyAssignment] getGlobalDiagnostics: notImplemented,
+src/compiler/builder.ts:<coordinate> [PropertyAssignment] getConfigFileParsingDiagnostics: notImplemented,
+src/compiler/builder.ts:<coordinate> [PropertyAssignment] getSyntacticDiagnostics: notImplemented,
+src/compiler/builder.ts:<coordinate> [PropertyAssignment] getDeclarationDiagnostics: notImplemented,
+src/compiler/builder.ts:<coordinate> [PropertyAssignment] getSemanticDiagnostics: notImplemented,
+src/compiler/builder.ts:<coordinate> [PropertyAssignment] emit: notImplemented,
+src/compiler/builder.ts:<coordinate> [PropertyAssignment] getAllDependencies: notImplemented,
+src/compiler/builder.ts:<coordinate> [PropertyAssignment] getCurrentDirectory: notImplemented,
+src/compiler/builder.ts:<coordinate> [PropertyAssignment] emitNextAffectedFile: notImplemented,
+src/compiler/builder.ts:<coordinate> [PropertyAssignment] getSemanticDiagnosticsOfNextAffectedFile: notImplemented,
+src/compiler/builder.ts:<coordinate> [PropertyAssignment] emitBuildInfo: notImplemented,
+src/compiler/builder.ts:<coordinate> [PropertyAssignment] getAllDependencies: notImplemented,
+src/server/editorServices.ts:<coordinate> [ImportSpecifier] notImplemented,
+src/server/editorServices.ts:<coordinate> [PropertyAssignment] installPackage: notImplemented,
+src/harness/client.ts:<coordinate> [ImportSpecifier] notImplemented,
+src/harness/client.ts:<coordinate> [direct call] return notImplemented();
+src/harness/client.ts:<coordinate> [direct call] return notImplemented();
+src/harness/client.ts:<coordinate> [direct call] return notImplemented();
+src/harness/client.ts:<coordinate> [direct call] return notImplemented();
+src/harness/client.ts:<coordinate> [direct call] return notImplemented();
+src/harness/client.ts:<coordinate> [direct call] return notImplemented();
+src/harness/client.ts:<coordinate> [direct call] return notImplemented();
+src/harness/client.ts:<coordinate> [direct call] return notImplemented();
+src/harness/client.ts:<coordinate> [direct call] return notImplemented();
+src/harness/client.ts:<coordinate> [direct call] return notImplemented();
+src/harness/client.ts:<coordinate> [direct call] return notImplemented();
+src/harness/client.ts:<coordinate> [TypeQuery] getCombinedCodeFix: typeof notImplemented = notImplemented;
+src/harness/client.ts:<coordinate> [PropertyDeclaration] getCombinedCodeFix: typeof notImplemented = notImplemented;
+src/harness/client.ts:<coordinate> [TypeQuery] applyCodeActionCommand: typeof notImplemented = notImplemented;
+src/harness/client.ts:<coordinate> [PropertyDeclaration] applyCodeActionCommand: typeof notImplemented = notImplemented;
+src/harness/client.ts:<coordinate> [TypeQuery] mapCode: typeof notImplemented = notImplemented;
+src/harness/client.ts:<coordinate> [PropertyDeclaration] mapCode: typeof notImplemented = notImplemented;
+src/harness/client.ts:<coordinate> [direct call] return notImplemented();
+src/harness/client.ts:<coordinate> [direct call] return notImplemented();
+src/harness/client.ts:<coordinate> [direct call] return notImplemented();
+src/harness/client.ts:<coordinate> [direct call] return notImplemented();
+src/harness/client.ts:<coordinate> [direct call] return notImplemented();
+src/harness/client.ts:<coordinate> [direct call] return notImplemented();
+src/harness/client.ts:<coordinate> [direct call] return notImplemented();
+src/harness/client.ts:<coordinate> [direct call] return notImplemented();
+src/harness/client.ts:<coordinate> [direct call] return notImplemented();
+src/harness/client.ts:<coordinate> [direct call] return notImplemented();
+src/harness/client.ts:<coordinate> [direct call] return notImplemented();
+src/harness/client.ts:<coordinate> [direct call] return notImplemented();
+src/harness/client.ts:<coordinate> [direct call] return notImplemented();
+src/services/utilities.ts:<coordinate> [ImportSpecifier] notImplemented,
+src/services/utilities.ts:<coordinate> [PropertyAssignment] rawWrite: notImplemented,
+
+Changed slot notImplementedResolver.getConstantValue
+src/compiler/types.ts:<coordinate> [MethodSignature] getConstantValue(node: EnumMember | PropertyAccessExpression | ElementAccessExpression): string | number | undefined;
+src/compiler/checker.ts:<coordinate> [declaration/write] getConstantValue: nodeIn => {
+src/compiler/transformers/ts.ts:<coordinate> [direct call] return isPropertyAccessExpression(node) || isElementAccessExpression(node) ? resolver.getConstantValue(node) : undefined;
+src/compiler/emitter.ts:<coordinate> [declaration/write] getConstantValue: (): string | number | undefined => notImplemented(),
+
+Object carrying the slot notImplementedResolver
+src/compiler/emitter.ts:<coordinate> [declaration/write] export const notImplementedResolver: EmitResolver = {
+src/compiler/program.ts:<coordinate> [ImportSpecifier] notImplementedResolver,
+src/compiler/program.ts:<coordinate> [CallExpression] notImplementedResolver,
+notImplemented shared length = 0
+notImplemented shared message = "Not implemented"
+notImplemented local length = 0
+notImplemented local message = "Not implemented"
+
+Spread alias textChangesTransformationContext
+src/services/textChanges.ts:<coordinate> [declaration/write] const textChangesTransformationContext: TransformationContext = {
+src/services/textChanges.ts:<coordinate> [CallExpression] const visited = visitEachChild(node, assignPositionsToNode, textChangesTransformationContext, assignPositionsToNodeArray, assignPositionsToNode);
+
+visitEachChild parameter context
+src/compiler/visitorPublic.ts:<coordinate> [declaration/write] export function visitEachChild<T extends Node>(node: T | undefined, visitor: Visitor, context = nullTransformationContext, nodesVisitor = visitNodes, tokenVisitor?: Visitor, nodeVisitor: NodeVisitor = visitNode): T | undefined {
+src/compiler/visitorPublic.ts:<coordinate> [CallExpression] return fn === undefined ? node : fn(node, visitor, context, nodesVisitor, nodeVisitor, tokenVisitor);
+
+emitFiles parameter resolver
+src/compiler/emitter.ts:<coordinate> [declaration/write] resolver: EmitResolver,
+src/compiler/emitter.ts:<coordinate> [CallExpression] const transform = transformNodes(resolver, host, factory, compilerOptions, [sourceFileOrBundle], scriptTransformers, /*allowDtsFiles*/ false);
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] hasGlobalName: resolver.hasGlobalName,
+src/compiler/emitter.ts:<coordinate> [CallExpression] const declarationTransform = transformNodes(resolver, host, factory, compilerOptions, inputListOrBundle, declarationTransformers, /*allowDtsFiles*/ false);
+src/compiler/emitter.ts:<coordinate> [PropertyAssignment] hasGlobalName: resolver.hasGlobalName,
+src/compiler/emitter.ts:<coordinate> [direct call] resolver.collectLinkedAliases(node.expression as Identifier, /*setVisibility*/ true);
+src/compiler/emitter.ts:<coordinate> [direct call] resolver.collectLinkedAliases(node.propertyName || node.name, /*setVisibility*/ true);
+src/compiler/emitter.ts:<coordinate> [direct call] resolver.markLinkedReferences(n);
+
+transformNodes parameter resolver
+src/compiler/transformer.ts:<coordinate> [JSDocParameterTag] * @param resolver The emit resolver provided by the checker.
+src/compiler/transformer.ts:<coordinate> [declaration/write] export function transformNodes<T extends Node>(resolver: EmitResolver | undefined, host: EmitHost | undefined, factory: NodeFactory, options: CompilerOptions, nodes: readonly T[], transformers: readonly TransformerFactory<T>[], allowDtsFiles: boolean): TransformationResult<T> {
+src/compiler/transformer.ts:<coordinate> [NonNullExpression] getEmitResolver: () => resolver!, // TODO: GH#18217
