@@ -43,9 +43,30 @@ const table = { ...base, name: "n" };
 const other = { one: 1, two: 2 };
 console.log(Object.keys(table).join(",") + "|" + Object.keys(other).join(","));
 `,
+		"presence.ts": `function f(present: boolean): { a: number } | undefined { return present ? { a: 2 } : undefined; }
+for (const present of [false, true]) {
+	const o = { ...f(present), x: 1 };
+	console.log(String("a" in o) + " " + String(Object.hasOwn(o, "a")) + " " + String(o.hasOwnProperty("a")));
+}
+`,
+		"respread.ts": `function f(present: boolean): { a: number } | undefined { return present ? { a: 2 } : undefined; }
+for (const present of [false, true]) {
+	const o = { ...f(present), x: 1 };
+	const copy = { ...o };
+	console.log(Object.keys(copy).join(",") + " " + String("a" in copy));
+}
+`,
+		"assign.ts": `function f(present: boolean): { a: number } | undefined { return present ? { a: 2 } : undefined; }
+for (const present of [false, true]) {
+	const o = { ...f(present), x: 1 };
+	const target: { a?: number; x?: number } = {};
+	Object.assign(target, o);
+	console.log(Object.keys(target).join(",") + " " + String("a" in target));
+}
+`,
 	}
 	directory := t.TempDir()
-	for _, name := range []string{"keys.ts", "for_in.ts", "stringify.ts", "later_write.ts", "nested_module.ts"} {
+	for _, name := range []string{"keys.ts", "for_in.ts", "stringify.ts", "later_write.ts", "nested_module.ts", "presence.ts", "respread.ts", "assign.ts"} {
 		t.Run(name, func(t *testing.T) {
 			path := filepath.Join(directory, name)
 			if err := os.WriteFile(path, []byte(programs[name]), 0o644); err != nil {
