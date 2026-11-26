@@ -235,6 +235,13 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 			return nil, err
 		}
 	}
+	// Before the accessors' dispatchers: in .a a spread whose type declares as a field a member a class
+	// holds on its prototype is refused at the spread, ahead of the stop at its copy's read (spread_prototype_members.go).
+	if err := lowering.checkSpreadPrototypeMembers(modules); err != nil {
+		if err = lowering.firstLinkPass("checkSpreadPrototypeMembers", false, err, func() error { return lowering.checkSpreadPrototypeMembers(modules) }); err != nil {
+			return nil, err
+		}
+	}
 	if err := lowering.finishAccessors(); err != nil {
 		if err = lowering.firstLinkPass("finishAccessors", true, err, lowering.finishAccessors); err != nil {
 			return nil, err
