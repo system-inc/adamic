@@ -8,7 +8,7 @@ function toNumber(source: { readonly k: string; readonly n: number }): { k: numb
 }
 const text = toText({ k: 10, label: "one" });
 console.log(Object.keys(text).join(","));
-console.log(JSON.stringify(text));
+console.log(String(JSON.stringify(text)));
 console.log(`${typeof text.k} ${text.k} ${text.label}`);
 const made = toNumber({ k: "x" + String(1), n: 2 });
 const names: string[] = [];
@@ -16,5 +16,5 @@ for (const key in made) {
     names.push(key);
 }
 console.log(names.join(","));
-console.log(JSON.stringify(made));
+console.log(String(JSON.stringify(made)));
 console.log(`${typeof made.k} ${made.k + made.n}`);

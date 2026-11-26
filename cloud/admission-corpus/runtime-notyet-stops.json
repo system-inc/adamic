@@ -427,13 +427,13 @@
       "lifting_task": "#8q1pjsp",
       "stderr": "adamic: panic: a host function called with more arguments than it forwards isn't built yet\n"
     },
-    "4bbedde0318a3c34f62a14f57f1ffeb81eca72a7da255892f9fcd82e76839c03": {
+    "853693bf05cc2799a8215b4f405e5e2481a27bc0cd36b949a33439f0987d446a": {
       "path": "internal/oracle/testdata/spread_with/backstop_tuple.ts",
       "ruling_task": "#k7g6f9h",
       "lifting_task": "#n0744ek",
       "stderr": "adamic: panic: a spread of a value not stored as a plain object into an object literal isn't built yet (#k7g6f9h)\n"
     },
-    "1fbfd97037a7fdee0e8bb1acfbe9a596f356853752105b498428d1f22cbf25ca": {
+    "ee2ebbb554dfbab546d9f67f8cb02af39384c72b316b35c704c87794da2dc453": {
       "path": "internal/oracle/testdata/spread_with/backstop_closure.ts",
       "ruling_task": "#k7g6f9h",
       "lifting_task": "#n0744ek",

@@ -5,10 +5,10 @@ interface Diagnostic {
 }
 interface ResolvedModuleWithFailedLookupLocations {
     readonly resolvedModule: { resolvedFileName: string } | undefined;
-    failedLookupLocations?: string[];
-    affectingLocations?: string[];
-    resolutionDiagnostics?: Diagnostic[];
-    alternateResult?: string;
+    failedLookupLocations?: string[] | undefined;
+    affectingLocations?: string[] | undefined;
+    resolutionDiagnostics?: Diagnostic[] | undefined;
+    alternateResult?: string | undefined;
 }
 function initializeResolutionField<T>(value: T[]): T[] | undefined {
     return value.length ? value : undefined;
@@ -37,7 +37,7 @@ for (const key of ["a", "b", "c"]) {
     const result = fromCache(key, ["/y"], [], [{ messageText: "m" }]);
     if (result) {
         console.log(Object.keys(result).join(","));
-        console.log(JSON.stringify(result));
+        console.log(String(JSON.stringify(result)));
     } else {
         console.log("missing");
     }

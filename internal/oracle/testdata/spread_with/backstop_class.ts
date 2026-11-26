@@ -11,7 +11,7 @@ class Point {
 function copy(source: { readonly x: number }): void {
     const made = { ...source, k: 1 };
     console.log(Object.keys(made).join(","));
-    console.log(JSON.stringify(made));
+    console.log(String(JSON.stringify(made)));
 }
 copy(new Point(1, 2));
 console.log("end");

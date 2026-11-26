@@ -6,7 +6,7 @@ function overwrite(source: { readonly a: number }): { a: number; k: number } {
 const wide = { a: 1, extra: 2 };
 const copy = overwrite(wide);
 console.log(Object.keys(copy).join(","));
-console.log(JSON.stringify(copy));
+console.log(String(JSON.stringify(copy)));
 const seen: string[] = [];
 for (const key in copy) {
     seen.push(key);
@@ -14,4 +14,4 @@ for (const key in copy) {
 console.log(seen.join(","));
 console.log(`${copy.a} ${copy.k}`);
 const again = { ...copy };
-console.log(JSON.stringify(again));
+console.log(String(JSON.stringify(again)));

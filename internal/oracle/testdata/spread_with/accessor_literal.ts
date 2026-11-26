@@ -11,4 +11,4 @@ function copy(source: { readonly label: string }): void {
     console.log(`${made.label} ${made.k}`);
 }
 copy(sized);
-console.log(sized.size);
+console.log(String(sized.size));

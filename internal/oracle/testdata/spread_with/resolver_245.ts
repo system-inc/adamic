@@ -4,7 +4,7 @@ interface Resolved {
     path: string;
     extension: string;
     packageId: string | undefined;
-    originalPath?: string | true;
+    originalPath?: string | true | undefined;
     resolvedUsingTsExtension: boolean | undefined;
 }
 function built(path: string): Resolved | undefined {
@@ -23,7 +23,7 @@ function handle(resolved: Resolved | undefined, resolvedFileName: string, found:
 function show(resolved: Resolved | undefined): void {
     if (resolved) {
         console.log(Object.keys(resolved).join(","));
-        console.log(JSON.stringify(resolved));
+        console.log(String(JSON.stringify(resolved)));
         console.log(String(resolved.originalPath));
     }
 }

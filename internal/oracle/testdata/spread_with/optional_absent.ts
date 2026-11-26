@@ -2,7 +2,7 @@
 function fill(source: { readonly a: number; readonly k?: string; readonly z: number }): void {
     const copy = { ...source, k: "set" };
     console.log(Object.keys(copy).join(","));
-    console.log(JSON.stringify(copy));
+    console.log(String(JSON.stringify(copy)));
     console.log(`${copy.a} ${copy.k} ${copy.z}`);
 }
 fill({ a: 1, z: 3 });
