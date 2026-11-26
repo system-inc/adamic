@@ -13,6 +13,7 @@
     "internal/leakcheck": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "internal/ccjobserver": ["internal/load", "internal/lower", "internal/native", "internal/native_runtime", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "internal/native_runtime": ["internal/load", "internal/lower", "internal/native", "internal/native_runtime", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
+    "cmd/adamic-firstlink": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "cmd/adamic-admission-delta": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
     "internal/compilercensus": ["cmd/adamic"],
     "stage3/census/scan-all": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic", "stage3/census/latent/refusalrewrite"],
