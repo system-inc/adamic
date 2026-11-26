@@ -1,0 +1,15 @@
+interface Source {
+	readonly label: string;
+	readonly weight: number;
+}
+class Base {
+	get weight(): number {
+		return 20;
+	}
+}
+class Sized extends Base {
+	readonly label = "t";
+}
+const built: Source = new Sized();
+const value: Source = { ...built };
+console.log(typeof value.weight + " " + String(value.weight));

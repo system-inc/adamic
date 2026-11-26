@@ -1,0 +1,13 @@
+interface Weighs {
+	readonly label: string;
+	weigh(): number;
+}
+class Scale {
+	readonly label = "t";
+	weigh(): number {
+		return 20;
+	}
+}
+const built: Weighs = new Scale();
+const value: Weighs = { ...built };
+console.log(value.label);
