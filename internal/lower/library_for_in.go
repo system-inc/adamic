@@ -111,8 +111,16 @@ func (l *lowering) plainEnumerableObject(node *ast.Node, visiting map[*ast.Symbo
 					return false
 				}
 			case ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment:
-				name := property.Name()
-				if name == nil || strings.ContainsRune(name.Text(), 0) || (property.Kind == ast.KindPropertyAssignment && name.Text() == "__proto__") {
+				// The key as the literal's own lowering names it (objectLiteral: methodName, then numericFieldName),
+				// so a computed key is read as the literal it's proven to be or not at all. Node.Text on a computed
+				// name panics ("Unhandled case in Node.Text: *ast.ComputedPropertyName", #ttkhftg), and a key the
+				// literal can't name isn't a proven shape: the for...in stops in this rule's words. A symbol key
+				// is never one for...in enumerates, so it isn't proven either.
+				name, known := l.methodName(property)
+				if !known {
+					name, known = l.numericFieldName(node, property)
+				}
+				if !known || name == iteratorSlot || strings.ContainsRune(name, 0) || (property.Kind == ast.KindPropertyAssignment && name == "__proto__") {
 					return false
 				}
 			default:
