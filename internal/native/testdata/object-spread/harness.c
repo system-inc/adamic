@@ -552,6 +552,11 @@ int main(int argc, char **argv) {
 			source = adamic_object_new(&k_number);
 			source->class = &field_accessor_class;
 		} else if (strcmp(mode, "refuse_value") == 0) source = (adamic_object *)(void *)text("s");
+		// #k7g6f9h's storages, each one Node copies its own enumerable keys of; a Set is stored as a Map.
+		else if (strcmp(mode, "refuse_array") == 0) source = (adamic_object *)(void *)strings(1, (const char *const[]){"a"});
+		else if (strcmp(mode, "refuse_typed_array") == 0) source = (adamic_object *)(void *)adamic_typed_array_make(adamic_typed_array_uint8, 2);
+		else if (strcmp(mode, "refuse_map") == 0) source = (adamic_object *)(void *)adamic_map_new(true, false);
+		else if (strcmp(mode, "refuse_closure") == 0) source = (adamic_object *)(void *)adamic_closure_new(five, 0);
 		else return 3;
 		adamic_release(adamic_object_spread_with(source, &undefined_k, 1));
 		adamic_release(source);

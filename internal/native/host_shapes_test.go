@@ -369,7 +369,7 @@ var hostShapeReaders = []struct {
 	{"object.c", "object_callee_slot", "a method call or truthiness read by a name the program's type declares", "", ""},
 	{"object.c", "adamic_object_optional_find", "a static read by a name the program's type declares", "", ""},
 	{"object.c", "adamic_object_view_write", "a static write by a name the program's type declares", "", ""},
-	{"object_spread.c", "adamic_object_spread_with", "refuses a host or groups source by adamic_host_shape, as it refuses a record, a tuple and an Error, before it reads a name", "", ""},
+	{"object_spread.c", "adamic_object_spread_with", "stops a host or groups source by adamic_host_shape in its storage test, before it reads a name", "", ""},
 	{"object_spread.c", "interned_shape", "compares the spread table's own interned shapes, never a program value's", "", ""},
 	{"regexp.c", "regex_storage", "the regular expression runtime reading its own objects", "", ""},
 	{"regexp.c", "adamic_regex_done", "the regular expression runtime reading its own objects", "", ""},
