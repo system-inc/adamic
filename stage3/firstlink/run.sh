@@ -88,6 +88,12 @@ if ((code)); then
 	tail -n 60 "$work/door.log"
 	grep -n -m1 -A40 -E '^goroutine 1 ' "$work/door.log" | sed 's/^/GOROUTINE-1 /'
 	grep -c -E '^goroutine ' "$work/door.log" | sed 's/^/GOROUTINES /'
+	if [ -f "$work/out/traps.json" ] && python3 -I -B "$here/report.py" "$work/out"; then
+		# Review scratch, never for main: the door wrote traps.json before it failed, so row 1 still reads (#nm7z8fv).
+		echo "== firstlink.md (the door failed after its report)"; cat "$work/out/firstlink.md"
+		echo "== firstlink.json"; cat "$work/out/firstlink.json"
+		echo "== traps.md"; head -c 200000 "$work/out/traps.md"
+	fi
 	if ((code == 124)); then
 		stop "door exceeded 60 minutes, no completed report read"
 	fi
