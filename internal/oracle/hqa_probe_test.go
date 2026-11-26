@@ -64,9 +64,25 @@ for (const present of [false, true]) {
 	console.log(Object.keys(target).join(",") + " " + String("a" in target));
 }
 `,
+		"in_alone.ts": `function f(present: boolean): { a: number } | undefined { return present ? { a: 2 } : undefined; }
+for (const present of [false, true]) {
+	const o = { ...f(present), x: 1 };
+	console.log(String("a" in o));
+}
+`,
+		"own_property.ts": `function f(present: boolean): { a: number } | undefined { return present ? { a: 2 } : undefined; }
+for (const present of [false, true]) {
+	const o = { ...f(present), x: 1 };
+	console.log(String(o.hasOwnProperty("a")));
+}
+`,
+		"in_module.ts": `const base: { level: number } | undefined = undefined as { level: number } | undefined;
+const table = { ...base, name: "n" };
+console.log(String("level" in table) + " " + String(table.hasOwnProperty("level")));
+`,
 	}
 	directory := t.TempDir()
-	for _, name := range []string{"keys.ts", "for_in.ts", "stringify.ts", "later_write.ts", "nested_module.ts", "presence.ts", "respread.ts", "assign.ts"} {
+	for _, name := range []string{"keys.ts", "for_in.ts", "stringify.ts", "later_write.ts", "nested_module.ts", "presence.ts", "respread.ts", "assign.ts", "in_alone.ts", "own_property.ts", "in_module.ts"} {
 		t.Run(name, func(t *testing.T) {
 			path := filepath.Join(directory, name)
 			if err := os.WriteFile(path, []byte(programs[name]), 0o644); err != nil {
