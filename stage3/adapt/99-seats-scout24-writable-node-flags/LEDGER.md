@@ -1,0 +1,1 @@
+- **Type-only, family 12 A (#bbssdcy, Adamic's Nov 24 16:19Z ruling, Compiler under the split):** 99-seats-scout24-writable-node-flags makes Node.flags writable after checking zero narrower declarations across the applied source tree. It drops twenty casts used only to write flags. Its one public line has a named sanction under docs/rulings.md:406.

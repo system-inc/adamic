@@ -1,0 +1,42 @@
+file	line	column	declaring type	assignable to Node	declared flags type	narrower than NodeFlags	kind
+src/compiler/binder.ts	496	44	{ flags: FlowFlags; id: number; node: unknown; antecedent: FlowNode | FlowNode[] | undefined; }	false	FlowFlags	false	declaration
+src/compiler/checker.ts	1162	45	NodeLinks	false	NodeCheckFlags	false	declaration
+src/compiler/checker.ts	6651	17	{ enclosingDeclaration: Node | undefined; enclosingFile: SourceFile | undefined; flags: NodeBuilderFlags; internalFlags: InternalNodeBuilderFlags; ... 27 more ...; out: { ...; }; }	false	NodeBuilderFlags	false	declaration
+src/compiler/checker.ts	26289	13	{ inferences: InferenceInfo[]; signature: Signature | undefined; flags: InferenceFlags; compareTypes: TypeComparer; mapper: TypeMapper; nonFixingMapper: TypeMapper; }	false	InferenceFlags	false	declaration
+src/compiler/checker.ts	28652	31	{ flags: 0; type: Type; }	false	0	true	declaration
+src/compiler/checker.ts	54327	5	NodeBuilderContext	false	NodeBuilderFlags	false	declaration
+src/compiler/commandLineParser.ts	4198	125	{ key: CanonicalKey; path: string; flags: WatchDirectoryFlags; }	false	WatchDirectoryFlags	false	declaration
+src/compiler/commandLineParser.ts	4211	13	{ key: CanonicalKey; path: string; flags: WatchDirectoryFlags; }	false	WatchDirectoryFlags	false	declaration
+src/compiler/commandLineParser.ts	4221	13	{ key: CanonicalKey; path: string; flags: WatchDirectoryFlags.Recursive; }	false	WatchDirectoryFlags.Recursive	false	declaration
+src/compiler/factory/nodeFactory.ts	551	9	{ readonly parenthesizer: ParenthesizerRules; readonly converters: NodeConverters; baseFactory: BaseNodeFactory; flags: NodeFactoryFlags; ... 486 more ...; replacePropertyName: <T extends AccessorDeclaration | MethodDeclaration | MethodSignature | PropertyDeclaration | PropertySignature | PropertyAssignment>(node: T...	false	NodeFactoryFlags	false	declaration
+src/compiler/factory/nodeFactory.ts	1206	13	{ flags: GeneratedIdentifierFlags; id: number; prefix: string | GeneratedNamePart | undefined; suffix: string | undefined; }	false	GeneratedIdentifierFlags	false	declaration
+src/compiler/factory/nodeFactory.ts	1294	13	{ flags: GeneratedIdentifierFlags; id: number; prefix: string | GeneratedNamePart | undefined; suffix: string | undefined; }	false	GeneratedIdentifierFlags	false	declaration
+src/compiler/tracing.ts	327	17	{ destructuringPattern: { path: Path; start: LineAndCharacter; end: LineAndCharacter; } | undefined; firstDeclaration: { path: Path; start: LineAndCharacter; end: LineAndCharacter; } | undefined; ... 10 more ...; keyofType: number | undefined; }	false	string[]	false	declaration
+src/compiler/transformers/es2015.ts	268	5	LoopOutParameter	false	LoopOutParameterFlags	false	declaration
+src/compiler/transformers/es2015.ts	4077	42	{ flags: LoopOutParameterFlags; originalName: Identifier; outParamName: Identifier; }	false	LoopOutParameterFlags	false	declaration
+src/compiler/types.ts	944	14	Node	true	NodeFlags	false	declaration
+src/compiler/types.ts	1713	5	AutoGenerateInfo	false	GeneratedIdentifierFlags	false	declaration
+src/compiler/types.ts	4178	5	FlowNodeBase	false	FlowFlags	false	declaration
+src/compiler/types.ts	4269	5	IncompleteType	false	0 | TypeFlags	false	declaration
+src/compiler/types.ts	6045	5	Symbol	false	SymbolFlags	false	declaration
+src/compiler/types.ts	6280	5	NodeLinks	false	NodeCheckFlags	false	declaration
+src/compiler/types.ts	6447	5	Type	false	TypeFlags	false	declaration
+src/compiler/types.ts	7043	22	Signature	false	SignatureFlags	false	declaration
+src/compiler/types.ts	7183	5	InferenceContext	false	InferenceFlags	false	declaration
+src/compiler/types.ts	8349	5	EmitNode	false	EmitFlags	false	declaration
+src/compiler/types.ts	8770	31	NodeFactory	false	NodeFactoryFlags	false	declaration
+src/compiler/types.ts	10666	5	SyntacticTypeNodeBuilderContext	false	NodeBuilderFlags	false	declaration
+src/compiler/watchUtilities.ts	503	5	WildcardDirectoryWatcher<T>	false	WatchDirectoryFlags	false	declaration
+src/compiler/watchUtilities.ts	541	13	{ watcher: T; flags: WatchDirectoryFlags; }	false	WatchDirectoryFlags	false	declaration
+src/lib/es2015.core.d.ts	364	14	RegExp	false	string	false	declaration
+src/services/completions.ts	1416	9	{ flags: CompletionInfoFlags; isGlobalCompletion: boolean; isIncomplete: true | undefined; isMemberCompletion: boolean; isNewIdentifierLocation: boolean; optionalReplacementSpan: TextSpan | undefined; entries: SortedArray<...>; defaultCommitCharacters: string[]; }	false	CompletionInfoFlags	false	declaration
+src/services/completions.ts	3225	14	CompletionData	false	CompletionInfoFlags	false	declaration
+src/services/completions.ts	3666	9	{ kind: CompletionDataKind.Data; symbols: Symbol[]; completionKind: CompletionKind.Global | CompletionKind.None; isInSnippetScope: false; ... 19 more ...; defaultCommitCharacters: string[] | undefined; }	false	CompletionInfoFlags	false	declaration
+src/services/formatting/rule.ts	13	14	Rule	false	RuleFlags	false	declaration
+src/services/formatting/rules.ts	444	124	{ debugName: string; context: readonly ContextPredicate[]; action: RuleAction; flags: RuleFlags; }	false	RuleFlags	false	declaration
+src/services/services.ts	381	12	NodeObject<TKind>	true	NodeFlags	false	declaration
+src/services/services.ts	574	12	TokenOrIdentifierObject<TKind>	true	NodeFlags	false	declaration
+src/services/services.ts	660	5	SymbolObject	false	SymbolFlags	false	declaration
+src/services/services.ts	847	5	TypeObject	false	TypeFlags	false	declaration
+src/services/services.ts	944	5	SignatureObject	false	SignatureFlags	false	declaration
+src/services/types.ts	1430	5	CompletionInfo	false	CompletionInfoFlags	false	declaration

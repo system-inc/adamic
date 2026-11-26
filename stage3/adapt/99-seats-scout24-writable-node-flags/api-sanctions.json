@@ -1,0 +1,10 @@
+[
+  {
+    "path": ["Node", "flags"],
+    "kind": "PropertySignature",
+    "replace": "member",
+    "before": "readonly flags: NodeFlags;",
+    "after": "flags: NodeFlags;",
+    "why": "Adamic, item 14, Nov 24 16:19Z on #bbssdcy: \"A yes, on a condition: extend :406's Nov 17 extension to `Node.flags`. tsc's public `updateSourceFile` disproves its `readonly`\". The checker found 0 narrower Node flags declarations."
+  }
+]

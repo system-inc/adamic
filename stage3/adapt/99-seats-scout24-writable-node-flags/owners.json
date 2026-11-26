@@ -1,0 +1,757 @@
+[
+  {
+    "file": "src/compiler/binder.ts",
+    "function": "bindContainer",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createBinder"
+      ],
+      [
+        "Block",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "bindContainer"
+      ]
+    ],
+    "before": "function bindContainer(node: Mutable<HasContainerFlags>, containerFlags: ContainerFlags) {\r\n        // Before we recurse into a node's children, we first save the existing parent, container\r\n        // and block-container.  Then after we pop out of processing the children, we restore\r\n        // these saved values.\r\n        const saveContainer = container;\r\n        const saveThisParentContainer = thisParentContainer;\r\n        const savedBlockScopeContainer = blockScopeContainer;\r\n        const savedInReturnPosition = inReturnPosition;\r\n\r\n        if (node.kind === SyntaxKind.ArrowFunction && node.body.kind !== SyntaxKind.Block) inReturnPosition = true;\r\n        // Depending on what kind of node this is, we may have to adjust the current container\r\n        // and block-container.   If the current node is a container, then it is automatically\r\n        // considered the current block-container as well.  Also, for containers that we know\r\n        // may contain locals, we eagerly initialize the .locals field. We do this because\r\n        // it's highly likely that the .locals will be needed to place some child in (for example,\r\n        // a parameter, or variable declaration).\r\n        //\r\n        // However, we do not proactively create the .locals for block-containers because it's\r\n        // totally normal and common for block-containers to never actually have a block-scoped\r\n        // variable in them.  We don't want to end up allocating an object for every 'block' we\r\n        // run into when most of them won't be necessary.\r\n        //\r\n        // Finally, if this is a block-container, then we clear out any existing .locals object\r\n        // it may contain within it.  This happens in incremental scenarios.  Because we can be\r\n        // reusing a node from a previous compilation, that node may have had 'locals' created\r\n        // for it.  We must clear this so we don't accidentally move any stale data forward from\r\n        // a previous compilation.\r\n        if (containerFlags & ContainerFlags.IsContainer) {\r\n            if (node.kind !== SyntaxKind.ArrowFunction) {\r\n                thisParentContainer = container;\r\n            }\r\n            container = blockScopeContainer = node as IsContainer;\r\n            if (containerFlags & ContainerFlags.HasLocals) {\r\n                (container as HasLocals).locals = createSymbolTable();\r\n                addToContainerChain(container as HasLocals);\r\n            }\r\n        }\r\n        else if (containerFlags & ContainerFlags.IsBlockScopedContainer) {\r\n            blockScopeContainer = node as IsBlockScopedContainer;\r\n            if (containerFlags & ContainerFlags.HasLocals) {\r\n                (blockScopeContainer as HasLocals).locals = undefined;\r\n            }\r\n        }\r\n        if (containerFlags & ContainerFlags.IsControlFlowContainer) {\r\n            const saveCurrentFlow = currentFlow;\r\n            const saveBreakTarget = currentBreakTarget;\r\n            const saveContinueTarget = currentContinueTarget;\r\n            const saveReturnTarget = currentReturnTarget;\r\n            const saveExceptionTarget = currentExceptionTarget;\r\n            const saveActiveLabelList = activeLabelList;\r\n            const saveHasExplicitReturn = hasExplicitReturn;\r\n            const saveSeenThisKeyword = seenThisKeyword;\r\n            const isImmediatelyInvoked = (\r\n                containerFlags & ContainerFlags.IsFunctionExpression &&\r\n                !hasSyntacticModifier(node, ModifierFlags.Async) &&\r\n                !(node as FunctionLikeDeclaration).asteriskToken &&\r\n                !!getImmediatelyInvokedFunctionExpression(node)\r\n            ) || node.kind === SyntaxKind.ClassStaticBlockDeclaration;\r\n            // A non-async, non-generator IIFE is considered part of the containing control flow. Return statements behave\r\n            // similarly to break statements that exit to a label just past the statement body.\r\n            if (!isImmediatelyInvoked) {\r\n                currentFlow = createFlowNode(FlowFlags.Start, /*node*/ containerFlags & (ContainerFlags.IsFunctionExpression | ContainerFlags.IsObjectLiteralOrClassExpressionMethodOrAccessor) ? node as FunctionExpression | ArrowFunction | MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration : undefined, /*antecedent*/ undefined);\r\n            }\r\n            // We create a return control flow graph for IIFEs and constructors. For constructors\r\n            // we use the return control flow graph in strict property initialization checks.\r\n            currentReturnTarget = isImmediatelyInvoked || node.kind === SyntaxKind.Constructor || (isInJSFile(node) && (node.kind === SyntaxKind.FunctionDeclaration || node.kind === SyntaxKind.FunctionExpression)) ? createBranchLabel() : undefined;\r\n            currentExceptionTarget = undefined;\r\n            currentBreakTarget = undefined;\r\n            currentContinueTarget = undefined;\r\n            activeLabelList = undefined;\r\n            hasExplicitReturn = false;\r\n            seenThisKeyword = false;\r\n            bindChildren(node);\r\n            // Reset flags (for incremental scenarios)\r\n            node.flags &= ~(NodeFlags.ReachabilityAndEmitFlags | NodeFlags.ContainsThis);\r\n            if (!(currentFlow.flags & FlowFlags.Unreachable) && containerFlags & ContainerFlags.IsFunctionLike && nodeIsPresent((node as FunctionLikeDeclaration | ClassStaticBlockDeclaration).body)) {\r\n                node.flags |= NodeFlags.HasImplicitReturn;\r\n                if (hasExplicitReturn) node.flags |= NodeFlags.HasExplicitReturn;\r\n                (node as FunctionLikeDeclaration | ClassStaticBlockDeclaration).endFlowNode = currentFlow;\r\n            }\r\n            if (seenThisKeyword) {\r\n                node.flags |= NodeFlags.ContainsThis;\r\n            }\r\n            if (node.kind === SyntaxKind.SourceFile) {\r\n                node.flags |= emitFlags;\r\n                (node as SourceFile).endFlowNode = currentFlow;\r\n            }\r\n            if (currentReturnTarget) {\r\n                addAntecedent(currentReturnTarget, currentFlow);\r\n                currentFlow = finishFlowLabel(currentReturnTarget);\r\n                if (node.kind === SyntaxKind.Constructor || node.kind === SyntaxKind.ClassStaticBlockDeclaration || (isInJSFile(node) && (node.kind === SyntaxKind.FunctionDeclaration || node.kind === SyntaxKind.FunctionExpression))) {\r\n                    (node as FunctionLikeDeclaration | ClassStaticBlockDeclaration).returnFlowNode = currentFlow;\r\n                }\r\n            }\r\n            if (!isImmediatelyInvoked) {\r\n                currentFlow = saveCurrentFlow;\r\n            }\r\n            currentBreakTarget = saveBreakTarget;\r\n            currentContinueTarget = saveContinueTarget;\r\n            currentReturnTarget = saveReturnTarget;\r\n            currentExceptionTarget = saveExceptionTarget;\r\n            activeLabelList = saveActiveLabelList;\r\n            hasExplicitReturn = saveHasExplicitReturn;\r\n            seenThisKeyword = containerFlags & ContainerFlags.PropagatesThisKeyword ? saveSeenThisKeyword || seenThisKeyword : saveSeenThisKeyword;\r\n        }\r\n        else if (containerFlags & ContainerFlags.IsInterface) {\r\n            const saveSeenThisKeyword = seenThisKeyword;\r\n            seenThisKeyword = false;\r\n            bindChildren(node);\r\n            Debug.assertNotNode(node, isIdentifier); // ContainsThis cannot overlap with HasExtendedUnicodeEscape on Identifier\r\n            node.flags = seenThisKeyword ? node.flags | NodeFlags.ContainsThis : node.flags & ~NodeFlags.ContainsThis;\r\n            seenThisKeyword = saveSeenThisKeyword;\r\n        }\r\n        else {\r\n            bindChildren(node);\r\n        }\r\n\r\n        inReturnPosition = savedInReturnPosition;\r\n        container = saveContainer;\r\n        thisParentContainer = saveThisParentContainer;\r\n        blockScopeContainer = savedBlockScopeContainer;\r\n    }",
+    "after": "function bindContainer(node: Mutable<HasContainerFlags>, containerFlags: ContainerFlags) {\r\n        // Before we recurse into a node's children, we first save the existing parent, container\r\n        // and block-container.  Then after we pop out of processing the children, we restore\r\n        // these saved values.\r\n        const saveContainer = container;\r\n        const saveThisParentContainer = thisParentContainer;\r\n        const savedBlockScopeContainer = blockScopeContainer;\r\n        const savedInReturnPosition = inReturnPosition;\r\n\r\n        if (node.kind === SyntaxKind.ArrowFunction && node.body.kind !== SyntaxKind.Block) inReturnPosition = true;\r\n        // Depending on what kind of node this is, we may have to adjust the current container\r\n        // and block-container.   If the current node is a container, then it is automatically\r\n        // considered the current block-container as well.  Also, for containers that we know\r\n        // may contain locals, we eagerly initialize the .locals field. We do this because\r\n        // it's highly likely that the .locals will be needed to place some child in (for example,\r\n        // a parameter, or variable declaration).\r\n        //\r\n        // However, we do not proactively create the .locals for block-containers because it's\r\n        // totally normal and common for block-containers to never actually have a block-scoped\r\n        // variable in them.  We don't want to end up allocating an object for every 'block' we\r\n        // run into when most of them won't be necessary.\r\n        //\r\n        // Finally, if this is a block-container, then we clear out any existing .locals object\r\n        // it may contain within it.  This happens in incremental scenarios.  Because we can be\r\n        // reusing a node from a previous compilation, that node may have had 'locals' created\r\n        // for it.  We must clear this so we don't accidentally move any stale data forward from\r\n        // a previous compilation.\r\n        if (containerFlags & ContainerFlags.IsContainer) {\r\n            if (node.kind !== SyntaxKind.ArrowFunction) {\r\n                thisParentContainer = container;\r\n            }\r\n            container = blockScopeContainer = node as IsContainer;\r\n            if (containerFlags & ContainerFlags.HasLocals) {\r\n                (container as HasLocals).locals = createSymbolTable();\r\n                addToContainerChain(container as HasLocals);\r\n            }\r\n        }\r\n        else if (containerFlags & ContainerFlags.IsBlockScopedContainer) {\r\n            blockScopeContainer = node as IsBlockScopedContainer;\r\n            if (containerFlags & ContainerFlags.HasLocals) {\r\n                (blockScopeContainer as HasLocals).locals = undefined;\r\n            }\r\n        }\r\n        if (containerFlags & ContainerFlags.IsControlFlowContainer) {\r\n            const saveCurrentFlow = currentFlow;\r\n            const saveBreakTarget = currentBreakTarget;\r\n            const saveContinueTarget = currentContinueTarget;\r\n            const saveReturnTarget = currentReturnTarget;\r\n            const saveExceptionTarget = currentExceptionTarget;\r\n            const saveActiveLabelList = activeLabelList;\r\n            const saveHasExplicitReturn = hasExplicitReturn;\r\n            const saveSeenThisKeyword = seenThisKeyword;\r\n            const isImmediatelyInvoked = (\r\n                containerFlags & ContainerFlags.IsFunctionExpression &&\r\n                !hasSyntacticModifier(node, ModifierFlags.Async) &&\r\n                !(node as FunctionLikeDeclaration).asteriskToken &&\r\n                !!getImmediatelyInvokedFunctionExpression(node)\r\n            ) || node.kind === SyntaxKind.ClassStaticBlockDeclaration;\r\n            // A non-async, non-generator IIFE is considered part of the containing control flow. Return statements behave\r\n            // similarly to break statements that exit to a label just past the statement body.\r\n            if (!isImmediatelyInvoked) {\r\n                currentFlow = createFlowNode(FlowFlags.Start, /*node*/ containerFlags & (ContainerFlags.IsFunctionExpression | ContainerFlags.IsObjectLiteralOrClassExpressionMethodOrAccessor) ? node as FunctionExpression | ArrowFunction | MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration : undefined, /*antecedent*/ undefined);\r\n            }\r\n            // We create a return control flow graph for IIFEs and constructors. For constructors\r\n            // we use the return control flow graph in strict property initialization checks.\r\n            currentReturnTarget = isImmediatelyInvoked || node.kind === SyntaxKind.Constructor || (isInJSFile(node) && (node.kind === SyntaxKind.FunctionDeclaration || node.kind === SyntaxKind.FunctionExpression)) ? createBranchLabel() : undefined;\r\n            currentExceptionTarget = undefined;\r\n            currentBreakTarget = undefined;\r\n            currentContinueTarget = undefined;\r\n            activeLabelList = undefined;\r\n            hasExplicitReturn = false;\r\n            seenThisKeyword = false;\r\n            bindChildren(node);\r\n            // Reset flags (for incremental scenarios)\r\n            node.flags &= ~(NodeFlags.ReachabilityAndEmitFlags | NodeFlags.ContainsThis);\r\n            if (!(currentFlow.flags & FlowFlags.Unreachable) && containerFlags & ContainerFlags.IsFunctionLike && nodeIsPresent((node as FunctionLikeDeclaration | ClassStaticBlockDeclaration).body)) {\r\n                node.flags |= NodeFlags.HasImplicitReturn;\r\n                if (hasExplicitReturn) node.flags |= NodeFlags.HasExplicitReturn;\r\n                (node as FunctionLikeDeclaration | ClassStaticBlockDeclaration).endFlowNode = currentFlow;\r\n            }\r\n            if (seenThisKeyword) {\r\n                node.flags |= NodeFlags.ContainsThis;\r\n            }\r\n            if (node.kind === SyntaxKind.SourceFile) {\r\n                node.flags |= emitFlags;\r\n                (node as SourceFile).endFlowNode = currentFlow;\r\n            }\r\n            if (currentReturnTarget) {\r\n                addAntecedent(currentReturnTarget, currentFlow);\r\n                currentFlow = finishFlowLabel(currentReturnTarget);\r\n                if (node.kind === SyntaxKind.Constructor || node.kind === SyntaxKind.ClassStaticBlockDeclaration || (isInJSFile(node) && (node.kind === SyntaxKind.FunctionDeclaration || node.kind === SyntaxKind.FunctionExpression))) {\r\n                    (node as FunctionLikeDeclaration | ClassStaticBlockDeclaration).returnFlowNode = currentFlow;\r\n                }\r\n            }\r\n            if (!isImmediatelyInvoked) {\r\n                currentFlow = saveCurrentFlow;\r\n            }\r\n            currentBreakTarget = saveBreakTarget;\r\n            currentContinueTarget = saveContinueTarget;\r\n            currentReturnTarget = saveReturnTarget;\r\n            currentExceptionTarget = saveExceptionTarget;\r\n            activeLabelList = saveActiveLabelList;\r\n            hasExplicitReturn = saveHasExplicitReturn;\r\n            seenThisKeyword = containerFlags & ContainerFlags.PropagatesThisKeyword ? saveSeenThisKeyword || seenThisKeyword : saveSeenThisKeyword;\r\n        }\r\n        else if (containerFlags & ContainerFlags.IsInterface) {\r\n            const saveSeenThisKeyword = seenThisKeyword;\r\n            seenThisKeyword = false;\r\n            bindChildren(node);\r\n            Debug.assertNotNode(node, isIdentifier); // ContainsThis cannot overlap with HasExtendedUnicodeEscape on Identifier\r\n            node.flags = seenThisKeyword ? node.flags | NodeFlags.ContainsThis : node.flags & ~NodeFlags.ContainsThis;\r\n            seenThisKeyword = saveSeenThisKeyword;\r\n        }\r\n        else {\r\n            bindChildren(node);\r\n        }\r\n\r\n        inReturnPosition = savedInReturnPosition;\r\n        container = saveContainer;\r\n        thisParentContainer = saveThisParentContainer;\r\n        blockScopeContainer = savedBlockScopeContainer;\r\n    }"
+  },
+  {
+    "file": "src/compiler/binder.ts",
+    "function": "bindChildren",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createBinder"
+      ],
+      [
+        "Block",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "bindChildren"
+      ]
+    ],
+    "before": "function bindChildren(node: Node): void {\r\n        const saveInAssignmentPattern = inAssignmentPattern;\r\n        // Most nodes aren't valid in an assignment pattern, so we clear the value here\r\n        // and set it before we descend into nodes that could actually be part of an assignment pattern.\r\n        inAssignmentPattern = false;\r\n\r\n        // Clear Unreachable flag from previous binding (for incremental scenarios)\r\n        if (isPotentiallyExecutableNode(node)) {\r\n            (node as Mutable<Node>).flags &= ~NodeFlags.Unreachable;\r\n        }\r\n\r\n        if (currentFlow === unreachableFlow) {\r\n            if (canHaveFlowNode(node)) {\r\n                node.flowNode = undefined;\r\n            }\r\n            if (isPotentiallyExecutableNode(node)) {\r\n                (node as Mutable<Node>).flags |= NodeFlags.Unreachable;\r\n            }\r\n            bindEachChild(node);\r\n            bindJSDoc(node);\r\n            inAssignmentPattern = saveInAssignmentPattern;\r\n            return;\r\n        }\r\n\r\n        if (SyntaxKind.FirstStatement <= node.kind && node.kind <= SyntaxKind.LastStatement && canHaveFlowNode(node)) {\r\n            node.flowNode = currentFlow;\r\n        }\r\n\r\n        switch (node.kind) {\r\n            case SyntaxKind.WhileStatement:\r\n                bindWhileStatement(node as WhileStatement);\r\n                break;\r\n            case SyntaxKind.DoStatement:\r\n                bindDoStatement(node as DoStatement);\r\n                break;\r\n            case SyntaxKind.ForStatement:\r\n                bindForStatement(node as ForStatement);\r\n                break;\r\n            case SyntaxKind.ForInStatement:\r\n            case SyntaxKind.ForOfStatement:\r\n                bindForInOrForOfStatement(node as ForInOrOfStatement);\r\n                break;\r\n            case SyntaxKind.IfStatement:\r\n                bindIfStatement(node as IfStatement);\r\n                break;\r\n            case SyntaxKind.ReturnStatement:\r\n            case SyntaxKind.ThrowStatement:\r\n                bindReturnOrThrow(node as ReturnStatement | ThrowStatement);\r\n                break;\r\n            case SyntaxKind.BreakStatement:\r\n            case SyntaxKind.ContinueStatement:\r\n                bindBreakOrContinueStatement(node as BreakOrContinueStatement);\r\n                break;\r\n            case SyntaxKind.TryStatement:\r\n                bindTryStatement(node as TryStatement);\r\n                break;\r\n            case SyntaxKind.SwitchStatement:\r\n                bindSwitchStatement(node as SwitchStatement);\r\n                break;\r\n            case SyntaxKind.CaseBlock:\r\n                bindCaseBlock(node as CaseBlock);\r\n                break;\r\n            case SyntaxKind.CaseClause:\r\n                bindCaseClause(node as CaseClause);\r\n                break;\r\n            case SyntaxKind.ExpressionStatement:\r\n                bindExpressionStatement(node as ExpressionStatement);\r\n                break;\r\n            case SyntaxKind.LabeledStatement:\r\n                bindLabeledStatement(node as LabeledStatement);\r\n                break;\r\n            case SyntaxKind.PrefixUnaryExpression:\r\n                bindPrefixUnaryExpressionFlow(node as PrefixUnaryExpression);\r\n                break;\r\n            case SyntaxKind.PostfixUnaryExpression:\r\n                bindPostfixUnaryExpressionFlow(node as PostfixUnaryExpression);\r\n                break;\r\n            case SyntaxKind.BinaryExpression:\r\n                if (isDestructuringAssignment(node)) {\r\n                    // Carry over whether we are in an assignment pattern to\r\n                    // binary expressions that could actually be an initializer\r\n                    inAssignmentPattern = saveInAssignmentPattern;\r\n                    bindDestructuringAssignmentFlow(node);\r\n                    return;\r\n                }\r\n                bindBinaryExpressionFlow(node as BinaryExpression);\r\n                break;\r\n            case SyntaxKind.DeleteExpression:\r\n                bindDeleteExpressionFlow(node as DeleteExpression);\r\n                break;\r\n            case SyntaxKind.ConditionalExpression:\r\n                bindConditionalExpressionFlow(node as ConditionalExpression);\r\n                break;\r\n            case SyntaxKind.VariableDeclaration:\r\n                bindVariableDeclarationFlow(node as VariableDeclaration);\r\n                break;\r\n            case SyntaxKind.PropertyAccessExpression:\r\n            case SyntaxKind.ElementAccessExpression:\r\n                bindAccessExpressionFlow(node as AccessExpression);\r\n                break;\r\n            case SyntaxKind.CallExpression:\r\n                bindCallExpressionFlow(node as CallExpression);\r\n                break;\r\n            case SyntaxKind.NonNullExpression:\r\n                bindNonNullExpressionFlow(node as NonNullExpression);\r\n                break;\r\n            case SyntaxKind.JSDocTypedefTag:\r\n            case SyntaxKind.JSDocCallbackTag:\r\n            case SyntaxKind.JSDocEnumTag:\r\n                bindJSDocTypeAlias(node as JSDocTypedefTag | JSDocCallbackTag | JSDocEnumTag);\r\n                break;\r\n            case SyntaxKind.JSDocImportTag:\r\n                bindJSDocImportTag(node as JSDocImportTag);\r\n                break;\r\n            // In source files and blocks, bind functions first to match hoisting that occurs at runtime\r\n            case SyntaxKind.SourceFile: {\r\n                bindEachFunctionsFirst((node as SourceFile).statements);\r\n                bind((node as SourceFile).endOfFileToken);\r\n                break;\r\n            }\r\n            case SyntaxKind.Block:\r\n            case SyntaxKind.ModuleBlock:\r\n                bindEachFunctionsFirst((node as Block).statements);\r\n                break;\r\n            case SyntaxKind.BindingElement:\r\n                bindBindingElementFlow(node as BindingElement);\r\n                break;\r\n            case SyntaxKind.Parameter:\r\n                bindParameterFlow(node as ParameterDeclaration);\r\n                break;\r\n            case SyntaxKind.ObjectLiteralExpression:\r\n            case SyntaxKind.ArrayLiteralExpression:\r\n            case SyntaxKind.PropertyAssignment:\r\n            case SyntaxKind.SpreadElement:\r\n                // Carry over whether we are in an assignment pattern of Object and Array literals\r\n                // as well as their children that are valid assignment targets.\r\n                inAssignmentPattern = saveInAssignmentPattern;\r\n                // falls through\r\n            default:\r\n                bindEachChild(node);\r\n                break;\r\n        }\r\n        bindJSDoc(node);\r\n        inAssignmentPattern = saveInAssignmentPattern;\r\n    }",
+    "after": "function bindChildren(node: Node): void {\r\n        const saveInAssignmentPattern = inAssignmentPattern;\r\n        // Most nodes aren't valid in an assignment pattern, so we clear the value here\r\n        // and set it before we descend into nodes that could actually be part of an assignment pattern.\r\n        inAssignmentPattern = false;\r\n\r\n        // Clear Unreachable flag from previous binding (for incremental scenarios)\r\n        if (isPotentiallyExecutableNode(node)) {\r\n            node.flags &= ~NodeFlags.Unreachable;\r\n        }\r\n\r\n        if (currentFlow === unreachableFlow) {\r\n            if (canHaveFlowNode(node)) {\r\n                node.flowNode = undefined;\r\n            }\r\n            if (isPotentiallyExecutableNode(node)) {\r\n                node.flags |= NodeFlags.Unreachable;\r\n            }\r\n            bindEachChild(node);\r\n            bindJSDoc(node);\r\n            inAssignmentPattern = saveInAssignmentPattern;\r\n            return;\r\n        }\r\n\r\n        if (SyntaxKind.FirstStatement <= node.kind && node.kind <= SyntaxKind.LastStatement && canHaveFlowNode(node)) {\r\n            node.flowNode = currentFlow;\r\n        }\r\n\r\n        switch (node.kind) {\r\n            case SyntaxKind.WhileStatement:\r\n                bindWhileStatement(node as WhileStatement);\r\n                break;\r\n            case SyntaxKind.DoStatement:\r\n                bindDoStatement(node as DoStatement);\r\n                break;\r\n            case SyntaxKind.ForStatement:\r\n                bindForStatement(node as ForStatement);\r\n                break;\r\n            case SyntaxKind.ForInStatement:\r\n            case SyntaxKind.ForOfStatement:\r\n                bindForInOrForOfStatement(node as ForInOrOfStatement);\r\n                break;\r\n            case SyntaxKind.IfStatement:\r\n                bindIfStatement(node as IfStatement);\r\n                break;\r\n            case SyntaxKind.ReturnStatement:\r\n            case SyntaxKind.ThrowStatement:\r\n                bindReturnOrThrow(node as ReturnStatement | ThrowStatement);\r\n                break;\r\n            case SyntaxKind.BreakStatement:\r\n            case SyntaxKind.ContinueStatement:\r\n                bindBreakOrContinueStatement(node as BreakOrContinueStatement);\r\n                break;\r\n            case SyntaxKind.TryStatement:\r\n                bindTryStatement(node as TryStatement);\r\n                break;\r\n            case SyntaxKind.SwitchStatement:\r\n                bindSwitchStatement(node as SwitchStatement);\r\n                break;\r\n            case SyntaxKind.CaseBlock:\r\n                bindCaseBlock(node as CaseBlock);\r\n                break;\r\n            case SyntaxKind.CaseClause:\r\n                bindCaseClause(node as CaseClause);\r\n                break;\r\n            case SyntaxKind.ExpressionStatement:\r\n                bindExpressionStatement(node as ExpressionStatement);\r\n                break;\r\n            case SyntaxKind.LabeledStatement:\r\n                bindLabeledStatement(node as LabeledStatement);\r\n                break;\r\n            case SyntaxKind.PrefixUnaryExpression:\r\n                bindPrefixUnaryExpressionFlow(node as PrefixUnaryExpression);\r\n                break;\r\n            case SyntaxKind.PostfixUnaryExpression:\r\n                bindPostfixUnaryExpressionFlow(node as PostfixUnaryExpression);\r\n                break;\r\n            case SyntaxKind.BinaryExpression:\r\n                if (isDestructuringAssignment(node)) {\r\n                    // Carry over whether we are in an assignment pattern to\r\n                    // binary expressions that could actually be an initializer\r\n                    inAssignmentPattern = saveInAssignmentPattern;\r\n                    bindDestructuringAssignmentFlow(node);\r\n                    return;\r\n                }\r\n                bindBinaryExpressionFlow(node as BinaryExpression);\r\n                break;\r\n            case SyntaxKind.DeleteExpression:\r\n                bindDeleteExpressionFlow(node as DeleteExpression);\r\n                break;\r\n            case SyntaxKind.ConditionalExpression:\r\n                bindConditionalExpressionFlow(node as ConditionalExpression);\r\n                break;\r\n            case SyntaxKind.VariableDeclaration:\r\n                bindVariableDeclarationFlow(node as VariableDeclaration);\r\n                break;\r\n            case SyntaxKind.PropertyAccessExpression:\r\n            case SyntaxKind.ElementAccessExpression:\r\n                bindAccessExpressionFlow(node as AccessExpression);\r\n                break;\r\n            case SyntaxKind.CallExpression:\r\n                bindCallExpressionFlow(node as CallExpression);\r\n                break;\r\n            case SyntaxKind.NonNullExpression:\r\n                bindNonNullExpressionFlow(node as NonNullExpression);\r\n                break;\r\n            case SyntaxKind.JSDocTypedefTag:\r\n            case SyntaxKind.JSDocCallbackTag:\r\n            case SyntaxKind.JSDocEnumTag:\r\n                bindJSDocTypeAlias(node as JSDocTypedefTag | JSDocCallbackTag | JSDocEnumTag);\r\n                break;\r\n            case SyntaxKind.JSDocImportTag:\r\n                bindJSDocImportTag(node as JSDocImportTag);\r\n                break;\r\n            // In source files and blocks, bind functions first to match hoisting that occurs at runtime\r\n            case SyntaxKind.SourceFile: {\r\n                bindEachFunctionsFirst((node as SourceFile).statements);\r\n                bind((node as SourceFile).endOfFileToken);\r\n                break;\r\n            }\r\n            case SyntaxKind.Block:\r\n            case SyntaxKind.ModuleBlock:\r\n                bindEachFunctionsFirst((node as Block).statements);\r\n                break;\r\n            case SyntaxKind.BindingElement:\r\n                bindBindingElementFlow(node as BindingElement);\r\n                break;\r\n            case SyntaxKind.Parameter:\r\n                bindParameterFlow(node as ParameterDeclaration);\r\n                break;\r\n            case SyntaxKind.ObjectLiteralExpression:\r\n            case SyntaxKind.ArrayLiteralExpression:\r\n            case SyntaxKind.PropertyAssignment:\r\n            case SyntaxKind.SpreadElement:\r\n                // Carry over whether we are in an assignment pattern of Object and Array literals\r\n                // as well as their children that are valid assignment targets.\r\n                inAssignmentPattern = saveInAssignmentPattern;\r\n                // falls through\r\n            default:\r\n                bindEachChild(node);\r\n                break;\r\n        }\r\n        bindJSDoc(node);\r\n        inAssignmentPattern = saveInAssignmentPattern;\r\n    }"
+  },
+  {
+    "file": "src/compiler/binder.ts",
+    "function": "bindLabeledStatement",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createBinder"
+      ],
+      [
+        "Block",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "bindLabeledStatement"
+      ]
+    ],
+    "before": "function bindLabeledStatement(node: LabeledStatement): void {\r\n        const postStatementLabel = createBranchLabel();\r\n        activeLabelList = {\r\n            next: activeLabelList,\r\n            name: node.label.escapedText,\r\n            breakTarget: postStatementLabel,\r\n            continueTarget: undefined,\r\n            referenced: false,\r\n        };\r\n        bind(node.label);\r\n        bind(node.statement);\r\n        if (!activeLabelList.referenced) {\r\n            (node.label as Mutable<Node>).flags |= NodeFlags.Unreachable;\r\n        }\r\n        activeLabelList = activeLabelList.next;\r\n        addAntecedent(postStatementLabel, currentFlow);\r\n        currentFlow = finishFlowLabel(postStatementLabel);\r\n    }",
+    "after": "function bindLabeledStatement(node: LabeledStatement): void {\r\n        const postStatementLabel = createBranchLabel();\r\n        activeLabelList = {\r\n            next: activeLabelList,\r\n            name: node.label.escapedText,\r\n            breakTarget: postStatementLabel,\r\n            continueTarget: undefined,\r\n            referenced: false,\r\n        };\r\n        bind(node.label);\r\n        bind(node.statement);\r\n        if (!activeLabelList.referenced) {\r\n            node.label.flags |= NodeFlags.Unreachable;\r\n        }\r\n        activeLabelList = activeLabelList.next;\r\n        addAntecedent(postStatementLabel, currentFlow);\r\n        currentFlow = finishFlowLabel(postStatementLabel);\r\n    }"
+  },
+  {
+    "file": "src/compiler/binder.ts",
+    "function": "setExportContextFlag",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createBinder"
+      ],
+      [
+        "Block",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "setExportContextFlag"
+      ]
+    ],
+    "before": "function setExportContextFlag(node: Mutable<ModuleDeclaration | SourceFile>) {\r\n        // A declaration source file or ambient module declaration that contains no export declarations (but possibly regular\r\n        // declarations with export modifiers) is an export context in which declarations are implicitly exported.\r\n        if (node.flags & NodeFlags.Ambient && !hasExportDeclarations(node)) {\r\n            node.flags |= NodeFlags.ExportContext;\r\n        }\r\n        else {\r\n            node.flags &= ~NodeFlags.ExportContext;\r\n        }\r\n    }",
+    "after": "function setExportContextFlag(node: Mutable<ModuleDeclaration | SourceFile>) {\r\n        // A declaration source file or ambient module declaration that contains no export declarations (but possibly regular\r\n        // declarations with export modifiers) is an export context in which declarations are implicitly exported.\r\n        if (node.flags & NodeFlags.Ambient && !hasExportDeclarations(node)) {\r\n            node.flags |= NodeFlags.ExportContext;\r\n        }\r\n        else {\r\n            node.flags &= ~NodeFlags.ExportContext;\r\n        }\r\n    }"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "function": "createIdentifier",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createNodeFactory"
+      ],
+      [
+        "Block",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createIdentifier"
+      ]
+    ],
+    "before": "function createIdentifier(text: string, originalKeywordKind?: SyntaxKind, hasExtendedUnicodeEscape?: boolean): Identifier {\r\n        if (originalKeywordKind === undefined && text) {\r\n            originalKeywordKind = stringToToken(text);\r\n        }\r\n        if (originalKeywordKind === SyntaxKind.Identifier) {\r\n            originalKeywordKind = undefined;\r\n        }\r\n\r\n        const node = createBaseIdentifier(escapeLeadingUnderscores(text));\r\n        if (hasExtendedUnicodeEscape) node.flags |= NodeFlags.IdentifierHasExtendedUnicodeEscape;\r\n\r\n        // NOTE: we do not include transform flags of typeArguments in an identifier as they do not contribute to transformations\r\n        if (node.escapedText === \"await\") {\r\n            node.transformFlags |= TransformFlags.ContainsPossibleTopLevelAwait;\r\n        }\r\n        if (node.flags & NodeFlags.IdentifierHasExtendedUnicodeEscape) {\r\n            node.transformFlags |= TransformFlags.ContainsES2015;\r\n        }\r\n\r\n        return node;\r\n    }",
+    "after": "function createIdentifier(text: string, originalKeywordKind?: SyntaxKind, hasExtendedUnicodeEscape?: boolean): Identifier {\r\n        if (originalKeywordKind === undefined && text) {\r\n            originalKeywordKind = stringToToken(text);\r\n        }\r\n        if (originalKeywordKind === SyntaxKind.Identifier) {\r\n            originalKeywordKind = undefined;\r\n        }\r\n\r\n        const node = createBaseIdentifier(escapeLeadingUnderscores(text));\r\n        if (hasExtendedUnicodeEscape) node.flags |= NodeFlags.IdentifierHasExtendedUnicodeEscape;\r\n\r\n        // NOTE: we do not include transform flags of typeArguments in an identifier as they do not contribute to transformations\r\n        if (node.escapedText === \"await\") {\r\n            node.transformFlags |= TransformFlags.ContainsPossibleTopLevelAwait;\r\n        }\r\n        if (node.flags & NodeFlags.IdentifierHasExtendedUnicodeEscape) {\r\n            node.transformFlags |= TransformFlags.ContainsES2015;\r\n        }\r\n\r\n        return node;\r\n    }"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "function": "createPropertyAccessChain",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createNodeFactory"
+      ],
+      [
+        "Block",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createPropertyAccessChain"
+      ]
+    ],
+    "before": "function createPropertyAccessChain(expression: Expression, questionDotToken: QuestionDotToken | undefined, name: string | Identifier | PrivateIdentifier) {\r\n        const node = createBasePropertyAccessExpression(\r\n            parenthesizerRules().parenthesizeLeftSideOfAccess(expression, /*optionalChain*/ true),\r\n            questionDotToken,\r\n            asName(name),\r\n        ) as Mutable<PropertyAccessChain>;\r\n        node.flags |= NodeFlags.OptionalChain;\r\n        node.transformFlags |= TransformFlags.ContainsES2020;\r\n        return node;\r\n    }",
+    "after": "function createPropertyAccessChain(expression: Expression, questionDotToken: QuestionDotToken | undefined, name: string | Identifier | PrivateIdentifier) {\r\n        const node = createBasePropertyAccessExpression(\r\n            parenthesizerRules().parenthesizeLeftSideOfAccess(expression, /*optionalChain*/ true),\r\n            questionDotToken,\r\n            asName(name),\r\n        ) as Mutable<PropertyAccessChain>;\r\n        node.flags |= NodeFlags.OptionalChain;\r\n        node.transformFlags |= TransformFlags.ContainsES2020;\r\n        return node;\r\n    }"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "function": "createElementAccessChain",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createNodeFactory"
+      ],
+      [
+        "Block",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createElementAccessChain"
+      ]
+    ],
+    "before": "function createElementAccessChain(expression: Expression, questionDotToken: QuestionDotToken | undefined, index: number | Expression) {\r\n        const node = createBaseElementAccessExpression(\r\n            parenthesizerRules().parenthesizeLeftSideOfAccess(expression, /*optionalChain*/ true),\r\n            questionDotToken,\r\n            asExpression(index),\r\n        ) as Mutable<ElementAccessChain>;\r\n        node.flags |= NodeFlags.OptionalChain;\r\n        node.transformFlags |= TransformFlags.ContainsES2020;\r\n        return node;\r\n    }",
+    "after": "function createElementAccessChain(expression: Expression, questionDotToken: QuestionDotToken | undefined, index: number | Expression) {\r\n        const node = createBaseElementAccessExpression(\r\n            parenthesizerRules().parenthesizeLeftSideOfAccess(expression, /*optionalChain*/ true),\r\n            questionDotToken,\r\n            asExpression(index),\r\n        ) as Mutable<ElementAccessChain>;\r\n        node.flags |= NodeFlags.OptionalChain;\r\n        node.transformFlags |= TransformFlags.ContainsES2020;\r\n        return node;\r\n    }"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "function": "createCallChain",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createNodeFactory"
+      ],
+      [
+        "Block",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createCallChain"
+      ]
+    ],
+    "before": "function createCallChain(expression: Expression, questionDotToken: QuestionDotToken | undefined, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined) {\r\n        const node = createBaseCallExpression(\r\n            parenthesizerRules().parenthesizeLeftSideOfAccess(expression, /*optionalChain*/ true),\r\n            questionDotToken,\r\n            asNodeArray(typeArguments),\r\n            parenthesizerRules().parenthesizeExpressionsOfCommaDelimitedList(createNodeArray(argumentsArray)),\r\n        ) as Mutable<CallChain>;\r\n        node.flags |= NodeFlags.OptionalChain;\r\n        node.transformFlags |= TransformFlags.ContainsES2020;\r\n        return node;\r\n    }",
+    "after": "function createCallChain(expression: Expression, questionDotToken: QuestionDotToken | undefined, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined) {\r\n        const node = createBaseCallExpression(\r\n            parenthesizerRules().parenthesizeLeftSideOfAccess(expression, /*optionalChain*/ true),\r\n            questionDotToken,\r\n            asNodeArray(typeArguments),\r\n            parenthesizerRules().parenthesizeExpressionsOfCommaDelimitedList(createNodeArray(argumentsArray)),\r\n        ) as Mutable<CallChain>;\r\n        node.flags |= NodeFlags.OptionalChain;\r\n        node.transformFlags |= TransformFlags.ContainsES2020;\r\n        return node;\r\n    }"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "function": "createNonNullChain",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createNodeFactory"
+      ],
+      [
+        "Block",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createNonNullChain"
+      ]
+    ],
+    "before": "function createNonNullChain(expression: Expression) {\r\n        const node = createBaseNode<NonNullChain>(SyntaxKind.NonNullExpression);\r\n        node.flags |= NodeFlags.OptionalChain;\r\n        node.expression = parenthesizerRules().parenthesizeLeftSideOfAccess(expression, /*optionalChain*/ true);\r\n        node.transformFlags |= propagateChildFlags(node.expression) |\r\n            TransformFlags.ContainsTypeScript;\r\n        return node;\r\n    }",
+    "after": "function createNonNullChain(expression: Expression) {\r\n        const node = createBaseNode<NonNullChain>(SyntaxKind.NonNullExpression);\r\n        node.flags |= NodeFlags.OptionalChain;\r\n        node.expression = parenthesizerRules().parenthesizeLeftSideOfAccess(expression, /*optionalChain*/ true);\r\n        node.transformFlags |= propagateChildFlags(node.expression) |\r\n            TransformFlags.ContainsTypeScript;\r\n        return node;\r\n    }"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "function": "createVariableDeclarationList",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createNodeFactory"
+      ],
+      [
+        "Block",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createVariableDeclarationList"
+      ]
+    ],
+    "before": "function createVariableDeclarationList(declarations: readonly VariableDeclaration[], flags = NodeFlags.None) {\r\n        const node = createBaseNode<VariableDeclarationList>(SyntaxKind.VariableDeclarationList);\r\n        node.flags |= flags & NodeFlags.BlockScoped;\r\n        node.declarations = createNodeArray(declarations);\r\n        node.transformFlags |= propagateChildrenFlags(node.declarations) |\r\n            TransformFlags.ContainsHoistedDeclarationOrCompletion;\r\n        if (flags & NodeFlags.BlockScoped) {\r\n            node.transformFlags |= TransformFlags.ContainsES2015 |\r\n                TransformFlags.ContainsBlockScopedBinding;\r\n        }\r\n        if (flags & NodeFlags.Using) {\r\n            node.transformFlags |= TransformFlags.ContainsESNext;\r\n        }\r\n        return node;\r\n    }",
+    "after": "function createVariableDeclarationList(declarations: readonly VariableDeclaration[], flags = NodeFlags.None) {\r\n        const node = createBaseNode<VariableDeclarationList>(SyntaxKind.VariableDeclarationList);\r\n        node.flags |= flags & NodeFlags.BlockScoped;\r\n        node.declarations = createNodeArray(declarations);\r\n        node.transformFlags |= propagateChildrenFlags(node.declarations) |\r\n            TransformFlags.ContainsHoistedDeclarationOrCompletion;\r\n        if (flags & NodeFlags.BlockScoped) {\r\n            node.transformFlags |= TransformFlags.ContainsES2015 |\r\n                TransformFlags.ContainsBlockScopedBinding;\r\n        }\r\n        if (flags & NodeFlags.Using) {\r\n            node.transformFlags |= TransformFlags.ContainsESNext;\r\n        }\r\n        return node;\r\n    }"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "function": "createModuleDeclaration",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createNodeFactory"
+      ],
+      [
+        "Block",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createModuleDeclaration"
+      ]
+    ],
+    "before": "function createModuleDeclaration(\r\n        modifiers: readonly ModifierLike[] | undefined,\r\n        name: ModuleName,\r\n        body: ModuleBody | undefined,\r\n        flags = NodeFlags.None,\r\n    ) {\r\n        const node = createBaseDeclaration<ModuleDeclaration>(SyntaxKind.ModuleDeclaration);\r\n        node.modifiers = asNodeArray(modifiers);\r\n        node.flags |= flags & (NodeFlags.Namespace | NodeFlags.NestedNamespace | NodeFlags.GlobalAugmentation);\r\n        node.name = name;\r\n        node.body = body;\r\n        if (modifiersToFlags(node.modifiers) & ModifierFlags.Ambient) {\r\n            node.transformFlags = TransformFlags.ContainsTypeScript;\r\n        }\r\n        else {\r\n            node.transformFlags |= propagateChildrenFlags(node.modifiers) |\r\n                propagateChildFlags(node.name) |\r\n                propagateChildFlags(node.body) |\r\n                TransformFlags.ContainsTypeScript;\r\n        }\r\n        node.transformFlags &= ~TransformFlags.ContainsPossibleTopLevelAwait; // Module declarations cannot contain `await`.\r\n\r\n        node.jsDoc = undefined; // initialized by parser (JsDocContainer)\r\n        node.locals = undefined; // initialized by binder (LocalsContainer)\r\n        node.nextContainer = undefined; // initialized by binder (LocalsContainer)\r\n        return node;\r\n    }",
+    "after": "function createModuleDeclaration(\r\n        modifiers: readonly ModifierLike[] | undefined,\r\n        name: ModuleName,\r\n        body: ModuleBody | undefined,\r\n        flags = NodeFlags.None,\r\n    ) {\r\n        const node = createBaseDeclaration<ModuleDeclaration>(SyntaxKind.ModuleDeclaration);\r\n        node.modifiers = asNodeArray(modifiers);\r\n        node.flags |= flags & (NodeFlags.Namespace | NodeFlags.NestedNamespace | NodeFlags.GlobalAugmentation);\r\n        node.name = name;\r\n        node.body = body;\r\n        if (modifiersToFlags(node.modifiers) & ModifierFlags.Ambient) {\r\n            node.transformFlags = TransformFlags.ContainsTypeScript;\r\n        }\r\n        else {\r\n            node.transformFlags |= propagateChildrenFlags(node.modifiers) |\r\n                propagateChildFlags(node.name) |\r\n                propagateChildFlags(node.body) |\r\n                TransformFlags.ContainsTypeScript;\r\n        }\r\n        node.transformFlags &= ~TransformFlags.ContainsPossibleTopLevelAwait; // Module declarations cannot contain `await`.\r\n\r\n        node.jsDoc = undefined; // initialized by parser (JsDocContainer)\r\n        node.locals = undefined; // initialized by binder (LocalsContainer)\r\n        node.nextContainer = undefined; // initialized by binder (LocalsContainer)\r\n        return node;\r\n    }"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "function": "createSourceFile",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createNodeFactory"
+      ],
+      [
+        "Block",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createSourceFile"
+      ]
+    ],
+    "before": "function createSourceFile(\r\n        statements: readonly Statement[],\r\n        endOfFileToken: EndOfFileToken,\r\n        flags: NodeFlags,\r\n    ) {\r\n        const node = baseFactory.createBaseSourceFileNode(SyntaxKind.SourceFile) as Mutable<SourceFile>;\r\n        node.statements = createNodeArray(statements);\r\n        node.endOfFileToken = endOfFileToken;\r\n        node.flags |= flags;\r\n        node.text = \"\";\r\n        node.fileName = \"\";\r\n        node.path = \"\" as Path;\r\n        node.resolvedPath = \"\" as Path;\r\n        node.originalFileName = \"\";\r\n        node.languageVersion = ScriptTarget.LatestStandard;\r\n        node.languageVariant = 0;\r\n        node.scriptKind = 0;\r\n        node.isDeclarationFile = false;\r\n        node.hasNoDefaultLib = false;\r\n\r\n        node.transformFlags |= propagateChildrenFlags(node.statements) |\r\n            propagateChildFlags(node.endOfFileToken);\r\n\r\n        node.locals = undefined; // initialized by binder (LocalsContainer)\r\n        node.nextContainer = undefined; // initialized by binder (LocalsContainer)\r\n        node.endFlowNode = undefined;\r\n\r\n        node.nodeCount = 0;\r\n        node.identifierCount = 0;\r\n        node.symbolCount = 0;\r\n        node.parseDiagnostics = undefined!;\r\n        node.bindDiagnostics = undefined!;\r\n        node.bindSuggestionDiagnostics = undefined;\r\n        node.lineMap = undefined!;\r\n        node.externalModuleIndicator = undefined;\r\n        node.setExternalModuleIndicator = undefined;\r\n        node.pragmas = undefined!;\r\n        node.checkJsDirective = undefined;\r\n        node.referencedFiles = undefined!;\r\n        node.typeReferenceDirectives = undefined!;\r\n        node.libReferenceDirectives = undefined!;\r\n        node.amdDependencies = undefined!;\r\n        node.commentDirectives = undefined;\r\n        node.identifiers = undefined!;\r\n        node.packageJsonLocations = undefined;\r\n        node.packageJsonScope = undefined;\r\n        node.imports = undefined!;\r\n        node.moduleAugmentations = undefined!;\r\n        node.ambientModuleNames = undefined!;\r\n        node.classifiableNames = undefined;\r\n        node.impliedNodeFormat = undefined;\r\n        return node;\r\n    }",
+    "after": "function createSourceFile(\r\n        statements: readonly Statement[],\r\n        endOfFileToken: EndOfFileToken,\r\n        flags: NodeFlags,\r\n    ) {\r\n        const node = baseFactory.createBaseSourceFileNode(SyntaxKind.SourceFile) as Mutable<SourceFile>;\r\n        node.statements = createNodeArray(statements);\r\n        node.endOfFileToken = endOfFileToken;\r\n        node.flags |= flags;\r\n        node.text = \"\";\r\n        node.fileName = \"\";\r\n        node.path = \"\" as Path;\r\n        node.resolvedPath = \"\" as Path;\r\n        node.originalFileName = \"\";\r\n        node.languageVersion = ScriptTarget.LatestStandard;\r\n        node.languageVariant = 0;\r\n        node.scriptKind = 0;\r\n        node.isDeclarationFile = false;\r\n        node.hasNoDefaultLib = false;\r\n\r\n        node.transformFlags |= propagateChildrenFlags(node.statements) |\r\n            propagateChildFlags(node.endOfFileToken);\r\n\r\n        node.locals = undefined; // initialized by binder (LocalsContainer)\r\n        node.nextContainer = undefined; // initialized by binder (LocalsContainer)\r\n        node.endFlowNode = undefined;\r\n\r\n        node.nodeCount = 0;\r\n        node.identifierCount = 0;\r\n        node.symbolCount = 0;\r\n        node.parseDiagnostics = undefined!;\r\n        node.bindDiagnostics = undefined!;\r\n        node.bindSuggestionDiagnostics = undefined;\r\n        node.lineMap = undefined!;\r\n        node.externalModuleIndicator = undefined;\r\n        node.setExternalModuleIndicator = undefined;\r\n        node.pragmas = undefined!;\r\n        node.checkJsDirective = undefined;\r\n        node.referencedFiles = undefined!;\r\n        node.typeReferenceDirectives = undefined!;\r\n        node.libReferenceDirectives = undefined!;\r\n        node.amdDependencies = undefined!;\r\n        node.commentDirectives = undefined;\r\n        node.identifiers = undefined!;\r\n        node.packageJsonLocations = undefined;\r\n        node.packageJsonScope = undefined;\r\n        node.imports = undefined!;\r\n        node.moduleAugmentations = undefined!;\r\n        node.ambientModuleNames = undefined!;\r\n        node.classifiableNames = undefined;\r\n        node.impliedNodeFormat = undefined;\r\n        return node;\r\n    }"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "function": "cloneRedirectedSourceFile",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createNodeFactory"
+      ],
+      [
+        "Block",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "cloneRedirectedSourceFile"
+      ]
+    ],
+    "before": "function cloneRedirectedSourceFile(source: SourceFile) {\r\n        const node = createRedirectedSourceFile(source.redirectInfo!) as Mutable<SourceFile>;\r\n        node.flags |= source.flags & ~NodeFlags.Synthesized;\r\n        node.fileName = source.fileName;\r\n        node.path = source.path;\r\n        node.resolvedPath = source.resolvedPath;\r\n        node.originalFileName = source.originalFileName;\r\n        node.packageJsonLocations = source.packageJsonLocations;\r\n        node.packageJsonScope = source.packageJsonScope;\r\n        node.emitNode = undefined;\r\n        return node;\r\n    }",
+    "after": "function cloneRedirectedSourceFile(source: SourceFile) {\r\n        const node = createRedirectedSourceFile(source.redirectInfo!) as Mutable<SourceFile>;\r\n        node.flags |= source.flags & ~NodeFlags.Synthesized;\r\n        node.fileName = source.fileName;\r\n        node.path = source.path;\r\n        node.resolvedPath = source.resolvedPath;\r\n        node.originalFileName = source.originalFileName;\r\n        node.packageJsonLocations = source.packageJsonLocations;\r\n        node.packageJsonScope = source.packageJsonScope;\r\n        node.emitNode = undefined;\r\n        return node;\r\n    }"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "function": "cloneSourceFileWorker",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createNodeFactory"
+      ],
+      [
+        "Block",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "cloneSourceFileWorker"
+      ]
+    ],
+    "before": "function cloneSourceFileWorker(source: SourceFile) {\r\n        // TODO: This mechanism for cloning results in megamorphic property reads and writes. In future perf-related\r\n        //       work, we should consider switching explicit property assignments instead of using `for..in`.\r\n        const node = baseFactory.createBaseSourceFileNode(SyntaxKind.SourceFile) as Mutable<SourceFile>;\r\n        node.flags |= source.flags & ~NodeFlags.Synthesized;\r\n        for (const p in source) {\r\n            if (hasProperty(node, p) || !hasProperty(source, p)) {\r\n                continue;\r\n            }\r\n            if (p === \"emitNode\") {\r\n                node.emitNode = undefined;\r\n                continue;\r\n            }\r\n            (node as any)[p] = (source as any)[p];\r\n        }\r\n        return node;\r\n    }",
+    "after": "function cloneSourceFileWorker(source: SourceFile) {\r\n        // TODO: This mechanism for cloning results in megamorphic property reads and writes. In future perf-related\r\n        //       work, we should consider switching explicit property assignments instead of using `for..in`.\r\n        const node = baseFactory.createBaseSourceFileNode(SyntaxKind.SourceFile) as Mutable<SourceFile>;\r\n        node.flags |= source.flags & ~NodeFlags.Synthesized;\r\n        for (const p in source) {\r\n            if (hasProperty(node, p) || !hasProperty(source, p)) {\r\n                continue;\r\n            }\r\n            if (p === \"emitNode\") {\r\n                node.emitNode = undefined;\r\n                continue;\r\n            }\r\n            (node as any)[p] = (source as any)[p];\r\n        }\r\n        return node;\r\n    }"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "function": "cloneGeneratedIdentifier",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createNodeFactory"
+      ],
+      [
+        "Block",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "cloneGeneratedIdentifier"
+      ]
+    ],
+    "before": "function cloneGeneratedIdentifier(node: GeneratedIdentifier): GeneratedIdentifier {\r\n        const clone = createBaseIdentifier(node.escapedText) as Mutable<GeneratedIdentifier>;\r\n        clone.flags |= node.flags & ~NodeFlags.Synthesized;\r\n        clone.transformFlags = node.transformFlags;\r\n        setOriginal(clone, node);\r\n        setIdentifierAutoGenerate(clone, { ...node.emitNode.autoGenerate });\r\n        return clone;\r\n    }",
+    "after": "function cloneGeneratedIdentifier(node: GeneratedIdentifier): GeneratedIdentifier {\r\n        const clone = createBaseIdentifier(node.escapedText) as Mutable<GeneratedIdentifier>;\r\n        clone.flags |= node.flags & ~NodeFlags.Synthesized;\r\n        clone.transformFlags = node.transformFlags;\r\n        setOriginal(clone, node);\r\n        setIdentifierAutoGenerate(clone, { ...node.emitNode.autoGenerate });\r\n        return clone;\r\n    }"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "function": "cloneIdentifier",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createNodeFactory"
+      ],
+      [
+        "Block",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "cloneIdentifier"
+      ]
+    ],
+    "before": "function cloneIdentifier(node: Identifier): Identifier {\r\n        const clone = createBaseIdentifier(node.escapedText);\r\n        clone.flags |= node.flags & ~NodeFlags.Synthesized;\r\n        clone.jsDoc = node.jsDoc;\r\n        clone.flowNode = node.flowNode;\r\n        clone.symbol = node.symbol;\r\n        clone.transformFlags = node.transformFlags;\r\n        setOriginal(clone, node);\r\n\r\n        // clone type arguments for emitter/typeWriter\r\n        const typeArguments = getIdentifierTypeArguments(node);\r\n        if (typeArguments) setIdentifierTypeArguments(clone, typeArguments);\r\n        return clone;\r\n    }",
+    "after": "function cloneIdentifier(node: Identifier): Identifier {\r\n        const clone = createBaseIdentifier(node.escapedText);\r\n        clone.flags |= node.flags & ~NodeFlags.Synthesized;\r\n        clone.jsDoc = node.jsDoc;\r\n        clone.flowNode = node.flowNode;\r\n        clone.symbol = node.symbol;\r\n        clone.transformFlags = node.transformFlags;\r\n        setOriginal(clone, node);\r\n\r\n        // clone type arguments for emitter/typeWriter\r\n        const typeArguments = getIdentifierTypeArguments(node);\r\n        if (typeArguments) setIdentifierTypeArguments(clone, typeArguments);\r\n        return clone;\r\n    }"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "function": "cloneGeneratedPrivateIdentifier",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createNodeFactory"
+      ],
+      [
+        "Block",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "cloneGeneratedPrivateIdentifier"
+      ]
+    ],
+    "before": "function cloneGeneratedPrivateIdentifier(node: GeneratedPrivateIdentifier): GeneratedPrivateIdentifier {\r\n        const clone = createBasePrivateIdentifier(node.escapedText) as Mutable<GeneratedPrivateIdentifier>;\r\n        clone.flags |= node.flags & ~NodeFlags.Synthesized;\r\n        clone.transformFlags = node.transformFlags;\r\n        setOriginal(clone, node);\r\n        setIdentifierAutoGenerate(clone, { ...node.emitNode.autoGenerate });\r\n        return clone;\r\n    }",
+    "after": "function cloneGeneratedPrivateIdentifier(node: GeneratedPrivateIdentifier): GeneratedPrivateIdentifier {\r\n        const clone = createBasePrivateIdentifier(node.escapedText) as Mutable<GeneratedPrivateIdentifier>;\r\n        clone.flags |= node.flags & ~NodeFlags.Synthesized;\r\n        clone.transformFlags = node.transformFlags;\r\n        setOriginal(clone, node);\r\n        setIdentifierAutoGenerate(clone, { ...node.emitNode.autoGenerate });\r\n        return clone;\r\n    }"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "function": "clonePrivateIdentifier",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createNodeFactory"
+      ],
+      [
+        "Block",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "clonePrivateIdentifier"
+      ]
+    ],
+    "before": "function clonePrivateIdentifier(node: PrivateIdentifier): PrivateIdentifier {\r\n        const clone = createBasePrivateIdentifier(node.escapedText);\r\n        clone.flags |= node.flags & ~NodeFlags.Synthesized;\r\n        clone.transformFlags = node.transformFlags;\r\n        setOriginal(clone, node);\r\n        return clone;\r\n    }",
+    "after": "function clonePrivateIdentifier(node: PrivateIdentifier): PrivateIdentifier {\r\n        const clone = createBasePrivateIdentifier(node.escapedText);\r\n        clone.flags |= node.flags & ~NodeFlags.Synthesized;\r\n        clone.transformFlags = node.transformFlags;\r\n        setOriginal(clone, node);\r\n        return clone;\r\n    }"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "function": "cloneNode",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createNodeFactory"
+      ],
+      [
+        "Block",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "cloneNode"
+      ]
+    ],
+    "before": "function cloneNode<T extends Node>(node: T) {\r\n        // We don't use \"clone\" from core.ts here, as we need to preserve the prototype chain of\r\n        // the original node. We also need to exclude specific properties and only include own-\r\n        // properties (to skip members already defined on the shared prototype).\r\n        if (node === undefined) {\r\n            return node;\r\n        }\r\n        if (isSourceFile(node)) {\r\n            return cloneSourceFile(node) as T & SourceFile;\r\n        }\r\n        if (isGeneratedIdentifier(node)) {\r\n            return cloneGeneratedIdentifier(node) as T & GeneratedIdentifier;\r\n        }\r\n        if (isIdentifier(node)) {\r\n            return cloneIdentifier(node) as T & Identifier;\r\n        }\r\n        if (isGeneratedPrivateIdentifier(node)) {\r\n            return cloneGeneratedPrivateIdentifier(node) as T & GeneratedPrivateIdentifier;\r\n        }\r\n        if (isPrivateIdentifier(node)) {\r\n            return clonePrivateIdentifier(node) as T & PrivateIdentifier;\r\n        }\r\n\r\n        const clone = !isNodeKind(node.kind) ? baseFactory.createBaseTokenNode(node.kind) as T :\r\n            baseFactory.createBaseNode(node.kind) as T;\r\n\r\n        (clone as Mutable<T>).flags |= node.flags & ~NodeFlags.Synthesized;\r\n        (clone as Mutable<T>).transformFlags = node.transformFlags;\r\n        setOriginal(clone, node);\r\n\r\n        for (const key in node) {\r\n            if (hasProperty(clone, key) || !hasProperty(node, key)) {\r\n                continue;\r\n            }\r\n\r\n            clone[key] = node[key];\r\n        }\r\n\r\n        return clone;\r\n    }",
+    "after": "function cloneNode<T extends Node>(node: T) {\r\n        // We don't use \"clone\" from core.ts here, as we need to preserve the prototype chain of\r\n        // the original node. We also need to exclude specific properties and only include own-\r\n        // properties (to skip members already defined on the shared prototype).\r\n        if (node === undefined) {\r\n            return node;\r\n        }\r\n        if (isSourceFile(node)) {\r\n            return cloneSourceFile(node) as T & SourceFile;\r\n        }\r\n        if (isGeneratedIdentifier(node)) {\r\n            return cloneGeneratedIdentifier(node) as T & GeneratedIdentifier;\r\n        }\r\n        if (isIdentifier(node)) {\r\n            return cloneIdentifier(node) as T & Identifier;\r\n        }\r\n        if (isGeneratedPrivateIdentifier(node)) {\r\n            return cloneGeneratedPrivateIdentifier(node) as T & GeneratedPrivateIdentifier;\r\n        }\r\n        if (isPrivateIdentifier(node)) {\r\n            return clonePrivateIdentifier(node) as T & PrivateIdentifier;\r\n        }\r\n\r\n        const clone = !isNodeKind(node.kind) ? baseFactory.createBaseTokenNode(node.kind) as T :\r\n            baseFactory.createBaseNode(node.kind) as T;\r\n\r\n        clone.flags |= node.flags & ~NodeFlags.Synthesized;\r\n        (clone as Mutable<T>).transformFlags = node.transformFlags;\r\n        setOriginal(clone, node);\r\n\r\n        for (const key in node) {\r\n            if (hasProperty(clone, key) || !hasProperty(node, key)) {\r\n                continue;\r\n            }\r\n\r\n            clone[key] = node[key];\r\n        }\r\n\r\n        return clone;\r\n    }"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "function": "makeSynthetic",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "makeSynthetic"
+      ]
+    ],
+    "before": "function makeSynthetic(node: Node) {\r\n    (node as Mutable<Node>).flags |= NodeFlags.Synthesized;\r\n    return node;\r\n}",
+    "after": "function makeSynthetic(node: Node) {\r\n    node.flags |= NodeFlags.Synthesized;\r\n    return node;\r\n}"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "function": "updateSourceFile",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "updateSourceFile"
+      ]
+    ],
+    "before": "export function updateSourceFile(sourceFile: SourceFile, newText: string, textChangeRange: TextChangeRange, aggressiveChecks = false): SourceFile {\r\n    const newSourceFile = IncrementalParser.updateSourceFile(sourceFile, newText, textChangeRange, aggressiveChecks);\r\n    // Because new source file node is created, it may not have the flag PossiblyContainDynamicImport. This is the case if there is no new edit to add dynamic import.\r\n    // We will manually port the flag to the new source file.\r\n    (newSourceFile as Mutable<SourceFile>).flags |= sourceFile.flags & NodeFlags.PermanentlySetIncrementalFlags;\r\n    return newSourceFile;\r\n}",
+    "after": "export function updateSourceFile(sourceFile: SourceFile, newText: string, textChangeRange: TextChangeRange, aggressiveChecks = false): SourceFile {\r\n    const newSourceFile = IncrementalParser.updateSourceFile(sourceFile, newText, textChangeRange, aggressiveChecks);\r\n    // Because new source file node is created, it may not have the flag PossiblyContainDynamicImport. This is the case if there is no new edit to add dynamic import.\r\n    // We will manually port the flag to the new source file.\r\n    newSourceFile.flags |= sourceFile.flags & NodeFlags.PermanentlySetIncrementalFlags;\r\n    return newSourceFile;\r\n}"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "function": "withJSDoc",
+    "key": [
+      [
+        "ModuleDeclaration",
+        "statements",
+        "Parser"
+      ],
+      [
+        "ModuleBlock",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "withJSDoc"
+      ]
+    ],
+    "before": "function withJSDoc<T extends HasJSDoc>(node: T, hasJSDoc: boolean): T {\r\n        if (!hasJSDoc) {\r\n            return node;\r\n        }\r\n\r\n        Debug.assert(!node.jsDoc); // Should only be called once per node\r\n        const jsDoc = mapDefined(getJSDocCommentRanges(node, sourceText), comment => JSDocParser.parseJSDocComment(node, comment.pos, comment.end - comment.pos));\r\n        if (jsDoc.length) node.jsDoc = jsDoc;\r\n        if (hasDeprecatedTag) {\r\n            hasDeprecatedTag = false;\r\n            (node as Mutable<T>).flags |= NodeFlags.Deprecated;\r\n        }\r\n        return node;\r\n    }",
+    "after": "function withJSDoc<T extends HasJSDoc>(node: T, hasJSDoc: boolean): T {\r\n        if (!hasJSDoc) {\r\n            return node;\r\n        }\r\n\r\n        Debug.assert(!node.jsDoc); // Should only be called once per node\r\n        const jsDoc = mapDefined(getJSDocCommentRanges(node, sourceText), comment => JSDocParser.parseJSDocComment(node, comment.pos, comment.end - comment.pos));\r\n        if (jsDoc.length) node.jsDoc = jsDoc;\r\n        if (hasDeprecatedTag) {\r\n            hasDeprecatedTag = false;\r\n            node.flags |= NodeFlags.Deprecated;\r\n        }\r\n        return node;\r\n    }"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "function": "finishNode",
+    "key": [
+      [
+        "ModuleDeclaration",
+        "statements",
+        "Parser"
+      ],
+      [
+        "ModuleBlock",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "finishNode"
+      ]
+    ],
+    "before": "function finishNode<T extends Node>(node: T, pos: number, end?: number): T {\r\n        setTextRangePosEnd(node, pos, end ?? scanner.getTokenFullStart());\r\n        if (contextFlags) {\r\n            (node as Mutable<T>).flags |= contextFlags;\r\n        }\r\n\r\n        // Keep track on the node if we encountered an error while parsing it.  If we did, then\r\n        // we cannot reuse the node incrementally.  Once we've marked this node, clear out the\r\n        // flag so that we don't mark any subsequent nodes.\r\n        if (parseErrorBeforeNextFinishedNode) {\r\n            parseErrorBeforeNextFinishedNode = false;\r\n            (node as Mutable<T>).flags |= NodeFlags.ThisNodeHasError;\r\n        }\r\n\r\n        return node;\r\n    }",
+    "after": "function finishNode<T extends Node>(node: T, pos: number, end?: number): T {\r\n        setTextRangePosEnd(node, pos, end ?? scanner.getTokenFullStart());\r\n        if (contextFlags) {\r\n            node.flags |= contextFlags;\r\n        }\r\n\r\n        // Keep track on the node if we encountered an error while parsing it.  If we did, then\r\n        // we cannot reuse the node incrementally.  Once we've marked this node, clear out the\r\n        // flag so that we don't mark any subsequent nodes.\r\n        if (parseErrorBeforeNextFinishedNode) {\r\n            parseErrorBeforeNextFinishedNode = false;\r\n            node.flags |= NodeFlags.ThisNodeHasError;\r\n        }\r\n\r\n        return node;\r\n    }"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "function": "parseTupleElementType",
+    "key": [
+      [
+        "ModuleDeclaration",
+        "statements",
+        "Parser"
+      ],
+      [
+        "ModuleBlock",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "parseTupleElementType"
+      ]
+    ],
+    "before": "function parseTupleElementType() {\r\n        const pos = getNodePos();\r\n        if (parseOptional(SyntaxKind.DotDotDotToken)) {\r\n            return finishNode(factory.createRestTypeNode(parseType()), pos);\r\n        }\r\n        const type = parseType();\r\n        if (isJSDocNullableType(type) && type.pos === type.type.pos) {\r\n            const node = factory.createOptionalTypeNode(type.type);\r\n            setTextRange(node, type);\r\n            (node as Mutable<Node>).flags = type.flags;\r\n            return node;\r\n        }\r\n        return type;\r\n    }",
+    "after": "function parseTupleElementType() {\r\n        const pos = getNodePos();\r\n        if (parseOptional(SyntaxKind.DotDotDotToken)) {\r\n            return finishNode(factory.createRestTypeNode(parseType()), pos);\r\n        }\r\n        const type = parseType();\r\n        if (isJSDocNullableType(type) && type.pos === type.type.pos) {\r\n            const node = factory.createOptionalTypeNode(type.type);\r\n            setTextRange(node, type);\r\n            node.flags = type.flags;\r\n            return node;\r\n        }\r\n        return type;\r\n    }"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "function": "tryReparseOptionalChain",
+    "key": [
+      [
+        "ModuleDeclaration",
+        "statements",
+        "Parser"
+      ],
+      [
+        "ModuleBlock",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "tryReparseOptionalChain"
+      ]
+    ],
+    "before": "function tryReparseOptionalChain(node: Expression) {\r\n        if (node.flags & NodeFlags.OptionalChain) {\r\n            return true;\r\n        }\r\n        // check for an optional chain in a non-null expression\r\n        if (isNonNullExpression(node)) {\r\n            let expr = node.expression;\r\n            while (isNonNullExpression(expr) && !(expr.flags & NodeFlags.OptionalChain)) {\r\n                expr = expr.expression;\r\n            }\r\n            if (expr.flags & NodeFlags.OptionalChain) {\r\n                // this is part of an optional chain. Walk down from `node` to `expression` and set the flag.\r\n                while (isNonNullExpression(node)) {\r\n                    (node as Mutable<NonNullExpression>).flags |= NodeFlags.OptionalChain;\r\n                    node = node.expression;\r\n                }\r\n                return true;\r\n            }\r\n        }\r\n        return false;\r\n    }",
+    "after": "function tryReparseOptionalChain(node: Expression) {\r\n        if (node.flags & NodeFlags.OptionalChain) {\r\n            return true;\r\n        }\r\n        // check for an optional chain in a non-null expression\r\n        if (isNonNullExpression(node)) {\r\n            let expr = node.expression;\r\n            while (isNonNullExpression(expr) && !(expr.flags & NodeFlags.OptionalChain)) {\r\n                expr = expr.expression;\r\n            }\r\n            if (expr.flags & NodeFlags.OptionalChain) {\r\n                // this is part of an optional chain. Walk down from `node` to `expression` and set the flag.\r\n                while (isNonNullExpression(node)) {\r\n                    node.flags |= NodeFlags.OptionalChain;\r\n                    node = node.expression;\r\n                }\r\n                return true;\r\n            }\r\n        }\r\n        return false;\r\n    }"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "function": "parseTaggedTemplateRest",
+    "key": [
+      [
+        "ModuleDeclaration",
+        "statements",
+        "Parser"
+      ],
+      [
+        "ModuleBlock",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "parseTaggedTemplateRest"
+      ]
+    ],
+    "before": "function parseTaggedTemplateRest(pos: number, tag: LeftHandSideExpression, questionDotToken: QuestionDotToken | undefined, typeArguments: NodeArray<TypeNode> | undefined) {\r\n        const tagExpression = factory.createTaggedTemplateExpression(\r\n            tag,\r\n            typeArguments,\r\n            token() === SyntaxKind.NoSubstitutionTemplateLiteral ?\r\n                (reScanTemplateToken(/*isTaggedTemplate*/ true), parseLiteralNode() as NoSubstitutionTemplateLiteral) :\r\n                parseTemplateExpression(/*isTaggedTemplate*/ true),\r\n        );\r\n        if (questionDotToken || tag.flags & NodeFlags.OptionalChain) {\r\n            (tagExpression as Mutable<Node>).flags |= NodeFlags.OptionalChain;\r\n        }\r\n        tagExpression.questionDotToken = questionDotToken;\r\n        return finishNode(tagExpression, pos);\r\n    }",
+    "after": "function parseTaggedTemplateRest(pos: number, tag: LeftHandSideExpression, questionDotToken: QuestionDotToken | undefined, typeArguments: NodeArray<TypeNode> | undefined) {\r\n        const tagExpression = factory.createTaggedTemplateExpression(\r\n            tag,\r\n            typeArguments,\r\n            token() === SyntaxKind.NoSubstitutionTemplateLiteral ?\r\n                (reScanTemplateToken(/*isTaggedTemplate*/ true), parseLiteralNode() as NoSubstitutionTemplateLiteral) :\r\n                parseTemplateExpression(/*isTaggedTemplate*/ true),\r\n        );\r\n        if (questionDotToken || tag.flags & NodeFlags.OptionalChain) {\r\n            tagExpression.flags |= NodeFlags.OptionalChain;\r\n        }\r\n        tagExpression.questionDotToken = questionDotToken;\r\n        return finishNode(tagExpression, pos);\r\n    }"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "function": "parseDeclaration",
+    "key": [
+      [
+        "ModuleDeclaration",
+        "statements",
+        "Parser"
+      ],
+      [
+        "ModuleBlock",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "parseDeclaration"
+      ]
+    ],
+    "before": "function parseDeclaration(): Statement {\r\n        // `parseListElement` attempted to get the reused node at this position,\r\n        // but the ambient context flag was not yet set, so the node appeared\r\n        // not reusable in that context.\r\n        const pos = getNodePos();\r\n        const hasJSDoc = hasPrecedingJSDocComment();\r\n        const modifiers = parseModifiers(/*allowDecorators*/ true);\r\n        const isAmbient = some(modifiers, isDeclareModifier);\r\n        if (isAmbient) {\r\n            const node = tryReuseAmbientDeclaration(pos);\r\n            if (node) {\r\n                return node;\r\n            }\r\n\r\n            for (const m of modifiers!) {\r\n                (m as Mutable<Node>).flags |= NodeFlags.Ambient;\r\n            }\r\n            return doInsideOfContext(NodeFlags.Ambient, () => parseDeclarationWorker(pos, hasJSDoc, modifiers));\r\n        }\r\n        else {\r\n            return parseDeclarationWorker(pos, hasJSDoc, modifiers);\r\n        }\r\n    }",
+    "after": "function parseDeclaration(): Statement {\r\n        // `parseListElement` attempted to get the reused node at this position,\r\n        // but the ambient context flag was not yet set, so the node appeared\r\n        // not reusable in that context.\r\n        const pos = getNodePos();\r\n        const hasJSDoc = hasPrecedingJSDocComment();\r\n        const modifiers = parseModifiers(/*allowDecorators*/ true);\r\n        const isAmbient = some(modifiers, isDeclareModifier);\r\n        if (isAmbient) {\r\n            const node = tryReuseAmbientDeclaration(pos);\r\n            if (node) {\r\n                return node;\r\n            }\r\n\r\n            for (const m of modifiers!) {\r\n                m.flags |= NodeFlags.Ambient;\r\n            }\r\n            return doInsideOfContext(NodeFlags.Ambient, () => parseDeclarationWorker(pos, hasJSDoc, modifiers));\r\n        }\r\n        else {\r\n            return parseDeclarationWorker(pos, hasJSDoc, modifiers);\r\n        }\r\n    }"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "function": "parseClassElement",
+    "key": [
+      [
+        "ModuleDeclaration",
+        "statements",
+        "Parser"
+      ],
+      [
+        "ModuleBlock",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "parseClassElement"
+      ]
+    ],
+    "before": "function parseClassElement(): ClassElement {\r\n        const pos = getNodePos();\r\n        const hasJSDoc = hasPrecedingJSDocComment();\r\n        if (token() === SyntaxKind.SemicolonToken) {\r\n            nextToken();\r\n            return withJSDoc(finishNode(factory.createSemicolonClassElement(), pos), hasJSDoc);\r\n        }\r\n\r\n        const modifiers = parseModifiers(/*allowDecorators*/ true, /*permitConstAsModifier*/ true, /*stopOnStartOfClassStaticBlock*/ true);\r\n        if (token() === SyntaxKind.StaticKeyword && lookAhead(nextTokenIsOpenBrace)) {\r\n            return parseClassStaticBlockDeclaration(pos, hasJSDoc, modifiers);\r\n        }\r\n\r\n        if (parseContextualModifier(SyntaxKind.GetKeyword)) {\r\n            return parseAccessorDeclaration(pos, hasJSDoc, modifiers, SyntaxKind.GetAccessor, SignatureFlags.None);\r\n        }\r\n\r\n        if (parseContextualModifier(SyntaxKind.SetKeyword)) {\r\n            return parseAccessorDeclaration(pos, hasJSDoc, modifiers, SyntaxKind.SetAccessor, SignatureFlags.None);\r\n        }\r\n\r\n        if (token() === SyntaxKind.ConstructorKeyword || token() === SyntaxKind.StringLiteral) {\r\n            const constructorDeclaration = tryParseConstructorDeclaration(pos, hasJSDoc, modifiers);\r\n            if (constructorDeclaration) {\r\n                return constructorDeclaration;\r\n            }\r\n        }\r\n\r\n        if (isIndexSignature()) {\r\n            return parseIndexSignatureDeclaration(pos, hasJSDoc, modifiers);\r\n        }\r\n\r\n        // It is very important that we check this *after* checking indexers because\r\n        // the [ token can start an index signature or a computed property name\r\n        if (\r\n            tokenIsIdentifierOrKeyword(token()) ||\r\n            token() === SyntaxKind.StringLiteral ||\r\n            token() === SyntaxKind.NumericLiteral ||\r\n            token() === SyntaxKind.BigIntLiteral ||\r\n            token() === SyntaxKind.AsteriskToken ||\r\n            token() === SyntaxKind.OpenBracketToken\r\n        ) {\r\n            const isAmbient = some(modifiers, isDeclareModifier);\r\n            if (isAmbient) {\r\n                for (const m of modifiers!) {\r\n                    (m as Mutable<Node>).flags |= NodeFlags.Ambient;\r\n                }\r\n                return doInsideOfContext(NodeFlags.Ambient, () => parsePropertyOrMethodDeclaration(pos, hasJSDoc, modifiers));\r\n            }\r\n            else {\r\n                return parsePropertyOrMethodDeclaration(pos, hasJSDoc, modifiers);\r\n            }\r\n        }\r\n\r\n        if (modifiers) {\r\n            // treat this as a property declaration with a missing name.\r\n            const name = createMissingNode<Identifier>(SyntaxKind.Identifier, /*reportAtCurrentPosition*/ true, Diagnostics.Declaration_expected);\r\n            return parsePropertyDeclaration(pos, hasJSDoc, modifiers, name, /*questionToken*/ undefined);\r\n        }\r\n\r\n        // 'isClassMemberStart' should have hinted not to attempt parsing.\r\n        return Debug.fail(\"Should not have attempted to parse class member declaration.\");\r\n    }",
+    "after": "function parseClassElement(): ClassElement {\r\n        const pos = getNodePos();\r\n        const hasJSDoc = hasPrecedingJSDocComment();\r\n        if (token() === SyntaxKind.SemicolonToken) {\r\n            nextToken();\r\n            return withJSDoc(finishNode(factory.createSemicolonClassElement(), pos), hasJSDoc);\r\n        }\r\n\r\n        const modifiers = parseModifiers(/*allowDecorators*/ true, /*permitConstAsModifier*/ true, /*stopOnStartOfClassStaticBlock*/ true);\r\n        if (token() === SyntaxKind.StaticKeyword && lookAhead(nextTokenIsOpenBrace)) {\r\n            return parseClassStaticBlockDeclaration(pos, hasJSDoc, modifiers);\r\n        }\r\n\r\n        if (parseContextualModifier(SyntaxKind.GetKeyword)) {\r\n            return parseAccessorDeclaration(pos, hasJSDoc, modifiers, SyntaxKind.GetAccessor, SignatureFlags.None);\r\n        }\r\n\r\n        if (parseContextualModifier(SyntaxKind.SetKeyword)) {\r\n            return parseAccessorDeclaration(pos, hasJSDoc, modifiers, SyntaxKind.SetAccessor, SignatureFlags.None);\r\n        }\r\n\r\n        if (token() === SyntaxKind.ConstructorKeyword || token() === SyntaxKind.StringLiteral) {\r\n            const constructorDeclaration = tryParseConstructorDeclaration(pos, hasJSDoc, modifiers);\r\n            if (constructorDeclaration) {\r\n                return constructorDeclaration;\r\n            }\r\n        }\r\n\r\n        if (isIndexSignature()) {\r\n            return parseIndexSignatureDeclaration(pos, hasJSDoc, modifiers);\r\n        }\r\n\r\n        // It is very important that we check this *after* checking indexers because\r\n        // the [ token can start an index signature or a computed property name\r\n        if (\r\n            tokenIsIdentifierOrKeyword(token()) ||\r\n            token() === SyntaxKind.StringLiteral ||\r\n            token() === SyntaxKind.NumericLiteral ||\r\n            token() === SyntaxKind.BigIntLiteral ||\r\n            token() === SyntaxKind.AsteriskToken ||\r\n            token() === SyntaxKind.OpenBracketToken\r\n        ) {\r\n            const isAmbient = some(modifiers, isDeclareModifier);\r\n            if (isAmbient) {\r\n                for (const m of modifiers!) {\r\n                    m.flags |= NodeFlags.Ambient;\r\n                }\r\n                return doInsideOfContext(NodeFlags.Ambient, () => parsePropertyOrMethodDeclaration(pos, hasJSDoc, modifiers));\r\n            }\r\n            else {\r\n                return parsePropertyOrMethodDeclaration(pos, hasJSDoc, modifiers);\r\n            }\r\n        }\r\n\r\n        if (modifiers) {\r\n            // treat this as a property declaration with a missing name.\r\n            const name = createMissingNode<Identifier>(SyntaxKind.Identifier, /*reportAtCurrentPosition*/ true, Diagnostics.Declaration_expected);\r\n            return parsePropertyDeclaration(pos, hasJSDoc, modifiers, name, /*questionToken*/ undefined);\r\n        }\r\n\r\n        // 'isClassMemberStart' should have hinted not to attempt parsing.\r\n        return Debug.fail(\"Should not have attempted to parse class member declaration.\");\r\n    }"
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "function": "parseJSDocTypeNameWithNamespace",
+    "key": [
+      [
+        "ModuleDeclaration",
+        "statements",
+        "Parser"
+      ],
+      [
+        "ModuleBlock",
+        "body",
+        ""
+      ],
+      [
+        "ModuleDeclaration",
+        "statements",
+        "JSDocParser"
+      ],
+      [
+        "ModuleBlock",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "parseJSDocCommentWorker"
+      ],
+      [
+        "Block",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "parseJSDocTypeNameWithNamespace"
+      ]
+    ],
+    "before": "function parseJSDocTypeNameWithNamespace(nested?: boolean) {\r\n                const start = scanner.getTokenStart();\r\n                if (!tokenIsIdentifierOrKeyword(token())) {\r\n                    return undefined;\r\n                }\r\n                const typeNameOrNamespaceName = parseJSDocIdentifierName();\r\n                if (parseOptional(SyntaxKind.DotToken)) {\r\n                    const body = parseJSDocTypeNameWithNamespace(/*nested*/ true);\r\n                    const jsDocNamespaceNode = factory.createModuleDeclaration(\r\n                        /*modifiers*/ undefined,\r\n                        typeNameOrNamespaceName,\r\n                        body,\r\n                        nested ? NodeFlags.NestedNamespace : undefined,\r\n                    ) as JSDocNamespaceDeclaration;\r\n                    return finishNode(jsDocNamespaceNode, start);\r\n                }\r\n\r\n                if (nested) {\r\n                    (typeNameOrNamespaceName as Mutable<Identifier>).flags |= NodeFlags.IdentifierIsInJSDocNamespace;\r\n                }\r\n                return typeNameOrNamespaceName;\r\n            }",
+    "after": "function parseJSDocTypeNameWithNamespace(nested?: boolean) {\r\n                const start = scanner.getTokenStart();\r\n                if (!tokenIsIdentifierOrKeyword(token())) {\r\n                    return undefined;\r\n                }\r\n                const typeNameOrNamespaceName = parseJSDocIdentifierName();\r\n                if (parseOptional(SyntaxKind.DotToken)) {\r\n                    const body = parseJSDocTypeNameWithNamespace(/*nested*/ true);\r\n                    const jsDocNamespaceNode = factory.createModuleDeclaration(\r\n                        /*modifiers*/ undefined,\r\n                        typeNameOrNamespaceName,\r\n                        body,\r\n                        nested ? NodeFlags.NestedNamespace : undefined,\r\n                    ) as JSDocNamespaceDeclaration;\r\n                    return finishNode(jsDocNamespaceNode, start);\r\n                }\r\n\r\n                if (nested) {\r\n                    typeNameOrNamespaceName.flags |= NodeFlags.IdentifierIsInJSDocNamespace;\r\n                }\r\n                return typeNameOrNamespaceName;\r\n            }"
+  },
+  {
+    "file": "src/compiler/program.ts",
+    "function": "createSyntheticImport",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createProgram"
+      ],
+      [
+        "Block",
+        "body",
+        ""
+      ],
+      [
+        "FunctionDeclaration",
+        "statements",
+        "createSyntheticImport"
+      ]
+    ],
+    "before": "function createSyntheticImport(text: string, file: SourceFile) {\r\n        const externalHelpersModuleReference = factory.createStringLiteral(text);\r\n        const importDecl = factory.createImportDeclaration(/*modifiers*/ undefined, /*importClause*/ undefined, externalHelpersModuleReference);\r\n        addInternalEmitFlags(importDecl, InternalEmitFlags.NeverApplyImportHelper);\r\n        setParent(externalHelpersModuleReference, importDecl);\r\n        setParent(importDecl, file);\r\n        // explicitly unset the synthesized flag on these declarations so the checker API will answer questions about them\r\n        // (which is required to build the dependency graph for incremental emit)\r\n        (externalHelpersModuleReference as Mutable<Node>).flags &= ~NodeFlags.Synthesized;\r\n        (importDecl as Mutable<Node>).flags &= ~NodeFlags.Synthesized;\r\n        return externalHelpersModuleReference;\r\n    }",
+    "after": "function createSyntheticImport(text: string, file: SourceFile) {\r\n        const externalHelpersModuleReference = factory.createStringLiteral(text);\r\n        const importDecl = factory.createImportDeclaration(/*modifiers*/ undefined, /*importClause*/ undefined, externalHelpersModuleReference);\r\n        addInternalEmitFlags(importDecl, InternalEmitFlags.NeverApplyImportHelper);\r\n        setParent(externalHelpersModuleReference, importDecl);\r\n        setParent(importDecl, file);\r\n        // explicitly unset the synthesized flag on these declarations so the checker API will answer questions about them\r\n        // (which is required to build the dependency graph for incremental emit)\r\n        externalHelpersModuleReference.flags &= ~NodeFlags.Synthesized;\r\n        importDecl.flags &= ~NodeFlags.Synthesized;\r\n        return externalHelpersModuleReference;\r\n    }"
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "function": "aggregateChildData",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "aggregateChildData"
+      ]
+    ],
+    "before": "function aggregateChildData(node: Node): void {\r\n    if (!(node.flags & NodeFlags.HasAggregatedChildData)) {\r\n        // A node is considered to contain a parse error if:\r\n        //  a) the parser explicitly marked that it had an error\r\n        //  b) any of it's children reported that it had an error.\r\n        const thisNodeOrAnySubNodesHasError = ((node.flags & NodeFlags.ThisNodeHasError) !== 0) ||\r\n            forEachChild(node, containsParseError);\r\n\r\n        // If so, mark ourselves accordingly.\r\n        if (thisNodeOrAnySubNodesHasError) {\r\n            (node as Mutable<Node>).flags |= NodeFlags.ThisNodeOrAnySubNodesHasError;\r\n        }\r\n\r\n        // Also mark that we've propagated the child information to this node.  This way we can\r\n        // always consult the bit directly on this node without needing to check its children\r\n        // again.\r\n        (node as Mutable<Node>).flags |= NodeFlags.HasAggregatedChildData;\r\n    }\r\n}",
+    "after": "function aggregateChildData(node: Node): void {\r\n    if (!(node.flags & NodeFlags.HasAggregatedChildData)) {\r\n        // A node is considered to contain a parse error if:\r\n        //  a) the parser explicitly marked that it had an error\r\n        //  b) any of it's children reported that it had an error.\r\n        const thisNodeOrAnySubNodesHasError = ((node.flags & NodeFlags.ThisNodeHasError) !== 0) ||\r\n            forEachChild(node, containsParseError);\r\n\r\n        // If so, mark ourselves accordingly.\r\n        if (thisNodeOrAnySubNodesHasError) {\r\n            node.flags |= NodeFlags.ThisNodeOrAnySubNodesHasError;\r\n        }\r\n\r\n        // Also mark that we've propagated the child information to this node.  This way we can\r\n        // always consult the bit directly on this node without needing to check its children\r\n        // again.\r\n        node.flags |= NodeFlags.HasAggregatedChildData;\r\n    }\r\n}"
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "function": "Node",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "Node"
+      ]
+    ],
+    "before": "function Node(this: Mutable<Node>, kind: SyntaxKind, pos: number, end: number): void {\r\n    // Note: if modifying this, be sure to update NodeObject in src/services/services.ts\r\n    this.pos = pos;\r\n    this.end = end;\r\n    this.kind = kind;\r\n    this.id = 0;\r\n    this.flags = NodeFlags.None;\r\n    this.modifierFlagsCache = ModifierFlags.None;\r\n    this.transformFlags = TransformFlags.None;\r\n    this.parent = undefined!;\r\n    this.original = undefined;\r\n    this.emitNode = undefined;\r\n}",
+    "after": "function Node(this: Mutable<Node>, kind: SyntaxKind, pos: number, end: number): void {\r\n    // Note: if modifying this, be sure to update NodeObject in src/services/services.ts\r\n    this.pos = pos;\r\n    this.end = end;\r\n    this.kind = kind;\r\n    this.id = 0;\r\n    this.flags = NodeFlags.None;\r\n    this.modifierFlagsCache = ModifierFlags.None;\r\n    this.transformFlags = TransformFlags.None;\r\n    this.parent = undefined!;\r\n    this.original = undefined;\r\n    this.emitNode = undefined;\r\n}"
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "function": "Token",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "Token"
+      ]
+    ],
+    "before": "function Token(this: Mutable<Node>, kind: SyntaxKind, pos: number, end: number): void {\r\n    // Note: if modifying this, be sure to update TokenOrIdentifierObject in src/services/services.ts\r\n    this.pos = pos;\r\n    this.end = end;\r\n    this.kind = kind;\r\n    this.id = 0;\r\n    this.flags = NodeFlags.None;\r\n    this.transformFlags = TransformFlags.None;\r\n    this.parent = undefined!;\r\n    this.emitNode = undefined;\r\n}",
+    "after": "function Token(this: Mutable<Node>, kind: SyntaxKind, pos: number, end: number): void {\r\n    // Note: if modifying this, be sure to update TokenOrIdentifierObject in src/services/services.ts\r\n    this.pos = pos;\r\n    this.end = end;\r\n    this.kind = kind;\r\n    this.id = 0;\r\n    this.flags = NodeFlags.None;\r\n    this.transformFlags = TransformFlags.None;\r\n    this.parent = undefined!;\r\n    this.emitNode = undefined;\r\n}"
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "function": "Identifier",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "Identifier"
+      ]
+    ],
+    "before": "function Identifier(this: Mutable<Node>, kind: SyntaxKind, pos: number, end: number): void {\r\n    // Note: if modifying this, be sure to update TokenOrIdentifierObject in src/services/services.ts\r\n    this.pos = pos;\r\n    this.end = end;\r\n    this.kind = kind;\r\n    this.id = 0;\r\n    this.flags = NodeFlags.None;\r\n    this.transformFlags = TransformFlags.None;\r\n    this.parent = undefined!;\r\n    this.original = undefined;\r\n    this.emitNode = undefined;\r\n}",
+    "after": "function Identifier(this: Mutable<Node>, kind: SyntaxKind, pos: number, end: number): void {\r\n    // Note: if modifying this, be sure to update TokenOrIdentifierObject in src/services/services.ts\r\n    this.pos = pos;\r\n    this.end = end;\r\n    this.kind = kind;\r\n    this.id = 0;\r\n    this.flags = NodeFlags.None;\r\n    this.transformFlags = TransformFlags.None;\r\n    this.parent = undefined!;\r\n    this.original = undefined;\r\n    this.emitNode = undefined;\r\n}"
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "function": "setNodeFlags",
+    "key": [
+      [
+        "FunctionDeclaration",
+        "statements",
+        "setNodeFlags"
+      ]
+    ],
+    "before": "export function setNodeFlags<T extends Node>(node: T | undefined, newFlags: NodeFlags): T | undefined {\r\n    if (node) {\r\n        (node as Mutable<T>).flags = newFlags;\r\n    }\r\n    return node;\r\n}",
+    "after": "export function setNodeFlags<T extends Node>(node: T | undefined, newFlags: NodeFlags): T | undefined {\r\n    if (node) {\r\n        node.flags = newFlags;\r\n    }\r\n    return node;\r\n}"
+  }
+]
