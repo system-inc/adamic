@@ -15,7 +15,9 @@ import (
 // program in testdata/reuse_spread agrees with Node natively, sanitized and on the JavaScript
 // backend, and leaks nothing: a getter that writes the global a call was handed, an object literal's
 // own (which a spread runs), a class's and one inherited from a base (which it doesn't, the set
-// over-approximating), and the control without a getter. Each reads the copy by its named fields.
+// over-approximating), and the control without a getter. Each reads the copy by its named fields. The class's
+// and the inherited one are .ts, since in .a a spread whose type declares as a field a member a class reaching it
+// holds on its prototype is refused (spread_prototype_members.go, #vjvcnnj).
 // Mutants (h3-proof.sh, and testdata/iterable_views' mutants.md): the spread's case dropped from
 // reachesGlobal, and spreadGetters' call made nil; each lets reuse lend or move the global across
 // the getter's write, which only the object literal's row runs.
@@ -28,7 +30,7 @@ func TestReuseSpreadAgreesWithNode(t *testing.T) {
 	}
 	programs := 0
 	for _, entry := range entries {
-		if !strings.HasSuffix(entry.Name(), ".a") {
+		if !strings.HasSuffix(entry.Name(), ".a") && !strings.HasSuffix(entry.Name(), ".ts") {
 			continue
 		}
 		programs++
