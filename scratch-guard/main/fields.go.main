@@ -1,0 +1,134 @@
+package native
+
+import (
+	"fmt"
+
+	"github.com/system-inc/adamic/internal/ir"
+)
+
+// uniformFieldSlot skips shape lookup when every layout containing name puts it in the same slot.
+// The checker has already proved the field exists; unlike a class tag, that proof also holds for
+// structural literals and generic instantiations. Conflicting layouts keep the existing checks.
+func (e *emitter) uniformFieldSlot(object, name string) string {
+	if !cName.MatchString(object) {
+		return ""
+	}
+	if e.fieldOffsets == nil {
+		e.fieldOffsets = uniformFieldOffsets(e.program)
+	}
+	if index, found := e.fieldOffsets[name]; found && index >= 0 {
+		// ADAMIC_UNIFORM_OBJECT is the object itself in release builds and a record check in the
+		// address-sanitized and counted ones (adamic.h).
+		return fmt.Sprintf("(&ADAMIC_UNIFORM_OBJECT(%s, %s)->slots[%d])", object, cString(name), index)
+	}
+	return ""
+}
+
+// ObjectLiteral and MapEntries produce generated layouts (shapeOf in emit.go).
+// Copies, reuse and region allocation preserve those layouts. A spread preserves its source's
+// layout too, except the undefined branch, whose emptyFields layout must be counted explicitly, and a
+// SpreadWith literal's, whose appended names have no slot known before the run.
+func uniformFieldOffsets(program *ir.Program) map[string]int {
+	// Named regex groups create layouts outside ObjectLiteral. Until their names and
+	// offsets participate in this proof, regex programs retain checked shape lookup.
+	recordStorage := false
+	walkExpressions(program, func(expression ir.Expression) {
+		if literal, ok := expression.(ir.ObjectLiteral); ok && literal.Record {
+			recordStorage = true
+		}
+	})
+	if len(program.Regexps) != 0 || recordStorage || hasJsonDecode(program) {
+		return map[string]int{}
+	}
+	// Runtime-produced layouts are not ObjectLiterals: map entries (0, 1), Error (name, message),
+	// and input/directory results (kind, text/names/message/type, size, symbolicLink). Including
+	// them unconditionally is conservative when the program does not use that runtime API.
+	// TestRuntimeFieldLayoutsAreIncluded checks this list against the embedded C declarations.
+	offsets := map[string]int{
+		"0": 0, "1": 1, "name": 0, "message": 1, "kind": 0, "text": 1,
+		"#message": 1, "names": 1, "type": 1, "size": 2, "symbolicLink": 3,
+		// Dynamic regex layouts append private counted compiler storage.
+		"#compiler": 12,
+	}
+	for _, names := range [][]string{
+		{"heapUsed"}, {"name", "entryType", "startTime", "duration"}, {"setBlocking"}, {"timeOrigin", "now", "mark", "measure", "clearMarks", "clearMeasures"},
+		{"kind", "path"}, {"name", "type"},
+		{"name", "message", "code"}, {"name", "message", "code", "syscall", "path", "errno"}, {"#time"},
+		// node_fs_file.c's Stats, Node's fourteen own numbers and then its four Dates (#6xfkdwj).
+		{"dev", "mode", "nlink", "uid", "gid", "rdev", "blksize", "ino", "size", "blocks", "atimeMs", "mtimeMs", "ctimeMs", "birthtimeMs", "atime", "mtime", "ctime", "birthtime"},
+		{"close", "on"},
+		{"next"}, {"iterator", "part", "key", "value", "set", "planned"}, {"value", "done"}, {"string", "offset"},
+		// An Intl.Collator's (library_intl.c): compare is a private slot, as Node's collator holds no
+		// own field of that name.
+		{"#compare", "#locale"},
+		{"__program", "lastIndex", "source", "flags", "global", "ignoreCase", "multiline", "unicode", "sticky", "hasIndices", "unicodeSets", "dotAll"},
+		{"index", "input", "groups", "indices"}, {"regex", "input", "done"},
+		{"nodeKind", "symbolName", "type"},
+		{"bytes", "finalized"},
+		// async_host_impl.h's host promise settlement and timers_impl.h's Timeout.
+		{"body", "status"}, {"#identity"},
+		// node_fs_watch_impl.h's watch error, in Node's key order: errno, code and path sit where the
+		// realpath error above holds other fields, so all three go by name.
+		{"name", "message", "errno", "syscall", "code", "path", "filename"},
+		{"heapUsed"}, {"name", "entryType", "startTime", "duration"}, {"setBlocking"},
+		{"timeOrigin", "now", "mark", "measure", "clearMarks", "clearMeasures"},
+	} {
+		for index, name := range names {
+			if before, found := offsets[name]; found && before != index {
+				offsets[name] = -1
+			} else if !found {
+				offsets[name] = index
+			}
+		}
+	}
+	// A collator holds no field named compare (#zjndrx5), so a program's own compare, say an object
+	// literal typed Intl.Collator, would make compare uniform at its own place, and a collator seen
+	// through a view naming compare would then be read or written there by position. Where a program
+	// makes a collator, compare always goes by name.
+	walkExpressions(program, func(expression ir.Expression) {
+		if _, ok := expression.(ir.IntlCollatorNew); ok {
+			offsets["compare"] = -1
+		}
+	})
+	record := func(fields []ir.Field) {
+		for index, field := range fields {
+			if before, found := offsets[field.Name]; found && before != index {
+				offsets[field.Name] = -1 // A conflict stays a conflict, even if a later layout agrees.
+			} else if !found {
+				offsets[field.Name] = index
+			}
+		}
+	}
+	// Class spreads copy only public fields, compacting private and accessor storage.
+	// These descriptor layouts are emitted separately from the constructor literal.
+	for _, class := range program.Classes {
+		if class.Literal {
+			record(class.PublicFields)
+			continue
+		}
+		public := []ir.Field{}
+		for _, field := range class.Fields {
+			if !field.Private {
+				public = append(public, field)
+			}
+		}
+		record(public)
+	}
+	walkExpressions(program, func(expression ir.Expression) {
+		if literal, ok := expression.(ir.ObjectLiteral); ok {
+			if literal.SpreadWith {
+				// adamic_object_spread_with keeps every name the source holds at its index, which the source's own
+				// layout records, but appends each name it lacks after the source's count, which only the run
+				// knows. Any of the literal's names may be appended, so none of them has a uniform slot.
+				for _, field := range literal.Fields {
+					offsets[field.Name] = -1
+				}
+			} else if literal.Spread == nil {
+				record(literal.Fields)
+			} else if literal.SpreadMaybeUndefined {
+				record(emptyFields(literal))
+			}
+		}
+	})
+	return offsets
+}
