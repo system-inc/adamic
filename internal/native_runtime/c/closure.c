@@ -190,12 +190,19 @@ adamic_closure *adamic_bound_closure_new(adamic_code code, size_t count) {
 adamic_value adamic_bound_closure_call(adamic_closure *self, adamic_value *arguments, size_t argument_count, size_t packed_size) {
  adamic_closure *target = self->cells[0]->value.reference;
  if (target == NULL) {
+  // A bound method whose lookup found nothing has no code to call (#1k4z29h). The emitter stops such a
+  // bind where it's made, so a null code pointer here is a road it missed: an invariant, never a call.
 #ifdef ADAMIC_CLOSURE_CONVENTION
+  if (self->bound_method.counted ? self->bound_method.counted_code == NULL : self->bound_method.code == NULL) {
+   adamic_invariant("a bound method has no code to call");
+  }
   return adamic_method_call(self->bound_method, self->cells[1]->value.reference, arguments, argument_count);
 #else
   if (self->bound_method_storage.counted) {
+   if (self->bound_method_storage.counted_code == NULL) adamic_invariant("a bound method has no code to call");
    return self->bound_method_storage.counted_code(self->cells[1]->value.reference, arguments, argument_count);
   }
+  if (self->bound_method_storage.code == NULL) adamic_invariant("a bound method has no code to call");
   return self->bound_method_storage.code(self->cells[1]->value.reference, arguments);
 #endif
  }
