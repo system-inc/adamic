@@ -253,6 +253,10 @@ func (l *lowering) exceptions() error {
 		}
 	}
 	for _, record := range l.tries {
+		// A first-link lowering's trapped unit left its try here, though the trap replaced its code.
+		if l.firstLinkSkips(record.node) {
+			continue
+		}
 		if failing := l.libraryFailure(record.body, map[int]bool{}); failing != "" {
 			return l.notYet(record.node, "a try around "+failing+", whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)")
 		}
