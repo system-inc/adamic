@@ -1,0 +1,12 @@
+// s1 (#snypn8c, c1): the && stored into a Ternary slot first, then used under ||: the slot sees the left's 0 or
+// NaN before any || drops it, so it's judged as it is.
+enum Ternary { False = 0, Unknown = 1, Maybe = 3, True = -1 }
+function compare(a: number, b: number): Ternary {
+	return a === b ? Ternary.True : a < b ? Ternary.Maybe : Ternary.False;
+}
+enum Mode { None = 0, BivariantCallback = 1 }
+function returns(mode: Mode, a: number, b: number): Ternary {
+	const result: Ternary = mode & Mode.BivariantCallback && compare(a, b);
+	return result || compare(b, a);
+}
+console.log(String(returns(Mode.None, 1, 1)) + ", " + String(returns(Mode.BivariantCallback, 2, 1)));

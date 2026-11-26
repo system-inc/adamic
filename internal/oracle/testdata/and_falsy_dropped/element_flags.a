@@ -1,0 +1,12 @@
+// a4 (#snypn8c, c1): `!!(flags[index]! && Flag)` handed to a boolean parameter, as
+// getContextualTypeForElementExpression's `!!(t.target.elementFlags[index]! && ElementFlags.Optional)`
+// (checker.ts:32547, upstream's && where & is meant): the ! reads only the &&'s truth.
+enum ElementFlags { None = 0, Required = 1, Optional = 2, Rest = 4, Variadic = 8 }
+function takes(optional: boolean): string {
+	return optional ? "optional" : "required";
+}
+function element(flags: readonly ElementFlags[], index: number): string {
+	return takes(!!(flags[index]! && ElementFlags.Optional));
+}
+const flags = [ElementFlags.Required, ElementFlags.Optional, ElementFlags.None, ElementFlags.Rest];
+console.log(element(flags, 0) + ", " + element(flags, 1) + ", " + element(flags, 2) + ", " + element(flags, 3));

@@ -1,0 +1,11 @@
+// s3 (#snypn8c, c1): an && under ??, which keeps every falsy value, 0 and NaN among them.
+enum Ternary { False = 0, Unknown = 1, Maybe = 3, True = -1 }
+function compare(a: number, b: number): Ternary {
+	return a === b ? Ternary.True : a < b ? Ternary.Maybe : Ternary.False;
+}
+enum Mode { None = 0, BivariantCallback = 1 }
+function returns(mode: Mode, a: number, b: number): Ternary {
+	const result = (mode & Mode.BivariantCallback && compare(a, b)) ?? compare(b, a);
+	return result;
+}
+console.log(String(returns(Mode.None, 1, 1)) + ", " + String(returns(Mode.BivariantCallback, 2, 1)));

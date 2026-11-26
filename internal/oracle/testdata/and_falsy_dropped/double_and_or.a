@@ -1,0 +1,16 @@
+// a2 (#snypn8c, c1): two && lefts under ||, as compareSignaturesRelated's `!(checkMode & Callback) &&
+// !strictVariance && compareTypes(...) || compareTypes(...)` (checker.ts:22020), into a let then tested in an
+// if's && condition and written a member.
+enum Ternary { False = 0, Unknown = 1, Maybe = 3, True = -1 }
+function compare(a: number, b: number): Ternary {
+	return a === b ? Ternary.True : a < b ? Ternary.Maybe : Ternary.False;
+}
+enum Mode { None = 0, Callback = 1, StrictArity = 2 }
+function related(mode: Mode, strict: boolean, a: number, b: number): Ternary {
+	let result = !(mode & Mode.Callback) && !strict && compare(a, b) || compare(b, a);
+	if (result && mode & Mode.StrictArity) {
+		result = Ternary.False;
+	}
+	return result;
+}
+console.log(String(related(Mode.None, false, 1, 1)) + ", " + String(related(Mode.Callback, false, 1, 2)) + ", " + String(related(Mode.StrictArity, true, 3, 3)) + ", " + String(related(Mode.None, false, 2, 1)));
