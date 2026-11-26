@@ -24,7 +24,11 @@ back Rule C's held NotYet for a write the view walk met wherever its statement w
 lowered (#5qx6qv4); a body lowered on its own records it as not run.
 `finishViewStaticsAdmitted`, after it, sets each view contract's `StaticsAdmitted`
 from the finished table (#s03ndgw), a flag only the emitters read, so a body lowered
-on its own records it as not run too.
+on its own records it as not run too. `checkSpreadPrototypeMembers`, after
+`certifySourceSlots`, refuses in .a a spread whose type declares as a field a member
+a class reaching it holds on its prototype (#vjvcnnj); it judges by every class
+instance the modules hold and the whole program's allocation graph, so a body
+lowered on its own records it as not run.
 
 Each independently attempted unit gets `pass_ledger` beside its status and
 instantiation metadata in the census JSONL. First-error, full and speculative
