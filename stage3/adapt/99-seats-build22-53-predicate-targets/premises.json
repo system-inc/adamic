@@ -1,0 +1,550 @@
+[
+  {
+    "file": "utilities.ts",
+    "name": "getAllAccessorDeclarations",
+    "declarations": [
+      "export function getAllAccessorDeclarations(declarations: readonly Declaration[] | undefined, accessor: AccessorDeclaration): AllAccessorDeclarations {\n    // TODO: GH#18217\n    let firstAccessor!: AccessorDeclaration;\n    let secondAccessor!: AccessorDeclaration;\n    let getAccessor!: GetAccessorDeclaration;\n    let setAccessor!: SetAccessorDeclaration;\n    if (__REVIEWED_SLOT__) {\n        firstAccessor = accessor;\n        if (accessor.kind === SyntaxKind.GetAccessor) {\n            getAccessor = accessor;\n        }\n        else if (accessor.kind === SyntaxKind.SetAccessor) {\n            setAccessor = accessor;\n        }\n        else {\n            Debug.fail(\"Accessor has wrong kind\");\n        }\n    }\n    else {\n        forEach(declarations, member => {\n            if (\n                isAccessor(member)\n                && isStatic(member) === isStatic(accessor)\n            ) {\n                const memberName = getPropertyNameForPropertyNameNode(member.name);\n                const accessorName = getPropertyNameForPropertyNameNode(accessor.name);\n                if (memberName === accessorName) {\n                    if (!firstAccessor) {\n                        firstAccessor = member;\n                    }\n                    else if (!secondAccessor) {\n                        secondAccessor = member;\n                    }\n\n                    if (member.kind === SyntaxKind.GetAccessor && !getAccessor) {\n                        getAccessor = member;\n                    }\n\n                    if (member.kind === SyntaxKind.SetAccessor && !setAccessor) {\n                        setAccessor = member;\n                    }\n                }\n            }\n        });\n    }\n    return {\n        firstAccessor,\n        secondAccessor,\n        getAccessor,\n        setAccessor,\n    };\n}"
+    ]
+  },
+  {
+    "file": "utilities.ts",
+    "name": "hasDynamicName",
+    "declarations": [
+      "export function hasDynamicName(declaration: Declaration): declaration is DynamicNamedDeclaration | DynamicNamedBinaryExpression {\n    const name = getNameOfDeclaration(declaration);\n    return !!name && isDynamicName(name);\n}"
+    ],
+    "usedIn": [
+      "utilities.ts"
+    ]
+  },
+  {
+    "file": "utilities.ts",
+    "name": "isDynamicName",
+    "declarations": [
+      "export function isDynamicName(name: DeclarationName): boolean {\n    if (!(name.kind === SyntaxKind.ComputedPropertyName || name.kind === SyntaxKind.ElementAccessExpression)) {\n        return false;\n    }\n    const expr = isElementAccessExpression(name) ? skipParentheses(name.argumentExpression) : name.expression;\n    return !isStringOrNumericLiteralLike(expr) &&\n        !isSignedNumericLiteral(expr);\n}"
+    ],
+    "usedIn": [
+      "utilities.ts"
+    ]
+  },
+  {
+    "file": "utilities.ts",
+    "name": "isFunctionBlock",
+    "declarations": [
+      "export function isFunctionBlock(node: Node): boolean {\n    return node && node.kind === SyntaxKind.Block && isFunctionLike(node.parent);\n}"
+    ],
+    "usedIn": [
+      "utilitiesPublic.ts"
+    ]
+  },
+  {
+    "file": "utilities.ts",
+    "name": "isStringOrNumericLiteralLike",
+    "declarations": [
+      "export function isStringOrNumericLiteralLike(node: Node): node is StringLiteralLike | NumericLiteral {\n    return isStringLiteralLike(node) || isNumericLiteral(node);\n}"
+    ],
+    "usedIn": [
+      "utilities.ts"
+    ]
+  },
+  {
+    "file": "utilities.ts",
+    "name": "isSignedNumericLiteral",
+    "declarations": [
+      "export function isSignedNumericLiteral(node: Node): node is PrefixUnaryExpression & { operand: NumericLiteral; } {\n    return isPrefixUnaryExpression(node) && (node.operator === SyntaxKind.PlusToken || node.operator === SyntaxKind.MinusToken) && isNumericLiteral(node.operand);\n}"
+    ],
+    "usedIn": [
+      "utilities.ts"
+    ]
+  },
+  {
+    "file": "utilities.ts",
+    "name": "skipParentheses",
+    "declarations": [
+      "export function skipParentheses(node: Expression, excludeJSDocTypeAssertions?: boolean): Expression;",
+      "export function skipParentheses(node: Node, excludeJSDocTypeAssertions?: boolean): Node;",
+      "export function skipParentheses(node: Node, excludeJSDocTypeAssertions?: boolean): Node {\n    const flags = excludeJSDocTypeAssertions ?\n        OuterExpressionKinds.Parentheses | OuterExpressionKinds.ExcludeJSDocTypeAssertion :\n        OuterExpressionKinds.Parentheses;\n    return skipOuterExpressions(node, flags);\n}"
+    ],
+    "usedIn": [
+      "utilities.ts"
+    ]
+  },
+  {
+    "file": "utilitiesPublic.ts",
+    "name": "getNameOfDeclaration",
+    "declarations": [
+      "export function getNameOfDeclaration(declaration: Declaration | Expression | undefined): DeclarationName | undefined {\n    if (declaration === undefined) return undefined;\n    return getNonAssignedNameOfDeclaration(declaration) ||\n        (isFunctionExpression(declaration) || isArrowFunction(declaration) || isClassExpression(declaration) ? getAssignedName(declaration) : undefined);\n}"
+    ],
+    "usedIn": [
+      "utilities.ts"
+    ]
+  },
+  {
+    "file": "utilitiesPublic.ts",
+    "name": "getNonAssignedNameOfDeclaration",
+    "declarations": [
+      "export function getNonAssignedNameOfDeclaration(declaration: Declaration | Expression): DeclarationName | undefined {\n    switch (declaration.kind) {\n        case SyntaxKind.Identifier:\n            return declaration as Identifier;\n        case SyntaxKind.JSDocPropertyTag:\n        case SyntaxKind.JSDocParameterTag: {\n            const { name } = declaration as JSDocPropertyLikeTag;\n            if (name.kind === SyntaxKind.QualifiedName) {\n                return name.right;\n            }\n            break;\n        }\n        case SyntaxKind.CallExpression:\n        case SyntaxKind.BinaryExpression: {\n            const expr = declaration as BinaryExpression | CallExpression;\n            switch (getAssignmentDeclarationKind(expr)) {\n                case AssignmentDeclarationKind.ExportsProperty:\n                case AssignmentDeclarationKind.ThisProperty:\n                case AssignmentDeclarationKind.Property:\n                case AssignmentDeclarationKind.PrototypeProperty:\n                    return getElementOrPropertyAccessArgumentExpressionOrName((expr as BinaryExpression).left as AccessExpression);\n                case AssignmentDeclarationKind.ObjectDefinePropertyValue:\n                case AssignmentDeclarationKind.ObjectDefinePropertyExports:\n                case AssignmentDeclarationKind.ObjectDefinePrototypeProperty:\n                    return (expr as BindableObjectDefinePropertyCall).arguments[1];\n                default:\n                    return undefined;\n            }\n        }\n        case SyntaxKind.JSDocTypedefTag:\n            return getNameOfJSDocTypedef(declaration as JSDocTypedefTag);\n        case SyntaxKind.JSDocEnumTag:\n            return nameForNamelessJSDocTypedef(declaration as JSDocEnumTag);\n        case SyntaxKind.ExportAssignment: {\n            const { expression } = declaration as ExportAssignment;\n            return isIdentifier(expression) ? expression : undefined;\n        }\n        case SyntaxKind.ElementAccessExpression:\n            const expr = declaration as ElementAccessExpression;\n            if (isBindableStaticElementAccessExpression(expr)) {\n                return expr.argumentExpression;\n            }\n    }\n    return (declaration as NamedDeclaration).name;\n}"
+    ],
+    "usedIn": [
+      "utilitiesPublic.ts"
+    ]
+  },
+  {
+    "file": "utilitiesPublic.ts",
+    "name": "findAncestor",
+    "declarations": [
+      "export function findAncestor<T extends Node>(node: Node | undefined, callback: (element: Node) => element is T): T | undefined;",
+      "export function findAncestor(node: Node | undefined, callback: (element: Node) => boolean | \"quit\"): Node | undefined;",
+      "export function findAncestor(node: Node | undefined, callback: (element: Node) => boolean | \"quit\"): Node | undefined {\n    while (node) {\n        const result = callback(node);\n        if (result === \"quit\") {\n            return undefined;\n        }\n        else if (result) {\n            return node;\n        }\n        node = node.parent;\n    }\n    return undefined;\n}"
+    ],
+    "usedIn": [
+      "transformers/declarations/diagnostics.ts"
+    ]
+  },
+  {
+    "file": "utilitiesPublic.ts",
+    "name": "isStatement",
+    "declarations": [
+      "export function isStatement(node: Node): node is Statement {\n    const kind = node.kind;\n    return isStatementKindButNotDeclarationKind(kind)\n        || isDeclarationStatementKind(kind)\n        || isBlockStatement(node);\n}"
+    ],
+    "usedIn": [
+      "transformers/declarations/diagnostics.ts"
+    ]
+  },
+  {
+    "file": "utilitiesPublic.ts",
+    "name": "isBlockStatement",
+    "declarations": [
+      "function isBlockStatement(node: Node): node is Block {\n    if (node.kind !== SyntaxKind.Block) return false;\n    if (node.parent !== undefined) {\n        if (node.parent.kind === SyntaxKind.TryStatement || node.parent.kind === SyntaxKind.CatchClause) {\n            return false;\n        }\n    }\n    return !isFunctionBlock(node);\n}"
+    ],
+    "usedIn": [
+      "utilitiesPublic.ts"
+    ]
+  },
+  {
+    "file": "utilitiesPublic.ts",
+    "name": "isStringLiteralLike",
+    "declarations": [
+      "export function isStringLiteralLike(node: Node | FileReference): node is StringLiteralLike {\n    return (node as Node).kind === SyntaxKind.StringLiteral || (node as Node).kind === SyntaxKind.NoSubstitutionTemplateLiteral;\n}"
+    ],
+    "usedIn": [
+      "utilities.ts"
+    ]
+  },
+  {
+    "file": "utilitiesPublic.ts",
+    "name": "isStatementKindButNotDeclarationKind",
+    "declarations": [
+      "function isStatementKindButNotDeclarationKind(kind: SyntaxKind) {\n    return kind === SyntaxKind.BreakStatement\n        || kind === SyntaxKind.ContinueStatement\n        || kind === SyntaxKind.DebuggerStatement\n        || kind === SyntaxKind.DoStatement\n        || kind === SyntaxKind.ExpressionStatement\n        || kind === SyntaxKind.EmptyStatement\n        || kind === SyntaxKind.ForInStatement\n        || kind === SyntaxKind.ForOfStatement\n        || kind === SyntaxKind.ForStatement\n        || kind === SyntaxKind.IfStatement\n        || kind === SyntaxKind.LabeledStatement\n        || kind === SyntaxKind.ReturnStatement\n        || kind === SyntaxKind.SwitchStatement\n        || kind === SyntaxKind.ThrowStatement\n        || kind === SyntaxKind.TryStatement\n        || kind === SyntaxKind.VariableStatement\n        || kind === SyntaxKind.WhileStatement\n        || kind === SyntaxKind.WithStatement\n        || kind === SyntaxKind.NotEmittedStatement;\n}"
+    ],
+    "usedIn": [
+      "utilitiesPublic.ts"
+    ]
+  },
+  {
+    "file": "utilitiesPublic.ts",
+    "name": "isDeclarationStatementKind",
+    "declarations": [
+      "function isDeclarationStatementKind(kind: SyntaxKind) {\n    return kind === SyntaxKind.FunctionDeclaration\n        || kind === SyntaxKind.MissingDeclaration\n        || kind === SyntaxKind.ClassDeclaration\n        || kind === SyntaxKind.InterfaceDeclaration\n        || kind === SyntaxKind.TypeAliasDeclaration\n        || kind === SyntaxKind.EnumDeclaration\n        || kind === SyntaxKind.ModuleDeclaration\n        || kind === SyntaxKind.ImportDeclaration\n        || kind === SyntaxKind.ImportEqualsDeclaration\n        || kind === SyntaxKind.ExportDeclaration\n        || kind === SyntaxKind.ExportAssignment\n        || kind === SyntaxKind.NamespaceExportDeclaration;\n}"
+    ],
+    "usedIn": [
+      "utilitiesPublic.ts"
+    ]
+  },
+  {
+    "file": "utilitiesPublic.ts",
+    "name": "isFunctionLike",
+    "declarations": [
+      "export function isFunctionLike(node: Node | undefined): node is SignatureDeclaration {\n    return !!node && isFunctionLikeKind(node.kind);\n}"
+    ],
+    "usedIn": [
+      "utilities.ts"
+    ]
+  },
+  {
+    "file": "utilitiesPublic.ts",
+    "name": "isFunctionLikeKind",
+    "declarations": [
+      "export function isFunctionLikeKind(kind: SyntaxKind): boolean {\n    switch (kind) {\n        case SyntaxKind.MethodSignature:\n        case SyntaxKind.CallSignature:\n        case SyntaxKind.JSDocSignature:\n        case SyntaxKind.ConstructSignature:\n        case SyntaxKind.IndexSignature:\n        case SyntaxKind.FunctionType:\n        case SyntaxKind.JSDocFunctionType:\n        case SyntaxKind.ConstructorType:\n            return true;\n        default:\n            return isFunctionLikeDeclarationKind(kind);\n    }\n}"
+    ],
+    "usedIn": [
+      "utilitiesPublic.ts"
+    ]
+  },
+  {
+    "file": "utilitiesPublic.ts",
+    "name": "isFunctionLikeDeclaration",
+    "declarations": [
+      "export function isFunctionLikeDeclaration(node: Node): node is FunctionLikeDeclaration {\n    return node && isFunctionLikeDeclarationKind(node.kind);\n}"
+    ],
+    "usedIn": [
+      "transformers/declarations/diagnostics.ts"
+    ]
+  },
+  {
+    "file": "transformers/declarations/diagnostics.ts",
+    "name": "findNearestDeclaration",
+    "declarations": [
+      "function findNearestDeclaration(node: Node) {\n        const result = findAncestor(node, n => isExportAssignment(n) || isStatement(n) || isVariableDeclaration(n) || isPropertyDeclaration(n) || isParameter(n));\n        if (!result) return undefined;\n\n        if (isExportAssignment(result)) return result;\n\n        if (isReturnStatement(result)) {\n            return findAncestor(result, (n): n is Exclude<FunctionLikeDeclaration, ConstructorDeclaration> => isFunctionLikeDeclaration(n) && !isConstructorDeclaration(n));\n        }\n        return (__REVIEWED_SLOT__) as VariableDeclaration | PropertyDeclaration | ParameterDeclaration | ExportAssignment | undefined;\n    }"
+    ]
+  },
+  {
+    "file": "types.ts",
+    "name": "AccessorDeclaration",
+    "declarations": [
+      "export type AccessorDeclaration = GetAccessorDeclaration | SetAccessorDeclaration;"
+    ]
+  },
+  {
+    "file": "types.ts",
+    "name": "GetAccessorDeclaration",
+    "declarations": [
+      "export interface GetAccessorDeclaration extends FunctionLikeDeclarationBase, ClassElement, TypeElement, ObjectLiteralElement, JSDocContainer, LocalsContainer, FlowContainer {\n    readonly kind: SyntaxKind.GetAccessor;\n    readonly parent: ClassLikeDeclaration | ObjectLiteralExpression | TypeLiteralNode | InterfaceDeclaration;\n    readonly modifiers?: NodeArray<ModifierLike> | undefined;\n    readonly name: PropertyName;\n    readonly body?: FunctionBody | undefined;\n\n    // The following properties are used only to report grammar errors (see `isGrammarError` in utilities.ts)\n    /** @internal */ readonly typeParameters?: NodeArray<TypeParameterDeclaration> | undefined; // A get accessor cannot have type parameters\n}"
+    ]
+  },
+  {
+    "file": "types.ts",
+    "name": "SetAccessorDeclaration",
+    "declarations": [
+      "export interface SetAccessorDeclaration extends FunctionLikeDeclarationBase, ClassElement, TypeElement, ObjectLiteralElement, JSDocContainer, LocalsContainer, FlowContainer {\n    readonly kind: SyntaxKind.SetAccessor;\n    readonly parent: ClassLikeDeclaration | ObjectLiteralExpression | TypeLiteralNode | InterfaceDeclaration;\n    readonly modifiers?: NodeArray<ModifierLike> | undefined;\n    readonly name: PropertyName;\n    readonly body?: FunctionBody | undefined;\n\n    // The following properties are used only to report grammar errors (see `isGrammarError` in utilities.ts)\n    /** @internal */ readonly typeParameters?: NodeArray<TypeParameterDeclaration> | undefined; // A set accessor cannot have type parameters\n    /** @internal */ readonly type?: TypeNode | undefined; // A set accessor cannot have a return type\n}"
+    ]
+  },
+  {
+    "file": "types.ts",
+    "name": "ElementAccessExpression",
+    "declarations": [
+      "export interface ElementAccessExpression extends MemberExpression, Declaration, JSDocContainer, FlowContainer {\n    readonly kind: SyntaxKind.ElementAccessExpression;\n    readonly expression: LeftHandSideExpression;\n    readonly questionDotToken?: QuestionDotToken | undefined;\n    readonly argumentExpression: Expression;\n}"
+    ]
+  },
+  {
+    "file": "types.ts",
+    "name": "OuterExpressionKinds",
+    "declarations": [
+      "export const enum OuterExpressionKinds {\n    Parentheses = 1 << 0,\n    TypeAssertions = 1 << 1,\n    NonNullAssertions = 1 << 2,\n    PartiallyEmittedExpressions = 1 << 3,\n    ExpressionsWithTypeArguments = 1 << 4,\n    Satisfies = 1 << 5,\n\n    Assertions = TypeAssertions | NonNullAssertions | Satisfies,\n    All = Parentheses | Assertions | PartiallyEmittedExpressions | ExpressionsWithTypeArguments,\n\n    ExcludeJSDocTypeAssertion = 1 << 31,\n}"
+    ],
+    "usedIn": [
+      "utilities.ts",
+      "factory/utilities.ts"
+    ]
+  },
+  {
+    "file": "factory/utilities.ts",
+    "name": "skipOuterExpressions",
+    "declarations": [
+      "export function skipOuterExpressions<T extends Expression>(node: WrappedExpression<T>): T;",
+      "export function skipOuterExpressions(node: Expression, kinds?: OuterExpressionKinds): Expression;",
+      "export function skipOuterExpressions(node: Node, kinds?: OuterExpressionKinds): Node;",
+      "export function skipOuterExpressions(node: Node, kinds = OuterExpressionKinds.All) {\n    while (isOuterExpression(node, kinds)) {\n        node = node.expression;\n    }\n    return node;\n}"
+    ],
+    "usedIn": [
+      "utilities.ts"
+    ]
+  },
+  {
+    "file": "factory/utilities.ts",
+    "name": "isOuterExpression",
+    "declarations": [
+      "export function isOuterExpression(node: Node, kinds: OuterExpressionKinds = OuterExpressionKinds.All): node is OuterExpression {\n    switch (node.kind) {\n        case SyntaxKind.ParenthesizedExpression:\n            if (kinds & OuterExpressionKinds.ExcludeJSDocTypeAssertion && isJSDocTypeAssertion(node)) {\n                return false;\n            }\n            return (kinds & OuterExpressionKinds.Parentheses) !== 0;\n        case SyntaxKind.TypeAssertionExpression:\n        case SyntaxKind.AsExpression:\n            return (kinds & OuterExpressionKinds.TypeAssertions) !== 0;\n        case SyntaxKind.SatisfiesExpression:\n            return (kinds & (OuterExpressionKinds.TypeAssertions | OuterExpressionKinds.Satisfies)) !== 0;\n        case SyntaxKind.ExpressionWithTypeArguments:\n            return (kinds & OuterExpressionKinds.ExpressionsWithTypeArguments) !== 0;\n        case SyntaxKind.NonNullExpression:\n            return (kinds & OuterExpressionKinds.NonNullAssertions) !== 0;\n        case SyntaxKind.PartiallyEmittedExpression:\n            return (kinds & OuterExpressionKinds.PartiallyEmittedExpressions) !== 0;\n    }\n    return false;\n}"
+    ],
+    "usedIn": [
+      "factory/utilities.ts"
+    ]
+  },
+  {
+    "file": "factory/nodeTests.ts",
+    "name": "isIdentifier",
+    "declarations": [
+      "export function isIdentifier(node: Node): node is Identifier {\n    return node.kind === SyntaxKind.Identifier;\n}"
+    ],
+    "usedIn": [
+      "utilitiesPublic.ts"
+    ]
+  },
+  {
+    "file": "factory/nodeTests.ts",
+    "name": "isNumericLiteral",
+    "declarations": [
+      "export function isNumericLiteral(node: Node): node is NumericLiteral {\n    return node.kind === SyntaxKind.NumericLiteral;\n}"
+    ],
+    "usedIn": [
+      "utilities.ts"
+    ]
+  },
+  {
+    "file": "factory/nodeTests.ts",
+    "name": "isPrefixUnaryExpression",
+    "declarations": [
+      "export function isPrefixUnaryExpression(node: Node): node is PrefixUnaryExpression {\n    return node.kind === SyntaxKind.PrefixUnaryExpression;\n}"
+    ],
+    "usedIn": [
+      "utilities.ts"
+    ]
+  },
+  {
+    "file": "factory/nodeTests.ts",
+    "name": "isElementAccessExpression",
+    "declarations": [
+      "export function isElementAccessExpression(node: Node): node is ElementAccessExpression {\n    return node.kind === SyntaxKind.ElementAccessExpression;\n}"
+    ],
+    "usedIn": [
+      "utilities.ts"
+    ]
+  },
+  {
+    "file": "factory/nodeTests.ts",
+    "name": "isVariableDeclaration",
+    "declarations": [
+      "export function isVariableDeclaration(node: Node): node is VariableDeclaration {\n    return node.kind === SyntaxKind.VariableDeclaration;\n}"
+    ],
+    "usedIn": [
+      "transformers/declarations/diagnostics.ts"
+    ]
+  },
+  {
+    "file": "factory/nodeTests.ts",
+    "name": "isPropertyDeclaration",
+    "declarations": [
+      "export function isPropertyDeclaration(node: Node): node is PropertyDeclaration {\n    return node.kind === SyntaxKind.PropertyDeclaration;\n}"
+    ],
+    "usedIn": [
+      "transformers/declarations/diagnostics.ts"
+    ]
+  },
+  {
+    "file": "factory/nodeTests.ts",
+    "name": "isParameter",
+    "declarations": [
+      "export function isParameter(node: Node): node is ParameterDeclaration {\n    return node.kind === SyntaxKind.Parameter;\n}"
+    ],
+    "usedIn": [
+      "transformers/declarations/diagnostics.ts"
+    ]
+  },
+  {
+    "file": "factory/nodeTests.ts",
+    "name": "isExportAssignment",
+    "declarations": [
+      "export function isExportAssignment(node: Node): node is ExportAssignment {\n    return node.kind === SyntaxKind.ExportAssignment;\n}"
+    ],
+    "usedIn": [
+      "transformers/declarations/diagnostics.ts"
+    ]
+  },
+  {
+    "file": "factory/nodeTests.ts",
+    "name": "isReturnStatement",
+    "declarations": [
+      "export function isReturnStatement(node: Node): node is ReturnStatement {\n    return node.kind === SyntaxKind.ReturnStatement;\n}"
+    ],
+    "usedIn": [
+      "transformers/declarations/diagnostics.ts"
+    ]
+  },
+  {
+    "file": "factory/nodeTests.ts",
+    "name": "isConstructorDeclaration",
+    "declarations": [
+      "export function isConstructorDeclaration(node: Node): node is ConstructorDeclaration {\n    return node.kind === SyntaxKind.Constructor;\n}"
+    ],
+    "usedIn": [
+      "transformers/declarations/diagnostics.ts"
+    ]
+  },
+  {
+    "file": "utilitiesPublic.ts",
+    "name": "isFunctionLikeDeclarationKind",
+    "declarations": [
+      "function isFunctionLikeDeclarationKind(kind: SyntaxKind): boolean {\n    switch (kind) {\n        case SyntaxKind.FunctionDeclaration:\n        case SyntaxKind.MethodDeclaration:\n        case SyntaxKind.Constructor:\n        case SyntaxKind.GetAccessor:\n        case SyntaxKind.SetAccessor:\n        case SyntaxKind.FunctionExpression:\n        case SyntaxKind.ArrowFunction:\n            return true;\n        default:\n            return false;\n    }\n}"
+    ],
+    "usedIn": [
+      "utilitiesPublic.ts"
+    ]
+  },
+  {
+    "file": "types.ts",
+    "name": "SyntaxKind",
+    "declarations": [
+      "export const enum SyntaxKind {\n    Unknown,\n    EndOfFileToken,\n    SingleLineCommentTrivia,\n    MultiLineCommentTrivia,\n    NewLineTrivia,\n    WhitespaceTrivia,\n    // We detect and preserve #! on the first line\n    ShebangTrivia,\n    // We detect and provide better error recovery when we encounter a git merge marker.  This\n    // allows us to edit files with git-conflict markers in them in a much more pleasant manner.\n    ConflictMarkerTrivia,\n    // If a file is actually binary, with any luck, we'll get U+FFFD REPLACEMENT CHARACTER\n    // in position zero and can just skip what is surely a doomed parse.\n    NonTextFileMarkerTrivia,\n    // Literals\n    NumericLiteral,\n    BigIntLiteral,\n    StringLiteral,\n    JsxText,\n    JsxTextAllWhiteSpaces,\n    RegularExpressionLiteral,\n    NoSubstitutionTemplateLiteral,\n    // Pseudo-literals\n    TemplateHead,\n    TemplateMiddle,\n    TemplateTail,\n    // Punctuation\n    OpenBraceToken,\n    CloseBraceToken,\n    OpenParenToken,\n    CloseParenToken,\n    OpenBracketToken,\n    CloseBracketToken,\n    DotToken,\n    DotDotDotToken,\n    SemicolonToken,\n    CommaToken,\n    QuestionDotToken,\n    LessThanToken,\n    LessThanSlashToken,\n    GreaterThanToken,\n    LessThanEqualsToken,\n    GreaterThanEqualsToken,\n    EqualsEqualsToken,\n    ExclamationEqualsToken,\n    EqualsEqualsEqualsToken,\n    ExclamationEqualsEqualsToken,\n    EqualsGreaterThanToken,\n    PlusToken,\n    MinusToken,\n    AsteriskToken,\n    AsteriskAsteriskToken,\n    SlashToken,\n    PercentToken,\n    PlusPlusToken,\n    MinusMinusToken,\n    LessThanLessThanToken,\n    GreaterThanGreaterThanToken,\n    GreaterThanGreaterThanGreaterThanToken,\n    AmpersandToken,\n    BarToken,\n    CaretToken,\n    ExclamationToken,\n    TildeToken,\n    AmpersandAmpersandToken,\n    BarBarToken,\n    QuestionToken,\n    ColonToken,\n    AtToken,\n    QuestionQuestionToken,\n    /** Only the JSDoc scanner produces BacktickToken. The normal scanner produces NoSubstitutionTemplateLiteral and related kinds. */\n    BacktickToken,\n    /** Only the JSDoc scanner produces HashToken. The normal scanner produces PrivateIdentifier. */\n    HashToken,\n    // Assignments\n    EqualsToken,\n    PlusEqualsToken,\n    MinusEqualsToken,\n    AsteriskEqualsToken,\n    AsteriskAsteriskEqualsToken,\n    SlashEqualsToken,\n    PercentEqualsToken,\n    LessThanLessThanEqualsToken,\n    GreaterThanGreaterThanEqualsToken,\n    GreaterThanGreaterThanGreaterThanEqualsToken,\n    AmpersandEqualsToken,\n    BarEqualsToken,\n    BarBarEqualsToken,\n    AmpersandAmpersandEqualsToken,\n    QuestionQuestionEqualsToken,\n    CaretEqualsToken,\n    // Identifiers and PrivateIdentifiers\n    Identifier,\n    PrivateIdentifier,\n    /**\n     * Only the special JSDoc comment text scanner produces JSDocCommentTextTokes. One of these tokens spans all text after a tag comment's start and before the next @\n     * @internal\n     */\n    JSDocCommentTextToken,\n    // Reserved words\n    BreakKeyword,\n    CaseKeyword,\n    CatchKeyword,\n    ClassKeyword,\n    ConstKeyword,\n    ContinueKeyword,\n    DebuggerKeyword,\n    DefaultKeyword,\n    DeleteKeyword,\n    DoKeyword,\n    ElseKeyword,\n    EnumKeyword,\n    ExportKeyword,\n    ExtendsKeyword,\n    FalseKeyword,\n    FinallyKeyword,\n    ForKeyword,\n    FunctionKeyword,\n    IfKeyword,\n    ImportKeyword,\n    InKeyword,\n    InstanceOfKeyword,\n    NewKeyword,\n    NullKeyword,\n    ReturnKeyword,\n    SuperKeyword,\n    SwitchKeyword,\n    ThisKeyword,\n    ThrowKeyword,\n    TrueKeyword,\n    TryKeyword,\n    TypeOfKeyword,\n    VarKeyword,\n    VoidKeyword,\n    WhileKeyword,\n    WithKeyword,\n    // Strict mode reserved words\n    ImplementsKeyword,\n    InterfaceKeyword,\n    LetKeyword,\n    PackageKeyword,\n    PrivateKeyword,\n    ProtectedKeyword,\n    PublicKeyword,\n    StaticKeyword,\n    YieldKeyword,\n    // Contextual keywords\n    AbstractKeyword,\n    AccessorKeyword,\n    AsKeyword,\n    AssertsKeyword,\n    AssertKeyword,\n    AnyKeyword,\n    AsyncKeyword,\n    AwaitKeyword,\n    BooleanKeyword,\n    ConstructorKeyword,\n    DeclareKeyword,\n    GetKeyword,\n    InferKeyword,\n    IntrinsicKeyword,\n    IsKeyword,\n    KeyOfKeyword,\n    ModuleKeyword,\n    NamespaceKeyword,\n    NeverKeyword,\n    OutKeyword,\n    ReadonlyKeyword,\n    RequireKeyword,\n    NumberKeyword,\n    ObjectKeyword,\n    SatisfiesKeyword,\n    SetKeyword,\n    StringKeyword,\n    SymbolKeyword,\n    TypeKeyword,\n    UndefinedKeyword,\n    UniqueKeyword,\n    UnknownKeyword,\n    UsingKeyword,\n    FromKeyword,\n    GlobalKeyword,\n    BigIntKeyword,\n    OverrideKeyword,\n    OfKeyword,\n    DeferKeyword, // LastKeyword and LastToken and LastContextualKeyword\n\n    // Parse tree nodes\n\n    // Names\n    QualifiedName,\n    ComputedPropertyName,\n    // Signature elements\n    TypeParameter,\n    Parameter,\n    Decorator,\n    // TypeMember\n    PropertySignature,\n    PropertyDeclaration,\n    MethodSignature,\n    MethodDeclaration,\n    ClassStaticBlockDeclaration,\n    Constructor,\n    GetAccessor,\n    SetAccessor,\n    CallSignature,\n    ConstructSignature,\n    IndexSignature,\n    // Type\n    TypePredicate,\n    TypeReference,\n    FunctionType,\n    ConstructorType,\n    TypeQuery,\n    TypeLiteral,\n    ArrayType,\n    TupleType,\n    OptionalType,\n    RestType,\n    UnionType,\n    IntersectionType,\n    ConditionalType,\n    InferType,\n    ParenthesizedType,\n    ThisType,\n    TypeOperator,\n    IndexedAccessType,\n    MappedType,\n    LiteralType,\n    NamedTupleMember,\n    TemplateLiteralType,\n    TemplateLiteralTypeSpan,\n    ImportType,\n    // Binding patterns\n    ObjectBindingPattern,\n    ArrayBindingPattern,\n    BindingElement,\n    // Expression\n    ArrayLiteralExpression,\n    ObjectLiteralExpression,\n    PropertyAccessExpression,\n    ElementAccessExpression,\n    CallExpression,\n    NewExpression,\n    TaggedTemplateExpression,\n    TypeAssertionExpression,\n    ParenthesizedExpression,\n    FunctionExpression,\n    ArrowFunction,\n    DeleteExpression,\n    TypeOfExpression,\n    VoidExpression,\n    AwaitExpression,\n    PrefixUnaryExpression,\n    PostfixUnaryExpression,\n    BinaryExpression,\n    ConditionalExpression,\n    TemplateExpression,\n    YieldExpression,\n    SpreadElement,\n    ClassExpression,\n    OmittedExpression,\n    ExpressionWithTypeArguments,\n    AsExpression,\n    NonNullExpression,\n    MetaProperty,\n    SyntheticExpression,\n    SatisfiesExpression,\n\n    // Misc\n    TemplateSpan,\n    SemicolonClassElement,\n    // Element\n    Block,\n    EmptyStatement,\n    VariableStatement,\n    ExpressionStatement,\n    IfStatement,\n    DoStatement,\n    WhileStatement,\n    ForStatement,\n    ForInStatement,\n    ForOfStatement,\n    ContinueStatement,\n    BreakStatement,\n    ReturnStatement,\n    WithStatement,\n    SwitchStatement,\n    LabeledStatement,\n    ThrowStatement,\n    TryStatement,\n    DebuggerStatement,\n    VariableDeclaration,\n    VariableDeclarationList,\n    FunctionDeclaration,\n    ClassDeclaration,\n    InterfaceDeclaration,\n    TypeAliasDeclaration,\n    EnumDeclaration,\n    ModuleDeclaration,\n    ModuleBlock,\n    CaseBlock,\n    NamespaceExportDeclaration,\n    ImportEqualsDeclaration,\n    ImportDeclaration,\n    ImportClause,\n    NamespaceImport,\n    NamedImports,\n    ImportSpecifier,\n    ExportAssignment,\n    ExportDeclaration,\n    NamedExports,\n    NamespaceExport,\n    ExportSpecifier,\n    MissingDeclaration,\n\n    // Module references\n    ExternalModuleReference,\n\n    // JSX\n    JsxElement,\n    JsxSelfClosingElement,\n    JsxOpeningElement,\n    JsxClosingElement,\n    JsxFragment,\n    JsxOpeningFragment,\n    JsxClosingFragment,\n    JsxAttribute,\n    JsxAttributes,\n    JsxSpreadAttribute,\n    JsxExpression,\n    JsxNamespacedName,\n\n    // Clauses\n    CaseClause,\n    DefaultClause,\n    HeritageClause,\n    CatchClause,\n\n    ImportAttributes,\n    ImportAttribute,\n    /** @deprecated */ AssertClause = ImportAttributes,\n    /** @deprecated */ AssertEntry = ImportAttribute,\n    /** @deprecated */ ImportTypeAssertionContainer,\n\n    // Property assignments\n    PropertyAssignment,\n    ShorthandPropertyAssignment,\n    SpreadAssignment,\n\n    // Enum\n    EnumMember,\n\n    // Top-level nodes\n    SourceFile,\n    Bundle,\n\n    // JSDoc nodes\n    JSDocTypeExpression,\n    JSDocNameReference,\n    JSDocMemberName, // C#p\n    JSDocAllType, // The * type\n    JSDocUnknownType, // The ? type\n    JSDocNullableType,\n    JSDocNonNullableType,\n    JSDocOptionalType,\n    JSDocFunctionType,\n    JSDocVariadicType,\n    JSDocNamepathType, // https://jsdoc.app/about-namepaths.html\n    JSDoc,\n    /** @deprecated Use SyntaxKind.JSDoc */\n    JSDocComment = JSDoc,\n    JSDocText,\n    JSDocTypeLiteral,\n    JSDocSignature,\n    JSDocLink,\n    JSDocLinkCode,\n    JSDocLinkPlain,\n    JSDocTag,\n    JSDocAugmentsTag,\n    JSDocImplementsTag,\n    JSDocAuthorTag,\n    JSDocDeprecatedTag,\n    JSDocClassTag,\n    JSDocPublicTag,\n    JSDocPrivateTag,\n    JSDocProtectedTag,\n    JSDocReadonlyTag,\n    JSDocOverrideTag,\n    JSDocCallbackTag,\n    JSDocOverloadTag,\n    JSDocEnumTag,\n    JSDocParameterTag,\n    JSDocReturnTag,\n    JSDocThisTag,\n    JSDocTypeTag,\n    JSDocTemplateTag,\n    JSDocTypedefTag,\n    JSDocSeeTag,\n    JSDocPropertyTag,\n    JSDocThrowsTag,\n    JSDocSatisfiesTag,\n    JSDocImportTag,\n\n    // Synthesized list\n    SyntaxList,\n\n    // Transformation nodes\n    NotEmittedStatement,\n    NotEmittedTypeElement,\n    PartiallyEmittedExpression,\n    CommaListExpression,\n    SyntheticReferenceExpression,\n\n    // Enum value count\n    Count,\n\n    // Markers\n    FirstAssignment = EqualsToken,\n    LastAssignment = CaretEqualsToken,\n    FirstCompoundAssignment = PlusEqualsToken,\n    LastCompoundAssignment = CaretEqualsToken,\n    FirstReservedWord = BreakKeyword,\n    LastReservedWord = WithKeyword,\n    FirstKeyword = BreakKeyword,\n    LastKeyword = DeferKeyword,\n    FirstFutureReservedWord = ImplementsKeyword,\n    LastFutureReservedWord = YieldKeyword,\n    FirstTypeNode = TypePredicate,\n    LastTypeNode = ImportType,\n    FirstPunctuation = OpenBraceToken,\n    LastPunctuation = CaretEqualsToken,\n    FirstToken = Unknown,\n    LastToken = LastKeyword,\n    FirstTriviaToken = SingleLineCommentTrivia,\n    LastTriviaToken = ConflictMarkerTrivia,\n    FirstLiteralToken = NumericLiteral,\n    LastLiteralToken = NoSubstitutionTemplateLiteral,\n    FirstTemplateToken = NoSubstitutionTemplateLiteral,\n    LastTemplateToken = TemplateTail,\n    FirstBinaryOperator = LessThanToken,\n    LastBinaryOperator = CaretEqualsToken,\n    FirstStatement = VariableStatement,\n    LastStatement = DebuggerStatement,\n    FirstNode = QualifiedName,\n    FirstJSDocNode = JSDocTypeExpression,\n    LastJSDocNode = JSDocImportTag,\n    FirstJSDocTagNode = JSDocTag,\n    LastJSDocTagNode = JSDocImportTag,\n    /** @internal */ FirstContextualKeyword = AbstractKeyword,\n    /** @internal */ LastContextualKeyword = LastKeyword,\n}"
+    ],
+    "usedIn": [
+      "utilities.ts",
+      "utilitiesPublic.ts",
+      "factory/utilities.ts",
+      "factory/nodeTests.ts"
+    ]
+  },
+  {
+    "file": "types.ts",
+    "name": "AssignmentDeclarationKind",
+    "declarations": [
+      "export const enum AssignmentDeclarationKind {\n    None,\n    /// exports.name = expr\n    /// module.exports.name = expr\n    ExportsProperty,\n    /// module.exports = expr\n    ModuleExports,\n    /// className.prototype.name = expr\n    PrototypeProperty,\n    /// this.name = expr\n    ThisProperty,\n    // F.name = expr\n    Property,\n    // F.prototype = { ... }\n    Prototype,\n    // Object.defineProperty(x, 'name', { value: any, writable?: boolean (false by default) });\n    // Object.defineProperty(x, 'name', { get: Function, set: Function });\n    // Object.defineProperty(x, 'name', { get: Function });\n    // Object.defineProperty(x, 'name', { set: Function });\n    ObjectDefinePropertyValue,\n    // Object.defineProperty(exports || module.exports, 'name', ...);\n    ObjectDefinePropertyExports,\n    // Object.defineProperty(Foo.prototype, 'name', ...);\n    ObjectDefinePrototypeProperty,\n}"
+    ],
+    "usedIn": [
+      "utilitiesPublic.ts"
+    ]
+  },
+  {
+    "file": "debug.ts",
+    "name": "Debug",
+    "headerOnly": true,
+    "declarations": [
+      "export namespace Debug"
+    ],
+    "usedIn": [
+      "utilities.ts"
+    ]
+  },
+  {
+    "file": "core.ts",
+    "name": "forEach",
+    "headerOnly": true,
+    "declarations": [
+      "export function forEach<T, U>(array: readonly T[] | undefined, callback: (element: T, index: number) => U | undefined): U | undefined"
+    ],
+    "usedIn": [
+      "utilities.ts"
+    ]
+  },
+  {
+    "file": "utilitiesPublic.ts",
+    "name": "isAccessor",
+    "headerOnly": true,
+    "declarations": [
+      "export function isAccessor(node: Node): node is AccessorDeclaration"
+    ],
+    "usedIn": [
+      "utilities.ts"
+    ]
+  },
+  {
+    "file": "utilitiesPublic.ts",
+    "name": "getAssignedName",
+    "headerOnly": true,
+    "declarations": [
+      "export function getAssignedName(node: Node): DeclarationName | undefined"
+    ],
+    "usedIn": [
+      "utilitiesPublic.ts"
+    ]
+  },
+  {
+    "file": "utilitiesPublic.ts",
+    "name": "getNameOfJSDocTypedef",
+    "headerOnly": true,
+    "declarations": [
+      "export function getNameOfJSDocTypedef(declaration: JSDocTypedefTag): Identifier | PrivateIdentifier | undefined"
+    ],
+    "usedIn": [
+      "utilitiesPublic.ts"
+    ]
+  },
+  {
+    "file": "utilitiesPublic.ts",
+    "name": "nameForNamelessJSDocTypedef",
+    "headerOnly": true,
+    "declarations": [
+      "function nameForNamelessJSDocTypedef(declaration: JSDocTypedefTag | JSDocEnumTag): Identifier | PrivateIdentifier | undefined"
+    ],
+    "usedIn": [
+      "utilitiesPublic.ts"
+    ]
+  },
+  {
+    "file": "utilities.ts",
+    "name": "isStatic",
+    "headerOnly": true,
+    "declarations": [
+      "export function isStatic(node: Node): boolean"
+    ],
+    "usedIn": [
+      "utilities.ts"
+    ]
+  },
+  {
+    "file": "utilities.ts",
+    "name": "getPropertyNameForPropertyNameNode",
+    "headerOnly": true,
+    "declarations": [
+      "export function getPropertyNameForPropertyNameNode(name: PropertyName | JsxAttributeName): __String | undefined"
+    ],
+    "usedIn": [
+      "utilities.ts"
+    ]
+  },
+  {
+    "file": "utilities.ts",
+    "name": "getAssignmentDeclarationKind",
+    "headerOnly": true,
+    "declarations": [
+      "export function getAssignmentDeclarationKind(expr: BinaryExpression | CallExpression): AssignmentDeclarationKind"
+    ],
+    "usedIn": [
+      "utilitiesPublic.ts"
+    ]
+  },
+  {
+    "file": "utilities.ts",
+    "name": "getElementOrPropertyAccessArgumentExpressionOrName",
+    "headerOnly": true,
+    "declarations": [
+      "export function getElementOrPropertyAccessArgumentExpressionOrName(node: AccessExpression): Identifier | PrivateIdentifier | StringLiteralLike | NumericLiteral | ElementAccessExpression | undefined"
+    ],
+    "usedIn": [
+      "utilitiesPublic.ts"
+    ]
+  },
+  {
+    "file": "utilities.ts",
+    "name": "isBindableStaticElementAccessExpression",
+    "headerOnly": true,
+    "declarations": [
+      "export function isBindableStaticElementAccessExpression(node: Node, excludeThisKeyword?: boolean): node is BindableStaticElementAccessExpression"
+    ],
+    "usedIn": [
+      "utilitiesPublic.ts"
+    ]
+  },
+  {
+    "file": "factory/nodeTests.ts",
+    "name": "isFunctionExpression",
+    "headerOnly": true,
+    "declarations": [
+      "export function isFunctionExpression(node: Node): node is FunctionExpression"
+    ],
+    "usedIn": [
+      "utilitiesPublic.ts"
+    ]
+  },
+  {
+    "file": "factory/nodeTests.ts",
+    "name": "isArrowFunction",
+    "headerOnly": true,
+    "declarations": [
+      "export function isArrowFunction(node: Node): node is ArrowFunction"
+    ],
+    "usedIn": [
+      "utilitiesPublic.ts"
+    ]
+  },
+  {
+    "file": "factory/nodeTests.ts",
+    "name": "isClassExpression",
+    "headerOnly": true,
+    "declarations": [
+      "export function isClassExpression(node: Node): node is ClassExpression"
+    ],
+    "usedIn": [
+      "utilitiesPublic.ts"
+    ]
+  },
+  {
+    "file": "factory/utilities.ts",
+    "name": "isJSDocTypeAssertion",
+    "headerOnly": true,
+    "declarations": [
+      "export function isJSDocTypeAssertion(node: Node): node is JSDocTypeAssertion"
+    ],
+    "usedIn": [
+      "factory/utilities.ts"
+    ]
+  }
+]
