@@ -1,0 +1,20 @@
+// A view naming only the getter's sibling, and a let the getter replaces handed to the call first. Node
+// prints held1 swapper4 1, then new2.
+// An object literal's own type is fresh and fails the view by excess properties, so spreadGetters relates
+// it by relatedShape: related raw, the getter was left out of the spread's set, reuse lent the global, and
+// native read it freed under ASan (#z6h9s7k).
+type Pair = { count: number; name: string };
+let held: Pair = { count: 1, name: `held${String(1)}` };
+const swapper: Pair = {
+    get count(): number {
+        held = { count: 2, name: `new${String(2)}` };
+        return 3;
+    },
+    name: `swapper${String(4)}`,
+};
+function run(first: Pair, second: { readonly name: string }): string {
+    const made = { ...second };
+    return `${first.name} ${made.name} ${String(first.count)}`;
+}
+console.log(run(held, swapper));
+console.log(held.name);

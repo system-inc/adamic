@@ -569,6 +569,11 @@ func (l *lowering) classHolder(class int, holder *checker.Type) {
 // declared plain field is assignable to that plain type, so "the source's type has no accessor" would
 // fail open (Memory's and Compiler's ruling on #qk8rztp S2c-2b). It over-approximates, since a spread
 // copies own properties only and a class's getter is its prototype's, which is the safe direction.
+// An object literal's holder is its own fresh type, which the checker relates with the excess-property
+// check, so { get value(), label } is no { readonly label: string } though the value reaches that view by
+// width: it's related by relatedShape, freshness taken off by the checker's own rule. Related raw, the
+// literal's getter was left out, reuse lent a global into the call while the getter replaced it, and
+// native read it freed (#z6h9s7k, z1 to z5).
 func (l *lowering) spreadGetters(literal ir.ObjectLiteral) []int {
 	if plainDataSpreadSource(literal.Spread) {
 		return nil
@@ -581,7 +586,7 @@ func (l *lowering) spreadGetters(literal ir.ObjectLiteral) []int {
 	seen := map[int]bool{}
 	for index := range l.result.Classes {
 		holder := l.classHolders[index+1]
-		if viewed != nil && holder != nil && !l.checker.IsTypeAssignableTo(holder, viewed) {
+		if viewed != nil && holder != nil && !l.checker.IsTypeAssignableTo(l.relatedShape(holder), viewed) {
 			continue
 		}
 		for class := index + 1; class != 0; class = l.result.Classes[class-1].Base {
