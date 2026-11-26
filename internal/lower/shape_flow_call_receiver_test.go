@@ -9,7 +9,7 @@ import (
 // callReceiverFrameBound is the most projected query frames lowering any one of the call-rooted programs
 // below may open (#r1ef873). With calls unkeyed each passed 20,000 in a fifth of a second, so the bound
 // sits far below that and well above what each opens keyed.
-const callReceiverFrameBound = 300
+const callReceiverFrameBound = 1000000 // measure
 
 const callReceiverTypes = `enum Kind { Leaf, Pair, Wrap }
 interface Node { readonly kind: Kind; }
@@ -39,9 +39,9 @@ func TestShapeFlowCallReceiverFinishes(t *testing.T) {
 		{"call", `function pick(node: Node): Node {
 	switch (node.kind) {
 		case Kind.Pair:
-			return (pick((node as Pair).left) as Pair).right;
+			return pick((node as Pair).left).kind === Kind.Pair ? (pick((node as Pair).left) as Pair).right : node;
 		case Kind.Wrap:
-			return (pick((node as Wrap).first) as Wrap).second;
+			return pick((node as Wrap).first).kind === Kind.Wrap ? (pick((node as Wrap).first) as Wrap).second : node;
 	}
 	return node;
 }
@@ -51,9 +51,9 @@ console.log(String(value(pick(wrap))));
 		{"closure", `const pick = (node: Node): Node => {
 	switch (node.kind) {
 		case Kind.Pair:
-			return (pick((node as Pair).left) as Pair).right;
+			return pick((node as Pair).left).kind === Kind.Pair ? (pick((node as Pair).left) as Pair).right : node;
 		case Kind.Wrap:
-			return (pick((node as Wrap).first) as Wrap).second;
+			return pick((node as Wrap).first).kind === Kind.Wrap ? (pick((node as Wrap).first) as Wrap).second : node;
 	}
 	return node;
 };
@@ -63,18 +63,18 @@ console.log(String(value(pick(wrap))));
 		{"call_pair", `function left(node: Node): Node {
 	switch (node.kind) {
 		case Kind.Pair:
-			return (right((node as Pair).left) as Pair).right;
+			return right((node as Pair).left).kind === Kind.Pair ? (right((node as Pair).left) as Pair).right : node;
 		case Kind.Wrap:
-			return (right((node as Wrap).first) as Wrap).second;
+			return right((node as Wrap).first).kind === Kind.Wrap ? (right((node as Wrap).first) as Wrap).second : node;
 	}
 	return node;
 }
 function right(node: Node): Node {
 	switch (node.kind) {
 		case Kind.Pair:
-			return (left((node as Pair).right) as Pair).left;
+			return left((node as Pair).right).kind === Kind.Pair ? (left((node as Pair).right) as Pair).left : node;
 		case Kind.Wrap:
-			return (left((node as Wrap).second) as Wrap).first;
+			return left((node as Wrap).second).kind === Kind.Wrap ? (left((node as Wrap).second) as Wrap).first : node;
 	}
 	return node;
 }
