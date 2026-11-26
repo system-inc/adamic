@@ -36,11 +36,23 @@ func (l *lowering) narrowedArmPropertyReadGap(node *ast.Node) error {
 			return nil
 		}
 	}
+	narrowed := l.checker.GetTypeAtLocation(node)
+	var declared *checker.Type
 	property := l.checker.GetSymbolAtLocation(key)
-	if property == nil {
-		return nil // No declared property, so no declared type the checker narrowed from.
+	if property != nil {
+		declared = l.checker.GetTypeOfSymbol(property)
+	} else if node.Kind == ast.KindElementAccessExpression && key.Kind == ast.KindNumericLiteral {
+		// An array's element by a literal index, arr[0], has no property of its own: its declared type is the
+		// array's element type, and a write by any index or an array method may rewrite it (Language's r08).
+		receiver := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsElementAccessExpression().Expression))
+		if !l.isArrayType(receiver) {
+			return nil
+		}
+		declared = l.elementTypeOfArray(receiver)
 	}
-	narrowed, declared := l.checker.GetTypeAtLocation(node), l.checker.GetTypeOfSymbol(property)
+	if declared == nil {
+		return nil // No declared property or element, so no declared type the checker narrowed from.
+	}
 	if narrowed.Id() == declared.Id() || narrowed.Flags()&checker.TypeFlagsNever != 0 {
 		return nil
 	}
@@ -57,7 +69,7 @@ func (l *lowering) narrowedArmPropertyReadGap(node *ast.Node) error {
 	if narrowedStorage, narrowedKnown := l.representation(narrowed); narrowedKnown && narrowedStorage != ir.Object {
 		return nil // Only an object arm reads through an object's layout: a scalar, a string, an array, a closure or a record arm doesn't. An arm whose storage isn't known is judged.
 	}
-	if property.Flags&ast.SymbolFlagsEnumMember != 0 {
+	if property != nil && property.Flags&ast.SymbolFlagsEnumMember != 0 {
 		return nil // An enum's member is a constant no write reaches.
 	}
 	name := key.Text()
