@@ -1,0 +1,8 @@
+// typeof cannot tell an array from an object, and an index signature of unknown neither declares a property nor keeps a
+// function out of its values, so no arm rule rules an array out and the narrowed read stops.
+function first(): number[] | { [key: string]: unknown } {
+	return [1];
+}
+let shared: number[] | { [key: string]: unknown } = first();
+shared = [1];
+console.log(`${shared.length}`);
