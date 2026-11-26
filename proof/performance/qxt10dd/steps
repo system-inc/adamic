@@ -1,0 +1,69 @@
+# #qxt10dd proof (Performance): the untagged arm's tag test. Source after environment.sh, cloud/sandboxed-job.sh,
+# sandboxed_npm stage3/api and sandboxed_products. Never merged.
+set -u
+fail=0
+P=./internal/lower
+pins='^(TestUntaggedUnionCast.*|TestKeepsNullishCast.*|TestAbsentArmCasts.*)$'
+out=$(gofmt -l internal/lower); [ -z "$out" ] && echo "PASS gofmt" || { echo "FAIL gofmt: $out"; fail=1; }
+go vet $P > "$TMPDIR/vet.log" 2>&1 && echo "PASS vet" || { echo "FAIL vet"; head -20 "$TMPDIR/vet.log"; fail=1; }
+go test -count=1 -v -run "$pins" $P > "$TMPDIR/pins.log" 2>&1; r=$?
+grep -E -- '^\s*--- FAIL|_test.go:[0-9]+:' "$TMPDIR/pins.log" | cut -c1-400 | head -30
+echo "pins: $(grep -cE -- '^\s*--- PASS' "$TMPDIR/pins.log") passed, $(grep -cE -- '^\s*--- FAIL' "$TMPDIR/pins.log") failed"
+[ $r = 0 ] && echo "PASS pins" || { echo "FAIL pins"; fail=1; }
+for f in cast_untagged_union.go cast_proof.go invariance.go; do cp internal/lower/$f "$TMPDIR/$f.keep"; done
+mutant() {
+	local label=$1 file=$2 old=$3 new=$4 red=$5
+	echo "== mutant: $label"
+	cp "$TMPDIR/$file.keep" internal/lower/$file
+	python3 -I - internal/lower/$file "$old" "$new" <<'PY' || { echo "FAIL mutant $label: not applied"; fail=1; return; }
+import sys
+path, old, new = sys.argv[1:]
+text = open(path).read()
+if text.count(old) != 1:
+    sys.exit(1)
+open(path, "w").write(text.replace(old, new))
+PY
+	go vet $P > "$TMPDIR/mvet.log" 2>&1 || { echo "FAIL mutant $label: doesn't compile"; head -5 "$TMPDIR/mvet.log"; fail=1; cp "$TMPDIR/$file.keep" internal/lower/$file; return; }
+	echo "compiles"
+	go test -count=1 -v -run "$pins" $P > "$TMPDIR/m.log" 2>&1
+	grep -E -- '^\s*--- FAIL' "$TMPDIR/m.log" | cut -c1-200 | head -8
+	grep -qE -- "^\s*--- FAIL: ${red}" "$TMPDIR/m.log" && echo "PASS mutant red: $label" || { echo "FAIL mutant survived: $label"; fail=1; }
+	cp "$TMPDIR/$file.keep" internal/lower/$file
+}
+mutant "untagged left out of viewCasts" cast_proof.go 'if proof.overlap || proof.structuralView || proof.untagged {' 'if proof.overlap || proof.structuralView {' 'TestUntaggedUnionCastTestsItsTag'
+mutant "no tag test at the cast" cast_untagged_union.go 'if err != nil || field == "" {' 'if true {' 'TestUntaggedUnionCastFailsAnotherKind'
+mutant "plain widened per member" cast_untagged_union.go 'return l.untaggedWidening(node, source, target, members) == nil' 'return l.widened(source, target, map[[2]*checker.Type]bool{}) == nil' 'TestUntaggedUnionCastTagBesideAnOpenSibling'
+mutant "the tag's representation unchecked" cast_untagged_union.go 'held = known && of == want' 'held = known && (of == want || true)' 'TestUntaggedUnionCastMixedTagRepresentationStops'
+echo "== the mixed-representation union with the check dropped, run natively"
+cp "$TMPDIR/cast_untagged_union.go.keep" internal/lower/cast_untagged_union.go
+python3 -I - internal/lower/cast_untagged_union.go <<'PY'
+import sys
+p = sys.argv[1]; t = open(p).read(); t = t.replace("held = known && of == want", "held = known && (of == want || true)"); open(p, "w").write(t)
+PY
+cat > internal/lower/zz_mixed_probe_test.go <<'GO'
+package lower
+
+import (
+	"fmt"
+	"testing"
+)
+
+func TestZZMixedTagProbe(t *testing.T) {
+	source := "enum SyntaxKind { Identifier, CallExpression, Block } interface A { readonly kind: SyntaxKind; readonly a: number } interface B { readonly kind: SyntaxKind | string; readonly b: number } interface CallLike extends A { readonly kind: SyntaxKind.CallExpression; readonly argumentCount: number } function f(x: A | B): number { return (x as CallLike).argumentCount; } const b: B = { kind: \"call\", b: 4 }; console.log(String(f(b)));"
+	program, err := lowerSourceAs(t, source, ".ts")
+	if err != nil {
+		fmt.Printf("PROBE mixed: stops: %v\n", err)
+		return
+	}
+	code, stdout, stderr := brandedNative(t, program)
+	fmt.Printf("PROBE mixed: lowers; native exit %d stdout %q stderr %q\n", code, stdout, stderr)
+}
+GO
+go test -count=1 -v -run '^TestZZMixedTagProbe$' $P > "$TMPDIR/mixed.log" 2>&1; grep -E '^PROBE' "$TMPDIR/mixed.log" | cut -c1-400
+rm internal/lower/zz_mixed_probe_test.go
+cp "$TMPDIR/cast_untagged_union.go.keep" internal/lower/cast_untagged_union.go
+echo "== internal/lower, stage3/fixtures and internal/oracle whole"
+go test -count=1 -timeout 100m $P ./stage3/fixtures ./internal/oracle > "$TMPDIR/whole.log" 2>&1; r=$?
+grep -E -- '^(ok|FAIL)|--- FAIL|panic:' "$TMPDIR/whole.log" | cut -c1-300 | head -30
+[ $r = 0 ] && echo "PASS whole" || { echo "FAIL whole"; grep -E '_test.go:[0-9]+:' "$TMPDIR/whole.log" | cut -c1-300 | head -30; fail=1; }
+[ $fail = 0 ] && echo "VERDICT PASS" || { echo "VERDICT FAIL"; false; }
