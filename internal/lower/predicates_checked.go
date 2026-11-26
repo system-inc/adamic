@@ -99,17 +99,12 @@ func (l *lowering) checkedPredicateClosedRemainder(call *ast.CallExpression, ind
 	}
 	var tags []*checker.Type
 	for _, member := range members {
-		if member.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(member) {
+		// 12 A's `never` road stays over plain members, so an intersection member keeps main's refusal.
+		if remainder.Flags()&checker.TypeFlagsNever != 0 && member.Flags()&checker.TypeFlagsIntersection != 0 {
 			return nil
 		}
-		property := l.checker.GetPropertyOfType(member, "kind")
-		if property == nil || len(property.Declarations) == 0 {
+		if !l.checkedPredicateRemainderField(member) {
 			return nil
-		}
-		for _, declaration := range property.Declarations {
-			if declaration.Kind != ast.KindPropertySignature && declaration.Kind != ast.KindPropertyDeclaration {
-				return nil
-			}
 		}
 		tag := l.fieldLiteral(member, "kind")
 		if tag == nil || l.tagHoldsAnyNumber(tag) {
@@ -126,6 +121,40 @@ func (l *lowering) checkedPredicateClosedRemainder(call *ast.CallExpression, ind
 		return nil
 	}
 	return remainder
+}
+
+// checkedPredicateRemainderField checks the declarations that give a member its kind.
+func (l *lowering) checkedPredicateRemainderField(member *checker.Type) bool {
+	parts := []*checker.Type{member}
+	if member.Flags()&checker.TypeFlagsIntersection != 0 {
+		// Ruling 12 B: check each plain object's own declaration, since the merged
+		// property is synthetic and may hide an accessor. Read the literal from the
+		// merged type in checkedPredicateClosedRemainder.
+		if !l.plainObjectIntersection(member) {
+			return false
+		}
+		parts = member.Types()
+	}
+	hasField := false
+	for _, part := range parts {
+		if part.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(part) {
+			return false
+		}
+		property := l.checker.GetPropertyOfType(part, "kind")
+		if property == nil {
+			continue
+		}
+		if len(property.Declarations) == 0 {
+			return false
+		}
+		for _, declaration := range property.Declarations {
+			if declaration.Kind != ast.KindPropertySignature && declaration.Kind != ast.KindPropertyDeclaration {
+				return false
+			}
+		}
+		hasField = true
+	}
+	return hasField
 }
 
 // predicateFalseRead is whether a read of argument, the reference call narrows, sits where the checker's
