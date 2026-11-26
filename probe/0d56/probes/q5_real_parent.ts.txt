@@ -1,0 +1,15 @@
+// #0d56xpd question 5: every N's parent is a real N (the root is its own parent), read through ?. as
+// accessKind reads it. tsc types parent?.kind as number.
+interface N {
+	readonly kind: number;
+	readonly parent: N;
+}
+interface MutableN {
+	kind: number;
+	parent: N;
+}
+const root: MutableN = { kind: 1, parent: undefined! };
+root.parent = root;
+const child: N = { kind: 2, parent: root };
+console.log(child.parent?.kind);
+console.log(root.parent?.kind);

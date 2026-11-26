@@ -1,0 +1,10 @@
+// #0d56xpd question 2: a required object field left as the undefined! placeholder in an object literal,
+// read with a plain dot.
+interface N {
+	readonly kind: number;
+	readonly parent: N;
+}
+const root: N = { kind: 1, parent: undefined! };
+console.log('before');
+console.log(root.parent.kind);
+console.log('after');

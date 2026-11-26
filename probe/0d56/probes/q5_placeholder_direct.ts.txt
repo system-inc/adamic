@@ -1,0 +1,9 @@
+// #0d56xpd question 5: the placeholder parent read straight through ?., with no destructuring between.
+interface N {
+	readonly kind: number;
+	readonly parent: N;
+}
+const root: N = { kind: 1, parent: undefined! };
+const child: N = { kind: 2, parent: root };
+console.log(child.parent?.kind);
+console.log(root.parent?.kind);

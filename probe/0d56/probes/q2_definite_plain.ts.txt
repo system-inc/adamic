@@ -1,0 +1,10 @@
+// #0d56xpd question 2: a class's required object field declared with a definite-assignment !, never
+// assigned, and read with a plain dot.
+class C {
+	kind = 1;
+	parent!: C;
+}
+const c = new C();
+console.log('before');
+console.log(c.parent.kind);
+console.log('after');

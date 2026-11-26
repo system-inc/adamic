@@ -1,0 +1,14 @@
+// #0d56xpd question 2: a class's required object field set to undefined! in its constructor, as tsc's
+// Node constructor sets parent, and read with a plain dot.
+class C {
+	kind: number;
+	parent: C;
+	constructor(kind: number) {
+		this.kind = kind;
+		this.parent = undefined!;
+	}
+}
+const c = new C(1);
+console.log('before');
+console.log(c.parent.kind);
+console.log('after');

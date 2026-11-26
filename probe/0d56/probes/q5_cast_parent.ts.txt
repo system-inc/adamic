@@ -1,0 +1,9 @@
+// #0d56xpd question 5: an N with no parent at all, made by a cast.
+interface N {
+	readonly kind: number;
+	readonly parent: N;
+}
+const root = { kind: 1 } as N;
+const child: N = { kind: 2, parent: root };
+console.log(child.parent?.kind);
+console.log(root.parent?.kind);
