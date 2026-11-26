@@ -1,5 +1,5 @@
 {
-  "version": 6,
+  "version": 7,
   "about": "Adamic's submit script input: what a head's diff requires before it submits. Every rule is read from the head's diff against main's tip at submit. A rule fires when any of its triggers matches; a head owes the union of what its fired rules require. Written by Compiler from #system_adamic_compiler's standing rules (#mbtv3vv, #07a4th6). When unsure, a rule fires: a gate run needlessly costs a job, a gate missed costs a red block.",
   "definitions": {
     "productionGo": "a .go file not ending _test.go",
@@ -22,7 +22,8 @@
     "ir-whole": "go test ./internal/ir/ whole (its call-target census)",
     "latent-whole": "go test ./stage3/census/latent/... whole (the statecopy guard and the pass ledger)",
     "admission-delta": "the admission delta against main's tip: its verdict line pass, and its admitted programs listed",
-    "unit-census-pair": "tsc's paired census, base main's tip and head, by stage3/census/pair/pair.py's rule: 0 units newly stopping, or each newly stopping unit named in the commit message with the ruling that allows it",
+    "unit-census-entry": "tsc's paired census in its entry pass, base main's tip and head, by stage3/census/pair/pair.py's rule: 0 units newly stopping, or each newly stopping unit named in the commit message with the ruling that allows it",
+    "unit-census-directory": "tsc's paired census in its compiler directory pass, base main's tip and head, by stage3/census/pair/pair.py's rule: 0 units newly stopping, or each newly stopping unit named in the commit message with the ruling that allows it",
     "lane-whole-sealed": "stage3/lane whole, sealed",
     "mutants-red": "for every mutant the head's *.mutants.md names: its own job, red on the test it names",
     "adapter-plants-red": "the adapter's plant kit job at the head: the kept tail ends with a VERDICT n of n red verdict for a positive n, and every plant is red on the line the kit expects; the accepter reads the kit and job by hand",
@@ -74,7 +75,8 @@
         "oracle-whole",
         "native-whole-wasi",
         "admission-delta",
-        "unit-census-pair",
+        "unit-census-entry",
+        "unit-census-directory",
         "stage1-gaps-whole",
         "stage3-fixtures-whole"
       ]
@@ -297,7 +299,8 @@
         }
       ],
       "requires": [
-        "unit-census-pair",
+        "unit-census-entry",
+        "unit-census-directory",
         "stock-js-identical",
         "declarations-identical",
         "adapter-plants-red"
