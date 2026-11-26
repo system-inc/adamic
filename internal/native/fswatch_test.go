@@ -210,7 +210,7 @@ func TestFSWatchMutantAddErrorDropsSyscall(t *testing.T) {
 		"name Error\n" +
 		"message ENOENT: no such file or directory, watch 'adamic-fswatch-missing'\n" +
 		"errno -2\n"
-	const stderr = "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+	const stderr = "adamic: panic: NotYet: a field missing from this object, where a narrowing kept across a call that rewrote the property said it is there (#8nj5pn4)\n"
 	if expired || got.ExitCode != 70 || string(got.Stdout) != stdout || string(got.Stderr) != stderr {
 		t.Fatalf("the mutant's error must lack syscall: expired %t, %+v", expired, got)
 	}

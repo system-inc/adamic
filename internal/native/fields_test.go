@@ -85,21 +85,36 @@ console.log((missing?.steady ?? -3).toString());
 	lookup := func(name string) bool {
 		return regexp.MustCompile(`adamic_object_(?:data_)?field\([^\n]+, ` + strconv.Quote(name) + `, &adamic_cache_`).MatchString(generated)
 	}
-	// Required reads keep the uniform-slot proof. Writes also guard presence and may
-	// contain a checked fallback in their slot declaration.
+	// Required reads keep the uniform-slot proof, behind the shape guard whose miss is the checked
+	// lookup (uniformFieldGuard, #8nj5pn4), so a read's only lookup is a guard's fallback. Writes also
+	// guard presence and may contain a checked fallback in their slot declaration.
+	readLines := []string{}
+	for _, line := range strings.Split(generated, "\n") {
+		if !strings.HasPrefix(strings.TrimSpace(line), "adamic_value *") {
+			readLines = append(readLines, line)
+		}
+	}
 	readLookup := func(name string) bool {
-		for _, line := range strings.Split(generated, "\n") {
-			if strings.HasPrefix(strings.TrimSpace(line), "adamic_value *") {
-				continue
-			}
-			if regexp.MustCompile(`adamic_object_(?:data_)?field\([^\n]+, ` + strconv.Quote(name) + `, &adamic_cache_`).MatchString(line) {
+		lookups := regexp.MustCompile(`adamic_object_(?:data_)?field\([^\n]+?, ` + regexp.QuoteMeta(strconv.Quote(name)) + `, &adamic_cache_\w+\)`)
+		fallbacks := regexp.MustCompile(`->slots\[\d+\]\) : adamic_object_data_field\(\w+, ` + regexp.QuoteMeta(strconv.Quote(name)) + `, &adamic_cache_\w+\)`)
+		for _, line := range readLines {
+			if len(lookups.FindAllString(line, -1)) > len(fallbacks.FindAllString(line, -1)) {
 				return true
 			}
 		}
 		return false
 	}
-	if readLookup("steady") || readLookup("label") {
-		t.Fatal("uniform reads still use shape lookup")
+	guardedRead := func(name string) bool {
+		slot := regexp.MustCompile(`\? \(&ADAMIC_UNIFORM_OBJECT\(\w+, ` + regexp.QuoteMeta(strconv.Quote(name)) + `\)->slots\[\d+\]\) : `)
+		for _, line := range readLines {
+			if slot.MatchString(line) {
+				return true
+			}
+		}
+		return false
+	}
+	if readLookup("steady") || readLookup("label") || !guardedRead("steady") || !guardedRead("label") {
+		t.Fatal("uniform reads still use shape lookup, or lost their guarded slot")
 	}
 	if !lookup("left") || !lookup("emptyLeft") {
 		t.Fatal("conflicting layouts lost their lookup fallback")
