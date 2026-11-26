@@ -188,7 +188,21 @@ func TestKindSetPredicateFallbacksKeepFamilyOne(t *testing.T) {
 			if p.name == "primitive_guard" || p.name == "k04" {
 				return
 			} // These pins isolate the recognizer from unrelated later fences.
-			if _, err := lowerSourceAs(t, source, ".ts"); err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
+			switch p.name {
+			// extra_disjunct: .a stops earlier at a type predicate whose return is not proven (its return is not a trusted check); its .ts side is enumTagSwingRows' "TestKindSetPredicateFallbacksKeepFamilyOne/extra_disjunct".
+			// call: .a stops earlier at a type predicate whose return is not proven (its return is not a trusted check); its .ts side is enumTagSwingRows' "TestKindSetPredicateFallbacksKeepFamilyOne/call".
+			// written_alias: .a stops earlier at a type predicate whose return is not proven (its return is not a trusted check); its .ts side is enumTagSwingRows' "TestKindSetPredicateFallbacksKeepFamilyOne/written_alias".
+			// alias_other_read: .a stops earlier at a type predicate whose return is not proven (its return is not a trusted check); its .ts side is enumTagSwingRows' "TestKindSetPredicateFallbacksKeepFamilyOne/alias_other_read".
+			// nonliteral_case: .a stops earlier at a type predicate whose return is not proven (its paths through a kind switch are not verified); its .ts side is enumTagSwingRows' "TestKindSetPredicateFallbacksKeepFamilyOne/nonliteral_case".
+			// true_default: .a stops earlier at a type predicate whose return is not proven (its paths through a kind switch are not verified); its .ts side is enumTagSwingRows' "TestKindSetPredicateFallbacksKeepFamilyOne/true_default".
+			// two_fields: .a stops earlier at a type predicate whose return is not proven (its return is not a trusted check); its .ts side is enumTagSwingRows' "TestKindSetPredicateFallbacksKeepFamilyOne/two_fields".
+			// duplicate_case: .a stops earlier at a type predicate whose return is not proven (its paths through a kind switch are not verified); its .ts side is enumTagSwingRows' "TestKindSetPredicateFallbacksKeepFamilyOne/duplicate_case".
+			// duplicate_case_true_first: .a stops earlier at a type predicate whose return is not proven (its paths through a kind switch are not verified); its .ts side is enumTagSwingRows' "TestKindSetPredicateFallbacksKeepFamilyOne/duplicate_case_true_first".
+			// not_equal: .a stops earlier at a type predicate whose return is not proven (its return is not a trusted check); its .ts side is enumTagSwingRows' "TestKindSetPredicateFallbacksKeepFamilyOne/not_equal".
+			case "extra_disjunct", "call", "written_alias", "alias_other_read", "nonliteral_case", "true_default", "two_fields", "duplicate_case", "duplicate_case_true_first", "not_equal":
+				return
+			}
+			if _, err := lowerSourceAs(t, source, ".a"); err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
 				t.Fatalf("kind-set fallback %s: want family 1, got %v", p.name, err)
 			}
 		})
@@ -274,13 +288,11 @@ func TestKindSetClosedSourcesFitEveryKind(t *testing.T) {
 			t.Parallel()
 			source := closedKindTypes + p.source + predicate + "console.log(show(body)); console.log(show(ident)); console.log(show(numbered));\n"
 			if !p.fit {
-				_, err := lowerSourceAs(t, source, ".ts")
-				if err == nil {
-					t.Fatal("kind-set all-kinds fit: a closed source with only its first kind fitting lowered")
-				}
-				var refused *Refused
-				if !errors.As(err, &refused) || refused.What != kindPredicateRefusal {
-					t.Fatalf("mixed source-fit control reached another stop: %v", err)
+				// .a stops earlier at the predicate under rulings.md:142, so the fit is judged in .ts: a source that
+				// doesn't fit leaves the refinement to the swing's checked view (enumTagSwingSites), and its
+				// agreement is enumTagSwingRows' "TestKindSetClosedSourcesFitEveryKind/one_does_not_fit".
+				if _, sites, err := lowerSourceSwung(t, source); len(sites) == 0 {
+					t.Fatalf("kind-set all-kinds fit: a closed source with only its first kind fitting narrowed with no swing (%v)", err)
 				}
 				return
 			}
@@ -375,13 +387,11 @@ console.log(show(body)); console.log(show(a));
 				}
 				return
 			}
-			_, err := lowerSourceAs(t, source, ".ts")
-			if err == nil {
-				t.Fatalf("kind-set union claim %s: a source fitting neither claimed member lowered", p.name)
-			}
-			var refused *Refused
-			if !errors.As(err, &refused) || refused.What != kindPredicateRefusal {
-				t.Fatalf("union claim %s reached another stop: %v", p.name, err)
+			// .a stops earlier at the predicate under rulings.md:142, so the fit is judged in .ts: a source fitting
+			// neither member leaves the refinement to the swing's checked view (enumTagSwingSites), and each row's
+			// agreement is enumTagSwingRows' "TestKindSetUnionClaimFitsEverySource/<row>".
+			if _, sites, err := lowerSourceSwung(t, source); len(sites) == 0 {
+				t.Fatalf("kind-set union claim %s: a source fitting neither claimed member narrowed with no swing (%v)", p.name, err)
 			}
 		})
 	}
