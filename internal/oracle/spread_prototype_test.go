@@ -102,12 +102,20 @@ func genericClaim(class, member string) string {
 // returns into map's U, which the checker has resolved by the callback's own return, a concrete type that
 // claims peek, so it's refused through its contextual type rather than the fallback: an over-refusal that
 // fails closed, held so a later relaxation sees it.
+//
+// Diagnostics' re-read of head 2 found the same gap one level up: a return or an arrow body is held as its
+// contextual type only when the function's return is annotated or the function itself is held, since under
+// `satisfies` the function keeps its own type, whose return is the literal's own. satisfies_return_setter_a's
+// make() is typed as Source, which claims weight, and natively it ended on the compiler bug, so it's refused.
+// An assignment's value is held both ways, and a name the literal writes after its spread isn't judged; their
+// rows are internal/lower's TestSpreadContextHeldAnswersByThePlace and the ones below.
 // Mutants: spreadCopyRead answering nil lowers c13b again (internal/lower/spread_copy_reads.mutants.md); the
 // .a refusal answering nil lowers the refused .a rows, the type parameter's arm answering false lowers the
 // generic rows, the union walk dropped lowers the union rows, prototypeFree answering false refuses
 // over_refusal_a, the accessor literal's clause dropped refuses literal_with_class_a and literal_accessor_a,
 // the signature forms dropped lowers the rows whose claim is a method or getter signature, the contextual type
-// judged even when generic lowers generic_partial_a, and the satisfies target judged lowers s01_call_a
+// judged even when generic lowers generic_partial_a, the satisfies target judged lowers s01_call_a and
+// satisfies_return_setter_a, and spreadReturnHeld answering held for any function lowers satisfies_return_setter_a
 // (internal/lower/spread_prototype_members.mutants.md).
 func TestSpreadPrototypeField(t *testing.T) {
 	t.Parallel()
@@ -146,6 +154,7 @@ func TestSpreadPrototypeField(t *testing.T) {
 		{"s03_a.a", "tag\n", "", ""},
 		{"s04_a.a", "undefined\n", "", "Adamic 0.1 refuses optional property peek in { readonly tag: string; peek?: () => string; } absent from structural source Plain, which can hide fields; declare peek on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"},
 		{"s05_a.a", "1\n", "", spreadPrototypeRefusalOf("t", heldAs("{ tag: string; peek(): string; }", "peek", "a method"), "Real", "peek", "method", "Real")},
+		{"satisfies_return_setter_a.a", "t undefined undefined\n", "", spreadPrototypeRefusalOf("built", ownClaim("weight", "a field"), "Sized", "weight", "setter", "Sized")},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()

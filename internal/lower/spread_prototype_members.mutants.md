@@ -36,4 +36,16 @@ Each is run on Loom as its own red job, and each goes red on exactly the rows na
   already resolved to the callback's own concrete return.
 - **The satisfies target judged** (`spreadContextHeld` takes a `satisfies` as a slot): s01_call_a.a's copy is
   judged as Plain, though it keeps the literal's own type, which claims peek, so `TestSpreadPrototypeField`
-  goes red on s01_call_a.a, which lowers and differs from Node where it wants the refusal.
+  goes red on s01_call_a.a, which lowers and differs from Node where it wants the refusal. A function under
+  `satisfies` is then held too, so it goes red on satisfies_return_setter_a.a as well, which lowers and ends on
+  the compiler bug natively, and `TestSpreadContextHeldAnswersByThePlace` (internal/lower) goes red on its two
+  satisfies rows, each answered held.
+- **spreadReturnHeld answers held for any function** (the bare answer for a return or an arrow body, before
+  Diagnostics' must on the re-read): satisfies_return_setter_a.a's literal is judged as Light, the context
+  `satisfies` gives it, though make() is typed as its own type, Source, which claims weight, so
+  `TestSpreadPrototypeField` goes red on satisfies_return_setter_a.a, which lowers and ends on the compiler bug
+  natively, and `TestSpreadContextHeldAnswersByThePlace` goes red on its two satisfies rows.
+- **alsoOwn always false** (an assignment's target taken as the one holder even where its value is read):
+  `TestSpreadContextHeldAnswersByThePlace` goes red on its read assignment's row, answered (true, false). No
+  oracle row reaches it today: Diagnostics' assign_value probes stop earlier, at stage-0 stops that aren't this
+  rule's.
