@@ -100,4 +100,8 @@ timed report "$work/report.log" python3 -I -B "$here/report.py" "$work/out" \
 	|| { tail -n 60 "$work/report.log"; stop "read the door report"; }
 grep -Eq '^REPORT-SHA256 [0-9a-f]{64}$' "$work/report.log" || stop "report SHA256 missing"
 cat "$work/report.log" || stop "print report SHA256"
+# Review scratch, never for main: a job's files aren't kept, so the row is printed (#nm7z8fv).
+echo "== firstlink.md"; cat "$work/out/firstlink.md"
+echo "== firstlink.json"; cat "$work/out/firstlink.json"
+echo "== traps.md"; head -c 200000 "$work/out/traps.md"
 echo "VERDICT PASS"
