@@ -1,0 +1,1 @@
+- **JavaScript-changing, tail pass family 128 (#bbssdcy, Compiler accepts, by Adamic's Nov 26 19:38:08Z ruling):** The optional built-in Set visit discards the recursive worker result with a block body, preserving calls, arguments, and thrown errors.
