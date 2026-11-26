@@ -1,0 +1,23 @@
+interface Heavy {
+	readonly kind: "heavy";
+	readonly label: string;
+	readonly weight: number;
+}
+interface Light {
+	readonly kind: "light";
+	readonly label: string;
+}
+class Sized {
+	readonly kind = "heavy";
+	readonly label = "t";
+	set weight(value: number) {
+		console.log("set " + String(value));
+	}
+}
+function copy(source: Heavy | Light): Heavy | Light {
+	return { ...source };
+}
+const value = copy(new Sized());
+if (value.kind === "heavy") {
+	console.log(typeof value.weight + " " + String(value.weight));
+}

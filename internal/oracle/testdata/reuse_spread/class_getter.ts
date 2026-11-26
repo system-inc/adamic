@@ -5,6 +5,8 @@
 // rule over-approximates here, the safe direction. describe reads the copy by its named fields,
 // never by Object.keys. Tree's fields are readonly, as a getter without a setter is, so a Sized is
 // assignable to Tree without lowering's refusal of a readonly field seen as writable.
+// It is .ts: in .a the spread is refused, since Tree declares value a field and a Sized holds value as a
+// getter on its prototype (spread_prototype_members.go, #vjvcnnj).
 type Tree = { readonly value: number; readonly label: string };
 let tree: Tree = { value: 1, label: `tree${String(1)}` };
 class Sized {
