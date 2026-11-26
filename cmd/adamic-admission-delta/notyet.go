@@ -83,6 +83,9 @@ const (
 // applying docs/rulings.md:411, lifted by #nw1kfem). A key no one sets on the
 // Error, where Node answers false, stops too: an over-stop that fails closed,
 // counted by #nw1kfem.
+// A SpreadWith literal's source stored as an array, a tuple or a host value, where Node copies its indices or
+// own keys, stops whole too, on both backends alike (Adamic, Nov 26, #k7g6f9h, under #7fg2fp3's form; lifted by
+// #n0744ek): ir.SpreadWithSourceStop says it.
 var runtimeNotYetKeyless = map[string]string{
 	"an Error's own property isn't represented yet":       "#hh1cezv",
 	ir.JSONErrorWriteStop:                                 "#z4a9p9e",
@@ -91,6 +94,9 @@ var runtimeNotYetKeyless = map[string]string{
 	"Intl.Collator with a defined locale isn't built yet": "#zjndrx5",
 	"clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet; pass clearTimeout only what setTimeout or setInterval returned, or undefined": "#995spev",
 	"a host function called with more arguments than it forwards isn't built yet":                                                                                     "#995spev",
+
+	// A SpreadWith literal's array, tuple or host source (#k7g6f9h).
+	ir.SpreadWithSourceStop: "#k7g6f9h",
 }
 
 // runtimeNotYetKeylessPrefix is what every keyless message is said after.

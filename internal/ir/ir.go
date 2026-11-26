@@ -590,7 +590,8 @@ type (
 	}
 
 	// ObjectLiteral makes an object. With Spread, it's { ...Spread, fields }: a copy of Spread's
-	// object, whatever its shape, with Fields replaced (each one a field Spread's type has).
+	// object, whatever its shape, with Fields replaced (each one a field Spread's type has), or, with
+	// SpreadWith, a fresh object built from Spread's own keys and Fields.
 	//
 	// SpreadMaybeUndefined says Spread may be undefined, and then JavaScript's { ...undefined } is
 	// {}: the object made is Empty, each of the source type's fields the literal doesn't give, as
@@ -608,6 +609,15 @@ type (
 		NoReuse              bool
 		SpreadMaybeUndefined bool
 		Empty                []Field
+
+		// SpreadWith says a field can't land in the slot Spread brings for it: one of another kind than the
+		// source's slot, one the source's type makes optional, or one it doesn't declare, which by width the
+		// actual source may hold anyway (lower's spreadOverwrite, #k7g6f9h). Natively the object is then
+		// adamic_object_spread_with's, whose shape is made at run time from the actual source's own keys,
+		// each at its index, then each of Fields the source lacks, appended in the literal's order, every
+		// slot the kind of the value that fills it, in Node's key order. Its layout is no static one, so
+		// every field it holds is read by name. It is never the source taken over (NoReuse).
+		SpreadWith bool
 
 		// SpreadGetters are the getters a spread may run: natively the copy calls the getter of every
 		// accessor its source's class chain owns (runtime/object.c's adamic_object_copy_checked), an

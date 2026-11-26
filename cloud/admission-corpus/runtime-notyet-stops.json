@@ -426,6 +426,12 @@
       "ruling_task": "#995spev",
       "lifting_task": "#8q1pjsp",
       "stderr": "adamic: panic: a host function called with more arguments than it forwards isn't built yet\n"
+    },
+    "4bbedde0318a3c34f62a14f57f1ffeb81eca72a7da255892f9fcd82e76839c03": {
+      "path": "internal/oracle/testdata/spread_with/backstop_tuple.ts",
+      "ruling_task": "#k7g6f9h",
+      "lifting_task": "#n0744ek",
+      "stderr": "adamic: panic: a spread of a value stored as an array or a host value into an object literal isn't built yet (#k7g6f9h)\n"
     }
   }
 }
