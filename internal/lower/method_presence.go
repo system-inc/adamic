@@ -198,6 +198,9 @@ func (l *lowering) methodPresence(operand *ast.Node) (read methodPresenceRead, h
 		// value, a view. Only the object itself can say whether it has the method.
 		return methodPresenceRead{}, true, l.notYet(node, methodPresenceUnproven)
 	}
+	if class {
+		l.notePrototypeMemberUse(node, value)
+	}
 	if access.QuestionDotToken == nil {
 		return methodPresenceRead{effects: []ir.Statement{ir.Evaluate{Value: value}}}, true, nil
 	}
