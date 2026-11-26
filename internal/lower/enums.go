@@ -842,27 +842,26 @@ func (l *lowering) enumTagCheckedViews(node *ast.Node, declared, observed *check
 		members = observed.Types()
 	}
 	if l.enumTagCheckedViewsDone == nil {
-		l.enumTagCheckedViewsDone = map[enumTagCheckedViewKey]error{}
+		l.enumTagCheckedViewsDone = map[enumTagCheckedViewKey]bool{}
 	}
 	for _, member := range members {
 		if member.Flags()&checker.TypeFlagsPrimitive != 0 {
 			continue
 		}
 		key := enumTagCheckedViewKey{declared, member}
-		err, done := l.enumTagCheckedViewsDone[key]
-		if !done {
-			// view appends its own entry first and may append nested contracts' after it, so the entry to
-			// mark is the one at the length before the call, as relativeView marks it.
-			views := len(l.viewSources)
-			_, err = l.view(node, nil, declared, member)
-			if err == nil {
-				l.viewSources[views].narrows = true
-			}
-			l.enumTagCheckedViewsDone[key] = err
+		if l.enumTagCheckedViewsDone[key] {
+			continue
 		}
-		if err != nil {
+		// view appends its own entry first and may append nested contracts' after it, so the entry to
+		// mark is the one at the length before the call, as relativeView marks it.
+		views := len(l.viewSources)
+		if _, err := l.view(node, nil, declared, member); err != nil {
+			// Never kept: a first-link lowering goes on past a stop, and a second site over this pair must
+			// stop at its own node, in its own unit, not echo the first site's (Compiler's should).
 			return err
 		}
+		l.viewSources[views].narrows = true
+		l.enumTagCheckedViewsDone[key] = true
 	}
 	return nil
 }
