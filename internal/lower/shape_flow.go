@@ -55,7 +55,21 @@ func (graph *allocationFlowGraph) reachingAllocations(expression ir.Expression, 
 			if cached, ok := graph.projectionFrames[key]; ok {
 				return cached
 			}
-			defer func() { graph.projectionFrames[key] = result }()
+			// A receiver already open on the projection stack is busy, as a Read is: two values whose fields
+			// project to each other reopened each other at every level, a new frame each time since the frame
+			// is keyed by depth, until the depth cap, and tsc's first link spent its whole 55 minutes there
+			// (#r1ef873, J-k7dy1eb). Unknown keeps the checks, so the cut can only add a stop. The frame memo
+			// keeps an answer cut here, as projectionReads keeps one a busy Read cut: a later query may then
+			// keep a check a full walk would drop, never drop one it would keep.
+			receiver, _ := projectionValueKey(expression)
+			if graph.projectionOpen == nil {
+				graph.projectionOpen = map[string]bool{}
+			}
+			if graph.projectionOpen[receiver] {
+				return ir.AllocationSet{Unknown: true, Reasons: []string{"recursive projection receiver not certified"}}
+			}
+			graph.projectionOpen[receiver] = true
+			defer func() { delete(graph.projectionOpen, receiver); graph.projectionFrames[key] = result }()
 		}
 	}
 	if counter := projectionFramesOpened.Load(); counter != nil && project {
