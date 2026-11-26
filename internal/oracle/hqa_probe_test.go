@@ -15,7 +15,7 @@ func TestHqaProbe(t *testing.T) {
 for (const present of [false, true]) {
 	const m = f(present);
 	const o = { ...m, x: 1 };
-	console.log(JSON.stringify(Object.keys(o)) + " " + JSON.stringify(Object.entries(o)) + " " + JSON.stringify(Object.values(o)));
+	console.log(Object.keys(o).join(",") + " " + Object.entries(o).map((e) => e[0] + "=" + String(e[1])).join(",") + " " + Object.values(o).map((v) => String(v)).join(","));
 }
 `,
 		"for_in.ts": `function f(present: boolean): { a: number } | undefined { return present ? { a: 2 } : undefined; }
@@ -29,14 +29,14 @@ for (const present of [false, true]) {
 		"stringify.ts": `function f(present: boolean): { a: number; s: string } | undefined { return present ? { a: 2, s: "t" } : undefined; }
 for (const present of [false, true]) {
 	const o = { ...f(present), x: 1 };
-	console.log(JSON.stringify(o));
+	console.log(JSON.stringify(o) ?? "none");
 }
 `,
 		"later_write.ts": `interface Wide { a?: number; x: number }
 function f(present: boolean): { a: number } | undefined { return present ? { a: 2 } : undefined; }
 const o: Wide = { ...f(false), x: 1 };
 o.a = 5;
-console.log(JSON.stringify(Object.keys(o)) + " " + JSON.stringify(Object.values(o)));
+console.log(Object.keys(o).join(",") + " " + Object.values(o).map((v) => String(v)).join(","));
 `,
 		"nested_module.ts": `const base: { level: number } | undefined = undefined as { level: number } | undefined;
 const table = { ...base, name: "n" };
