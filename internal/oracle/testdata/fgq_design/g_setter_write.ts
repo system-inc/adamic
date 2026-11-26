@@ -16,4 +16,4 @@ function copy<T extends Source>(source: T): T {
 }
 const value = copy(new Sized());
 value.weight = 5;
-console.log(JSON.stringify(value));
+console.log(String(JSON.stringify(value)));
