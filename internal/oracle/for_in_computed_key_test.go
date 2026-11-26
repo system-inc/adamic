@@ -25,6 +25,9 @@ func TestForInComputedKey(t *testing.T) {
 	}{
 		{"inline_enum.ts", "const enum P { Low, High }\nconst seen: string[] = [];\nfor (const k in { [P.Low]: 1, [P.High]: 2 }) {\n    seen.push(k);\n}\nconsole.log(seen.join(\",\"));\n", "0,1\n", stop},
 		{"string_computed.ts", "const seen: string[] = [];\nfor (const k in { [\"a\"]: 1, b: 2 }) {\n    seen.push(k);\n}\nconsole.log(seen.join(\",\"));\n", "a,b\n", ""},
+		// Node enumerates an integer-like key first, so a computed "1" after b reads 1,b; a wrong order here would be
+		// silent (Library's should on #ttkhftg, J-xre8f1y).
+		{"integer_like_computed.ts", "const seen: string[] = [];\nfor (const k in { b: 2, [\"1\"]: 1 }) {\n    seen.push(k);\n}\nconsole.log(seen.join(\",\"));\n", "1,b\n", ""},
 		{"record_key.ts", "function key(n: number): string {\n    return \"k\" + String(n);\n}\nconst seen: string[] = [];\nfor (const k in { [key(1)]: 1 }) {\n    seen.push(k);\n}\nconsole.log(seen.join(\",\"));\n", "k1\n", ""},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
