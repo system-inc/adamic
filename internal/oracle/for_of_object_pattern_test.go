@@ -17,7 +17,10 @@ import (
 // dropped from the loop's body, so the bindings are never read from the element, reds getters.ts.
 func TestForOfObjectPatternReadsAsADeclaration(t *testing.T) {
 	t.Parallel()
-	directory := filepath.Join(repository, "internal/oracle/testdata/for_of_object_pattern")
+	directory, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/for_of_object_pattern"))
+	if err != nil {
+		t.Fatal(err)
+	}
 	for _, name := range []string{"getters.ts", "defaults_rename.ts"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
@@ -43,7 +46,7 @@ func TestForOfObjectPatternReadsAsADeclaration(t *testing.T) {
 	}
 	for _, stop := range []struct{ name, what string }{
 		{"nested.ts", "a nested destructuring pattern"},
-		{"rest.ts", ""},
+		{"rest.ts", "a rest element in destructuring"},
 		{"set.ts", "a for...of destructuring an object"},
 	} {
 		t.Run(stop.name, func(t *testing.T) {
