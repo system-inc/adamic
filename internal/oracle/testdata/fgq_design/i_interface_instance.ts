@@ -15,6 +15,4 @@ function copy(source: Weighs): Weighs {
 }
 const value: Weighs = new Scale();
 console.log(String(value.weigh()));
-if (value.weigh) {
-	console.log("has");
-}
+console.log(String(!value.weigh));

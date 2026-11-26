@@ -14,8 +14,4 @@ function copy(source: Weighs): Weighs {
 	return { ...source };
 }
 const value = copy({ label: "x", weigh: () => 5 });
-if (value.weigh) {
-	console.log("has");
-} else {
-	console.log("none");
-}
+console.log(String(!value.weigh));
