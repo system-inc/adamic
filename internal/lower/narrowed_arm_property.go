@@ -69,6 +69,12 @@ func (l *lowering) narrowedArmPropertyReadGap(node *ast.Node) error {
 	if l.accessorName(name) {
 		return stop
 	}
+	if !l.armReadMaySilentlyMisread(node, narrowed) {
+		// A stale arm is read by the value's own shape or by a slot every layout holding the name shares, and
+		// a field the new value lacks stops loudly there (Emit's guard on #8nj5pn4), so only a field held at
+		// two representations can read the wrong bits silently.
+		return nil
+	}
 	_, notNumeric := strconv.ParseFloat(name, 64)
 	numeric := notNumeric == nil
 	observation := l.armObservationOf(node)
@@ -155,4 +161,91 @@ func (l *lowering) armObservationAlong(read *ast.Node, flow *ast.FlowNode, joins
 		flow = flow.Antecedent
 	}
 	return nil
+}
+
+// armReadMaySilentlyMisread is whether a read through a property narrowed to an object arm could read a stale
+// value's field at the wrong representation, the one silent case Compiler left the floor on #8nj5pn4: the field
+// read off it, or, where the narrowed value is handed on whole, any field its arm declares, is declared at two
+// representations somewhere in the program or its libraries (fieldRepresentations). A field whose
+// representations can't all be named counts as two, failing closed.
+func (l *lowering) armReadMaySilentlyMisread(read *ast.Node, narrowed *checker.Type) bool {
+	at := read
+	for at.Parent != nil && at.Parent.Kind == ast.KindParenthesizedExpression {
+		at = at.Parent
+	}
+	var names []string
+	if parent := at.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == at {
+		names = []string{parent.Name().Text()}
+	} else {
+		for _, field := range l.checker.GetPropertiesOfType(narrowed) {
+			names = append(names, field.Name)
+		}
+	}
+	representations := l.fieldRepresentations()
+	if representations == nil {
+		return true
+	}
+	for _, name := range names {
+		if len(representations[name]) > 1 {
+			return true
+		}
+	}
+	return false
+}
+
+// fieldRepresentations is every field name the program and its libraries declare, with each representation a
+// declaration of it gives its value: a property, a method, an accessor, a parameter property or an object
+// literal's member, as sourceSlotDeclared reads them. An optional field adds undefined to its type first. It's
+// walked once per lowering. Nil means some declaration's name couldn't be read, so any name may be held twice.
+func (l *lowering) fieldRepresentations() map[string]map[ir.Type]bool {
+	if l.armFieldRepresentationsDone {
+		return l.armFieldRepresentations
+	}
+	l.armFieldRepresentationsDone = true
+	found := map[string]map[ir.Type]bool{}
+	unnamed := false
+	var visit ast.Visitor
+	visit = func(part *ast.Node) bool {
+		switch part.Kind {
+		case ast.KindPropertySignature, ast.KindPropertyDeclaration, ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment, ast.KindMethodSignature, ast.KindMethodDeclaration, ast.KindGetAccessor, ast.KindSetAccessor, ast.KindParameter:
+			if part.Kind == ast.KindParameter && !parameterProperty(part) {
+				break
+			}
+			name, named := l.sourceSlotDeclaredName(part)
+			if !named {
+				unnamed = true
+				return true
+			}
+			if name == "" {
+				break
+			}
+			symbol := l.checker.GetSymbolOfDeclaration(part)
+			if symbol == nil {
+				unnamed = true
+				return true
+			}
+			declared := l.checker.GetTypeOfSymbol(symbol)
+			if symbol.Flags&ast.SymbolFlagsOptional != 0 {
+				declared = l.checker.GetUnionType([]*checker.Type{declared, l.checker.GetUndefinedType()})
+			}
+			storage, known := l.representation(declared)
+			if !known {
+				storage = 0 // No representation, which counts as one more than any it may also have.
+			}
+			if found[name] == nil {
+				found[name] = map[ir.Type]bool{}
+			}
+			found[name][storage] = true
+		}
+		part.ForEachChild(visit)
+		return unnamed
+	}
+	for _, file := range l.program.CompilerProgram().GetSourceFiles() {
+		file.AsNode().ForEachChild(visit)
+		if unnamed {
+			return nil
+		}
+	}
+	l.armFieldRepresentations = found
+	return found
 }
