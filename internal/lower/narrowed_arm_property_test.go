@@ -15,7 +15,8 @@ import (
 // nothing between, since it answers each read itself. The same read where both arms hold v as a string, rows
 // with nothing between the check and the read, a held binding the call can't rewrite, and an unrelated getter
 // lower and agree with Node. Language's r08 is the same hole through an element, arr[0] after a call that writes
-// x[0], pinned with its honest twin and its nothing-between control. Mutants (narrowed_arm_property.mutants.md): the property dispatch dropped, the
+// x[0], pinned with its honest twin and its nothing-between control, and through a const index, which tsc narrows by
+// its literal type (Language's e02). Mutants (narrowed_arm_property.mutants.md): the property dispatch dropped, the
 // write test dropped, and the silent test dropped (the same-representation row stops).
 func TestNarrowedArmPropertyRead(t *testing.T) {
 	t.Parallel()
@@ -37,6 +38,7 @@ func TestNarrowedArmPropertyRead(t *testing.T) {
 		{"unrelated getter", stringTypes + "const g = { get other(): number { return 1; } };\nfunction show(m: M): string { if (m.n.kind === 'a') { return String(m.n.v + 1); } return 'b'; }\nconsole.log(show({ n: a }));\nconsole.log(String(g.other));\n", "2\n1\n"},
 		{"element lie", stringTypes + elements + "function show(arr: N[]): string { if (arr[0] !== undefined && arr[0].kind === 'a') { resetFirst(arr); return String(arr[0].v + 1); } return 'b'; }\nconsole.log(show([a]));\n", ""},
 		{"element honest twin", stringTypes + elements + "function show(arr: N[]): string { if (arr[0] !== undefined && arr[0].kind === 'a') { keepFirst(arr); return String(arr[0].v + 1); } return 'b'; }\nconsole.log(show([a]));\n", ""},
+		{"element const index lie", stringTypes + elements + "const index = 0;\nfunction show(arr: N[]): string { if (arr[index] !== undefined && arr[index].kind === 'a') { resetFirst(arr); return String(arr[index].v + 1); } return 'b'; }\nconsole.log(show([a]));\n", ""},
 		{"element nothing between", stringTypes + elements + "function show(arr: N[]): string { if (arr[0] !== undefined && arr[0].kind === 'a') { return String(arr[0].v + 1); } return 'b'; }\nconsole.log(show([a]));\nconsole.log(show([b]));\n", "2\nb\n"},
 		{"string held binding", stringTypes + "function show(m: M): string { const n = m.n; if (n.kind === 'a') { reset(m); return String(n.v + 1); } return 'b'; }\nconsole.log(show({ n: a }));\n", "2\n"},
 	} {

@@ -27,21 +27,41 @@ func (l *lowering) narrowedArmPropertyReadGap(node *ast.Node) error {
 	if !l.isExpression(node) || (ast.IsAssignmentTarget(node) && pureWrite(node)) {
 		return nil
 	}
-	var key *ast.Node
+	// The read's name, and its property where it has one. An element's key is read as tsc narrows it: a literal,
+	// or any key whose type is a string or number literal, a const index among them (Language's e02).
+	var name string
+	var property *ast.Symbol
 	if node.Kind == ast.KindPropertyAccessExpression {
-		key = node.Name()
+		name = node.Name().Text()
+		property = l.checker.GetSymbolAtLocation(node.Name())
 	} else {
-		key = ast.SkipParentheses(node.AsElementAccessExpression().ArgumentExpression)
-		if key.Kind != ast.KindStringLiteral && key.Kind != ast.KindNoSubstitutionTemplateLiteral && key.Kind != ast.KindNumericLiteral {
-			return nil
+		key := ast.SkipParentheses(node.AsElementAccessExpression().ArgumentExpression)
+		switch key.Kind {
+		case ast.KindStringLiteral, ast.KindNoSubstitutionTemplateLiteral, ast.KindNumericLiteral:
+			name = key.Text()
+			property = l.checker.GetSymbolAtLocation(key)
+		default:
+			keyType := l.checker.GetTypeAtLocation(key)
+			switch {
+			case keyType.Flags()&checker.TypeFlagsNumberLiteral != 0:
+				name = l.checker.TypeToString(keyType)
+			case keyType.Flags()&checker.TypeFlagsStringLiteral != 0:
+				text, isText := keyType.AsLiteralType().Value().(string)
+				if !isText {
+					return nil
+				}
+				name = text
+			default:
+				return nil // A key of no literal type narrows nothing.
+			}
+			property = l.checker.GetPropertyOfType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsElementAccessExpression().Expression)), name)
 		}
 	}
 	narrowed := l.checker.GetTypeAtLocation(node)
 	var declared *checker.Type
-	property := l.checker.GetSymbolAtLocation(key)
 	if property != nil {
 		declared = l.checker.GetTypeOfSymbol(property)
-	} else if node.Kind == ast.KindElementAccessExpression && key.Kind == ast.KindNumericLiteral {
+	} else if _, numberError := strconv.ParseFloat(name, 64); node.Kind == ast.KindElementAccessExpression && numberError == nil {
 		// An array's element by a literal index, arr[0], has no property of its own: its declared type is the
 		// array's element type, and a write by any index or an array method may rewrite it (Language's r08).
 		receiver := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsElementAccessExpression().Expression))
@@ -72,7 +92,6 @@ func (l *lowering) narrowedArmPropertyReadGap(node *ast.Node) error {
 	if property != nil && property.Flags&ast.SymbolFlagsEnumMember != 0 {
 		return nil // An enum's member is a constant no write reaches.
 	}
-	name := key.Text()
 	stop := l.notYet(node, "a read of property "+name+" narrowed to "+l.checker.TypeToString(narrowed)+" where a call may have rewritten it")
 	// A getter of the name answers each read itself, so it stops the read whatever the flow says. A program that
 	// could install one some other way (writes.accessors: a descriptor, a prototype) stops it only where program
