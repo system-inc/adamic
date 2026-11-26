@@ -125,9 +125,6 @@ func (l *lowering) enumerationDescriptors(where, operand *ast.Node, deep, checke
 				if known && (strings.ContainsRune(name, 0) || strings.HasPrefix(name, "#") || name == iteratorSlot) {
 					failure = l.notYet(where, "Object enumeration of a literal with reserved or symbol key storage")
 				}
-				if property.Kind == ast.KindSpreadAssignment && l.includesUndefined(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression)) {
-					failure = l.notYet(where, "Object enumeration of a nullable spread with synthetic absent slots")
-				}
 			}
 		}
 		return node.ForEachChild(visit)
