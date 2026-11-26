@@ -1,0 +1,85 @@
+package oracle
+
+import (
+	"context"
+	"crypto/sha256"
+	"fmt"
+	"os"
+	"path/filepath"
+	"runtime"
+	"strings"
+	"sync"
+	"testing"
+
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
+)
+
+// Scratch, never landing (#8nj5pn4, Emit's guard): each listed program lowered from its one path in the tree, its
+// emitted C written whole to GUARD_C_DIR/<index>.c and its sha256 printed, or its stop's, one line a program in the
+// list's order, so the same tree at main's emitter files and at the head's compares program by program.
+func TestZZGuardIdentityProbe(t *testing.T) {
+	list, err := os.ReadFile(os.Getenv("GUARD_IDENTITY_LIST"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	directory := os.Getenv("GUARD_C_DIR")
+	paths := strings.Fields(string(list))
+	lines := make([]string, len(paths))
+	work := make(chan int)
+	var group sync.WaitGroup
+	for range min(runtime.NumCPU(), 32) {
+		group.Add(1)
+		go func() {
+			defer group.Done()
+			for index := range work {
+				path := paths[index]
+				lines[index] = fmt.Sprintf("PROBE %d %s panicked", index, path)
+				absolute, err := filepath.Abs(filepath.Join(repository, path))
+				if err != nil {
+					lines[index] = fmt.Sprintf("PROBE %d %s path-error", index, path)
+					continue
+				}
+				code, err := func() (code string, err error) {
+					defer func() {
+						if recovered := recover(); recovered != nil {
+							err = fmt.Errorf("panic: %v", recovered)
+						}
+					}()
+					program, err := load.Load([]string{absolute})
+					if err != nil {
+						return "", fmt.Errorf("load: %v", err)
+					}
+					for _, file := range program.Files() {
+						rememberImports(absolute, file.Text(), program)
+					}
+					var lowered *ir.Program
+					lowered, err = lower.Lower(context.Background(), program)
+					if err != nil {
+						return "", err
+					}
+					return native.C(lowered), nil
+				}()
+				if err != nil {
+					lines[index] = fmt.Sprintf("PROBE %d %s stop %x", index, path, sha256.Sum256([]byte(err.Error())))
+					continue
+				}
+				if err := os.WriteFile(filepath.Join(directory, fmt.Sprintf("%d.c", index)), []byte(code), 0o644); err != nil {
+					lines[index] = fmt.Sprintf("PROBE %d %s write-error", index, path)
+					continue
+				}
+				lines[index] = fmt.Sprintf("PROBE %d %s c %x", index, path, sha256.Sum256([]byte(code)))
+			}
+		}()
+	}
+	for index := range paths {
+		work <- index
+	}
+	close(work)
+	group.Wait()
+	for _, line := range lines {
+		fmt.Println(line)
+	}
+}
