@@ -116,6 +116,8 @@ const (
 // NodeFlagsOptionalChain raw, by symbolComparerName's name.
 var optionalChainReaders = map[string]optionalChainReader{
 	"questionDot":                     {1, readerGuardHelper},
+	"overloadGuardedLoop":             {1, readerProof + ": the guarded-array certificate's loop shape, which a ?. on the test's call refuses"},
+	"overloadGuardedFails":            {2, readerProof + ": the guarded-array certificate's Debug.fail call, which a ?. on it or its callee refuses"},
 	"inOptionalChain":                 {1, readerGuardHelper},
 	"property":                        {1, readerChainShape},
 	"typedArrayExpression":            {2, readerChainShape},
