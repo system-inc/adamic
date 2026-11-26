@@ -251,3 +251,66 @@ func numericKeyOuter(node *ast.Node) *ast.Node {
 	}
 	return node
 }
+
+// orderedEnumFieldName is Adamic's Nov 26 18:00:59Z road on #bbssdcy.
+// An ordinary object enumerates integer-like keys ascending, then the rest
+// in insertion order. The literal has that order by construction when its
+// canonical array indices come first, increase strictly, and no key is
+// spelled twice. Only numeric members of ordinary enums with constant
+// initializers qualify. The premise would hold for any constant key, but
+// widening ruling (A) needs its own change and census.
+func (l *lowering) orderedEnumFieldName(literal, property *ast.Node) (string, bool) {
+	name, named := l.numericKey(property.Name())
+	if !named {
+		return "", false
+	}
+	for _, field := range literal.AsObjectLiteralExpression().Properties.Nodes {
+		switch field.Kind {
+		case ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment:
+		default:
+			return "", false
+		}
+		key := field.Name()
+		if key.Kind != ast.KindComputedPropertyName {
+			continue
+		}
+		if _, named := l.numericKey(key); !named {
+			return "", false
+		}
+		expression := ast.SkipParentheses(key.AsComputedPropertyName().Expression)
+		member := l.enumMember(expression)
+		if member == nil || member.Parent.Kind != ast.KindEnumDeclaration || ast.IsEnumConst(member.Parent) ||
+			member.Initializer() == nil || l.checker.GetConstantValue(member) == nil {
+			return "", false
+		}
+		if expression.Kind == ast.KindPropertyAccessExpression &&
+			(l.questionDot(expression) || l.inOptionalChain(expression)) {
+			return "", false
+		}
+	}
+	keys, spelled := l.literalFieldKeys(literal)
+	if !spelled || !keysInEnumerationOrder(keys) {
+		return "", false
+	}
+	return name, true
+}
+
+func keysInEnumerationOrder(keys []string) bool {
+	if !distinctFieldKeys(keys) {
+		return false
+	}
+	var previous uint64
+	seenIndex, seenOther := false, false
+	for _, key := range keys {
+		index, isIndex := jsonIndex(key)
+		if !isIndex {
+			seenOther = true
+			continue
+		}
+		if seenOther || (seenIndex && index <= previous) {
+			return false
+		}
+		previous, seenIndex = index, true
+	}
+	return true
+}
