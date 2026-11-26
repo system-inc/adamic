@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"slices"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -471,10 +472,11 @@ func (l *lowering) overloadCertificateEntry(node *ast.Node, overload *ast.Node) 
 }
 
 // overloadCertificateCall is nil unless node, a call, a new or a tagged template, resolves to an overload
-// census accepted by certificate A or B, or by the node-test proof, and enters it other than directly
-// (overloadCertificateEntry), or enters it directly and is stopped there: a certificate's call whose
-// instance stores its result otherwise than the call reads it (overloadCertificateStorage), or a node-test
-// call overloadNodeTestCall refuses. An array or Map result can't be checked at the call, and the node-test
+// census accepted by certificate A or B, by the node-test proof or by the guarded-array certificate, and
+// enters it other than directly (overloadCertificateEntry), or enters it directly and is stopped there: a
+// certificate's call whose instance stores its result otherwise than the call reads it
+// (overloadCertificateStorage), a node-test call overloadNodeTestCall refuses, or a guarded-array call
+// whose premises overloadGuardedArrayCall finds unkept. An array or Map result can't be checked at the call, and the node-test
 // proof's premise is the caller's arguments, so a non-direct entry is NotYet, naming why. Before any of
 // that, the call is judged by its overload's census verdict, or its set's (overloadCallVerdict). Each road
 // a call enters lowering by asks it beside noteOverloadCall, before the callee or an argument is lowered.
@@ -498,7 +500,11 @@ func (l *lowering) overloadCertificateCall(node *ast.Node) error {
 	if err != nil {
 		return err
 	}
-	if !certified && !tested {
+	guarded, err := l.overloadGuardedArrayCertified(overload)
+	if err != nil {
+		return err
+	}
+	if !certified && !tested && !guarded {
 		return nil
 	}
 	if l.overloadCertificateEntry(node, overload) {
@@ -507,6 +513,13 @@ func (l *lowering) overloadCertificateCall(node *ast.Node) error {
 			// undefined, held at the top level, which censusOverloadFit fits to the call's representation or
 			// stops. overloadCertificateStorage guards an array's or Map's elements, which no fit reaches.
 			return l.overloadNodeTestCall(node, resolved)
+		}
+		if guarded {
+			// The guarded-array certificate's premises first, then its NodeArray's storage, which
+			// overloadCertificateSameHeld reads through the NodeArray's own layout.
+			if err := l.overloadGuardedArrayCall(node, overload, resolved); err != nil {
+				return err
+			}
 		}
 		return l.overloadCertificateStorage(node, overload, resolved)
 	}
@@ -661,7 +674,8 @@ func (l *lowering) overloadCertificateStorage(node, overload *ast.Node, resolved
 // only by the ir.Type each side lowers to, level by level, through the functions lowering and the emitter
 // hold a checker type by: kept for the result, an array's element and a Map's value, representation for a
 // Map's key and a Set's element, as mapTypes and the array roads read them. The same at the top and, through
-// an array, Map or Set, the same all the way down. Never checker identity or assignability, since two types
+// an array, Map or Set, the same all the way down. A NodeArray is read through its own layout
+// (nodeArrayLayoutOf), never isArrayType, which never takes one. Never checker identity or assignability, since two types
 // tsc calls one can lower differently, a branded arm or a literal widened in one place (Compiler's
 // condition on #5fws6q8). Any other type with type arguments, a tuple among them, isn't read: false.
 func (l *lowering) overloadCertificateSameStorage(stored, read *checker.Type) bool {
@@ -691,6 +705,15 @@ func (l *lowering) overloadCertificateSameHeld(stored, read *checker.Type, keyed
 		if defined := l.definedMembers(read); len(defined) == 1 {
 			read = defined[0]
 		}
+	}
+	// A NodeArray is held as its layout says, the fixed metadata fields after the array header and its
+	// elements as its element's representation, so two are held alike when their layouts are and their
+	// elements are, all the way down: the guarded-array certificate's NodeArray<Node> read as NodeArray<TOut>
+	// (Lower's condition 5 on #ytagqs5, certificate A's lesson that a value fact is no storage fact).
+	storedLayout, storedElement, storedNodeArray := l.nodeArrayLayoutOf(stored)
+	readLayout, readElement, readNodeArray := l.nodeArrayLayoutOf(read)
+	if storedNodeArray || readNodeArray {
+		return storedNodeArray && readNodeArray && slices.Equal(storedLayout.Fields, readLayout.Fields) && l.overloadCertificateSameHeld(storedElement, readElement, false)
 	}
 	storedArguments, readArguments := l.typeArguments(stored), l.typeArguments(read)
 	if len(storedArguments) == 0 && len(readArguments) == 0 {
