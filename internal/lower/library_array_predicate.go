@@ -97,13 +97,14 @@ func (l *lowering) arrayPredicateMembers(proven *checker.Type, array bool) *chec
 // Tuples currently have an object representation. Erased object views can hide
 // one too, so the native array brand cannot decide their JavaScript arrayness.
 // A plain object arm is in the domain only where a property rules an array out
-// there (arrayExcludedArm).
+// there (arrayExcludedArm), or its index does (arrayExcludedIndexArm).
 func (l *lowering) arrayPredicateDomain(proven *checker.Type) bool {
 	return l.arrayPredicateArms(proven, nil)
 }
 
 // admitArrayPredicate is arrayPredicateDomain for a test lowering builds at node, the array brand's: each
-// arm it admits by arrayExcludedArm is recorded with node, for checkArrayArmViews to hold once lowering is done.
+// arm it admits by arrayExcludedArm or arrayExcludedIndexArm is recorded with node, for checkArrayArmViews to hold
+// once lowering is done.
 func (l *lowering) admitArrayPredicate(node *ast.Node, proven *checker.Type) bool {
 	var arms []*checker.Type
 	if !l.arrayPredicateArms(proven, &arms) {
@@ -115,7 +116,8 @@ func (l *lowering) admitArrayPredicate(node *ast.Node, proven *checker.Type) boo
 	return true
 }
 
-// arrayPredicateArms is arrayPredicateDomain, adding to arms, when it isn't nil, each arm arrayExcludedArm admits.
+// arrayPredicateArms is arrayPredicateDomain, adding to arms, when it isn't nil, each arm arrayExcludedArm or
+// arrayExcludedIndexArm admits.
 func (l *lowering) arrayPredicateArms(proven *checker.Type, arms *[]*checker.Type) bool {
 	proven = l.concrete(proven)
 	if proven.Flags()&checker.TypeFlagsUnion != 0 {
@@ -141,7 +143,7 @@ func (l *lowering) arrayPredicateArms(proven *checker.Type, arms *[]*checker.Typ
 	if proven.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(proven) || l.isLibraryType(proven, "Uint8Array", "Int32Array", "Float64Array") {
 		return true
 	}
-	if !l.arrayExcludedArm(proven) {
+	if !l.arrayExcludedArm(proven) && !l.arrayExcludedIndexArm(proven) {
 		return false
 	}
 	if arms != nil {
@@ -184,6 +186,86 @@ func (l *lowering) arrayExcludedArm(proven *checker.Type) bool {
 		}
 	}
 	return false
+}
+
+// arrayExcludedIndexArm is the arm rule's second form, for an index-only record (rulings.md:260's amendment, Nov 26,
+// @system_adamic on #gcec0bx): proven, a plain object type, rules an array out by its index instead of by a property.
+// The premise, in Adamic's words: at an index-only arm, every value assignable to it without a hatch has every property
+// readable as the index's value type. Every array-stored type has callable members (its methods), and condition 2 keeps
+// every callable out of that value type. So no array-stored value reaches the arm except through a hatch, and condition
+// 4's view check covers the hatch. That makes :260's "a kept arm that no array could be" hold by the index instead of by
+// a property. The arm is admitted only when all four hold, and any other keeps the stop and its words:
+//  1. proven isn't stored as an array, and has no property, exactly one index signature, a string's, so no number
+//     index, and no call or construct signature (a class instance never gets here: arrayPredicateArms takes it first);
+//  2. the index's value type admits no callable and no any, unknown, object or {} (indexValueAdmitsNoCallable);
+//  3. no type stored as an array in the closed world declares a string index of its own (arrayStoredIndex, found by
+//     arrayStoredPropertyNames' walk, failing closed as it does): one whose index its methods fit would be assignable
+//     to the arm with no hatch;
+//  4. arrayPredicateArms records the arm in arms exactly as it does one arrayExcludedArm admits, so checkArrayArmViews
+//     holds it against every checked view the program makes.
+//
+// Lowering reads an instantiation's types (concrete), so in a generic function the index's value is what the
+// instantiation made it; a type parameter is met here only where no instantiation fixes it, and is read at its
+// constraint.
+func (l *lowering) arrayExcludedIndexArm(proven *checker.Type) bool {
+	if l.arrayStored(proven, map[*checker.Type]bool{}) || len(l.checker.GetPropertiesOfType(proven)) != 0 {
+		return false
+	}
+	infos := l.checker.GetIndexInfosOfType(proven)
+	if len(infos) != 1 || infos[0].KeyType().Flags() != checker.TypeFlagsString || len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) != 0 {
+		return false
+	}
+	if !l.indexValueAdmitsNoCallable(infos[0].ValueType(), map[*checker.Type]bool{}) {
+		return false
+	}
+	l.arrayStoredPropertyNames()
+	return !l.arrayStoredIndex
+}
+
+// indexValueAdmitsNoCallable is arrayExcludedIndexArm's condition 2 on value, an index-only arm's index value type: no
+// value of it can be a function, and it's none of any, unknown, object or {}, which each take one. It's read through
+// aliases (the type an alias names), unions and intersections, member by member, and through a type parameter, an
+// indexed access or a conditional at its base constraint, so one with no constraint, or whose constraint fails, fails;
+// keyof, a template literal and a string mapping are strings or keys whatever they're instantiated with, and pass.
+// An object member passes only when it isn't callable: no call or construct signature, not lib's Function, and not
+// empty, since every function is assignable to {}. Its properties aren't walked: the index value is what every property
+// of the arm reads as, and the question is only whether that type can be a function. seen ends a value type that
+// refers to itself (the JSON union holds itself): a member met again was judged where it was first met.
+func (l *lowering) indexValueAdmitsNoCallable(value *checker.Type, seen map[*checker.Type]bool) bool {
+	if value == nil {
+		return false
+	}
+	if seen[value] {
+		return true
+	}
+	seen[value] = true
+	flags := value.Flags()
+	switch {
+	case flags&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0:
+		return false
+	case flags&checker.TypeFlagsUnionOrIntersection != 0:
+		for _, member := range value.Types() {
+			if !l.indexValueAdmitsNoCallable(member, seen) {
+				return false
+			}
+		}
+		return true
+	case flags&checker.TypeFlagsInstantiableNonPrimitive != 0:
+		constraint := l.checker.GetBaseConstraintOfType(value)
+		return constraint != nil && constraint != value && l.indexValueAdmitsNoCallable(constraint, seen)
+	case flags&checker.TypeFlagsObject != 0:
+		if len(l.checker.GetSignaturesOfType(value, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(value, checker.SignatureKindConstruct)) != 0 || l.isLibraryType(value, "Function", "CallableFunction", "NewableFunction") {
+			return false
+		}
+		for _, info := range l.checker.GetIndexInfosOfType(value) {
+			// An index of any takes every object, a function's too, as tsc relates it.
+			if info.ValueType().Flags()&checker.TypeFlagsAny != 0 {
+				return false
+			}
+		}
+		return len(l.checker.GetPropertiesOfType(value)) != 0 || len(l.checker.GetIndexInfosOfType(value)) != 0
+	}
+	return true
 }
 
 // numericPropertyName is whether name reads as a number, an index an array may hold an element at: `0`, `"1"`,
@@ -241,15 +323,22 @@ func (l *lowering) arrayStored(proven *checker.Type, seen map[*checker.Type]bool
 // type argument is an array holding pos, and each Object.assign's result. An intersection holding a type parameter
 // counts as one stored as an array, failing closed: its argument may be one. The bundled library and the prelude
 // are walked too, for their interfaces and classes that extend another, such as lib's RegExpExecArray, whose index
-// and input an array the program holds can have.
+// and input an array the program holds can have. The same walk sets arrayStoredIndex, whether any of those types has
+// an index signature other than a number's (a string's, failing closed on any other key), for arrayExcludedIndexArm.
 func (l *lowering) arrayStoredPropertyNames() map[string]bool {
 	if l.arrayStoredNames != nil {
 		return l.arrayStoredNames
 	}
 	names := map[string]bool{}
+	index := false
 	add := func(proven *checker.Type) {
 		for _, property := range l.checker.GetPropertiesOfType(proven) {
 			names[property.Name] = true
+		}
+		for _, info := range l.checker.GetIndexInfosOfType(proven) {
+			if info.KeyType().Flags() != checker.TypeFlagsNumber {
+				index = true
+			}
 		}
 	}
 	add(predicateReadonlyArray(l.checker, l.checker.GetUnknownType(), false))
@@ -320,7 +409,7 @@ func (l *lowering) arrayStoredPropertyNames() map[string]bool {
 			file.AsNode().ForEachChild(visit)
 		}
 	}
-	l.arrayStoredNames = names
+	l.arrayStoredNames, l.arrayStoredIndex = names, index
 	return names
 }
 
@@ -330,7 +419,8 @@ func (l *lowering) arrayStoredPropertyNames() map[string]bool {
 //go:linkname predicateReadonlyArray github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).createArrayTypeEx
 func predicateReadonlyArray(receiver *checker.Checker, element *checker.Type, readonly bool) *checker.Type
 
-// arrayArmSite is a test lowering built at node whose array brand decides arms, each admitted by arrayExcludedArm.
+// arrayArmSite is a test lowering built at node whose array brand decides arms, each admitted by arrayExcludedArm or
+// arrayExcludedIndexArm.
 type arrayArmSite struct {
 	node *ast.Node
 	arms []*checker.Type
