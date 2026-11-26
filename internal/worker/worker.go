@@ -327,7 +327,7 @@ func BuildWith(entry, output string, options Options) error {
 	if !hasHandle {
 		return fmt.Errorf("worker: checked handle was lost during lowering")
 	}
-	backend := javascript.Options{ModuleExports: true, RuntimeImport: "./adamic.mjs"}
+	backend := workerBackend()
 	var wasm []workerFile
 	var imports string
 	bridge := Bridge("./handler.mjs")
@@ -382,4 +382,10 @@ func BuildWith(entry, output string, options Options) error {
 		}
 	}
 	return nil
+}
+
+// workerBackend is the JavaScript backend's options for a Worker's handler. It never sets FirstLinkTraps, so a
+// program lowered in first-link trap mode is refused at its emit (JavaScriptWith) and never becomes a Worker.
+func workerBackend() javascript.Options {
+	return javascript.Options{ModuleExports: true, RuntimeImport: "./adamic.mjs"}
 }
