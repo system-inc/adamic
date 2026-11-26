@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
-"""Put back the fail-open Adamic named for the advisory checklist (#v3q9ayd, Nov 23 14:33Z) and require its sealed test to
-go red: a gate with no evidence dropped from the report.
+"""Require the advisory checklist's fail-open mutant and the two steps.sh summary mutants to go red on their named tests.
 
-The mutant is put into a copy of cloud/ in a scratch directory, so the tree is never written. It's caught only when its
+The advisory ruling (#v3q9ayd, Nov 23 14:33Z) asked for the missing-gate mutant, caught by
+test_a_missing_gate_is_reported_missing. The package-skip mutant goes red on
+test_latent_whole_rejects_a_package_with_a_skipped_test. The dropped-failure mutant goes red on
+test_latent_whole_rejects_a_failing_test.
+
+Each mutant is put into a copy of cloud/ in a scratch directory, so the tree is never written. A mutant is caught only when its
 test fails on an assertion (`FAIL: <test>`), never on an error: a mutant that breaks the module proves nothing about the
 check. It's a test itself, run as `python3 -B -m unittest -v submit_gates_mutants_test` from cloud/, red when the mutant
 escapes or fails for the wrong reason. A test by name, as the Go mutants beside their packages are, since a script that
 isn't one and runs submit_gates_test.py is gate logic at the queue's door. The authority rounds' 36 mutants are in
-Loom's feed (#v3q9ayd, through J-ke9nhtw); the advisory script carries the one its ruling asked for.
+Loom's feed (#v3q9ayd, through J-ke9nhtw).
 """
 
 from pathlib import Path
@@ -27,6 +31,12 @@ mutants = [
         ('    report["missing"] = [entry["name"] for entry in report["gates"] + report["rows"]',
          '    report["missing"] = [entry["name"] for entry in report["rows"]'),
     ], [tests + "test_a_missing_gate_is_reported_missing"]),
+    ("a package skip accepted with test results", "gates/steps.sh", [
+        ("(action == 'skip' and not counted)", "action == 'skip'"),
+    ], ["submit_gates_test.GoTestSummaryTests.test_latent_whole_rejects_a_package_with_a_skipped_test"]),
+    ("a failing test dropped from the summary verdict", "gates/steps.sh", [
+        ("passed and not failed", "passed"),
+    ], ["submit_gates_test.GoTestSummaryTests.test_latent_whole_rejects_a_failing_test"]),
 ]
 
 

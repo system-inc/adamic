@@ -61,7 +61,7 @@ import sys
 
 
 MapPath = "cloud/gates/diff-to-gates.json"
-MapVersion = 5
+MapVersion = 6
 ShaPattern = re.compile(r"[0-9a-f]{40}\Z")
 
 # The map's definitions this script reads, word for word. A changed definition is a changed rule, so the script refuses
@@ -74,7 +74,7 @@ DefinitionsRead = {
              "submit, or a main commit with no change under internal/lower, internal/ir, internal/flow, internal/native "
              "or internal/load since",
     "green": "the job's outcome is exit 0, and its command's sha256 equals the sha256 of the named gate recipe read at "
-             "the head (Loom keeps a command's hash, never its text, so a gate is a fixed recipe file, "
+             "main's tip (Loom keeps a command's hash, never its text, so a gate is a fixed recipe file, "
              "cloud/gates/<gate>.sh, and the script compares hashes)",
     "red": "for a mutant job: exit non-zero, with the named test's FAIL line in its kept tail",
     "goFunctionBodyChanged": "the named function's body differs between base and head by go/ast, comments and "
@@ -88,6 +88,9 @@ DefinitionsRead = {
                   "to the union of each head's own added sites, and any unit in two heads' cleared lists or holding an "
                   "extra site censused for those heads alone. If lower moves during the combined job it is re-asked "
                   "once, then the set submits on that green",
+    # Only the accepter can read the operands and types of a newly stopping lowering-phase unit in unit-census-pair.
+    "exposure": "a lowering-phase stop the head's census newly lists is an exposure when the adapter neither wrote "
+                "nor changed the expression's operands or their types, only moved them; otherwise it's new",
 }
 CompilerProductionPrefixes = ("internal/lower/", "internal/ir/", "internal/flow/", "internal/native/",
                               "internal/javascript/", "internal/load/", "cmd/adamic/")
@@ -104,6 +107,11 @@ NotVerdicts = ("Infrastructure", "Cancelled", "Superseded", None)
 # rounds found a label, a repeated job or a selector standing in for the proof. The script names what to check; the
 # accepter checks it.
 ByHandGates = {
+    "adaptation-value-identical": "test.cjs drives stock and adapted tsc on inputs reaching each changed branch, "
+                                  "the reader's line-by-line statement covers identity, key order, thrown errors "
+                                  "and the timing of reads, and any change in those observations goes to Adamic",
+    "adapter-plants-red": "the adapter's plant kit job ran at this head, its tail ends with VERDICT n of n red with "
+                          "n greater than zero, and each plant in the kit is red on its expected line",
     "value-count-reached": "the adaptation's value count job: 0 counterexamples, and calls observed above 0 on the "
                            "changed path, or a fixture held to Node that drives it",
     "stock-js-identical": "tsc's emit of the adapted files byte for byte against stock's; no tool on main compares them "
@@ -117,7 +125,13 @@ ByHandRows = {
                        "which the script can't read",
     "statecopy-row": "that irSpecFields names each new exported internal/ir field, by go/ast, which the script can't read",
     "adapter-output-test": "that test.cjs runs the edited output, on a tree stage3/apply.sh wrote with its -before and "
-                           "-after refs, and goes red on a reviewer's mutation of it (a swapped pair, a dropped entry)",
+                           "-after refs, compares against the -after ref, and goes red on a reviewer's mutation of it "
+                           "(a swapped pair, a dropped entry)",
+    "adapter-table-mentions": "where the adapter rests on a table tsc declares, every mention of the table across src/ "
+                              "is in a reviewed set, and every value read out of it is followed through each function "
+                              "it's passed to, each pinned by its -before text and declared once, until it's only read "
+                              "into primitives; a form outside that is named in the README as the pin-time audit's; "
+                              "any other mention refuses",
     "adapter-structural-pins": "that each digest or getText( pins a node the adapter edits, never a whole file, and that "
                                "its tests read its own -after snapshot, never the final applied tree or a constant "
                                "digest: whether it is a node is its receiver's type, which the script can't read",
@@ -157,7 +171,6 @@ ScriptPath = "cloud/submit-gates.py"
 LiveHoleGates = ("format", "compilercensus", "parallelcensus", "lower-whole")
 
 PassLedgerPath = "stage3/census/latent/pass_ledger.go.txt"
-LedgerPath = "stage3/upstream/LEDGER.md"
 # The map names statecopy/main.go, but irSpecFields lives beside it (ir_fields.go on main 96a1291b), so the whole
 # directory is read.
 StatecopyDirectory = "stage3/census/latent/statecopy/"
@@ -704,9 +717,15 @@ def row_pending(diff, rule_ids):
 
 
 def row_ledger(diff, rule_ids):
-    if LedgerPath in diff.status:
-        return True, f"{LedgerPath} changed"
-    return False, f"{LedgerPath} isn't in the head's diff"
+    """Every affected adapter that remains at the head has its own ledger in this diff."""
+    directories = sorted({found.group(1) for path in diff.paths()
+                          for found in [AdaptDirectory.match(path)] if found})
+    ledgers = [directory + "/LEDGER.md" for directory in directories
+               if diff.repository.files(diff.head, directory)]
+    absent = [path for path in ledgers if diff.status.get(path, "D") == "D"]
+    if absent:
+        return False, "ledger missing or deleted in this diff: " + ", ".join(absent)
+    return True, ", ".join(ledgers) + " changed" if ledgers else "no changed adapter directories remain"
 
 
 def row_mutant_evidence(diff, rule_ids):
@@ -802,6 +821,10 @@ def row_output_test(diff, rule_ids):
     return False, f"test.cjs is in {', '.join(directories)}; " + owed_by_hand("adapter-output-test")
 
 
+def row_table_mentions(diff, rule_ids):
+    return False, owed_by_hand("adapter-table-mentions")
+
+
 def row_skip_census(diff, rule_ids):
     skips = "; the new skips: " + ", ".join(added_skips(diff))
     return False, owed_by_hand("skip-census-row") + skips
@@ -811,6 +834,7 @@ RowReaders = {
     "skip-census-row": row_skip_census,
     "adapter-structural-pins": row_structural_pins,
     "adapter-output-test": row_output_test,
+    "adapter-table-mentions": row_table_mentions,
     "statecopy-row": row_statecopy,
     "pass-ledger-row": row_pass_ledger,
     "pending-sidecar": row_pending,
