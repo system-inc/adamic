@@ -391,6 +391,13 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 			l.noteOverloadNodeTest(overload, true)
 			return nil
 		}
+		if l.overloadGuardedArrayProof(implementation, overload) {
+			// Every return is the array parameter narrowed to undefined, or an array whose every element the
+			// overload's own predicate just said yes to: this overload's NodeArray at a call that passes its
+			// test, so each direct call is judged at overloadGuardedArrayCall (Lower's design (b) on #ytagqs5).
+			l.noteOverloadGuardedArray(overload, true)
+			return nil
+		}
 		what := label + " result " + l.checker.TypeToString(promised) + " cannot be served by implementation result " + l.checker.TypeToString(produced)
 		if failed != nil {
 			what += " (return at " + l.program.Where(failed) + " isn't the value its predicate checked)"
