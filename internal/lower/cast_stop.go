@@ -1,10 +1,12 @@
 package lower
 
 import (
+	"os"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
 )
 
 // castCause is the branch of castProof that found no road for a cast, so its stop can say which one
@@ -125,12 +127,12 @@ func (l *lowering) castStop(node *ast.Node, cause castCause, source, target *che
 		}
 		return l.notYet(node, "a checked view of the intersection "+to+" over "+from)
 	case castUntaggedUnion:
-		return l.notYet(node, "a checked view of "+to+" over the union "+from+", whose members no literal tag tells apart")
+		return l.notYet(node, "a checked view of "+to+" over the union "+from+", whose members no literal tag tells apart"+l.untaggedWhy(node, source, target))
 	case castUnionTarget:
 		if l.distinctTagField(castMembers(l.checker.GetNonNullableType(target))) {
 			return l.notYet(node, "a checked view of the union "+to+" over "+from+", whose tag the kind-union road can't test from "+from)
 		}
-		return l.notYet(node, "a checked view of the union "+to+" over "+from+", whose members no literal tag tells apart")
+		return l.notYet(node, "a checked view of the union "+to+" over "+from+", whose members no literal tag tells apart"+l.untaggedTargetWhy(source, target))
 	case castIntersectionMember:
 		return l.notYet(node, "a checked view of the union "+to+" over "+from+", whose member "+field+" is an intersection")
 	case castDropsNullish:
@@ -479,4 +481,160 @@ func (l *lowering) unionTargetCause(source, present *checker.Type) (castCause, s
 		}
 	}
 	return castUnionTarget, ""
+}
+
+// untaggedWhy is proof-only (#eg3krrp scout, never merged): with ADAMIC_UNTAGGED_WHY=1, the first of
+// untaggedUnionArm's conditions that declined this cast, so the family splits by cause.
+func (l *lowering) untaggedWhy(node *ast.Node, source, target *checker.Type) string {
+	if os.Getenv("ADAMIC_UNTAGGED_WHY") != "1" {
+		return ""
+	}
+	members, targets := castMembers(source), castMembers(target)
+	plainWhy := func(proven *checker.Type) string {
+		switch {
+		case proven.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull|checker.TypeFlagsVoid) != 0:
+			return "nullish"
+		case proven.Flags()&checker.TypeFlagsIntersection != 0:
+			return "intersection"
+		case proven.Flags()&checker.TypeFlagsObject == 0:
+			return "not an object"
+		case isClassInstance(proven):
+			return "class instance"
+		case l.arrayLikeType(proven) || checker.IsTupleType(proven):
+			return "array or tuple"
+		}
+		if of, known := l.representation(proven); !known || of != ir.Object {
+			return "not held as an object"
+		}
+		if base, _ := l.phantomExtension(proven); base != nil {
+			return "phantom extension"
+		}
+		switch {
+		case len(l.checker.GetIndexInfosOfType(proven)) != 0:
+			return "index signature"
+		case len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) != 0:
+			return "callable"
+		}
+		return ""
+	}
+	why := ""
+	switch {
+	case len(members) < 2:
+		why = "one member"
+	case len(targets) == 0:
+		why = "no target members"
+	case l.unionHoldsLiterals(members):
+		why = "members hold a literal field"
+	case len(targets) > 1 && l.unionHoldsLiterals(targets):
+		why = "target union holds a literal field"
+	}
+	if why == "" {
+		tag := l.untaggedTagField(members, target)
+		w := l.widened(source, target, map[[2]*checker.Type]bool{})
+		if tag != "" {
+			w = l.untaggedWidening(node, source, target, members)
+			why = "tag " + tag + " walked past; "
+		}
+		if w != nil {
+			kind := "a field"
+			switch {
+			case w.readonlyField != "":
+				kind = "readonly field " + w.readonlyField + " becomes writable"
+			case w.enum:
+				kind = "an enum literal slot"
+			case w.methodField != "":
+				kind = "method " + w.methodField
+			case w.parameter:
+				kind = "a parameter"
+			case w.genericMethod != "":
+				kind = "generic method " + w.genericMethod
+			}
+			slot := ""
+			if w.source != nil && w.target != nil {
+				slot = " (" + l.checker.TypeToString(w.source) + " as " + l.checker.TypeToString(w.target) + ")"
+			}
+			if len(slot) > 120 {
+				slot = slot[:120] + "...)"
+			}
+			why += "widened: " + kind + slot
+		} else if why != "" {
+			why = ""
+		}
+	}
+	if why == "" {
+		for _, member := range members {
+			if reason := plainWhy(member); reason != "" {
+				why = "member " + l.checker.TypeToString(member) + ": " + reason
+				break
+			}
+		}
+	}
+	if why == "" {
+		for _, wanted := range targets {
+			if reason := plainWhy(wanted); reason != "" {
+				why = "target " + l.checker.TypeToString(wanted) + ": " + reason
+				break
+			}
+			downcast := false
+			for _, member := range members {
+				downcast = downcast || l.castAssignable(wanted, member)
+			}
+			if !downcast {
+				why = "target " + l.checker.TypeToString(wanted) + ": sideways"
+				break
+			}
+		}
+	}
+	if why == "" {
+		why = "the arm would take it: reached by another road"
+	}
+	return " [why: " + why + "]"
+}
+
+// untaggedTargetWhy is proof-only (#eg3krrp scout, never merged): with ADAMIC_UNTAGGED_WHY=1, why an object
+// cast to an untagged union target isn't union target (a)'s arm, read as that arm would with the source as its
+// one member.
+func (l *lowering) untaggedTargetWhy(source, target *checker.Type) string {
+	if os.Getenv("ADAMIC_UNTAGGED_WHY") != "1" {
+		return ""
+	}
+	members, targets := castMembers(source), castMembers(target)
+	why := ""
+	if len(members) >= 2 {
+		why = "a union source"
+	}
+	if why == "" && len(targets) > 1 && l.unionHoldsLiterals(targets) {
+		why = "target union holds a literal field"
+	}
+	if why == "" {
+		if w := l.widened(source, target, map[[2]*checker.Type]bool{}); w != nil {
+			switch {
+			case w.readonlyField != "":
+				why = "widened: readonly field " + w.readonlyField + " becomes writable"
+			case w.enum:
+				why = "widened: an enum literal slot"
+			default:
+				why = "widened: another slot"
+			}
+		}
+	}
+	if why == "" && !l.plainViewObject(members[0]) {
+		why = "source not a plain view object"
+	}
+	if why == "" {
+		for _, wanted := range targets {
+			if !l.plainViewObject(wanted) {
+				why = "target member " + l.checker.TypeToString(wanted) + " not a plain view object"
+				break
+			}
+			if !l.castAssignable(wanted, members[0]) {
+				why = "target member " + l.checker.TypeToString(wanted) + " sideways"
+				break
+			}
+		}
+	}
+	if why == "" {
+		why = "one object source: union target (a)'s arm would take it but for wanting a union source"
+	}
+	return " [why: " + why + "]"
 }
