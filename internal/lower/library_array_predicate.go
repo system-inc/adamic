@@ -194,9 +194,16 @@ func (l *lowering) arrayExcludedArm(proven *checker.Type) bool {
 // readable as the index's value type. Every array-stored type has callable members (its methods), and condition 2 keeps
 // every callable out of that value type. So no array-stored value reaches the arm except through a hatch, and condition
 // 4's view check covers the hatch. That makes :260's "a kept arm that no array could be" hold by the index instead of by
-// a property. The arm is admitted only when all four hold, and any other keeps the stop and its words:
-//  1. proven isn't stored as an array, and has no property, exactly one index signature, a string's, so no number
-//     index, and no call or construct signature (a class instance never gets here: arrayPredicateArms takes it first);
+// a property. Language's attack on the premise (#gcec0bx) found it stronger: tsc gives an implicit index signature only
+// to an object literal's type, never to Array, ReadonlyArray or a tuple, so every array-stored type fails a string index
+// (TS2322), even `[]` and `readonly never[]`, and its callable members are a second wall. It also found why the index
+// must be a string's: a number-only index arm takes an array tsc-clean (`const asArm: NumberOnly = ["a"]`, her i01),
+// since a number index constrains only numeric keys, and a symbol-only or template-pattern-only arm is no string index
+// either (her i05 and i02). The arm is
+// admitted only when all four hold, and any other keeps the stop and its words:
+//  1. proven isn't stored as an array, and has no property, exactly one index signature, and that one a string's: a
+//     number, symbol or template-pattern index alone fails, and so does one beside the string's; and no call or
+//     construct signature (a class instance never gets here: arrayPredicateArms takes it first);
 //  2. the index's value type admits no callable and no any, unknown, object or {} (indexValueAdmitsNoCallable);
 //  3. no type stored as an array in the closed world declares a string index of its own (arrayStoredIndex, found by
 //     arrayStoredPropertyNames' walk, failing closed as it does): one whose index its methods fit would be assignable

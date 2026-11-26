@@ -63,11 +63,13 @@ func TestArrayPredicateIndexArmRefusals(t *testing.T) {
 // types, so a generic arm a program lowers is read at what its instantiation made its type parameter, and only here,
 // on the declaration, is the parameter met as a parameter. Condition 2 reads it at its constraint: Bag's V has none
 // and fails, Bounded's holds no callable and passes, Loosely's holds one and fails. Record<string, V> resolves to the
-// same index (Counts passes, Calls fails), a property beside the index or a number index fails condition 1, and a
-// closed world holding an interface stored as an array with a string index of its own (Loose) fails every arm,
-// condition 3.
+// same index (Counts passes, Calls fails), a property beside the index fails condition 1, and so does an index that
+// isn't a string's: Numbered's and Language's NumberOnly (her i01, an arm a string[] is assignable to tsc-clean),
+// Pattern's template pattern (her i02) and Sym's symbol (her i05), each of whose value types condition 2 would pass. A closed
+// world holding an interface stored as an array with a string index of its own (Loose) fails every arm, condition 3.
 //
-// Mutant (M1): condition 2 dropped. bag, loosely, calls and unknowns go red.
+// Mutants: M1, condition 2 dropped, turns open red on Bag, Loosely, Calls and Unknowns; M4, condition 1 relaxed to any
+// one index signature, turns open red on Numbered, NumberOnly, Pattern and Sym.
 func TestArrayPredicateIndexArmValueType(t *testing.T) {
 	t.Parallel()
 	const declarations = jsonRecovery + `interface Bag<V> { [key: string]: V }
@@ -78,12 +80,13 @@ type Calls = Record<string, () => void>;
 interface Unknowns { [key: string]: unknown }
 interface Named { name: string; [key: string]: string }
 interface Numbered { [index: number]: string }
-`
+type NumberOnly = { [n: number]: string };
+` + "type Pattern = { [k: `x${string}`]: number };\ntype Sym = { [s: symbol]: number };\n"
 	for _, probe := range []struct {
 		name, source string
 		admitted     map[string]bool
 	}{
-		{"open", declarations, map[string]bool{"AdamicJsonRecoveryObject": true, "Bag": false, "Bounded": true, "Loosely": false, "Counts": true, "Calls": false, "Unknowns": false, "Named": false, "Numbered": false}},
+		{"open", declarations, map[string]bool{"AdamicJsonRecoveryObject": true, "Bag": false, "Bounded": true, "Loosely": false, "Counts": true, "Calls": false, "Unknowns": false, "Named": false, "Numbered": false, "NumberOnly": false, "Pattern": false, "Sym": false}},
 		{"closed-world-string-index", declarations + "interface Loose extends ReadonlyArray<string> { [key: string]: unknown }\n", map[string]bool{"AdamicJsonRecoveryObject": false, "Bounded": false, "Counts": false}},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
@@ -115,6 +118,35 @@ interface Numbered { [index: number]: string }
 			if len(seen) != len(probe.admitted) {
 				t.Fatalf("asked %d declarations, found %d", len(probe.admitted), len(seen))
 			}
+		})
+	}
+}
+
+// Language's i01 on #gcec0bx: a number-only index arm takes a string[] tsc-clean, since a number index constrains only
+// numeric keys and the array's methods never meet it, and Node calls the value an array, so the arm must stay out of
+// the domain. (Her i02 and i05, a template-pattern and a symbol index alone, tsc refuses as written; they're held at
+// condition 1 on their declarations in TestArrayPredicateIndexArmValueType.) The program must stop before it lowers
+// whole, by its own first stop: a type indexed by a number alone has no representation natively (records.go's
+// recordElement takes a string index only), so it may stop at the arm's first value before isArray's argument, and the
+// row asks only that it stops, logging where. Condition 1's own test of the key is TestArrayPredicateIndexArmValueType's,
+// which M4 turns red.
+func TestArrayPredicateIndexArmKeyRefusals(t *testing.T) {
+	t.Parallel()
+	for _, row := range []struct{ name, source, node string }{
+		{"i01-number-only", "type NumberOnly = { [n: number]: string };\ntype Value = string | NumberOnly;\nfunction show(v: Value): string {\n\tif (typeof v === \"object\" && !Array.isArray(v)) return \"record \" + String(v[0]);\n\treturn \"other\";\n}\nconst arr: string[] = [\"a\"];\nconst asArm: NumberOnly = arr;\nconsole.log(show(asArm));\n", "other\n"},
+	} {
+		t.Run(row.name, func(t *testing.T) {
+			t.Parallel()
+			if node := runAgreementNode(t, writeAgreementSource(t, "main.ts", row.source)); string(node.stdout) != row.node || node.code != 0 {
+				t.Fatalf("source Node: exit %d, stdout %q, stderr %q; want %q", node.code, node.stdout, node.stderr, row.node)
+			}
+			_, err := lowerSourceAs(t, row.source, ".ts")
+			var notYet *NotYet
+			var refused *Refused
+			if !errors.As(err, &notYet) && !errors.As(err, &refused) {
+				t.Fatalf("want a stop, got %v", err)
+			}
+			t.Logf("stops: %v", err)
 		})
 	}
 }
