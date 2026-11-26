@@ -79,7 +79,15 @@ func TestClosedKindFunctionConstructorNarrowing(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			if _, err := lowerSourceAs(t, probe.source, ".ts"); err == nil || !strings.Contains(err.Error(), probe.stop) {
+			ext := ".ts"
+			if probe.stop == kindPredicateRefusal {
+				ext = ".a"
+			}
+			_, err := lowerSourceAs(t, probe.source, ext)
+			if ext == ".a" {
+				t.Logf("FAMILY1AT %s %v", probe.name, err)
+			}
+			if err == nil || !strings.Contains(err.Error(), probe.stop) {
 				t.Fatalf("want a stop holding %q, got %v", probe.stop, err)
 			}
 		})
