@@ -494,5 +494,93 @@
     "before": "resolutionStack: string[]",
     "after": "resolutionStack: readonly string[]",
     "why": "The config extension reader only forwards the stack to parseConfig."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "JsonConversionNotifier",
+    "kind": "InterfaceDeclaration",
+    "before": "value: any,",
+    "after": "value: AdamicJsonRecoveryValue | undefined,",
+    "why": "Match convertPropertyValueToJson\u2019s recovery domain."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "getExtendsConfigPathOrArray",
+    "kind": "FunctionDeclaration",
+    "before": "value: CompilerOptionsValue,",
+    "after": "value: unknown,",
+    "why": "Preserve the extant string, array and malformed-input branches."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "onPropertySet",
+    "kind": "FunctionDeclaration",
+    "before": "        value: any,",
+    "after": "        value: AdamicJsonRecoveryValue | undefined,",
+    "why": "Match the notifier\u2019s recovery domain."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "onPropertySet",
+    "kind": "FunctionDeclaration",
+    "before": "        if (option && option !== extendsOptionDeclaration) value = convertJsonOption(option, value, basePath, errors, propertyAssignment, propertyAssignment.initializer, sourceFile);",
+    "after": "        const convertedValue = option && option !== extendsOptionDeclaration ? convertJsonOption(option, value, basePath, errors, propertyAssignment, propertyAssignment.initializer, sourceFile) : undefined;",
+    "why": "Retain a typed converted value separately from the raw extends payload."
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "owner": "onPropertySet",
+    "kind": "FunctionDeclaration",
+    "before": "                currentOption[option.name] = value;",
+    "after": "                if (/* family12:notifier-write */ option === extendsOptionDeclaration) return Debug.fail(\"Unexpected extends option in a named option group\");\r\n                currentOption[option.name] = convertedValue;",
+    "why": "Only store a converted CompilerOptionsValue. The root extends branch keeps its raw input."
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "owner": "readJsonOrUndefined",
+    "kind": "FunctionDeclaration",
+    "before": "if (!jsonText) return undefined;",
+    "after": "if (!jsonText) return /* family12:json-empty */ undefined;",
+    "why": "Give the counter an exact anchor for the early return."
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "owner": "readJsonOrUndefined",
+    "kind": "FunctionDeclaration",
+    "before": "let result = tryParseJson(jsonText);",
+    "after": "let result: AdamicJsonRecoveryValue | undefined = tryParseJson(jsonText);",
+    "why": "Hold all JSON recovery values returned by the parser."
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "owner": "",
+    "kind": "SourceFile",
+    "before": "    addEmitFlags,",
+    "after": "    type AdamicJsonRecoveryValue,\r\n    addEmitFlags,",
+    "why": "Import the JSON recovery binding through the existing namespace import."
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "owner": "",
+    "kind": "SourceFile",
+    "before": "    isAnyDirectorySeparator,",
+    "after": "    isAdamicJsonObject,\r\n    isAnyDirectorySeparator,",
+    "why": "Import the JSON recovery binding through the existing namespace import."
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "owner": "readJsonOrUndefined",
+    "kind": "FunctionDeclaration",
+    "before": " } | string): object | undefined {",
+    "after": " } | string): AdamicJsonRecoveryValue | undefined {",
+    "why": "Return any JSON value produced by strict or recovery parsing."
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "owner": "readJson",
+    "kind": "FunctionDeclaration",
+    "before": "    return readJsonOrUndefined(path, host) || {};",
+    "after": "    const value = readJsonOrUndefined(path, host);\r\n    return typeof value === \"object\" && value !== null && !Array.isArray(value) ? value : {};",
+    "why": "Use an empty record for arrays, primitives, null and undefined at the named field readers."
   }
 ]

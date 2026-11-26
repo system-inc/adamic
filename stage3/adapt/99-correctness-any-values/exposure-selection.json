@@ -1,0 +1,201 @@
+[
+  {
+    "baseline": "compiler/commandLineParser.ts:2621:1",
+    "unit": "compiler/commandLineParser.ts:2621:1",
+    "rows": [
+      [
+        "compiler/commandLineParser.ts:2624:13",
+        "NotYet",
+        "a field read through a union whose members store .type in different representations (CommandLineOptionOfBooleanType as string, CommandLineOptionOfCustomType as value)",
+        "Exact match"
+      ],
+      [
+        "compiler/commandLineParser.ts:2627:13",
+        "NotYet",
+        "a field read through a union whose members store .type in different representations (CommandLineOptionOfBooleanType as string, CommandLineOptionOfCustomType as value)",
+        "Exact match"
+      ],
+      [
+        "compiler/commandLineParser.ts:2630:39",
+        "NotYet",
+        "a field read through a union whose members store .type in different representations (CommandLineOptionOfBooleanType as string, CommandLineOptionOfCustomType as value)",
+        "Exact match"
+      ],
+      [
+        "compiler/commandLineParser.ts:2631:33",
+        "NotYet",
+        "reading expectedType",
+        "Exact reason absent"
+      ]
+    ],
+    "beforeAnchor": [
+      "compiler/commandLineParser.ts:2621:72",
+      "Refused",
+      "a value of type any: any has no proven type"
+    ],
+    "headAnchor": [
+      "compiler/commandLineParser.ts:2624:13",
+      "NotYet",
+      "a field read through a union whose members store .type in different representations (CommandLineOptionOfBooleanType as string, CommandLineOptionOfCustomType as value)"
+    ]
+  },
+  {
+    "baseline": "compiler/commandLineParser.ts:3619:5",
+    "unit": "compiler/commandLineParser.ts:3623:5",
+    "rows": [
+      [
+        "compiler/commandLineParser.ts:3634:21",
+        "Refused",
+        "a value of type any: any has no proven type",
+        "Exact match"
+      ],
+      [
+        "compiler/commandLineParser.ts:3635:66",
+        "NotYet",
+        "assigning to an Identifier",
+        "Exact reason absent"
+      ],
+      [
+        "compiler/commandLineParser.ts:3636:68",
+        "NotYet",
+        "assigning to an Identifier",
+        "Exact reason absent"
+      ],
+      [
+        "compiler/commandLineParser.ts:3637:71",
+        "NotYet",
+        "assigning to an Identifier",
+        "Exact reason absent"
+      ],
+      [
+        "compiler/commandLineParser.ts:3640:17",
+        "NotYet",
+        "reading currentOption",
+        "Exact reason absent"
+      ]
+    ],
+    "beforeAnchor": [
+      "compiler/commandLineParser.ts:3621:9",
+      "Refused",
+      "a value of type any: any has no proven type"
+    ],
+    "headAnchor": [
+      "compiler/commandLineParser.ts:3634:21",
+      "Refused",
+      "a value of type any: any has no proven type"
+    ]
+  },
+  {
+    "baseline": "compiler/commandLineParser.ts:3539:1",
+    "unit": "compiler/commandLineParser.ts:3543:1",
+    "rows": [],
+    "beforeAnchor": [
+      "compiler/commandLineParser.ts:3563:38",
+      "NotYet",
+      "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables"
+    ],
+    "headAnchor": [
+      "compiler/commandLineParser.ts:3568:30",
+      "NotYet",
+      "an array of unknown with erased element storage (retain its declared element type before reading elements)"
+    ]
+  },
+  {
+    "baseline": "compiler/program.ts:4902:1",
+    "unit": "compiler/program.ts:4902:1",
+    "rows": [
+      [
+        "compiler/program.ts:4977:13",
+        "Refused",
+        "inherited library member call read as an own field",
+        "Family 21, member variant"
+      ],
+      [
+        "compiler/program.ts:4988:39",
+        "Refused",
+        "inherited library member call read as an own field",
+        "Family 21, member variant"
+      ],
+      [
+        "compiler/program.ts:4996:13",
+        "NotYet",
+        "a Map or Set going where a plain object type is held",
+        "Exact match"
+      ],
+      [
+        "compiler/program.ts:5015:36",
+        "Refused",
+        "inherited library member call read as an own field",
+        "Family 21, member variant"
+      ],
+      [
+        "compiler/program.ts:5018:13",
+        "NotYet",
+        "reading real",
+        "Exact reason absent"
+      ],
+      [
+        "compiler/program.ts:5027:52",
+        "NotYet",
+        "reading real",
+        "Exact reason absent"
+      ],
+      [
+        "compiler/program.ts:5058:86",
+        "NotYet",
+        "RegExp with a nonconstant pattern",
+        "Exact match"
+      ],
+      [
+        "compiler/program.ts:4919:27",
+        "NotYet",
+        "an assignment value to a member",
+        "Exact match"
+      ],
+      [
+        "compiler/program.ts:4952:81",
+        "Refused",
+        "inherited library member call read as an own field",
+        "Family 21, member variant"
+      ],
+      [
+        "compiler/program.ts:4960:13",
+        "NotYet",
+        "an optional Map get through a structural receiver",
+        "Exact match"
+      ]
+    ],
+    "beforeAnchor": [
+      "compiler/program.ts:4914:9",
+      "Refused",
+      "a value of type any: any has no proven type"
+    ],
+    "headAnchor": [
+      "compiler/program.ts:4919:27",
+      "NotYet",
+      "an assignment value to a member"
+    ]
+  },
+  {
+    "baseline": "compiler/utilities.ts:7785:1",
+    "unit": "compiler/utilities.ts:7785:1",
+    "rows": [
+      [
+        "compiler/utilities.ts:7809:17",
+        "NotYet",
+        "a function returning any",
+        "Exact match"
+      ]
+    ],
+    "beforeAnchor": [
+      "compiler/utilities.ts:7792:9",
+      "Refused",
+      "a value of type any: any has no proven type"
+    ],
+    "headAnchor": [
+      "compiler/utilities.ts:7799:36",
+      "NotYet",
+      "reading result"
+    ]
+  }
+]
