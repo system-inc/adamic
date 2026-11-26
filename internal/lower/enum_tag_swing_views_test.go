@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/javascript"
@@ -11,13 +12,18 @@ import (
 // open numeric enum's, with a call between the test and the read that the walk can't see past. reset writes b,
 // a B, where the read takes an A, so the refined value is a lie at the read; keep writes a, an A, so its twin is
 // honest. Every cast that would build the lie directly is refused before the swing (J-3y6bcjn), so a call that
-// rewrites the field is the road.
+// rewrites the field is the road. A's flag holds the whole open enum F, as kindPredicateTypes' A does, so the
+// walk raises a hazard and the swing's view is what reads: without it closedKinds closes N, the walk proves the
+// refinement, and the swing never runs (J-zy5mseq read the lie wrong at the head and under the mutant alike, a
+// road #8nj5pn4 holds). Each row checks its .a copy is refused with family 1's words, so a pin can't miss the
+// swing's road again.
 const enumTagSwingViewTypes = `enum K { A = 1, B = 2 }
-interface A { readonly kind: K.A; readonly a: number }
+enum F { X = 1 }
+interface A { readonly kind: K.A; readonly flag: F; readonly a: number }
 interface B { readonly kind: K.B; readonly b: string }
 type N = A | B;
 interface M { n: N }
-const a: A = { kind: K.A, a: 1 };
+const a: A = { kind: K.A, flag: F.X, a: 1 };
 const b: B = { kind: K.B, b: "x" };
 function reset(m: M): void { m.n = b; }
 function keep(m: M): void { m.n = a; }
@@ -46,6 +52,9 @@ func TestEnumTagSwingLiesStopAtEveryRead(t *testing.T) {
 			t.Run(road.name+" "+side.name, func(t *testing.T) {
 				t.Parallel()
 				source := enumTagSwingViewTypes + "function show(m: M): string { if (m.n.kind === K.A) { " + side.call + "(m); " + road.read + " } return 'b'; }\nconsole.log(show({ n: a }));\n"
+				if _, err := lowerSourceAs(t, source, ".a"); err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
+					t.Fatalf("want the .a copy refused with %q, so the swing's road is what lowers the .ts copy, got %v", kindPredicateRefusal, err)
+				}
 				program, err := lowerSourceAs(t, source, ".ts")
 				if err != nil {
 					t.Fatalf("want it lowered, got %v", err)
