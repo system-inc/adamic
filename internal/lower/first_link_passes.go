@@ -1,6 +1,9 @@
 package lower
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/system-inc/adamic/internal/ir"
 )
@@ -51,6 +54,16 @@ func (l *lowering) firstLinkPass(name string, rewrites bool, err error, run func
 		_, echo := l.firstLinkTrappedAt(unit)
 		switch {
 		case unit == nil || seen[row.Site]:
+			// Trace, never for main (#nxb3xh1 wave 1): which arm of the Gap a pass took.
+			named := ""
+			if unit != nil {
+				named = " unit=" + l.firstLinkUnitName(unit)
+			}
+			reason := row.Reason
+			if len(reason) > 200 {
+				reason = reason[:200]
+			}
+			fmt.Fprintf(os.Stderr, "GAP-ARM %s %s unit-nil=%t seen=%t%s reason=%q\n", name, row.Site, unit == nil, seen[row.Site], named, reason)
 			row.Kind, row.Reason = "Gap", row.Kind+": "+row.Reason
 			l.firstLinkRecord(row, nil)
 			l.firstLinkRewriteSkip(name, rewrites)
