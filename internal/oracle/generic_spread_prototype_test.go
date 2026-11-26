@@ -16,10 +16,14 @@ import (
 // read function on both backends where Node reads undefined, and generic_setter stopped natively on a compiler
 // bug. Each now stops at compile time at the read, naming the member, the spread and the class
 // (checkGenericSpreadCopyReads, internal/lower/generic_spread_copy_reads.go), and so does generic_getter, which
-// spreadCopyRead stopped already. same (the generic returning its argument as is), plain_source (a generic
-// spread of a plain literal, whose weigh is its own) and class_parameter_call (a method call on a class-typed
-// parameter in a program with no generic spread) lower and agree with Node. Mutant
-// (internal/lower/generic_spread_copy_reads.mutants.md): the stop answering nil lowers generic_method_call again.
+// spreadCopyRead stopped already. private_read is the call road's memory hazard: its weigh reads a private field
+// and a data field the copy lays out elsewhere, so main printed 14 natively, ASan silent, where Node throws, and it
+// stops at compile time too. same (the generic returning its argument as is), plain_source (a generic spread of a
+// plain literal, whose weigh is its own), class_parameter_call (a method call on a class-typed parameter in a
+// program with no generic spread) and control_instance (private_read's class, a real instance through the same
+// generic) lower and agree with Node. Mutants (internal/lower/generic_spread_copy_reads.mutants.md): the stop
+// answering nil lowers generic_method_call and private_read again, and private_read then dies natively on the
+// runtime backstop's invariant (adamic_method_this), printing 14 only with the backstop dropped too.
 func TestGenericSpreadPrototypeMember(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, node, stop string }{
@@ -27,9 +31,11 @@ func TestGenericSpreadPrototypeMember(t *testing.T) {
 		{"generic_method_typeof.ts", "t undefined\n", "generic_method_typeof.ts:15:40: " + genericSpreadReadStop("weigh", "Scale", "method")},
 		{"generic_setter.ts", "undefined undefined\n", "generic_setter.ts:15:20: " + genericSpreadReadStop("weight", "Sized", "setter")},
 		{"generic_getter.ts", "undefined undefined\n", "generic_getter.ts:15:20: " + genericSpreadReadStop("weight", "Sized", "getter")},
+		{"private_read.ts", "threw\n", "private_read.ts:18:21: " + genericSpreadReadStop("weigh", "Scale", "method")},
 		{"generic_same.ts", "20\n", ""},
 		{"generic_plain_source.ts", "x 5\n", ""},
 		{"class_parameter_call.ts", "40\n", ""},
+		{"control_instance.ts", "20\n", ""},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
