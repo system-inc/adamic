@@ -210,3 +210,167 @@ func TestNumericKeyTableIsWalkedOncePerBinding(t *testing.T) {
 		t.Fatalf("a fresh lowering named the first key %q, %t", name, named)
 	}
 }
+
+func TestNumericKeyEnumerationOrder(t *testing.T) {
+	t.Parallel()
+	for _, row := range []struct {
+		keys []string
+		want bool
+	}{
+		{[]string{"250", "500", "2000"}, true},
+		{[]string{"2000", "500", "250"}, false},
+		{[]string{"250", "name", "2000"}, false},
+		{[]string{"250", "8"}, false},
+		{[]string{"0", "1", "7", "name"}, true},
+		{[]string{"name"}, true},
+		{nil, true},
+		{[]string{"8", "08"}, true},
+		{[]string{"08", "8"}, false},
+		{[]string{"4294967294", "4294967295"}, true},
+		{[]string{"4294967295", "4294967294"}, false},
+		{[]string{"8", "8"}, false},
+	} {
+		if got := keysInEnumerationOrder(row.keys); got != row.want {
+			t.Errorf("keysInEnumerationOrder(%q) = %t, want %t", row.keys, got, row.want)
+		}
+	}
+}
+
+func TestNumericKeyOrderedEnumPolling(t *testing.T) {
+	t.Parallel()
+	source := readEnumInitFixture(t, "../oracle/testdata/numeric_keys_enumeration_order.ts")
+	program, err := lowerSourceAs(t, source, ".ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	found := false
+	for _, function := range program.Functions {
+		walk(function.Body, func(node any) bool {
+			if literal, ok := node.(ir.ObjectLiteral); ok && len(literal.Fields) == 3 {
+				found = found || literal.Fields[0].Name == "250" &&
+					literal.Fields[1].Name == "500" && literal.Fields[2].Name == "2000"
+			}
+			return true
+		})
+	}
+	if !found {
+		t.Fatal("no returned literal with field order 250,500,2000")
+	}
+}
+
+func TestNumericKeyOrderedEnumStops(t *testing.T) {
+	t.Parallel()
+	for _, row := range []struct {
+		name, source string
+	}{
+		{"descending", `enum PollingInterval { High = 2000, Medium = 500, Low = 250 }
+function make() {
+    return { [PollingInterval.High]: 256, [PollingInterval.Medium]: 64, [PollingInterval.Low]: 32 };
+}
+console.log(Object.keys(make()).join(","));
+`},
+		{"interleaved", `enum PollingInterval { High = 2000, Medium = 500, Low = 250 }
+function make() {
+    return { [PollingInterval.Low]: 1, name: 2, [PollingInterval.High]: 3 };
+}
+console.log(Object.keys(make()).join(","));
+`},
+		{"spelled-index", `enum PollingInterval { High = 2000, Medium = 500, Low = 250 }
+function make() {
+    return { [PollingInterval.Low]: 1, "8": 2 };
+}
+console.log(Object.keys(make()).join(","));
+`},
+		{"numeric-literals", `enum PollingInterval { High = 2000, Medium = 500, Low = 250 }
+function make() {
+    return { [250]: 1, [500]: 2 };
+}
+console.log(Object.keys(make()).join(","));
+`},
+		{"const-enum", `const enum PollingInterval { High = 2000, Medium = 500, Low = 250 }
+function make() {
+    return { [PollingInterval.Low]: 1, [PollingInterval.Medium]: 2 };
+}
+console.log(Object.keys(make()).join(","));
+`},
+		{"string-enum", `enum Label { Name = "name" }
+function make() {
+    return { [Label.Name]: 1 };
+}
+console.log(Object.keys(make()).join(","));
+`},
+	} {
+		t.Run(row.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, row.source, ".ts")
+			var stop *NotYet
+			if !errors.As(err, &stop) || stop.What != "a computed field name" || !strings.HasSuffix(stop.Where, ":3:14") {
+				t.Fatalf("want NotYet a computed field name at :3:14, got %v", err)
+			}
+		})
+	}
+}
+
+func TestNumericKeyOrderedEnumReadiness(t *testing.T) {
+	t.Parallel()
+	const early = `function make() {
+    return { [Pending.Low]: 1 };
+}
+function read(): void {
+    const table = make();
+    console.log(String(table[250]));
+}
+read();
+enum Pending { Low = 250 }
+`
+	const unknown = `function make() {
+    return { [Pending.Low]: initializeField() };
+}
+function read(): number {
+    const table = make();
+    return table[250];
+}
+function initializeField(): number { console.log("initializer"); return 1; }
+function invoke(action: () => number): number { return action(); }
+let action = (): number => 7;
+action = read;
+console.log("before");
+console.log(String(invoke(action)));
+enum Pending { Low = 250 }
+`
+
+	_, err := lowerSourceAs(t, early, ".ts")
+	var stop *NotYet
+	const reason = "reading an enum before its runtime initialization; move the call after the enum declaration"
+	if !errors.As(err, &stop) || stop.What != reason || !strings.HasSuffix(stop.Where, ":2:15") {
+		t.Fatalf("want known early enum read stopped at :2:15, got %v", err)
+	}
+
+	program, err := lowerSourceAs(t, unknown, ".ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	checkedKey := false
+	for _, function := range program.Functions {
+		walk(function.Body, func(node any) bool {
+			literal, ok := node.(ir.ObjectLiteral)
+			if !ok || len(literal.Fields) != 1 || literal.Fields[0].Name != "250" {
+				return true
+			}
+			sequence, sequenced := literal.Fields[0].Value.(ir.Comma)
+			if !sequenced {
+				return true
+			}
+			walk(sequence.Left, func(node any) bool {
+				if read, ok := node.(ir.Read); ok && read.Checked && program.Locals[read.Local].Name == "Pending" {
+					checkedKey = true
+				}
+				return true
+			})
+			return true
+		})
+	}
+	if !checkedKey {
+		t.Fatal("returned literal must check the Pending enum at its key before the initializer")
+	}
+}
