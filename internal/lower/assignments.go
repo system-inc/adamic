@@ -303,8 +303,13 @@ func (l *lowering) objectDestructuringAssignment(pattern *ast.Node, valueNode *a
 		read.ViewWhere = l.program.Where(property)
 		read.ViewType = l.checker.TypeToString(fieldType)
 		read.ViewAllowed = l.viewLiterals(fieldType)
+		// A field that may hold a placeholder is read as one and checked as a use (#jjf9ppe).
+		checked, err := l.placeholderDestructuredRead(property, symbol, fieldType, read, false)
+		if err != nil {
+			return nil, err
+		}
 		to := l.result.Locals[local].Type
-		assigned := fit(ir.Expression(read), to)
+		assigned := fit(checked, to)
 		if assigned.Type() != to {
 			return nil, l.notYet(property, "a destructured field of type "+l.checker.TypeToString(fieldType)+" given to a "+typeName(to))
 		}
