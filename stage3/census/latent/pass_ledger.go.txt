@@ -17,6 +17,11 @@ var latentPostLoweringSteps = []latent.PassStep{
 	// every view write and every declaration in every source file (#2msw6t8). As checkOptionalMemberPresence,
 	// it's judged by the whole program, so a body lowered on its own is recorded as not run.
 	{Name: "certifySourceSlots"},
+	// checkSpreadPrototypeMembers refuses, in .a, a spread whose type declares as a field a member a class
+	// reaching it holds on its prototype (#vjvcnnj): it judges by every class instance the modules' expressions
+	// have and the whole program's allocation graph, and rewrites nothing, so a body lowered on its own is
+	// recorded as not run, as checkLibrarySpreads is.
+	{Name: "checkSpreadPrototypeMembers"},
 	// checkGenericSpreadCopyReads stops a read or call of a class's prototype member whose receiver may be a
 	// generic spread's copy, by the whole program's allocation graph and the generic spreads it holds
 	// (#y4gjeb8): it reads the IR and rewrites nothing, so a body lowered on its own is recorded as not run,
