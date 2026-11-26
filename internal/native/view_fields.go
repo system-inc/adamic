@@ -41,7 +41,7 @@ func (e *emitter) viewFieldObject(property ir.Property, object string) string {
 	names := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map"}
 	name, supported := names[property.Of]
 	if !supported || property.Absent || property.Method {
-		panic("compiler bug: incomplete checked field contract")
+		panic(fmt.Sprintf("compiler bug: incomplete checked field contract: name %q of %d absent %v method %v view %q view type %q where %q class %d contract %d type id %d receiver type id %d unset %v readiness %q object %T", property.Name, property.Of, property.Absent, property.Method, property.View, property.ViewType, property.ViewWhere, property.Class, property.ViewContract, property.ViewTypeID, property.ViewReceiverTypeID, property.Unset, property.Readiness, property.Object))
 	}
 	if property.ViewType != "" {
 		name = property.ViewType
