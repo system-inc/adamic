@@ -88,6 +88,10 @@ if ((code)); then
 	tail -n 60 "$work/door.log"
 	grep -n -m1 -A40 -E '^goroutine 1 ' "$work/door.log" | sed 's/^/GOROUTINE-1 /'
 	grep -c -E '^goroutine ' "$work/door.log" | sed 's/^/GOROUTINES /'
+	if [ -f "$work/out/traps.json" ]; then
+		echo "SCRATCH: the door wrote traps.json before it failed; reading it (never for main, #nm7z8fv)"
+		python3 -I -B "$here/report.py" "$work/out" || true
+	fi
 	if ((code == 124)); then
 		stop "door exceeded 60 minutes, no completed report read"
 	fi
