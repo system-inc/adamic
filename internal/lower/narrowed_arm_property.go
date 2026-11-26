@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"reflect"
 	"strconv"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -44,7 +45,12 @@ func (l *lowering) narrowedArmPropertyReadGap(node *ast.Node) error {
 			keyType := l.checker.GetTypeAtLocation(key)
 			switch {
 			case keyType.Flags()&checker.TypeFlagsNumberLiteral != 0:
-				name = l.checker.TypeToString(keyType)
+				// Its value, never its spelling: an enum member's literal type prints as Slot.First (Language's e05).
+				value := reflect.ValueOf(keyType.AsLiteralType().Value())
+				if value.Kind() != reflect.Float64 {
+					return nil
+				}
+				name = strconv.FormatFloat(value.Float(), 'f', -1, 64)
 			case keyType.Flags()&checker.TypeFlagsStringLiteral != 0:
 				text, isText := keyType.AsLiteralType().Value().(string)
 				if !isText {
@@ -80,8 +86,10 @@ func (l *lowering) narrowedArmPropertyReadGap(node *ast.Node) error {
 		return nil // narrowedNullishPropertyReadGap's.
 	}
 	present := l.checker.GetNonNullableType(declared)
-	if present.Id() == narrowed.Id() {
-		return nil // A presence strip, checked or observed at run time, as the binding rule says.
+	if present.Id() == narrowed.Id() || l.checker.GetNonNullableType(narrowed).Id() == present.Id() {
+		// A presence strip, checked or observed at run time, as the binding rule says, or the declared type with
+		// only undefined added, an element read under noUncheckedIndexedAccess, which narrows nothing (Language's e01).
+		return nil
 	}
 	if storage, known := l.representation(declared); known && storage == ir.Union {
 		return nil // The held union's member is checked at run time before it's narrowed.
