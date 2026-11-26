@@ -360,7 +360,10 @@ func enumTagSwingClass(code int, stdout, stderr string, node nodeObservation) st
 	if strings.Contains(stderr, "Sanitizer:") {
 		return "WRONG"
 	}
-	if code == 70 && strings.Contains(stderr, "field read failed") && strings.HasPrefix(string(node.stdout), stdout) {
+	// A loud stop is the runtime's own deliberate panic at exit 70 with nothing printed past what Node
+	// printed: the checked view's "field read failed" at the read, or an earlier check that catches the
+	// same lie, such as a checked predicate's claim at its call ("predicate isAB ... false branch").
+	if code == 70 && strings.HasPrefix(stderr, "adamic: panic: ") && strings.HasPrefix(string(node.stdout), stdout) {
 		return "STOP"
 	}
 	if stdout == string(node.stdout) && (code == node.code || code != 0 && node.code != 0) {
