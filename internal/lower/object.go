@@ -78,8 +78,18 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if !known {
 				fieldName, known = l.numericFieldName(node, property)
 			}
+			var keyRead ir.Expression
 			if !known {
-				return nil, l.notYet(name, "a computed field name")
+				fieldName, known = l.orderedEnumFieldName(node, property)
+				if !known {
+					return nil, l.notYet(name, "a computed field name")
+				}
+				// Evaluate the ordinary enum read at the key, before its initializer.
+				var err error
+				keyRead, err = l.expression(name.AsComputedPropertyName().Expression)
+				if err != nil {
+					return nil, err
+				}
 			}
 			if property.Kind == ast.KindPropertyAssignment && fieldName == "__proto__" {
 				return nil, &Refused{Where: l.program.Where(property), What: "__proto__ in an object literal", Fix: "JavaScript changes the prototype instead of making an own field; Adamic objects have fixed shapes and no prototype mutation"}
@@ -106,6 +116,9 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 					value = ir.Undefined{Of: declared}
 				}
 				value = l.placeholderInitialValue(property.AsPropertyAssignment().Initializer, declared)
+				if keyRead != nil {
+					value = ir.Comma{Left: keyRead, Right: value}
+				}
 				if literal.Spread != nil {
 					var reason string
 					var err error
@@ -149,7 +162,11 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if censusFieldSlotless(value.Type()) {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
 			}
-			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value, Nullish: l.fieldNullish(property, value)})
+			nullish := l.fieldNullish(property, value)
+			if keyRead != nil {
+				value = ir.Comma{Left: keyRead, Right: value}
+			}
+			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value, Nullish: nullish})
 		default:
 			return nil, l.notYet(property, describe(property)+" in an object literal")
 		}
