@@ -377,7 +377,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	if strings.Contains(code, "adamicDynamicGet(") {
 		code = dynamicKeyedRuntime(program) + code
 	}
-	if strings.Contains(code, "adamicDynamicHas(") || strings.Contains(code, "adamicDynamicRead(") || strings.Contains(code, "adamicHostKeys(") || strings.Contains(code, "adamicHostHasOwn(") || strings.Contains(code, "adamicHostCheck(") {
+	if strings.Contains(code, "adamicDynamicHas(") || strings.Contains(code, "adamicDynamicRead(") || strings.Contains(code, "adamicHostKeys(") || strings.Contains(code, "adamicHostHasOwn(") || strings.Contains(code, "adamicHostCheck(") || strings.Contains(code, "adamicSpreadWithSource(") {
 		code = dynamicHostRuntime(program) + code
 	}
 	if strings.Contains(code, "adamicHasOwnErrorView(") {
@@ -1229,6 +1229,12 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 		}
 		if expression.Spread != nil {
 			spread := e.value(expression.Spread)
+			if expression.SpreadWith {
+				// Native builds this literal with adamic_object_spread_with, which stops on a source not stored as a
+				// plain object or a class instance, so the same source stops here, with the same words, rather than
+				// copying the keys Node copies (ir.SpreadWithSourceStop).
+				spread = "adamicSpreadWithSource(" + spread + ")"
+			}
 			if expression.SpreadReadiness != "" {
 				spread = "adamicSpreadFields(" + spread + ", " + quote(expression.SpreadReadiness) + ")"
 			}

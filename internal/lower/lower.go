@@ -1104,14 +1104,20 @@ type lowering struct {
 
 	// spreadSources is the type each object literal's spread sees its source as, by the literal's
 	// SpreadSite less one, and classHolders each class's instance type by its one-based index, the
-	// two sides of the assignability spreadGetters asks (class_accessors.go).
+	// two sides of the assignability spreadGetters asks (class_accessors.go). spreadNodes is each spread
+	// itself by the same index, where a SpreadWith literal's accessor stop is said (spreadAccessorClass).
 	spreadSources []*checker.Type
+	spreadNodes   []*ast.Node
 	classHolders  map[int]*checker.Type
 	// genericSpreadSites are the SpreadSites of the spreads whose source the checker types with a type
 	// parameter, and prototypeMemberUses the class method calls and presence tests lowering made on a
 	// receiver other than this, which checkGenericSpreadCopyReads judges (generic_spread_copy_reads.go).
 	genericSpreadSites  map[int]bool
 	prototypeMemberUses []prototypeMemberUse
+
+	// spreadWithCopied is spreadCopiedGetters' copied for SpreadWith literals alone: each getter name one may
+	// leave out of its copy, with the class holding it (spreadWithSourceGetter).
+	spreadWithCopied map[string]string
 
 	// toPrimitive is the program's to_string_hint helper plus one, or zero before a String of a union
 	// that may hold an object needs it (to_primitive.go).

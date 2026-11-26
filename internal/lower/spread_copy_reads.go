@@ -27,6 +27,7 @@ import (
 // it stopped on a compiler bug and an enumeration of the copy would leave the field out where Node holds it.
 func (l *lowering) spreadCopiedGetters() (map[string]string, error) {
 	copied := map[string]string{}
+	l.spreadWithCopied = map[string]string{}
 	var failure error
 	check := func(node any) bool {
 		if literal, ok := node.(ir.ObjectLiteral); ok && literal.Spread != nil && failure == nil {
@@ -37,6 +38,9 @@ func (l *lowering) spreadCopiedGetters() (map[string]string, error) {
 				}
 				if _, known := copied[name]; !known {
 					copied[name] = class
+				}
+				if _, known := l.spreadWithCopied[name]; literal.SpreadWith && !known {
+					l.spreadWithCopied[name] = class
 				}
 			}
 		}
@@ -100,6 +104,38 @@ func (l *lowering) spreadCopyRead(reach *accessorReach, copied map[string]string
 		if class, left := l.spreadCopyGetters(literal)[name]; left {
 			return &NotYet{Where: where, What: "a read of " + name + " from " + literal.SpreadReadiness + ", a spread's copy of a " + class + " instance, whose " + name + " is a getter on its prototype: a spread copies own properties only, so the copy has no " + name + " though its type says it does"}
 		}
+		if class, left := l.spreadWithSourceGetter(reach, literal, name, map[int]bool{}); left {
+			return &NotYet{Where: where, What: "a read of " + name + " from " + literal.SpreadReadiness + ", a spread's copy of a spread that copied a " + class + " instance, whose " + name + " is a getter on its prototype: a spread copies own properties only, so the copy has no " + name + " though its type says it does"}
+		}
 	}
 	return nil
+}
+
+// spreadWithSourceGetter is the class whose name getter a SpreadWith literal reaching literal's source may leave
+// out of its copy, through any spread between them. A copy is judged by the type its own spread sees, and a
+// SpreadWith literal's type holds the names it adds, which the class's instances don't have, so { ...inner }
+// over inner = { ...built, extra: 1 } can't find built's getter by its own type: the getter is the SpreadWith
+// literal's to say (spreadCopyGetters). A reach the graph can't close fails closed on the getters some SpreadWith
+// literal in the program may leave out (spreadWithCopied), so a program without one stops nothing new here.
+func (l *lowering) spreadWithSourceGetter(reach *accessorReach, literal ir.ObjectLiteral, name string, seen map[int]bool) (string, bool) {
+	allocations := reach.graph.ReachingAllocations(literal.Spread)
+	if allocations.Unknown {
+		class, left := l.spreadWithCopied[name]
+		return class, left
+	}
+	records := reach.graph.projectionIndex().records
+	for _, site := range allocations.Sites {
+		source, ok := records[site]
+		if !ok || source.Spread == nil || seen[site] {
+			continue
+		}
+		seen[site] = true
+		if class, left := l.spreadCopyGetters(source)[name]; left && source.SpreadWith {
+			return class, true
+		}
+		if class, left := l.spreadWithSourceGetter(reach, source, name, seen); left {
+			return class, true
+		}
+	}
+	return "", false
 }

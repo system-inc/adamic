@@ -119,6 +119,9 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 	if literal.Record {
 		return e.recordLiteral(literal)
 	}
+	if literal.SpreadWith {
+		return e.spreadWith(literal)
+	}
 	if !constructionFields(literal.Fields) {
 		if reused, ok := e.reused(literal); ok {
 			return reused
@@ -268,6 +271,83 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		}
 	}
 	return object
+}
+
+// spreadWith makes a SpreadWith literal's object, { ...source, fields } where a field can't land in the slot
+// the source brings for it (#k7g6f9h): adamic_object_spread_with builds a fresh object whose shape is the
+// actual source's own keys, each at its index, then each field the source lacks, appended in the literal's
+// order, every slot the kind of the value that fills it, in Node's key order (object_spread.c).
+//
+// JavaScript reads the spread's own keys before any field's value is evaluated. So when a value may run program
+// code, or the source's fields are read through the readiness check, the source is copied first, as any spread
+// is (spreadCopy), and the result is built from the copy, which the statement lets go of. Otherwise nothing a
+// value does can change the source, and it's held only so that no value can let go of it before the call.
+//
+// The call takes each value with one count, moved from a temporary the statement owns or retained once (kept),
+// and never retained an overwritten slot of the source, so nothing is dropped for one. In a program with graph
+// storage those plain counts are what adamic_graph_born makes boundary edges of, as copy_checked's copied slots
+// are (Memory, #k7g6f9h), so the adoption follows the call with nothing written to the object between them.
+func (e *emitter) spreadWith(literal ir.ObjectLiteral) string {
+	source := e.value(literal.Spread)
+	base := ""
+	if literal.SpreadReadiness != "" || !spreadWithValuesInert(literal) {
+		// The copy of a source that may be undefined is undefined when it is: the primitive makes that an empty
+		// source, as Node's { ...undefined } is, so no Empty layout is reserved.
+		present := literal
+		present.SpreadMaybeUndefined = false
+		copied := e.spreadCopy(present, source)
+		if literal.SpreadMaybeUndefined {
+			copied = fmt.Sprintf("(%s != NULL ? %s : NULL)", source, copied)
+		}
+		base = e.own(ir.Object, copied)
+		if e.program.ObjectSpreadMayThrow(literal) {
+			e.checkThrown()
+		}
+	} else {
+		// A retain of an undefined source is nothing, and the primitive copies nothing of it.
+		base = e.own(ir.Object, fmt.Sprintf("adamic_retain(%s)", source))
+	}
+	values := make([]string, 0, len(literal.Fields))
+	for _, field := range literal.Fields {
+		values = append(values, e.value(field.Value))
+	}
+	entries := make([]string, 0, len(literal.Fields))
+	for index, field := range literal.Fields {
+		of := field.Value.Type()
+		value := values[index]
+		if field.Nullish != 0 && !cName.MatchString(value) {
+			// The representation byte tests the pointer, so the value is named once rather than evaluated twice.
+			named := e.temporary()
+			e.line("%s %s = %s;", cType(of), named, value)
+			value = named
+		}
+		representation := fieldInitialRepresentation(field, value)
+		if of.IsReference() {
+			value = e.kept(value)
+		}
+		entries = append(entries, fmt.Sprintf("{%s, %s, %s, {.%s = %s}}", cString(field.Name), fieldStorageKind(of), representation, member(of), slotted(of, value)))
+	}
+	overwrites := e.temporary()
+	e.line("adamic_spread_overwrite %s[] = {%s};", overwrites, strings.Join(entries, ", "))
+	object := e.own(ir.Object, fmt.Sprintf("adamic_object_spread_with(%s, %s, %d)", base, overwrites, len(literal.Fields)))
+	e.adoptGraphObject(object, literal)
+	e.programObject(object, literal.ProgramRegion)
+	return object
+}
+
+// spreadWithValuesInert reports whether every operation in every field value of a SpreadWith literal is
+// ir.Inert, so that none can run program code that writes the source before the call reads it. A body of
+// statements inside a value isn't walked, so one counts as not inert.
+func spreadWithValuesInert(literal ir.ObjectLiteral) bool {
+	inert := true
+	for _, field := range literal.Fields {
+		walkStatement(field.Value, func(expression ir.Expression) {
+			inert = inert && ir.Inert(expression)
+		}, func([]ir.Statement) {
+			inert = false
+		})
+	}
+	return inert
 }
 
 // shape declares an object literal's layout once, at file scope, and names it.
