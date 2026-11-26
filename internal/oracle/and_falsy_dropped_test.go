@@ -9,9 +9,9 @@ import (
 // Adamic's ruling of Nov 19 on #snypn8c, rule 3, c1): tsc's compareSignaturesRelated under || with a boolean left
 // (boolean_or, checker.ts:21987), two && lefts (double_and_or, :22020) and a number left assigned through &=
 // (number_and_assign, :22066), a ! over a flag read (element_flags, :32547) and an if condition (if_condition). A
-// left that can only be truthy, 1 or true, never reaches the result (truthy_literal). Each lowers and agrees with
-// Node on the JavaScript backend and natively under the leak check, every left falsy in some call and truthy in
-// another. The stops are pinned in internal/lower/and_falsy_dropped_test.go, and the mutants in
+// left that can only be truthy, 1, never reaches the result (truthy_literal). Each lowers and agrees with
+// Node on the JavaScript backend and natively under the leak check, every other left falsy in some call and truthy
+// in another. The stops are pinned in internal/lower/and_falsy_dropped_test.go, and the mutants in
 // testdata/and_falsy_dropped/mutants.md.
 func TestAndFalsyDroppedAgreesWithNode(t *testing.T) {
 	t.Parallel()

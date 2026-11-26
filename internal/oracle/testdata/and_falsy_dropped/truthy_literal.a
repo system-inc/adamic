@@ -1,5 +1,7 @@
-// a6 (#snypn8c, c1, part 2): a left that can only be truthy, 1 or true, never reaches the && result, so only the
-// right is written into the member slot. tsc refuses "a" on an && left (TS2872, always truthy), so no string row.
+// a6 (#snypn8c, c1, part 2): a left that can only be truthy, here 1, never reaches the && result, so only the right
+// is written into the member slot. tsc refuses "a" on an && left (TS2872, always truthy), so no string row, and
+// `true && checked(n)` is held by falsyArms' own pin, since native's emitter has no conversion from a boolean left to
+// a number result (internal/native/taste.go's logicalConverted panics), whatever the slot.
 enum Ternary { False = 0, Unknown = 1, Maybe = 3, True = -1 }
 function checked(n: number): Ternary.True {
 	if (n < 0) {
@@ -10,7 +12,4 @@ function checked(n: number): Ternary.True {
 function one(n: number): Ternary.True {
 	return 1 && checked(n);
 }
-function yes(n: number): Ternary.True {
-	return true && checked(n);
-}
-console.log(String(one(1)) + ", " + String(yes(2)));
+console.log(String(one(1)) + ", " + String(one(2)));
