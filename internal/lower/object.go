@@ -12,8 +12,9 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 )
 
-// objectLiteral lowers { name: value, ... }, and the one spread 0.1 allows: { ...source, fields },
-// where every field replaces one the source's type already has.
+// objectLiteral lowers { name: value, ... }, and the one spread 0.1 allows: { ...source, fields }. A field
+// that can't land in the slot the spread brings for it (spreadOverwrite) makes the literal a SpreadWith one,
+// whose result's shape is built at run time.
 func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 	if element := l.recordLiteralElement(node); element != nil {
 		return l.recordLiteral(node, element)
@@ -45,6 +46,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			literal.NoReuse = l.hasPrivateStorage(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression)) || l.hasAccessorStorage(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression))
 			literal.Spread = spread
 			l.spreadSources = append(l.spreadSources, l.concrete(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression)))
+			l.spreadNodes = append(l.spreadNodes, property)
 			literal.SpreadSite = len(l.spreadSources)
 			l.librarySpreads = append(l.librarySpreads, librarySpread{node: property, source: spread, view: l.concrete(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression))})
 			l.wholeObjectCopies = append(l.wholeObjectCopies, wholeObjectCopy{node: property, source: spread, copied: l.concrete(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression))})
@@ -59,9 +61,11 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				return nil, err
 			}
 			if literal.Spread != nil {
-				if value, err = l.spreadOverwrite(node, property, name, value); err != nil {
+				var reason string
+				if value, reason, err = l.spreadOverwrite(node, name, value); err != nil {
 					return nil, err
 				}
+				l.spreadWith(&literal, reason)
 			}
 			literal.Fields = append(literal.Fields, ir.Field{Name: name, Value: value})
 		case ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment:
@@ -91,8 +95,10 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				if declared == 0 {
 					return nil, l.notYet(property, "an uninitialized object field without a supported declared slot type")
 				}
+				// A placeholder keeps the stop a SpreadWith literal would lift (#k7g6f9h's first cut): its slot's
+				// readiness is the literal's to say, and adamic_object_spread_with makes every overwrite ready.
 				if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
-					return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
+					return nil, l.notYet(property, spreadAddsField)
 				}
 				value := ir.Expression(zeroValue(declared))
 				if declared.IsReference() {
@@ -100,9 +106,13 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				}
 				value = l.placeholderInitialValue(property.AsPropertyAssignment().Initializer, declared)
 				if literal.Spread != nil {
+					var reason string
 					var err error
-					if value, err = l.spreadOverwrite(node, property, fieldName, value); err != nil {
+					if value, reason, err = l.spreadOverwrite(node, fieldName, value); err != nil {
 						return nil, err
+					}
+					if reason != "" {
+						return nil, l.notYet(property, reason)
 					}
 				}
 				literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value, Uninitialized: true, Unset: true})
@@ -119,7 +129,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				return nil, err
 			}
 			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
-				return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
+				l.spreadWith(&literal, spreadAddsField)
 			}
 			if l.placeholderOrigin(property.Name()) != "" {
 				value = fit(value, placeholderStorage(value.Type()))
@@ -129,9 +139,11 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				value = fit(value, declared)
 			}
 			if literal.Spread != nil {
-				if value, err = l.spreadOverwrite(node, property, fieldName, value); err != nil {
+				var reason string
+				if value, reason, err = l.spreadOverwrite(node, fieldName, value); err != nil {
 					return nil, err
 				}
+				l.spreadWith(&literal, reason)
 			}
 			if censusFieldSlotless(value.Type()) {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
@@ -153,7 +165,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			field.Value = fit(field.Value, ir.Union)
 		}
 	}
-	if literal.SpreadMaybeUndefined {
+	if literal.SpreadMaybeUndefined && !literal.SpreadWith {
 		empty, err := l.emptySpread(node, literal.Fields)
 		if err != nil {
 			return nil, err
@@ -161,6 +173,19 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 		literal.Empty = empty
 	}
 	return l.reserveFactoryFields(node, literal)
+}
+
+// spreadWith makes literal a SpreadWith one when a field's reason, from spreadOverwrite, says the field can't
+// land in the slot its spread brings for it: the result is built by adamic_object_spread_with, a fresh object
+// whose shape is the actual source's own keys plus every field the literal writes, so it's never the source
+// taken over (NoReuse). A source that may be undefined needs no Empty layout, since the primitive makes an
+// undefined source an empty one, as Node's { ...undefined } is. An empty reason changes nothing.
+func (l *lowering) spreadWith(literal *ir.ObjectLiteral, reason string) {
+	if reason == "" {
+		return
+	}
+	literal.SpreadWith = true
+	literal.NoReuse = true
 }
 
 // emptySpread is the object { ...source, fields } makes when source is undefined: JavaScript's is

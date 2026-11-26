@@ -560,6 +560,7 @@ var irSpecFields = map[string]irFieldPolicy{
 	"ObjectLiteral.NoReuse":              {"bool", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"ObjectLiteral.SpreadMaybeUndefined": {"bool", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"ObjectLiteral.Empty":                {"[]Field", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
+	"ObjectLiteral.SpreadWith":           {"bool", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"ObjectLiteral.Tuple":                {"bool", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"ObjectLiteral.Methods":              {"[]Method", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"OwnFunction.Object":                 {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
