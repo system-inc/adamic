@@ -48,6 +48,12 @@ func (graph *allocationFlowGraph) reachingAllocations(expression ir.Expression, 
 		// seen through a cast (binder.ts's isNarrowableOperand, `isNarrowableOperand((expr as
 		// BinaryExpression).left)`) reopens a frame for the cast receiver at every level, once per
 		// recursive call, fan-out^32 before the depth cap, and lowering never finished (#tzy22kd).
+		//
+		// The memo alone doesn't cut a cycle between two such receivers: each level is a deeper frame, so
+		// two receivers whose fields' sources are each other (a projection of x reaches y's receiver, and
+		// y's reaches x's) reopen a fresh frame at every level, fan-out^32 before the depth cap. On tsc's
+		// whole program that ran the first link's 55 minutes (#r1ef873). So a receiver already open on the
+		// stack, at any depth, answers Unknown, as a busy Read does, and Unknown keeps the checks.
 		if key, keyed := graph.projectionFrame(expression, depth); keyed {
 			if graph.projectionFrames == nil {
 				graph.projectionFrames = map[string]ir.AllocationSet{}
@@ -55,7 +61,15 @@ func (graph *allocationFlowGraph) reachingAllocations(expression ir.Expression, 
 			if cached, ok := graph.projectionFrames[key]; ok {
 				return cached
 			}
-			defer func() { graph.projectionFrames[key] = result }()
+			open, _ := projectionValueKey(expression)
+			if graph.projectionOpen == nil {
+				graph.projectionOpen = map[string]bool{}
+			}
+			if graph.projectionOpen[open] {
+				return ir.AllocationSet{Unknown: true, Reasons: []string{"recursive projection receiver not certified"}}
+			}
+			graph.projectionOpen[open] = true
+			defer func() { delete(graph.projectionOpen, open); graph.projectionFrames[key] = result }()
 		}
 	}
 	if counter := projectionFramesOpened.Load(); counter != nil && project {
@@ -154,8 +168,9 @@ func (graph *allocationFlowGraph) reachingAllocations(expression ir.Expression, 
 	return result
 }
 
-// projectionFrame is the memo key of a projected query: the expression, its depth, and the Reads busy
-// around it, sorted. An expression that isn't receiver-shaped has none, and isn't memoized.
+// projectionFrame is the memo key of a projected query: the expression, its depth, and the Reads and
+// receivers busy around it, sorted, since either cuts what the query can follow. An expression that isn't
+// receiver-shaped has none, and isn't memoized.
 func (graph *allocationFlowGraph) projectionFrame(expression ir.Expression, depth int) (string, bool) {
 	key, keyed := projectionValueKey(expression)
 	if !keyed {
@@ -166,11 +181,20 @@ func (graph *allocationFlowGraph) projectionFrame(expression ir.Expression, dept
 		busy = append(busy, local)
 	}
 	sort.Ints(busy)
+	open := make([]string, 0, len(graph.projectionOpen))
+	for receiver := range graph.projectionOpen {
+		open = append(open, receiver)
+	}
+	sort.Strings(open)
 	var builder strings.Builder
 	builder.WriteString(strconv.Itoa(depth))
 	for _, local := range busy {
 		builder.WriteString(",")
 		builder.WriteString(strconv.Itoa(local))
+	}
+	for _, receiver := range open {
+		builder.WriteString(";")
+		builder.WriteString(receiver)
 	}
 	builder.WriteString(" ")
 	builder.WriteString(key)
