@@ -18,3 +18,12 @@ then lowers or stops somewhere else.
 
 The proof's memo has its own: numeric_keys.go:158, the held answer never returned (`if closed, held := ...; held && false {`),
 reds TestNumericKeyTableIsWalkedOncePerBinding (three walks for one binding).
+
+## Road 2: ordinary enum keys in enumeration order
+
+These patches are owed to Loom and have only been checked for applicability.
+
+| Condition | Mutant | Edit | Red |
+|---|---|---|---|
+| Array indices increase strictly | `wrong-drops-ascending-check.patch` | numeric_keys.go:310, disable the ascending comparison in keysInEnumerationOrder | TestNumericKeyOrderedEnumStops/descending at numeric_keys_test.go:266 and the descending order table row |
+| The enum must be initialized before the key is read | `wrong-key-without-readiness.patch` | object.go:88-92, omit the ordinary enum key's member read | TestNumericKeyOrderedEnumReadiness, the unresolved callback at numeric_keys_test.go:327 and checked key assertion at :374 |
