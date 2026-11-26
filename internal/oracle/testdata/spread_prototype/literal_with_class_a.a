@@ -1,0 +1,20 @@
+interface Source {
+	readonly label: string;
+	readonly weight: number;
+}
+class Sized {
+	readonly label = "t";
+	get weight(): number {
+		return 20;
+	}
+}
+const elsewhere: Source = new Sized();
+console.log(String(elsewhere.weight));
+const built: Source = {
+	label: "l",
+	get weight(): number {
+		return 7;
+	},
+};
+const value: Source = { ...built };
+console.log(typeof value.weight + " " + String(value.weight));

@@ -1,0 +1,15 @@
+interface Source {
+	readonly label: string;
+	readonly weight: number;
+}
+class Sized {
+	readonly label = "t";
+	set weight(value: number) {
+		console.log("set " + String(value));
+	}
+}
+function copy(source: Source | undefined): string {
+	const made = { ...source };
+	return typeof made.weight + " " + String(made.weight);
+}
+console.log(copy(new Sized()));
