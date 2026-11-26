@@ -30,6 +30,9 @@ var visitNodesMutations = []visitNodesMutation{
 	// goes red; the hop programs still stop at view_arrays.go or castRefusal (probes J-v8b36r7, J-3ffrmk8),
 	// so no program lowers and lowered is false.
 	{"MayHold", "internal/lower/overload_certificate_visit_nodes.go", "\tif proven == nil {\n\t\treturn false\n\t}\n\tif seen[proven] {\n", "\tif true || proven == nil {\n\t\treturn false\n\t}\n\tif seen[proven] {\n", "TestVisitNodesCertificateScanReadsHops", []string{"(a)_through_unknown", "(b)_through_object", "(c)_through_{}", "(d)_through_a_type_parameter", "(e)_through_an_unknown_parameter"}, false},
+	// Condition 1's typed holders: the object case's property test of -8 restored, so ArrayLike<Node> and
+	// Iterable<Node>, each with properties, may hold no NodeArray. The hops never lower, so lowered is false.
+	{"Holder", "internal/lower/overload_certificate_visit_nodes.go", "\treturn l.checker.IsTypeAssignableTo(predicateReadonlyArray(l.checker, l.checker.GetAnyType(), true), proven)\n", "\treturn len(l.checker.GetPropertiesOfType(proven)) == 0 && !l.castSignatures(proven)\n", "TestVisitNodesCertificateScanReadsHops", []string{"through_ArrayLike<Node>", "through_Iterable<Node>"}, false},
 	// Condition 3: the guard read from any earlier statement of the block, not the one right before.
 	{"Adjacent", "internal/lower/overload_certificate_visit_nodes.go", "\treturn l.overloadGuardedLoop(implementation, guarded, test, statements[position-1], local)\n", "\tfor _, earlier := range statements[:position] {\n\t\tif l.overloadGuardedLoop(implementation, guarded, test, earlier, local) {\n\t\t\treturn true\n\t\t}\n\t}\n\treturn false\n", "TestVisitNodesCertificateLoopShape", []string{"a_statement_between"}, true},
 	// Condition 5: overloadCertificateSameHeld's NodeArray arm dropped, so a NodeArray is no collection it reads.
@@ -60,6 +63,10 @@ func TestProduct_VisitNodesWritableViewMutant(t *testing.T) {
 func TestProduct_VisitNodesMayHoldMutant(t *testing.T) {
 	t.Parallel()
 	visitNodesMutantBinary(t, "MayHold")
+}
+func TestProduct_VisitNodesHolderMutant(t *testing.T) {
+	t.Parallel()
+	visitNodesMutantBinary(t, "Holder")
 }
 func TestProduct_VisitNodesAdjacentMutant(t *testing.T) {
 	t.Parallel()

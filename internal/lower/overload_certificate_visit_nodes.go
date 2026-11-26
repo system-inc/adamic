@@ -833,11 +833,14 @@ func (l *lowering) overloadGuardedWritableCast(source, target *checker.Type, lit
 
 // overloadGuardedMayHoldNodeArray is whether a value of type proven may be a NodeArray without its type saying so
 // (Lower's must candidate on #ytagqs5): a top type hop, `nodes as unknown` and then `as Node[]`, makes a writable
-// view the cast from a NodeArray alone never shows. So any, unknown, object, an object type with no property
-// and no call or construct signature ({}, or an index signature alone), lib's ReadonlyArray and a readonly tuple,
-// either of which a NodeArray is assigned to as it is, and a type parameter whose constraint, absent or read the
-// same way, doesn't exclude one, each may. A union may when a member may, an intersection when every part may,
-// and a type met again on the walk may, failing closed.
+// view the cast from a NodeArray alone never shows. So any, unknown, object, lib's ReadonlyArray and a readonly
+// tuple, either of which a NodeArray is assigned to as it is, a type parameter whose constraint, absent or read
+// the same way, doesn't exclude one, and any other object type a readonly array is assignable to, by the
+// checker, each may: {}, an index signature alone, ArrayLike<Node>, Iterable<Node>, { readonly length: number }
+// (Lower's should on #ytagqs5). The array asked is lib's own ReadonlyArray of any, made by the checker
+// (predicateReadonlyArray), since a NodeArray of any element is one: of unknown it would fit no holder whose
+// element is typed, ArrayLike<Node> among them. A union may when a member may, an intersection when every part
+// may, and a type met again on the walk may, failing closed.
 func (l *lowering) overloadGuardedMayHoldNodeArray(proven *checker.Type, seen map[*checker.Type]bool) bool {
 	if proven == nil {
 		return false
@@ -871,7 +874,7 @@ func (l *lowering) overloadGuardedMayHoldNodeArray(proven *checker.Type, seen ma
 	case l.isLibraryType(proven, "ReadonlyArray"), checker.IsTupleType(proven) && proven.TargetTupleType().IsReadonly():
 		return true
 	}
-	return len(l.checker.GetPropertiesOfType(proven)) == 0 && !l.castSignatures(proven)
+	return l.checker.IsTypeAssignableTo(predicateReadonlyArray(l.checker, l.checker.GetAnyType(), true), proven)
 }
 
 // overloadGuardedWritableField is whether some view the program holds can write field of a value the check
