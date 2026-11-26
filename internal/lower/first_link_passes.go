@@ -146,8 +146,9 @@ func (l *lowering) firstLinkMainAt(unit *ast.Node) (start, length int, placed bo
 // firstLinkStubUnit traps a unit in the IR already made: every function lowered from a declaration inside
 // it, the unit itself included, every generic instance among them, has the stub for its body, and a
 // top-level statement's own statements in Main become the stub, then empty blocks, so Main keeps its
-// length.
+// length. Then every helper whose owners are all trapped now is stubbed too (firstLinkStubHelpers).
 func (l *lowering) firstLinkStubUnit(unit *ast.Node, stub ir.Panic) {
+	defer l.firstLinkStubHelpers()
 	for index, declaration := range l.functionNodes {
 		for ancestor := declaration; ancestor != nil; ancestor = ancestor.Parent {
 			if ancestor == unit {
@@ -170,11 +171,13 @@ func (l *lowering) firstLinkStubUnit(unit *ast.Node, stub ir.Panic) {
 // firstLinkHeldStops records, in a first-link lowering, the stops lowering held rather than returned where
 // it met them: the first unlowerable construct, and every async payload it couldn't lower. Each is placed
 // and trapped as a pass's stop is. One that's neither a NotYet nor a Refused stays held, so it's returned
-// as it always is.
+// as it always is. First, every helper whose owners the bodies' and statements' traps left all trapped is
+// stubbed with them (firstLinkStubHelpers), before any pass judges its code.
 func (l *lowering) firstLinkHeldStops() {
 	if !l.firstLinkTraps {
 		return
 	}
+	l.firstLinkStubHelpers()
 	if l.unlowerable != nil {
 		l.unlowerable = l.firstLinkPass("unlowerable", false, l.unlowerable, nil)
 	}
