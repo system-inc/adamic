@@ -17,22 +17,23 @@ import (
 // overwrite of another kind than the source's slot, one the source's type makes optional, and one it doesn't
 // declare, with the width a { readonly a: number } may hold beside it. Each is held to its pinned output and to
 // Node, through Object.keys, JSON.stringify, for-in and a later read where the program prints them. graph marks
-// Memory's two graph-program pins, whose counted build must also end with nothing held in a region.
+// Memory's three graph-program pins, whose counted build must also end with nothing held in a region.
 var spreadWithAgreeing = []struct {
 	path, want string
 	graph      bool
 }{
-	{"spread_with/width_extra.ts", "a,extra,k\n{\"a\":1,\"extra\":2,\"k\":5}\na,extra,k\n1 5\n{\"a\":1,\"extra\":2,\"k\":5}\n", false},
-	{"spread_with/kind_change.ts", "k,label\n{\"k\":\"ten\",\"label\":\"one\"}\nstring ten one\nk,n\n{\"k\":5,\"n\":2}\nnumber 7\n", false},
+	{"spread_with/width_extra.ts", "a,extra,k\n{\"a\":1,\"extra\":2,\"k\":5}\n1 5\n{\"a\":1,\"extra\":2,\"k\":5}\n", false},
+	{"spread_with/kind_change.ts", "k,label\n{\"k\":\"ten\",\"label\":\"one\"}\nstring ten one\n{\"k\":5,\"n\":2}\nnumber 7\n", false},
 	{"spread_with/optional_absent.ts", "a,z,k\n{\"a\":1,\"z\":3,\"k\":\"set\"}\n1 set 3\na,k,z\n{\"a\":1,\"k\":\"set\",\"z\":3}\n1 set 3\n", false},
-	{"spread_with/resolver_245.ts", "path,extension,packageId,resolvedUsingTsExtension,originalPath\n{\"path\":\"/b.ts\",\"extension\":\".ts\",\"resolvedUsingTsExtension\":false,\"originalPath\":\"/c.ts\"}\n/c.ts\npath,extension,packageId,originalPath,resolvedUsingTsExtension\n{\"path\":\"/b.ts\",\"extension\":\".ts\",\"originalPath\":\"/c.ts\",\"resolvedUsingTsExtension\":false}\n/c.ts\npath,extension,packageId,resolvedUsingTsExtension\n{\"path\":\"/a.ts\",\"extension\":\".ts\",\"resolvedUsingTsExtension\":false}\nundefined\n", false},
+	{"spread_with/resolver_245.ts", "path,extension,packageId,resolvedUsingTsExtension,originalPath\n/b.ts .ts undefined /c.ts false\npath,extension,packageId,originalPath,resolvedUsingTsExtension\n/b.ts .ts undefined /c.ts false\npath,extension,packageId,resolvedUsingTsExtension\n/a.ts .ts undefined undefined false\n", false},
 	{"spread_with/resolver_279.ts", "resolvedModule,failedLookupLocations,affectingLocations,resolutionDiagnostics\n{\"resolvedModule\":{\"resolvedFileName\":\"/a.ts\"},\"failedLookupLocations\":[\"/x\",\"/y\"],\"resolutionDiagnostics\":[{\"messageText\":\"m\"}]}\nresolvedModule,alternateResult,failedLookupLocations,affectingLocations,resolutionDiagnostics\n{\"alternateResult\":\"/alt\",\"failedLookupLocations\":[\"/y\"],\"resolutionDiagnostics\":[{\"messageText\":\"m\"}]}\nmissing\n", false},
 	{"spread_with/uniform.ts", "10 0 7 1\n", false},
 	{"spread_with/effect_order.ts", "1 2 5\n", false},
-	{"spread_with/backstop_plain.ts", "{\"length\":2,\"k\":1}\nend\n", false},
+	{"spread_with/backstop_plain.ts", "{\"0\":2,\"k\":1}\nend\n", false},
 	{"spread_with/backstop_class.ts", "x,y,k\n{\"x\":1,\"y\":2,\"k\":1}\nend\n", false},
 	{"spread_with/graph_member.ts", "b a b a\n", true},
 	{"spread_with/graph_fresh.ts", "b fresh b\n", true},
+	{"spread_with/graph_string.ts", "xx a xx\n", true},
 	// #xy74m5x's own rows, which its stop held until a spread built its own layout.
 	{"spread_overwrite/number_present.ts", "undefined\n", false},
 	{"spread_overwrite/optional_string.ts", "true\nundefined\ntrue\nundefined\n", false},
@@ -129,13 +130,14 @@ func TestSpreadWithAgrees(t *testing.T) {
 // What keeps its stop, each where and in the words it stops: a SpreadWith literal whose source may hold an accessor
 // as an own key, an object literal's, stops by the accessor registry, since adamic_object_spread_with passes over
 // an accessor that Node's spread runs and copies (spreadAccessorClass); and one whose source's view may hold a
-// library type's storage, an array, a typed array, a Map, a Set or a Node host value, is refused by
-// checkLibrarySpreads, so those storages never reach the run-time stop (TestSpreadWithSourceBackstop). If a stop
+// library type's storage, an array, a typed array or a Node host value, is refused by checkLibrarySpreads, and a
+// Map or a Set stops earlier, where it's passed to a plain object type, so those storages never reach the run-time stop (TestSpreadWithSourceBackstop). If a stop
 // goes missing, the program is run natively under the sanitizers and its run is part of the failure.
 func TestSpreadWithStops(t *testing.T) {
 	t.Parallel()
 	const accessor = "which adamic_object_spread_with doesn't copy yet (#vjvcnnj)"
 	const library = "an object spread through a view that may hold library class "
+	const collection = "a Map or Set going where a plain object type is held"
 	// An accessor row's words end the stop's, naming what reaches it. A refused row is checkLibrarySpreads' Refused,
 	// every other a NotYet.
 	for _, pin := range []struct {
@@ -145,8 +147,8 @@ func TestSpreadWithStops(t *testing.T) {
 		{"spread_with/accessor_literal.ts", "l 1\n3\n", "...source", accessor + ", an object literal with accessors among them", true, false},
 		{"spread_with/backstop_array.ts", "{\"length\":2,\"k\":1}\n{\"0\":1,\"1\":2,\"k\":1}\n", "...source", library + "Array", false, true},
 		{"spread_with/backstop_typed_array.ts", "{\"length\":2,\"k\":1}\n{\"0\":0,\"1\":0,\"k\":1}\n", "...source", library + "Uint8Array", false, true},
-		{"spread_with/backstop_map.ts", "{\"size\":2,\"k\":1}\n{\"k\":1}\n", "...source", library + "Map", false, true},
-		{"spread_with/backstop_set.ts", "{\"size\":2,\"k\":1}\n{\"k\":1}\n", "...source", library + "Set", false, true},
+		{"spread_with/backstop_map.ts", "{\"size\":2,\"k\":1}\n{\"k\":1}\n", "new Map<", collection, false, false},
+		{"spread_with/backstop_set.ts", "{\"size\":2,\"k\":1}\n{\"k\":1}\n", "new Set<", collection, false, false},
 		{"spread_with/backstop_host.ts", "number\nnumber\n", "...source", library, false, true},
 	} {
 		t.Run(pin.file, func(t *testing.T) {
@@ -190,16 +192,16 @@ func TestSpreadWithStops(t *testing.T) {
 // NotYet (Adamic on #k7g6f9h, under #7fg2fp3's form, a positive test on both backends): Node copies its own
 // enumerable keys and runs on, and both backends print exactly Node's output up to the spread, then stop, exit 70,
 // with ir.SpreadWithSourceStop whole. These are the storages lowering can't see at the spread, a tuple (no library
-// type names one) and a closure (its type is its own signature's), each through { readonly length: number }; the
-// rest are refused at compile time (TestSpreadWithStops). Native runs sanitized, ASan with UBSan, so a source read
+// type names one) and a function (its type is its own), each through a view naming a field no library type has,
+// { readonly 0: number } and { readonly tag: number }, since a length view would fit console.log's function type
+// and be refused; the rest are refused at compile time (TestSpreadWithStops). Native runs sanitized, ASan with UBSan, so a source read
 // as an object's storage fails there loudly instead. backstop_plain.ts and backstop_class.ts, a plain object and an
 // accessor-free class instance through such a type, agree (TestSpreadWithAgrees).
 func TestSpreadWithSourceBackstop(t *testing.T) {
 	t.Parallel()
-	const before = "{\"length\":2,\"k\":1}\n"
-	for _, pin := range []struct{ file, node string }{
-		{"backstop_tuple.ts", before + "{\"0\":1,\"1\":2,\"k\":1}\nend\n"},
-		{"backstop_closure.ts", before + "{\"k\":1}\nend\n"},
+	for _, pin := range []struct{ file, before, node string }{
+		{"backstop_tuple.ts", "{\"0\":5,\"k\":1}\n", "{\"0\":1,\"1\":2,\"k\":1}\nend\n"},
+		{"backstop_closure.ts", "{\"tag\":1,\"k\":1}\n", "{\"tag\":2,\"k\":1}\n3\n"},
 	} {
 		t.Run(pin.file, func(t *testing.T) {
 			t.Parallel()
@@ -208,7 +210,7 @@ func TestSpreadWithSourceBackstop(t *testing.T) {
 				t.Fatal(err)
 			}
 			truth := onNode(t, path)
-			if truth.exitCode != 0 || string(truth.stdout) != pin.node {
+			if truth.exitCode != 0 || string(truth.stdout) != pin.before+pin.node {
 				t.Fatalf("Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
 			program, err := lowered(t, path)
@@ -218,8 +220,8 @@ func TestSpreadWithSourceBackstop(t *testing.T) {
 			sanitized, _ := natively(t, program)
 			stop := "adamic: panic: " + ir.SpreadWithSourceStop + "\n"
 			for name, got := range map[string]run{"native": sanitized, "javascript": onJavaScriptBackend(t, program)} {
-				if got.exitCode != 70 || string(got.stdout) != before || string(got.stderr) != stop {
-					t.Errorf("%s: exit %d, stdout %q, stderr %q; want exit 70, stdout %q, stderr %q", name, got.exitCode, got.stdout, got.stderr, before, stop)
+				if got.exitCode != 70 || string(got.stdout) != pin.before || string(got.stderr) != stop {
+					t.Errorf("%s: exit %d, stdout %q, stderr %q; want exit 70, stdout %q, stderr %q", name, got.exitCode, got.stdout, got.stderr, pin.before, stop)
 				}
 			}
 		})

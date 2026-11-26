@@ -26,7 +26,11 @@ copies its value. Red: `TestSpreadWithStops/spread_with/accessor_literal.ts`.
 counted build: `TestSpreadWithAgrees/spread_with/resolver_279.ts` and `graph_fresh.ts` (fresh arrays and a fresh literal).
 
 **W7, a graph value held after adoption too.** Today's copy arm's hold is added on top of the primitive's count, after the
-adoption (Memory's mutant). Red, on the counted build: `TestSpreadWithAgrees/spread_with/graph_member.ts` and `graph_fresh.ts`.
+adoption (Memory's mutant). On a member value it can't show: the adoption's merge takes the count off every edge it
+brings inside one region, and adamic_graph_hold returns a member value without a retain (graph_regions.c), so
+graph_member's and graph_fresh's counted rows stay balanced under it, and W6 keeps their count. On a value that isn't a
+member, a fresh string, the hold retains it (graph_regions.c:672-678), one count too many. Red, on the counted build:
+`TestSpreadWithAgrees/spread_with/graph_string.ts`.
 
 **W8, the native storage check dropped.** Library's positive test in object_spread.c (`if (!plain)`) never stops, her
 `storage-check-dropped`, planted on this stacked tree, so a tuple is copied as a plain object's slots and a closure's
@@ -39,6 +43,11 @@ copied where native stops. Red: `TestSpreadWithSourceBackstop/backstop_tuple.ts`
 **W10, the getter walk blind to a SpreadWith literal.** spreadCopyRead judges `{ ...inner }` by its own spread's type
 alone, which holds inner's `extra` and so no Sized, and the read of weight lowers and loads a slot the copy lacks
 (Memory's mutant). Red: `TestSpreadWithGetterReads/getter_copy_of_copy.ts`.
+
+**W11, an object literal's holder judged by assignability.** spreadAccessorClass tests an object literal's own fresh
+type against the spread's view, which the checker relates with the excess-property check, so a literal with a getter
+reaching a narrower view by width is passed over (J-5e03qs3), and natively Library's backstop stops where Node runs.
+Red: `TestSpreadWithStops/spread_with/accessor_literal.ts`.
 
 Must stay green under each: `TestSpreadOverwriteNeighborsAgree` and `TestSpreadWithLeavesNeighbors`. A pin row the C's
 own mutant turns red is Library's to name in object_spread_test.go; W8 is hers planted here to show the backend rows.

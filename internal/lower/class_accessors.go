@@ -626,8 +626,12 @@ func (l *lowering) spreadAccessorClass(literal ir.ObjectLiteral) string {
 		viewed = l.spreadSources[literal.SpreadSite-1]
 	}
 	for index := range l.result.Classes {
+		// An object literal's holder is its own fresh type, which the checker relates with the excess-property
+		// check, so { label, get size() } is no { readonly label: string } though its value reaches one by width
+		// (J-5e03qs3's accessor_literal.ts). An object literal with accessors counts whatever the view, failing
+		// closed.
 		holder := l.classHolders[index+1]
-		if viewed != nil && holder != nil && !l.checker.IsTypeAssignableTo(holder, viewed) {
+		if viewed != nil && holder != nil && !l.result.Classes[index].Literal && !l.checker.IsTypeAssignableTo(holder, viewed) {
 			continue
 		}
 		public := map[string]bool{}
