@@ -1,0 +1,155 @@
+Roots: compiler tsconfig plus all src/**/*.ts (713)
+Harness roots (38): src/harness/client.ts, src/harness/collectionsImpl.ts, src/harness/compilerImpl.ts, src/harness/documentsUtil.ts, src/harness/evaluatorImpl.ts, src/harness/fakesHosts.ts, src/harness/findUpDir.ts, src/harness/fourslashImpl.ts, src/harness/fourslashInterfaceImpl.ts, src/harness/harnessGlobals.ts, src/harness/harnessIO.ts, src/harness/harnessLanguageService.ts, src/harness/harnessUtils.ts, src/harness/incrementalUtils.ts, src/harness/projectServiceStateLogger.ts, src/harness/runnerbase.ts, src/harness/sourceMapRecorder.ts, src/harness/tsserverLogger.ts, src/harness/typeWriter.ts, src/harness/util.ts, src/harness/vfsUtil.ts, src/harness/vpathUtil.ts, src/harness/watchUtils.ts, src/harness/_namespaces/FourSlash.ts, src/harness/_namespaces/FourSlashInterface.ts, src/harness/_namespaces/Harness.LanguageService.ts, src/harness/_namespaces/Harness.SourceMapRecorder.ts, src/harness/_namespaces/Harness.ts, src/harness/_namespaces/Utils.ts, src/harness/_namespaces/collections.ts, src/harness/_namespaces/compiler.ts, src/harness/_namespaces/documents.ts, src/harness/_namespaces/evaluator.ts, src/harness/_namespaces/fakes.ts, src/harness/_namespaces/ts.server.ts, src/harness/_namespaces/ts.ts, src/harness/_namespaces/vfs.ts, src/harness/_namespaces/vpath.ts
+
+Transformer slot, including contextual property symbols
+src/compiler/types.ts:<coordinate> [MethodSignature] /** @internal */ setLexicalEnvironmentFlags(flags: LexicalEnvironmentFlags, value: boolean): void;
+src/compiler/visitorPublic.ts:<coordinate> [direct call] context.setLexicalEnvironmentFlags(LexicalEnvironmentFlags.InParameters, true);
+src/compiler/visitorPublic.ts:<coordinate> [direct call] context.setLexicalEnvironmentFlags(LexicalEnvironmentFlags.InParameters, false);
+src/compiler/transformer.ts:<coordinate> [ShorthandPropertyAssignment] setLexicalEnvironmentFlags,
+src/compiler/transformer.ts:<coordinate> [declaration/write] setLexicalEnvironmentFlags: (_flags: number, _value: boolean = false): void => {},
+
+Context object
+src/compiler/transformer.ts:<coordinate> [declaration/write] export const nullTransformationContext: TransformationContext = {
+src/compiler/visitorPublic.ts:<coordinate> [ImportSpecifier] nullTransformationContext,
+src/compiler/visitorPublic.ts:<coordinate> [Parameter] export function visitEachChild<T extends Node>(node: T | undefined, visitor: Visitor, context = nullTransformationContext, nodesVisitor = visitNodes, tokenVisitor?: Visitor, nodeVisitor: NodeVisitor = visitNode): T | undefined {
+src/services/textChanges.ts:<coordinate> [ImportSpecifier] nullTransformationContext,
+src/services/textChanges.ts:<coordinate> [SpreadAssignment] ...nullTransformationContext,
+src/services/textChanges.ts:<coordinate> [PropertyAccessExpression] nullTransformationContext.factory.flags | NodeFactoryFlags.NoParenthesizerRules,
+src/services/textChanges.ts:<coordinate> [PropertyAccessExpression] nullTransformationContext.factory.baseFactory,
+
+Spread alias
+src/services/textChanges.ts:<coordinate> [declaration/write] const textChangesTransformationContext: TransformationContext = {
+src/services/textChanges.ts:<coordinate> [CallExpression] const visited = visitEachChild(node, assignPositionsToNode, textChangesTransformationContext, assignPositionsToNodeArray, assignPositionsToNode);
+
+visitEachChild context or dispatch
+src/compiler/visitorPublic.ts:<coordinate> [declaration/write] export function visitEachChild<T extends Node>(node: T | undefined, visitor: Visitor, context = nullTransformationContext, nodesVisitor = visitNodes, tokenVisitor?: Visitor, nodeVisitor: NodeVisitor = visitNode): T | undefined {
+src/compiler/visitorPublic.ts:<coordinate> [CallExpression] return fn === undefined ? node : fn(node, visitor, context, nodesVisitor, nodeVisitor, tokenVisitor);
+
+visitParameterList context or dispatch
+src/compiler/visitorPublic.ts:<coordinate> [declaration/write] export function visitParameterList(nodes: NodeArray<ParameterDeclaration> | undefined, visitor: Visitor, context: TransformationContext, nodesVisitor = visitNodes) {
+src/compiler/visitorPublic.ts:<coordinate> [direct call] context.startLexicalEnvironment();
+src/compiler/visitorPublic.ts:<coordinate> [direct call] context.setLexicalEnvironmentFlags(LexicalEnvironmentFlags.InParameters, true);
+src/compiler/visitorPublic.ts:<coordinate> [direct call] context.getLexicalEnvironmentFlags() & LexicalEnvironmentFlags.VariablesHoistedInParameters &&
+src/compiler/visitorPublic.ts:<coordinate> [direct call] getEmitScriptTarget(context.getCompilerOptions()) >= ScriptTarget.ES2015
+src/compiler/visitorPublic.ts:<coordinate> [CallExpression] updated = addDefaultValueAssignmentsIfNeeded(updated, context);
+src/compiler/visitorPublic.ts:<coordinate> [direct call] context.setLexicalEnvironmentFlags(LexicalEnvironmentFlags.InParameters, false);
+src/compiler/visitorPublic.ts:<coordinate> [direct call] context.suspendLexicalEnvironment();
+
+addDefaultValueAssignmentsIfNeeded context or dispatch
+src/compiler/visitorPublic.ts:<coordinate> [declaration/write] function addDefaultValueAssignmentsIfNeeded(parameters: NodeArray<ParameterDeclaration>, context: TransformationContext) {
+src/compiler/visitorPublic.ts:<coordinate> [CallExpression] const updated = addDefaultValueAssignmentIfNeeded(parameter, context);
+src/compiler/visitorPublic.ts:<coordinate> [PropertyAccessExpression] return setTextRange(context.factory.createNodeArray(result, parameters.hasTrailingComma), parameters);
+
+visitEachChildTable context or dispatch
+src/compiler/visitorPublic.ts:<coordinate> [AsExpression] const fn = (visitEachChildTable as Record<SyntaxKind, VisitEachChildFunction<any> | undefined>)[node.kind];
+src/compiler/visitorPublic.ts:<coordinate> [declaration/write] const visitEachChildTable: VisitEachChildTable = {
+
+ProjectService.baseline and related symbols
+src/server/editorServices.ts:<coordinate> [declaration/write] /** @internal */ baseline: (title?: string) => void = noop;
+src/harness/projectServiceStateLogger.ts:<coordinate> [BinaryExpression] if (service.baseline !== noop) return; // Already patched
+src/harness/projectServiceStateLogger.ts:<coordinate> [BinaryExpression] service.baseline = title => {
+src/harness/harnessLanguageService.ts:<coordinate> [direct call] this.server.getProjectService().baseline();
+src/harness/harnessLanguageService.ts:<coordinate> [direct call] this.server.getProjectService().baseline(when);
+src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:<coordinate> [direct call] this.service?.baseline();
+ProjectService.baseline initializes from the shared declaration: export function noop(_?: unknown): void {}
+Transformer slot initializes from its local arrow: (_flags: number, _value: boolean = false): void => {}
+shared length = 1
+local length = 1
+
+Bindings that call visitParameterList
+src/compiler/visitorPublic.ts:<coordinate> [declaration/write] export function visitParameterList(nodes: NodeArray<ParameterDeclaration>, visitor: Visitor, context: TransformationContext, nodesVisitor?: NodesVisitor): NodeArray<ParameterDeclaration>;
+src/compiler/visitorPublic.ts:<coordinate> [declaration/write] export function visitParameterList(nodes: NodeArray<ParameterDeclaration> | undefined, visitor: Visitor, context: TransformationContext, nodesVisitor?: NodesVisitor): NodeArray<ParameterDeclaration> | undefined;
+src/compiler/visitorPublic.ts:<coordinate> [declaration/write] export function visitParameterList(nodes: NodeArray<ParameterDeclaration> | undefined, visitor: Visitor, context: TransformationContext, nodesVisitor = visitNodes) {
+src/compiler/visitorPublic.ts:<coordinate> [direct call] visitParameterList(node.parameters, visitor, context, nodesVisitor),
+src/compiler/visitorPublic.ts:<coordinate> [direct call] visitParameterList(node.parameters, visitor, context, nodesVisitor),
+src/compiler/visitorPublic.ts:<coordinate> [direct call] visitParameterList(node.parameters, visitor, context, nodesVisitor),
+src/compiler/visitorPublic.ts:<coordinate> [direct call] visitParameterList(node.parameters, visitor, context, nodesVisitor),
+src/compiler/visitorPublic.ts:<coordinate> [direct call] visitParameterList(node.parameters, visitor, context, nodesVisitor),
+src/compiler/visitorPublic.ts:<coordinate> [direct call] visitParameterList(node.parameters, visitor, context, nodesVisitor),
+src/compiler/visitorPublic.ts:<coordinate> [direct call] visitParameterList(node.parameters, visitor, context, nodesVisitor),
+src/compiler/transformers/ts.ts:<coordinate> [ImportSpecifier] visitParameterList,
+src/compiler/transformers/ts.ts:<coordinate> [direct call] visitParameterList(node.parameters, visitor, context),
+src/compiler/transformers/ts.ts:<coordinate> [direct call] visitParameterList(node.parameters, visitor, context),
+src/compiler/transformers/ts.ts:<coordinate> [direct call] visitParameterList(node.parameters, visitor, context),
+src/compiler/transformers/ts.ts:<coordinate> [direct call] visitParameterList(node.parameters, visitor, context),
+src/compiler/transformers/ts.ts:<coordinate> [direct call] visitParameterList(node.parameters, visitor, context),
+src/compiler/transformers/ts.ts:<coordinate> [direct call] visitParameterList(node.parameters, visitor, context),
+src/compiler/transformers/ts.ts:<coordinate> [direct call] visitParameterList(node.parameters, visitor, context),
+src/compiler/transformers/classFields.ts:<coordinate> [ImportSpecifier] visitParameterList,
+src/compiler/transformers/classFields.ts:<coordinate> [direct call] visitParameterList(node.parameters, visitor, context),
+src/compiler/transformers/classFields.ts:<coordinate> [direct call] const parameters = visitParameterList(constructor ? constructor.parameters : undefined, visitor, context);
+src/compiler/transformers/es2017.ts:<coordinate> [ImportSpecifier] visitParameterList,
+src/compiler/transformers/es2017.ts:<coordinate> [direct call] visitParameterList(node.parameters, visitor, context),
+src/compiler/transformers/es2017.ts:<coordinate> [direct call] visitParameterList(node.parameters, visitor, context),
+src/compiler/transformers/es2017.ts:<coordinate> [direct call] visitParameterList(node.parameters, visitor, context),
+src/compiler/transformers/es2017.ts:<coordinate> [direct call] visitParameterList(node.parameters, visitor, context),
+src/compiler/transformers/es2017.ts:<coordinate> [direct call] visitParameterList(node.parameters, visitor, context),
+src/compiler/transformers/es2017.ts:<coordinate> [direct call] visitParameterList(node.parameters, visitor, context),
+src/compiler/transformers/es2017.ts:<coordinate> [direct call] visitParameterList(node.parameters, visitor, context),
+src/compiler/transformers/es2017.ts:<coordinate> [direct call] return visitParameterList(node.parameters, visitor, context);
+src/compiler/transformers/es2017.ts:<coordinate> [direct call] const innerParameters = !isSimpleParameterList(node.parameters) ? visitParameterList(node.parameters, visitor, context) : undefined;
+src/compiler/transformers/es2018.ts:<coordinate> [ImportSpecifier] visitParameterList,
+src/compiler/transformers/es2018.ts:<coordinate> [direct call] visitParameterList(node.parameters, parameterVisitor, context),
+src/compiler/transformers/es2018.ts:<coordinate> [direct call] visitParameterList(node.parameters, parameterVisitor, context),
+src/compiler/transformers/es2018.ts:<coordinate> [direct call] visitParameterList(node.parameters, parameterVisitor, context),
+src/compiler/transformers/es2018.ts:<coordinate> [direct call] visitParameterList(node.parameters, parameterVisitor, context),
+src/compiler/transformers/es2018.ts:<coordinate> [direct call] visitParameterList(node.parameters, parameterVisitor, context),
+src/compiler/transformers/es2018.ts:<coordinate> [direct call] visitParameterList(node.parameters, parameterVisitor, context),
+src/compiler/transformers/es2018.ts:<coordinate> [direct call] visitParameterList(node.parameters, parameterVisitor, context),
+src/compiler/transformers/es2018.ts:<coordinate> [direct call] return visitParameterList(node.parameters, visitor, context);
+src/compiler/transformers/es2018.ts:<coordinate> [direct call] const innerParameters = !isSimpleParameterList(node.parameters) ? visitParameterList(node.parameters, visitor, context) : undefined;
+src/compiler/transformers/es2015.ts:<coordinate> [ImportSpecifier] visitParameterList,
+src/compiler/transformers/es2015.ts:<coordinate> [direct call] return visitParameterList(constructor && !hasSynthesizedSuper ? constructor.parameters : undefined, visitor, context)
+src/compiler/transformers/es2015.ts:<coordinate> [direct call] visitParameterList(node.parameters, visitor, context),
+src/compiler/transformers/es2015.ts:<coordinate> [direct call] const parameters = visitParameterList(node.parameters, visitor, context);
+src/compiler/transformers/es2015.ts:<coordinate> [direct call] const parameters = visitParameterList(node.parameters, visitor, context);
+src/compiler/transformers/es2015.ts:<coordinate> [direct call] const parameters = visitParameterList(node.parameters, visitor, context);
+src/compiler/transformers/es2015.ts:<coordinate> [direct call] const parameters = visitParameterList(node.parameters, visitor, context);
+src/compiler/transformers/generators.ts:<coordinate> [ImportSpecifier] visitParameterList,
+src/compiler/transformers/generators.ts:<coordinate> [direct call] visitParameterList(node.parameters, visitor, context),
+src/compiler/transformers/generators.ts:<coordinate> [direct call] visitParameterList(node.parameters, visitor, context),
+Dispatch [SyntaxKind.MethodDeclaration] -> src/compiler/visitorPublic.ts:<coordinate> visitParameterList(node.parameters, visitor, context, nodesVisitor)
+Dispatch [SyntaxKind.Constructor] -> src/compiler/visitorPublic.ts:<coordinate> visitParameterList(node.parameters, visitor, context, nodesVisitor)
+Dispatch [SyntaxKind.GetAccessor] -> src/compiler/visitorPublic.ts:<coordinate> visitParameterList(node.parameters, visitor, context, nodesVisitor)
+Dispatch [SyntaxKind.SetAccessor] -> src/compiler/visitorPublic.ts:<coordinate> visitParameterList(node.parameters, visitor, context, nodesVisitor)
+Dispatch [SyntaxKind.FunctionExpression] -> src/compiler/visitorPublic.ts:<coordinate> visitParameterList(node.parameters, visitor, context, nodesVisitor)
+Dispatch [SyntaxKind.ArrowFunction] -> src/compiler/visitorPublic.ts:<coordinate> visitParameterList(node.parameters, visitor, context, nodesVisitor)
+Dispatch [SyntaxKind.FunctionDeclaration] -> src/compiler/visitorPublic.ts:<coordinate> visitParameterList(node.parameters, visitor, context, nodesVisitor)
+Indexed reads or reflective operations on the two checker-assignable receiver types: 0
+
+enableSubstitution slot and contextual property
+src/compiler/types.ts:<coordinate> [MethodSignature] enableSubstitution(kind: SyntaxKind): void;
+src/compiler/transformers/ts.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.PropertyAccessExpression);
+src/compiler/transformers/ts.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.ElementAccessExpression);
+src/compiler/transformers/ts.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.Identifier);
+src/compiler/transformers/ts.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.Identifier);
+src/compiler/transformers/ts.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.ShorthandPropertyAssignment);
+src/compiler/transformers/classFields.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.Identifier);
+src/compiler/transformers/classFields.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.ThisKeyword);
+src/compiler/transformers/legacyDecorators.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.Identifier);
+src/compiler/transformers/es2017.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.CallExpression);
+src/compiler/transformers/es2017.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.PropertyAccessExpression);
+src/compiler/transformers/es2017.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.ElementAccessExpression);
+src/compiler/transformers/es2018.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.CallExpression);
+src/compiler/transformers/es2018.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.PropertyAccessExpression);
+src/compiler/transformers/es2018.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.ElementAccessExpression);
+src/compiler/transformers/es2015.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.Identifier);
+src/compiler/transformers/es2015.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.ThisKeyword);
+src/compiler/transformers/generators.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.Identifier);
+src/compiler/transformers/module/module.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.CallExpression); // Substitute calls to imported/exported symbols to avoid incorrect `this`.
+src/compiler/transformers/module/module.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.TaggedTemplateExpression); // Substitute calls to imported/exported symbols to avoid incorrect `this`.
+src/compiler/transformers/module/module.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.Identifier); // Substitutes expression identifiers with imported/exported symbols.
+src/compiler/transformers/module/module.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.BinaryExpression); // Substitutes assignments to exported symbols.
+src/compiler/transformers/module/module.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.ShorthandPropertyAssignment); // Substitutes shorthand property assignments for imported/exported symbols.
+src/compiler/transformers/module/system.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.Identifier); // Substitutes expression identifiers for imported symbols.
+src/compiler/transformers/module/system.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.ShorthandPropertyAssignment); // Substitutes expression identifiers for imported symbols
+src/compiler/transformers/module/system.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.BinaryExpression); // Substitutes assignments to exported symbols.
+src/compiler/transformers/module/system.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.MetaProperty); // Substitutes 'import.meta'
+src/compiler/transformers/module/esnextAnd2015.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.Identifier);
+src/compiler/transformers/module/impliedNodeFormatDependent.ts:<coordinate> [direct call] context.enableSubstitution(SyntaxKind.SourceFile);
+src/compiler/transformer.ts:<coordinate> [ShorthandPropertyAssignment] enableSubstitution,
+src/compiler/transformer.ts:<coordinate> [declaration/write] enableSubstitution: (_kind: SyntaxKind): void => {},
+src/testRunner/unittests/transform.ts:<coordinate> [direct call] context.enableSubstitution(ts.SyntaxKind.Identifier);
+src/testRunner/unittests/transform.ts:<coordinate> [direct call] context.enableSubstitution(ts.SyntaxKind.Identifier);
+enableSubstitution shared length = 1
+enableSubstitution local length = 1
