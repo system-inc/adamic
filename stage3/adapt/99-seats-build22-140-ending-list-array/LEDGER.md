@@ -1,0 +1,1 @@
+- **JavaScript-changing, families 140 and 167 (#bbssdcy, Adamic):** 99-seats-build22-140-ending-list-array carries the private module specifier ending preferences as readonly arrays. The exhaustive switch binds its checked first ending once so stock TypeScript can narrow the fallback; both searches keep the same list and order.
