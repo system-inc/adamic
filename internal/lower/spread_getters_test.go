@@ -14,6 +14,10 @@ import (
 // read of its name from the copy stops (spreadCopyRead, #7mjgxkc).
 const spreadTree = "type Tree = { readonly value: number; readonly label: string };\nlet tree: Tree = { value: 1, label: `tree${String(1)}` };\nfunction describe(node: Tree, extra: Tree): string { const copy = { ...extra }; return `${String(node.value)} ${node.label} ${copy.label}`; }\n"
 
+// narrowTree is spreadTree with describe's spread seen through { readonly label: string }, a view an
+// object literal with a getter beside label reaches by width and fails by excess properties (#z6h9s7k).
+const narrowTree = "type Tree = { readonly value: number; readonly label: string };\nlet tree: Tree = { value: 1, label: `tree${String(1)}` };\nfunction describe(node: Tree, extra: { readonly label: string }): string { const copy = { ...extra }; return `${String(node.value)} ${node.label} ${copy.label}`; }\n"
+
 // spreadGettersOf is, for every object literal with a spread, the names of the getters lowering says
 // it may run, sorted.
 func spreadGettersOf(program *ir.Program) [][]string {
@@ -42,7 +46,8 @@ func spreadGettersOf(program *ir.Program) [][]string {
 // getter, a class's, and one inherited from a base, each a class whose instances are assignable to
 // the parameter's plain declared type, which every one of them satisfies, so no test of that type
 // could rule them out. A getter of a class no Tree can be isn't taken, and a program with no getter
-// records none, so reuse and purity judge its spreads as before. Mutant
+// records none, so reuse and purity judge its spreads as before. A literal seen through a narrower view
+// is related by its regular type, never its fresh one (#z6h9s7k; spread_getters.mutants.md). Mutant
 // (internal/oracle/testdata/iterable_views/mutants.md): spreadGetters' call in finishAccessors made
 // nil, and the three getter rows find none.
 func TestSpreadRecordsTheGettersItMayRun(t *testing.T) {
@@ -54,6 +59,9 @@ func TestSpreadRecordsTheGettersItMayRun(t *testing.T) {
 		{"an object literal's getter", spreadTree + "const source: Tree = { get value(): number { return tree.value + 10; }, label: `source${String(2)}` };\nconsole.log(describe(tree, source));", true},
 		{"a class's getter", spreadTree + "class Sized { label = `sized${String(3)}`; get value(): number { return tree.value + 20; } }\nconsole.log(describe(tree, new Sized()));", true},
 		{"a getter inherited from a base", spreadTree + "class Base { get value(): number { return tree.value + 30; } }\nclass Derived extends Base { label = `derived${String(4)}`; }\nconsole.log(describe(tree, new Derived()));", true},
+		// #z6h9s7k: the literal's own type is fresh, so it reaches a narrower view only by relatedShape.
+		{"an object literal's getter through a narrower view", narrowTree + "const source: Tree = { get value(): number { return tree.value + 10; }, label: `source${String(2)}` };\nconsole.log(describe(tree, source));", true},
+		{"an unannotated object literal's getter through a narrower view", narrowTree + "const source = { get value(): number { return tree.value + 10; }, label: `source${String(2)}` };\nconsole.log(describe(tree, source));", true},
 		{"a getter of a class no Tree can be", spreadTree + "class Counter { count = 0; get next(): number { this.count++; return this.count; } }\nconst counter = new Counter();\nconsole.log(String(counter.next));\nconsole.log(describe(tree, { value: 10, label: `source${String(2)}` }));", false},
 		{"no getter anywhere", spreadTree + "const source: Tree = { value: 10, label: `source${String(2)}` };\nconsole.log(describe(tree, source));", false},
 	} {
