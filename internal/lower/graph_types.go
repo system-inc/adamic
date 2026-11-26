@@ -240,18 +240,14 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 	// payload is a counted value outside any region), so a cycle through one would keep its region
 	// alive forever: refuse it, as before graph regions.
 	if throughPromise != nil {
-		var where *ast.Node
+		members := []*checker.Type{}
 		for _, each := range throughPromise {
-			if each.proven != nil && f.where[each.proven] != nil {
-				where = f.where[each.proven]
-				break
+			if each.proven != nil {
+				members = append(members, each.proven)
 			}
 		}
-		if where == nil {
-			where = modules[0].AsNode()
-		}
 		return &Refused{
-			Where: f.l.program.Where(where),
+			Where: f.l.program.Where(f.whereOf(members...)),
 			What:  "a Promise whose payload can reach back to what holds it: a cycle reference counting can't free, and a Promise can't join a graph region",
 			Fix:   "don't keep a Promise in a value its result can reach, or declare the field Weak<...> (adamic/cycle-capable)",
 		}
