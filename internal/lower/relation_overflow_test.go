@@ -115,6 +115,18 @@ func TestAnOverflowedRelationMakesLoweringNotYet(t *testing.T) {
 	if _, err := Lower(ctx, checked); err != nil {
 		t.Fatalf("the control, its checker holding no overflow: %v", err)
 	}
+	markRelationOverflow(t, typeChecker)
+	_, err = Lower(ctx, checked)
+	var notYet *NotYet
+	if !errors.As(err, &notYet) || !strings.Contains(notYet.Error(), "gave up on as too complex") || !strings.Contains(notYet.Error(), "marked as overflowed") {
+		t.Fatalf("lowering with an overflow marked: got %v, want the guard's NotYet", err)
+	}
+}
+
+// markRelationOverflow plants an overflow mark in the checker's assignable relation cache, as
+// checkTypeRelatedToEx leaves one (relater.go:382), with no TS2859 beside it.
+func markRelationOverflow(t *testing.T, typeChecker *checker.Checker) {
+	t.Helper()
 	relation := reflect.ValueOf(typeChecker).Elem().FieldByName("assignableRelation")
 	if !relation.IsValid() || relation.IsNil() {
 		t.Fatal("the checker's assignable relation isn't where the guard reads it")
@@ -127,9 +139,4 @@ func TestAnOverflowedRelationMakesLoweringNotYet(t *testing.T) {
 	mark := reflect.New(field.Type().Elem()).Elem()
 	mark.SetUint(1<<1 | 1<<5) // RelationComparisonResultFailed | RelationComparisonResultComplexityOverflow
 	results.SetMapIndex(reflect.New(field.Type().Key()).Elem(), mark)
-	_, err = Lower(ctx, checked)
-	var notYet *NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(notYet.Error(), "gave up on as too complex") || !strings.Contains(notYet.Error(), "marked as overflowed") {
-		t.Fatalf("lowering with an overflow marked: got %v, want the guard's NotYet", err)
-	}
 }
