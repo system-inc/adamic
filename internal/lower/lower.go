@@ -1108,9 +1108,10 @@ type lowering struct {
 	spreadSources []*checker.Type
 	classHolders  map[int]*checker.Type
 	// genericSpreadSites are the SpreadSites of the spreads whose source the checker types with a type
-	// parameter, and prototypeMemberUses the class method calls and presence tests lowering made on a
+	// parameter, or with a type that may hide a program class's instance, each with how a stop names its
+	// copy, and prototypeMemberUses the class method calls and presence tests lowering made on a
 	// receiver other than this, which checkGenericSpreadCopyReads judges (generic_spread_copy_reads.go).
-	genericSpreadSites  map[int]bool
+	genericSpreadSites  map[int]string
 	prototypeMemberUses []prototypeMemberUse
 
 	// toPrimitive is the program's to_string_hint helper plus one, or zero before a String of a union
