@@ -153,9 +153,18 @@ adamic_object *adamic_object_spread_with(const adamic_object *source, const adam
 		if (adamic_error_is(source)) refuse("an Error");
 		// A host's and a match's groups object alike: their names aren't all Node's own enumerable keys.
 		if (adamic_host_shape(source->shape)) refuse("a runtime library value (a host or groups object)");
-		// A getter would run at the copy, and its key's order is the public shape's.
-		for (const adamic_class *class = source->class; class != NULL; class = class->base) {
-			if (class->accessor_count != 0) refuse("a class instance with accessors");
+		// An accessor lives on the prototype, never among the own keys a spread copies, so a getter or setter
+		// only there is passed over, on Node and here (#vjvcnnj). One named as a public field would put a
+		// getter on a copied name, which TypeScript refuses as a declaration, so it's only the backstop.
+		if (source->class != NULL) {
+			const adamic_shape *public_shape = source->class->public_shape;
+			for (const adamic_class *class = source->class; class != NULL; class = class->base) {
+				for (size_t at = 0; at < class->accessor_count; at++) {
+					for (size_t index = 0; index < public_shape->count; index++) {
+						if (strcmp(public_shape->names[index], class->accessors[at].name) == 0) refuse("a class instance with an accessor named as a public field");
+					}
+				}
+			}
 		}
 	}
 	// The source's own layout: a class instance's public shape, as adamic_object_copy_checked copies it.
