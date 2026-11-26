@@ -31,16 +31,20 @@ func isArrayArgument(source string) string {
 // a value Node answers for (Diagnostics' pins on #gcec0bx):
 //   - unknown-value: the index holds unknown, which takes a function (condition 2);
 //   - callable-value: the index's union holds a function type (condition 2);
+//   - length-value: the index holds { length: number }, which every function is assignable to (condition 2's
+//     Function test, Diagnostics' ruling on #gcec0bx);
 //   - array-stored-string-index: the JSON record beside an interface stored as an array that declares a string index
 //     of its own, which fails every index-only arm closed (condition 3). Its index is unknown here, which .a can hold;
 //     one of any would take the array's methods, and the array would be assignable to the JSON record with no hatch.
 //
-// Mutant (array_predicate_index_arm.mutants.md, M1): condition 2 dropped, every index value admitted. unknown-value and
-// callable-value go red, each lowering past isArray; array-stored-string-index stays green, condition 3 still stopping it.
+// Mutants (array_predicate_index_arm.mutants.md): M1, condition 2 dropped, every index value admitted, turns
+// unknown-value, callable-value and length-value red, each lowering past isArray; array-stored-string-index stays green,
+// condition 3 still stopping it. M5, the Function test dropped, turns length-value red.
 func TestArrayPredicateIndexArmRefusals(t *testing.T) {
 	t.Parallel()
 	for _, row := range []struct{ name, source, node string }{
 		{"unknown-value", "interface Bag { [key: string]: unknown }\nfunction isList(value: Bag | string[]): boolean { return Array.isArray(value); }\nconsole.log(String(isList(['a'])));\n", "true\n"},
+		{"length-value", "interface Bag { [key: string]: { length: number } }\nfunction isList(value: Bag | string[]): boolean { return Array.isArray(value); }\nconsole.log(String(isList(['a'])));\n", "true\n"},
 		{"callable-value", "interface Bag { [key: string]: string | (() => void) }\nfunction isList(value: Bag | string[]): boolean { return Array.isArray(value); }\nconsole.log(String(isList(['a'])));\n", "true\n"},
 		{"array-stored-string-index", jsonRecovery + "interface Loose extends ReadonlyArray<string> { [key: string]: unknown }\nfunction isList(value: AdamicJsonRecoveryObject | string[]): boolean { return Array.isArray(value); }\nconsole.log(String(isList({ a: 1 })));\n", "false\n"},
 	} {
@@ -67,9 +71,12 @@ func TestArrayPredicateIndexArmRefusals(t *testing.T) {
 // isn't a string's: Numbered's and Language's NumberOnly (her i01, an arm a string[] is assignable to tsc-clean),
 // Pattern's template pattern (her i02) and Sym's symbol (her i05), each of whose value types condition 2 would pass. A closed
 // world holding an interface stored as an array with a string index of its own (Loose) fails every arm, condition 3.
+// An object value with no signature fails where lib's Function is assignable to it: Lengths' { length: number } takes
+// every function, Lettered's { a: string } none, so Lettered passes (Diagnostics' ruling on #gcec0bx).
 //
-// Mutants: M1, condition 2 dropped, turns open red on Bag, Loosely, Calls and Unknowns; M4, condition 1 relaxed to any
-// one index signature, turns open red on Numbered, NumberOnly, Pattern and Sym.
+// Mutants: M1, condition 2 dropped, turns open red on Bag, Loosely, Calls, Unknowns and Lengths; M4, condition 1
+// relaxed to any one index signature, turns open red on Numbered, NumberOnly, Pattern and Sym; M5, the Function test
+// dropped, turns open red on Lengths.
 func TestArrayPredicateIndexArmValueType(t *testing.T) {
 	t.Parallel()
 	const declarations = jsonRecovery + `interface Bag<V> { [key: string]: V }
@@ -81,12 +88,14 @@ interface Unknowns { [key: string]: unknown }
 interface Named { name: string; [key: string]: string }
 interface Numbered { [index: number]: string }
 type NumberOnly = { [n: number]: string };
+interface Lengths { [key: string]: { length: number } }
+interface Lettered { [key: string]: { a: string } }
 ` + "type Pattern = { [k: `x${string}`]: number };\ntype Sym = { [s: symbol]: number };\n"
 	for _, probe := range []struct {
 		name, source string
 		admitted     map[string]bool
 	}{
-		{"open", declarations, map[string]bool{"AdamicJsonRecoveryObject": true, "Bag": false, "Bounded": true, "Loosely": false, "Counts": true, "Calls": false, "Unknowns": false, "Named": false, "Numbered": false, "NumberOnly": false, "Pattern": false, "Sym": false}},
+		{"open", declarations, map[string]bool{"AdamicJsonRecoveryObject": true, "Bag": false, "Bounded": true, "Loosely": false, "Counts": true, "Calls": false, "Unknowns": false, "Named": false, "Numbered": false, "NumberOnly": false, "Pattern": false, "Sym": false, "Lengths": false, "Lettered": true}},
 		{"closed-world-string-index", declarations + "interface Loose extends ReadonlyArray<string> { [key: string]: unknown }\n", map[string]bool{"AdamicJsonRecoveryObject": false, "Bounded": false, "Counts": false}},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
@@ -120,6 +129,14 @@ type NumberOnly = { [n: number]: string };
 			}
 		})
 	}
+}
+
+// An index arm whose value is an object no function is assignable to is in the domain, both ways, as Node answers:
+// Lettered's { a: string } passes condition 2, so isArray decides `Lettered | string[]` (Diagnostics' ruling on
+// #gcec0bx). M5 leaves it green; M1 does too, since it only admits more.
+func TestArrayPredicateIndexArmObjectValueAgrees(t *testing.T) {
+	t.Parallel()
+	lowersAndAgreesWithNode(t, "interface Lettered { [key: string]: { a: string } }\nfunction isList(value: Lettered | string[]): boolean { return Array.isArray(value); }\nconsole.log(String(isList(['z'])));\nconsole.log(String(isList({ x: { a: 'y' } })));\n")
 }
 
 // Language's i01 on #gcec0bx: a number-only index arm takes a string[] tsc-clean, since a number index constrains only

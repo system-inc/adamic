@@ -13,10 +13,12 @@ import (
 //   - json_record: readJson's own spelling, `... && !Array.isArray(value) ? value : {}`, printing each record's key
 //     count and its read of a;
 //   - json_record_test: the test alone, printing its answer, so the arm's admission is held apart from the read of the
-//     narrowed record after it.
+//     narrowed record after it;
+//   - json_recovery_record and json_recovery_record_test: the same two over the record as stage3's adaptation 52
+//     publishes it, `{ [key: string]: AdamicJsonRecoveryValue | undefined }`, parser recovery's undefined values in it.
 //
 // Mutant (array_predicate_index_arm.mutants.md, M2): the brand answering false at a site whose arm is index-only, the
-// array read as the record. Both rows go red on their array line (json_record prints 2 keys, json_record_test true).
+// array read as the record. Each row goes red on its array line (a record printing 2 keys, a test printing true).
 //
 // The fixtures sit outside testdata's top level, so the flow and fresh corpora don't take them as their own.
 func TestArrayPredicateIndexArmAgrees(t *testing.T) {
@@ -24,6 +26,8 @@ func TestArrayPredicateIndexArmAgrees(t *testing.T) {
 	for _, row := range []struct{ name, output string }{
 		{"json_record", "object 1 number\narray 0 absent\nstring 0 absent\nnumber 0 absent\nboolean 0 absent\nnull 0 absent\nundefined 0 absent\n"},
 		{"json_record_test", "object true\narray false\nstring false\nnumber false\nboolean false\nnull false\nundefined false\n"},
+		{"json_recovery_record", "object 1 number\narray 0 absent\nstring 0 absent\nnumber 0 absent\nboolean 0 absent\nnull 0 absent\nundefined 0 absent\n"},
+		{"json_recovery_record_test", "object true\narray false\nstring false\nnumber false\nboolean false\nnull false\nundefined false\n"},
 	} {
 		t.Run(row.name, func(t *testing.T) {
 			t.Parallel()

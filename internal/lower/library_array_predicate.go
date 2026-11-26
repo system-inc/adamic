@@ -234,10 +234,12 @@ func (l *lowering) arrayExcludedIndexArm(proven *checker.Type) bool {
 // aliases (the type an alias names), unions and intersections, member by member, and through a type parameter, an
 // indexed access or a conditional at its base constraint, so one with no constraint, or whose constraint fails, fails;
 // keyof, a template literal and a string mapping are strings or keys whatever they're instantiated with, and pass.
-// An object member passes only when it isn't callable: no call or construct signature, not lib's Function, and not
-// empty, since every function is assignable to {}. Its properties aren't walked: the index value is what every property
-// of the arm reads as, and the question is only whether that type can be a function. seen ends a value type that
-// refers to itself (the JSON union holds itself): a member met again was judged where it was first met.
+// An object member passes only when no function is one: no call or construct signature, not lib's Function, not
+// empty, since every function is assignable to {}, and not a type lib's Function is assignable to, as { length: number }
+// is (Diagnostics' ruling on #gcec0bx, the premise's second wall). Its properties aren't walked further: the index
+// value is what every property of the arm reads as, and the question is only whether that type can be a function.
+// seen ends a value type that refers to itself (the JSON union holds itself): a member met again was judged where it
+// was first met.
 func (l *lowering) indexValueAdmitsNoCallable(value *checker.Type, seen map[*checker.Type]bool) bool {
 	if value == nil {
 		return false
@@ -270,9 +272,30 @@ func (l *lowering) indexValueAdmitsNoCallable(value *checker.Type, seen map[*che
 				return false
 			}
 		}
-		return len(l.checker.GetPropertiesOfType(value)) != 0 || len(l.checker.GetIndexInfosOfType(value)) != 0
+		if len(l.checker.GetPropertiesOfType(value)) == 0 && len(l.checker.GetIndexInfosOfType(value)) == 0 {
+			return false
+		}
+		// A member with no signature still takes a function where Function's own members meet it ({ length: number },
+		// a weak type naming name or call), by the checker's relation; no Function to ask fails closed.
+		function := l.libraryFunctionType()
+		return function != nil && !l.checker.IsTypeAssignableTo(function, value)
 	}
 	return true
+}
+
+// libraryFunctionType is lib's Function interface, the apparent type every function value has, or nil where a
+// declaration other than the library's or the prelude's merges into the global Function (arrayPredicateMember's test).
+func (l *lowering) libraryFunctionType() *checker.Type {
+	symbol := l.checker.GetGlobalSymbol("Function", ast.SymbolFlagsType, nil)
+	if symbol == nil || len(symbol.Declarations) == 0 {
+		return nil
+	}
+	for _, declaration := range symbol.Declarations {
+		if file := ast.GetSourceFileOfNode(declaration); !load.IsLibrary(file) && !load.IsPrelude(file) {
+			return nil
+		}
+	}
+	return l.checker.GetDeclaredTypeOfSymbol(symbol)
 }
 
 // numericPropertyName is whether name reads as a number, an index an array may hold an element at: `0`, `"1"`,
