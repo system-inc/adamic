@@ -35,9 +35,9 @@ import (
 // It runs before finishAccessors, whose stop at such a read (spreadCopyRead) would otherwise answer
 // first for a program the language refuses at the spread.
 
-// prototypeMember is a member a class reaching a spread holds on its prototype, under a name the
+// spreadClaimedMember is a member a class reaching a spread holds on its prototype, under a name the
 // spread's copy is typed with.
-type prototypeMember struct {
+type spreadClaimedMember struct {
 	// class reaches the spread; holder declares the member, the class itself or one of its bases.
 	class, holder, name, kind string
 	// claim is how the copy's held type comes to claim name, said after "a spread of <source>, ".
@@ -47,7 +47,7 @@ type prototypeMember struct {
 // viewPart is one constituent of the type a spread's copy is held as, with the names it claims.
 type viewPart struct {
 	names []string
-	// claim is prototypeMember's, for a name of this part.
+	// claim is spreadClaimedMember's, for a name of this part.
 	claim func(name string) string
 }
 
@@ -387,8 +387,8 @@ func (l *lowering) spreadViewParts(held *checker.Type, inContext bool, source *c
 // class assignable to view, the spread's source type, holds under a name a part of the held type claims.
 // The candidate need not be assignable to the part: the part is how the copy is held, not what reaches
 // the spread, and a union is refused if any arm claims such a member.
-func (l *lowering) spreadPrototypeMember(view *checker.Type, parts []viewPart, classes map[*checker.Type]string) (prototypeMember, bool) {
-	var found []prototypeMember
+func (l *lowering) spreadPrototypeMember(view *checker.Type, parts []viewPart, classes map[*checker.Type]string) (spreadClaimedMember, bool) {
+	var found []spreadClaimedMember
 	for candidate, class := range classes {
 		if !l.checker.IsTypeAssignableTo(candidate, view) {
 			continue
@@ -402,7 +402,7 @@ func (l *lowering) spreadPrototypeMember(view *checker.Type, parts []viewPart, c
 				if holder == nil {
 					continue
 				}
-				member := prototypeMember{class: class, holder: class, name: name, kind: kind, claim: part.claim(name)}
+				member := spreadClaimedMember{class: class, holder: class, name: name, kind: kind, claim: part.claim(name)}
 				if !slices.Contains(candidate.Symbol().Declarations, holder) {
 					member.holder = "an anonymous class"
 					if holderName := holder.Name(); holderName != nil {
@@ -414,7 +414,7 @@ func (l *lowering) spreadPrototypeMember(view *checker.Type, parts []viewPart, c
 		}
 	}
 	if len(found) == 0 {
-		return prototypeMember{}, false
+		return spreadClaimedMember{}, false
 	}
 	// Stable, so of one class and name met through several parts the first part's claim is said.
 	sort.SliceStable(found, func(i, j int) bool {
