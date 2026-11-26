@@ -1,0 +1,56 @@
+# #qxt10dd: the unit census both ways on one box, base (main 0b031fc8's lowering, the head's new files set aside) then the head,
+# each side's entry pass over one adapted tree, compared by stage3/census/pair/pair.py, and every unit whose first stop moved
+# side, with its first stop on each side. Run with bash after the sealed opening (sandboxed_repositories, sandboxed_npm stage3/api
+# stage3/typescript, sandboxed_typescript_source). Never merged.
+set -uo pipefail
+root=$PWD; K=proof/performance/qxt10dd/census; R=$TMPDIR/d17c; mkdir -p "$R"
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg)"
+step() { local name=$1 log=$2 begun=$SECONDS; shift 2; "$@" > "$log" 2>&1; local s=$?; if [ $s -eq 0 ]; then echo "PASS $name ($((SECONDS - begun)) s)"; return 0; fi; echo "FAIL $name (exit $s)"; tail -30 "$log"; echo "VERDICT FAIL $name"; exit 1; }
+ts=$root/stage3/api/node_modules/typescript
+[ -f "$ts/lib/typescript.js" ] || { echo "FAIL stock typescript"; exit 1; }
+step apply "$R/apply.log" bash stage3/apply.sh "$R/adapted"
+side() {
+	local out=$R/$1
+	mkdir -p "$out"
+	python3 stage3/census/latent/make_overlay.py "$root" "$out/latent-overlay" && gofmt -w "$out"/latent-overlay/*.go &&
+	python3 stage3/meter/entry_overlay.py "$out/latent-overlay" "$out/entry-overlay" && gofmt -w "$out"/entry-overlay/*.go &&
+	go build -buildvcs=false -overlay="$out/entry-overlay/overlay.json" -o "$out/entry-census" ./stage3/census/latent/tool &&
+	sha256sum internal/lower/lower.go "$out/entry-census"
+}
+run() {
+	local out=$R/$1
+	export LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 LATENT_TAIL=1 CENSUS_MODULE_FORMAT=CommonJSBundle
+	"$out/entry-census" "$R/adapted/src/tsc/tsc.ts" "$out/entry.jsonl"
+}
+changed="internal/lower/cast.go internal/lower/cast_proof.go internal/lower/cast_untagged_union.go"
+added=""
+mkdir -p "$R/head-files"
+for p in $changed $added; do cp "$p" "$R/head-files/$(echo "$p" | tr / _)"; done
+for p in $changed; do cp "$K/base/$(echo "$p" | tr / _).txt" "$p"; done
+for p in $added; do mv "$p" "$R/aside-$(echo "$p" | tr / _)"; done
+step build-base "$R/build-base.log" side base; grep -E '^[0-9a-f]{64} ' "$R/build-base.log" | cut -c1-90
+for p in $changed $added; do cp "$R/head-files/$(echo "$p" | tr / _)" "$p"; done
+step build-head "$R/build-head.log" side head; grep -E '^[0-9a-f]{64} ' "$R/build-head.log" | cut -c1-90
+step census-base "$R/census-base.log" run base
+step census-head "$R/census-head.log" run head
+for s in base head; do echo "$s: entry $(wc -l < "$R/$s/entry.jsonl") rows"; done
+if python3 -I stage3/census/pair/pair.py "$R/base/entry.jsonl" "$R/head/entry.jsonl" "$R/adapted" --typescript "$ts" --json "$R/pair.json" --report "$R/pair.md" > "$R/pair.log" 2>&1; then echo "PASS pair"; else echo "FAIL pair"; tail -12 "$R/pair.log"; fi
+sed -n '1,16p' "$R/pair.md" | cut -c1-300
+echo "-- every section past the reason table, whole:"
+awk '/^## /{p=1} p' "$R/pair.md" | grep -v '^$' | cut -c1-300 | head -120
+python3 -I -c 'import json,sys; d=json.load(open(sys.argv[1])); [print(n, side, len(d[n]["panics"][side])) for n in ("raw_findings","distinct_reads") for side in ("before","after")]' "$R/pair.json"
+python3 -I - "$R/pair.json" << 'PYTHON'
+import json, sys
+d = json.load(open(sys.argv[1]))
+rows = d["raw_findings"]["unit_first_stop_delta"]
+short = lambda f: (f["where"].split("/src/", 1)[-1] + " " + f["kind"] + ": " + f["reason"])[:240] if f else "lowers, no finding"
+print("== every unit whose first stop moved, base then head")
+for row in rows:
+    u = row.get("unit") or {}
+    where = str(u.get("where", "?")).split("/src/", 1)[-1]
+    extra = {k: v for k, v in u.items() if k in ("name", "function", "declaration", "kind", "status")}
+    print("unit", where, extra)
+    print("  base", short(row.get("base")))
+    print("  head", short(row.get("head")))
+PYTHON
+echo "VERDICT OK (read the pair tables and the unit lines)"
