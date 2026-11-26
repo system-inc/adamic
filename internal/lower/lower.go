@@ -559,6 +559,12 @@ type lowering struct {
 	// node-test proof, whose direct calls overloadNodeTestCall judges one by one
 	// (overload_parse_tree_node.go, #0kkpw2e).
 	overloadNodeTests map[*ast.Node]bool
+	// overloadGuardedArrays holds, for each overload judged, whether censusOverload accepted it by the
+	// guarded-array certificate, whose direct calls overloadGuardedArrayCall judges one by one, and
+	// overloadGuardedViews what that judgment reads of the whole program, collected once
+	// (overload_certificate_visit_nodes.go, #ytagqs5).
+	overloadGuardedArrays map[*ast.Node]bool
+	overloadGuardedViews  *overloadGuardedViews
 	// overloadVerdicts holds, for each overload of a function declaration's set the census judged, its
 	// verdict: censusOverload's Refused or NotYet, or nil when it's served. A set's implementation is keyed
 	// too, always nil, once its set is judged (censusOverloads, #4czdn4q).
