@@ -998,7 +998,8 @@ class GateTreeTests(unittest.TestCase):
 
     def test_new_whole_recipes_settle_and_test_their_packages(self):
         for gate, package in (("stage1-gaps-whole", "./stage1/cohere/estree"),
-                              ("stage3-fixtures-whole", "./stage3/fixtures")):
+                              ("stage3-fixtures-whole", "./stage3/fixtures"),
+                              ("projects-whole", "./internal/load/projects")):
             with self.subTest(gate=gate):
                 lines = (Cloud / "gates" / (gate + ".sh")).read_text().splitlines()
                 self.assertIn(f"gate_products {package}", lines)

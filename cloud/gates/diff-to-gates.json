@@ -31,6 +31,7 @@
     "stock-js-identical": "tsc's emitted JavaScript for the adapted files byte-identical to stock; true makes an adaptation type-only and drops value-count-reached",
     "stage1-gaps-whole": "go test ./stage1/cohere/estree/ whole: its gap tests pin recorded gaps as stops, and a head that closes one must update it (block 3532's TestPostfixValueGap, Nov 23)",
     "stage3-fixtures-whole": "go test ./stage3/fixtures/ whole: its recorded stops (status.json) move when lowering refuses earlier (block 3532, Nov 23)",
+    "projects-whole": "go test ./internal/load/projects/ whole: its TestTheRootProjectsAreLoadsOwn holds the root tsconfig.json and internal/load/projects/node/tsconfig.json to what go run ./internal/load/projects writes from the tree as tested (#kyq0pyn, #w5zzdjp)",
     "adaptation-value-identical": "a test.cjs drives stock and adapted tsc on inputs that reach each changed branch, and the reader states line by line that no input tells them apart (identity, key order, thrown errors and the timing of reads included); anything that changes identity, key order or a failure path is Adamic's to accept"
   },
   "sameDiff": {
@@ -77,6 +78,55 @@
         "stage1-gaps-whole",
         "stage3-fixtures-whole"
       ]
+    },
+    {
+      "id": "projects-lists",
+      "source": "Compiler on #w5zzdjp (Nov 26, 21:54Z): a head that adds or changes an Adamic source under the TypeScript projects' include directories, or touches internal/load, runs the projects generator's check, since the two tsconfigs name each program by file and Load's own predicate places it (#kyq0pyn's five landing reds were this list going stale under a head); the root tsconfig.json and cohere's pin, which carries typescript-go's checker that place() asks, fire it too (Compiler's accept, Nov 26 22:01Z)",
+      "triggers": [
+        {
+          "paths": "internal/load/**"
+        },
+        {
+          "paths": "tsconfig.json"
+        },
+        {
+          "paths": "cohere"
+        },
+        {
+          "paths": "dedication/**/*.a"
+        },
+        {
+          "paths": "dedication/**/*.ts"
+        },
+        {
+          "paths": "internal/load/testdata/**/*.a"
+        },
+        {
+          "paths": "internal/load/testdata/**/*.ts"
+        },
+        {
+          "paths": "internal/oracle/testdata/**/*.a"
+        },
+        {
+          "paths": "internal/oracle/testdata/**/*.ts"
+        },
+        {
+          "paths": "stage1/**/*.a"
+        },
+        {
+          "paths": "stage1/**/*.ts"
+        },
+        {
+          "paths": "bench/**/*.a"
+        },
+        {
+          "paths": "bench/**/*.ts"
+        }
+      ],
+      "requires": [
+        "projects-whole"
+      ],
+      "note": "A red here means the tsconfigs aren't what go run ./internal/load/projects writes from the head's tree: run it and commit both files. A head can red without its own hand being wrong when another change in line made a shared module import a node: module, so a fixture importing it became a Node program: regenerate on the second head. It's a red, never a wrong pass."
     },
     {
       "id": "refusal-added",
