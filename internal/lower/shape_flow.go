@@ -202,12 +202,20 @@ func (graph *allocationFlowGraph) projectionFrame(expression ir.Expression, dept
 }
 
 // projectionValueKey spells a receiver-shaped value whole, every field of every node printed, so two
-// values share a key only when they're the same value: a Read, a property or a constant element of
-// one, and the wrappers follow looks through. Anything else has no key.
+// values share a key only when they're the same value: a Read or a call, a property or a constant
+// element of one, and the wrappers follow looks through. Anything else has no key.
+//
+// A call is a root as a Read is, because it's the other receiver a projected query reopens a frame for:
+// follow demands its targets' result nodes, and a result's source can be a field of the same call, so a
+// function that returns a field of its own call seen through a cast, `return (pick((node as
+// Pair).left) as Pair).right`, reached that call again one level deeper at every level. Unkeyed, it had
+// neither the memo nor the open-receiver cut, and two such returns opened 2^32 frames (#r1ef873, row 1
+// at 2a97945f). Its answer is a function of the value and the busy and open receivers around it, as a
+// Read-rooted receiver's is, since follow reads only the graph's fixed sources for it.
 func projectionValueKey(value ir.Expression) (string, bool) {
 	for node := value; ; {
 		switch current := node.(type) {
-		case ir.Read:
+		case ir.Read, ir.Call, ir.CallClosure:
 			return fmt.Sprintf("%#v", value), true
 		case ir.Property:
 			node = current.Object
