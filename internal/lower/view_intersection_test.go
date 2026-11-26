@@ -20,6 +20,8 @@ interface ImportClause extends Node { readonly kind: 273; readonly isTypeOnly: b
 class Box { readonly kind: 201 = 201; }
 type Plain = Node & { readonly kind: 201; readonly literal: 11 };
 type TypeOnlyImportClause = ImportClause & { readonly isTypeOnly: true; readonly name: Identifier };
+type SyntheticKind = { [P in "kind"]: 201 };
+type MappedKind = Node & SyntheticKind & { readonly literal: 11 };
 type Nominal = Box & { readonly literal: 11 };
 type Callable = Node & { (): number };
 type Indexed = Node & { [key: string]: number };
