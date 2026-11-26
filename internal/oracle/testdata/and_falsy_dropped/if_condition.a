@@ -1,0 +1,14 @@
+// a5 (#snypn8c, c1): a number && left in an if's condition, which reads only the &&'s truth, so the left's 0 and
+// NaN reach no slot.
+enum Ternary { False = 0, Unknown = 1, Maybe = 3, True = -1 }
+function compare(a: number, b: number): Ternary {
+	return a === b ? Ternary.True : a < b ? Ternary.Maybe : Ternary.False;
+}
+enum Mode { None = 0, Strict = 1 }
+function check(mode: Mode, a: number, b: number): string {
+	if (mode & Mode.Strict && compare(a, b)) {
+		return "related " + String(compare(a, b));
+	}
+	return "unrelated";
+}
+console.log(check(Mode.None, 1, 1) + ", " + check(Mode.Strict, 1, 1) + ", " + check(Mode.Strict, 2, 1) + ", " + check(Mode.Strict, 1, 2));

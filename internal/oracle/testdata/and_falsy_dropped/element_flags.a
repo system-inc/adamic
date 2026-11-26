@@ -1,0 +1,18 @@
+// a4 (#snypn8c, c1): `!!(flags[index] && Flag)` handed to a boolean parameter, as
+// getContextualTypeForElementExpression's `!!(t.target.elementFlags[index]! && ElementFlags.Optional)`
+// (checker.ts:32547, upstream's && where & is meant): the ! reads only the &&'s truth. As in tsc's ElementFlags, no
+// member is 0, so the && is typed ElementFlags.Optional alone, a member slot the open enum's read was refused into.
+// .a refuses the non-null assertion, so the read goes without it; flagOf makes each flag from a number at run time,
+// 0 among them, which the open enum holds.
+enum ElementFlags { Required = 1, Optional = 2, Rest = 4, Variadic = 8 }
+function flagOf(n: number): ElementFlags {
+	return n;
+}
+function takes(optional: boolean): string {
+	return optional ? "optional" : "required";
+}
+function element(flags: readonly ElementFlags[], index: number): string {
+	return takes(!!(flags[index] && ElementFlags.Optional));
+}
+const flags = [flagOf(1), flagOf(2), flagOf(0), flagOf(4)];
+console.log(element(flags, 0) + ", " + element(flags, 1) + ", " + element(flags, 2) + ", " + element(flags, 3));

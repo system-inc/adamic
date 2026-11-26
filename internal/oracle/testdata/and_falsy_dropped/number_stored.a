@@ -1,0 +1,9 @@
+// s4 (#snypn8c, c1): a number && left stored directly, so its 0 and NaN still reach the slot.
+enum Ternary { False = 0, Unknown = 1, Maybe = 3, True = -1 }
+function compare(a: number, b: number): Ternary {
+	return a === b ? Ternary.True : a < b ? Ternary.Maybe : Ternary.False;
+}
+function returns(count: number, a: number, b: number): Ternary {
+	return count && compare(a, b);
+}
+console.log(String(returns(0, 1, 1)) + ", " + String(returns(2, 2, 1)));

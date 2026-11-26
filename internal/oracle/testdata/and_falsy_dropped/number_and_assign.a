@@ -1,0 +1,14 @@
+// a3 (#snypn8c, c1): a number && left under ||, assigned through &=, as compareSignaturesRelated's `result &=
+// checkMode & BivariantCallback && compareTypes(...) || compareTypes(...)` (checker.ts:22066): the left's 0 is
+// dropped by the ||, so only the && right's Ternary reaches the result.
+enum Ternary { False = 0, Unknown = 1, Maybe = 3, True = -1 }
+function compare(a: number, b: number): Ternary {
+	return a === b ? Ternary.True : a < b ? Ternary.Maybe : Ternary.False;
+}
+enum Mode { None = 0, BivariantCallback = 1, StrictCallback = 2 }
+function returns(mode: Mode, a: number, b: number): Ternary {
+	let result = Ternary.True;
+	result &= mode & Mode.BivariantCallback && compare(b, a) || compare(a, b);
+	return result;
+}
+console.log(String(returns(Mode.None, 1, 1)) + ", " + String(returns(Mode.BivariantCallback, 2, 1)) + ", " + String(returns(Mode.StrictCallback, 1, 2)) + ", " + String(returns(Mode.BivariantCallback, 1, 2)) + ", " + String(returns(Mode.None, 2, 1)));

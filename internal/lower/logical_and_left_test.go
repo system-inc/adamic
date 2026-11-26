@@ -20,20 +20,27 @@ import (
 // two-hop Weakish and its intersection with Sized, a type parameter bound by Weakish, an unconstrained or
 // `{}`-bound type parameter and a brand stay judged. Mutants: leave string out of primitiveHas, and the
 // structural and sizedFoo rows are dropped; count an optional property as required, and the weak and weakish
-// rows are dropped.
+// rows are dropped. An arm that can only be truthy is dropped too (#snypn8c c1, Adamic's ruling of Nov 19, rule 3):
+// boolean's true, so flag keeps false; 1, true, "a", 1n and a nonzero member literal, so one and yes keep nothing
+// or undefined, and word, bigOne and member keep their falsy literal. number, a whole numeric enum, which is open,
+// and 0 stay. Mutant M4 (and_falsy_dropped/mutants.md): truthy literals kept again, and flag, one, yes, word, bigOne
+// and member are kept whole.
 func TestAndLeftFalsyArms(t *testing.T) {
 	t.Parallel()
 	const source = `interface Program { name: string }
 interface Builder { readonly name: string; readonly program: Program | undefined }
 interface Sized { length: number }
 interface Weakish { foo?: number }
+enum Ternary { False = 0, Unknown = 1, Maybe = 3, True = -1 }
 function probe<B extends Builder, S extends { readonly length: number }, U, E extends {}, W extends Weakish, V extends W>(
 	builder: Builder | undefined, generic: B | undefined, list: string[] | undefined, call: (() => void) | undefined,
 	text: string | Builder, zero: 0 | Builder, flag: boolean | Builder, big: bigint | Builder, empty: {} | Builder,
 	opaque: unknown, sized: S | Builder, bare: U | Builder, loose: E | Builder, structural: Sized | Builder,
 	brand: (string & { readonly brand: true }) | Builder, whole: Builder, weak: { a?: number } | Builder,
 	indexed: { [key: string]: number } | Builder, weakish: Weakish | Builder, sizedFoo: { length: number; foo?: number } | Builder,
-	both: (Weakish & { length: number }) | Builder, boundWeak: W | Builder, chained: V | Builder): void {}
+	both: (Weakish & { length: number }) | Builder, boundWeak: W | Builder, chained: V | Builder,
+	one: 1 | Builder, yes: true | undefined, word: "a" | "", bigOne: 1n | 0n, member: Ternary.Unknown | Ternary.False,
+	ternary: Ternary | Builder, count: number): void {}
 console.log("probe");
 `
 	path := filepath.Join(t.TempDir(), "main.ts")
@@ -63,11 +70,13 @@ console.log("probe");
 	file.AsNode().ForEachChild(walk)
 	for name, want := range map[string]string{
 		"builder": "undefined", "generic": "undefined", "list": "undefined", "call": "undefined", "whole": "nothing",
-		"text": "string", "zero": "0", "flag": "boolean", "big": "bigint", "empty": "{}", "opaque": "unknown",
+		"text": "string", "zero": "0", "flag": "false", "big": "bigint", "empty": "{}", "opaque": "unknown",
 		"sized": "S", "bare": "U", "loose": "E", "structural": "Sized",
 		"brand": "string & { readonly brand: true; }", "weak": "{ a?: number; }", "indexed": "{ [key: string]: number; }",
 		"weakish": "Weakish", "sizedFoo": "{ length: number; foo?: number; }", "both": "Weakish & { length: number; }",
 		"boundWeak": "W", "chained": "V",
+		"one": "nothing", "yes": "undefined", "word": `""`, "bigOne": "0n", "member": "Ternary.False", "ternary": "Ternary",
+		"count": "number",
 	} {
 		if got[name] != want {
 			t.Errorf("%s: falsy arms %q, want %q", name, got[name], want)
@@ -78,7 +87,7 @@ console.log("probe");
 // tsc's two sites, as minimal programs: builder.ts:1601's object literal property and watchPublic.ts:610's
 // generic return, each `x && x.program` where x is an object type or undefined. The left reaches the result only
 // as undefined, so the Builder whose readonly name a Program could write is no view of the result, and each lowers
-// and agrees with Node, the program read back through the result written. Mutant: drop the andLeftOperand check
+// and agrees with Node, the program read back through the result written. Mutant: drop the andOfLeft check
 // in refuseWidening, and each is refused again, "a value of type Builder | undefined seen as Program | undefined,
 // whose readonly field name becomes writable".
 func TestAndLeftObjectArmsLower(t *testing.T) {
