@@ -149,6 +149,12 @@ func (l *lowering) unknownView(node *ast.Node, own, contextual *checker.Type) er
 		outer = outer.Parent
 	}
 	if outer.Parent != nil && outer.Parent.Kind == ast.KindCallExpression {
+		// Array.isArray's builtin reads only its argument's array brand and hands no value out (ir.ArrayIsArray), so
+		// the argument is no unknown view. librarySymbol misses it, since its root carries the prelude's merged
+		// readonly unknown[] overload; arrayPredicateMember is the test that knows the builtin (#gcec0bx).
+		if l.isArrayPredicateCall(outer.Parent) && outer.Parent.AsCallExpression().Arguments.Nodes[0] == outer {
+			return nil
+		}
 		callee := outer.Parent.AsCallExpression().Expression
 		if l.librarySymbol(l.memberSymbol(callee)) {
 			return nil

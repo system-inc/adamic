@@ -14,9 +14,9 @@ import (
 // checked once a call has written a dictionary into it. Main compiled narrowed_union_record_tag.ts, and release native
 // read the dictionary as a Box, printing 5.4e-310 where Node prints 5; sanitized and counted builds stopped only at the
 // field load's record guard, as a compiler bug. Record is now among the object kinds the narrowed read stops at. The
-// fixture sits in reland_refused, beside narrowed_union_object_tag.a, since it doesn't lower and the flow and fresh
-// corpora lower every program in testdata. Mutant: Record dropped from that list in internal/lower/locals.go; with it
-// applied, this test goes red, and ADAMIC_NARROWED_RECORD_MUTANT=1 holds the mutant's admitted program to Node on
+// fixture sits in reland_refused, beside narrowed_union_object_tag_unknown.a, since it doesn't lower and the flow and
+// fresh corpora lower every program in testdata. Mutant: Record dropped from that list in internal/lower/locals.go; with
+// it applied, this test goes red, and ADAMIC_NARROWED_RECORD_MUTANT=1 holds the mutant's admitted program to Node on
 // sanitized and release native to show the miscompile (testdata/narrowed-union-record-mutant.json).
 func TestNarrowedUnionRecordTag(t *testing.T) {
 	t.Parallel()

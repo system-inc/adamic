@@ -880,8 +880,12 @@ type lowering struct {
 	// arrayStoredNames is every property name a type stored as an array can have, found once, the first time
 	// Array.isArray meets a plain object arm (library_array_predicate.go, #s8gy89r).
 	arrayStoredNames map[string]bool
-	// arrayArmSites are the tests lowering built whose array brand decides an arm arrayExcludedArm admitted, which
-	// checkArrayArmViews holds against every checked view once lowering is done (library_array_predicate.go).
+	// arrayStoredIndex is whether a type stored as an array in the closed world has an index signature other than a
+	// number's, found by the same walk, at the same time (arrayExcludedIndexArm, #gcec0bx).
+	arrayStoredIndex bool
+	// arrayArmSites are the tests lowering built whose array brand decides an arm arrayExcludedArm or
+	// arrayExcludedIndexArm admitted, which checkArrayArmViews holds against every checked view once lowering is done
+	// (library_array_predicate.go).
 	arrayArmSites []arrayArmSite
 	// closureSpreadSites are the calls with a spread through a function value callClosure made, which
 	// checkClosureSpreadLayouts judges against every target their layouts pack for once FunctionTypeTargets

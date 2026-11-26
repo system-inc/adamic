@@ -1,0 +1,15 @@
+type AdamicJsonRecoveryValue = string | number | boolean | null | AdamicJsonRecoveryValue[] | AdamicJsonRecoveryObject;
+interface AdamicJsonRecoveryObject { [key: string]: AdamicJsonRecoveryValue }
+function isRecord(value: AdamicJsonRecoveryValue | undefined): boolean {
+    return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+function show(label: string, value: AdamicJsonRecoveryValue | undefined): void {
+    console.log(label + " " + String(isRecord(value)));
+}
+show("object", { a: 1 });
+show("array", [1, "x"]);
+show("string", "s");
+show("number", 2);
+show("boolean", true);
+show("null", null);
+show("undefined", undefined);

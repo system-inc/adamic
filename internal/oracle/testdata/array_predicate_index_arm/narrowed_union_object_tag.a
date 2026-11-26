@@ -1,0 +1,8 @@
+// typeof cannot tell an array from an object, but the index-only arm's number values keep every function out, so no
+// array reaches it and the narrowed read checks the array member by its brand (rulings.md:260's amendment, #gcec0bx).
+function first(): number[] | { [key: string]: number } {
+	return [1];
+}
+let shared: number[] | { [key: string]: number } = first();
+shared = [1];
+console.log(`${shared.length}`);
