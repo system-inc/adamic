@@ -49,6 +49,8 @@ import (
 //   - the kind and byte invariant dropped: wrong_byte stops later, in other words;
 //   - every accessor on the chain refused again, not only one named as a public field (#vjvcnnj): prototype_getter
 //     and prototype_getter_past stop where Node copies past the getter;
+//   - the storage check dropped (#k7g6f9h): refuse_array, refuse_map and refuse_closure read an array's, a
+//     map's or a closure's storage as an object's, and stop elsewhere or not at all;
 //   - an interned shape's reference bit set against its kind, TestShapeProducerInventory's bitmap mutant for
 //     a shape made at run time: width and p01 stop in adamic_shape_check;
 //   - the result always made by adamic_object_new, never constructed (Memory's must 1): absent_kept shows
@@ -87,6 +89,10 @@ var (
 		"layout: resolvedUsingTsExtension kind 0 byte 9 initialized 1 order 3",
 	}
 )
+
+// objectSpreadStorageStop is the stop for a source not stored as a plain object or a class instance
+// (#k7g6f9h), in the words the JavaScript backend's mirror uses.
+const objectSpreadStorageStop = "a spread of a value not stored as a plain object into an object literal isn't built yet (#k7g6f9h)"
 
 var objectSpreadModes = []objectSpreadMode{
 	{name: "number_source", layout: objectSpreadSeat},
@@ -140,12 +146,16 @@ var objectSpreadModes = []objectSpreadMode{
 	{name: "graph_result_written", layout: objectSpreadWritten2774},
 	{name: "graph_result_absent", layout: objectSpreadKept},
 	{name: "refuse_record", stop: "NotYet: spread of record storage"},
-	{name: "refuse_host", stop: "NotYet: a spread with overwrites of a runtime library value (a host or groups object)"},
-	{name: "refuse_groups", stop: "NotYet: a spread with overwrites of a runtime library value (a host or groups object)"},
+	{name: "refuse_host", stop: objectSpreadStorageStop},
+	{name: "refuse_groups", stop: objectSpreadStorageStop},
 	{name: "refuse_error", stop: "NotYet: a spread with overwrites of an Error"},
-	{name: "refuse_tuple", stop: "NotYet: a spread with overwrites of a tuple"},
+	{name: "refuse_tuple", stop: objectSpreadStorageStop},
 	{name: "refuse_accessor_field", stop: "NotYet: a spread with overwrites of a class instance with an accessor named as a public field"},
-	{name: "refuse_value", stop: "NotYet: a spread with overwrites of a value that isn't an object"},
+	{name: "refuse_value", stop: objectSpreadStorageStop},
+	{name: "refuse_array", stop: objectSpreadStorageStop},
+	{name: "refuse_typed_array", stop: objectSpreadStorageStop},
+	{name: "refuse_map", stop: objectSpreadStorageStop},
+	{name: "refuse_closure", stop: objectSpreadStorageStop},
 	{name: "wrong_byte", stop: "compiler bug: a spread's overwrite of k states kind 0 and representation 3, which don't describe its value"},
 	{name: "wrong_value", stop: "compiler bug: a spread's overwrite of k states kind 2 and representation 3, which don't describe its value"},
 	{name: "duplicate", stop: "compiler bug: a spread overwrites k twice"},
@@ -174,6 +184,7 @@ var objectSpreadMutations = []struct {
 	}, []string{"p01_reverse"}},
 	{"invariant-dropped", [][2]string{{"\t\tif (agrees(&overwrites[at])) continue;\n", "\t\tcontinue;\n"}}, []string{"wrong_byte"}},
 	{"accessor-refusal-wide", [][2]string{{"if (strcmp(public_shape->names[index], class->accessors[at].name) == 0) refuse(", "refuse("}}, []string{"prototype_getter", "prototype_getter_past"}},
+	{"storage-check-dropped", [][2]string{{"\t\tif (!plain) {\n", "\t\tif (!plain && false) {\n"}}, []string{"refuse_array", "refuse_map", "refuse_closure"}},
 	{"reference-bit-against-kind", [][2]string{{"\t\t\treferences[index] = kinds[index] == adamic_field_reference;\n", "\t\t\treferences[index] = kinds[index] != adamic_field_reference;\n"}}, []string{"width", "p01"}},
 }
 

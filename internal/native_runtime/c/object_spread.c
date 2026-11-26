@@ -147,12 +147,18 @@ adamic_object *adamic_object_spread_with(const adamic_object *source, const adam
 	// A spread of undefined or of null copies nothing.
 	if ((const adamic_heap *)source == &adamic_null) source = NULL;
 	if (source != NULL) {
-		if (source->heap.kind != adamic_kind_object) refuse("a value that isn't an object");
+		// What this copies is a positive test (#k7g6f9h, Adamic's ruling): an object stored as a plain object
+		// or a class instance. Anything else, an array, a tuple, a typed array, a Map, a Set, a closure, a host
+		// or groups object, or a storage added later, stops here, with the words the JavaScript backend's
+		// mirror uses, since Node copies their own enumerable keys and that copy isn't built yet (#n0744ek).
+		bool plain = source->heap.kind == adamic_kind_object && !source->tuple && !adamic_host_shape(source->shape);
+		if (!plain) {
+			static const char message[] = "a spread of a value not stored as a plain object into an object literal isn't built yet (#k7g6f9h)";
+			adamic_panic(message, sizeof message - 1);
+		}
+		// Lowering stops these at compile time; each is the backstop, in its own words.
 		if (adamic_record_is(source)) adamic_panic("NotYet: spread of record storage", sizeof "NotYet: spread of record storage" - 1);
-		if (source->tuple) refuse("a tuple");
 		if (adamic_error_is(source)) refuse("an Error");
-		// A host's and a match's groups object alike: their names aren't all Node's own enumerable keys.
-		if (adamic_host_shape(source->shape)) refuse("a runtime library value (a host or groups object)");
 		// An accessor lives on the prototype, never among the own keys a spread copies, so a getter or setter
 		// only there is passed over, on Node and here (#vjvcnnj). One named as a public field would put a
 		// getter on a copied name, which TypeScript refuses as a declaration, so it's only the backstop.
