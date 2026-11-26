@@ -75,19 +75,11 @@ func TestClosedKindFunctionConstructorNarrowing(t *testing.T) {
 		"console.log(show(body));\nconsole.log(show(open));\n"
 	for _, probe := range []struct{ name, source, stop string }{
 		{"unused", closedKindConstructorTypes + narrowing, "can't lower this outside a method"},
-		{"called", closedKindConstructorTypes + "OpenNode.call(open);\n" + narrowing, kindPredicateRefusal},
+		// called: .a stops earlier at an unproven type predicate; its .ts side is enumTagSwingRows' "TestClosedKindFunctionConstructorNarrowing/called".
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			ext := ".ts"
-			if probe.stop == kindPredicateRefusal {
-				ext = ".a"
-			}
-			_, err := lowerSourceAs(t, probe.source, ext)
-			if ext == ".a" {
-				t.Logf("FAMILY1AT %s %v", probe.name, err)
-			}
-			if err == nil || !strings.Contains(err.Error(), probe.stop) {
+			if _, err := lowerSourceAs(t, probe.source, ".ts"); err == nil || !strings.Contains(err.Error(), probe.stop) {
 				t.Fatalf("want a stop holding %q, got %v", probe.stop, err)
 			}
 		})

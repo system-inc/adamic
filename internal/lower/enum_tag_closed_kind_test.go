@@ -184,18 +184,20 @@ func TestClosedKindLiteralKindBuildsStayOpen(t *testing.T) {
 		{"widened kind", "const odd = { kind: Kind.Block, text: 'xyz' };\nconst lie: Expr = odd;\nconsole.log(measure(ident) + ' ' + measure(lie));\n"},
 		{"widened as", "const lie = { kind: Kind.Block, text: 'xyz' } as Expr;\nconsole.log(measure(ident) + ' ' + measure(lie));\n"},
 	} {
-		for _, extension := range []string{".a", ".ts"} {
-			t.Run(probe.name+extension, func(t *testing.T) {
-				t.Parallel()
-				want := kindPredicateRefusal
-				if extension == ".a" {
-					want = "over Node, whose kind is an open numeric enum: a value of it can carry Kind.Block without Block's layout (rulings.md:142)"
-				}
-				if _, err := lowerSourceAs(t, types+probe.source, extension); err == nil || !strings.Contains(err.Error(), want) {
-					t.Fatalf("want %q, got %v", want, err)
-				}
-			})
-		}
+		// annotated literal.ts: the swing lifted its .ts refusal; its .ts side is enumTagSwingRows' "TestClosedKindLiteralKindBuildsStayOpen/annotated_literal.ts".
+		// as const kind.ts: the swing lifted its .ts refusal; its .ts side is enumTagSwingRows' "TestClosedKindLiteralKindBuildsStayOpen/as_const_kind.ts".
+		// inline intersection.ts: the swing lifted its .ts refusal; its .ts side is enumTagSwingRows' "TestClosedKindLiteralKindBuildsStayOpen/inline_intersection.ts".
+		// return type.ts: the swing lifted its .ts refusal; its .ts side is enumTagSwingRows' "TestClosedKindLiteralKindBuildsStayOpen/return_type.ts".
+		// parameter type.ts: the swing lifted its .ts refusal; its .ts side is enumTagSwingRows' "TestClosedKindLiteralKindBuildsStayOpen/parameter_type.ts".
+		// widened kind.ts: the swing lifted its .ts refusal; its .ts side is enumTagSwingRows' "TestClosedKindLiteralKindBuildsStayOpen/widened_kind.ts".
+		// widened as.ts: the swing lifted its .ts refusal; its .ts side is enumTagSwingRows' "TestClosedKindLiteralKindBuildsStayOpen/widened_as.ts".
+		t.Run(probe.name+".a", func(t *testing.T) {
+			t.Parallel()
+			const want = "over Node, whose kind is an open numeric enum: a value of it can carry Kind.Block without Block's layout (rulings.md:142)"
+			if _, err := lowerSourceAs(t, types+probe.source, ".a"); err == nil || !strings.Contains(err.Error(), want) {
+				t.Fatalf("want %q, got %v", want, err)
+			}
+		})
 	}
 	t.Run("control.a", func(t *testing.T) {
 		t.Parallel()
@@ -256,24 +258,16 @@ func TestClosedKindRunTimeKindStaysOpen(t *testing.T) {
 		"function show(x: Body | Open): string { return isOpenBody(x) ? x.b : 'open'; }\n" +
 		"function kb(): K { return K.Ident; }\n"
 	for _, probe := range []struct{ name, source, stdout string }{
-		{"class", "class N { constructor(readonly kind: K, readonly pos: number, readonly n: number) {} }\nconsole.log(show(new N(kb(), 0, 1)));\n", ""},
-		{"function", "function make(kind: K): Open { return { kind, pos: 0, n: 1 }; }\nconsole.log(show(make(kb())));\n", ""},
+		// class: .a stops earlier at an unproven type predicate; its .ts side is enumTagSwingRows' "TestClosedKindRunTimeKindStaysOpen/class".
+		// function: .a stops earlier at an unproven type predicate; its .ts side is enumTagSwingRows' "TestClosedKindRunTimeKindStaysOpen/function".
 		{"control", "const o: Open = { kind: K.Ident, pos: 0, n: 1 };\nconsole.log(show(body));\nconsole.log(show(o));\n", "block\nopen\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			source := closedKindTypes + open + probe.source
-			if probe.stdout != "" {
-				program := lowersAndAgreesWithNodeAs(t, source, ".ts")
-				if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != probe.stdout {
-					t.Fatalf("native: exit %d, stdout %q, stderr %q; want 0 and %q", code, stdout, stderr, probe.stdout)
-				}
-				return
-			}
-			_, err := lowerSourceAs(t, source, ".a")
-			t.Logf("FAMILY1AT %s %v", probe.name, err)
-			if err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
-				t.Fatalf("want %q, got %v", kindPredicateRefusal, err)
+			program := lowersAndAgreesWithNodeAs(t, source, ".ts")
+			if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != probe.stdout {
+				t.Fatalf("native: exit %d, stdout %q, stderr %q; want 0 and %q", code, stdout, stderr, probe.stdout)
 			}
 		})
 	}
@@ -291,27 +285,8 @@ func TestClosedKindRunTimeKindStaysOpen(t *testing.T) {
 	}
 }
 
-// What makes K(S) hold the compared kind keeps the narrowing refused: an anonymous literal typed Ex with
-// kind Body puts Body in K(Ex) (a Body-kinded value with Ex's layout), and so does a second declared type
-// with Body's kind, a twin layout. The predicate's type drops Ex, the comparison its body makes keeps it,
-// and the identity check refuses. Mutants: m1 lowers the anonymous literal, and m4 lowers both.
-func TestClosedKindHoldingTheComparedKindRefuses(t *testing.T) {
-	t.Parallel()
-	const show = closedKindIsBody + "function show(x: Body | Ex): string { return isBody(x) ? x.b : 'expression'; }\nconsole.log(show(body));\n"
-	for _, probe := range []struct{ name, source string }{
-		{"anonymous literal", "const e: Ex = { kind: K.Body, pos: 2, _expressionBrand: undefined };\nconsole.log(show(e));\n"},
-		{"twin layout", "interface Twin extends Ex { readonly kind: K.Body; readonly t: number }\n"},
-	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSourceAs(t, closedKindTypes+show+probe.source, ".a")
-			t.Logf("FAMILY1AT %s %v", probe.name, err)
-			if err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
-				t.Fatalf("want %q, got %v", kindPredicateRefusal, err)
-			}
-		})
-	}
-}
+// TestClosedKindHoldingTheComparedKindRefuses/anonymous literal: .a stops earlier at a type predicate whose return is not proven; its .ts side is enumTagSwingRows' "TestClosedKindHoldingTheComparedKindRefuses/anonymous_literal".
+// TestClosedKindHoldingTheComparedKindRefuses/twin layout: .a stops earlier at a type predicate whose return is not proven; its .ts side is enumTagSwingRows' "TestClosedKindHoldingTheComparedKindRefuses/twin_layout".
 
 // tsc's LateBoundDeclaration, as the brief writes it: DynamicNamedDeclaration, whose kind is the open
 // enum, intersected with a LateBoundName name. The rule closes it with K(LateBound) empty, and that's

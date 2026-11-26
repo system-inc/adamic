@@ -55,7 +55,6 @@ func TestEnumTagWalkKeepsMembersThatHoldAValue(t *testing.T) {
 	t.Parallel()
 	source := neverMemberTypes + "interface Q { readonly kind: K; readonly q: string }\nfunction numeric(): number { return 1; }\nconst wide: Q = { kind: numeric(), q: 'wide' };\nfunction isPQ(n: P | Q): n is P { return n.kind === K.P; }\nfunction show(n: (P | Q) & (P | Q | C)): string { return isPQ(n) ? `p ${n.p}` : 'other'; }\nconsole.log(show(p));\n"
 	_, err := lowerSourceAs(t, source, ".a")
-	t.Logf("FAMILY1AT %s %v", "TestEnumTagWalkKeepsMembersThatHoldAValue", err)
 	if err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
 		t.Fatalf("want %q, got %v", kindPredicateRefusal, err)
 	}

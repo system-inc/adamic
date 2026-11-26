@@ -72,7 +72,7 @@ func TestEnumTagAccessRefusals(t *testing.T) {
 		{"early return", "function show(h: H): string { if (!isA(h.n)) { return 'b'; } return `a ${h.n.a}`; }\nconsole.log(show(ha));\n"},
 		{"read in a loop under the test", reset + "function show(m: M): string { let out = ''; if (isA(m.n)) { let i = 0; while (i < 2) { if (i === 1) { out = `a ${m.n.a}`; } reset(m); i = i + 1; } } return out; }\nconsole.log(show({ n: a }));\n"},
 		{"getter of that name in the program", "class Lazy implements H { get n(): N { return a; } }\nfunction show(h: H): string { return isA(h.n) ? `a ${h.n.a}` : 'b'; }\nconsole.log(show(new Lazy()));\n"},
-		{"writing predicate", "const holder: M = { n: a };\nfunction isAw(n: N): n is A { holder.n = b; return n.kind === K.A; }\nfunction show(h: H): string { return isAw(h.n) ? `a ${h.n.a}` : 'b'; }\nconsole.log(show(holder));\n"},
+		// writing predicate: .a stops earlier at a type predicate whose return is not proven; its .ts side is enumTagSwingRows' "TestEnumTagAccessRefusals/writing_predicate".
 		{"call inside the step", "function kindOf(): K.A { return K.A; }\nfunction show(h: H): string { return h.n.kind === kindOf() ? `a ${h.n.a}` : 'b'; }\nconsole.log(show(ha));\n"},
 		{"getter of the compared field, by predicate", "class Odd { get kind(): K.A { return K.A; } }\nfunction show(h: H): string { return isA(h.n) ? `a ${h.n.a}` : 'b'; }\nconst odd = new Odd();\nconsole.log(show(ha) + String(odd.kind));\n"},
 		{"getter of the compared field, by comparison", "class Odd { get kind(): K.A { return K.A; } }\nfunction show(h: H): string { return h.n.kind === K.A ? `a ${h.n.a}` : 'b'; }\nconst odd = new Odd();\nconsole.log(show(ha) + String(odd.kind));\n"},
@@ -81,7 +81,6 @@ func TestEnumTagAccessRefusals(t *testing.T) {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSourceAs(t, kindPredicateTypes+accessHolder+probe.source, ".a")
-			t.Logf("FAMILY1AT %s %v", probe.name, err)
 			if err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
 				t.Fatalf("want %q, got %v", kindPredicateRefusal, err)
 			}

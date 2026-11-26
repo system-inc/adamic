@@ -109,7 +109,6 @@ const b = new GB();
 				return
 			}
 			_, err := lowerSourceAs(t, p.source, ".a")
-			t.Logf("FAMILY1AT %s %v", p.name, err)
 			var refused *Refused
 			if !errors.As(err, &refused) || refused.What != kindPredicateRefusal {
 				t.Fatalf("kind-alias fallback %s must keep family 1: %v", p.name, err)

@@ -43,34 +43,26 @@ func TestClosedKindSourcesNarrowByThePredicate(t *testing.T) {
 	for _, probe := range []struct{ name, source, stdout string }{
 		{"honest", "", "other\nx\n"},
 		{"anonymous literal", "const raw = { kind: K.Ident as const, pos: 9, name: 'y', _expressionBrand: undefined };\nconst anon: Ex = raw;\nconsole.log(show(anon));\n", "other\nx\ny\n"},
-		{"anonymous literal, no name", "const raw = { kind: K.Ident as const, pos: 9, _expressionBrand: undefined };\nconst anon: Ex = raw;\nconsole.log(show(anon));\n", ""},
+		// anonymous literal, no name: .a stops earlier at a type predicate whose return is not proven; its .ts side is enumTagSwingRows' "TestClosedKindSourcesNarrowByThePredicate/anonymous_literal,_no_name".
 		{"class", "class OwnIdent { readonly kind = K.Ident as const; readonly pos = 0; readonly name = 'c'; readonly _expressionBrand = undefined; }\nconst made: Ex = new OwnIdent();\nconsole.log(show(made));\n", "other\nx\nc\n"},
-		{"class, no name", "class OwnIdent { readonly kind = K.Ident as const; readonly pos = 0; readonly _expressionBrand = undefined; }\nconst made: Ex = new OwnIdent();\nconsole.log(show(made));\n", ""},
+		// class, no name: .a stops earlier at a type predicate whose return is not proven; its .ts side is enumTagSwingRows' "TestClosedKindSourcesNarrowByThePredicate/class,_no_name".
 		{"literal cast as Ex", "const cast = { kind: K.Ident as const, pos: 1, name: 'z', _expressionBrand: undefined } as Ex;\nconsole.log(show(cast));\n", "other\nx\nz\n"},
-		{"literal cast as Ex, no name", "const cast = { kind: K.Ident as const, pos: 1, _expressionBrand: undefined } as Ex;\nconsole.log(show(cast));\n", ""},
+		// literal cast as Ex, no name: .a stops earlier at a type predicate whose return is not proven; its .ts side is enumTagSwingRows' "TestClosedKindSourcesNarrowByThePredicate/literal_cast_as_Ex,_no_name".
 		{"declared union of sources", "type IdentOrNum = Ident | NumLit;\n", "other\nx\n"},
-		{"declared union with an anonymous member, no name", "type Odd = Ident | { readonly kind: K.Ident; readonly pos: number; readonly _expressionBrand: undefined };\n", ""},
+		// declared union with an anonymous member, no name: .a stops earlier at a type predicate whose return is not proven; its .ts side is enumTagSwingRows' "TestClosedKindSourcesNarrowByThePredicate/declared_union_with_an_anonymous_member,_no_name".
 		{"inline intersection", "const inter: Node & { readonly kind: K.Ident; readonly pos: number; readonly _expressionBrand: undefined; readonly name: string } = { kind: K.Ident, pos: 3, _expressionBrand: undefined, name: 'i' };\nconst viaInter: Ex = inter;\nconsole.log(show(viaInter));\n", "other\nx\ni\n"},
-		{"inline intersection, no name", "const inter: Node & { readonly kind: K.Ident; readonly pos: number; readonly _expressionBrand: undefined } = { kind: K.Ident, pos: 3, _expressionBrand: undefined };\nconst viaInter: Ex = inter;\nconsole.log(show(viaInter));\n", ""},
+		// inline intersection, no name: .a stops earlier at a type predicate whose return is not proven; its .ts side is enumTagSwingRows' "TestClosedKindSourcesNarrowByThePredicate/inline_intersection,_no_name".
 		{"return type", "function make(): { readonly kind: K.Ident; readonly pos: number; readonly _expressionBrand: undefined; readonly name: string } { return { kind: K.Ident, pos: 4, _expressionBrand: undefined, name: 'r' }; }\nconst made: Ex = make();\nconsole.log(show(made));\n", "other\nx\nr\n"},
-		{"return type, no name", "function make(): { readonly kind: K.Ident; readonly pos: number; readonly _expressionBrand: undefined } { return { kind: K.Ident, pos: 4, _expressionBrand: undefined }; }\nconst made: Ex = make();\nconsole.log(show(made));\n", ""},
+		// return type, no name: .a stops earlier at a type predicate whose return is not proven; its .ts side is enumTagSwingRows' "TestClosedKindSourcesNarrowByThePredicate/return_type,_no_name".
 		{"parameter type", "function take(odd: { readonly kind: K.Ident; readonly pos: number; readonly _expressionBrand: undefined; readonly name: string }): string { const viaParam: Ex = odd; return show(viaParam); }\nconsole.log(take({ kind: K.Ident, pos: 5, _expressionBrand: undefined, name: 'p' }));\n", "other\nx\np\n"},
-		{"parameter type, no name", "function take(odd: { readonly kind: K.Ident; readonly pos: number; readonly _expressionBrand: undefined }): string { const viaParam: Ex = odd; return show(viaParam); }\nconsole.log(take({ kind: K.Ident, pos: 5, _expressionBrand: undefined }));\n", ""},
-		{"widened kind", "const wide = { kind: K.Ident, pos: 6, _expressionBrand: undefined, name: 'w' };\nconst viaWide: Ex = wide;\nconsole.log(show(viaWide));\n", ""},
-		{"widened kind, no name", "const wide = { kind: K.Ident, pos: 6, _expressionBrand: undefined };\nconst viaWide: Ex = wide;\nconsole.log(show(viaWide));\n", ""},
-		{"declared source with another field type", "interface NumIdent extends Ex { readonly kind: K.Ident; readonly name: number }\nconst numbered: NumIdent = { kind: K.Ident, pos: 8, _expressionBrand: undefined, name: 3 };\nconsole.log(show(numbered));\n", ""},
+		// parameter type, no name: .a stops earlier at a type predicate whose return is not proven; its .ts side is enumTagSwingRows' "TestClosedKindSourcesNarrowByThePredicate/parameter_type,_no_name".
+		// widened kind: .a stops earlier at a type predicate whose return is not proven; its .ts side is enumTagSwingRows' "TestClosedKindSourcesNarrowByThePredicate/widened_kind".
+		// widened kind, no name: .a stops earlier at a type predicate whose return is not proven; its .ts side is enumTagSwingRows' "TestClosedKindSourcesNarrowByThePredicate/widened_kind,_no_name".
+		// declared source with another field type: .a stops earlier at a type predicate whose return is not proven; its .ts side is enumTagSwingRows' "TestClosedKindSourcesNarrowByThePredicate/declared_source_with_another_field_type".
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			source := closedKindTypes + closedKindSourcesNarrowing + probe.source
-			if probe.stdout == "" {
-				_, err := lowerSourceAs(t, source, ".a")
-				t.Logf("FAMILY1AT %s %v", probe.name, err)
-				if err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
-					t.Fatalf("want %q, got %v", kindPredicateRefusal, err)
-				}
-				return
-			}
 			program := lowersAndAgreesWithNodeAs(t, source, ".ts")
 			if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != probe.stdout {
 				t.Fatalf("native: exit %d, stdout %q, stderr %q; want 0 and %q", code, stdout, stderr, probe.stdout)

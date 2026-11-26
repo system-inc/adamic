@@ -97,20 +97,12 @@ type N = A | B;
 		{"const enum tag", constEnum + "function isA(n: N): n is A { return n.kind === K.A; }\n" + both("", "`b ${n.b}`") +
 			"const values: N[] = [{ kind: K.A, flag: F.X, a: 1 }, { kind: K.B, b: 'x' }];\nfor (const n of values) { console.log(viaCall(n) + ' ' + viaComparison(n)); }\n", "a 1 a 1\nb x b x\n", ""},
 		// isBC's body keeps B and C, its declared type only C: the call is refused, the comparison lowers.
-		{"declared type narrower than the body", unionTag + "function isBC(n: N): n is C { return n.kind === K.B; }\nfunction show(n: N): string { return isBC(n) ? `c ${n.c}` : 'other'; }\nconsole.log(show({ kind: K.C, c: 'y' }));\n", "", kindPredicateRefusal},
+		// declared type narrower than the body: .a stops earlier at a type predicate whose return is not proven; its .ts side is enumTagSwingRows' "TestKindPredicateMatchesTheWrittenComparison/declared_type_narrower_than_the_body".
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			if probe.refusal != "" {
-				ext := ".ts"
-				if probe.refusal == kindPredicateRefusal {
-					ext = ".a"
-				}
-				_, err := lowerSourceAs(t, probe.source, ext)
-				if ext == ".a" {
-					t.Logf("FAMILY1AT %s %v", probe.name, err)
-				}
-				if err == nil || !strings.Contains(err.Error(), probe.refusal) {
+				if _, err := lowerSourceAs(t, probe.source, ".ts"); err == nil || !strings.Contains(err.Error(), probe.refusal) {
 					t.Fatalf("want %q, got %v", probe.refusal, err)
 				}
 				return
@@ -137,11 +129,11 @@ func TestKindPredicateWalkRefusals(t *testing.T) {
 		{"comparison control", kindPredicateTypes, "function show(n: N): string { return n.kind === K.A ? `a ${n.a}` : 'b'; }\nconsole.log(show({ kind: K.A, flag: F.X, a: 1 }));\n", ""},
 		// The comparison's own hazard, met by the predicate's call. wide is a B whose kind is chosen at run
 		// time, which keeps B open (closedKinds, enum_tag_closed_kind.go).
-		{"wide kind call", "enum K { A = 1, B = 2 }\nenum F { X = 1 }\ninterface A { readonly kind: K.A; readonly flag: F; readonly a: number }\ninterface B { readonly kind: K; readonly b: string }\ntype N = A | B;\nfunction numeric(): number { return 1; }\nconst wide: B = { kind: numeric(), b: 'wide' };\n", "function isA(n: N): n is A { return n.kind === K.A; }\n" + show, kindPredicateRefusal},
+		// wide kind call: .a stops earlier at an unproven type predicate; its .ts side is enumTagSwingRows' "TestKindPredicateWalkRefusals/wide_kind_call".
 		{"shared value call", "enum K { A = 1, Z = 5 }\nenum L { B = 1, W = 6 }\ninterface A { readonly kind: K.A; readonly a: number }\ninterface B { readonly kind: L.B; readonly b: string }\ntype N = A | B;\n", "function isA(n: N): n is A { return n.kind === K.A; }\nfunction show(n: N): string { return isA(n) ? `a ${n.a}` : 'b'; }\nconsole.log(show({ kind: K.A, a: 1 }));\n", "share a value"},
 		{"shared value comparison", "enum K { A = 1, Z = 5 }\nenum L { B = 1, W = 6 }\ninterface A { readonly kind: K.A; readonly a: number }\ninterface B { readonly kind: L.B; readonly b: string }\ntype N = A | B;\n", "function show(n: N): string { return n.kind === K.A ? `a ${n.a}` : 'b'; }\nconsole.log(show({ kind: K.A, a: 1 }));\n", "share a value"},
 		// Condition 2: the checker narrows by the declared type, so one that disagrees proves nothing.
-		{"lying declared type", kindPredicateTypes, "function isA(n: N): n is A { return n.kind === K.B; }\n" + show, kindPredicateRefusal},
+		// lying declared type: .a stops earlier at a type predicate whose return is not proven; its .ts side is enumTagSwingRows' "TestKindPredicateWalkRefusals/lying_declared_type".
 		{"twin layouts", "enum K { A = 1, B = 2 }\nenum F { X = 1 }\ninterface A { readonly kind: K.A; readonly flag: F; readonly a: number }\ninterface B { readonly kind: K.A; readonly b: string }\ntype N = A | B;\n", "function isA(n: N): n is A { return n.kind === K.A; }\n" + show, kindPredicateRefusal},
 		// A const whose annotation is wider than its arrow narrows by its annotation, N here, so its call
 		// isn't exact and narrows nothing: a step that changes nothing, and the comparison after it proves A.
@@ -153,14 +145,14 @@ func TestKindPredicateWalkRefusals(t *testing.T) {
 		{"this parameter", kindPredicateTypes, "function isA(this: void, n: N): n is A { return n.kind === K.A; }\n" + show, "a function or method with a this parameter followed by another parameter"},
 		// Not exact, so the call is any other step.
 		{"inferred predicate", kindPredicateTypes, "function isA(n: N) { return n.kind === K.A; }\n" + show, kindPredicateRefusal},
-		{"overloaded", kindPredicateTypes, "function isA(n: A): n is A;\nfunction isA(n: N): n is A;\nfunction isA(n: N): n is A { return n.kind === K.A; }\n" + show, kindPredicateRefusal},
+		// overloaded: .a stops earlier at an unproven type predicate, since its overload implementation does not prove both directions; its .ts side is enumTagSwingRows' "TestKindPredicateWalkRefusals/overloaded".
 		{"method", kindPredicateTypes, "const kinds = { isA(n: N): n is A { return n.kind === K.A; } };\nfunction show(n: N): string { return kinds.isA(n) ? `a ${n.a}` : 'b'; }\nconsole.log(show({ kind: K.A, flag: F.X, a: 1 }));\n", "an indirect call of a checked predicate"},
 		{"value alias", kindPredicateTypes, "function isAlpha(n: N): n is A { return n.kind === K.A; }\nconst isA = isAlpha;\n" + show, kindPredicateRefusal},
 		{"let arrow", kindPredicateTypes, "let isA = (n: N): n is A => n.kind === K.A;\n" + show, "an indirect call of a checked predicate"},
 		// A default or an optional mark: isA(undefined) would test the default's kind, not the argument's
 		// (Language's attack on 5d222aba).
-		{"parameter with a default", kindPredicateTypes, "const fallback: N = { kind: K.A, flag: F.X, a: 0 };\nfunction isA(n: N = fallback): n is A { return n.kind === K.A; }\nfunction show(n: N | undefined): string { return isA(n) ? `a ${n.a}` : 'b'; }\nconsole.log(show({ kind: K.A, flag: F.X, a: 1 }));\n", kindPredicateRefusal},
-		{"optional parameter", kindPredicateTypes, "function isA(n?: N): n is A { return n !== undefined && n.kind === K.A; }\nfunction show(n: N): string { return isA(n) ? `a ${n.a}` : 'b'; }\nconsole.log(show({ kind: K.A, flag: F.X, a: 1 }));\n", kindPredicateRefusal},
+		// parameter with a default: .a stops earlier at a type predicate whose return is not proven; its .ts side is enumTagSwingRows' "TestKindPredicateWalkRefusals/parameter_with_a_default".
+		// optional parameter: .a stops earlier at a type predicate whose return is not proven; its .ts side is enumTagSwingRows' "TestKindPredicateWalkRefusals/optional_parameter".
 		{"const alias singleton", kindPredicateTypes, "function isA(n: N): n is A { const k = n.kind; return k === K.A; }\n" + show, ""},
 		{"asserts", kindPredicateTypes, "function assertA(n: N): asserts n is A { if (n.kind !== K.A) { throw new Error('not A'); } }\nfunction show(n: N): string { assertA(n); return `a ${n.a}`; }\nconsole.log(show({ kind: K.A, flag: F.X, a: 1 }));\n", kindPredicateRefusal},
 		{"switch (true)", kindPredicateTypes, "function isA(n: N): n is A { return n.kind === K.A; }\nfunction show(n: N): string { switch (true) { case isA(n): return `a ${n.a}`; } return 'b'; }\nconsole.log(show({ kind: K.A, flag: F.X, a: 1 }));\n", kindPredicateRefusal},
@@ -172,9 +164,6 @@ func TestKindPredicateWalkRefusals(t *testing.T) {
 				ext = ".a"
 			}
 			_, err := lowerSourceAs(t, probe.types+probe.source, ext)
-			if ext == ".a" {
-				t.Logf("FAMILY1AT %s %v", probe.name, err)
-			}
 			if probe.refusal == "" {
 				if err != nil {
 					t.Fatalf("want it lowered, got %v", err)

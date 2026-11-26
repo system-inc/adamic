@@ -202,7 +202,6 @@ function textOf(node: Identifier | Expression): string { return isIdentifier(nod
 console.log(textOf(id));
 `
 	_, err := lowerSourceAs(t, source, ".a")
-	t.Logf("FAMILY1AT %s %v", "TestClosedRemainderOpenRemainderRefusedFirst", err)
 	var refused *Refused
 	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "an object refinement using an open numeric enum as a literal tag") {
 		t.Fatalf("want the open enum refinement refused, got %v", err)
