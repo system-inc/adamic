@@ -14,14 +14,15 @@ import (
 // layout the constructor's object literal has, for an object of that shape: a compare and a load,
 // inline. Any other object is looked up by name through the field cache, as is every other field:
 // an object literal can be seen through a class's type, since tsc lets one through and only cohere's
-// adamic/nominal-class refuses it, so the shape is checked unless fields.go proves a uniform slot.
+// adamic/nominal-class refuses it, so the shape is checked. A uniform slot fields.go proves is checked
+// too, against the literal layouts that hold the name (uniformFieldGuard).
 func (e *emitter) fieldSlot(object string, name string, class int) string {
 	// Uniform offsets describe own storage; static names may instead read live parent data.
 	if e.staticFieldName(name) {
 		return fmt.Sprintf("adamic_object_field(%s, %s, &%s)", object, cString(name), e.cache())
 	}
 	if slot := e.uniformFieldSlot(object, name); slot != "" {
-		return slot
+		return e.uniformFieldGuard(object, name, slot, fmt.Sprintf("adamic_object_data_field(%s, %s, &%s)", object, cString(name), e.cache()))
 	}
 	lookup := fmt.Sprintf("adamic_object_data_field(%s, %s, &%s)", object, cString(name), e.cache())
 	if class == 0 || !cName.MatchString(object) {
@@ -79,35 +80,74 @@ func (e *emitter) writeFieldSlot(object, name string, class int) string {
 	if !static {
 		fallback = fmt.Sprintf("adamic_object_data_field(%s, %s, &%s)", object, cString(name), e.cache())
 	}
-	data := e.fieldSlot(object, name, class)
-	if slot := e.uniformFieldSlot(object, name); slot != "" {
-		seen := map[string]bool{}
-		checks := []string{}
-		walkExpressions(e.program, func(expression ir.Expression) {
-			literal, ok := expression.(ir.ObjectLiteral)
-			if !ok || literal.Spread != nil {
-				return
-			}
-			for _, field := range literal.Fields {
-				if field.Name == name {
-					shape := e.literalShape(literal)
-					if !seen[shape] {
-						seen[shape] = true
-						checks = append(checks, fmt.Sprintf("%s->shape == &%s", object, shape))
-					}
-					break
-				}
-			}
-		})
-		data = fallback
-		if len(checks) != 0 {
-			data = fmt.Sprintf("(%s ? %s : %s)", strings.Join(checks, " || "), slot, fallback)
-		}
+	slot := e.uniformFieldSlot(object, name)
+	data := ""
+	if slot == "" || static {
+		// A uniform name's fieldSlot is a guarded read whose field cache this write would never use, so it
+		// isn't asked. A static name's is its static road, asked as it always was: the guard below takes its
+		// place, but the cache it declares stays in the C.
+		data = e.fieldSlot(object, name, class)
+	}
+	if slot != "" {
+		data = e.uniformFieldGuard(object, name, slot, fallback)
 	}
 	if !static {
 		return data
 	}
 	return fmt.Sprintf("(%s->class != NULL && %s->class->is_static ? %s : %s)", object, object, lookup, data)
+}
+
+// uniformFieldGuard is a uniform slot (fields.go) behind a check of the object's shape: slot is taken only
+// where the object has the layout of an object literal that holds name, and any other object takes
+// fallback, the by-name road. A write needs it because a write doesn't prove an optional field exists. A
+// read needs it because the checker's proof that the field is there can be stale: a property narrowed to
+// one arm of a union, the narrowing kept across a call that put another arm's object there, reads slot k of
+// that object, which is another field's storage or past its end (#8nj5pn4). Layouts the runtime makes and
+// no program literal names, an Error's or a map entry's, and the public layout a class spread copies, aren't
+// in the list, so their objects take the by-name road, which is correct and slower. With no literal holding
+// name, every object takes it.
+func (e *emitter) uniformFieldGuard(object, name, slot, fallback string) string {
+	checks := []string{}
+	for _, shape := range e.literalShapesHolding(name) {
+		checks = append(checks, fmt.Sprintf("%s->shape == &%s", object, shape))
+	}
+	if len(checks) == 0 {
+		return fallback
+	}
+	return fmt.Sprintf("(%s ? %s : %s)", strings.Join(checks, " || "), slot, fallback)
+}
+
+// literalShapesHolding is each distinct layout an object literal with no spread makes that holds name, in
+// the program's order. It's found once for each name: every layout is declared the first time it's named,
+// so another walk would name the same layouts and declare nothing more, and a walk for every read would
+// make emission cost the reads times the program's size.
+func (e *emitter) literalShapesHolding(name string) []string {
+	if shapes, found := e.uniformShapes[name]; found {
+		return shapes
+	}
+	seen := map[string]bool{}
+	shapes := []string{}
+	walkExpressions(e.program, func(expression ir.Expression) {
+		literal, ok := expression.(ir.ObjectLiteral)
+		if !ok || literal.Spread != nil {
+			return
+		}
+		for _, field := range literal.Fields {
+			if field.Name == name {
+				shape := e.literalShape(literal)
+				if !seen[shape] {
+					seen[shape] = true
+					shapes = append(shapes, shape)
+				}
+				break
+			}
+		}
+	})
+	if e.uniformShapes == nil {
+		e.uniformShapes = map[string][]string{}
+	}
+	e.uniformShapes[name] = shapes
+	return shapes
 }
 
 // cName is a C name alone, which a C expression can repeat without evaluating anything twice.

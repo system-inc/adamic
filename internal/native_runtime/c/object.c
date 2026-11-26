@@ -140,7 +140,12 @@ adamic_value *adamic_object_find(const adamic_object *object, const char *name, 
 			return &mutable->slots[index];
 		}
 	}
-	static const char message[] = "compiler bug: a field the checker proved is there is missing";
+	// The shape lacks a name lowering proved is there. That proof can be stale: a property narrowed to one arm
+	// of a union, the narrowing kept across a call that put another arm's object there, reaches here for a
+	// field only the first arm holds, and the uniform slot's shape guard sends it here too (#8nj5pn4,
+	// uniformFieldGuard in emit_objects.go). Node reads undefined, which the read's typed slot can't hold, so
+	// the run stops in the words of what isn't built yet. A field a lowering bug loses stops the same way.
+	static const char message[] = "NotYet: a field missing from this object, where a narrowing kept across a call that rewrote the property said it is there (#8nj5pn4)";
 	adamic_panic(message, sizeof message - 1);
 }
 

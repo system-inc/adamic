@@ -224,7 +224,7 @@ func TestLibraryMethodOwnLoadMutants(t *testing.T) {
 				t.Fatal("mutant changed nothing")
 			}
 			result, _ := natively(t, program)
-			if result.exitCode != 70 || !strings.Contains(string(result.stderr), "compiler bug: a field the checker proved is there is missing") {
+			if result.exitCode != 70 || !strings.Contains(string(result.stderr), "NotYet: a field missing from this object, where a narrowing kept across a call that rewrote the property said it is there") {
 				t.Fatalf("want the own-field panic, got exit %d stderr %s", result.exitCode, result.stderr)
 			}
 			if disagreement(onNode(t, path), result) == "" {
