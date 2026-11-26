@@ -481,8 +481,9 @@ func TestTheLibrariesAndThePreludeAreInTheBinary(t *testing.T) {
 				t.Errorf("%s loads %s from disk", paths[0], path)
 			}
 		}
-		if counts["prelude"] != 1 || counts["library"] == 0 || counts["source"] != len(paths) {
-			t.Errorf("%s loads %v: want the prelude, the libraries and its own %d", paths[0], counts, len(paths))
+		// The prelude is two files in a program: prelude.d.ts and its console, the standalone one or Node's.
+		if counts["prelude"] != 2 || counts["library"] == 0 || counts["source"] != len(paths) {
+			t.Errorf("%s loads %v: want the prelude's two files, the libraries and its own %d", paths[0], counts, len(paths))
 		}
 		if paths[0] == corpus[2][0] && counts["node"] == 0 {
 			t.Errorf("%s, which imports node:fs, loads none of Node's declarations", paths[0])
@@ -493,7 +494,7 @@ func TestTheLibrariesAndThePreludeAreInTheBinary(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, embedded := range []string{"internal/load/prelude.d.ts", "internal/load/host_axioms.json",
+	for _, embedded := range []string{"internal/load/prelude.d.ts", "internal/load/prelude_console.d.ts", "internal/load/prelude_node.d.ts", "internal/load/host_axioms.json",
 		"internal/load/node_types/node_modules/@types/node/index.d.ts", "cohere/TypeScript/tsc/internal/bundled/libs/lib.es2024.d.ts"} {
 		if !slices.Contains(lowering.files, embedded) {
 			t.Errorf("%s, embedded in the lowering, isn't among the key's files", embedded)
