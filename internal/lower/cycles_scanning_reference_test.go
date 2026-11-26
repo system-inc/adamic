@@ -1787,6 +1787,11 @@ func scanLowerWithElementKey(key *viewElementKey, program *load.Program, typeChe
 	if err := lowering.certifySourceSlots(); err != nil {
 		return nil, err
 	}
+	// As lowerWithElementKey does, before finishAccessors: a read of a prototype member from a generic
+	// spread's copy stops in both modes alike (#y4gjeb8).
+	if err := lowering.checkGenericSpreadCopyReads(); err != nil {
+		return nil, err
+	}
 	if err := lowering.finishAccessors(); err != nil {
 		return nil, err
 	}
