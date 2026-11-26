@@ -13,8 +13,9 @@ import (
 // destructures it by the declaration road (#rm22wzv): getters.ts reads each getter once per step in the pattern's
 // order, and defaults_rename.ts takes a default and a rename, each beside Node on sanitized native, release native
 // and the JavaScript backend. A nested pattern and a rest element keep the declaration road's stops, and an object
-// pattern over a Set, no plain array, keeps "a for...of destructuring an object". Mutant: the element destructured
-// twice each step, so every getter runs twice, reds getters.ts against Node, with C that compiles.
+// pattern over a Set, no plain array, keeps "a for...of destructuring an object". Mutant: destructureFrom reading a
+// pattern's bindings in reverse, so each step runs b's getter before a's, reds getters.ts against Node, with C that
+// compiles. A mutant of the loop's own code, the prefix dropped or moved or run twice, fails to compile on native.
 func TestForOfObjectPatternReadsAsADeclaration(t *testing.T) {
 	t.Parallel()
 	directory, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/for_of_object_pattern"))
