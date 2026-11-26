@@ -52,12 +52,15 @@ type firstLinkRun struct {
 	stdout, stderr string
 }
 
-// firstLinkRuns builds a lowered program as sanitized native and on the JavaScript backend, and runs each.
+// firstLinkRuns builds a lowered program as sanitized native and on the JavaScript backend, and runs each. Each
+// backend refuses a trap-mode program unless its own FirstLinkTraps is set, so both are set here, as the door
+// sets them.
 func firstLinkRuns(t *testing.T, program *ir.Program) []firstLinkRun {
 	t.Helper()
 	directory := t.TempDir()
 	binary := filepath.Join(directory, "native")
-	if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
+	options := native_runtime.Options{Sanitize: true, FirstLinkTraps: true}
+	if err := native.Build(native.CWithOptions(program, native.EmitOptions{Options: options}), binary, options); err != nil {
 		t.Fatal(err)
 	}
 	runner, err := filepath.Abs("../../oracle/node.mjs")
@@ -65,7 +68,7 @@ func firstLinkRuns(t *testing.T, program *ir.Program) []firstLinkRun {
 		t.Fatal(err)
 	}
 	generated := filepath.Join(directory, "generated.mjs")
-	if err := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); err != nil {
+	if err := os.WriteFile(generated, []byte(javascript.JavaScriptWith(program, javascript.Options{FirstLinkTraps: true})), 0o644); err != nil {
 		t.Fatal(err)
 	}
 	commands := []struct {
