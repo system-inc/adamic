@@ -1,0 +1,29 @@
+{
+  "findings": "leads only; reproduce without FirstLinkTraps before filing",
+  "traps": [
+    {
+      "Kind": "NotYet",
+      "Reason": "bind of a function that declares 2 parameters where the type it's bound as names 1",
+      "Fix": "",
+      "Site": "setter.ts:9:15",
+      "Unit": "setter.ts module",
+      "Phase": "checkBoundArguments",
+      "Suspect": false,
+      "Echo": false
+    }
+  ],
+  "total": 1,
+  "by_phase": {
+    "checkBoundArguments": 1
+  },
+  "by_kind": {
+    "NotYet": 1
+  },
+  "by_reason": {
+    "NotYet: bind of a function that declares 2 parameters where the type it's bound as names 1": 1
+  },
+  "unplaced": 0,
+  "suspect": 0,
+  "echo": 0,
+  "rewrites_skipped": []
+}
