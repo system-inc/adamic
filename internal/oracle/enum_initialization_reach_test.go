@@ -10,7 +10,7 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"native-enum-map", "native-call-before-enum", "safe-helper", "safe-constructor", "callable-selection", "call-graph-24", "unknown-after"} {
+	for _, name := range []string{"native-enum-map", "native-call-before-enum", "safe-helper", "safe-constructor", "callable-selection", "call-graph-24", "unknown-after", "computed-key-after", "computed-key-const"} {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
@@ -20,7 +20,7 @@ func init() {
 
 func TestEnumInitializationNode(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"native-enum-map", "native-call-before-enum", "safe-helper", "safe-constructor", "callable-selection", "call-graph-24", "unknown-after"} {
+	for _, name := range []string{"native-enum-map", "native-call-before-enum", "safe-helper", "safe-constructor", "callable-selection", "call-graph-24", "unknown-after", "computed-key-after", "computed-key-const"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/enum-init-reach", name+".a"))
@@ -68,7 +68,7 @@ func TestEnumInitializationNode(t *testing.T) {
 
 func TestEnumInitializationUnknownPinned(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"unknown-before", "unknown-callback", "unknown-property"} {
+	for _, name := range []string{"unknown-before", "unknown-callback", "unknown-property", "unknown-computed-key"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/enum-init-reach", name+".a"))
