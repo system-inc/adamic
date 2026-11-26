@@ -573,8 +573,8 @@ func (l *lowering) fieldStore(target, receiver, valueNode *ast.Node, field *ast.
 }
 
 // absentOptionalWrite judges a write to an optional own field of a plain object when some producer left a
-// field of that name out: such an object has no slot for it, and the write would find none ('a field the
-// checker proved is there is missing'), whatever the field's representation. A field held in a Union is
+// field of that name out: such an object has no slot for it, and the write would find none and stop at
+// adamic_object_find's missing field (object.c), whatever the field's representation. A field held in a Union is
 // refused wherever it's written, as before. A class instance declares every field, so it has the slot.
 // The field is matched by name, never by the declaration that spelled it: a literal typed Link, seen
 // through another interface or a generic's constraint that declares next again, is the same object with
