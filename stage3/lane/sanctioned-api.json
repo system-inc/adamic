@@ -887,6 +887,11 @@
       "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeArguments\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]],[\"UndefinedKeyword\"]]]"
     },
     {
+      "declaration": "member:[\"ts\",\"Node\",\"flags\"]#0",
+      "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"flags\"],[\"TypeReference\",[\"Identifier\",\"NodeFlags\"]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"flags\"],[\"TypeReference\",[\"Identifier\",\"NodeFlags\"]]]"
+    },
+    {
       "declaration": "member:[\"ts\",\"NodeWithTypeArguments\",\"typeArguments\"]#0",
       "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeArguments\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]]]",
       "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeArguments\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]],[\"UndefinedKeyword\"]]]"
@@ -3719,6 +3724,14 @@
       "line": 6826
     },
     {
+      "adaptation": "adapt/99-seats-scout24-writable-node-flags/api-sanctions.json row 1 {\"path\":[\"Node\",\"flags\"],\"kind\":\"PropertySignature\",\"replace\":\"member\",\"before\":\"readonly flags: NodeFlags;\",\"after\":\"flags: NodeFlags;\",\"why\":\"Adamic, item 14, Nov 24 16:19Z on #bbssdcy: \\\"A yes, on a condition: extend :406's Nov 17 extension to `Node.flags`. tsc's public `updateSourceFile` disproves its `readonly`\\\". The checker found 0 narrower Node flags declarations.\"}",
+      "path": [
+        "Node",
+        "flags"
+      ],
+      "line": 4307
+    },
+    {
       "adaptation": "adapt/99-z-family20/api-sanctions.json row 1 {\"path\":[\"JSDocReturnTag\",\"typeExpression\"],\"kind\":\"PropertySignature\",\"before\":\"JSDocTypeExpression\",\"after\":\"JSDocTypeExpression | undefined\",\"why\":\"Adamic, Nov 22, #bbssdcy decision 2 and ruling :78. The return tag factory assigns an own undefined value when no child is supplied.\"}",
       "path": [
         "JSDocReturnTag",
@@ -3889,6 +3902,10 @@
       "sha256": "7d04faceffc7b6dda82fa5a3f161a3cbf74280eb313a6c37f2ad8f3a3dadd46a"
     },
     {
+      "file": "stage3/adapt/99-seats-scout24-writable-node-flags/api-sanctions.json",
+      "sha256": "1583801bdabadd66b74021a1606c92b3ff60732a40c792ab1a8b4a5e89146a92"
+    },
+    {
       "file": "stage3/adapt/99-z-family20/api-sanctions.json",
       "sha256": "1a119294a4714b6e7c6d8ac0c6cabe80266e1edbc7dc635553de2fd2081f05c7"
     }
@@ -3999,15 +4016,18 @@
     "     };\n",
     "     interface TextRange {\n",
     "         pos: number;\n",
-    "@@ -4302,7 +4299,7 @@\n",
+    "@@ -4302,9 +4299,9 @@\n",
     "         IntrinsicIndexedElement = 2,\n",
     "         IntrinsicElement = 3,\n",
     "     }\n",
     "-    interface Node extends ReadonlyTextRange {\n",
     "+    interface Node extends TextRange {\n",
     "         readonly kind: SyntaxKind;\n",
-    "         readonly flags: NodeFlags;\n",
+    "-        readonly flags: NodeFlags;\n",
+    "+        flags: NodeFlags;\n",
     "         readonly parent: Node;\n",
+    "     }\n",
+    "     interface Node {\n",
     "@@ -4325,13 +4322,13 @@\n",
     "         forEachChild<T>(cbNode: (node: Node) => T | undefined, cbNodeArray?: (nodes: NodeArray<Node>) => T | undefined): T | undefined;\n",
     "     }\n",

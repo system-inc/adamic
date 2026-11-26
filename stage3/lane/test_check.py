@@ -259,8 +259,20 @@ class LandingLaneTests(unittest.TestCase):
                 sanction, ensure_ascii=False, separators=(',', ':'))
             self.assertEqual([row for row in manifest['owners'] if tuple(row['path']) == path],
                              [dict(adaptation=expected_owner, path=list(path), line=line)])
-        self.assertEqual(len(manifest['normalized_changes']), 286)
-        self.assertEqual(len(changes), 286)
+        family12 = 'adapt/99-seats-scout24-writable-node-flags/api-sanctions.json'
+        sanctions = json.loads((LANE.parent / family12).read_text())
+        path = ('Node', 'flags')
+        self.assertEqual([tuple(row['path']) for row in sanctions], [path])
+        self.assertIn('member:["ts","Node","flags"]#0', changes)
+        sanction = sanctions[0]
+        self.assertEqual((sanction['kind'], sanction['before'], sanction['after']),
+                         ('PropertySignature', 'readonly flags: NodeFlags;', 'flags: NodeFlags;'))
+        expected_owner = f'{family12} row 1 ' + json.dumps(
+            sanction, ensure_ascii=False, separators=(',', ':'))
+        self.assertEqual([row for row in manifest['owners'] if tuple(row['path']) == path],
+                         [dict(adaptation=expected_owner, path=list(path), line=4307)])
+        self.assertEqual(len(manifest['normalized_changes']), 287)
+        self.assertEqual(len(changes), 287)
 
     def test_unknown_platform(self):
         self.execution['platform']['node'] = 'v24.19.1'
