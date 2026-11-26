@@ -16,7 +16,7 @@ import (
 // with nothing between the check and the read, a held binding the call can't rewrite, and an unrelated getter
 // lower and agree with Node. Language's r08 is the same hole through an element, arr[0] after a call that writes
 // x[0], pinned with its honest twin and its nothing-between control, and through a const index, which tsc narrows by
-// its literal type (Language's e02) or a const enum member (e05). A read re-tested after the call agrees (e01). Mutants (narrowed_arm_property.mutants.md): the property dispatch dropped, the
+// its literal type (Language's e02) or a const enum member (e05). A read held into a const after the call is still the checker's A, so it stops too (Language's e01). Mutants (narrowed_arm_property.mutants.md): the property dispatch dropped, the
 // write test dropped, and the silent test dropped (the same-representation row stops).
 func TestNarrowedArmPropertyRead(t *testing.T) {
 	t.Parallel()
@@ -40,7 +40,7 @@ func TestNarrowedArmPropertyRead(t *testing.T) {
 		{"element honest twin", stringTypes + elements + "function show(arr: N[]): string { if (arr[0] !== undefined && arr[0].kind === 'a') { keepFirst(arr); return String(arr[0].v + 1); } return 'b'; }\nconsole.log(show([a]));\n", ""},
 		{"element const index lie", stringTypes + elements + "const index = 0;\nfunction show(arr: N[]): string { if (arr[index] !== undefined && arr[index].kind === 'a') { resetFirst(arr); return String(arr[index].v + 1); } return 'b'; }\nconsole.log(show([a]));\n", ""},
 		{"element const enum index lie", stringTypes + elements + "const enum Slot { First = 0 }\nfunction show(arr: N[]): string { if (arr[Slot.First] !== undefined && arr[Slot.First].kind === 'a') { resetFirst(arr); return String(arr[Slot.First].v + 1); } return 'b'; }\nconsole.log(show([a]));\n", ""},
-		{"element retested after the call", stringTypes + elements + "const index = 0;\nfunction show(arr: N[]): string { if (arr[index] !== undefined && arr[index].kind === 'a') { resetFirst(arr); const got = arr[index]; if (got !== undefined && got.kind === 'a') { return String(got.v + 1); } return 'changed'; } return 'b'; }\nconsole.log(show([a]));\n", "changed\n"},
+		{"element held after the call", stringTypes + elements + "const index = 0;\nfunction show(arr: N[]): string { if (arr[index] !== undefined && arr[index].kind === 'a') { resetFirst(arr); const got = arr[index]; if (got !== undefined && got.kind === 'a') { return String(got.v + 1); } return 'changed'; } return 'b'; }\nconsole.log(show([a]));\n", ""},
 		{"element nothing between", stringTypes + elements + "function show(arr: N[]): string { if (arr[0] !== undefined && arr[0].kind === 'a') { return String(arr[0].v + 1); } return 'b'; }\nconsole.log(show([a]));\nconsole.log(show([b]));\n", "2\nb\n"},
 		{"string held binding", stringTypes + "function show(m: M): string { const n = m.n; if (n.kind === 'a') { reset(m); return String(n.v + 1); } return 'b'; }\nconsole.log(show({ n: a }));\n", "2\n"},
 	} {
