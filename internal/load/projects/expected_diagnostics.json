@@ -213,41 +213,6 @@
 		},
 		{
 			"project": "tsconfig.json",
-			"file": "internal/oracle/testdata/node_process_runtime/node_process_directory_mutation.a",
-			"code": "TS2591",
-			"count": 10,
-			"cause": "never loaded: no test loads this file, and it names Node without importing a builtin, so Load would check it standalone"
-		},
-		{
-			"project": "tsconfig.json",
-			"file": "internal/oracle/testdata/node_process_runtime/node_process_environment_mutation.a",
-			"code": "TS2591",
-			"count": 8,
-			"cause": "never loaded: no test loads this file, and it names Node without importing a builtin, so Load would check it standalone"
-		},
-		{
-			"project": "tsconfig.json",
-			"file": "internal/oracle/testdata/node_source_map/enum_tab_throw.ts",
-			"code": "TS2532",
-			"count": 1,
-			"cause": "never loaded: no test loads this file, and it names Node without importing a builtin, so Load would check it standalone"
-		},
-		{
-			"project": "tsconfig.json",
-			"file": "internal/oracle/testdata/node_source_map/enum_tab_throw.ts",
-			"code": "TS2591",
-			"count": 2,
-			"cause": "never loaded: no test loads this file, and it names Node without importing a builtin, so Load would check it standalone"
-		},
-		{
-			"project": "tsconfig.json",
-			"file": "internal/oracle/testdata/node_source_map/enum_tab_throw.ts",
-			"code": "TS7006",
-			"count": 1,
-			"cause": "never loaded: no test loads this file, and it names Node without importing a builtin, so Load would check it standalone"
-		},
-		{
-			"project": "tsconfig.json",
 			"file": "internal/oracle/testdata/record_boxed_keys/p8-undefined.ts",
 			"code": "TS2538",
 			"count": 1,
