@@ -1968,9 +1968,14 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 		return 0, 0, l.notYet(node, "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions")
 	}
 	// number | undefined is held in a value's one slot packed (native/slots.go).
-	// The existing union tag carries object, array and scalar members alike.
-	// Keep unknown/nonprimitive erasure and nullable mixed layouts outside this cut.
-	boxed := value == ir.Union && arguments[1].Flags()&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) == 0 && !l.includesNull(arguments[1])
+	// Box mixed unions, including null and undefined, in the existing Union slot.
+	// Reference arms use ordinary Map ownership. Keep erased and Weak arms
+	// outside the nullable extension, since a Union cannot hold a weak slot.
+	boxed := value == ir.Union && arguments[1].Flags()&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) == 0
+	if boxed && l.includesNull(arguments[1]) {
+		weak, _ := l.keepsWeak(arguments[1])
+		boxed = !weak && !dynamicObjectType(arguments[1])
+	}
 	if !valueKnown || (slotless(value) && !boxed) {
 		return 0, 0, l.notYet(node, "a Map of "+l.checker.TypeToString(arguments[1]))
 	}
@@ -2047,13 +2052,24 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 		}
 		// A number, or undefined, where number | undefined goes is made that pair.
 		entryKey = fit(entryKey, key)
-		entryValue = fit(entryValue, value)
+		entryValue = l.fitMapValue(elements[1], entryValue, value)
 		if entryKey.Type() != key || entryValue.Type() != value {
 			return nil, l.notYet(pair, "a Map entry whose key or value is of another type than the Map's")
 		}
 		lowered.Entries = append(lowered.Entries, [2]ir.Expression{entryKey, entryValue})
 	}
 	return lowered, nil
+}
+
+// fitMapValue preserves null when a legacy nullable reference enters a boxed Map slot.
+func (l *lowering) fitMapValue(node *ast.Node, value ir.Expression, to ir.Type) ir.Expression {
+	if _, literalNull := value.(ir.Null); !literalNull && to == ir.Union && value != nil && value.Type() != ir.Union && value.Type().IsReference() {
+		proven := l.concrete(l.checker.GetTypeAtLocation(node))
+		if l.includesNull(proven) && !l.includesUndefined(proven) {
+			return l.boxNullableReference(value)
+		}
+	}
+	return fit(value, to)
 }
 
 // writtenOut reports whether a new Map's argument is its pairs written out: an array literal of
@@ -2086,8 +2102,9 @@ func (l *lowering) mapMethod(node *ast.Node, receiver *ast.Node, name string) (i
 	if err != nil {
 		return nil, true, err
 	}
+	written := node.AsCallExpression().Arguments.Nodes
 	arguments := []ir.Expression{}
-	for _, argument := range node.AsCallExpression().Arguments.Nodes {
+	for _, argument := range written {
 		lowered, err := l.expression(argument)
 		if err != nil {
 			return nil, true, err
@@ -2102,7 +2119,7 @@ func (l *lowering) mapMethod(node *ast.Node, receiver *ast.Node, name string) (i
 		want = 2
 	}
 	if name == "set" && len(arguments) == 2 {
-		arguments[1] = fit(arguments[1], value)
+		arguments[1] = l.fitMapValue(written[1], arguments[1], value)
 	}
 	if len(arguments) != want || arguments[0].Type() != key || (name == "set" && arguments[1].Type() != value) {
 		return nil, true, l.notYet(node, "map."+name+" with arguments of other types")
