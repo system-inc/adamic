@@ -32,21 +32,21 @@ func isArrayArgument(source string) string {
 //   - unknown-value: the index holds unknown, which takes a function (condition 2);
 //   - callable-value: the index's union holds a function type (condition 2);
 //   - length-value: the index holds { length: number }, which every function is assignable to (condition 2's
-//     Function test, Diagnostics' ruling on #gcec0bx);
-//   - array-stored-string-index: the JSON record beside an interface stored as an array that declares a string index
-//     of its own, which fails every index-only arm closed (condition 3). Its index is unknown here, which .a can hold;
-//     one of any would take the array's methods, and the array would be assignable to the JSON record with no hatch.
+//     Function test, Diagnostics' ruling on #gcec0bx).
+//
+// Condition 3 has no whole program here: an interface stored as an array with a string index of its own stops at its
+// dictionary storage before any isArray (measured, J-j9pbsdc), so TestArrayPredicateIndexArmValueType's
+// closed-world-string-index row holds it on declared types.
 //
 // Mutants (array_predicate_index_record.mutants.md): M1, condition 2 dropped, every index value admitted, turns
-// unknown-value, callable-value and length-value red, each lowering past isArray; array-stored-string-index stays green,
-// condition 3 still stopping it. M5, the Function test dropped, turns length-value red.
+// unknown-value, callable-value and length-value red, each lowering past isArray. M5, the Function test dropped, turns
+// length-value red.
 func TestArrayPredicateIndexArmRefusals(t *testing.T) {
 	t.Parallel()
 	for _, row := range []struct{ name, source, node string }{
 		{"unknown-value", "interface Bag { [key: string]: unknown }\nfunction isList(value: Bag | string[]): boolean { return Array.isArray(value); }\nconsole.log(String(isList(['a'])));\n", "true\n"},
 		{"length-value", "interface Bag { [key: string]: { length: number } }\nfunction isList(value: Bag | string[]): boolean { return Array.isArray(value); }\nconsole.log(String(isList(['a'])));\n", "true\n"},
 		{"callable-value", "interface Bag { [key: string]: string | (() => void) }\nfunction isList(value: Bag | string[]): boolean { return Array.isArray(value); }\nconsole.log(String(isList(['a'])));\n", "true\n"},
-		{"array-stored-string-index", jsonRecovery + "interface Loose extends ReadonlyArray<string> { [key: string]: unknown }\nfunction isList(value: AdamicJsonRecoveryObject | string[]): boolean { return Array.isArray(value); }\nconsole.log(String(isList({ a: 1 })));\n", "false\n"},
 	} {
 		t.Run(row.name, func(t *testing.T) {
 			t.Parallel()
@@ -77,7 +77,7 @@ func TestArrayPredicateIndexArmRefusals(t *testing.T) {
 //
 // Mutants: M1, condition 2 dropped, turns open red on Bag, Loosely, Calls, Unknowns and Lengths; M4, condition 1
 // relaxed to any one index signature, turns open red on Numbered, NumberOnly, Pattern and Sym; M5, the Function test
-// dropped, turns open red on Lengths.
+// dropped, turns open red on Lengths; M6, condition 3 dropped, turns closed-world-string-index red on all three.
 func TestArrayPredicateIndexArmValueType(t *testing.T) {
 	t.Parallel()
 	const declarations = jsonRecovery + `interface Bag<V> { [key: string]: V }
@@ -144,10 +144,10 @@ func TestArrayPredicateIndexArmObjectValueAgrees(t *testing.T) {
 // numeric keys and the array's methods never meet it, and Node calls the value an array, so the arm must stay out of
 // the domain. (Her i02 and i05, a template-pattern and a symbol index alone, tsc refuses as written; they're held at
 // condition 1 on their declarations in TestArrayPredicateIndexArmValueType.) The program must stop before it lowers
-// whole, by its own first stop: a type indexed by a number alone has no representation natively (records.go's
-// recordElement takes a string index only), so it may stop at the arm's first value before isArray's argument, and
-// the row asks only that it stops, logging where. Condition 1's own test of the key is
-// TestArrayPredicateIndexArmValueType's, which M4 turns red.
+// whole, and it does at its own first stop: a type indexed by a number alone has no native storage, so it stops at
+// NumberOnly's declaration (1:21, "... numeric, symbol, patterned or callable dictionary storage", measured,
+// J-j9pbsdc), before any isArray. The row asks only that it stops, logging where, so it can't prove condition 1;
+// TestArrayPredicateIndexArmValueType's declaration rows are condition 1's proof, which M4 turns red.
 func TestArrayPredicateIndexArmKeyRefusals(t *testing.T) {
 	t.Parallel()
 	for _, row := range []struct{ name, source, node string }{
