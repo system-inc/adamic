@@ -178,5 +178,9 @@ func dynamicHostRuntime(program *ir.Program) string {
 	builder.WriteString("const adamicHostKeys = value => adamicHostValue(value) ? panic(" + quote(ir.DynamicKeysStop) + ") : Object.keys(value);\n")
 	builder.WriteString("const adamicHostHasOwn = (value, key) => adamicHostValue(value) ? adamicHostStop(key) : value.hasOwnProperty(key);\n")
 	builder.WriteString("const adamicHostCheck = (value, key) => adamicHostValue(value) ? adamicHostStop(key) : true;\n")
+	// A SpreadWith literal's source stored as an array (a tuple among them, an array here) or a host value
+	// stops as native's adamic_object_spread_with does, decided by the value's storage alone: a plain object
+	// or a record passes, and so does undefined or null, which a spread copies nothing of.
+	builder.WriteString("const adamicSpreadWithSource = value => Array.isArray(value) || adamicHostValue(value) ? panic(" + quote(ir.SpreadWithSourceStop) + ") : value;\n")
 	return builder.String()
 }

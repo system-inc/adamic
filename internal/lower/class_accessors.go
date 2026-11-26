@@ -434,6 +434,18 @@ func (l *lowering) finishAccessors() error {
 				if expression.Spread != nil {
 					expression.NoReuse = true
 					expression.SpreadGetters = l.spreadGetters(expression)
+					// adamic_object_spread_with refuses a source with an accessor on its class chain, so a SpreadWith
+					// literal one may reach stops here, before the run would (spreadAccessorClass).
+					if expression.SpreadWith {
+						if class := l.spreadAccessorClass(expression); class != "" {
+							where := l.result.Source
+							if expression.SpreadSite > 0 && expression.SpreadSite <= len(l.spreadNodes) {
+								where = l.program.Where(l.spreadNodes[expression.SpreadSite-1])
+							}
+							failure = &NotYet{Where: where, What: spreadWithAccessorStop + ", " + class + " among them"}
+							return value
+						}
+					}
 					node = expression
 				}
 			case ir.Property:
@@ -594,6 +606,38 @@ func (l *lowering) spreadGetters(literal ir.ObjectLiteral) []int {
 		}
 	}
 	return getters
+}
+
+// spreadAccessorClass is the name of a registered class a SpreadWith literal's source may be an instance of
+// whose chain holds an accessor, a getter or a setter alike, or "" when there's none: adamic_object_spread_with
+// refuses a source whose class chain has any (object_spread.c), and an object literal's own accessors make it a
+// registered class too. It asks what spreadGetters asks, every class whose instances are assignable to the type
+// the spread sees, all of them when that type isn't known, so it fails closed, and a fresh data literal has none.
+// An object literal's synthetic class is named "an object literal with accessors".
+func (l *lowering) spreadAccessorClass(literal ir.ObjectLiteral) string {
+	if plainDataSpreadSource(literal.Spread) {
+		return ""
+	}
+	var viewed *checker.Type
+	if literal.SpreadSite > 0 && literal.SpreadSite <= len(l.spreadSources) {
+		viewed = l.spreadSources[literal.SpreadSite-1]
+	}
+	for index := range l.result.Classes {
+		holder := l.classHolders[index+1]
+		if viewed != nil && holder != nil && !l.checker.IsTypeAssignableTo(holder, viewed) {
+			continue
+		}
+		for class := index + 1; class != 0; class = l.result.Classes[class-1].Base {
+			if len(l.result.Classes[class-1].Accessors) == 0 {
+				continue
+			}
+			if l.result.Classes[index].Literal || l.result.Classes[index].Name == "" {
+				return "an object literal with accessors"
+			}
+			return l.result.Classes[index].Name
+		}
+	}
+	return ""
 }
 
 // Until spread callbacks are explicit calls in the flow graph, their exception edges must not be lost.
