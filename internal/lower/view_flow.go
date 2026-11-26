@@ -18,7 +18,10 @@ type allocationFlowGraph struct {
 	projectionBusy  map[int]bool
 	// projectionFrames memoizes a projected query that isn't a bare Read, keyed by the expression, its
 	// depth and the Reads busy around it (shape_flow.go's projectionFrame).
-	projectionFrames  map[string]ir.AllocationSet
+	projectionFrames map[string]ir.AllocationSet
+	// projectionOpen is each keyed receiver whose projected query is open on the stack, by its value
+	// key without depth: a query that reaches one again answers Unknown (#r1ef873).
+	projectionOpen    map[string]bool
 	program           *ir.Program
 	sources           map[int][]ir.Expression
 	unknownParameters map[int]bool

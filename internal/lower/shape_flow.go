@@ -2,10 +2,12 @@ package lower
 
 import (
 	"fmt"
+	"os"
 	"reflect"
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 	"sync/atomic"
 
 	"github.com/system-inc/adamic/internal/ir"
@@ -55,7 +57,22 @@ func (graph *allocationFlowGraph) reachingAllocations(expression ir.Expression, 
 			if cached, ok := graph.projectionFrames[key]; ok {
 				return cached
 			}
-			defer func() { graph.projectionFrames[key] = result }()
+			// A receiver already open on the projection stack is busy, as a Read is: two values whose fields
+			// project to each other reopened each other at every level, a new frame each time since the frame
+			// is keyed by depth, until the depth cap, and tsc's first link spent its whole 55 minutes there
+			// (#r1ef873, J-k7dy1eb). Unknown keeps the checks, so the cut can only add a stop. The frame memo
+			// keeps an answer cut here, as projectionReads keeps one a busy Read cut: a later query may then
+			// keep a check a full walk would drop, never drop one it would keep.
+			receiver, _ := projectionValueKey(expression)
+			if graph.projectionOpen == nil {
+				graph.projectionOpen = map[string]bool{}
+			}
+			if graph.projectionOpen[receiver] {
+				traceReopen(graph, expression, receiver, depth)
+				return ir.AllocationSet{Unknown: true, Reasons: []string{"recursive projection receiver not certified"}}
+			}
+			graph.projectionOpen[receiver] = true
+			defer func() { delete(graph.projectionOpen, receiver); graph.projectionFrames[key] = result }()
 		}
 	}
 	if counter := projectionFramesOpened.Load(); counter != nil && project {
@@ -368,4 +385,60 @@ func (graph *allocationFlowGraph) projectedSources(expression ir.Expression, dep
 		sources = append(sources, index.stores[site][name]...)
 	}
 	return sources, reasons, true
+}
+
+// traceReopen is proof-only (#r1ef873, never merged): it names each receiver the guard cuts, once, on stderr.
+var traceReopened, traceMutex = map[string]bool{}, sync.Mutex{}
+
+func traceReopen(graph *allocationFlowGraph, expression ir.Expression, receiver string, depth int) {
+	if os.Getenv("ADAMIC_PROJECTION_TRACE") != "1" {
+		return
+	}
+	traceMutex.Lock()
+	defer traceMutex.Unlock()
+	if traceReopened[receiver] {
+		return
+	}
+	traceReopened[receiver] = true
+	local := -1
+	path := ""
+	for node := expression; local < 0; {
+		switch current := node.(type) {
+		case ir.Read:
+			local = current.Local
+		case ir.Property:
+			path = "." + current.Name + path
+			node = current.Object
+		case ir.ArrayIndex:
+			path = "[k]" + path
+			node = current.Array
+		case ir.Box:
+			node = current.Value
+		case ir.Narrow:
+			node = current.Value
+		case ir.Unwrap:
+			node = current.Value
+		case ir.CheckedCast:
+			path = " as<" + current.Message + ">" + path
+			node = current.Value
+		default:
+			local = -2
+		}
+	}
+	name, owner := "?", "?"
+	if local >= 0 && local < len(graph.program.Locals) {
+		name = graph.program.Locals[local].Name
+		for _, function := range graph.program.Functions {
+			for _, parameter := range function.Parameters {
+				if parameter == local {
+					owner = fmt.Sprintf("%s %s:%d:%d", function.Name, function.Position.File, function.Position.Line, function.Position.Column)
+				}
+			}
+		}
+	}
+	short := receiver
+	if len(short) > 160 {
+		short = short[:160]
+	}
+	fmt.Fprintf(os.Stderr, "PROJECTION-REOPEN depth %d local %d %s%s param-of %s | %s\n", depth, local, name, path, owner, short)
 }
