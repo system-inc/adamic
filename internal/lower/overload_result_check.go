@@ -286,15 +286,18 @@ func (l *lowering) walkLoweredRegions(modules []*ast.SourceFile, each func(node 
 // checkOverloadResults is the guard behind overloadResultCheck, run once lowering is done. Every narrow
 // overload call in the lowered regions (walkLoweredRegions) must be settled (checked, proven or erased),
 // even if a lowering road failed to note it. Missing or unsettled calls are compiler bugs because
-// censusOverload accepted the promise only on that condition.
+// censusOverload accepted the promise only on that condition. In a first-link lowering, a call inside a
+// unit that lowered as its trap never got the result check and needs none, since the trap replaced the
+// unit's code: it's passed over, as checkCheckedPredicateParameters passes over it (first_link_units.go),
+// where a lowered unit's still panics (#1061tyd, tsc's classFields.ts:2223:59).
 func (l *lowering) checkOverloadResults(modules []*ast.SourceFile) {
 	l.walkLoweredRegions(modules, func(node *ast.Node) {
-		if l.narrowOverloadCall(node) && !l.overloadCalls[node] {
+		if l.narrowOverloadCall(node) && !l.overloadCalls[node] && !l.firstLinkSkips(node) {
 			panic(fmt.Sprintf("lower: compiler bug: a call to an overload accepted narrow at %s lowered without its result check", l.program.Where(node)))
 		}
 	})
 	for node, settled := range l.overloadCalls {
-		if !settled {
+		if !settled && !l.firstLinkSkips(node) {
 			panic(fmt.Sprintf("lower: compiler bug: a call to an overload accepted narrow at %s lowered without its result check", l.program.Where(node)))
 		}
 	}
