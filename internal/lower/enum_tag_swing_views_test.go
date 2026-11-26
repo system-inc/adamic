@@ -35,9 +35,13 @@ function use(x: A): string { return String(x.a + 1); }
 // the member, stored in an array of the member and read back, and read through a wider structural view. Each
 // honest twin agrees with Node on both backends, and each lie stops with a deliberate panic at exit 70 on sanitized
 // native and the JavaScript backend, where Node prints what reading a missing field gives; a write through
-// the refined type stops at the write. A's a is writable for that row alone. Mutant: the view
-// registered without narrows (enums.go's enumTagViewProbe), under which the array and wider-view lies read B's
-// storage raw and the test goes red.
+// the refined type stops at the write. A's a is writable for that row alone. Each lie stops at its own read
+// under the member's checked view, m.n.a, x.a, wide.a or <write>.a (J-svh9wt1). Mutant: enumRefusal returning
+// nil where it registers the swing's views (enums.go's enumTagCheckedViews), under which every lie reads B's
+// storage through A's layout natively and the test goes red (J-svh9wt1). Registering the views without narrows
+// changes nothing here, and neither does dropping a narrows view from view_widened.go's unentered fallback:
+// a narrowed field read takes that fallback either way, and the reads are checked at the member's own view
+// before any widening (J-k2nxabz, J-ja4ynd3), so neither is a mutant this test can catch.
 func TestEnumTagSwingLiesStopAtEveryRead(t *testing.T) {
 	t.Parallel()
 	for _, road := range []struct{ name, read string }{
