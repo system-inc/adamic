@@ -6,5 +6,5 @@ interface N {
 }
 const root: N = { kind: 1, parent: undefined! };
 console.log('before');
-console.log(root.parent.kind);
+console.log(`${root.parent.kind}`);
 console.log('after');

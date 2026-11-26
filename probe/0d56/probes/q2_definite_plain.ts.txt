@@ -6,5 +6,5 @@ class C {
 }
 const c = new C();
 console.log('before');
-console.log(c.parent.kind);
+console.log(`${c.parent.kind}`);
 console.log('after');

@@ -10,5 +10,5 @@ class C {
 }
 const c = new C(1);
 console.log('before');
-console.log(c.parent.kind);
+console.log(`${c.parent.kind}`);
 console.log('after');

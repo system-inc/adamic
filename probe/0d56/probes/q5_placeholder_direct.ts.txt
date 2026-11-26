@@ -5,5 +5,5 @@ interface N {
 }
 const root: N = { kind: 1, parent: undefined! };
 const child: N = { kind: 2, parent: root };
-console.log(child.parent?.kind);
-console.log(root.parent?.kind);
+console.log(`${child.parent?.kind}`);
+console.log(`${root.parent?.kind}`);

@@ -11,5 +11,5 @@ interface MutableN {
 const root: MutableN = { kind: 1, parent: undefined! };
 root.parent = root;
 const child: N = { kind: 2, parent: root };
-console.log(child.parent?.kind);
-console.log(root.parent?.kind);
+console.log(`${child.parent?.kind}`);
+console.log(`${root.parent?.kind}`);
