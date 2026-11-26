@@ -1,0 +1,26 @@
+// #xfpsqtn soundness road: an increment of a let typed the open enum
+enum E {
+	A,
+	B,
+	C,
+}
+function describe(value: E): string {
+	switch (value) {
+		case E.A:
+			return "a";
+		case E.B:
+			return "b";
+		case E.C:
+			return "c";
+		default: {
+			const unreachable: never = value;
+			return "unreachable";
+		}
+	}
+}
+const raw: number = 7;
+console.log("before");
+let e: E = E.C;
+e++;
+console.log(describe(e));
+console.log("after");

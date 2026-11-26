@@ -1,0 +1,27 @@
+// #xfpsqtn soundness road: a number returned where the open enum is the return type
+enum E {
+	A,
+	B,
+	C,
+}
+function describe(value: E): string {
+	switch (value) {
+		case E.A:
+			return "a";
+		case E.B:
+			return "b";
+		case E.C:
+			return "c";
+		default: {
+			const unreachable: never = value;
+			return "unreachable";
+		}
+	}
+}
+const raw: number = 7;
+console.log("before");
+function kind(v: number): E {
+	return v;
+}
+console.log(describe(kind(raw)));
+console.log("after");

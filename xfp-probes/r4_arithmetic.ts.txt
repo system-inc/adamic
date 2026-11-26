@@ -1,0 +1,27 @@
+// #xfpsqtn soundness road: arithmetic on a member returned as the open enum
+enum E {
+	A,
+	B,
+	C,
+}
+function describe(value: E): string {
+	switch (value) {
+		case E.A:
+			return "a";
+		case E.B:
+			return "b";
+		case E.C:
+			return "c";
+		default: {
+			const unreachable: never = value;
+			return "unreachable";
+		}
+	}
+}
+const raw: number = 7;
+console.log("before");
+function next(v: E): E {
+	return v + 1;
+}
+console.log(describe(next(E.C)));
+console.log("after");

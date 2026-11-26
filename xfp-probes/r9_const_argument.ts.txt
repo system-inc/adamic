@@ -1,0 +1,24 @@
+// #xfpsqtn soundness road: a number passed where a const enum is the parameter
+const enum E {
+	A,
+	B,
+	C,
+}
+function describe(value: E): string {
+	switch (value) {
+		case E.A:
+			return "a";
+		case E.B:
+			return "b";
+		case E.C:
+			return "c";
+		default: {
+			const unreachable: never = value;
+			return "unreachable";
+		}
+	}
+}
+const raw: number = 7;
+console.log("before");
+console.log(describe(raw));
+console.log("after");

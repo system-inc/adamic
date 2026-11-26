@@ -1,0 +1,22 @@
+// #xfpsqtn site 2 with a plain (not const) enum, utilities.ts:8142: a parameter, the default of a switch over every member.
+enum AccessKind {
+	Read,
+	Write,
+	ReadWrite,
+}
+function assertNever(value: never): never {
+	throw new Error("Illegal value: " + value);
+}
+function reverseAccessKind(a: AccessKind): AccessKind {
+	switch (a) {
+		case AccessKind.Read:
+			return AccessKind.Write;
+		case AccessKind.Write:
+			return AccessKind.Read;
+		case AccessKind.ReadWrite:
+			return AccessKind.ReadWrite;
+		default:
+			return assertNever(a);
+	}
+}
+console.log(reverseAccessKind(AccessKind.Read) + " " + reverseAccessKind(AccessKind.Write) + " " + reverseAccessKind(AccessKind.ReadWrite));

@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 
@@ -61,7 +62,16 @@ func (l *lowering) neverRead(node *ast.Node) (*neverMaking, error) {
 			return &neverMaking{}, nil
 		}
 	}
-	if !l.neverReadPosition(node) || l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsNever == 0 || l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil {
+	if !l.neverReadPosition(node) {
+		l.xfp("never_read.go:64 neverReadPosition false", node, "kind="+node.Kind.String())
+		return nil, nil
+	}
+	if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsNever == 0 {
+		l.xfp("never_read.go:64 type isn't never", node, l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
+		return nil, nil
+	}
+	if identity := l.enumNeverIdentity(node, map[*ast.Node]bool{}); identity != nil {
+		l.xfp("never_read.go:64 enumNeverIdentity non-nil", node, "enum="+identity.Name+" gap="+fmt.Sprint(l.enumNeverReadGap(node)))
 		return nil, nil
 	}
 	return l.neverJudged(node)
@@ -86,19 +96,24 @@ func (l *lowering) neverJudged(node *ast.Node) (*neverMaking, error) {
 	stop := l.notYet(node, "a read the checker narrowed to never across code that may write it")
 	data := node.FlowNodeData()
 	if data == nil || data.FlowNode == nil {
+		l.xfp("never_read.go:89 no flow node", node, "")
 		return nil, stop
 	}
 	if data.FlowNode.Flags&ast.FlowFlagsUnreachable != 0 {
+		l.xfp("never_read.go:92 unreachable", node, "")
 		return nil, nil // Proven unreachable, so nothing runs it.
 	}
 	if node.Kind == ast.KindThisKeyword {
+		l.xfp("never_read.go:95 this", node, "")
 		return nil, stop // No symbol gives this a declared type to walk back to.
 	}
 	declared := l.enumStoredType(node)
 	if declared == nil {
+		l.xfp("never_read.go:99 enumStoredType nil", node, "")
 		return nil, stop
 	}
 	if declared.Flags()&checker.TypeFlagsNever != 0 {
+		l.xfp("never_read.go:102 declared never", node, "")
 		return nil, nil // Declared never: no narrowing made it, and what passes it there lied first.
 	}
 	// A binding only its own function writes is trusted wherever the walk ends, for two reasons, and this
@@ -117,17 +132,21 @@ func (l *lowering) neverJudged(node *ast.Node) (*neverMaking, error) {
 		own = symbol != nil && !l.writtenAcrossFunctions(symbol)
 	}
 	var making *neverMaking
-	if predicateFlowType(l.checker, node, declared, declared, nil, data.FlowNode).Flags()&checker.TypeFlagsNever != 0 {
+	predicate := predicateFlowType(l.checker, node, declared, declared, nil, data.FlowNode)
+	if predicate.Flags()&checker.TypeFlagsNever != 0 {
 		making = l.neverMakingAlong(node, declared, data.FlowNode, 0, map[*ast.FlowNode]*neverMaking{})
 	} // Otherwise the walk's own reading of the flow disagrees with the checker's, so it can't be trusted.
 	switch {
 	case making == nil && own:
 		return &neverMaking{}, nil
 	case making == nil:
+		l.xfp("never_read.go:127 making nil", node, "declared="+l.checker.TypeToString(declared)+" predicateFlowType="+l.checker.TypeToString(predicate))
 		return nil, stop
 	case making.placeholder:
+		l.xfp("never_read.go:129 placeholder", node, "")
 		return nil, nil
 	case l.neverPlaceWrittenBetween(node, making.earliest.from, making.earliest.observed):
+		l.xfp("never_read.go:131 written between", node, "earliest="+making.earliest.kind+" "+strings.Join(strings.Fields(sourceExpression(making.earliest.node)), " "))
 		return nil, stop
 	}
 	return making, nil
@@ -304,7 +323,11 @@ func (l *lowering) neverPlaceWrittenBetween(read *ast.Node, from int, observed *
 		switch reference.Kind {
 		case ast.KindIdentifier:
 			symbol := l.bindingNamed(reference)
-			return symbol == nil || l.writtenAcrossFunctions(symbol) && l.codeBetween(from, read, nil)
+			written := symbol == nil || l.writtenAcrossFunctions(symbol) && l.codeBetween(from, read, nil)
+			if written {
+				l.xfp("never_read.go:307 link identifier written", reference, fmt.Sprintf("symbolNil=%v", symbol == nil))
+			}
+			return written
 		case ast.KindThisKeyword:
 			return false
 		case ast.KindPropertyAccessExpression:
@@ -312,15 +335,18 @@ func (l *lowering) neverPlaceWrittenBetween(read *ast.Node, from int, observed *
 		case ast.KindElementAccessExpression:
 			key := ast.SkipParentheses(reference.AsElementAccessExpression().ArgumentExpression)
 			if key.Kind != ast.KindStringLiteral && key.Kind != ast.KindNoSubstitutionTemplateLiteral && key.Kind != ast.KindNumericLiteral {
+				l.xfp("never_read.go:315 key not literal", reference, "")
 				return true
 			}
 			name = key.Text()
 			_, notNumeric := strconv.ParseFloat(name, 64)
 			numeric = notNumeric == nil
 		default:
+			l.xfp("never_read.go:321 link not a reference", reference, "")
 			return true
 		}
 		if l.propertyWritesOf().accessors || l.accessorName(name) || l.propertyWriteMayRunBetween(read, name, numeric, from, observed, l.elementReadsBetween(from, read)) {
+			l.xfp("never_read.go:323 property link", reference, fmt.Sprintf("name=%s accessors=%v accessorName=%v codeBetween=%v everyName=%v namedWrites=%d", name, l.propertyWritesOf().accessors, l.accessorName(name), l.codeBetween(from, read, l.elementReadsBetween(from, read)), l.propertyWritesOf().everyName, len(l.propertyWritesOf().named[name])))
 			return true
 		}
 		reference = reference.Expression()

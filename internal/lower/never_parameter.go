@@ -1,6 +1,8 @@
 package lower
 
 import (
+	"fmt"
+	"os"
 	"slices"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -233,10 +235,18 @@ func (l *lowering) checkNeverArguments(call *ast.CallExpression, function int) e
 			return l.notYet(call.AsNode(), condition)
 		}
 		argument := call.Arguments.Nodes[position]
+		xfpTracing = true
 		making, err := l.neverRead(argument)
+		xfpTracing = false
 		if err != nil || making == nil {
+			fmt.Fprintf(os.Stderr, "XFP never_parameter.go:237 declined at %s: making=%v err=%v\n", l.program.Where(argument), making != nil, err)
+			if os.Getenv("XFP_LIFT") == "1" {
+				fmt.Fprintf(os.Stderr, "XFP lifted at %s\n", l.program.Where(argument))
+				continue
+			}
 			return l.notYet(argument, condition)
 		}
+		fmt.Fprintf(os.Stderr, "XFP never_parameter.go:240 trusted at %s\n", l.program.Where(argument))
 	}
 	return nil
 }

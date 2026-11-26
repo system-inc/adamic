@@ -1,0 +1,26 @@
+// #xfpsqtn soundness road: a number written into an object field typed the open enum
+enum E {
+	A,
+	B,
+	C,
+}
+function describe(value: E): string {
+	switch (value) {
+		case E.A:
+			return "a";
+		case E.B:
+			return "b";
+		case E.C:
+			return "c";
+		default: {
+			const unreachable: never = value;
+			return "unreachable";
+		}
+	}
+}
+const raw: number = 7;
+console.log("before");
+const holder: { e: E } = { e: E.A };
+holder.e = raw;
+console.log(describe(holder.e));
+console.log("after");

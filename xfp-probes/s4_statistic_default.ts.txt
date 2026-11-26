@@ -1,0 +1,37 @@
+// #xfpsqtn site 4, reaching the default by raw as StatisticType, executeCommandLine.ts:1285: a property read s.type of a parameter, the default of switch (s.type).
+enum StatisticType {
+	time,
+	count,
+	memory,
+}
+interface Statistic {
+	name: string;
+	value: number;
+	type: StatisticType;
+}
+function assertNever(value: never): never {
+	throw new Error("Illegal value: " + value);
+}
+function statisticValue(s: Statistic) {
+	switch (s.type) {
+		case StatisticType.count:
+			return "" + s.value;
+		case StatisticType.time:
+			return (s.value / 1000).toFixed(2) + "s";
+		case StatisticType.memory:
+			return Math.round(s.value / 1000) + "K";
+		default:
+			assertNever(s.type);
+	}
+}
+const statistics: Statistic[] = [
+	{ name: "Files", value: 12, type: StatisticType.count },
+	{ name: "Check time", value: 1234, type: StatisticType.time },
+	{ name: "Memory used", value: 56789, type: StatisticType.memory },
+];
+const raw: number = 7;
+console.log("before");
+console.log(statisticValue({ name: "Stray", value: 1, type: raw as StatisticType }));
+for (const s of statistics) {
+	console.log(s.name + ": " + statisticValue(s));
+}

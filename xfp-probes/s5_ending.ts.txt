@@ -1,0 +1,25 @@
+// #xfpsqtn site 5, moduleSpecifiers.ts:1411 as adapted: an element read allowedEndings[0] of a readonly [E, ...E[]], the default of a switch on it.
+const enum ModuleSpecifierEnding {
+	Minimal,
+	Index,
+	JsExtension,
+	TsExtension,
+}
+function assertNever(value: never): never {
+	throw new Error("Illegal value: " + value);
+}
+function processEnding(fileName: string, allowedEndings: readonly [ModuleSpecifierEnding, ...ModuleSpecifierEnding[]]): string {
+	switch (allowedEndings[0]) {
+		case ModuleSpecifierEnding.Minimal:
+			return fileName + "/min";
+		case ModuleSpecifierEnding.Index:
+			return fileName + "/index";
+		case ModuleSpecifierEnding.JsExtension:
+			return fileName + ".js";
+		case ModuleSpecifierEnding.TsExtension:
+			return fileName + ".ts";
+		default:
+			return assertNever(allowedEndings[0]);
+	}
+}
+console.log(processEnding("a", [ModuleSpecifierEnding.Minimal]) + " " + processEnding("b", [ModuleSpecifierEnding.Index, ModuleSpecifierEnding.Minimal]) + " " + processEnding("c", [ModuleSpecifierEnding.JsExtension]) + " " + processEnding("d", [ModuleSpecifierEnding.TsExtension]));
