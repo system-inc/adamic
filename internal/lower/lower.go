@@ -235,6 +235,13 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 			return nil, err
 		}
 	}
+	// Before the accessors' dispatchers: in .a a spread whose type declares as a field a member a class
+	// holds on its prototype is refused at the spread, ahead of the stop at its copy's read (spread_prototype_members.go).
+	if err := lowering.checkSpreadPrototypeMembers(modules); err != nil {
+		if err = lowering.firstLinkPass("checkSpreadPrototypeMembers", false, err, func() error { return lowering.checkSpreadPrototypeMembers(modules) }); err != nil {
+			return nil, err
+		}
+	}
 	// Before finishAccessors, while a getter's or setter's read is still the ir.Property lowering made: a
 	// read of a prototype member from a generic spread's copy stops (#y4gjeb8).
 	if err := lowering.checkGenericSpreadCopyReads(); err != nil {
