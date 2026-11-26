@@ -54,9 +54,8 @@ func (l *lowering) narrowedArmPropertyReadGap(node *ast.Node) error {
 	if storage, known := l.representation(declared); known && storage == ir.Union {
 		return nil // The held union's member is checked at run time before it's narrowed.
 	}
-	presentStorage, presentKnown := l.representation(present)
-	if narrowedStorage, narrowedKnown := l.representation(narrowed); presentKnown && narrowedKnown && narrowedStorage == presentStorage && !presentStorage.IsReference() && !l.armReadSpecializes(node) {
-		return nil // The same scalar storage either way, as the binding rule says.
+	if narrowedStorage, narrowedKnown := l.representation(narrowed); narrowedKnown && !narrowedStorage.IsReference() {
+		return nil // A scalar arm reads no object's layout. An arm whose storage isn't known is judged.
 	}
 	name := key.Text()
 	stop := l.notYet(node, "a read of property "+name+" narrowed to "+l.checker.TypeToString(narrowed)+" where a call may have rewritten it")
@@ -68,10 +67,17 @@ func (l *lowering) narrowedArmPropertyReadGap(node *ast.Node) error {
 	numeric := notNumeric == nil
 	observation := l.armObservationOf(node)
 	if observation == nil {
-		if numeric || writes.everyName || len(writes.named[name]) > 0 {
-			return stop
+		// No one place the narrowing was seen (a join of two checks, as a ternary chain's), so what may run is
+		// judged from the start of the read's own code, where every narrowing of it begins. A read with no such
+		// start stops if anything can write its name.
+		boundary := callBoundary(node)
+		if boundary == nil || boundary.Pos() < 0 {
+			if numeric || writes.everyName || len(writes.named[name]) > 0 {
+				return stop
+			}
+			return nil
 		}
-		return nil
+		observation = &nullishObservation{from: boundary.Pos()}
 	}
 	if l.propertyWriteMayRunBetween(node, name, numeric, observation.from, observation.target, l.appendsBetween(observation, node, numeric)) {
 		return stop
