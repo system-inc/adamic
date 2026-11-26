@@ -678,7 +678,9 @@ if (n.kind !== "c") {
 			if !errors.As(err, &notYet) {
 				t.Fatalf("want NotYet at the write, got %v", err)
 			}
-			if notYet.What != kindUnionOwnWhole {
+			// The stale rows' holder.n is read narrowed across swap's write, so narrowedArmPropertyReadGap's stale
+			// arm (#8nj5pn4) answers first at that read, in the refusal pass, before the write's own judgment.
+			if notYet.What != kindUnionOwnWhole && !strings.HasPrefix(notYet.What, "a read of property n narrowed to A | B where a call may have rewritten it") {
 				t.Fatalf("want NotYet %q, got %q", kindUnionOwnWhole, notYet.What)
 			}
 		})

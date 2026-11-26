@@ -532,6 +532,12 @@ type lowering struct {
 	// iterableViewFlowGraph), which checkFlowLiveness holds to that once lowering is done.
 	flowDead map[int]bool
 
+	// armFieldRepresentations is every field name the program and its libraries declare, with each
+	// representation a declaration gives it, walked once (fieldRepresentations), and
+	// armFieldRepresentationsDone whether it was: narrowedArmPropertyReadGap's silent case (#8nj5pn4).
+	armFieldRepresentations     map[string]map[ir.Type]bool
+	armFieldRepresentationsDone bool
+
 	// Source-only sites for graph adoption diagnostics; never stored in emitted IR.
 	graphDynamicSite *ast.Node
 	// graphDecodeSite is the first decodeJson whose value can hold a container, and graphDecodeType
