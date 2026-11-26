@@ -187,7 +187,7 @@ func (l *lowering) firstLinkRefusalWalk(module *ast.SourceFile) error {
 			// The unit trapped lies outside the statement the walk was in, so the rest of the statement went
 			// unjudged, and the statement is trapped whole.
 			if _, trapped := l.firstLinkTrappedAt(statement); !trapped {
-				l.firstLinkRecord(ir.Trap{Kind: "Gap", Reason: "the refusal walk left " + l.firstLinkUnitName(leaving) + ", which is outside this statement", Site: l.program.Where(statement), Unit: l.firstLinkUnitName(statement), Phase: "Refusal", Suspect: l.firstLinkSuspect || l.firstLinkRewriteSkipped}, statement)
+				l.firstLinkRecord(ir.Trap{Kind: "Gap", Reason: "the refusal walk left " + l.firstLinkUnitName(leaving) + ", which is outside this statement", Site: l.program.Where(statement), Unit: l.firstLinkUnitName(statement), Phase: "Refusal", Suspect: l.firstLinkSuspect || l.firstLinkRewriteSkipped || l.firstLinkJudgmentAbandoned}, statement)
 			}
 			leaving = nil
 		}
