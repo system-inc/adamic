@@ -86,11 +86,11 @@ func TestUntaggedUnionCastsKeepTheirStops(t *testing.T) {
 		{"a primitive member", members + "function f(x: A | string): A { return x as A; }", ".ts", false, "which holds primitives"},
 		{"a class instance member", members + "class K { readonly k = 1; } function f(x: A | K): A { return x as A; }", ".ts", false, "whose members no literal tag tells apart"},
 		{"a dictionary member", members + "function f(x: A | Record<string, number>): A { return x as A; }", ".ts", false, ""},
-		// A target that holds a literal the source doesn't, at the top (binder.ts's CallExpression) or one field down
-		// (FlowCall, whose node is a CallExpression), and a readonly field the target makes writable (FlowLabel's
-		// antecedent): the unchecked-widening rule would refuse each, so the arm leaves each at the untagged stop and
-		// never turns it Refused (#qxt10dd). Mutant: untaggedUnionArm without its widened test refuses all three.
-		{"a target with a literal kind", "enum SyntaxKind { Identifier = 80, CallExpression = 213, Block = 241 } interface Expression { readonly kind: SyntaxKind; readonly end: number } interface Statement { readonly kind: SyntaxKind; readonly pos: number } interface CallExpression extends Expression { readonly kind: SyntaxKind.CallExpression; readonly argumentCount: number } function f(x: Expression | Statement): CallExpression { return x as CallExpression; }", ".ts", false, "a checked view of CallExpression over the union Expression | Statement, whose members no literal tag tells apart"},
+		// A target that holds a literal the source doesn't one field down (FlowCall, whose node is a CallExpression),
+		// and a readonly field the target makes writable (FlowLabel's antecedent): the unchecked-widening rule would
+		// refuse each, so the arm leaves each at the untagged stop and never turns it Refused. A literal at the top,
+		// binder.ts's CallExpression, is the cast's tag, tested there, so it lowers (TestUntaggedUnionCastTestsItsTag,
+		// #qxt10dd). Mutant: untaggedUnionArm without its write judgment refuses both.
 		{"a target with a literal one field down", "enum SyntaxKind { Identifier = 80, CallExpression = 213 } interface Node { readonly kind: SyntaxKind } interface CallExpression extends Node { readonly kind: SyntaxKind.CallExpression } interface FlowStart { readonly flags: number; readonly node: Node | undefined } interface FlowCall { readonly flags: number; readonly node: CallExpression } function f(x: FlowStart | FlowCall): FlowCall { return x as FlowCall; }", ".ts", false, "a checked view of FlowCall over the union FlowCall | FlowStart, whose members no literal tag tells apart"},
 		// FlowUnreachable lacks antecedent, so the union isn't assignable to FlowLabel and takes unionMemberProof, as
 		// tsc's FlowNode does; with two members it's an upcast in TypeScript's eyes and the relation refuses it first.
@@ -159,5 +159,95 @@ func TestUntaggedUnionCastInAGraphProgram(t *testing.T) {
 				t.Fatalf("want NotYet holding %q, got %v", probe.want, err)
 			}
 		})
+	}
+}
+
+// untaggedTagModel is binder.ts:1416's shape (#qxt10dd): every member of Expression | Statement declares kind as
+// the whole open SyntaxKind, through Node, and CallExpression narrows it to one member, so no literal tag tells
+// the union's members apart and the target's kind is the tag its cast tests.
+const untaggedTagModel = "enum SyntaxKind { Identifier, CallExpression, Block } interface Node { readonly kind: SyntaxKind } interface Expression extends Node {} interface Statement extends Node {} interface CallExpression extends Expression { readonly kind: SyntaxKind.CallExpression; readonly argumentCount: number } "
+
+// A cast from an untagged union to a target that declares a literal tag the members hold open, tsc's `node as
+// CallExpression` (#qxt10dd), lowers as a tag test at the cast and the target's checked view: a true claim reads
+// through it and agrees with Node, on the sanitized native too. Mutant: proof.untagged left out of castRefusal's
+// viewCasts, so stringWideningRefusal judges the cast as a plain widening and refuses the open kind it tests.
+func TestUntaggedUnionCastTestsItsTag(t *testing.T) {
+	t.Parallel()
+	program := lowersAndAgreesWithNodeAs(t, untaggedTagModel+"function f(x: Expression | Statement): number { return (x as CallExpression).argumentCount; } const call: CallExpression = { kind: SyntaxKind.CallExpression, argumentCount: 2 }; console.log(String(f(call)));", ".ts")
+	if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != "2\n" {
+		t.Fatalf("sanitized native exit %d, stdout %q, stderr %.300q; want 2, as Node prints", code, stdout, stderr)
+	}
+}
+
+// A lie of another kind fails at the cast, with row 9's message (docs/rulings.md:9): a Block holds the
+// argumentCount the view reads, as a number, so only the tag test tells it isn't a CallExpression, and native
+// stops before printing where Node prints 3. Mutant: untaggedUnionCast returning the view with no CheckedCast
+// around it, and native reads the Block's argumentCount through the view and exits 0.
+func TestUntaggedUnionCastFailsAnotherKind(t *testing.T) {
+	t.Parallel()
+	program, err := lowerSourceAs(t, untaggedTagModel+"interface Block extends Statement { readonly kind: SyntaxKind.Block; readonly argumentCount: number } function f(x: Expression | Statement): number { return (x as CallExpression).argumentCount; } const block: Block = { kind: SyntaxKind.Block, argumentCount: 3 }; console.log(String(f(block)));", ".ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if code, stdout, stderr := brandedNative(t, program); code == 0 || stdout != "" || !strings.Contains(stderr, "cast failed: this Expression | Statement is not a CallExpression") {
+		t.Fatalf("sanitized native exit %d, stdout %q, stderr %.300q; want a stop at the cast, in row 9's words", code, stdout, stderr)
+	}
+}
+
+// A member beside the target's ancestors whose kind stays the open SyntaxKind, as tsc's Declaration does beside
+// Expression and Statement, leaves the write judgment where it was: every member's kind is the tag the cast
+// tests, so the cast lowers. Mutant: the arm judging each member with plain widened, whose enum arm refuses every
+// open kind seen as the target's literal.
+func TestUntaggedUnionCastTagBesideAnOpenSibling(t *testing.T) {
+	t.Parallel()
+	if _, err := lowerSourceAs(t, untaggedTagModel+"interface Declaration extends Node { readonly name: string } function f(x: Expression | Statement | Declaration): number { return (x as CallExpression).argumentCount; } const call: CallExpression = { kind: SyntaxKind.CallExpression, argumentCount: 2 }; console.log(String(f(call)));", ".ts"); err != nil {
+		t.Fatalf("an open sibling beside the tag's members: %v", err)
+	}
+}
+
+// A kind a write can reach is no tag (untaggedTagField), so its enum slot keeps the untagged stop, NotYet and
+// never Refused: written on every side, and readonly in the members but made writable by the target, where a
+// write through the view could store any SyntaxKind under a CallExpression's kind. The every-side row is declined
+// by the arm's downcast test first, so it holds the stop's words alone. The target-writable row is held three ways
+// at once, so no one mutant reds it: untaggedTagField names no writable tag, so the arm judges it by widened; the
+// enum slot widened then meets is a widening; and widenedPast judges a readonly field seen as a writable one a
+// widening too. Each of the last two is red-tested alone, by TestUntaggedUnionCastTagBesideAnOpenSibling and by
+// TestUntaggedUnionCastsKeepTheirStops' FlowLabel row, and this pin holds them together (J-5wgaj8z).
+func TestUntaggedUnionCastWritableKindStops(t *testing.T) {
+	t.Parallel()
+	use := "function f(x: Expression | Statement): number { return (x as CallExpression).argumentCount; }"
+	for _, probe := range []struct{ name, source string }{
+		{"a kind written on every side", "enum SyntaxKind { Identifier, CallExpression, Block } interface Node { kind: SyntaxKind } interface Expression extends Node {} interface Statement extends Node {} interface CallExpression extends Expression { kind: SyntaxKind.CallExpression; readonly argumentCount: number } " + use},
+		{"a kind the target makes writable", "enum SyntaxKind { Identifier, CallExpression, Block } interface Node { readonly kind: SyntaxKind } interface Expression extends Node {} interface Statement extends Node {} interface CallExpression extends Expression { kind: SyntaxKind.CallExpression; readonly argumentCount: number } " + use},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, probe.source, ".ts")
+			var refused *Refused
+			var notYet *NotYet
+			if errors.As(err, &refused) || !errors.As(err, &notYet) || !strings.Contains(err.Error(), "no literal tag tells apart") {
+				t.Fatalf("want NotYet holding %q, never a refusal, got %v", "no literal tag tells apart", err)
+			}
+		})
+	}
+}
+
+// A cast that keeps undefined over the same union, `node as CallExpression | undefined`, takes the same road on its
+// present value: keepsNullishValue lowers the untagged arm's view, and untaggedUnionCast tests the tag there, so a
+// lie of another kind fails at the cast in the present types' words and undefined is itself. Mutant: the tag
+// test dropped from untaggedUnionCast, and native reads the Block's argumentCount and prints it.
+func TestUntaggedUnionCastKeepingUndefinedTestsItsTag(t *testing.T) {
+	t.Parallel()
+	use := "interface Block extends Statement { readonly kind: SyntaxKind.Block; readonly argumentCount: number } function f(x: Expression | Statement | undefined): number { const call = x as CallExpression | undefined; return call === undefined ? -1 : call.argumentCount; } "
+	program, err := lowerSourceAs(t, untaggedTagModel+use+"const block: Block = { kind: SyntaxKind.Block, argumentCount: 3 }; console.log(String(f(undefined))); console.log(String(f(block)));", ".ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if code, stdout, stderr := brandedNative(t, program); code == 0 || stdout != "-1\n" || !strings.Contains(stderr, "is not a CallExpression") {
+		t.Fatalf("sanitized native exit %d, stdout %q, stderr %.300q; want -1, then a stop at the cast in row 9's words", code, stdout, stderr)
+	}
+	honest := lowersAndAgreesWithNodeAs(t, untaggedTagModel+use+"const call: CallExpression = { kind: SyntaxKind.CallExpression, argumentCount: 2 }; console.log(String(f(call))); console.log(String(f(undefined)));", ".ts")
+	if code, stdout, stderr := brandedNative(t, honest); code != 0 || stdout != "2\n-1\n" {
+		t.Fatalf("sanitized native exit %d, stdout %q, stderr %.300q; want 2 and -1, as Node prints", code, stdout, stderr)
 	}
 }
