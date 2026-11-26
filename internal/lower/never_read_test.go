@@ -82,14 +82,16 @@ func neverReadTraps(program *ir.Program) bool {
 // A read the checker types never, with something that can write its place between the earliest
 // narrowing the never is made of and the read, is rulings.md:151's case and stops as not yet at the read
 // (never_read.go). nv1 and nv5 hold the path road's call between the two checks, nv3 its call after the
-// last check. nv2 pins the let's never read in an exhaustive switch. The remaining let rows pin
+// last check. Each of the three now stops one read earlier, at the second check's holder.node, which the
+// checker keeps narrowed to NodeB across flip's write: narrowedArmPropertyReadGap's stale arm (#8nj5pn4), an
+// older rule answering first. nv2 pins the let's never read in an exhaustive switch. The remaining let rows pin
 // the earlier arm read in the original two-check programs.
 func TestNeverReadAcrossAWriteIsNotYet(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, read, what string }{
-		{"nv1", neverReadHolder + "\tflip(holder);\n\tif (holder.node.kind === K.B) return 'b';\n\t{ const seen: unknown = holder.node; return stray(seen); }\n}\nconsole.log(describe({ node: { kind: K.B, b: 2 } }));\n", "holder.node; return", ""},
-		{"nv3", neverReadHolder + "\tif (holder.node.kind === K.B) {\n\t\tflip(holder);\n\t\tif (holder.node.kind === K.B) return 'still b';\n\t\t{ const seen: unknown = holder.node; return stray(seen); }\n\t}\n\treturn 'none';\n}\nconsole.log(describe({ node: { kind: K.B, b: 2 } }));\n", "holder.node; return", ""},
-		{"nv5", neverReadHolder + "\tflip(holder);\n\tif (holder.node.kind === K.B) return 'b';\n\t{ const count: number = holder.node; return \"count \" + String(count + 1); }\n}\nconsole.log(describe({ node: { kind: K.B, b: 2 } }));\n", "holder.node; return", ""},
+		{"nv1", neverReadHolder + "\tflip(holder);\n\tif (holder.node.kind === K.B) return 'b';\n\t{ const seen: unknown = holder.node; return stray(seen); }\n}\nconsole.log(describe({ node: { kind: K.B, b: 2 } }));\n", "holder.node.kind === K.B) return 'b'", ""},
+		{"nv3", neverReadHolder + "\tif (holder.node.kind === K.B) {\n\t\tflip(holder);\n\t\tif (holder.node.kind === K.B) return 'still b';\n\t\t{ const seen: unknown = holder.node; return stray(seen); }\n\t}\n\treturn 'none';\n}\nconsole.log(describe({ node: { kind: K.B, b: 2 } }));\n", "holder.node.kind === K.B) return 'still b'", ""},
+		{"nv5", neverReadHolder + "\tflip(holder);\n\tif (holder.node.kind === K.B) return 'b';\n\t{ const count: number = holder.node; return \"count \" + String(count + 1); }\n}\nconsole.log(describe({ node: { kind: K.B, b: 2 } }));\n", "holder.node.kind === K.B) return 'b'", ""},
 		{"nv2", neverReadLetSwitch + "\t\tconst seen: unknown = node; return stray(seen);" + neverReadLetSwitchEnd, "node; return", neverReadCallWrittenWhat},
 		{"nv6", neverReadLet + "\t{ const count: number = node; return \"count \" + String(count + 1); }\n}\nconsole.log(describe({ kind: K.B, b: 2 }));\n", "node.kind === K.B", neverReadNodeArmWhat},
 		{"nv7", neverReadLet + "\t{ const other: { readonly label: string } = node; return other.label.toUpperCase(); }\n}\nconsole.log(describe({ kind: K.B, b: 2 }));\n", "node.kind === K.B", neverReadNodeArmWhat},
