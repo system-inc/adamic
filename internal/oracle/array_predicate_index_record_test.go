@@ -15,9 +15,13 @@ import (
 //   - json_record_test: the test alone, printing its answer, so the arm's admission is held apart from the read of the
 //     narrowed record after it;
 //   - json_recovery_record and json_recovery_record_test: the same two over the record as stage3's adaptation 52
-//     publishes it, `{ [key: string]: AdamicJsonRecoveryValue | undefined }`, parser recovery's undefined values in it.
+//     publishes it, `{ [key: string]: AdamicJsonRecoveryValue | undefined }`, parser recovery's undefined values in it;
+//   - narrowed_union_object_tag: `number[] | { [key: string]: number }` assigned an array and read as one, the
+//     checked narrowed read excluding the record arm by the brand (locals.go). It was pinned refused in reland_refused
+//     until the amendment admitted its arm, and its refused twin there now holds unknown values
+//     (TestNarrowedUnionObjectTagRefusal).
 //
-// Mutant (array_predicate_index_arm.mutants.md, M2): the brand answering false at a site whose arm is index-only, the
+// Mutant (array_predicate_index_record.mutants.md, M2): the brand answering false at a site whose arm is index-only, the
 // array read as the record. Each row goes red on its array line (a record printing 2 keys, a test printing true).
 //
 // The fixtures sit outside testdata's top level, so the flow and fresh corpora don't take them as their own.
@@ -27,6 +31,7 @@ func TestArrayPredicateIndexArmAgrees(t *testing.T) {
 		{"json_record", "object 1 number\narray 0 absent\nstring 0 absent\nnumber 0 absent\nboolean 0 absent\nnull 0 absent\nundefined 0 absent\n"},
 		{"json_record_test", "object true\narray false\nstring false\nnumber false\nboolean false\nnull false\nundefined false\n"},
 		{"json_recovery_record", "object 1 number\narray 0 absent\nstring 0 absent\nnumber 0 absent\nboolean 0 absent\nnull 0 absent\nundefined 0 absent\n"},
+		{"narrowed_union_object_tag", "1\n"},
 		{"json_recovery_record_test", "object true\narray false\nstring false\nnumber false\nboolean false\nnull false\nundefined false\n"},
 	} {
 		t.Run(row.name, func(t *testing.T) {

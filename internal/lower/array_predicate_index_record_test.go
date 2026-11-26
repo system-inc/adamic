@@ -37,7 +37,7 @@ func isArrayArgument(source string) string {
 //     of its own, which fails every index-only arm closed (condition 3). Its index is unknown here, which .a can hold;
 //     one of any would take the array's methods, and the array would be assignable to the JSON record with no hatch.
 //
-// Mutants (array_predicate_index_arm.mutants.md): M1, condition 2 dropped, every index value admitted, turns
+// Mutants (array_predicate_index_record.mutants.md): M1, condition 2 dropped, every index value admitted, turns
 // unknown-value, callable-value and length-value red, each lowering past isArray; array-stored-string-index stays green,
 // condition 3 still stopping it. M5, the Function test dropped, turns length-value red.
 func TestArrayPredicateIndexArmRefusals(t *testing.T) {
@@ -69,8 +69,9 @@ func TestArrayPredicateIndexArmRefusals(t *testing.T) {
 // and fails, Bounded's holds no callable and passes, Loosely's holds one and fails. Record<string, V> resolves to the
 // same index (Counts passes, Calls fails), a property beside the index fails condition 1, and so does an index that
 // isn't a string's: Numbered's and Language's NumberOnly (her i01, an arm a string[] is assignable to tsc-clean),
-// Pattern's template pattern (her i02) and Sym's symbol (her i05), each of whose value types condition 2 would pass. A closed
-// world holding an interface stored as an array with a string index of its own (Loose) fails every arm, condition 3.
+// Pattern's template pattern (her i02) and Sym's symbol (her i05), each of whose value types condition 2 would pass.
+// A closed world holding an interface stored as an array with a string index of its own (Loose) fails every arm,
+// condition 3.
 // An object value with no signature fails where lib's Function is assignable to it: Lengths' { length: number } takes
 // every function, Lettered's { a: string } none, so Lettered passes (Diagnostics' ruling on #gcec0bx).
 //
@@ -144,9 +145,9 @@ func TestArrayPredicateIndexArmObjectValueAgrees(t *testing.T) {
 // the domain. (Her i02 and i05, a template-pattern and a symbol index alone, tsc refuses as written; they're held at
 // condition 1 on their declarations in TestArrayPredicateIndexArmValueType.) The program must stop before it lowers
 // whole, by its own first stop: a type indexed by a number alone has no representation natively (records.go's
-// recordElement takes a string index only), so it may stop at the arm's first value before isArray's argument, and the
-// row asks only that it stops, logging where. Condition 1's own test of the key is TestArrayPredicateIndexArmValueType's,
-// which M4 turns red.
+// recordElement takes a string index only), so it may stop at the arm's first value before isArray's argument, and
+// the row asks only that it stops, logging where. Condition 1's own test of the key is
+// TestArrayPredicateIndexArmValueType's, which M4 turns red.
 func TestArrayPredicateIndexArmKeyRefusals(t *testing.T) {
 	t.Parallel()
 	for _, row := range []struct{ name, source, node string }{
@@ -164,6 +165,36 @@ func TestArrayPredicateIndexArmKeyRefusals(t *testing.T) {
 				t.Fatalf("want a stop, got %v", err)
 			}
 			t.Logf("stops: %v", err)
+		})
+	}
+}
+
+// A read narrowed to one record keeps the narrowed read's stop for every other member held as an object or a record
+// (narrowed_union_record_test.go's rule: typeof says object for a dictionary and a class instance alike), however the
+// record arm is admitted: an assignment narrows `Box | Dict | number[]` and `Counts | Names | number[]` to the record
+// it's handed, and the read beside Box, a class instance, or Names, a second record, stops in its words, at v.
+// Only an array member, by the array brand, and null are excluded at a record narrowing (Diagnostics' ruling on
+// #gcec0bx).
+//
+// Mutant (M7): the record narrowing skipping every other object-held or record-held member. Both rows go red.
+func TestArrayPredicateIndexArmRecordNarrowingStops(t *testing.T) {
+	t.Parallel()
+	for _, row := range []struct{ name, source string }{
+		{"class-instance", "class Box { n = 5; }\ntype Dict = { [key: string]: number };\nfunction first(): Box | Dict | number[] { return [1]; }\nlet v: Box | Dict | number[] = first();\nv = { a: 1 };\nconsole.log(String(Object.keys(v).length));\n"},
+		{"second-record", "type Counts = { [key: string]: number };\ntype Names = { [key: string]: string };\nfunction first(): Counts | Names | number[] { return [1]; }\nlet v: Counts | Names | number[] = first();\nv = { a: 1 };\nconsole.log(String(Object.keys(v).length));\n"},
+	} {
+		t.Run(row.name, func(t *testing.T) {
+			t.Parallel()
+			if node := runAgreementNode(t, writeAgreementSource(t, "main.a", row.source)); string(node.stdout) != "1\n" || node.code != 0 {
+				t.Fatalf("source Node: exit %d, stdout %q, stderr %q; want 1", node.code, node.stdout, node.stderr)
+			}
+			_, err := lowerSource(t, row.source)
+			var notYet *NotYet
+			const what = "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables"
+			where := fmt.Sprintf(":6:%d", strings.Index("console.log(String(Object.keys(v).length));", "(v)")+2)
+			if !errors.As(err, &notYet) || !strings.HasSuffix(notYet.Where, where) || notYet.What != what {
+				t.Fatalf("want NotYet at %s, %q, got %v", where, what, err)
+			}
 		})
 	}
 }
