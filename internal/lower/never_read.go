@@ -61,7 +61,7 @@ func (l *lowering) neverRead(node *ast.Node) (*neverMaking, error) {
 			return &neverMaking{}, nil
 		}
 	}
-	if !l.neverReadPosition(node) || l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsNever == 0 || l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil {
+	if !l.neverReadPosition(node) || l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsNever == 0 || l.enumNeverTrapped(node) {
 		return nil, nil
 	}
 	return l.neverJudged(node)
@@ -79,6 +79,16 @@ func (l *lowering) enumNeverReadGap(node *ast.Node) error {
 	}
 	_, err := l.neverJudged(node)
 	return err
+}
+
+// enumNeverTrapped is whether value() lowers node as enum_never.go's trap: a numeric enum's never read
+// with nothing that can write its place between (enumNeverReadGap). neverRead answers neither for one,
+// since the trap is already the enum form's, and checkNeverArguments takes one as a never argument, so
+// the two can't drift apart on what the trap covers.
+// A node outside neverReadPosition passes the gap test vacuously (enumNeverReadGap is nil there), and so
+// traps as value() traps it, whose first arm asks the same two things.
+func (l *lowering) enumNeverTrapped(node *ast.Node) bool {
+	return l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil && l.enumNeverReadGap(node) == nil
 }
 
 // neverJudged is neverRead's judgment of a read the checker types never, an enum's included.
