@@ -53,21 +53,32 @@ func TestAbsentArmCastsLower(t *testing.T) {
 // What absentArm leaves as it was: a null beside the members, a writable tag, and a tag the checker's duplicates
 // can't tell apart. A single member beside undefined, cast to that member, is presentCast's road
 // (cast_drops_nullish_test.go), and a target that keeps undefined is keepsNullishCast's (cast_keeps_nullish_test.go).
+// Each row pins its own cause's stop, as castRoad's untagged rows do: a null beside the members has no literal tag,
+// so the untagged arm's NotYet stops it first (cast_untagged_union.go, #axqgdck), and the other two keep the
+// unchecked-cast refusal. These rows never ran until the file's name stopped reading as `GOARCH=arm` (#b5w3ycg).
 func TestAbsentArmCastsStayRefused(t *testing.T) {
 	t.Parallel()
 	members := "enum K { A = 1, B = 2 } type A = { readonly kind: K.A }; type B = { readonly kind: K.B }; "
-	for _, probe := range []struct{ name, source, extension string }{
-		{"null beside", members + "function f(x: A | B | null): A { return x as A; }", ".ts"},
-		{"null and undefined beside", members + "function f(x: A | B | null | undefined): A { return x as A; }", ".ts"},
-		{"writable tag", "enum K { A = 1, B = 2 } type A = { kind: K.A }; type B = { kind: K.B }; function f(x: A | B | undefined): A { return x as A; }", ".ts"},
-		{"duplicate tags", "enum K { A = 1, B = 1 } type A = { readonly kind: K.A; readonly n: number }; type B = { readonly kind: K.B; readonly s: string }; function f(x: A | B | undefined): A { return x as A; }", ".ts"},
+	untagged, unchecked := "no literal tag tells apart", "adamic/no-unchecked-cast"
+	for _, probe := range []struct {
+		name, source, extension, want string
+		refused                       bool
+	}{
+		{"null beside", members + "function f(x: A | B | null): A { return x as A; }", ".ts", untagged, false},
+		{"null and undefined beside", members + "function f(x: A | B | null | undefined): A { return x as A; }", ".ts", untagged, false},
+		{"writable tag", "enum K { A = 1, B = 2 } type A = { kind: K.A }; type B = { kind: K.B }; function f(x: A | B | undefined): A { return x as A; }", ".ts", unchecked, true},
+		{"duplicate tags", "enum K { A = 1, B = 1 } type A = { readonly kind: K.A; readonly n: number }; type B = { readonly kind: K.B; readonly s: string }; function f(x: A | B | undefined): A { return x as A; }", ".ts", unchecked, true},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSourceAs(t, probe.source, probe.extension)
 			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/no-unchecked-cast") {
-				t.Fatalf("want an unchecked-cast refusal, got %v", err)
+			var notYet *NotYet
+			switch {
+			case probe.refused && (!errors.As(err, &refused) || !strings.Contains(err.Error(), probe.want)):
+				t.Fatalf("want a refusal holding %q, got %v", probe.want, err)
+			case !probe.refused && (!errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.want)):
+				t.Fatalf("want NotYet holding %q, got %v", probe.want, err)
 			}
 		})
 	}
