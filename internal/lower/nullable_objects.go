@@ -116,6 +116,12 @@ func (l *lowering) nullableObjectBoundary(node *ast.Node, value ir.Expression) i
 	if _, literal := value.(ir.Null); literal {
 		return value
 	}
+	return l.boxNullableReference(value)
+}
+
+// boxNullableReference converts a reference whose null uses the missing pointer
+// into a Union whose null has its own tag.
+func (l *lowering) boxNullableReference(value ir.Expression) ir.Expression {
 	b := l.libraryArrayBuilder([]ir.Expression{value})
 	held := b.read(b.parameters[0])
 	return b.finish("nullable_object_to_union", ir.Conditional{Condition: ir.IsNull{Value: held}, WhenTrue: ir.Box{Value: ir.Null{}}, WhenNot: ir.Box{Value: held}, Of: ir.Union})
