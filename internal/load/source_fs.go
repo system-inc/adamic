@@ -11,14 +11,40 @@ import (
 )
 
 // The prelude is served from inside the binary, at a path no disk has, so a program checks the same
-// wherever adamic runs.
+// wherever adamic runs. It is three files, each a real one beside this: prelude.d.ts, what every program
+// has, and the console its program has, prelude_console.d.ts's standalone one or, for a program given
+// Node's declarations, prelude_node.d.ts's Node one, with NodeJS.Process's recordreplay. Load roots
+// prelude.d.ts and one of the two others, never both, since the two consoles collide. Every file the
+// directory serves is the prelude to IsPrelude (prelude_files_test.go holds the three).
 const (
-	preludeDirectory = "/adamic-prelude"
-	preludePath      = preludeDirectory + "/adamic.d.ts"
+	preludeDirectory   = "/adamic-prelude"
+	preludePath        = preludeDirectory + "/adamic.d.ts"
+	preludeConsolePath = preludeDirectory + "/console.d.ts"
+	preludeNodePath    = preludeDirectory + "/node.d.ts"
 )
 
 //go:embed prelude.d.ts
 var prelude string
+
+//go:embed prelude_console.d.ts
+var preludeConsole string
+
+//go:embed prelude_node.d.ts
+var preludeNode string
+
+// preludeSource is the text the prelude directory serves at path, and whether it serves one there. It reads the
+// variables each time, so a test that replaces one is served what it wrote.
+func preludeSource(path tspath.RootedFilePath) (string, bool) {
+	switch path {
+	case preludePath:
+		return prelude, true
+	case preludeConsolePath:
+		return preludeConsole, true
+	case preludeNodePath:
+		return preludeNode, true
+	}
+	return "", false
+}
 
 // sourceFS is the disk as the checker sees an Adamic program.
 //
@@ -31,9 +57,7 @@ var prelude string
 // is ever shadowed silently.
 type sourceFS struct {
 	vfs.FS
-	overlay         map[tspath.RootedFilePath]string
-	nodeTypes       bool
-	nodePreludeText string
+	overlay map[tspath.RootedFilePath]string
 	// display names a file for whoever reads the program (LoadDisplayed); nil names it by its path.
 	display func(string) string
 	// adamicFiles is adamicFile's answer for each path it was asked, an adamicAnswer, kept for the load's life.
@@ -82,7 +106,7 @@ func (s *sourceFS) displayName(path tspath.RootedFilePath) string {
 }
 
 func (s *sourceFS) FileExists(path tspath.RootedFilePath) bool {
-	if path == preludePath {
+	if _, isPrelude := preludeSource(path); isPrelude {
 		return true
 	}
 	if _, isAdamic := s.adamicFile(path); isAdamic {
@@ -95,11 +119,8 @@ func (s *sourceFS) FileExists(path tspath.RootedFilePath) bool {
 }
 
 func (s *sourceFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
-	if path == preludePath {
-		if s.nodeTypes {
-			return s.nodePreludeText, true
-		}
-		return prelude, true
+	if source, isPrelude := preludeSource(path); isPrelude {
+		return source, true
 	}
 	if source, exists := s.overlay[path]; exists {
 		return source, true
@@ -125,7 +146,7 @@ func (s *sourceFS) Stat(path tspath.RootedPath) vfs.FileInfo {
 }
 
 func (s *sourceFS) Realpath(path tspath.RootedPath) tspath.RootedPath {
-	if path == preludePath {
+	if _, isPrelude := preludeSource(tspath.RootedFilePathFromPath(path)); isPrelude {
 		return path
 	}
 	if adamicPath, isAdamic := s.adamicFile(tspath.RootedFilePathFromPath(path)); isAdamic {
