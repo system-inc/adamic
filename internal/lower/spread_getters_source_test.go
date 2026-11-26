@@ -52,8 +52,14 @@ func TestSpreadGettersHolderReadersAreListed(t *testing.T) {
 			if !isFunction || function.Body == nil {
 				continue
 			}
+			// classHolder's own store is a write, never a read of a holder.
+			written := map[ast.Node]bool{}
 			ast.Inspect(function.Body, func(node ast.Node) bool {
 				switch node := node.(type) {
+				case *ast.AssignStmt:
+					for _, left := range node.Lhs {
+						written[left] = true
+					}
 				case *ast.CallExpr:
 					if selector, isSelector := node.Fun.(*ast.SelectorExpr); isSelector {
 						if selector.Sel.Name == "spreadGetters" {
@@ -72,7 +78,7 @@ func TestSpreadGettersHolderReadersAreListed(t *testing.T) {
 						}
 					}
 				case *ast.IndexExpr:
-					if selector, isSelector := node.X.(*ast.SelectorExpr); isSelector && selector.Sel.Name == "classHolders" {
+					if selector, isSelector := node.X.(*ast.SelectorExpr); isSelector && selector.Sel.Name == "classHolders" && !written[node] {
 						readers[function.Name.Name] = true
 						if classHolderReaders[function.Name.Name] == "" {
 							t.Errorf("%s: %s reads a class's holder and isn't in classHolderReaders", files.Position(node.Pos()), function.Name.Name)
