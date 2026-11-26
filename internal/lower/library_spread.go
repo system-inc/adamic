@@ -33,7 +33,7 @@ func (l *lowering) checkLibrarySpreads(modules []*ast.SourceFile) error {
 		}
 		// A complete producer proof preserves ordinary record and Adamic class
 		// spreads even when an unrelated compatible library object exists elsewhere.
-		if graph.plainSpreadSources(spread.source, map[int]bool{}) {
+		if graph.plainSpreadSources(spread.source, map[int]bool{}, true) {
 			continue
 		}
 		if err := l.librarySpreadRefusal(spread, candidates); err != nil {
@@ -45,7 +45,10 @@ func (l *lowering) checkLibrarySpreads(modules []*ast.SourceFile) error {
 
 // Follow joined assignments, arguments and returns. An unmodeled producer is
 // not evidence of a plain object: it falls back to the closed-world type set.
-func (graph *allocationFlowGraph) plainSpreadSources(expression ir.Expression, active map[int]bool) bool {
+// classes says whether an instance of an Adamic class declaration counts as plain:
+// it does for the library rule, and not for the prototype member rule
+// (spread_prototype_members.go), whose concern is exactly such an instance.
+func (graph *allocationFlowGraph) plainSpreadSources(expression ir.Expression, active map[int]bool, classes bool) bool {
 	sources := func(node int) bool {
 		if _, unknownSource := graph.unknownAt(node); active[node] || unknownSource || len(graph.sources[node]) == 0 {
 			return false
@@ -53,7 +56,7 @@ func (graph *allocationFlowGraph) plainSpreadSources(expression ir.Expression, a
 		active[node] = true
 		defer delete(active, node)
 		for _, source := range graph.sources[node] {
-			if !graph.plainSpreadSources(source, active) {
+			if !graph.plainSpreadSources(source, active, classes) {
 				return false
 			}
 		}
@@ -61,8 +64,9 @@ func (graph *allocationFlowGraph) plainSpreadSources(expression ir.Expression, a
 	}
 	switch value := expression.(type) {
 	case ir.ObjectLiteral:
-		// A spread result has already been checked at its own source.
-		return true
+		// A spread result has already been checked at its own source. An accessor
+		// literal's synthetic class holds its accessors as its own, which a spread copies.
+		return classes || value.Class == 0 || graph.program.Classes[value.Class-1].Literal
 	case ir.Undefined, ir.Null:
 		return true
 	case ir.Read:
@@ -90,19 +94,19 @@ func (graph *allocationFlowGraph) plainSpreadSources(expression ir.Expression, a
 		}
 		return true
 	case ir.Conditional:
-		return graph.plainSpreadSources(value.WhenTrue, active) && graph.plainSpreadSources(value.WhenNot, active)
+		return graph.plainSpreadSources(value.WhenTrue, active, classes) && graph.plainSpreadSources(value.WhenNot, active, classes)
 	case ir.Coalesce:
-		return graph.plainSpreadSources(value.Value, active) && graph.plainSpreadSources(value.Fallback, active)
+		return graph.plainSpreadSources(value.Value, active, classes) && graph.plainSpreadSources(value.Fallback, active, classes)
 	case ir.Box:
-		return graph.plainSpreadSources(value.Value, active)
+		return graph.plainSpreadSources(value.Value, active, classes)
 	case ir.Narrow:
-		return graph.plainSpreadSources(value.Value, active)
+		return graph.plainSpreadSources(value.Value, active, classes)
 	case ir.Unwrap:
-		return graph.plainSpreadSources(value.Value, active)
+		return graph.plainSpreadSources(value.Value, active, classes)
 	case ir.Defined:
-		return graph.plainSpreadSources(value.Value, active)
+		return graph.plainSpreadSources(value.Value, active, classes)
 	case ir.CheckedCast:
-		return graph.plainSpreadSources(value.Value, active)
+		return graph.plainSpreadSources(value.Value, active, classes)
 	}
 	return false
 }
