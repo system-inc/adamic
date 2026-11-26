@@ -1787,6 +1787,11 @@ func scanLowerWithElementKey(key *viewElementKey, program *load.Program, typeChe
 	if err := lowering.certifySourceSlots(); err != nil {
 		return nil, err
 	}
+	// As lowerWithElementKey does, refuse a .a spread whose type declares as a field a member a class holds
+	// on its prototype before the accessors' dispatchers, so both modes refuse it alike.
+	if err := lowering.checkSpreadPrototypeMembers(modules); err != nil {
+		return nil, err
+	}
 	// As lowerWithElementKey does, before finishAccessors: a read of a prototype member from a generic
 	// spread's copy stops in both modes alike (#y4gjeb8).
 	if err := lowering.checkGenericSpreadCopyReads(); err != nil {
