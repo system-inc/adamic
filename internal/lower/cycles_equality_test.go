@@ -144,6 +144,41 @@ func cycleLooseSlotStop(err error) bool {
 	return errors.As(err, &notYet) && strings.HasSuffix(notYet.What, looseStopWords)
 }
 
+// cycleRecordSlotStop reports whether err is judgeRecordSlots' stop for a seed write into a graph slot
+// whose type can hold a record the program's graph doesn't select (graph_records.go:53, #t5q4prw).
+// Memory's read on #bbssdcy at 2026-11-26 21:02:38Z confirms the stop fails closed by the slot's type.
+// The frozen scanning reference predates it, so where it lowers and the indexed side stops here, the
+// two differ by the stop alone.
+func cycleRecordSlotStop(err error) bool {
+	var notYet *NotYet
+	return errors.As(err, &notYet) && notYet.What == "a record written into a graph slot, where the write at "+notYet.Where+" may close a cycle through it, in a graph program: a record of a type the program's graph doesn't select can't join a graph region"
+}
+
+func TestCycleRecordSlotStopMatchesTheWholeStop(t *testing.T) {
+	t.Parallel()
+	const words = "a record written into a graph slot, where the write at p.ts:6:5 may close a cycle through it, in a graph program: a record of a type the program's graph doesn't select can't join a graph region"
+	for _, row := range []struct {
+		name string
+		err  error
+		want bool
+	}{
+		{"exact", &NotYet{Where: "p.ts:6:5", What: words}, true},
+		{"wrong_position", &NotYet{Where: "p.ts:7:5", What: words}, false},
+		{"truncated", &NotYet{Where: "p.ts:6:5", What: "a record written into a graph slot, where the write at p.ts:6:5 may close a cycle through it"}, false},
+		{"extra_text", &NotYet{Where: "p.ts:6:5", What: words + " with another reason"}, false},
+		{"unrecorded_write", &NotYet{Where: "p.ts:1:1", What: "a record written into a graph slot, where a write in close may close a cycle through it, in a graph program: a record of a type the program's graph doesn't select can't join a graph region"}, false},
+		{"captured_cell", &NotYet{Where: "p.ts:6:5", What: "a record held by 'record', a variable a function value captures and the program assigns again, on a cycle, in a graph program: a record of a type the program's graph doesn't select can't join a graph region"}, false},
+		{"refused", &Refused{Where: "p.ts:6:5", What: words}, false},
+		{"nil", nil, false},
+	} {
+		t.Run(row.name, func(t *testing.T) {
+			if got := cycleRecordSlotStop(row.err); got != row.want {
+				t.Errorf("cycleRecordSlotStop(%v) = %t, want %t", row.err, got, row.want)
+			}
+		})
+	}
+}
+
 // cycleExhaustiveFlowSites takes out of the indexed program's GraphTypes the allocation sites (the
 // negative keys, which only graphFlows sets) the scanning reference's plan lacks, and returns them.
 // graphFlows' follow enters wrappers and record calls the reference's never reached (#y7wexf5), and
@@ -258,6 +293,10 @@ func cycleCompareProgramModes(t *testing.T, path string, regions ...bool) {
 		}
 		if cycleLooseSlotStop(indexErr) && !cycleLooseSlotStop(scanErr) {
 			t.Logf("%s: ProgramRegion=%t not compared: the indexed pipeline stops at the loose-slot stop the frozen scanning reference predates (#kaz4pk8): %v; scanning: %v", path, region, indexErr, scanErr)
+			continue
+		}
+		if scanErr == nil && cycleRecordSlotStop(indexErr) {
+			t.Logf("%s: ProgramRegion=%t not compared: the indexed pipeline stops at the record-slot stop the frozen scanning reference predates (#t5q4prw): %v", path, region, indexErr)
 			continue
 		}
 		if scanErr == nil && cycleExhaustiveFlowStop(indexErr) {
