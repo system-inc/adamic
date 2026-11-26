@@ -1,0 +1,13 @@
+[
+  {
+    "file": "src/compiler/visitorPublic.ts",
+    "owner": "visitNode",
+    "old": "export function visitNode(\n    node: Node,\n    visitor: Visitor,",
+    "new": "export function visitNode(\n    node: Node | undefined,\n    visitor: Visitor,",
+    "count": 1,
+    "before": "export function visitNode(\n    node: Node,\n    visitor: Visitor,\n    test?: (node: Node) => boolean,\n    lift?: (node: readonly Node[]) => Node,\n): Node | undefined {\n    if (node === undefined) {\n        // If the input type is undefined, then the output type can be undefined.\n        return node;\n    }\n\n    const visited = visitor(node);\n\n    let visitedNode: Node | undefined;\n    if (visited === undefined) {\n        // If the visited node is undefined, then the visitor must have returned undefined,\n        // so the visitor must have been declared as able to return undefined, so TOut must be\n        // potentially undefined.\n        return undefined;\n    }\n    else if (isArray(visited)) {\n        visitedNode = (lift || extractSingleNode)(visited);\n    }\n    else {\n        visitedNode = visited;\n    }\n\n    Debug.assertNode(visitedNode, test);\n    return visitedNode;\n}",
+    "after": "export function visitNode(\n    node: Node | undefined,\n    visitor: Visitor,\n    test?: (node: Node) => boolean,\n    lift?: (node: readonly Node[]) => Node,\n): Node | undefined {\n    if (node === undefined) {\n        // If the input type is undefined, then the output type can be undefined.\n        return node;\n    }\n\n    const visited = visitor(node);\n\n    let visitedNode: Node | undefined;\n    if (visited === undefined) {\n        // If the visited node is undefined, then the visitor must have returned undefined,\n        // so the visitor must have been declared as able to return undefined, so TOut must be\n        // potentially undefined.\n        return undefined;\n    }\n    else if (isArray(visited)) {\n        visitedNode = (lift || extractSingleNode)(visited);\n    }\n    else {\n        visitedNode = visited;\n    }\n\n    Debug.assertNode(visitedNode, test);\n    return visitedNode;\n}",
+    "ownerBeforeSha256": "ef4391d0913b1a25c0b1ca33d2c12f85486c51636790d7fa3d64a7c5622c4237",
+    "ownerAfterSha256": "5a9fce5f11ea60338a05ee95aa36980dca410b3f61965ad7ae583cfc97b5936f"
+  }
+]
