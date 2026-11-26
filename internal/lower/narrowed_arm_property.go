@@ -17,11 +17,11 @@ import (
 //
 // Node prints NaN, since m.n holds b by the read, and native read b's storage through a's layout and printed 1.
 // A property has no declaration that keeps its writes in one function, so it's proved by name, as the nullish
-// twin proves it: a getter of the name, or a program that could install one, stops the read first, since a
-// getter answers each read itself. Then the read lowers when the place it was last seen narrowed (an
-// assignment, or a check that mentions it, armObservationOf) is followed by nothing that can run program code
-// before the read, or by nothing that can write its name (propertyWriteMayRunBetween). A read with no such
-// place stops when a number spells its name, some write could reach any name, or any write of its name exists.
+// twin proves it: a getter of the name stops the read first, since a getter answers each read itself. Then
+// the read lowers when the place it was last seen narrowed (an assignment, or a check that mentions it,
+// armObservationOf) is followed by nothing that can run program code before the read, or by nothing that can
+// write its name or install an accessor (propertyWriteMayRunBetween). A read with no such place is judged
+// from the start of its own function.
 // It's a fail-closed stop: a checked view of the declared union is the read that lifts it.
 func (l *lowering) narrowedArmPropertyReadGap(node *ast.Node) error {
 	if !l.isExpression(node) || (ast.IsAssignmentTarget(node) && pureWrite(node)) {
@@ -59,8 +59,11 @@ func (l *lowering) narrowedArmPropertyReadGap(node *ast.Node) error {
 	}
 	name := key.Text()
 	stop := l.notYet(node, "a read of property "+name+" narrowed to "+l.checker.TypeToString(narrowed)+" where a call may have rewritten it")
+	// A getter of the name answers each read itself, so it stops the read whatever the flow says. A program that
+	// could install one some other way (writes.accessors: a descriptor, a prototype) stops it only where program
+	// code can run between the narrowing and the read, since nothing else can install it there.
 	writes := l.propertyWritesOf()
-	if writes.accessors || l.accessorName(name) {
+	if l.accessorName(name) {
 		return stop
 	}
 	_, notNumeric := strconv.ParseFloat(name, 64)
@@ -79,7 +82,11 @@ func (l *lowering) narrowedArmPropertyReadGap(node *ast.Node) error {
 		}
 		observation = &nullishObservation{from: boundary.Pos()}
 	}
-	if l.propertyWriteMayRunBetween(node, name, numeric, observation.from, observation.target, l.appendsBetween(observation, node, numeric)) {
+	exempt := l.appendsBetween(observation, node, numeric)
+	if writes.accessors && l.codeBetween(observation.from, node, exempt) {
+		return stop
+	}
+	if l.propertyWriteMayRunBetween(node, name, numeric, observation.from, observation.target, exempt) {
 		return stop
 	}
 	return nil
