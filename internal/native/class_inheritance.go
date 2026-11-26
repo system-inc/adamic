@@ -113,9 +113,40 @@ func (e *emitter) keyedClassDeclarations(builder *strings.Builder) {
 	fmt.Fprintf(builder, "static const adamic_keyed_class adamic_keyed_classes[] = {\n%s};\n", strings.Join(entries, ""))
 }
 
+// methodOwner is, for a virtual call whose one target is an instance method a class declares, that class,
+// one-based: the first class whose slot holds the target where its base's doesn't. It is 0 for a call that
+// isn't such a method's, a receiver not held as an object, a static or literal class's method, and a
+// receiver exactReceiverClass proves.
+func (e *emitter) methodOwner(call ir.Call, target int) int {
+	slot := call.Virtual - 1
+	if slot < 0 || len(call.Arguments) == 0 || call.Arguments[0].Type() != ir.Object || !e.program.Functions[target].Receiver {
+		return 0
+	}
+	holds := func(class int) bool {
+		methods := e.program.Classes[class-1].Methods
+		return slot < len(methods) && methods[slot] == target
+	}
+	for index, class := range e.program.Classes {
+		if class.Static || class.Literal || !holds(index+1) || (class.Base != 0 && holds(class.Base)) {
+			continue
+		}
+		if e.exactReceiverClass(call.Arguments[0]) != 0 {
+			return 0
+		}
+		return index + 1
+	}
+	return 0
+}
+
 func (e *emitter) callCode(call ir.Call, arguments []string) string {
 	targets := e.program.CallTargets(call)
 	if len(targets) == 1 {
+		if owner := e.methodOwner(call, targets[0]); owner != 0 {
+			// The one road that enters a class's method by its own code without reading the receiver's
+			// identity: a this that isn't the class's instance stops on an invariant (adamic_method_this,
+			// #y4gjeb8). An exact receiver is that class's allocation, so it needs no check.
+			arguments = append([]string{fmt.Sprintf("adamic_method_this(%s, &%s)", arguments[0], e.className(owner))}, arguments[1:]...)
+		}
 		return fmt.Sprintf("%s(%s)", e.functionName(targets[0]), strings.Join(arguments, ", "))
 	}
 	if class := e.exactReceiverClass(call.Arguments[0]); class != 0 {
