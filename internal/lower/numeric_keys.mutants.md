@@ -18,3 +18,8 @@ then lowers or stops somewhere else.
 
 The proof's memo has its own: numeric_keys.go:158, the held answer never returned (`if closed, held := ...; held && false {`),
 reds TestNumericKeyTableIsWalkedOncePerBinding (three walks for one binding).
+
+The key's enum read has its own (#kgngvxj): numericKeyRead returning nil before anything else, so (A) names the field
+and never reads the ordinary enum member, reds TestEnumInitializationComputedKeyStops in internal/oracle (it prints
+`initializer` and `1` again where the pin wants exit 70 with the row's ReferenceError), and the fixture runner's row for
+stage3/fixtures/enum-init-reach/unknown-computed-key.a in backend_divergences.json.
