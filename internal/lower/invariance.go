@@ -1076,15 +1076,11 @@ func (l *lowering) literalMethodRefusal(method *ast.Node, slots []*checker.Type)
 				continue
 			}
 			if len(slotSignatures) > 1 {
-				if l.unlowerable == nil {
-					l.unlowerable = l.notYet(method, "a method in an object literal seen as an overloaded method, which stage 0 doesn't judge")
-				}
+				l.holdUnlowerable(l.notYet(method, "a method in an object literal seen as an overloaded method, which stage 0 doesn't judge"))
 				return nil
 			}
 			if len(slotSignatures[0].TypeParameters()) > 0 {
-				if l.unlowerable == nil {
-					l.unlowerable = l.notYet(method, "a method in an object literal seen as a generic method, which stage 0 doesn't judge")
-				}
+				l.holdUnlowerable(l.notYet(method, "a method in an object literal seen as a generic method, which stage 0 doesn't judge"))
 				return nil
 			}
 			if whole {
