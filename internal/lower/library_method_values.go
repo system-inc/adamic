@@ -382,13 +382,18 @@ func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error
 var delayedArrayWriters = map[string]bool{"push": true, "fill": true, "splice": true, "concat": true}
 var delayedArrayReaders = map[string]bool{"slice": true, "join": true, "at": true, "reverse": true, "indexOf": true, "includes": true, "lastIndexOf": true}
 
-// delayedArrayMutators are the delayed Array methods that change their receiver in place, so none may be
-// called on a readonly view (delayedReadonlyReceiver). concat writes only its result, never its receiver.
-var delayedArrayMutators = map[string]bool{"push": true, "fill": true, "splice": true, "reverse": true}
+// delayedArrayLeavesReceiver names the delayed Array methods that leave their receiver as it was: concat and
+// slice make a new array, and the rest only read. Every other name changes its receiver in place (push, fill,
+// splice, reverse, and whatever adapter is added later), so none may be called on a readonly view
+// (delayedReadonlyReceiver). The list is of what's safe, so a mutator it forgets fails closed.
+var delayedArrayLeavesReceiver = map[string]bool{"concat": true, "slice": true, "join": true, "at": true, "indexOf": true, "includes": true, "lastIndexOf": true}
 
-// delayedReadonlyReceiver is the first member of a delayed call's receiver type that has no push, a readonly
-// view of an array (ReadonlyArray, a readonly tuple, a NodeArray-shaped layout), or nil when every member can
-// push. A member that isn't an array at all has no push either, so it fails closed.
+// delayedReadonlyReceiver is the first member of a delayed call's receiver type, past null and undefined, that
+// a write may not go through, or nil when every member is writable. Writable is lib's mutable Array or a tuple
+// that isn't readonly, and nothing else: ReadonlyArray, a readonly tuple, a NodeArray-shaped interface over
+// ReadonlyArray, one that declares its own push over a readonly view, and any type this doesn't classify are
+// returned, so it fails closed. A push property is no proof: an interface over ReadonlyArray may declare one
+// and still be a covariant readonly view.
 func (l *lowering) delayedReadonlyReceiver(receiver *ast.Node) *checker.Type {
 	held := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver))
 	members := []*checker.Type{held}
@@ -396,7 +401,13 @@ func (l *lowering) delayedReadonlyReceiver(receiver *ast.Node) *checker.Type {
 		members = held.Types()
 	}
 	for _, member := range members {
-		if l.checker.GetPropertyOfType(member, "push") == nil {
+		switch {
+		case checker.IsTupleType(member):
+			if member.TargetTupleType().IsReadonly() {
+				return member
+			}
+		case l.isArrayType(member) && !l.isLibraryType(member, "ReadonlyArray"):
+		default:
 			return member
 		}
 	}
@@ -417,11 +428,11 @@ func (l *lowering) delayedArrayWritesFit(node, receiver *ast.Node, name string, 
 	// A readonly view is never a write's slot (#3cee4gb, Adamic's ruling on Language's J-2rzaksa): its
 	// declared element type is a covariant view, so the array it names may hold narrower elements another
 	// alias reads, and splice.call(nodes, 0, 1, other) on a readonly Ident[] seen as readonly Node[] put an
-	// Other where the Ident[] alias read an Ident, which native read past. A delayed mutator on a receiver
-	// some member of whose type can't push (ReadonlyArray, a readonly tuple, a NodeArray-shaped readonly
-	// layout) is refused as a direct write through a readonly view is. reverse reorders in place, so it's a
-	// mutator here though it writes nothing new.
-	if delayedArrayMutators[name] {
+	// Other where the Ident[] alias read an Ident, which native read past. A delayed method that doesn't
+	// leave its receiver as it was, on a receiver some member of whose type isn't lib's mutable Array or a
+	// tuple that isn't readonly (delayedReadonlyReceiver), is refused as a direct write through a readonly
+	// view is. reverse reorders in place, so it's a mutator here though it writes nothing new.
+	if !delayedArrayLeavesReceiver[name] {
 		if readonly := l.delayedReadonlyReceiver(receiver); readonly != nil {
 			return &Refused{Where: l.program.Where(node), What: "a delayed Array.prototype." + name + " on a readonly array (" + l.checker.TypeToString(readonly) + "), a write through a view that can't be written", Fix: "write through the mutable array the program owns, or change a copy (slice() it first)"}
 		}
