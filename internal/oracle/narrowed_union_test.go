@@ -72,12 +72,14 @@ func TestNarrowedUnionMemberCheck(t *testing.T) {
 	}
 }
 
-// Ambiguous object tags need a stronger IR predicate before they can be cast safely. An object arm with an index
-// signature declares no required property that rules an array out, so the array brand can't decide it either. A Map
-// arm can be, and agrees (TestArrayPredicateArmsAgree).
+// Ambiguous object tags need a stronger IR predicate before they can be cast safely. An object arm whose index holds
+// unknown declares no required property that rules an array out, and its values admit a function, so neither arm rule
+// (rulings.md:260 and its amendment of Nov 26) puts it in the array brand's domain, and the narrowed read stops. Its
+// twin over `{ [key: string]: number }` was pinned here refused until that amendment admitted it, and now agrees in
+// TestArrayPredicateIndexArmAgrees; a Map arm agrees too (TestArrayPredicateArmsAgree).
 func TestNarrowedUnionObjectTagRefusal(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/reland_refused/narrowed_union_object_tag.a"))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/reland_refused/narrowed_union_object_tag_unknown.a"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -85,7 +87,7 @@ func TestNarrowedUnionObjectTagRefusal(t *testing.T) {
 		t.Fatalf("source Node: %#v", node)
 	}
 	_, err = lowered(t, path)
-	if err == nil || !strings.Contains(err.Error(), "narrowed_union_object_tag.a:8:16:") || !strings.Contains(err.Error(), "stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet") {
+	if err == nil || !strings.Contains(err.Error(), "narrowed_union_object_tag_unknown.a:8:16:") || !strings.Contains(err.Error(), "stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet") {
 		t.Fatalf("want refusal naming the path and fix, got %v", err)
 	}
 }
