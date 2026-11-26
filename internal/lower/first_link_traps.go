@@ -154,7 +154,7 @@ func (l *lowering) firstLinkCatch(phase string, unit *ast.Node, run func() error
 // ends it. A panic or such an error carries no site of its own, so it's at site. A context's cancellation or
 // deadline is no stop, and no row, so the caller returns it.
 func (l *lowering) firstLinkRow(recovered any, err error, phase string, site, unit *ast.Node) (ir.Trap, bool) {
-	row := ir.Trap{Phase: phase, Suspect: l.firstLinkSuspect || l.firstLinkRewriteSkipped}
+	row := ir.Trap{Phase: phase, Suspect: l.firstLinkSuspect || l.firstLinkRewriteSkipped || l.firstLinkJudgmentAbandoned}
 	var notYet *NotYet
 	var refused *Refused
 	switch {
