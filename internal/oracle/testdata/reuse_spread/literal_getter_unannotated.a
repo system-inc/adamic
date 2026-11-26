@@ -1,0 +1,20 @@
+// getter_writes_global.a's literal held by an unannotated const and seen through { readonly label: string }, a
+// view that doesn't name its getter. Node prints 1 tree1 source2, then swapped5.
+// An object literal's own type is fresh and fails the view by excess properties, so spreadGetters relates
+// it by relatedShape: related raw, the getter was left out of the spread's set, reuse lent the global, and
+// native read it freed under ASan (#z6h9s7k).
+type Tree = { value: number; label: string };
+let tree: Tree = { value: 1, label: `tree${String(1)}` };
+function describe(node: Tree, extra: { readonly label: string }): string {
+    const copy = { ...extra };
+    return `${String(node.value)} ${node.label} ${copy.label}`;
+}
+const wide = {
+    get value(): number {
+        tree = { value: 5, label: `swapped${String(5)}` };
+        return 10;
+    },
+    label: `source${String(2)}`,
+};
+console.log(describe(tree, wide));
+console.log(tree.label);

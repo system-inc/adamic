@@ -15,7 +15,10 @@ import (
 // program in testdata/reuse_spread agrees with Node natively, sanitized and on the JavaScript
 // backend, and leaks nothing: a getter that writes the global a call was handed, an object literal's
 // own (which a spread runs), a class's and one inherited from a base (which it doesn't, the set
-// over-approximating), and the control without a getter. Each reads the copy by its named fields.
+// over-approximating), and the control without a getter. Each reads the copy by its named fields. The
+// three literal_getter rows see the literal through a view narrower than its own type, which a fresh
+// literal fails by excess properties, so spreadGetters relates it by relatedShape (#z6h9s7k): related raw,
+// each was a heap use after free natively under ASan.
 // Mutants (h3-proof.sh, and testdata/iterable_views' mutants.md): the spread's case dropped from
 // reachesGlobal, and spreadGetters' call made nil; each lets reuse lend or move the global across
 // the getter's write, which only the object literal's row runs.
@@ -38,7 +41,7 @@ func TestReuseSpreadAgreesWithNode(t *testing.T) {
 			generatorAgrees(t, directory+"/"+entry.Name())
 		})
 	}
-	if programs != 4 {
-		t.Fatalf("%d programs in %s, want 4: a program added or removed needs this count changed with it", programs, directory)
+	if programs != 7 {
+		t.Fatalf("%d programs in %s, want 7: a program added or removed needs this count changed with it", programs, directory)
 	}
 }
