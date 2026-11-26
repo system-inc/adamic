@@ -1107,6 +1107,11 @@ func (e *emitter) boundMethod(expression ir.BoundMethod) string {
 		return result
 	}
 	if !expression.Optional {
+		// A non-optional bind of a method the receiver doesn't hold, such as a spread's copy seen as a type
+		// declaring one, found nothing: no closure and no method code. It stops here with the words every
+		// other road to a missing method uses, which #8vptg16 turns into Node's catchable TypeError,
+		// rather than leave the bound closure a null code pointer to call (#1k4z29h).
+		e.checkDefinedWhen(fmt.Sprintf("%s == NULL && !%s", target, e.methodPresent(method)), "method "+expression.Name+" is absent")
 		return makeValue()
 	}
 	text, value, owned := e.asideWith(makeValue)
