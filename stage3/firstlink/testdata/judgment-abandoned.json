@@ -1,0 +1,36 @@
+{
+  "findings": "leads only; reproduce without FirstLinkTraps before filing",
+  "traps": [
+    {
+      "Kind": "Gap",
+      "Reason": "a spread of a parameter in a program with a static constructor object, which checkAccessorSpreads can't judge",
+      "Fix": "",
+      "Site": "spread.ts:9:12",
+      "Unit": "spread.ts copy",
+      "Phase": "checkAccessorSpreads",
+      "Suspect": false,
+      "Echo": false
+    }
+  ],
+  "total": 1,
+  "by_phase": {
+    "checkAccessorSpreads": 1
+  },
+  "by_kind": {
+    "Gap": 1
+  },
+  "by_reason": {
+    "Gap: a spread of a parameter in a program with a static constructor object, which checkAccessorSpreads can't judge": 1
+  },
+  "unplaced": 0,
+  "suspect": 0,
+  "echo": 0,
+  "rewrites_skipped": [],
+  "judgments_abandoned": [
+    {
+      "Pass": "checkAccessorSpreads",
+      "Site": "spread.ts",
+      "Why": "Gap"
+    }
+  ]
+}
