@@ -1,0 +1,27 @@
+package native_test
+
+import (
+	"context"
+	"os"
+	"testing"
+
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
+)
+
+// Scratch, never landing (#8nj5pn4, Emit's guard): no_relation_presence.a's C, loaded by the path and from the
+// directory TestRegExpUnservedEmissionMatchesMain loads it by, written whole to GUARD_GOLDEN_OUT.
+func TestZZGuardGoldenProbe(t *testing.T) {
+	checked, err := load.Load([]string{"../oracle/testdata/regexp_served_values/no_relation_presence.a"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lower.Lower(context.Background(), checked)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(os.Getenv("GUARD_GOLDEN_OUT"), []byte(native.C(program)), 0o644); err != nil {
+		t.Fatal(err)
+	}
+}

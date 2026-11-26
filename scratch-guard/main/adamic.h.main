@@ -1,0 +1,2032 @@
+// adamic.h: the Adamic runtime. Small, plain C11, compiled with every program.
+
+#ifndef ADAMIC_H
+#define ADAMIC_H
+
+#include <stdbool.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <stdatomic.h>
+#include "count.h"
+#include "tsan_test.h"
+
+#include <math.h>
+
+// ir.Type representation ABI; TestIRTypeTags checks both inventories and numbers.
+enum adamic_ir_type {
+	adamic_ir_Number = 1,
+	adamic_ir_Boolean = 2,
+	adamic_ir_String = 3,
+	adamic_ir_Object = 4,
+	adamic_ir_Array = 5,
+	adamic_ir_Map = 6,
+	adamic_ir_MaybeNumber = 7,
+	adamic_ir_Closure = 8,
+	adamic_ir_MaybeBoolean = 9,
+	adamic_ir_Union = 10,
+	adamic_ir_Weak = 11,
+	adamic_ir_NullRepresentation = 12,
+	adamic_ir_UndefinedRepresentation = 13,
+	adamic_ir_Record = 14,
+	adamic_ir_Uint8Array = 15,
+	adamic_ir_Int32Array = 16,
+	adamic_ir_Float64Array = 17,
+	adamic_ir_Promise = 18,
+	adamic_ir_Uint16Array = 19,
+	adamic_ir_Generator = 20,
+	adamic_ir_WeakCollection = 21,
+};
+
+// adamic_ir_type_reference is ir.Type.IsReference: whether a value of the type lives on the heap and
+// is counted. 0, a type not known, is no reference.
+static inline bool adamic_ir_type_reference(enum adamic_ir_type type) {
+	// Keep every tag explicit: -Wswitch must reject new representations until classified.
+	switch (type) {
+	case adamic_ir_Number:
+	case adamic_ir_Boolean:
+	case adamic_ir_MaybeNumber:
+	case adamic_ir_MaybeBoolean:
+	case adamic_ir_NullRepresentation:
+	case adamic_ir_UndefinedRepresentation:
+		return false;
+	case adamic_ir_String:
+	case adamic_ir_Object:
+	case adamic_ir_Array:
+	case adamic_ir_Map:
+	case adamic_ir_Closure:
+	case adamic_ir_Union:
+	case adamic_ir_Weak:
+	case adamic_ir_Record:
+	case adamic_ir_Uint8Array:
+	case adamic_ir_Int32Array:
+	case adamic_ir_Float64Array:
+	case adamic_ir_Promise:
+	case adamic_ir_Uint16Array:
+	case adamic_ir_Generator:
+	case adamic_ir_WeakCollection:
+		return true;
+	}
+	return false;
+}
+
+enum adamic_stream {
+	adamic_stdout = 1,
+	adamic_stderr = 2,
+};
+
+// adamic_heap begins every value on the heap: strings, objects and arrays (heap.c, docs/memory.md).
+// references 0 is a constant the program spelled out, immortal; anything made at runtime starts at 1,
+// and its last release frees it and releases what it holds.
+enum adamic_kind {
+	adamic_kind_string = 1,
+	adamic_kind_object,
+	adamic_kind_array,
+	adamic_kind_map,
+	adamic_kind_cell,
+	adamic_kind_closure,
+	adamic_kind_map_iterator,
+	adamic_kind_number,
+	adamic_kind_boolean,
+	adamic_kind_weak,
+	adamic_kind_typed_array,
+	adamic_kind_typed_array_iterator,
+	adamic_kind_async_frame,
+	adamic_kind_async_promise,
+	adamic_kind_async_reaction,
+	adamic_kind_foreign,
+#ifdef ADAMIC_CANONICAL_CLOSURES
+	adamic_kind_environment,
+	adamic_kind_generator,
+#endif
+	// A WeakMap or a WeakSet (weak_collection.c).
+	adamic_kind_weak_map,
+	// A union's null, the static adamic_null and nothing else: a bare header, so a reader that tests
+	// for an object's kind never reads past it (#ch0xvam). It comes last so no other kind's number moves.
+	adamic_kind_null,
+};
+
+typedef struct adamic_heap {
+	size_t references;
+	enum adamic_kind kind;
+	// slab is the number of the chunk the value's memory came from, plus one, or 0 for memory from
+	// malloc and for a value never freed (heap.c). It fills what was padding.
+	uint32_t slab;
+} adamic_heap;
+
+// The high count bit records permanent sharing; the remaining bits are the actual count.
+// Unshared operations read and update the count plainly. Shared updates are atomic. A separate
+// immutable slab bit dispatches before reading a count. Zero remains immortal, including regions.
+#define ADAMIC_SHARED ((size_t)1 << (sizeof(size_t) * 8 - 1))
+_Static_assert((intptr_t)ADAMIC_SHARED == INTPTR_MIN, "native count tags require two-complement intptr_t conversion");
+// adamic_heap.slab is a chunk number plus one (zero for malloc) in its low 27 bits, and five flags
+// above them: shared, a statement region's value (region.c), a graph region member with its two-word
+// prefix (graph_regions.h), a Program member, and a value some weak handle has named (weak.c). The
+// heap keeps chunk numbers below the lowest flag (heap_parallel.h).
+#define ADAMIC_SHARED_HEADER UINT32_C(0x80000000)
+#define ADAMIC_REGION_VALUE UINT32_C(0x40000000)
+#define ADAMIC_GRAPH_FLAG UINT32_C(0x20000000)
+_Static_assert((ADAMIC_SHARED_HEADER & ADAMIC_REGION_VALUE) == 0 && (ADAMIC_SHARED_HEADER & ADAMIC_GRAPH_FLAG) == 0 &&
+	(ADAMIC_REGION_VALUE & ADAMIC_GRAPH_FLAG) == 0 && ADAMIC_GRAPH_FLAG < ADAMIC_REGION_VALUE, "slab flags overlap");
+// Values whose counts the inline paths below must not touch: shared ones count atomically, and a
+// graph member counts on its region too (graph_regions.c). Program members stay
+// on the ownership dispatch path even though their slow operation is a no-op.
+#define ADAMIC_SLOW_COUNT (ADAMIC_SHARED_HEADER | ADAMIC_GRAPH_FLAG | ADAMIC_PROGRAM_FLAG)
+// Slab bits 31 and 30 are shared and statement-region flags. Bit 29 stays
+// reserved for graph storage; opt-in Program members use bit 28.
+#define ADAMIC_PROGRAM_FLAG UINT32_C(0x10000000)
+_Static_assert((ADAMIC_PROGRAM_FLAG & (ADAMIC_SHARED_HEADER | ADAMIC_REGION_VALUE | ADAMIC_GRAPH_FLAG)) == 0,
+    "Program flag overlaps another slab flag");
+// Bit 27 says a weak handle was made for the value (weak.c), so freeing it must ask the side table
+// to forget it; a value without it, and not shared, skips the table and its lock. It's set only on
+// writable heap storage, never on a count-zero value in static storage, and it isn't a slow count:
+// the inline retain and release never read it. Chunk number + 1 must fit below it (heap_parallel.h).
+#define ADAMIC_WEAK_NAMED UINT32_C(0x08000000)
+_Static_assert((ADAMIC_WEAK_NAMED & (ADAMIC_SHARED_HEADER | ADAMIC_REGION_VALUE | ADAMIC_GRAPH_FLAG | ADAMIC_PROGRAM_FLAG)) == 0 &&
+	ADAMIC_WEAK_NAMED < ADAMIC_PROGRAM_FLAG, "weak-named flag overlaps another slab flag");
+// Every flag bit, which a slab number is read without (heap.c's deallocate).
+#define ADAMIC_SLAB_FLAGS (ADAMIC_SHARED_HEADER | ADAMIC_REGION_VALUE | ADAMIC_GRAPH_FLAG | ADAMIC_PROGRAM_FLAG | ADAMIC_WEAK_NAMED)
+static inline bool adamic_program_is(const void *value) {
+#ifdef ADAMIC_PROGRAM_REGION
+    return value != NULL && (((const adamic_heap *)value)->slab & ADAMIC_PROGRAM_FLAG) != 0;
+#else
+    (void)value; return false;
+#endif
+}
+// Adopt a fresh, unaliased counted allocation on the main thread. It moves;
+// preserve the returned address before creating aliases, Weak handles or caches.
+void *adamic_program_adopt_owned(void *value, size_t size);
+// Invalidate Weak handles, release counted children, then free all members.
+// Called after task joins by heap_end; repeated calls on an empty region do nothing.
+void adamic_program_region_end(void);
+static inline bool adamic_is_shared(const adamic_heap *heap) {
+	return (heap->slab & ADAMIC_SHARED_HEADER) != 0;
+}
+static inline size_t adamic_reference_count(const adamic_heap *heap) {
+	return adamic_is_shared(heap) ? __atomic_load_n(&heap->references, __ATOMIC_ACQUIRE) & ~ADAMIC_SHARED : heap->references;
+}
+void adamic_share(void *value);
+void adamic_heap_thread_end(void);
+void adamic_heap_end(void);
+// A thread is quiet once a wait of its own has sat ADAMIC_HEAP_QUIET_MS with nothing to do: then its
+// spare chunks past the cap go back to the kernel (heap.c, #vea9pph). adamic_heap_quiet_pending says
+// whether it may hold any, so a single-threaded wait with nothing to give back never wakes early.
+#ifndef ADAMIC_HEAP_QUIET_MS
+#define ADAMIC_HEAP_QUIET_MS 10
+#endif
+bool adamic_heap_quiet_pending(void);
+void adamic_heap_quiet(void);
+
+// adamic_retain and adamic_release take any heap value. NULL (undefined) is left alone.
+void *adamic_retain_slow(void *value);
+void adamic_release_slow(void *value);
+
+// ASan instruments every header access. Expanding these paths at every ownership
+// operation makes large sanitized translation units expensive to compile. Keep
+// them instrumented once per translation unit; release and TSan still inline.
+// Marked unused, as inline already is: a file that includes this header without
+// retaining anything must still build under -Wall -Werror (the decoder's harness).
+#if defined(__has_feature)
+#if __has_feature(address_sanitizer)
+#define ADAMIC_OWNERSHIP_NOINLINE
+#endif
+#endif
+#if defined(__SANITIZE_ADDRESS__) || defined(ADAMIC_OWNERSHIP_NOINLINE)
+#define ADAMIC_OWNERSHIP static __attribute__((noinline, unused))
+#else
+#define ADAMIC_OWNERSHIP __attribute__((always_inline)) static inline
+#endif
+
+// Sharing is published before any other worker can reach a value and never cleared. Test that
+// separate bit first: a plain read of a shared count would race with its atomic updates. A graph
+// member's header bit sends it the same way, to count on its region; an environment's interior cell
+// has count zero, so it too reaches the slow path, which counts its environment or async frame.
+// Other zero-count values are immortal. Non-sanitized callers keep their no-op cases inline.
+ADAMIC_OWNERSHIP void *adamic_retain(void *value) {
+	ADAMIC_COUNT_RETAIN();
+	adamic_heap *heap = value;
+	if (heap == NULL) { return value; }
+	if ((heap->slab & ADAMIC_SLOW_COUNT) == 0) {
+		size_t count = heap->references;
+		if (count > 0) { ADAMIC_TSAN_PAUSE(adamic_tsan_plain_count); heap->references = count + 1; return value; }
+		if (heap->kind != adamic_kind_cell) { return value; }
+	}
+	return adamic_retain_slow(value);
+}
+
+ADAMIC_OWNERSHIP void adamic_release(void *value) {
+	ADAMIC_COUNT_RELEASE();
+	adamic_heap *heap = value;
+	if (heap == NULL) { return; }
+	if ((heap->slab & ADAMIC_SLOW_COUNT) == 0) {
+		size_t count = heap->references;
+		if (count > 1) { heap->references = count - 1; return; }
+		if (count == 0 && heap->kind != adamic_kind_cell) { return; }
+	}
+	adamic_release_slow(value);
+}
+
+// Graph allocation and slot ownership (graph_regions.c). Ordinary references use
+// adamic_retain/release, which dispatch to the object's current region root. Hold or take before
+// the slot is written, never after: graph_regions.h says why.
+void *adamic_graph_adopt(void *value, size_t bytes);
+void *adamic_graph_adopt_owned(void *value, size_t bytes);
+void *adamic_graph_hold(void *holder, void *value);
+void adamic_graph_drop(void *holder, void *value);
+void *adamic_graph_escape(void *holder, void *value);
+void *adamic_graph_take(void *holder, void *value);
+bool adamic_graph_counted(const void *value);
+
+// adamic_allocate makes a heap value of size bytes, references 1, and panics when memory runs out.
+void *adamic_allocate(size_t size, enum adamic_kind kind);
+
+// adamic_value is a field or an element: which member is live is known statically, at every place
+// that reads or writes one, and to the runtime through each object's shape and each array's flag.
+typedef union adamic_value {
+	double number;
+	bool boolean;
+	uint8_t maybe_boolean;
+	void *reference;
+} adamic_value;
+_Static_assert(sizeof(bool) == sizeof(uint8_t), "boolean slots require one-byte bool");
+
+// adamic_maybe_number is number | undefined: present, and the number when it is.
+typedef struct adamic_maybe_number {
+	bool present;
+	double number;
+} adamic_maybe_number;
+
+// adamic_maybe_boolean is boolean | undefined: present, and the boolean when it is.
+typedef struct adamic_maybe_boolean {
+	bool present;
+	bool boolean;
+} adamic_maybe_boolean;
+
+// adamic_cell holds a variable a closure captured, so the function that declared it and every
+// closure that captured it share one (closure.c). references says whether value is a reference.
+typedef struct adamic_cell {
+	adamic_heap heap;
+	bool references;
+	bool ready;
+#ifdef ADAMIC_CANONICAL_CLOSURES
+	adamic_heap *owner;
+#endif
+	adamic_value value;
+} adamic_cell;
+
+#ifdef ADAMIC_CANONICAL_CLOSURES
+// One counted allocation owns every interior captured slot.
+typedef struct adamic_environment {
+	adamic_heap heap;
+	size_t count;
+	// Weak cache: closures unlink themselves before releasing this frame.
+	struct adamic_closure *functions;
+	adamic_cell *cells;
+} adamic_environment;
+adamic_environment *adamic_environment_new(size_t count);
+void adamic_environment_init(adamic_environment *, adamic_cell *, size_t);
+void adamic_environment_end(adamic_environment *);
+void adamic_environment_initialize_cells(adamic_heap *, adamic_cell *, size_t);
+void adamic_environment_drop_cells(adamic_cell *, size_t, void (*)(void *));
+#endif
+
+adamic_cell *adamic_cell_new(adamic_value value, bool references);
+
+typedef struct adamic_object adamic_object;
+// adamic_method is a class's method as a call through an interface calls it: the object as this, and
+// the arguments and the result as adamic_value, as a closure's are (the result owned).
+typedef adamic_value adamic_method_function(adamic_object *self, adamic_value *arguments);
+typedef adamic_method_function *adamic_method;
+typedef adamic_value adamic_counted_method_function(adamic_object *self, adamic_value *arguments, size_t argument_count);
+typedef adamic_counted_method_function *adamic_counted_method;
+#ifdef ADAMIC_CLOSURE_CONVENTION
+typedef struct adamic_method_entry {
+ bool counted;
+ union { adamic_method code; adamic_counted_method counted_code; };
+} adamic_method_entry;
+static inline adamic_value adamic_method_call(adamic_method_entry method, adamic_object *self, adamic_value *arguments, size_t argument_count) {
+ if (method.counted) { return method.counted_code(self, arguments, argument_count); }
+ return method.code(self, arguments);
+}
+#else
+typedef adamic_method adamic_method_entry;
+#endif
+
+
+// adamic_closure is a function value: its code, and the cells it captured. Every closure is called
+// the same way, its arguments and its result as adamic_value, whatever its types.
+typedef struct adamic_closure adamic_closure;
+typedef adamic_value adamic_code_function(adamic_closure *self, adamic_value *arguments);
+typedef adamic_code_function *adamic_code;
+typedef adamic_value adamic_counted_code_function(adamic_closure *self, adamic_value *arguments, size_t argument_count);
+typedef adamic_counted_code_function *adamic_counted_code;
+#ifdef ADAMIC_CLOSURE_DISCARDS
+// adamic_discard is what a call with no use for a closure's result does with it, fixed by the made
+// function's result type alone: a counted reference is released, and any other word holds nothing.
+enum adamic_discard {
+	adamic_discard_none,
+	adamic_discard_reference,
+};
+#endif
+struct adamic_closure {
+	adamic_heap heap;
+#ifdef ADAMIC_CLOSURE_CONVENTION
+ union { adamic_code code; adamic_counted_code counted_code; };
+#else
+ adamic_code code;
+#endif
+	// The strict WASI runtime and generated callers can select different conventions.
+	// Reserve both tags so code, metadata and captures keep the same offsets.
+	bool counted;
+	// A bound class method keeps code here; every owning edge remains in cells.
+	union {
+		adamic_method_entry bound_method;
+		struct {
+			bool counted;
+			union { adamic_method code; adamic_counted_method counted_code; };
+		} bound_method_storage;
+	};
+#ifdef ADAMIC_CLOSURE_RECEIVERS
+ bool receiver;
+#endif
+#ifdef ADAMIC_CLOSURE_DISCARDS
+ uint8_t discard; // an adamic_discard
+#endif
+	size_t count;
+	size_t source_length;
+#ifdef ADAMIC_CANONICAL_CLOSURES
+	adamic_environment *canonical_owner;
+	adamic_closure *canonical_previous;
+	adamic_closure *canonical_next;
+#endif
+	adamic_cell *cells[];
+};
+
+// adamic_closure_new makes a closure of count cells, for the caller to fill with references it gives.
+adamic_closure *adamic_closure_new(adamic_code code, size_t count);
+#ifdef ADAMIC_CLOSURE_CONVENTION
+static inline adamic_closure *adamic_counted_closure_new(adamic_counted_code code, size_t count) {
+ adamic_closure *closure = adamic_closure_new(NULL, count);
+ closure->counted = true;
+ closure->counted_code = code;
+ return closure;
+}
+#endif
+static inline adamic_value adamic_closure_call(adamic_closure *closure, adamic_value *arguments, size_t argument_count) {
+#ifdef ADAMIC_CLOSURE_CONVENTION
+ if (closure->counted) { return closure->counted_code(closure, arguments, argument_count); }
+#else
+ (void)argument_count;
+#endif
+ return closure->code(closure, arguments);
+}
+#ifdef ADAMIC_CLOSURE_RECEIVERS
+static inline adamic_value adamic_closure_receiver_call(adamic_closure *closure, void *receiver, adamic_value *arguments, size_t argument_count, size_t packed_size) {
+ if (!closure->receiver) { return adamic_closure_call(closure, arguments, argument_count); }
+ adamic_value received[packed_size + 1];
+ received[0].reference = receiver;
+ for (size_t i = 0; i < packed_size; i++) { received[i + 1] = arguments[i]; }
+ return adamic_closure_call(closure, received, argument_count + 1);
+}
+#endif
+#ifdef ADAMIC_CLOSURE_DISCARDS
+// adamic_closure_discard lets go of what a void call through closure gave back, where the function
+// it holds can't be known at the call: a () => void slot may hold () => make(), whose reference comes
+// back owned, or () => 42, whose word is no reference, so the closure says which. An immortal closure
+// (count 0) is a library identity, a bare adamic_heap with no field to read, which lowering lets no
+// call reach; it holds nothing to let go either way.
+static inline void adamic_closure_discard(adamic_closure *closure, adamic_value result) {
+ if (adamic_reference_count(&closure->heap) == 0) { return; }
+ if (closure->discard == adamic_discard_reference) { adamic_release(result.reference); }
+}
+#endif
+
+#ifdef ADAMIC_CANONICAL_CLOSURES
+#ifdef ADAMIC_CLOSURE_DISCARDS
+// A canonical closure is given its discard (an adamic_discard) with the rest of what makes it, and
+// stores it once, when it's made rather than found in its frame's cache.
+#define ADAMIC_CANONICAL_DISCARD , uint8_t discard
+#else
+#define ADAMIC_CANONICAL_DISCARD
+#endif
+// Returns an owned canonical value; the frame cache holds no count on it.
+adamic_closure *adamic_closure_canonical(adamic_cell *identity, adamic_code code, size_t count, adamic_cell *const cells[] ADAMIC_CANONICAL_DISCARD);
+adamic_closure *adamic_closure_canonical_graph(adamic_cell *identity, adamic_code code, size_t count, adamic_cell *const cells[] ADAMIC_CANONICAL_DISCARD);
+#ifdef ADAMIC_CLOSURE_CONVENTION
+adamic_closure *adamic_counted_closure_canonical(adamic_cell *identity, adamic_counted_code code, size_t count, adamic_cell *const cells[] ADAMIC_CANONICAL_DISCARD);
+adamic_closure *adamic_counted_closure_canonical_graph(adamic_cell *identity, adamic_counted_code code, size_t count, adamic_cell *const cells[] ADAMIC_CANONICAL_DISCARD);
+#endif
+void adamic_closure_uncache(adamic_closure *closure);
+#endif
+
+// A bound closure uses the same allocation and captured-cell links as a closure.
+// Cell zero owns the target, cell one owns thisArg, and the rest own fixed values.
+// Its generated adapter packs fixed values before incoming values without taking them.
+adamic_closure *adamic_bound_closure_new(adamic_code code, size_t count);
+void adamic_closure_free_children(adamic_closure *closure, void (*drop)(void *));
+#ifdef ADAMIC_CLOSURE_CONVENTION
+static inline adamic_closure *adamic_counted_bound_closure_new(adamic_counted_code code, size_t count) {
+ adamic_closure *closure = adamic_bound_closure_new(NULL, count);
+ closure->counted = true;
+ closure->counted_code = code;
+ return closure;
+}
+#endif
+adamic_value adamic_bound_closure_call(adamic_closure *self, adamic_value *arguments, size_t argument_count, size_t packed_size);
+
+// adamic_string is an immutable string: UTF-8 bytes (string.c).
+typedef struct adamic_string {
+	adamic_heap heap;
+	size_t length;
+	const char *bytes;
+	// units is the length in UTF-16 units plus one, propagated when building, or 0 if unknown.
+	// units == length + 1 is the ASCII flag: no unit counting or decoding is needed. index is
+	// a long non-ASCII string's position index, once built (string_index.c). Both are caches, which
+	// every initializer that leaves them out leaves empty.
+	size_t units;
+	struct adamic_string_index *index;
+	// owner is the string whose bytes these are, when they aren't this string's own: a shared slice
+	// holds a reference to it, let go when the slice is freed (string_share.c). It's NULL for a
+	// string with bytes of its own, and for a slice of a constant, whose bytes never go away.
+	struct adamic_string *owner;
+	// capacity is how many bytes fit where this string's own bytes are, so an append can write in
+	// place when nothing else holds the string (string_append.c). It's 0 for every string whose
+	// bytes can't grow: a constant, a shared slice, one made on the stack.
+	size_t capacity;
+} adamic_string;
+
+struct adamic_string_index {
+	// Published with the view, never written after sharing.
+	size_t units;
+	// The last code point found: its first unit, and its byte offset. Kept here only while the
+	// string is unshared; a shared string's readers each keep their own (string_index.c).
+	size_t cursor_unit;
+	size_t cursor_offset;
+	// Stamped once when the index is built and never reused, so a thread's cursor for a shared
+	// index can't be taken for a later index allocated at the same address.
+	uint64_t id;
+	// checkpoints[k] is where unit k * STEP is: the byte offset of the code point holding it, shifted
+	// left once, and 1 when that unit is the low half of a surrogate pair, whose code point starts a
+	// unit earlier.
+	size_t count;
+	// Each UTF-16 unit, including both halves of supplementary points and lone surrogates.
+	// The byte checkpoints still serve slices and searches.
+	uint16_t *view;
+	uint32_t checkpoints[];
+};
+
+// ADAMIC_LITERAL_INDEX marks a constant's index as not yet built: a constant lives as long as the
+// program, so a long one can have an index that does too (string_index.c). Only a constant of static
+// storage may carry it.
+extern char adamic_literal_mark;
+#define ADAMIC_LITERAL_INDEX ((struct adamic_string_index *)&adamic_literal_mark)
+
+// ADAMIC_STRING is a constant: ADAMIC_STRING("text") as a static adamic_string's initializer.
+#define ADAMIC_STRING(text) {{0, adamic_kind_string, 0}, sizeof text - 1, text, 0, ADAMIC_LITERAL_INDEX, NULL, 0}
+
+// ADAMIC_STRING_BYTES holds an unsigned byte array too long for a C string literal.
+// Character pointers may read any object representation; the cast preserves the bytes
+// for the runtime, whose numeric byte readers use unsigned char.
+#define ADAMIC_STRING_BYTES(array, size) {{0, adamic_kind_string, 0}, size, (const char *)(array), 0, ADAMIC_LITERAL_INDEX, NULL, 0}
+// The _UNITS forms carry the literal's UTF-16 length, worked out when it's emitted. An immortal literal
+// can be read by any worker, so nothing caches into it at run time (string_index.c); without its units
+// every length or index read rescanned it, which made walking a long literal quadratic.
+#define ADAMIC_STRING_UNITS(text, units) {{0, adamic_kind_string, 0}, sizeof text - 1, text, (units) + 1, ADAMIC_LITERAL_INDEX, NULL, 0}
+#define ADAMIC_STRING_BYTES_UNITS(array, size, units) {{0, adamic_kind_string, 0}, size, (const char *)(array), (units) + 1, ADAMIC_LITERAL_INDEX, NULL, 0}
+
+// adamic_shape records field names, storage kinds and reference ownership.
+//
+// methods are, for the objects a class makes, the class's methods by name, and NULL for any other
+// object: a call through an interface the class implements finds one there (adamic_object_callee).
+typedef struct adamic_methods adamic_methods;
+// One byte per slot: optional scalars and unowned implementation words use number.
+enum adamic_field_kind { adamic_field_number, adamic_field_boolean, adamic_field_reference };
+typedef uint8_t adamic_field_kind;
+typedef struct adamic_shape {
+	size_t count;
+	const char *const *names;
+	const bool *references;
+	const adamic_methods *methods;
+	const adamic_field_kind *kinds;
+} adamic_shape;
+
+static inline void adamic_shape_check(const adamic_shape *shape) {
+#ifdef ADAMIC_COUNT
+	for (size_t i = 0; i < shape->count; i++) {
+		if (shape->kinds == NULL || shape->kinds[i] > adamic_field_reference ||
+			shape->references[i] != (shape->kinds[i] == adamic_field_reference)) {
+			fprintf(stderr, "adamic: inconsistent shape kind for field %s\n", shape->names[i]);
+			abort();
+		}
+	}
+#else
+	(void)shape;
+#endif
+}
+
+
+typedef struct adamic_accessor {
+	const char *name;
+	adamic_value (*get)(adamic_object *);
+	void (*set)(adamic_object *, adamic_value, int);
+	int type;
+} adamic_accessor;
+typedef struct adamic_class {
+	const struct adamic_class *base;
+	size_t own_start;
+	size_t count;
+	const size_t *methods;
+	size_t definition;
+	const adamic_shape *public_shape;
+	const adamic_accessor *accessors;
+	size_t accessor_count;
+	bool is_static;
+	size_t static_parent;
+	const size_t *static_flags;
+} adamic_class;
+
+// adamic_object is a plain object (object.c). Its shape travels with it, so the same object can be
+// seen through any type it satisfies, as JavaScript allows, without ever being copied.
+typedef struct adamic_object {
+	adamic_heap heap;
+	const adamic_shape *shape;
+	const adamic_class *class;
+	bool frozen;
+	bool tuple;
+	// NULL for a complete shape; SIZE_MAX means reserved but not own.
+	size_t *write_order;
+	adamic_value slots[];
+} adamic_object;
+
+// Slots, both per-slot metadata bytes, and the insertion-order tail move together during graph adoption.
+// The base has no order accessor yet; c1 uses this same allocation size.
+static inline size_t adamic_object_size(size_t count) {
+    return sizeof(adamic_object) + count * (sizeof(adamic_value) + sizeof(size_t) + 2);
+}
+
+// Initialized bits follow slots in the same allocation, indexed by the actual shape.
+static inline unsigned char *adamic_object_initialized(const adamic_object *object) {
+	return (unsigned char *)(void *)(object->slots + object->shape->count);
+}
+void adamic_object_set_initialized(adamic_object *object, const char *name, bool initialized);
+// Physical representation bytes are separate from the shared initialization bitmap.
+// Zero means no representation evidence, never permission to interpret a slot.
+static inline unsigned char *adamic_object_field_types(const adamic_object *object) {
+	return adamic_object_initialized(object) + object->shape->count;
+}
+// Error factories own these tags. Ordinary program stores only produce ir.Type tags.
+enum { adamic_error_own_hidden = 254, adamic_error_unwritten = 255 };
+// Both factory tags describe string slots.
+static inline unsigned char adamic_object_field_type(const adamic_object *object, size_t index) {
+ unsigned char type = adamic_object_field_types(object)[index];
+ return type == adamic_error_unwritten || type == adamic_error_own_hidden ? adamic_ir_String : type;
+}
+void adamic_error_initialize(adamic_object *object);
+
+// adamic_slot_index is where a slot sits in its object, for that object's per-slot bytes. It's taken
+// from the slot a lookup returned, never from a slot cache: the cache is one packed word another
+// thread may overwrite with a different shape's slot (adamic_slot_cache below).
+static inline size_t adamic_slot_index(const adamic_object *object, const adamic_value *slot) {
+	return (size_t)(slot - object->slots);
+}
+
+// Construction storage is reserved at allocation, independently of property presence.
+bool adamic_object_present(const adamic_object *object, size_t index);
+void adamic_object_publish(adamic_object *object, size_t index);
+size_t *adamic_object_ordered(const adamic_object *object);
+adamic_object *adamic_object_construct(const adamic_shape *shape);
+// A construction object's bytes, write order included, and its start: every slot absent, its order unwritten.
+size_t adamic_object_construction_size(const adamic_shape *shape);
+void adamic_object_construction_start(adamic_object *object, const adamic_shape *shape);
+// An object's allocation size as adamic_object_new or adamic_object_construct made it, the second longer by its write order.
+size_t adamic_object_allocation_size(const adamic_object *object);
+
+// adamic_foreign is a value another runtime made, held by Adamic: an Objective-C object, so far
+// (foreign.c, docs/apple.md). It's an object of no fields to everything that looks at objects, so
+// nothing can read it as one by accident, and its last release lets go of what it holds, through its
+// kind's release.
+typedef struct adamic_foreign_kind {
+	const char *name;
+	void (*release)(void *pointer);
+} adamic_foreign_kind;
+adamic_object *adamic_foreign_new(void *pointer, const adamic_foreign_kind *kind);
+void *adamic_foreign_pointer(const adamic_object *object);
+void adamic_foreign_dropped(adamic_object *object);
+
+bool adamic_instanceof(const void *value, const adamic_class *wanted);
+size_t adamic_virtual(const adamic_object *object, size_t slot);
+// adamic_method_this is the this a direct call enters a class method's own code with, checked to be an
+// instance of that class or of one derived from it (class_inheritance.c).
+adamic_object *adamic_method_this(adamic_object *object, const adamic_class *owner);
+void adamic_object_free_children(adamic_object *object, void (*release)(void *));
+
+// adamic_slot_cache remembers, at one place in the program that reads a field, where the field was in
+// the last shape seen there.
+typedef struct adamic_slot_cache {
+	uint64_t packed;
+} adamic_slot_cache;
+#define ADAMIC_SLOT_SHAPE_MASK UINT64_C(0x0000ffffffffffff)
+_Static_assert(sizeof(uintptr_t) <= sizeof(uint64_t), "slot cache requires pointers of at most 64 bits");
+// The standard lock-free macros are integer constant expressions under C11, including GCC.
+_Static_assert(_Generic((uint64_t)0,
+	unsigned char: ATOMIC_CHAR_LOCK_FREE,
+	unsigned short: ATOMIC_SHORT_LOCK_FREE,
+	unsigned int: ATOMIC_INT_LOCK_FREE,
+	unsigned long: ATOMIC_LONG_LOCK_FREE,
+	unsigned long long: ATOMIC_LLONG_LOCK_FREE) == 2, "slot cache requires lock-free 64-bit atomics");
+// One relaxed word contains both the immutable shape identity and its slot. Large
+// slot indices are simply not cached; shape addresses outside 48 bits are refused.
+void adamic_slot_cache_store(adamic_slot_cache *cache, const adamic_shape *shape, size_t index);
+
+adamic_value *adamic_object_read(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression);
+adamic_value adamic_object_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression);
+void adamic_view_literal_failure(const char *expression, const char *expected, unsigned char type, adamic_value value);
+void adamic_object_view_write(adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression);
+
+
+struct adamic_methods {
+	size_t count;
+	const char *const *names;
+	const adamic_method_entry *code;
+};
+
+// adamic_error_methods is the empty methods table every Error's shape names, the runtime's own and
+// an errno host error's alike, and adamic_coded_error_methods the one a Node-coded host error's shape
+// names in its place, one Node builds with makeNodeErrorWithCode or as a SystemError. adamic_error_is
+// is the one test that reads them (exceptions.c): an object is an Error exactly when its shape's
+// methods are either. An Error has no methods of its own, and no Error subclass a program declares
+// lowers yet, so no shape the emitter writes is an Error.
+extern const adamic_methods adamic_error_methods;
+extern const adamic_methods adamic_coded_error_methods;
+bool adamic_error_is(const adamic_object *object);
+bool adamic_error_own_key_stops(const adamic_string *key);
+bool adamic_object_has_own_error_view(const adamic_object *object, const adamic_string *key);
+// Complete error shapes publish their enumerable keys once, in the order Node records them.
+typedef struct adamic_error_json {
+ const adamic_shape *shape;
+ const char *const *keys;
+ size_t count;
+ struct adamic_error_json *next;
+ bool registered;
+} adamic_error_json;
+void adamic_register_error_json(adamic_error_json *entry);
+const adamic_error_json *adamic_error_json_lookup(const adamic_shape *shape);
+// adamic_host_methods, another empty table, marks a runtime shape whose object's prototype on Node
+// isn't Object's, a Stats, an iterator or memoryUsage's (a match's groups object has its own, below), so an in test, a
+// read it narrows and a run-time key read all stop on it (union.c's host_stop, #ey7aysy). The emitter
+// never writes it, so every object a program makes is plain, as on Node; an Error keeps its own
+// sentinel. A runtime shape left unmarked reads as plain, so host_shapes_test.go holds every runtime
+// shape to a table that classifies it against Node.
+extern const adamic_methods adamic_host_methods;
+// adamic_groups_methods, a third empty table, marks a RegExp match's groups object, whose prototype on
+// Node is null, so its toString, valueOf, hasOwnProperty and the rest of Object.prototype's methods
+// aren't there to call (#eksbz4c). The regular expression compiler writes it into each groups shape,
+// a literal's (internal/regexp/native.go) and a run-time pattern's (regexp_compile_runtime.c), and no
+// other shape names it. A groups object is a host's all the same: adamic_host_shape counts both tables,
+// and every reader that asks whether a shape is a host's asks it, so no road but the groups test below
+// tells the two apart. Every sentinel table is empty, so only its address tells it from the others,
+// and TestRuntimeSentinelsStayDistinctInRelease holds the four distinct in a ThinLTO release binary.
+extern const adamic_methods adamic_groups_methods;
+// adamic_host_shape says whether a shape is a host's (adamic_host_methods), a RegExp match's groups
+// among them (adamic_groups_methods): the one test of the host sentinel, union.c's host_object,
+// json_objects.c's stop and timers_impl.h's alike.
+static inline bool adamic_host_shape(const adamic_shape *shape) {
+	return shape->methods == &adamic_host_methods || shape->methods == &adamic_groups_methods;
+}
+// adamic_regexp_groups_is says whether a value is a RegExp match's groups object, by its shape's methods
+// table, never its static type, since a program's own object can carry the groups type: a call of
+// toString, toLocaleString, valueOf, hasOwnProperty or propertyIsEnumerable on a receiver whose type
+// admits groups throws Node's TypeError when it is (ir.IsRegExpGroups, lower/prototype.go).
+bool adamic_regexp_groups_is(const void *value);
+// adamic_host_stop stops, in the runtime value form naming the key, when the value is a host object
+// (union.c): every reader of a value's names by a key calls it before reading one.
+void adamic_host_stop(const adamic_heap *value, const adamic_string *key);
+// adamic_keyed_stats_shape_publish tells a run-time key read which shape is an fs.Stats' (#zhrjf2t):
+// node_fs_file.c publishes its stat shape each time it makes one, so union.c knows a Stats by its
+// shape's address without referencing node_fs_file.c, which runtimes that leave the fs out don't link
+// (the RegExp witness's among them). Before any Stats is made nothing is published and nothing
+// matches, which is right, since no Stats can reach a read before one exists.
+void adamic_keyed_stats_shape_publish(const adamic_shape *shape);
+// adamic_host_stop_keys stops Object.keys of a host object, with a message that names no key.
+void adamic_host_stop_keys(const adamic_heap *value);
+// adamic_error_to_string is String(error) for an Error, Error.prototype.toString over its name and
+// message fields: the two joined by ": " when both are there, whichever one is when the other is
+// empty, and "" when both are. A coded error's is its class's own toString, name, " [", its code
+// field, "]: " and message, whatever is empty. It returns a string the caller owns.
+adamic_string *adamic_error_to_string(const adamic_object *error);
+
+// adamic_object_callee finds what object.name(...) calls, where the object is seen through an
+// interface: its own field of that name, a function value, which it returns; or else its class's
+// method of that name, which it puts in *method, returning NULL. When absent,
+// both arms remain empty, for optional binding; callers initialize *method to zero.
+adamic_closure *adamic_object_callee(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method_entry *method);
+bool adamic_object_method_truthy(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+bool adamic_object_slot_truthy(const adamic_object *object, size_t index);
+bool adamic_object_slot_defined(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+bool adamic_object_slot_defined_at(const adamic_object *object, size_t index);
+
+// adamic_object_new makes an object of a shape, its fields zeroed for the caller to fill; a reference
+// stored in a field belongs to the object.
+adamic_object *adamic_object_new(const adamic_shape *shape);
+
+// adamic_region is a region (region.c): the objects one statement makes that nothing reaches after
+// it, let go of together when it ends. ADAMIC_REGION is an empty one. adamic_object_new_in makes an
+// object in a region (on the heap, as adamic_object_new does, for a NULL region), and
+// adamic_region_end lets go of the region's objects and what they hold.
+typedef struct adamic_region_block adamic_region_block;
+typedef struct adamic_region {
+	adamic_region_block *blocks;
+	size_t count;
+	bool holds_outside;
+} adamic_region;
+#define ADAMIC_REGION {NULL, 0, false}
+adamic_object *adamic_object_new_in(adamic_region *region, const adamic_shape *shape);
+// construct_in is adamic_object_construct in a region, for a constructor's region version (on the heap for a NULL region).
+adamic_object *adamic_object_construct_in(adamic_region *region, const adamic_shape *shape);
+// filled_in is only for a literal that fills every slot without a throwing operation or
+// publication between allocation and completion. Constructors use the zeroed allocator above.
+adamic_object *adamic_object_new_filled_in(adamic_region *region, const adamic_shape *shape);
+// Literal stores report a counted child; same-region values and constants need no cleanup.
+static inline void adamic_region_hold(adamic_region *region, const void *value) {
+	if (value != NULL && adamic_reference_count((const adamic_heap *)value) != 0) {
+		region->holds_outside = true;
+	}
+}
+bool adamic_region_contains(const adamic_region *region, const void *value);
+// adamic_region_capacity is what a region's blocks hold for objects, all of them, the doubling a test
+// can read (region.c).
+size_t adamic_region_capacity(const adamic_region *region);
+#ifdef ADAMIC_CANONICAL_CLOSURES
+adamic_environment *adamic_environment_new_in(adamic_region *, size_t);
+#endif
+void adamic_region_end(adamic_region *region);
+// adamic_region_cached is how many bytes of region blocks this thread keeps for its next region, at
+// most ADAMIC_REGION_BLOCK_CACHE, and adamic_region_thread_end frees them, as a thread ends
+// (adamic_heap_thread_end calls it, region.c).
+size_t adamic_region_cached(void);
+void adamic_region_thread_end(void);
+
+// adamic_object_copy is { ...source }: the same shape, its references retained.
+adamic_object *adamic_object_copy(const adamic_object *source);
+adamic_object *adamic_object_copy_checked(const adamic_object *source, const char *expression);
+
+// adamic_spread_overwrite is one name a spread's literal writes after its source, { ...source, name: value }:
+// the name, a static string; the kind of slot the value is held in; its representation byte, ir.Type's, as
+// every write leaves one; and the value, owned, which the result takes.
+typedef struct adamic_spread_overwrite {
+	const char *name;
+	adamic_field_kind kind;
+	unsigned char representation;
+	adamic_value value;
+} adamic_spread_overwrite;
+// adamic_object_spread_with is { ...source, name: value, ... } for a literal whose result can't take its
+// source's shape (object_spread.c): a fresh plain object in a shape made from the source's own keys and
+// the count overwrites, given in the literal's order. The source is only read; NULL and &adamic_null are
+// an empty one. It stops on a source it doesn't copy yet, and on an overwrite whose kind and byte don't
+// describe its value.
+adamic_object *adamic_object_spread_with(const adamic_object *source, const adamic_spread_overwrite *overwrites, size_t count);
+
+// adamic_object_has is object.hasOwnProperty(name).
+bool adamic_object_has(const adamic_object *object, const adamic_string *name);
+
+// Runtime scalar tags for fixed program shapes. Host reference slots already carry heap tags.
+typedef struct adamic_shape_types {
+	const adamic_shape *shape;
+	const int *types;
+	struct adamic_shape_types *next;
+	// Set, with release order, once the entry is on the list; parallel tasks make objects too, so
+	// registration is read with acquire and published under a lock (union.c).
+	bool registered;
+} adamic_shape_types;
+extern adamic_heap adamic_null;
+void adamic_register_shape_types(adamic_shape_types *metadata);
+bool adamic_has_property(const adamic_heap *object, const char *name);
+adamic_heap *adamic_dynamic_property(adamic_heap *object, const char *name);
+// adamic_keyed_class is what a run-time key read needs of a class that adamic_class doesn't carry: whether
+// an object literal made it, whose accessors the read stops at, and the names its methods table holds,
+// inherited ones included, which it stops at too. The emitter writes one row for each class, from the
+// same IR class the JavaScript backend's helper reads, only into a program that has the read, so a
+// program without it emits the C it did.
+typedef struct adamic_keyed_class {
+	const adamic_class *class;
+	bool literal;
+	const char *const *method_names;
+	size_t method_count;
+} adamic_keyed_class;
+
+// adamic_dynamic_property_keyed is Reflect.get(Object(object), key, object) for an object lowering
+// proved neither null nor undefined: an own data slot, a record's own key or a class getter, owned,
+// Object.prototype's immortal closure for one of its names, and a loud stop wherever the
+// representation can't answer as Node does. The key is compared by its content, whatever string it
+// is. classes are the program's rows, count of them.
+adamic_heap *adamic_dynamic_property_keyed(adamic_heap *object, const adamic_string *key, const adamic_keyed_class *classes, size_t count);
+
+// adamic_object_field finds a field by name. The checker proved the field is there. Where this place in
+// the program last saw the same shape, the field is where it was then, which is inline, since it's
+// what nearly every read is; anything else is adamic_object_find, which searches the shape's names.
+adamic_value *adamic_object_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+adamic_value *adamic_object_field_owned(const adamic_object *object, const char *name, adamic_slot_cache *cache, const adamic_object **owner);
+adamic_value *adamic_static_field(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+adamic_value *adamic_object_write_field(adamic_object *object, const char *name, adamic_slot_cache *cache);
+// A readonly numeric view may see a field made with the undefined-only reference representation.
+adamic_maybe_number adamic_object_maybe_number(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+adamic_maybe_boolean adamic_object_maybe_boolean(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+// Optional own fields may be absent; NULL then asks the reader to produce typed undefined.
+adamic_value *adamic_object_optional_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+bool adamic_object_optional_function_present(const adamic_object *, const char *, adamic_slot_cache *, const char *);
+static inline adamic_value *adamic_object_optional_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	uint64_t packed = __atomic_load_n(&cache->packed, __ATOMIC_RELAXED);
+	if ((packed & ADAMIC_SLOT_SHAPE_MASK) != (uintptr_t)object->shape) {
+		return adamic_object_optional_find(object, name, cache);
+	}
+	size_t slot = packed >> 48;
+	if (slot == object->shape->count || !adamic_object_present(object, slot)) { return NULL; }
+	return &((adamic_object *)object)->slots[slot];
+}
+// Whole-program data accesses exclude inherited constructor storage, so a cache
+// hit needs only the shape comparison, without loading a class descriptor.
+static inline adamic_value *adamic_object_data_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	uint64_t packed = __atomic_load_n(&cache->packed, __ATOMIC_RELAXED);
+	if ((packed & ADAMIC_SLOT_SHAPE_MASK) == (uintptr_t)object->shape) {
+		return &((adamic_object *)object)->slots[packed >> 48];
+	}
+	return adamic_object_find(object, name, cache);
+}
+
+static inline adamic_value *adamic_object_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	if (object->class != NULL && object->class->is_static) { return adamic_static_field(object, name, cache); }
+	return adamic_object_data_field(object, name, cache);
+}
+// A record reaching a fixed-object read is a lowering bug: it stops, naming the field (object.c).
+void adamic_refuse_record_fixed_read(const adamic_object *object, const char *name);
+// A uniform field slot (fields.go) is loaded with no shape check. In release builds that rests on
+// lowering: records.go's recordStorageView refuses a dictionary seen as a fixed object, so no record
+// reaches one. Address-sanitized and counted builds, which every oracle run uses, check it anyway,
+// so the day that refusal stops being the guard a run stops loudly instead of reading past a
+// record's slot. Release, UBSan-only and ThreadSanitizer builds keep the bare load.
+#if defined(__SANITIZE_ADDRESS__) || defined(ADAMIC_OWNERSHIP_NOINLINE) || defined(ADAMIC_COUNT)
+#define ADAMIC_UNIFORM_OBJECT(object, name) (adamic_refuse_record_fixed_read((object), (name)), (object))
+#else
+#define ADAMIC_UNIFORM_OBJECT(object, name) (object)
+#endif
+
+// Static Object methods (library_object.c). Returned collections and freeze own one reference.
+bool adamic_object_is(const adamic_heap *left, const adamic_heap *right);
+bool adamic_object_is_frozen(const adamic_heap *value);
+adamic_object *adamic_object_freeze(adamic_object *object);
+bool adamic_object_has_own(const adamic_object *object, const adamic_string *key);
+struct adamic_array *adamic_object_keys(const adamic_object *object);
+// An object's present public names in first-write order, the walk adamic_object_keys and a write-ordered
+// class instance's adamic_class_object_keys share.
+struct adamic_array *adamic_object_written_keys(const adamic_object *object);
+struct adamic_array *adamic_object_values(const adamic_object *object, enum adamic_ir_type element, bool entries);
+// A write to a frozen object, and Object.assign into one, set adamic_thrown to Node's TypeError and
+// write nothing: the caller tests it before writing (ir.Program's FrozenWriteMayThrow).
+void adamic_object_assign(adamic_object *target, const adamic_object *source);
+void adamic_object_check_write(const adamic_object *object, const char *name);
+// Keep frozen-object failures out of the ordinary write's call path.
+static inline void adamic_object_check_data_write(const adamic_object *object, const char *name) {
+	if (object->frozen) {
+		adamic_object_check_write(object, name);
+	}
+}
+
+// adamic_array is an array (array.c). references says whether its elements are references.
+typedef struct adamic_array {
+	adamic_heap heap;
+	size_t length;
+	size_t capacity;
+	bool references;
+	// element names how the array's slots are held, never a static type: an enum adamic_ir_type. A
+	// scalar array's (references false) is Number, Boolean or MaybeNumber: lowering refuses an array of
+	// MaybeBoolean (elementType, a slotless element), and no array holds the null or undefined representations. Every reference array's is
+	// Union, meaning each element names its own kind by its heap header, so a reader may not trust it
+	// as a class. 0 is a kind not known, and a reader that needs the kind stops on 0. Where it and
+	// the IR type at a read disagree, the byte is the truth. It fills what was padding.
+	uint8_t element;
+	adamic_value *elements;
+	// Extra fields of RegExp result arrays, owned and released with the array.
+	adamic_object *properties;
+	// An interior fixed layout, owned by this allocation, never a wrapper.
+	adamic_object *metadata; // Never retained, never escapes as a value; retaining then releasing its zero-count header frees interior array storage.
+} adamic_array;
+#if defined(ADAMIC_TARGET_WASI)
+_Static_assert(sizeof(adamic_array) == 36 && offsetof(adamic_array, element) == 21, "an array's element byte sits in wasm32 padding");
+#elif UINTPTR_MAX == UINT64_MAX
+_Static_assert(sizeof(adamic_array) == 64 && offsetof(adamic_array, element) == 33, "an array's element byte sits in padding");
+#endif
+// adamic_array_make is a new array the caller owns, with room for capacity elements. Its references
+// follow from element, which a reference type makes Union (see element above). Every runtime
+// function that makes an array and takes an element is given the kind its result holds, by the
+// emitter, which knows it, and hands it here.
+adamic_array *adamic_array_make(size_t capacity, enum adamic_ir_type element);
+// adamic_array_scalar_element is a scalar array's element kind. An array of references, or of a
+// kind not known, panics: whoever asks needs slots it can read as a scalar.
+enum adamic_ir_type adamic_array_scalar_element(const adamic_array *array);
+adamic_array *adamic_node_array_make(size_t capacity, enum adamic_ir_type element, const adamic_shape *extras);
+adamic_array *adamic_node_array_keys(const adamic_array *array);
+
+
+// Fixed-width typed arrays (typed_array.c, docs/typed-arrays.md). Constructors and
+// subarray return one owned reference. Arguments are borrowed; fill and sort return borrowed self.
+enum adamic_typed_array_kind {
+	adamic_typed_array_uint8 = 1,
+	adamic_typed_array_int32,
+	adamic_typed_array_float64,
+	adamic_typed_array_uint16,
+};
+typedef struct adamic_typed_array {
+	adamic_heap heap;
+	enum adamic_typed_array_kind kind;
+	size_t length;
+	void *data;
+	// NULL owns data; a view holds one count on the ultimate owning array.
+	struct adamic_typed_array *owner;
+} adamic_typed_array;
+
+adamic_typed_array *adamic_typed_array_new(enum adamic_typed_array_kind kind, double length);
+// A zeroed owner of a length the caller already knows, for the runtime's own byte producers (a Buffer).
+// Its data counts toward memoryUsage().arrayBuffers, as every owner's does, and heap.c's free takes it back.
+adamic_typed_array *adamic_typed_array_make(enum adamic_typed_array_kind kind, size_t length);
+// adamic_typed_array_try_make is make that fails instead of panicking: NULL, with nothing allocated or
+// counted, for a length whose bytes are past what a size_t holds or that can't be allocated.
+adamic_typed_array *adamic_typed_array_try_make(enum adamic_typed_array_kind kind, size_t length);
+adamic_typed_array *adamic_typed_array_from_numbers(enum adamic_typed_array_kind kind, const adamic_array *numbers);
+// The check is also called by compiler-inserted write checks. set always checks itself.
+// Panic text is the plain-array form: index <index> is outside an array of length <length>.
+void adamic_typed_array_check_write(const adamic_typed_array *array, double index);
+// set_slow is set for what the inline path leaves: a bad index (it panics) or a value that
+// needs ToUint8, ToUint16 or ToInt32's modulo.
+void adamic_typed_array_set_slow(adamic_typed_array *array, double index, double value);
+// Converts the value at an index whose bounds the caller has already checked.
+void adamic_typed_array_write_converted(adamic_typed_array *array, size_t index, double value);
+// width is a kind's bytes an element, the one table every owner's backing count is added and dropped by,
+// so an owner's free (heap.c) takes back exactly what its make added (#3wfes07). It's inline, since a
+// runtime built without typed_array.c (a test's subset) still frees through heap.c.
+_Noreturn void adamic_unreachable(void);
+static inline size_t adamic_typed_array_width(enum adamic_typed_array_kind kind) {
+	switch (kind) {
+	case adamic_typed_array_uint8: return 1;
+	case adamic_typed_array_uint16: return 2;
+	case adamic_typed_array_int32: return 4;
+	case adamic_typed_array_float64: return 8;
+	}
+	adamic_unreachable();
+}
+
+// Element reads and writes are inline, as adamic_array_at is, so a loop over a typed array is a
+// load or a store, not a call. The index test is adamic_array_at's: past the bounds,
+// (double)(size_t)index == index exactly when index is whole, and -0 is index 0.
+static inline adamic_maybe_number adamic_typed_array_get(const adamic_typed_array *array, double index) {
+	if (!(index >= 0) || index >= (double)array->length) {
+		return (adamic_maybe_number){false, 0};
+	}
+	size_t whole = (size_t)index;
+	if ((double)whole != index) {
+		return (adamic_maybe_number){false, 0};
+	}
+	switch (array->kind) {
+	case adamic_typed_array_uint8: return (adamic_maybe_number){true, ((const uint8_t *)array->data)[whole]};
+	case adamic_typed_array_uint16: return (adamic_maybe_number){true, ((const uint16_t *)array->data)[whole]};
+	case adamic_typed_array_int32: return (adamic_maybe_number){true, ((const int32_t *)array->data)[whole]};
+	case adamic_typed_array_float64: break;
+	}
+	return (adamic_maybe_number){true, ((const double *)array->data)[whole]};
+}
+
+// A proven integer counter needs only the bounds check.
+static inline adamic_maybe_number adamic_typed_array_get_integer(const adamic_typed_array *array, int64_t index) {
+	if (index < 0 || (uint64_t)index >= array->length) {
+		return (adamic_maybe_number){false, 0};
+	}
+	size_t whole = (size_t)index;
+	switch (array->kind) {
+	case adamic_typed_array_uint8: return (adamic_maybe_number){true, ((const uint8_t *)array->data)[whole]};
+	case adamic_typed_array_uint16: return (adamic_maybe_number){true, ((const uint16_t *)array->data)[whole]};
+	case adamic_typed_array_int32: return (adamic_maybe_number){true, ((const int32_t *)array->data)[whole]};
+	case adamic_typed_array_float64: break;
+	}
+	return (adamic_maybe_number){true, ((const double *)array->data)[whole]};
+}
+
+// A value already in an integer kind's range stores by plain conversion: C truncates toward zero
+// as ToUint8, ToUint16 and ToInt32 do, and in range the modulo is the identity. NaN, infinities
+// and out-of-range values fail the range test and take set_slow.
+static inline void adamic_typed_array_set(adamic_typed_array *array, double index, double value) {
+	if (index >= 0 && index < (double)array->length) {
+		size_t whole = (size_t)index;
+		if ((double)whole == index) {
+			switch (array->kind) {
+			case adamic_typed_array_float64:
+				((double *)array->data)[whole] = value;
+				return;
+			case adamic_typed_array_uint8:
+				if (value > -1.0 && value < 256.0) {
+					((uint8_t *)array->data)[whole] = (uint8_t)value;
+					return;
+				}
+				break;
+			case adamic_typed_array_uint16:
+				if (value > -1.0 && value < 65536.0) {
+					((uint16_t *)array->data)[whole] = (uint16_t)value;
+					return;
+				}
+				break;
+			case adamic_typed_array_int32:
+				if (value > -2147483649.0 && value < 2147483648.0) {
+					((int32_t *)array->data)[whole] = (int32_t)value;
+					return;
+				}
+				break;
+			}
+		}
+	}
+	adamic_typed_array_set_slow(array, index, value);
+}
+
+// Integer indices preserve the same panic and value conversion as the double form.
+static inline void adamic_typed_array_set_integer(adamic_typed_array *array, int64_t index, double value) {
+	if (index < 0 || (uint64_t)index >= array->length) {
+		adamic_typed_array_check_write(array, (double)index);
+		return;
+	}
+	size_t whole = (size_t)index;
+	switch (array->kind) {
+	case adamic_typed_array_float64:
+		((double *)array->data)[whole] = value;
+		return;
+	case adamic_typed_array_uint8:
+		if (value > -1.0 && value < 256.0) {
+			((uint8_t *)array->data)[whole] = (uint8_t)value;
+			return;
+		}
+		break;
+	case adamic_typed_array_uint16:
+		if (value > -1.0 && value < 65536.0) {
+			((uint16_t *)array->data)[whole] = (uint16_t)value;
+			return;
+		}
+		break;
+	case adamic_typed_array_int32:
+		if (value > -2147483649.0 && value < 2147483648.0) {
+			((int32_t *)array->data)[whole] = (int32_t)value;
+			return;
+		}
+		break;
+	}
+	adamic_typed_array_write_converted(array, whole, value);
+}
+double adamic_typed_array_length(const adamic_typed_array *array);
+adamic_typed_array *adamic_typed_array_fill(adamic_typed_array *array, double value, double start, double end, bool has_start, bool has_end);
+// Numeric ascending, stable for equal values; Float64 orders -0 before +0 and NaN last.
+adamic_typed_array *adamic_typed_array_sort(adamic_typed_array *array);
+void adamic_typed_array_set_from(adamic_typed_array *array, const adamic_typed_array *source, double offset, bool has_offset);
+adamic_typed_array *adamic_typed_array_subarray(const adamic_typed_array *array, double start, double end, bool has_end);
+
+// A counted iterator holds the array until released, including on early loop exits.
+// next reads current storage, never a snapshot. false means exhausted.
+typedef struct adamic_typed_array_iterator {
+	adamic_heap heap;
+	adamic_typed_array *array;
+	size_t next;
+} adamic_typed_array_iterator;
+adamic_typed_array_iterator *adamic_typed_array_iterate(adamic_typed_array *array);
+bool adamic_typed_array_iterator_next(adamic_typed_array_iterator *iterator, double *value);
+
+size_t adamic_public_index(const adamic_shape *shape, size_t position);
+adamic_array *adamic_class_object_keys(const adamic_object *object);
+const adamic_accessor *adamic_accessor_find(const adamic_object *object, const char *name);
+adamic_value adamic_accessor_get(adamic_object *object, const char *name);
+void adamic_accessor_set(adamic_object *object, const char *name, adamic_value value, int type);
+
+// Structured fork-join. Arguments are borrowed until the join; the result is owned.
+adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, enum adamic_ir_type element);
+
+// adamic_array_push appends; a reference pushed belongs to the array.
+void adamic_array_push(adamic_array *array, adamic_value value);
+
+// adamic_map is a Map with string or number keys (map.c).
+typedef struct adamic_map_entry {
+	adamic_value key;
+	adamic_value value;
+	bool deleted;
+	// A record key's attributes as Object.defineProperty leaves them (record.c), each false for an
+	// ordinary data property and for every Map entry: hidden is enumerable false, which keys leaves out;
+	// readonly is writable false, which a write is refused; fixed is configurable false, which a delete
+	// and a define of another value are refused.
+	bool hidden;
+	bool readonly;
+	bool fixed;
+} adamic_map_entry;
+// The attributes sit in the padding after deleted, so an entry is no bigger: wasm32 aligns a double
+// to 8 bytes too, so it's 24 bytes there as on 64-bit hosts.
+_Static_assert(sizeof(adamic_map_entry) == 24, "a map entry is two values and its flags");
+
+typedef struct adamic_map {
+	adamic_heap heap;
+	size_t count;
+	size_t used;
+	size_t capacity;
+	adamic_map_entry *entries;
+	size_t bucket_count;
+	size_t *buckets;
+	bool string_keys;
+	// reference_keys is keys that are counted references: strings, compared by their text, or, when
+	// string_keys isn't set, objects, arrays, maps and functions, compared by identity, as === does.
+	bool reference_keys;
+	// boolean_keys is keys that are booleans, compared and hashed as booleans: a boolean set in an
+	// adamic_value leaves the rest of its bytes unspecified, so it's never read as a number.
+	bool boolean_keys;
+	// maybe_number_keys are packed number | undefined keys. The reserved undefined NaN is distinct
+	// from the canonical present NaN, while present numbers use SameValueZero (map.c).
+	bool maybe_number_keys;
+	bool reference_values;
+	// iterating counts the iterations open over the map; while there are any, its entries keep their
+	// places (map.c).
+	_Atomic size_t iterating;
+	// key_list is a record table's for...in key list, one count the map's, or NULL: made on a loop's
+	// first ask and handed to every later loop until a write adds, deletes or hides a key, which lets
+	// it go first (record.c's adamic_record_for_in_keys, map.c's adamic_map_forget_key_list). Only an
+	// unshared table that's no graph member ever has one; every other map leaves it NULL.
+	adamic_array *key_list;
+} adamic_map;
+
+// adamic_map_iterator is one for...of over a map, in insertion order: entries added before it gets
+// to them are visited, and entries deleted before it gets to them aren't, as ECMA-262 requires. It
+// holds the map; exhaustion or letting go ends the iteration exactly once.
+typedef struct adamic_map_iterator {
+	adamic_heap heap;
+	adamic_map *map;
+	size_t next;
+	bool exhausted;
+} adamic_map_iterator;
+
+adamic_map_iterator *adamic_map_iterate(adamic_map *map);
+adamic_object *adamic_string_iterator(adamic_string *string);
+adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int key, int value, bool set);
+// adamic_collection_iterator_planned is the same, each entries() pair adopted into a graph region of
+// its own as next() makes it, for a pair whose tuple type is a graph type (#dps0kp6).
+adamic_object *adamic_collection_iterator_planned(adamic_map *collection, int part, int key, int value, bool set);
+// adamic_iterator_result is one step's { value, done }, value in slot 0 and done in slot 1, as every
+// runtime-built iterator's next() gives it (map_set.c). kind is the value slot's field kind, and
+// element_tag its representation byte, ir.Type's. The result is owned by the caller, and the element
+// is moved in, never retained: a reference the caller borrowed it retains first. At done element is
+// unread, and the value slot holds `NULL` for a reference kind, the absent maybe-number for a number
+// kind, and the absent maybe-boolean for a boolean kind, whose byte the builder makes MaybeBoolean.
+// The result is a plain counted object, never adopted into a region.
+adamic_object *adamic_iterator_result(adamic_field_kind kind, bool present, adamic_value element, unsigned char element_tag);
+// adamic_collection_iterator_is says whether a value is an iterator adamic_collection_iterator made:
+// an object of a Map's or a Set's iterator shape whose next is a collection's, never a string's
+// iterator, which has a shape of its own. An iterable view's dispatch asks it (ir.IsCollectionIterator).
+bool adamic_collection_iterator_is(const void *value);
+// adamic_object_tag is Object.prototype.toString's answer for a library object with a tag of its own, judged by
+// the value, never its type (ir.ObjectTag, #eksbz4c head T): a Map's, a Set's or a string's iterator's by its
+// shape's address, a matchAll iterator's by regexp.c's, a WeakMap's or a WeakSet's by its kind and set flag, and a
+// Promise's by its kind. Any other value, NULL among them, answers NULL, whose tag is Object. map_set.c's
+// object_tags is the one native spelling of a library tag, held to ir.LibraryObjectTags, the Go one, by
+// TestRuntimeObjectTagsAreIRs. The string is an immortal literal.
+adamic_string *adamic_object_tag(const void *value);
+// adamic_object_to_string is adamic_object_tag's answer, or "[object Object]" where it's NULL.
+adamic_string *adamic_object_to_string(const void *value);
+// adamic_intl_collator_new is new Intl.Collator(locale, tsc's options), locale borrowed and NULL for
+// undefined: an owned host object whose compare closure stops when called, and which stops itself
+// for a defined locale (library_intl.c, #zjndrx5).
+adamic_object *adamic_intl_collator_new(const adamic_string *locale);
+// adamic_intl_collator_shape_publish tells adamic_object_callee which shape is a collator's, so a call
+// x.compare(...) on one reaches its #compare slot (object.c). library_intl.c publishes it each time it
+// makes one, as node_fs_file.c publishes the Stats shape, and before any collator exists none can be
+// called.
+void adamic_intl_collator_shape_publish(const adamic_shape *shape);
+// adamic_intl_collator_compare is a new collator's compare read as a value (#9tw2b9z): its #compare
+// closure, owned, the collator borrowed (library_intl.c).
+adamic_closure *adamic_intl_collator_compare(const adamic_object *collator);
+
+// adamic_map_iterator_next gives the next live entry's key and value, borrowed, or false at the end.
+bool adamic_map_iterator_next(adamic_map_iterator *iterator, union adamic_value *key, union adamic_value *value);
+
+adamic_map *adamic_map_new(bool string_keys, bool reference_values);
+// Nonzero entries fit the first table; zero is the ordinary lazy map.
+adamic_map *adamic_map_new_sized(bool string_keys, bool reference_values, size_t entries);
+// adamic_map_relocated fixes a map copied byte for byte from one allocation to another (a graph
+// region's adoption) before the old allocation is freed: pointers into the map itself move with it.
+void adamic_map_relocated(const adamic_map *from, adamic_map *to);
+
+// adamic_map_new_identity is a map whose keys are objects, arrays, maps or functions, each its own
+// key, found by identity (map.c).
+adamic_map *adamic_map_new_identity(bool reference_values);
+
+// adamic_map_new_booleans is a map whose keys are booleans: true and false, two keys at most.
+adamic_map *adamic_map_new_booleans(bool reference_values);
+bool adamic_map_maybe_key_equal(double left, double right);
+uint64_t adamic_map_maybe_key_hash(double key);
+uint64_t adamic_map_number_hash(double number);
+
+// adamic_map_new_maybe_numbers makes a map whose keys are packed number | undefined values.
+adamic_map *adamic_map_new_maybe_numbers(bool reference_values);
+
+// adamic_map_clear is map.clear() and set.clear(): every entry deleted, as if one by one, so an
+// iteration open over it goes on with whatever is added after.
+void adamic_map_clear(adamic_map *map);
+
+// adamic_map_keys and adamic_map_values are [...map.keys()] and [...map.values()]: new arrays the
+// caller owns, in insertion order.
+adamic_array *adamic_map_keys(const adamic_map *map, enum adamic_ir_type element);
+
+// adamic_map_add_pairs sets each [key, value] tuple of an array in a map, in order: new Map(pairs).
+// The map takes its own references.
+void adamic_map_add_pairs(adamic_map *map, const adamic_array *pairs);
+adamic_array *adamic_map_values(const adamic_map *map, enum adamic_ir_type element);
+
+// adamic_map_get is the value's slot, or NULL when the key isn't there.
+adamic_value *adamic_map_get(const adamic_map *map, adamic_value key);
+
+// adamic_map_set takes the key and value it's given: references passed in belong to the map.
+void adamic_map_set(adamic_map *map, adamic_value key, adamic_value value);
+
+bool adamic_map_delete(adamic_map *map, adamic_value key);
+
+// Records own a string-keyed Map through a fixed-shape wrapper (record.c). These aliases
+// use ordinary object cleanup; the compiler must use record operations for record views.
+typedef adamic_object adamic_record;
+typedef adamic_object adamic_record_iterator;
+
+// A record's values are of one adamic_field_kind, named at allocation and kept by its shape
+// (record.c): counted references, numbers or booleans, a number or a boolean possibly packed with
+// undefined (adamic_maybe_number_pack, adamic_maybe_boolean_pack).
+adamic_record *adamic_record_new(adamic_field_kind values);
+// Known keys fit a power-of-two table; unknown sizes use new's four-entry start.
+adamic_record *adamic_record_new_capacity(adamic_field_kind values, size_t keys);
+// new_graph is a record of references that's a graph member: its table and wrapper adopted and merged
+// at birth, one region. Every write takes its key and value into the table after the refusal check,
+// and a refused write releases them plainly (record.c). No other kind of value has one.
+adamic_record *adamic_record_new_graph(adamic_field_kind values);
+bool adamic_record_is(const adamic_object *object);
+adamic_field_kind adamic_record_values(const adamic_record *record);
+// adamic_record_value_union is a record's own value, own being its slot, as a union, owned: a reference
+// retained, a number or a boolean boxed by the kind the record holds, undefined when packed absent
+// (union.c).
+adamic_heap *adamic_record_value_union(const adamic_record *record, const adamic_value *own);
+adamic_value adamic_record_view(const adamic_record *, const char *, unsigned char, const char *, const char *);
+// Own lookup returns a borrowed slot, NULL for absence (including an inherited name).
+adamic_value *adamic_record_get_own(const adamic_record *record, const adamic_string *key);
+bool adamic_record_has_own(const adamic_record *record, const adamic_string *key);
+// Dynamic get and in hold own keys only: on a miss naming an Object.prototype member,
+// both panic with the member name and "records hold own keys only". Other misses return
+// NULL/false. The member-name check runs only on a miss; an own value is always borrowed.
+adamic_value *adamic_record_get(const adamic_record *record, const adamic_string *key);
+bool adamic_record_has(const adamic_record *record, const adamic_string *key);
+// Every write consumes key and value references, as Map.set does, the ones it refuses included.
+// define creates an own data property even for __proto__; set refuses __proto__ assignment with an
+// explicit NotYet panic.
+void adamic_record_define(adamic_record *record, adamic_string *key, adamic_value value);
+void adamic_record_set(adamic_record *record, adamic_string *key, adamic_value value);
+// set_checked is set that returns false, storing nothing, when the key is read-only; delete_checked
+// is delete that returns false when the key is fixed. The unchecked ones never meet such a key, so they
+// keep their single lookup: only define_hidden gives an entry an attribute, its key is a string literal
+// there and so in the program's hidden keys (ir.Program's HiddenRecordKeys), and the compiler emits an
+// unchecked write or delete only for a literal key outside that set (ir.Program's RecordWriteMayThrow).
+bool adamic_record_set_checked(adamic_record *record, adamic_string *key, adamic_value value);
+bool adamic_record_delete_checked(adamic_record *record, const adamic_string *key);
+// adamic_record_scalar is what a record's slots hold when they aren't references, for SameValue.
+typedef enum adamic_record_scalar {
+	adamic_record_references,
+	adamic_record_numbers,
+	adamic_record_maybe_numbers,
+	adamic_record_booleans,
+} adamic_record_scalar;
+// define_hidden is Object.defineProperty(record, key, { enumerable: false, writable: false, value }),
+// as Node does it. A new key is hidden, read-only and fixed. A key already there and not fixed keeps
+// its place and takes the value, hidden and read-only, and stays configurable, as Node keeps the
+// attributes a descriptor leaves out. A fixed key is left as it is when value is SameValue to the one
+// it holds (compared as scalar says, unless the record holds references), and otherwise the define
+// returns false, storing nothing, for the caller to throw.
+bool adamic_record_define_hidden(adamic_record *record, adamic_string *key, adamic_value value, adamic_record_scalar scalar);
+// delete is always true, a key that isn't there included.
+bool adamic_record_delete(adamic_record *record, const adamic_string *key);
+// refused sets adamic_thrown to the TypeError Node throws for a write of a read-only key or, deleting,
+// a delete of a fixed one, the key borrowed.
+void adamic_record_refused(const adamic_string *key, bool deleting);
+size_t adamic_record_size(const adamic_record *record);
+// keys returns an owned array in own-key order: array indices ascending, then insertion order.
+// Hidden keys, the non-enumerable ones, are left out.
+adamic_array *adamic_record_keys(const adamic_record *record);
+// for_in_keys is keys for a for...in, which only reads the list: the same keys in the same order, one
+// count the caller's, but the array may be the one every loop over the record shares until its key set
+// changes, so nothing may write into it. A shared or graph record's is a new array each time.
+adamic_array *adamic_record_for_in_keys(const adamic_record *record);
+// adamic_map_forget_key_list lets go of a record table's for...in key list, when it has one, before a
+// write changes which keys it enumerates without adding or deleting one (record.c's define_hidden).
+void adamic_map_forget_key_list(adamic_map *map);
+// Iteration snapshots keys, holds record and keys, skips deleted keys, and reads current values.
+// New keys are not visited. next returns borrowed key/value pairs; release ends iteration.
+adamic_record_iterator *adamic_record_iterate(adamic_record *record);
+bool adamic_record_iterator_next(adamic_record_iterator *iterator, adamic_string **key, adamic_value *value);
+
+// A Set is a map whose values aren't used (set.c). adamic_set_add_all adds an array's elements in
+// order, new Set(array), each reference retained; adamic_set_values is [...set], a new array the caller
+// owns.
+void adamic_set_add_all(adamic_map *set, const adamic_array *values);
+adamic_array *adamic_set_values(const adamic_map *set, enum adamic_ir_type element);
+
+// adamic_map_free_children lets go of what a map holds, for the heap's freeing.
+void adamic_map_free_children(adamic_map *map, void (*let_go)(void *));
+
+// adamic_array_at is array[index]: the element's slot, or NULL (undefined) when there isn't one.
+// It's inline, since a loop over an array reads through it every pass. An array index is an integer
+// from 0 up to the length; anything else (negative, a fraction, NaN, past the end) is a property the
+// array doesn't have, which reads as undefined.
+//
+// Past the bounds check, 0 <= index < length, so (size_t)index is defined and, back as a double, is
+// trunc(index) exactly (below 2^53 the conversion is exact, and from there every double is whole), so
+// a fraction is caught without calling trunc, which on x86-64 without SSE4.1 is a call into libm on
+// every read. -0 is index 0, as JavaScript reads it.
+// adamic_array_at_integer is array[index] for an index that's a whole number already, a loop counter
+// kept in an integer (lower/counters.go): the same answer, with only the bounds to check.
+static inline adamic_value *adamic_array_at_integer(const adamic_array *array, int64_t index) {
+	if (index < 0 || (uint64_t)index >= array->length) {
+		return NULL;
+	}
+	return &array->elements[index];
+}
+
+static inline adamic_value *adamic_array_at(const adamic_array *array, double index) {
+	if (!(index >= 0) || index >= (double)array->length) {
+		return NULL;
+	}
+	size_t whole = (size_t)index;
+	if ((double)whole != index) {
+		return NULL;
+	}
+	return &array->elements[whole];
+}
+
+// adamic_array_set_outside is adamic_array_set's panic at an index the array doesn't have, kept out
+// of line so the inline write carries only its test and a call it never takes.
+__attribute__((cold)) _Noreturn void adamic_array_set_outside(const adamic_array *array, double index);
+// adamic_array_set_held is adamic_array_set's write to an array of references: it takes value into
+// slot and lets go of the reference slot held, through the graph when the array is a graph member.
+void adamic_array_set_held(adamic_array *array, adamic_value *slot, adamic_value value);
+
+// adamic_array_set is array[index] = value, which takes the value; it panics at an index the array
+// doesn't have. 0.1 writes only at an index the array has: JavaScript would grow the array, or leave
+// a hole, and a hole is something 0.1 can't hold. push is how to append.
+//
+// It's inline, as adamic_array_at is, so a write to an array of numbers is the bounds test and a
+// store, not a call: as a call it was 43.5% of fannkuchredux's user cycles (J-69c97as). It's
+// ADAMIC_OWNERSHIP, out of line under ASan, as retain and release are: inlined ownership paths took a
+// large unit's clang time from 21 s to 110 s there (ff1f4068).
+ADAMIC_OWNERSHIP void adamic_array_set(adamic_array *array, double index, adamic_value value) {
+	adamic_value *slot = adamic_array_at(array, index);
+	if (slot == NULL) {
+		adamic_array_set_outside(array, index);
+	}
+	if (array->references) {
+		adamic_array_set_held(array, slot, value);
+		return;
+	}
+	*slot = value;
+}
+
+// adamic_array_at_relative is array.at(index): the element's slot, or NULL (undefined).
+adamic_value *adamic_array_at_relative(const adamic_array *array, double index);
+
+// adamic_array_index_of is array.indexOf(value), and array.includes(value) with same_value_zero:
+// the first index whose element equals value, or -1. equality says how elements compare.
+enum adamic_equality {
+	adamic_equal_numbers = 1,
+	adamic_equal_booleans,
+	adamic_equal_strings,
+	adamic_equal_identity,
+	adamic_equal_maybe_numbers,
+	adamic_equal_unions,
+};
+double adamic_array_index_of(const adamic_array *array, adamic_value value, enum adamic_equality equality, bool same_value_zero);
+double adamic_array_search_from(const adamic_array *array, adamic_value value, enum adamic_equality equality, bool same_value_zero, double from, bool has_from, bool last);
+
+// adamic_array_from_length is the length Array.from({ length }) makes (array_from.c): ToLength of
+// the number, and 0 with adamic_thrown set to Node's RangeError past 2^32 - 1.
+size_t adamic_array_from_length(double length);
+
+// adamic_array_reverse reverses in place and is the array; adamic_array_concat makes a new array of
+// every array's elements in order, references retained.
+adamic_array *adamic_array_reverse(adamic_array *array);
+
+// adamic_array_filled is new Array(length).fill(value), a new array the caller owns, or NULL with
+// adamic_thrown set to Node's RangeError for a length that isn't an integer from 0 to 2^32 - 1;
+// adamic_array_fill is array.fill(value, start, end), in place, and is the array. Both hold the value
+// once per element; the caller keeps its own.
+adamic_array *adamic_array_filled(double length, adamic_value value, enum adamic_ir_type element);
+adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double start, double end, bool has_start, bool has_end);
+
+// adamic_array_splice is array.splice(start, count, ...items): what's removed, in a new array the
+// caller owns. The items' references are the array's from then on.
+adamic_array *adamic_array_splice(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items, enum adamic_ir_type element);
+// adamic_array_remove is a splice whose result nothing uses: what it removes is let go of, and no
+// array is made to hold it.
+void adamic_array_remove(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items);
+
+// adamic_array_append is a spread, [...source], into an array being made: each element pushed, a
+// reference retained.
+void adamic_array_append(adamic_array *array, const adamic_array *source);
+adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[], enum adamic_ir_type element);
+
+// adamic_array_slice is array.slice(start, end); adamic_array_sort sorts in place, stably, by a
+// comparator that gives -1, 0 or 1 and is passed context. adamic_compare_closure is that comparator for
+// a function value, the context.
+adamic_array *adamic_array_slice(const adamic_array *array, double start, double end, bool has_end, enum adamic_ir_type element);
+void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context);
+int adamic_compare_closure(adamic_value left, adamic_value right, void *context);
+// adamic_timsort sorts count values in place by V8's algorithm (sort.c). It says false, the values
+// in some order of the sort's half done, when the comparator threw (adamic_thrown set).
+bool adamic_timsort(adamic_value *work, size_t count, int (*compare)(adamic_value, adamic_value, void *), void *context);
+
+// adamic_array_sort_undefined_last sorts an array of number | undefined as JavaScript does: every
+// undefined goes to the end, never passed to the comparator (sort_undefined.c).
+void adamic_array_sort_undefined_last(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context);
+
+// adamic_map_entries is [...map]: [key, value] pairs, each an object of the shape given.
+adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair);
+// adamic_map_entries_planned is the same, each pair adopted into a graph region of its own, for a pair
+// whose tuple type is a graph type: it can reach a graph slot while its array is dropped (#dps0kp6).
+adamic_array *adamic_map_entries_planned(const adamic_map *map, const adamic_shape *pair);
+
+// adamic_array_join is array.join(separator), each element written as String() would, and the empty
+// string when the join would be longer than V8's longest (adamic_string_check_length).
+enum adamic_join {
+	adamic_join_numbers = 1,
+	adamic_join_booleans,
+	adamic_join_strings,
+	adamic_join_maybe_numbers,
+};
+struct adamic_string *adamic_array_join(const adamic_array *array, const struct adamic_string *separator, enum adamic_join kind);
+// adamic_array_of_scalars is ir.ArrayOfScalars of an array a union holds: it has elements, each a
+// number, a boolean, null or undefined, with a number or a boolean among them or only undefined, which
+// an array of unboxed elements always is.
+bool adamic_array_of_scalars(const adamic_heap *value);
+// adamic_join_enter and adamic_join_leave are ir.JoinEnter and ir.JoinLeave, V8's join stack: enter
+// pushes the array and says true, or says false, pushing nothing, when its join is already under way.
+bool adamic_join_enter(const adamic_heap *array);
+void adamic_join_leave(void);
+
+struct adamic_string *adamic_array_join_nested(const adamic_array *array, const struct adamic_string *separator, enum adamic_join kind, size_t depth);
+
+// These return a reference the caller owns.
+adamic_string *adamic_string_from_number(double value);
+
+// Number.parseInt(text, radix) and Number.parseFloat(text), as Node answers them (parse.c). A radix
+// of 0 is the one left out.
+double adamic_number_parse_int(const adamic_string *text, double radix);
+double adamic_number_parse_float(const adamic_string *text);
+double adamic_number_from_string(const adamic_string *text);
+double adamic_number_from_union(const adamic_heap *value);
+bool adamic_number_has_own_property(const adamic_string *key, bool prototype);
+double adamic_math_clz32(double value);
+double adamic_math_imul(double left, double right);
+double adamic_math_fround(double value);
+// adamic_string_concat is the parts joined, a string the caller owns: the empty string when it would
+// be longer than V8's longest (adamic_string_check_length).
+adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]);
+
+// The strings every program has: "", and String(true) and String(false).
+extern adamic_string adamic_string_empty;
+extern adamic_string adamic_string_true;
+extern adamic_string adamic_string_false;
+
+// String(undefined), and String(value) for number | undefined, a string the caller owns (maybe.c).
+// adamic_maybe_number_equal and adamic_maybe_boolean_equal are === on two pairs: both missing, or
+// both present and equal.
+extern adamic_string adamic_string_undefined;
+adamic_string *adamic_string_from_maybe_number(adamic_maybe_number value);
+bool adamic_maybe_number_equal(adamic_maybe_number left, adamic_maybe_number right);
+
+// adamic_maybe_number_pack makes number | undefined one double, for a field, an element, a cell or a
+// function value's argument or result: undefined is ADAMIC_UNDEFINED_BITS, a NaN no arithmetic
+// makes, and every other NaN is stored as the ordinary quiet NaN (JavaScript can't see a NaN's
+// payload), so nothing present is ever mistaken for undefined. adamic_maybe_number_unpack reads one
+// back.
+#define ADAMIC_UNDEFINED_BITS 0x7ff8000000000001u
+double adamic_maybe_number_pack(adamic_maybe_number value);
+adamic_maybe_number adamic_maybe_number_unpack(double packed);
+// Slot encoding: false = 0, true = 1, undefined = 2.
+uint8_t adamic_maybe_boolean_pack(adamic_maybe_boolean value);
+adamic_maybe_boolean adamic_maybe_boolean_unpack(uint8_t packed);
+bool adamic_maybe_boolean_equal(adamic_maybe_boolean left, adamic_maybe_boolean right);
+uint8_t adamic_maybe_boolean_pack(adamic_maybe_boolean value);
+adamic_maybe_boolean adamic_maybe_boolean_unpack(uint8_t packed);
+
+
+// A string's UTF-16 view (string.c): length, charCodeAt and trim as JavaScript means them.
+//
+// length reads the propagated or counted units inline. charCodeAt reads ASCII bytes or a built
+// UTF-16 view inline. An unknown length, an unbuilt index, NaN, a negative or past the end goes
+// to adamic_string_char_code. A position in range truncates to its index as (size_t) does.
+size_t adamic_string_units(const adamic_string *string);
+double adamic_string_char_code(const adamic_string *string, double position);
+// A shared string publishes length and position metadata together in its index.
+// Keep warm length and ASCII reads inline, without writing its plain units field.
+static inline size_t adamic_string_known_units(const adamic_string *string) {
+	if (string->units != 0) { return string->units; }
+	if (adamic_is_shared(&string->heap)) {
+		struct adamic_string_index *index = __atomic_load_n(&string->index, __ATOMIC_ACQUIRE);
+		if (index != NULL && index != ADAMIC_LITERAL_INDEX) { return index->units + 1; }
+	}
+	return 0;
+}
+static inline double adamic_string_length(const adamic_string *string) {
+	size_t units = adamic_string_known_units(string);
+	return units != 0 ? (double)(units - 1) : (double)adamic_string_units(string);
+}
+static inline double adamic_string_char_code_at(const adamic_string *string, double position) {
+	if (string->units == string->length + 1 && position >= 0 && position < (double)string->length) {
+		return (double)(unsigned char)string->bytes[(size_t)position];
+	}
+	// Shared views are published complete; an ordinary index is thread-local.
+	struct adamic_string_index *index = adamic_is_shared(&string->heap) ?
+		__atomic_load_n(&string->index, __ATOMIC_ACQUIRE) : string->index;
+	if (index != NULL && index != ADAMIC_LITERAL_INDEX && position >= 0 && position < (double)index->units) {
+		if (index->units == string->length) { return (double)(unsigned char)string->bytes[(size_t)position]; }
+		if (index->view != NULL) { return (double)index->view[(size_t)position]; }
+	}
+	return adamic_string_char_code(string, position);
+}
+
+adamic_string *adamic_string_trim(adamic_string *string);
+
+// for...of over a string walks code points: adamic_string_next is the byte size of the one at offset,
+// and adamic_string_slice_bytes makes it a string the caller owns.
+size_t adamic_string_next(const adamic_string *string, size_t offset);
+adamic_string *adamic_string_slice_bytes(const adamic_string *string, size_t offset, size_t size);
+
+// adamic_string_share is the size bytes at offset as a string the caller owns, reading the string's
+// own bytes where that's worth it (string_share.c). offset and size must fall between code points.
+adamic_string *adamic_string_share(const adamic_string *string, size_t offset, size_t size);
+
+// The rest of a string's UTF-16 view (string.c), each as JavaScript means it. These that return a
+// string return one the caller owns. repeat, pad and replace return the empty string when theirs would
+// be longer than V8's longest (adamic_string_check_length).
+adamic_string *adamic_string_slice(const adamic_string *string, double start, double end, bool has_end);
+adamic_maybe_number adamic_string_code_point_at(const adamic_string *string, double position);
+int adamic_string_compare(const adamic_string *left, const adamic_string *right);
+adamic_string *adamic_string_repeat(const adamic_string *string, double count);
+adamic_string *adamic_string_pad(const adamic_string *string, double target, const adamic_string *fill, bool at_start);
+double adamic_string_index_of(const adamic_string *string, const adamic_string *search);
+// adamic_string_index_of_at is indexOf from the UTF-16 index from, at most the string's length, in
+// place (string.c). adamic_string_index_of_from is indexOf with its position as JavaScript gives it
+// (string_from.c).
+double adamic_string_index_of_at(const adamic_string *string, const adamic_string *search, size_t from);
+double adamic_string_index_of_from(const adamic_string *string, const adamic_string *search, double position);
+bool adamic_string_starts_with(const adamic_string *string, const adamic_string *search);
+bool adamic_string_ends_with(const adamic_string *string, const adamic_string *search);
+struct adamic_array *adamic_string_code_points(const adamic_string *string);
+struct adamic_array *adamic_string_split(const adamic_string *string, const adamic_string *separator);
+
+// adamic_string_at is string[index]: the UTF-16 code unit there, as a string the caller owns, or NULL
+// (undefined) where the string has no such index. adamic_string_at_relative is string.at(index).
+adamic_string *adamic_string_at(const adamic_string *string, double index);
+adamic_string *adamic_string_at_relative(const adamic_string *string, double index);
+
+// trimStart and trimEnd; trim is both.
+adamic_string *adamic_string_trim_sides(adamic_string *string, bool at_start, bool at_end);
+
+// lastIndexOf, and replace and replaceAll with a string pattern and a replacement string (its $$, $&,
+// $` and $' expanded, as JavaScript does).
+double adamic_string_last_index_of(const adamic_string *string, const adamic_string *search);
+adamic_string *adamic_string_replace(const adamic_string *string, const adamic_string *search, const adamic_string *replacement, bool all);
+
+// adamic_string_inspect_received is the preview a Node ERR_INVALID_ARG_VALUE message ends with after
+// `Received `: util.inspect's quoting of value, cut to 128 units and `...` (string.c), a string the
+// caller owns. node_fs_file.c and node_fs_directory.c both write theirs with it.
+adamic_string *adamic_string_inspect_received(const adamic_string *value);
+
+// ADAMIC_STRING_MAX_UNITS is V8's longest string, in UTF-16 units (String::kMaxLength on 64-bit).
+#define ADAMIC_STRING_MAX_UNITS 536870888
+
+// adamic_string_check_length is whether a string of units UTF-16 units can be made: past V8's longest,
+// it sets adamic_thrown to Node's RangeError, "Invalid string length", and says false, and the caller
+// returns what it promises on a throw (the empty string, for those that return one) without making the
+// string. A RangeError already pending is kept: the first failure is the one Node throws.
+bool adamic_string_check_length(double units);
+
+// adamic_string_allocate makes a string of length bytes for the caller to fill, references 1.
+adamic_string *adamic_string_allocate(size_t length);
+
+// toUpperCase and toLowerCase (case.c): Unicode's full, locale-independent case mapping, final
+// sigma included, as Node does it. They return a string the caller owns: the empty string when a
+// mapping that lengthens it (ß to SS) would make it longer than V8's longest.
+adamic_string *adamic_string_to_upper(const adamic_string *string);
+adamic_string *adamic_string_to_lower(const adamic_string *string);
+
+// normalize (normalize.c): NFC, NFD, NFKC or NFKD as form names it. It returns a string the caller
+// owns: the empty string when any other form, or a result longer than V8's longest, sets adamic_thrown
+// to Node's RangeError.
+adamic_string *adamic_string_normalize(const adamic_string *string, const adamic_string *form);
+
+// adamic_string_units is a string's length in UTF-16 units, counted once. adamic_string_locate is
+// where a unit below that length is: the byte offset of the code point holding it, and whether the unit
+// is the low half of a surrogate pair there. Both take constant time amortized (string_index.c).
+// adamic_string_join_halves makes each lone high surrogate followed by a lone low one in bytes, from
+// offset from on, the character they are together, as JavaScript joins them, and returns the new
+// length (string.c).
+size_t adamic_string_join_halves(char *bytes, size_t from, size_t length);
+
+// adamic_string_put writes part's bytes after the first written of bytes, joining halves of a pair
+// where they meet, and returns how many bytes there are now (string.c). Every string's own halves are
+// joined already, so only the meeting is looked at.
+size_t adamic_string_put(char *bytes, size_t written, const adamic_string *part);
+
+// adamic_string_append is string + parts, taking the caller's reference to string: written in place
+// when the caller held the only reference and there's room, and otherwise a new string with room to
+// grow, string let go (string_append.c). When the result would be longer than V8's longest, string
+// comes back unchanged, with the RangeError pending (adamic_string_check_length): text = text + more
+// throws before text is written.
+adamic_string *adamic_string_append(adamic_string *string, size_t count, adamic_string *const parts[]);
+
+size_t adamic_string_units(const adamic_string *string);
+size_t adamic_string_locate(const adamic_string *string, size_t unit, bool *low);
+
+// adamic_string_units_before is how many UTF-16 units come before a byte offset that starts a code
+// point: indexOf's answer, found through the index rather than by counting from the start.
+size_t adamic_string_units_before(const adamic_string *string, size_t offset);
+void adamic_string_free_index(adamic_string *string);
+void adamic_string_prepare_shared(adamic_string *string);
+
+// adamic_string_equal is ===.
+int adamic_string_equal(const adamic_string *left, const adamic_string *right);
+
+// A union whose members are held differently (string | number) is one counted reference, its kind the
+// member it is (union.c): a string, object, array, map or closure is itself, undefined is NULL, a
+// number is boxed, and a boolean is one of two constant boxes.
+typedef struct adamic_number_box {
+	adamic_heap heap;
+	double number;
+} adamic_number_box;
+
+typedef struct adamic_boolean_box {
+	adamic_heap heap;
+	bool boolean;
+} adamic_boolean_box;
+
+extern adamic_boolean_box adamic_box_true;
+extern adamic_boolean_box adamic_box_false;
+
+// adamic_box_number boxes a number, a reference the caller owns.
+adamic_heap *adamic_box_number(double number);
+
+// adamic_union_equal is === on two unions: the same member, equal as that member is compared.
+bool adamic_union_equal(const adamic_heap *left, const adamic_heap *right);
+
+// ToBoolean on a boxed union; objects are truthy even when empty.
+bool adamic_census_to_boolean(const adamic_heap *value);
+
+// adamic_union_to_string is String(value) for a union of numbers, booleans, strings and undefined, a
+// string the caller owns.
+adamic_string *adamic_union_to_string(adamic_heap *value);
+
+// adamic_union_typeof classifies every reference, including static constructors. null says what
+// a missing pointer represents; null and undefined share NULL but have different typeof results.
+adamic_string *adamic_union_typeof(const adamic_heap *value, bool null);
+extern adamic_string adamic_typeof_number;
+extern adamic_string adamic_typeof_string;
+extern adamic_string adamic_typeof_boolean;
+extern adamic_string adamic_typeof_undefined;
+extern adamic_string adamic_typeof_object;
+extern adamic_string adamic_typeof_function;
+// adamic_union_kind is ir.UnknownKind's number for a union: the kind of value String's dispatch takes
+// apart (lower/to_primitive.go), from the value's own tags.
+double adamic_union_kind(const adamic_heap *value);
+// adamic_object_own_function is ir.OwnFunction: whether a plain object or a record has an own property
+// of the name holding a function.
+bool adamic_object_own_function(const adamic_heap *value, const char *name);
+
+// adamic_weak is the handle a Weak<Target> slot holds (weak.c): counted itself, it doesn't count its
+// target, and it says NULL once the target is freed. adamic_weak_of is the target's handle, retained
+// for the caller (NULL for NULL); adamic_weak_target is what a handle points to, and
+// adamic_weak_target_present the same where the checker proved it present, panicking if it was freed.
+// The heap tells weak.c when a target is freed (adamic_weak_forget) and when a handle is
+// (adamic_weak_dropped).
+typedef struct adamic_weak adamic_weak;
+adamic_weak *adamic_weak_of(void *target);
+void *adamic_weak_target(const adamic_weak *handle);
+void *adamic_weak_target_present(const adamic_weak *handle);
+void adamic_weak_forget(void *target);
+// One table check for a whole region, including a region with no outside children.
+void adamic_weak_forget_region(const adamic_region *region);
+void adamic_weak_dropped(adamic_weak *handle);
+// adamic_weak_held reports whether a Weak points at a value: reuse in place takes over only a value
+// nothing else can reach, and a Weak reaches without counting.
+bool adamic_weak_held(const void *target);
+// adamic_weak_named says whether a WeakMap or WeakSet holds an entry for the value, which share.c
+// refuses to publish: a collection and its keys stay on the thread that made them.
+bool adamic_weak_named(const void *target);
+// adamic_weak_thread_end frees the calling thread's list of what forget lets go of (heap.c).
+void adamic_weak_thread_end(void);
+
+// adamic_weak_map is a WeakMap, or a WeakSet when set is true, which has no values (weak_collection.c).
+// It's keyed by the key's weak handle, never its address: an entry holds a count on the handle, so the
+// handle's address can't be reused while the entry lives, and a new value at a freed key's address
+// gets a new handle. reference_values says whether values are counted references, as adamic_map's.
+//
+// adamic_weak_key is the key's handle for set and add, made if needed, retained for the caller, and
+// marked named. adamic_weak_key_find is the handle for get, has and delete, not retained, or NULL when
+// the key has none. adamic_weak_map_lookup says whether the map holds the key, and its value through
+// value when that isn't NULL, borrowed. adamic_weak_map_store takes the handle's count and the value's;
+// replacing an entry lets go of the old value and the extra handle count. adamic_weak_map_remove lets
+// go of the entry's value and handle count. When a key is freed, every entry for it goes, and its
+// value is let go of (adamic_weak_forget).
+typedef struct adamic_weak_map adamic_weak_map;
+adamic_weak_map *adamic_weak_map_new(bool set, bool reference_values);
+// adamic_weak_map_set_is says whether a weak collection is a WeakSet, as adamic_weak_map_new was told.
+bool adamic_weak_map_set_is(const adamic_weak_map *map);
+adamic_weak *adamic_weak_key(void *key);
+adamic_weak *adamic_weak_key_find(const void *key);
+bool adamic_weak_map_lookup(adamic_weak_map *map, const adamic_weak *key, adamic_value *value);
+void adamic_weak_map_store(adamic_weak_map *map, adamic_weak *key, adamic_value value);
+bool adamic_weak_map_remove(adamic_weak_map *map, const adamic_weak *key);
+// The heap frees a collection through this (heap.c): it takes the collection's names off its keys'
+// handles, then lets go of every value and handle count.
+void adamic_weak_map_free_children(adamic_weak_map *map, void (*let_go)(void *));
+#ifdef ADAMIC_COUNT
+// The entries every weak collection holds right now, for a harness (count.h has the peak).
+size_t adamic_weak_entries_live(void);
+#endif
+
+// OrdinaryToPrimitive's typed call seam (exceptions.c, docs/step22-to-primitive.md).
+// The existing method ABI is untagged; generated adapters must classify its result.
+enum adamic_primitive_kind {
+	adamic_primitive_undefined,
+	adamic_primitive_null,
+	adamic_primitive_boolean,
+	adamic_primitive_number,
+	adamic_primitive_string,
+	adamic_primitive_object,
+};
+typedef struct adamic_primitive {
+	enum adamic_primitive_kind kind;
+	adamic_value value;
+} adamic_primitive;
+enum adamic_primitive_hint {
+	adamic_hint_default,
+	adamic_hint_number,
+	adamic_hint_string,
+};
+typedef struct adamic_primitive_method {
+	// NULL means the property is absent or non-callable. owner is an owned callable
+	// (or non-callable property value) kept until this lookup/call finishes.
+	adamic_primitive (*call)(adamic_heap *receiver, void *owner);
+	void *owner;
+} adamic_primitive_method;
+// get performs one lazy Get and IsCallable, including inheritance and accessors.
+// Both callbacks can set adamic_thrown. String/object results own one reference;
+// an exceptional call returns a zero result with no owned value. An exceptional
+// get may return an owner; the helper releases it before propagating the error.
+typedef adamic_primitive_method (*adamic_primitive_get)(adamic_heap *receiver, const char *name);
+adamic_primitive adamic_ordinary_to_primitive(adamic_heap *receiver, enum adamic_primitive_hint hint, adamic_primitive_get get);
+
+// adamic_thrown is the error being thrown, or NULL (exceptions.c): set by a throw, tested after
+// every call that can throw, and taken by the catch that lands it. adamic_error_new is new
+// Error(message), adamic_error_new_kind the same with a built-in class's name (a RangeError's,
+// a TypeError's), and adamic_uncaught the panic of an error nothing caught.
+extern _Thread_local adamic_object *adamic_thrown;
+// NULL is an omitted or undefined message; its empty fallback is not an own field.
+adamic_object *adamic_error_new(adamic_string *message);
+// The message is retained, not taken: the caller still releases its own reference.
+adamic_object *adamic_error_new_kind(const char *name, size_t name_length, adamic_string *message);
+// adamic_throw_kind sets adamic_thrown to new <name>(message), the message given as bytes.
+void adamic_throw_kind(const char *name, size_t name_length, const char *message, size_t message_length);
+// adamic_throw_coded sets adamic_thrown to a Node-coded error, code its one enumerable own key, whose
+// String is name [code]: message when bracketed, as Node's makeNodeErrorWithCode makes one, and
+// name: message when not, as one Node's C++ throws; name and code are C strings, the message bytes.
+void adamic_throw_coded(const char *name, const char *code, const char *message, size_t message_length, bool bracketed);
+const char *adamic_error_field_name(const adamic_object *object, const char *name);
+_Noreturn void adamic_uncaught(void);
+
+// adamic_start begins every program: it keeps main's arguments, and writes to a closed pipe fail
+// rather than kill, as on Node.
+void adamic_start(int count, char **values);
+
+// adamic_output_flush writes out what stdout's buffer holds, before a file is read or written: the
+// file may be stdout itself, or stdin waiting on a prompt just printed (adamic.c).
+void adamic_output_flush(void);
+
+// adamic_write_line writes a string and a newline, as console.log does with one string. Stdout is
+// buffered, and flushed wherever Node's writing it at once could be told apart (adamic.c).
+void adamic_write_line(enum adamic_stream stream, const adamic_string *string);
+
+// Shortest double digits need at most 17 places. Small fixed notation needs at most a sign,
+// "0.", five zeros and those digits: 25 code units, reached by -0.0000012345678901234567.
+// Other fixed forms need at most 22 units; exponential needs at most a sign, 17 digits, a point,
+// "e", an exponent sign and three exponent digits: 24. Special values are shorter. All are ascii,
+// so bytes and code units agree. A number can never need the string-length check.
+#define ADAMIC_NUMBER_STRING_MAX_UNITS 25
+_Static_assert(ADAMIC_NUMBER_STRING_MAX_UNITS * 1000 < ADAMIC_STRING_MAX_UNITS,
+	"number text must stay far below the string length limit");
+// Leave one extra byte for snprintf's terminator when writing the exponent.
+#define ADAMIC_NUMBER_FORMAT_MAX (ADAMIC_NUMBER_STRING_MAX_UNITS + 1)
+
+// Date.prototype.toISOString of a clipped time value: owned UTC text, or NULL with
+// a catchable RangeError pending for an invalid time value. No host clock or timezone.
+adamic_string *adamic_date_to_iso_string(double milliseconds);
+
+// adamic_number_format writes value as JavaScript's String(value) does and returns the length. The
+// buffer is not terminated.
+size_t adamic_number_format(double value, char buffer[ADAMIC_NUMBER_FORMAT_MAX]);
+
+// adamic_number_received writes value as Node's ERR_OUT_OF_RANGE writes the number it received and
+// returns the length, grouped with underscores where Node groups it when separated is true (number.c).
+// The buffer is not terminated. Grouping adds at most one underscore a character.
+#define ADAMIC_NUMBER_RECEIVED_MAX (ADAMIC_NUMBER_FORMAT_MAX * 2)
+size_t adamic_number_received(double value, bool separated, char out[ADAMIC_NUMBER_RECEIVED_MAX]);
+
+// adamic_power is JavaScript's ** (number.c).
+double adamic_power(double base, double exponent);
+
+// JavaScript's Math functions where C's differ: round rounds half up and keeps -0, sign keeps -0 and
+// NaN, and max and min see NaN and tell +0 from -0 (math.c).
+double adamic_math_round(double value);
+double adamic_math_sign(double value);
+double adamic_math_max(double left, double right);
+double adamic_math_min(double left, double right);
+
+// The rest of JavaScript's Math, V8's port of fdlibm bit for bit (ieee754.c), and Math.hypot, V8's
+// MathHypot builtin (hypot.c), over count values.
+double adamic_math_acos(double x);
+double adamic_math_acosh(double x);
+double adamic_math_asin(double x);
+double adamic_math_asinh(double x);
+double adamic_math_atan(double x);
+double adamic_math_atan2(double y, double x);
+double adamic_math_atanh(double x);
+double adamic_math_cbrt(double x);
+double adamic_math_cos(double x);
+double adamic_math_cosh(double x);
+double adamic_math_exp(double x);
+double adamic_math_expm1(double x);
+double adamic_math_log(double x);
+double adamic_math_log1p(double x);
+double adamic_math_log2(double x);
+double adamic_math_log10(double x);
+double adamic_math_sin(double x);
+double adamic_math_sinh(double x);
+double adamic_math_tan(double x);
+double adamic_math_tanh(double x);
+double adamic_math_hypot(size_t count, const double *values);
+
+// adamic_number_shortest_digits is V8's shortest digits for a positive, finite value (dtoa.c), as
+// Number::toString writes them: value is 0.d1d2d3... times 10^point, and it returns how many.
+int adamic_number_shortest_digits(double value, char digits[18], int *point);
+
+// adamic_number_to_exponential is value.toExponential(digits), and the shortest digits when there
+// are none; adamic_number_to_precision is value.toPrecision(digits), and String(value) when there
+// are none. Both are V8's (dtoa.c), and return a string the caller owns: the empty string when
+// digits out of range set adamic_thrown to Node's RangeError.
+adamic_string *adamic_number_to_exponential(double value, double digits, bool has_digits);
+adamic_string *adamic_number_to_precision(double value, double digits, bool has_digits);
+
+// Math.max, Math.min, Math.hypot, String.fromCharCode and String.fromCodePoint over arguments with a
+// spread among them, already evaluated in order into an array of numbers (spread.c).
+double adamic_math_max_of(const adamic_array *values);
+double adamic_math_min_of(const adamic_array *values);
+double adamic_math_hypot_of(const adamic_array *values);
+adamic_string *adamic_string_from_char_codes_of(const adamic_array *values);
+adamic_string *adamic_string_from_code_points_of(const adamic_array *values);
+
+// utf8Length(text) and utf8At(text, index) from 'adamic': the text's UTF-8, read in place, a lone
+// surrogate as U+FFFD's bytes as the WHATWG encoder writes it (utf8.c). utf8At panics where the index
+// isn't one of the text's bytes.
+double adamic_utf8_length(const adamic_string *text);
+double adamic_utf8_at(const adamic_string *text, double index);
+
+// JavaScript's bitwise operators on numbers, each through ToInt32 or ToUint32 exactly (bitwise.c).
+double adamic_bitwise_and(double left, double right);
+double adamic_bitwise_or(double left, double right);
+double adamic_bitwise_xor(double left, double right);
+double adamic_bitwise_not(double value);
+double adamic_shift_left(double left, double right);
+double adamic_shift_right(double left, double right);
+double adamic_shift_right_unsigned(double left, double right);
+
+// String.fromCharCode and String.fromCodePoint over their arguments, already evaluated in order
+// (from_codes.c): each a string the caller owns. Where a value isn't a code point, fromCodePoint sets
+// adamic_thrown to Node's RangeError and returns the empty string.
+adamic_string *adamic_string_from_char_codes(size_t count, const double values[]);
+adamic_string *adamic_string_from_code_points(size_t count, const double values[]);
+
+// adamic_number_to_radix is value.toString(radix), V8's (radix.c), and returns a string the caller
+// owns: the empty string when a radix out of range sets adamic_thrown to Node's RangeError.
+adamic_string *adamic_number_to_radix(double value, double radix);
+
+// adamic_number_to_fixed is value.toFixed(digits), and returns a string the caller owns: the empty
+// string when digits out of range set adamic_thrown to Node's RangeError.
+adamic_string *adamic_number_to_fixed(double value, double digits);
+
+// Input, opened in 0.2 (input.c). adamic_arguments_save keeps main's argc and argv;
+// adamic_program_arguments is programArguments(), a new array of the arguments after the program, and
+// adamic_read_text_file is readTextFile(path), { kind: 'Ok', text } or { kind: 'Error', message }. Both
+// return a reference the caller owns.
+void adamic_arguments_save(int count, char **values);
+adamic_array *adamic_program_arguments(void);
+adamic_object *adamic_read_text_file(const adamic_string *path);
+
+// adamic_decode_utf8 makes a string of bytes decoded as Node decodes them, WHATWG UTF-8 with U+FFFD
+// for each invalid sequence, and adamic_path_bytes is a path as the terminated bytes Node names a file
+// by, a lone surrogate as U+FFFD, or NULL when it holds a NUL, which names no file; the caller frees it
+// (input.c).
+adamic_string *adamic_decode_utf8(const unsigned char *bytes, size_t length);
+char *adamic_path_bytes(const adamic_string *path);
+
+// adamic_read_directory is readDirectory(path), { kind: 'Ok', names } with the names in Node's order,
+// and adamic_file_status is fileStatus(path), { kind: 'Ok', type, size, symbolicLink }, each or
+// { kind: 'Error', message } (directory.c). Both return a reference the caller owns.
+adamic_object *adamic_read_directory(const adamic_string *path);
+adamic_object *adamic_file_status(const adamic_string *path);
+
+// adamic_write_text_file is writeTextFile(path, text) (input.c): { kind: 'Ok' } or { kind: 'Error',
+// message }, a reference the caller owns.
+adamic_object *adamic_write_text_file(const adamic_string *path, const adamic_string *text);
+
+// adamic_panic writes "adamic: panic: <message>" to stderr and exits 70 (EX_SOFTWARE).
+_Noreturn void adamic_panic(const char *message, size_t length);
+
+// adamic_first_link_trap writes "adamic: first-link trap: <message>" to stderr and exits 75 (EX_TEMPFAIL):
+// the program reached a unit a first-link lowering couldn't lower (lower's Options.FirstLinkTraps), so its
+// run is never a pass.
+_Noreturn void adamic_first_link_trap(const char *bytes, size_t length);
+
+// ADAMIC_CHECK_STACK starts every function the compiler emits: past adamic_stack_limit, the stack is
+// nearly gone, and that's a panic, as Node's RangeError is, rather than a segfault (stack.c). The
+// stack grows down on every processor Adamic targets. __builtin_frame_address is the real frame even
+// when the address sanitizer keeps locals elsewhere.
+extern _Thread_local uintptr_t adamic_stack_limit;
+void adamic_stack_thread_start(void);
+_Noreturn void adamic_stack_overflow(void);
+#ifdef ADAMIC_TARGET_WASI
+// Even a function using only Wasm locals must advance the linear stack. Otherwise
+// its engine call stack can trap before this check sees any movement. The volatile
+// endpoints preserve a 64-byte frame, including in optimized recursive functions.
+#define ADAMIC_CHECK_STACK_MESSAGE(message) \
+	do { \
+		volatile unsigned char adamic_stack_frame[64]; \
+		adamic_stack_frame[0] = 0; \
+		adamic_stack_frame[63] = 0; \
+		if ((uintptr_t)adamic_stack_frame < adamic_stack_limit) { \
+			adamic_panic(message, sizeof(message) - 1); \
+		} \
+	} while (0)
+#else
+#define ADAMIC_CHECK_STACK_MESSAGE(message) \
+	do { \
+		if ((uintptr_t)__builtin_frame_address(0) < adamic_stack_limit) { \
+			adamic_panic(message, sizeof(message) - 1); \
+		} \
+	} while (0)
+#endif
+
+// Names are compile-time string literals; the guard allocates nothing.
+#define ADAMIC_CHECK_STACK() ADAMIC_CHECK_STACK_MESSAGE("RangeError: Maximum call stack size exceeded")
+#define ADAMIC_CHECK_STACK_NAMED(name) ADAMIC_CHECK_STACK_MESSAGE("RangeError: Maximum call stack size exceeded in " name)
+
+// adamic_unreachable ends a function the checker proved always returns. Reaching it is a compiler
+// bug, and it says so rather than returning garbage.
+_Noreturn void adamic_unreachable(void);
+// Stop on a broken runtime precondition, with its specific invariant.
+_Noreturn void adamic_invariant(const char *what);
+
+#include "regexp.h"
+#include "node_fs_file.h"
+#include "node_buffer.h"
+#include "node_crypto.h"
+// Fixed plain literals can have public # keys; Object reflection refuses those shapes.
+// Keep their enumeration distinct from the Object slice, which skips private class slots.
+adamic_array *adamic_plain_object_keys(const adamic_object *object);
+void *adamic_library_identity(size_t index);
+
+
+// C permits some function-to-void pointer conversions without a diagnostic.
+// Check the source expression's type before a constructor can convert it.
+#define adamic_closure_new(code, ...) (adamic_closure_new)(_Generic((code), adamic_code: (code)), __VA_ARGS__)
+#ifdef ADAMIC_CLOSURE_CONVENTION
+#define adamic_counted_closure_new(code, ...) (adamic_counted_closure_new)(_Generic((code), adamic_counted_code: (code)), __VA_ARGS__)
+#endif
+#ifdef ADAMIC_CANONICAL_CLOSURES
+#define adamic_closure_canonical(identity, code, ...) (adamic_closure_canonical)((identity), _Generic((code), adamic_code: (code)), __VA_ARGS__)
+#define adamic_closure_canonical_graph(identity, code, ...) (adamic_closure_canonical_graph)((identity), _Generic((code), adamic_code: (code)), __VA_ARGS__)
+#ifdef ADAMIC_CLOSURE_CONVENTION
+#define adamic_counted_closure_canonical(identity, code, ...) (adamic_counted_closure_canonical)((identity), _Generic((code), adamic_counted_code: (code)), __VA_ARGS__)
+#define adamic_counted_closure_canonical_graph(identity, code, ...) (adamic_counted_closure_canonical_graph)((identity), _Generic((code), adamic_counted_code: (code)), __VA_ARGS__)
+#endif
+#endif
+// Library host contracts, also needed by the generated entry point.
+#include "host_runtime.h"
+
+
+#endif
+
+#include "node_path.h"
+#include "node_fs_directory.h"
+
+#include "node_process.h"
+adamic_maybe_number adamic_process_exit_code(void);
+void adamic_process_set_exit_code(adamic_maybe_number code);
+void adamic_process_exit(adamic_maybe_number code);
+adamic_string *adamic_process_environment(const adamic_string *name);
