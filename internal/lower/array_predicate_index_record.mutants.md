@@ -2,6 +2,8 @@
 
 rulings.md:260's amendment (Nov 26, @system_adamic on #gcec0bx) admits an index-only arm by four conditions, in library_array_predicate.go's arrayExcludedIndexArm. Each mutant is one edit to library_array_predicate.go (M7 to locals.go, M8 to unknown.go), planted on a house box, the named tests run, then put back.
 
+Measured: all eight red on every row named below at 9b26cf43 (Loom job J-7w5ptz6, verdict pass), with the head's lower and oracle rows green first and each row's own RUN line and FAIL ending in its log. M1 to M6 and M8 were first measured red at eba40921 (J-0m6qcvp), M2 and M8 there on the two test-only JSON rows only, since json_record and json_recovery_record stopped at the narrowed read until 9b26cf43.
+
 | Mutant | Old text | New text | Red |
 |---|---|---|---|
 | M1: condition 2 dropped, every index value admitted | `if !l.indexValueAdmitsNoCallable(infos[0].ValueType(), map[*checker.Type]bool{}) {` | `if false && !l.indexValueAdmitsNoCallable(infos[0].ValueType(), map[*checker.Type]bool{}) {` | internal/lower's TestArrayPredicateIndexArmRefusals: unknown-value, callable-value and length-value, each lowering past isArray; TestArrayPredicateIndexArmValueType/open: Bag, Loosely, Calls, Unknowns and Lengths admitted |
