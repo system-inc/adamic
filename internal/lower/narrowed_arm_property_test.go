@@ -10,7 +10,8 @@ import (
 // through a's layout natively and printed 1, where Node prints NaN. Optimizer's rows: string tags and an
 // open enum's, read directly and handed on, and the honest twin whose call writes an a, which the rule, keyed
 // by the name, stops too. Rows with nothing between the check and the read, and a held binding the call
-// can't rewrite, lower and agree with Node. Mutant (narrowed_arm_property.mutants.md): narrowedArmReadGap
+// can't rewrite, lower and agree with Node. A getter named n anywhere stops the read even with nothing between,
+// since it answers each read itself, and an unrelated getter elsewhere doesn't. Mutant (narrowed_arm_property.mutants.md): narrowedArmReadGap
 // without its property dispatch, and the lie rows lower again.
 func TestNarrowedArmPropertyRead(t *testing.T) {
 	t.Parallel()
@@ -25,6 +26,8 @@ func TestNarrowedArmPropertyRead(t *testing.T) {
 		{"string honest twin", stringTypes + "function show(m: M): string { if (m.n.kind === 'a') { keep(m); return String(m.n.a + 1); } return 'b'; }\nconsole.log(show({ n: a }));\n", ""},
 		{"string nothing between", stringTypes + "function show(m: M): string { if (m.n.kind === 'a') { return String(m.n.a + 1); } return 'b'; }\nconsole.log(show({ n: a }));\nconsole.log(show({ n: b }));\n", "2\nb\n"},
 		{"enum nothing between", enumTypes + "function show(m: M): string { if (m.n.kind === K.A) { return String(m.n.a + 1); } return 'b'; }\nconsole.log(show({ n: a }));\n", "2\n"},
+		{"getter named n", stringTypes + "const g = { get n(): N { return b; } };\nconsole.log(g.n.kind);\nfunction show(m: M): string { if (m.n.kind === 'a') { return String(m.n.a + 1); } return 'b'; }\nconsole.log(show({ n: a }));\n", ""},
+		{"unrelated getter", stringTypes + "const g = { get other(): number { return 1; } };\nfunction show(m: M): string { if (m.n.kind === 'a') { return String(m.n.a + 1); } return 'b'; }\nconsole.log(show({ n: a }));\nconsole.log(String(g.other));\n", "2\n1\n"},
 		{"string held binding", stringTypes + "function show(m: M): string { const n = m.n; if (n.kind === 'a') { reset(m); return String(n.a + 1); } return 'b'; }\nconsole.log(show({ n: a }));\n", "2\n"},
 	} {
 		t.Run(row.name, func(t *testing.T) {
