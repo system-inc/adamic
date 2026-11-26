@@ -15,8 +15,10 @@ func TestMapUnionValueBoundaries(t *testing.T) {
 		name, source, reason string
 		refused              bool
 	}{
-		{"null_and_undefined", `const map = new Map<string, string | null | undefined>();`, "a Map of", false},
 		{"boolean_and_undefined", `const map = new Map<string, boolean | undefined>();`, "a Map of", false},
+		{"nonprimitive_value", `const map = new Map<string, object>();`, "a Map of", false},
+		{"nullable_erased_member", `const map = new Map<string, object | null | string>();`, "a Map of", false},
+		{"nullable_weak_member", `import type { Weak } from "adamic"; interface Link { readonly name: string }; type Value = Weak<Link> | null | string; const map = new Map<string, Value>();`, "a Map of", false},
 		{"unknown_value", `const map = new Map<string, unknown>();`, "a Map of", false},
 		{"branded_string", `type Path = string & { readonly _path: never }; const map = new Map<string, Path>();`, "a primitive brand member _path whose type is not void", true},
 		// A value with no representation: an intersection whose member holds flag as boolean | string, since one
