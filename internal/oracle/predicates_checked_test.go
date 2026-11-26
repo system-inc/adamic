@@ -47,11 +47,11 @@ var checkedPredicateFixtures = []struct {
 	{"assert_not_node", "asserting\nnarrowed\n", "asserting\n", "asserts", "Node", "Identifier", "", 1, 0},
 	// Language's false-branch forms (#7v4rjr7): the checker narrows each one's false side, and isS
 	// says false to a Statement, so the false check must stop it before n.e is read.
-	{"false_switch_true", "undefined\n", "", "false", "Node", "Statement", "adamic: panic: compiler bug: a field the checker proved is there is missing\n", 2, 0},
-	{"false_eq_false", "undefined\n", "", "false", "Node", "Statement", "adamic: panic: compiler bug: a field the checker proved is there is missing\n", 2, 0},
-	{"false_ne_true", "undefined\n", "", "false", "Node", "Statement", "adamic: panic: compiler bug: a field the checker proved is there is missing\n", 2, 0},
-	{"false_false_eq", "undefined\n", "", "false", "Node", "Statement", "adamic: panic: compiler bug: a field the checker proved is there is missing\n", 2, 0},
-	{"false_comma", "undefined\n", "", "false", "Node", "Statement", "adamic: panic: compiler bug: a field the checker proved is there is missing\n", 2, 0},
+	{"false_switch_true", "undefined\n", "", "false", "Node", "Statement", "adamic: panic: NotYet: a field missing from this object, where a narrowing kept across a call that rewrote the property said it is there (#8nj5pn4)\n", 2, 0},
+	{"false_eq_false", "undefined\n", "", "false", "Node", "Statement", "adamic: panic: NotYet: a field missing from this object, where a narrowing kept across a call that rewrote the property said it is there (#8nj5pn4)\n", 2, 0},
+	{"false_ne_true", "undefined\n", "", "false", "Node", "Statement", "adamic: panic: NotYet: a field missing from this object, where a narrowing kept across a call that rewrote the property said it is there (#8nj5pn4)\n", 2, 0},
+	{"false_false_eq", "undefined\n", "", "false", "Node", "Statement", "adamic: panic: NotYet: a field missing from this object, where a narrowing kept across a call that rewrote the property said it is there (#8nj5pn4)\n", 2, 0},
+	{"false_comma", "undefined\n", "", "false", "Node", "Statement", "adamic: panic: NotYet: a field missing from this object, where a narrowing kept across a call that rewrote the property said it is there (#8nj5pn4)\n", 2, 0},
 }
 
 func predicateCheckedInput(t *testing.T, name string) (string, string) {

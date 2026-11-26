@@ -42,7 +42,7 @@ func TestLiteralOptionalOracleCatchesMutant(t *testing.T) {
 		t.Fatal(err)
 	}
 	result := execute(t, binary)
-	if result.exitCode != 70 || !strings.Contains(string(result.stderr), "a field the checker proved is there is missing") {
+	if result.exitCode != 70 || !strings.Contains(string(result.stderr), "a field missing from this object, where a narrowing kept across a call that rewrote the property said it is there") {
 		t.Fatalf("want restored missing-field panic: exit %d, stderr %q", result.exitCode, result.stderr)
 	}
 	if disagreement(onNode(t, path), result) == "" {
