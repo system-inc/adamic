@@ -8,7 +8,7 @@ import (
 
 // firstLinkOneTrap holds a first-link lowering to the one trap its program stops at: every whole-program pass
 // passes over what the trapped unit left in its tables, so the lowering returns no error, Traps is that one
-// row, no row is Suspect, and no rewriting pass skipped its work.
+// row, no row is Suspect, no rewriting pass skipped its work, and no judging pass gave up.
 func firstLinkOneTrap(t *testing.T, program *ir.Program, err error, want ir.Trap) {
 	t.Helper()
 	if err != nil {
@@ -25,6 +25,9 @@ func firstLinkOneTrap(t *testing.T, program *ir.Program, err error, want ir.Trap
 	}
 	if len(program.TrapRewritesSkipped) != 0 {
 		t.Errorf("TrapRewritesSkipped: got %q, want none", program.TrapRewritesSkipped)
+	}
+	if len(program.TrapJudgmentsAbandoned) != 0 {
+		t.Errorf("TrapJudgmentsAbandoned: got %+v, want none", program.TrapJudgmentsAbandoned)
 	}
 }
 

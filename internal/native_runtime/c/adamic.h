@@ -616,6 +616,9 @@ void adamic_foreign_dropped(adamic_object *object);
 
 bool adamic_instanceof(const void *value, const adamic_class *wanted);
 size_t adamic_virtual(const adamic_object *object, size_t slot);
+// adamic_method_this is the this a direct call enters a class method's own code with, checked to be an
+// instance of that class or of one derived from it (class_inheritance.c).
+adamic_object *adamic_method_this(adamic_object *object, const adamic_class *owner);
 void adamic_object_free_children(adamic_object *object, void (*release)(void *));
 
 // adamic_slot_cache remembers, at one place in the program that reads a field, where the field was in

@@ -135,6 +135,19 @@ type Program struct {
 	// first-link lowering skipped, in the order skipped. What runs after such a skip may be lowering's own
 	// echo rather than a wall, so every Trap recorded after the first is Suspect.
 	TrapRewritesSkipped []string
+	// TrapJudgmentsAbandoned is each whole-program pass that only judges the IR which a first-link lowering
+	// stopped judging partway, in the order abandoned: its rerun met a stop it couldn't place or one it met
+	// before (a Gap), one inside a unit trapped already (an Echo), or an error that names no site (an Error),
+	// and every unit past it went unjudged. A program with any is no program to emit, since its units can't
+	// be told judged from not, and every Trap recorded after the first is Suspect.
+	TrapJudgmentsAbandoned []TrapJudgmentAbandoned
+}
+
+// TrapJudgmentAbandoned is one judging pass a first-link lowering gave up on (Program.TrapJudgmentsAbandoned):
+// the pass's Go name, the site of the stop it gave up at, file:line:col or empty for an Error's, and Why, the
+// kind of that stop's row: "Gap", "Echo" or "Error".
+type TrapJudgmentAbandoned struct {
+	Pass, Site, Why string
 }
 
 // Trap is one unit a first-link lowering couldn't lower, which it lowered as a Panic with Trap set instead:
@@ -162,7 +175,8 @@ type Trap struct {
 	Phase string
 	// Suspect says a recovered Go panic or an "Error" was trapped earlier in the same lowering. Either can
 	// leave lowering's state part written, so this row may be its echo rather than a wall of its own. A row
-	// recorded after a whole-program pass skipped a rewrite (Program.TrapRewritesSkipped) is Suspect too.
+	// recorded after a whole-program pass skipped a rewrite (Program.TrapRewritesSkipped) or gave up judging
+	// (Program.TrapJudgmentsAbandoned) is Suspect too.
 	Suspect bool
 	// Echo says a whole-program pass stopped inside a unit trapped already, whose leftover state may be
 	// what it stopped at: no wall of its own, so the report counts it apart.
@@ -590,7 +604,8 @@ type (
 	}
 
 	// ObjectLiteral makes an object. With Spread, it's { ...Spread, fields }: a copy of Spread's
-	// object, whatever its shape, with Fields replaced (each one a field Spread's type has).
+	// object, whatever its shape, with Fields replaced (each one a field Spread's type has), or, with
+	// SpreadWith, a fresh object built from Spread's own keys and Fields.
 	//
 	// SpreadMaybeUndefined says Spread may be undefined, and then JavaScript's { ...undefined } is
 	// {}: the object made is Empty, each of the source type's fields the literal doesn't give, as
@@ -608,6 +623,15 @@ type (
 		NoReuse              bool
 		SpreadMaybeUndefined bool
 		Empty                []Field
+
+		// SpreadWith says a field can't land in the slot Spread brings for it: one of another kind than the
+		// source's slot, one the source's type makes optional, or one it doesn't declare, which by width the
+		// actual source may hold anyway (lower's spreadOverwrite, #k7g6f9h). Natively the object is then
+		// adamic_object_spread_with's, whose shape is made at run time from the actual source's own keys,
+		// each at its index, then each of Fields the source lacks, appended in the literal's order, every
+		// slot the kind of the value that fills it, in Node's key order. Its layout is no static one, so
+		// every field it holds is read by name. It is never the source taken over (NoReuse).
+		SpreadWith bool
 
 		// SpreadGetters are the getters a spread may run: natively the copy calls the getter of every
 		// accessor its source's class chain owns (runtime/object.c's adamic_object_copy_checked), an

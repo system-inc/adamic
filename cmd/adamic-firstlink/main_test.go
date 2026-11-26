@@ -57,20 +57,30 @@ func TestWriteUnderStaysInItsDirectory(t *testing.T) {
 // traps.md names as a measurement gap.
 // Sites are written relative to the deepest directory holding the root and every site, so a program rooted at
 // src/tsc/tsc.ts reads its src/compiler sites as compiler/...; a site with no path stays as it came, and so does every
-// site when the only directory they share is the filesystem's root. Mutant: relativeSites returning traps
-// unchanged, red.
+// site when the only directory they share is the filesystem's root. A site with no ':' is a file with no position,
+// the file alone a stop names, and an absolute one is placed too, its directory counted toward the common one.
+// Mutants: relativeSites returning traps unchanged, red; the common-directory loop skipping a site with no ':', red
+// at the file-only row, which reads ../compiler/types.ts.
 func TestSitesAreRelativeToTheProgramsCommonDirectory(t *testing.T) {
 	t.Parallel()
 	tree := t.TempDir()
-	placed := relativeSites(filepath.Join(tree, "src", "tsc"), []ir.Trap{
+	placed, judgments := relativeSites(filepath.Join(tree, "src", "tsc"), []ir.Trap{
 		{Site: filepath.Join(tree, "src", "compiler", "checker.ts") + ":3:5"},
 		{Site: filepath.Join(tree, "src", "tsc", "tsc.ts") + ":1:1"},
 		{Site: "a.ts:2:2"},
-	})
+	}, []ir.TrapJudgmentAbandoned{{Pass: "checkSomething", Site: filepath.Join(tree, "src", "compiler", "utilities.ts") + ":7:1", Why: "Echo"}, {Pass: "checkAccessorSpreads", Site: "checker.ts", Why: "Gap"}})
 	if placed[0].Site != "compiler/checker.ts:3:5" || placed[1].Site != "tsc/tsc.ts:1:1" || placed[2].Site != "a.ts:2:2" {
 		t.Fatalf("relativeSites: %+v", placed)
 	}
-	apart := relativeSites(filepath.Join(tree, "src"), []ir.Trap{{Site: filepath.Join(tree, "src", "a.ts") + ":1:1"}, {Site: "/b.ts:1:1"}})
+	if judgments[0].Site != "compiler/utilities.ts:7:1" || judgments[1].Site != "checker.ts" || judgments[0].Pass != "checkSomething" {
+		t.Fatalf("relativeSites' abandoned judgments: %+v", judgments)
+	}
+	// A file with no position is placed as any site is, and its directory counts toward the common one.
+	placed, judgments = relativeSites(filepath.Join(tree, "src", "tsc"), []ir.Trap{{Site: filepath.Join(tree, "src", "tsc", "tsc.ts") + ":1:1"}}, []ir.TrapJudgmentAbandoned{{Pass: "voidDiscards", Site: filepath.Join(tree, "src", "compiler", "types.ts"), Why: "Gap"}})
+	if placed[0].Site != "tsc/tsc.ts:1:1" || judgments[0].Site != "compiler/types.ts" {
+		t.Fatalf("relativeSites with a file-only site: %+v, %+v; want tsc/tsc.ts:1:1 and compiler/types.ts", placed, judgments)
+	}
+	apart, _ := relativeSites(filepath.Join(tree, "src"), []ir.Trap{{Site: filepath.Join(tree, "src", "a.ts") + ":1:1"}, {Site: "/b.ts:1:1"}}, nil)
 	if apart[0].Site != filepath.Join(tree, "src", "a.ts")+":1:1" || apart[1].Site != "/b.ts:1:1" {
 		t.Fatalf("sites sharing only the filesystem's root must stay as they came: %+v", apart)
 	}
@@ -85,7 +95,7 @@ func TestReportCountsAndNamesTheGap(t *testing.T) {
 		{Kind: "Panic", Reason: "index out of range", Site: "a.a:20:1", Unit: "a.a fourth", Phase: "Body", Suspect: true},
 		{Kind: "NotYet", Reason: "an echo", Site: "a.a:21:1", Unit: "a.a fourth", Phase: "findCycles", Echo: true},
 	}
-	counted := summarize(traps, []string{"normalizeAsync"})
+	counted := summarize(traps, []string{"normalizeAsync"}, nil)
 	if counted.Total != 5 || counted.Suspect != 1 || counted.Echo != 1 || len(counted.RewritesSkipped) != 1 || counted.ByPhase["Body"] != 3 || counted.ByPhase["checkSlotWrites"] != 1 || counted.ByKind["Refused"] != 2 ||
 		counted.ByReason["Refused: sort without a comparator"] != 2 || counted.Unplaced != 1 {
 		t.Fatalf("summarize: %+v", counted)
@@ -102,8 +112,27 @@ func TestReportCountsAndNamesTheGap(t *testing.T) {
 			t.Errorf("traps.md lacks %q:\n%s", want, text)
 		}
 	}
-	if empty := summarize(nil, nil); empty.Traps == nil || empty.RewritesSkipped == nil || empty.Total != 0 {
+	if empty := summarize(nil, nil, nil); empty.Traps == nil || empty.RewritesSkipped == nil || empty.JudgmentsAbandoned == nil || empty.Total != 0 {
 		t.Fatalf("no traps should write an empty list, not null: %+v", empty)
+	}
+}
+
+// An abandoned judgment whose stop names no site, an Error's, reads "with an error that names no site" in the wall
+// line and in traps.md, never "at" and a blank; one with a site reads at it. Mutant: abandonedAt's empty case
+// dropped, red at both.
+func TestAnAbandonedJudgmentWithNoSiteSaysSo(t *testing.T) {
+	t.Parallel()
+	unsited := ir.TrapJudgmentAbandoned{Pass: "checkSomething", Why: "Error"}
+	sited := ir.TrapJudgmentAbandoned{Pass: "voidDiscards", Site: "voids.a", Why: "Gap"}
+	if line := incomplete(unsited); line != "adamic-firstlink: the program's judgment is incomplete, so nothing was emitted: checkSomething gave up with an error that names no site (Error), and every unit past it went unjudged" {
+		t.Errorf("the wall line: %q", line)
+	}
+	if line := incomplete(sited); !strings.Contains(line, ": voidDiscards gave up at voids.a (Gap), and") {
+		t.Errorf("the wall line of a sited judgment: %q", line)
+	}
+	text := markdown(summarize(nil, nil, []ir.TrapJudgmentAbandoned{unsited, sited}))
+	if !strings.Contains(text, "Judgments abandoned past a stop, in order: checkSomething with an error that names no site (Error); voidDiscards at voids.a (Gap).") {
+		t.Errorf("traps.md doesn't say the judgment names no site:\n%s", text)
 	}
 }
 
@@ -184,5 +213,85 @@ func TestTheDoorReportsATrapAndTheBinaryStopsAtIt(t *testing.T) {
 	exit, isExit := err.(*exec.ExitError)
 	if !isExit || exit.ExitCode() != 75 || runOut.String() != "first\n" || !strings.HasPrefix(runErr.String(), "adamic: first-link trap: Refused: ") {
 		t.Fatalf("binary: %v, stdout %q, stderr %q, want exit 75 after first, at the trap", err, runOut.String(), runErr.String())
+	}
+}
+
+// voidsThatDisagree makes a void call through an interface whose class methods of the name disagree on their result,
+// an object's and a number's (internal/oracle's void_discards_refused/methods.a, its template literals taken out),
+// which voidDiscards, a judging pass, stops at with a NotYet whose Where names only the file, as checkAccessorSpreads'
+// did on tsc before it named its spread (#nxb3xh1). In trap mode no unit holds that stop, so the pass gives up there:
+// a Gap, and an abandoned judgment.
+const voidsThatDisagree = `interface Box {
+    readonly label: string;
+}
+interface Action {
+    run(): void;
+}
+class Maker implements Action {
+    name: string;
+    constructor(name: string) {
+        this.name = name;
+    }
+    run(): Box {
+        return { label: this.name };
+    }
+}
+class Counter implements Action {
+    count = 0;
+    run(): number {
+        this.count++;
+        return this.count;
+    }
+}
+const actions: Action[] = [new Maker("a"), new Counter()];
+for (const action of actions) {
+    action.run();
+}
+console.log(String(actions.length));
+`
+
+// A lowering in which a judging pass gave up left units nobody judged, so the door writes traps.json and traps.md,
+// each naming the pass, its site and why, and exits 1 naming the first as the wall, with no C, no JavaScript and no
+// binary written. Mutant: the door's check of TrapJudgmentsAbandoned dropped, so it emits and exits 0, red here.
+func TestTheDoorWontEmitPastAnAbandonedJudgment(t *testing.T) {
+	t.Parallel()
+	work := t.TempDir()
+	root := filepath.Join(work, "voids.a")
+	if err := os.WriteFile(root, []byte(voidsThatDisagree), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	output := filepath.Join(work, "out")
+	var stdout, stderr bytes.Buffer
+	code := run([]string{root, output, "--link"}, &stdout, &stderr)
+	const wall = "voidDiscards gave up at voids.a (Gap)"
+	if code != 1 || !strings.Contains(stderr.String(), "adamic-firstlink: the program's judgment is incomplete, so nothing was emitted: "+wall) || strings.Contains(stderr.String(), "compiler bug") {
+		t.Fatalf("exit %d, stderr %q; want exit 1 naming %q as the wall", code, stderr.String(), wall)
+	}
+	if printed := strings.Fields(stdout.String()); len(printed) != 2 || printed[0] != filepath.Join(output, "traps.json") || printed[1] != filepath.Join(output, "traps.md") {
+		t.Fatalf("printed %q, want traps.json and traps.md alone", printed)
+	}
+	for _, name := range []string{"c/main.c", "js/main.js", "firstlink"} {
+		if _, err := os.Stat(filepath.Join(output, name)); !os.IsNotExist(err) {
+			t.Errorf("%s was written past an abandoned judgment: %v", name, err)
+		}
+	}
+	var counted report
+	data, err := os.ReadFile(filepath.Join(output, "traps.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := json.Unmarshal(data, &counted); err != nil {
+		t.Fatal(err)
+	}
+	want := ir.TrapJudgmentAbandoned{Pass: "voidDiscards", Site: "voids.a", Why: "Gap"}
+	if len(counted.JudgmentsAbandoned) == 0 || counted.JudgmentsAbandoned[0] != want {
+		t.Fatalf("traps.json's judgments_abandoned: %s; want %+v first", data, want)
+	}
+	text, err := os.ReadFile(filepath.Join(output, "traps.md"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(string(text), "Judgments abandoned past a stop, in order: voidDiscards at voids.a (Gap)") {
+		t.Fatalf("traps.md doesn't name the abandoned judgment:\n%s", text)
 	}
 }

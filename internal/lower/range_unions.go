@@ -144,15 +144,16 @@ func rangeUnionStopped(expression ir.Expression) []ir.Expression {
 
 // checkRangeUnionReads is the table's pass, once lowering is done: every stopping expression, and every field
 // write (a SetProperty, a statement), whose operand is held as a Union that may be a range type's value, is
-// NotYet. A program with no NodeArray layout, or none of whose types was held as a range type's Union, has no
-// such operand, and the pass reads nothing.
+// NotYet, at the function or the statement of Main holding it (stopWhere), since the IR keeps no node for it. A
+// program with no NodeArray layout, or none of whose types was held as a range type's Union, has no such operand,
+// and the pass reads nothing.
 func (l *lowering) checkRangeUnionReads() error {
 	if !l.rangeUnionsHeld || !l.rangeArraysPresent() {
 		return nil
 	}
 	operands := &rangeOperands{l: l}
 	var refused error
-	inspect := func(where string) func(node any) bool {
+	inspect := func(where string, site stopSite) func(node any) bool {
 		return func(node any) bool {
 			if refused != nil {
 				return false
@@ -167,16 +168,18 @@ func (l *lowering) checkRangeUnionReads() error {
 			}
 			for _, operand := range stopped {
 				if operand != nil && operand.Type() == ir.Union && operands.held(operand) {
-					refused = &NotYet{Where: l.result.Source, What: road + " in " + where + ", whose operand may be a range type's value held as a union, where a NodeArray may stand for it"}
+					refused = &NotYet{Where: l.stopWhere(site), What: road + " in " + where + ", whose operand may be a range type's value held as a union, where a NodeArray may stand for it"}
 					return false
 				}
 			}
 			return true
 		}
 	}
-	walk(l.result.Main, inspect("the program's body"))
-	for _, function := range l.result.Functions {
-		walk(function.Body, inspect("function "+function.Name))
+	for index, statement := range l.result.Main {
+		walk(statement, inspect("the program's body", stopSite{function: -1, statement: index}))
+	}
+	for index, function := range l.result.Functions {
+		walk(function.Body, inspect("function "+function.Name, stopSite{function: index, statement: -1}))
 	}
 	return refused
 }

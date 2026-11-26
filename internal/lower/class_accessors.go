@@ -434,6 +434,18 @@ func (l *lowering) finishAccessors() error {
 				if expression.Spread != nil {
 					expression.NoReuse = true
 					expression.SpreadGetters = l.spreadGetters(expression)
+					// A SpreadWith literal whose source may hold an accessor adamic_object_spread_with doesn't copy as
+					// Node does stops here (spreadAccessorClass).
+					if expression.SpreadWith {
+						if class := l.spreadAccessorClass(expression); class != "" {
+							where := l.result.Source
+							if expression.SpreadSite > 0 && expression.SpreadSite <= len(l.spreadNodes) {
+								where = l.program.Where(l.spreadNodes[expression.SpreadSite-1])
+							}
+							failure = &NotYet{Where: where, What: spreadWithAccessorStop + ", " + class + " among them"}
+							return value
+						}
+					}
 					node = expression
 				}
 			case ir.Property:
@@ -601,6 +613,56 @@ func (l *lowering) spreadGetters(literal ir.ObjectLiteral) []int {
 	return getters
 }
 
+// spreadAccessorClass is what a SpreadWith literal's source may be that adamic_object_spread_with doesn't copy as
+// Node's spread does, or "" when there's none: an object literal with accessors, whose accessors are own enumerable
+// keys Node's spread runs and copies, and a class instance with an accessor named as one of its public fields, which
+// would put a getter on a copied name (object_spread.c's backstop). A class whose accessors are all on its prototype
+// passes, the narrowing of #vjvcnnj's write half: Node's spread copies own enumerable keys only, so a prototype
+// accessor is never copied, on Node or natively, and a read of its name from the copy stays #7mjgxkc's stop
+// (spreadCopyRead, which sees through a SpreadWith literal to its source). It asks what spreadGetters asks, every
+// registered class whose instances are assignable to the type the spread sees, all of them when that type isn't
+// known, so it fails closed, and a fresh data literal has none.
+func (l *lowering) spreadAccessorClass(literal ir.ObjectLiteral) string {
+	if plainDataSpreadSource(literal.Spread) {
+		return ""
+	}
+	var viewed *checker.Type
+	if literal.SpreadSite > 0 && literal.SpreadSite <= len(l.spreadSources) {
+		viewed = l.spreadSources[literal.SpreadSite-1]
+	}
+	for index := range l.result.Classes {
+		// An object literal's holder is its own fresh type, which the checker relates with the excess-property
+		// check, so { label, get size() } is no { readonly label: string } though its value reaches one by width
+		// (J-5e03qs3's accessor_literal.ts). An object literal with accessors counts whatever the view, failing
+		// closed.
+		holder := l.classHolders[index+1]
+		if viewed != nil && holder != nil && !l.result.Classes[index].Literal && !l.checker.IsTypeAssignableTo(holder, viewed) {
+			continue
+		}
+		public := map[string]bool{}
+		if l.result.Classes[index].Literal {
+			for _, field := range l.result.Classes[index].PublicFields {
+				public[field.Name] = true
+			}
+		} else {
+			for _, field := range l.result.Classes[index].Fields {
+				public[field.Name] = public[field.Name] || !field.Private
+			}
+		}
+		for class := index + 1; class != 0; class = l.result.Classes[class-1].Base {
+			for _, accessor := range l.result.Classes[class-1].Accessors {
+				if l.result.Classes[index].Literal {
+					return "an object literal with accessors"
+				}
+				if public[accessor.Name] {
+					return l.result.Classes[index].Name + ", whose " + accessor.Name + " is an accessor named as a public field,"
+				}
+			}
+		}
+	}
+	return ""
+}
+
 // Until spread callbacks are explicit calls in the flow graph, their exception edges must not be lost.
 func (l *lowering) checkAccessorSpreads() error {
 	setterOnly := false
@@ -620,27 +682,43 @@ func (l *lowering) checkAccessorSpreads() error {
 	if !throwing && !setterOnly && len(l.staticGlobals) == 0 {
 		return nil
 	}
-	spread := false
-	staticSpread := false
-	check := func(node any) bool {
-		if literal, ok := node.(ir.ObjectLiteral); ok && literal.Spread != nil {
-			spread = true
-			staticSpread = staticSpread || !plainDataSpreadSource(literal.Spread)
+	// The first spread, and the first whose source isn't a fresh data literal, each with where it lies, so the
+	// stop names the spread it's about (stopWhere): the spread's own node, or the function or the statement of
+	// Main holding it, where lowering kept no node.
+	var spread, staticSpread *stopSite
+	check := func(function, statement int) func(node any) bool {
+		return func(node any) bool {
+			literal, ok := node.(ir.ObjectLiteral)
+			if !ok || literal.Spread == nil {
+				return true
+			}
+			site := stopSite{function: function, statement: statement}
+			if literal.SpreadSite > 0 && literal.SpreadSite <= len(l.spreadNodes) {
+				site.node = l.spreadNodes[literal.SpreadSite-1]
+			}
+			if spread == nil {
+				spread = &site
+			}
+			if staticSpread == nil && !plainDataSpreadSource(literal.Spread) {
+				staticSpread = &site
+			}
+			return true
 		}
-		return true
 	}
-	walk(l.result.Main, check)
-	for _, function := range l.result.Functions {
-		walk(function.Body, check)
+	for index, statement := range l.result.Main {
+		walk(statement, check(-1, index))
 	}
-	if staticSpread && len(l.staticGlobals) > 0 {
-		return &NotYet{Where: l.result.Source, What: "spreading in a program with static constructor objects"}
+	for index, function := range l.result.Functions {
+		walk(function.Body, check(index, -1))
 	}
-	if spread && setterOnly {
-		return &NotYet{Where: l.result.Source, What: "spreading a setter-only property, whose read value is undefined"}
+	if staticSpread != nil && len(l.staticGlobals) > 0 {
+		return &NotYet{Where: l.stopWhere(*staticSpread), What: "spreading in a program with static constructor objects"}
 	}
-	if spread && throwing {
-		return &NotYet{Where: l.result.Source, What: "spreading an accessor literal whose getter may throw"}
+	if spread != nil && setterOnly {
+		return &NotYet{Where: l.stopWhere(*spread), What: "spreading a setter-only property, whose read value is undefined"}
+	}
+	if spread != nil && throwing {
+		return &NotYet{Where: l.stopWhere(*spread), What: "spreading an accessor literal whose getter may throw"}
 	}
 	return nil
 }

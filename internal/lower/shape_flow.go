@@ -48,14 +48,27 @@ func (graph *allocationFlowGraph) reachingAllocations(expression ir.Expression, 
 		// seen through a cast (binder.ts's isNarrowableOperand, `isNarrowableOperand((expr as
 		// BinaryExpression).left)`) reopens a frame for the cast receiver at every level, once per
 		// recursive call, fan-out^32 before the depth cap, and lowering never finished (#tzy22kd).
-		if key, keyed := graph.projectionFrame(expression, depth); keyed {
+		//
+		// The memo alone doesn't cut a cycle between two such receivers: each level is a deeper frame, so
+		// two receivers whose fields' sources are each other (a projection of x reaches y's receiver, and
+		// y's reaches x's) reopen a fresh frame at every level, fan-out^32 before the depth cap. On tsc's
+		// whole program that ran the first link's 55 minutes (#r1ef873). So a receiver already open on the
+		// stack, at any depth, answers Unknown, as a busy Read does, and Unknown keeps the checks.
+		if key, open, keyed := graph.projectionFrame(expression, depth); keyed {
 			if graph.projectionFrames == nil {
 				graph.projectionFrames = map[string]ir.AllocationSet{}
 			}
 			if cached, ok := graph.projectionFrames[key]; ok {
 				return cached
 			}
-			defer func() { graph.projectionFrames[key] = result }()
+			if graph.projectionOpen == nil {
+				graph.projectionOpen = map[string]bool{}
+			}
+			if graph.projectionOpen[open] {
+				return ir.AllocationSet{Unknown: true, Reasons: []string{"recursive projection receiver not certified"}}
+			}
+			graph.projectionOpen[open] = true
+			defer func() { delete(graph.projectionOpen, open); graph.projectionFrames[key] = result }()
 		}
 	}
 	if counter := projectionFramesOpened.Load(); counter != nil && project {
@@ -154,36 +167,55 @@ func (graph *allocationFlowGraph) reachingAllocations(expression ir.Expression, 
 	return result
 }
 
-// projectionFrame is the memo key of a projected query: the expression, its depth, and the Reads busy
-// around it, sorted. An expression that isn't receiver-shaped has none, and isn't memoized.
-func (graph *allocationFlowGraph) projectionFrame(expression ir.Expression, depth int) (string, bool) {
+// projectionFrame is the memo key of a projected query: the expression, its depth, and the Reads and
+// receivers busy around it, sorted, since either cuts what the query can follow, and the expression's own
+// value key, which the open-receiver guard reads. An expression that isn't receiver-shaped has neither, and
+// isn't memoized.
+func (graph *allocationFlowGraph) projectionFrame(expression ir.Expression, depth int) (string, string, bool) {
 	key, keyed := projectionValueKey(expression)
 	if !keyed {
-		return "", false
+		return "", "", false
 	}
 	busy := make([]int, 0, len(graph.projectionBusy))
 	for local := range graph.projectionBusy {
 		busy = append(busy, local)
 	}
 	sort.Ints(busy)
+	open := make([]string, 0, len(graph.projectionOpen))
+	for receiver := range graph.projectionOpen {
+		open = append(open, receiver)
+	}
+	sort.Strings(open)
 	var builder strings.Builder
 	builder.WriteString(strconv.Itoa(depth))
 	for _, local := range busy {
 		builder.WriteString(",")
 		builder.WriteString(strconv.Itoa(local))
 	}
+	for _, receiver := range open {
+		builder.WriteString(";")
+		builder.WriteString(receiver)
+	}
 	builder.WriteString(" ")
 	builder.WriteString(key)
-	return builder.String(), true
+	return builder.String(), key, true
 }
 
 // projectionValueKey spells a receiver-shaped value whole, every field of every node printed, so two
-// values share a key only when they're the same value: a Read, a property or a constant element of
-// one, and the wrappers follow looks through. Anything else has no key.
+// values share a key only when they're the same value: a Read or a call, a property or a constant
+// element of one, and the wrappers follow looks through. Anything else has no key.
+//
+// A call is a root as a Read is, because it's the other receiver a projected query reopens a frame for:
+// follow demands its targets' result nodes, and a result's source can be a field of the same call, so a
+// function that returns a field of its own call seen through a cast, `return (pick((node as
+// Pair).left) as Pair).right`, reached that call again one level deeper at every level. Unkeyed, it had
+// neither the memo nor the open-receiver cut, and two such returns opened 2^32 frames (#r1ef873, row 1
+// at 2a97945f). Its answer is a function of the value and the busy and open receivers around it, as a
+// Read-rooted receiver's is, since follow reads only the graph's fixed sources for it.
 func projectionValueKey(value ir.Expression) (string, bool) {
 	for node := value; ; {
 		switch current := node.(type) {
-		case ir.Read:
+		case ir.Read, ir.Call, ir.CallClosure:
 			return fmt.Sprintf("%#v", value), true
 		case ir.Property:
 			node = current.Object

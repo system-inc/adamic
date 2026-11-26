@@ -26,7 +26,8 @@ func (e *emitter) uniformFieldSlot(object, name string) string {
 
 // ObjectLiteral and MapEntries produce generated layouts (shapeOf in emit.go).
 // Copies, reuse and region allocation preserve those layouts. A spread preserves its source's
-// layout too, except the undefined branch, whose emptyFields layout must be counted explicitly.
+// layout too, except the undefined branch, whose emptyFields layout must be counted explicitly, and a
+// SpreadWith literal's, whose appended names have no slot known before the run.
 func uniformFieldOffsets(program *ir.Program) map[string]int {
 	// Named regex groups create layouts outside ObjectLiteral. Until their names and
 	// offsets participate in this proof, regex programs retain checked shape lookup.
@@ -115,7 +116,14 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 	}
 	walkExpressions(program, func(expression ir.Expression) {
 		if literal, ok := expression.(ir.ObjectLiteral); ok {
-			if literal.Spread == nil {
+			if literal.SpreadWith {
+				// adamic_object_spread_with keeps every name the source holds at its index, which the source's own
+				// layout records, but appends each name it lacks after the source's count, which only the run
+				// knows. Any of the literal's names may be appended, so none of them has a uniform slot.
+				for _, field := range literal.Fields {
+					offsets[field.Name] = -1
+				}
+			} else if literal.Spread == nil {
 				record(literal.Fields)
 			} else if literal.SpreadMaybeUndefined {
 				record(emptyFields(literal))
