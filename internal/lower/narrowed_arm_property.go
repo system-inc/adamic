@@ -54,8 +54,11 @@ func (l *lowering) narrowedArmPropertyReadGap(node *ast.Node) error {
 	if storage, known := l.representation(declared); known && storage == ir.Union {
 		return nil // The held union's member is checked at run time before it's narrowed.
 	}
-	if narrowedStorage, narrowedKnown := l.representation(narrowed); narrowedKnown && !narrowedStorage.IsReference() {
-		return nil // A scalar arm reads no object's layout. An arm whose storage isn't known is judged.
+	if narrowedStorage, narrowedKnown := l.representation(narrowed); narrowedKnown && narrowedStorage != ir.Object {
+		return nil // Only an object arm reads through an object's layout: a scalar, a string, an array, a closure or a record arm doesn't. An arm whose storage isn't known is judged.
+	}
+	if property.Flags&ast.SymbolFlagsEnumMember != 0 {
+		return nil // An enum's member is a constant no write reaches.
 	}
 	name := key.Text()
 	stop := l.notYet(node, "a read of property "+name+" narrowed to "+l.checker.TypeToString(narrowed)+" where a call may have rewritten it")
