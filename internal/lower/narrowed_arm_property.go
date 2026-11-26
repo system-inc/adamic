@@ -108,7 +108,7 @@ func (l *lowering) narrowedArmPropertyReadGap(node *ast.Node) error {
 	if l.accessorName(name) {
 		return stop
 	}
-	if !l.armReadMaySilentlyMisread(node, narrowed) {
+	if !l.armReadMaySilentlyMisread(node, narrowed, declared) {
 		// A stale arm is read by the value's own shape or by a slot every layout holding the name shares, and
 		// a field the new value lacks stops loudly there (Emit's guard on #8nj5pn4), so only a field held at
 		// two representations can read the wrong bits silently.
@@ -204,10 +204,13 @@ func (l *lowering) armObservationAlong(read *ast.Node, flow *ast.FlowNode, joins
 
 // armReadMaySilentlyMisread is whether a read through a property narrowed to an object arm could read a stale
 // value's field at the wrong representation, the one silent case Compiler left the floor on #8nj5pn4: the field
-// read off it, or, where the narrowed value is handed on whole, any field its arm declares, is declared at two
-// representations somewhere in the program or its libraries (fieldRepresentations). A field whose
-// representations can't all be named counts as two, failing closed.
-func (l *lowering) armReadMaySilentlyMisread(read *ast.Node, narrowed *checker.Type) bool {
+// read off it, or, where the narrowed value is handed on whole, any field its arm declares, is held at two
+// representations by the types a stale value could be. Those are the types declaring the field whose type is
+// assignable to the read's declared type, Node for node.parent, since only one of them can be what the call left
+// there (fieldDeclarationsOf). A declaration whose owner can't be named, or a computed key the checker can't
+// spell, which could name the field, counts as a representation of its own when its owner may be the value,
+// failing closed.
+func (l *lowering) armReadMaySilentlyMisread(read *ast.Node, narrowed, declared *checker.Type) bool {
 	at := read
 	for at.Parent != nil && at.Parent.Kind == ast.KindParenthesizedExpression {
 		at = at.Parent
@@ -220,29 +223,54 @@ func (l *lowering) armReadMaySilentlyMisread(read *ast.Node, narrowed *checker.T
 			names = append(names, field.Name)
 		}
 	}
-	representations := l.fieldRepresentations()
-	if representations == nil {
-		return true
+	declarations := l.fieldDeclarationsOf()
+	may := func(owner *checker.Type) bool {
+		return owner == nil || l.checker.IsTypeAssignableTo(owner, declared)
+	}
+	unspelled := false
+	for _, declaration := range declarations.unspelled {
+		if may(declaration.owner) {
+			unspelled = true
+			break
+		}
 	}
 	for _, name := range names {
-		if len(representations[name]) > 1 {
+		held := map[ir.Type]bool{}
+		for _, declaration := range declarations.named[name] {
+			if may(declaration.owner) {
+				held[declaration.storage] = true
+			}
+		}
+		if len(held) > 1 || len(held) > 0 && unspelled {
 			return true
 		}
 	}
 	return false
 }
 
-// fieldRepresentations is every field name the program and its libraries declare, with each representation a
-// declaration of it gives its value: a property, a method, an accessor, a parameter property or an object
-// literal's member, as sourceSlotDeclared reads them. An optional field adds undefined to its type first. It's
-// walked once per lowering. Nil means some declaration's name couldn't be read, so any name may be held twice.
-func (l *lowering) fieldRepresentations() map[string]map[ir.Type]bool {
-	if l.armFieldRepresentationsDone {
-		return l.armFieldRepresentations
+// fieldDeclaration is one declaration of a field: the type that declares it, nil where it can't be named, and the
+// representation it gives the field's value, 0 where that isn't known.
+type fieldDeclaration struct {
+	owner   *checker.Type
+	storage ir.Type
+}
+
+// fieldDeclarations is every declaration of every field the program and its libraries declare, by name, and the
+// ones whose name the checker can't spell, a computed key typed string but no literal.
+type fieldDeclarations struct {
+	named     map[string][]fieldDeclaration
+	unspelled []fieldDeclaration
+}
+
+// fieldDeclarationsOf walks once per lowering every declaration of a field, as sourceSlotDeclared reads them: a
+// property, a method, an accessor, a parameter property or an object literal's member. An optional field adds
+// undefined to its type first. Its owner is a class's or an interface's declared type, an object literal's or a
+// type literal's own type, or, for a parameter property, its class's.
+func (l *lowering) fieldDeclarationsOf() *fieldDeclarations {
+	if l.armFieldDeclarations != nil {
+		return l.armFieldDeclarations
 	}
-	l.armFieldRepresentationsDone = true
-	found := map[string]map[ir.Type]bool{}
-	unnamed := false
+	found := &fieldDeclarations{named: map[string][]fieldDeclaration{}}
 	var visit ast.Visitor
 	visit = func(part *ast.Node) bool {
 		switch part.Kind {
@@ -250,41 +278,51 @@ func (l *lowering) fieldRepresentations() map[string]map[ir.Type]bool {
 			if part.Kind == ast.KindParameter && !parameterProperty(part) {
 				break
 			}
+			declaration := fieldDeclaration{owner: l.fieldOwner(part)}
+			if symbol := l.checker.GetSymbolOfDeclaration(part); symbol != nil {
+				value := l.checker.GetTypeOfSymbol(symbol)
+				if symbol.Flags&ast.SymbolFlagsOptional != 0 {
+					value = l.checker.GetUnionType([]*checker.Type{value, l.checker.GetUndefinedType()})
+				}
+				if storage, known := l.representation(value); known {
+					declaration.storage = storage
+				}
+			}
 			name, named := l.sourceSlotDeclaredName(part)
-			if !named {
-				unnamed = true
-				return true
+			switch {
+			case !named:
+				found.unspelled = append(found.unspelled, declaration)
+			case name != "":
+				found.named[name] = append(found.named[name], declaration)
 			}
-			if name == "" {
-				break
-			}
-			symbol := l.checker.GetSymbolOfDeclaration(part)
-			if symbol == nil {
-				unnamed = true
-				return true
-			}
-			declared := l.checker.GetTypeOfSymbol(symbol)
-			if symbol.Flags&ast.SymbolFlagsOptional != 0 {
-				declared = l.checker.GetUnionType([]*checker.Type{declared, l.checker.GetUndefinedType()})
-			}
-			storage, known := l.representation(declared)
-			if !known {
-				storage = 0 // No representation, which counts as one more than any it may also have.
-			}
-			if found[name] == nil {
-				found[name] = map[ir.Type]bool{}
-			}
-			found[name][storage] = true
 		}
 		part.ForEachChild(visit)
-		return unnamed
+		return false
 	}
 	for _, file := range l.program.CompilerProgram().GetSourceFiles() {
 		file.AsNode().ForEachChild(visit)
-		if unnamed {
-			return nil
-		}
 	}
-	l.armFieldRepresentations = found
+	l.armFieldDeclarations = found
 	return found
+}
+
+// fieldOwner is the type that declares a field's declaration, or nil where it can't be named.
+func (l *lowering) fieldOwner(declaration *ast.Node) *checker.Type {
+	holder := declaration.Parent
+	if declaration.Kind == ast.KindParameter && holder != nil {
+		holder = holder.Parent // A parameter property's constructor, then its class.
+	}
+	if holder == nil {
+		return nil
+	}
+	switch holder.Kind {
+	case ast.KindClassDeclaration, ast.KindClassExpression, ast.KindInterfaceDeclaration:
+		if symbol := l.checker.GetSymbolOfDeclaration(holder); symbol != nil {
+			return l.checker.GetDeclaredTypeOfSymbol(symbol)
+		}
+		return nil
+	case ast.KindTypeLiteral, ast.KindObjectLiteralExpression:
+		return l.checker.GetTypeAtLocation(holder)
+	}
+	return nil
 }
