@@ -1,0 +1,15 @@
+interface Tree {
+	readonly tag: string;
+	peek(): string;
+}
+class Real implements Tree {
+	constructor(readonly tag: string) {}
+	peek(): string {
+		return "peeked " + this.tag;
+	}
+}
+function copy<T extends Tree>(x: T): Partial<T> {
+	return { ...x };
+}
+const v = copy(new Real("t"));
+console.log(String(v.tag));

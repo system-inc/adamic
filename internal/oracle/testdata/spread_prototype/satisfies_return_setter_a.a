@@ -1,0 +1,19 @@
+interface Source {
+	readonly label: string;
+	readonly weight: number;
+}
+interface Light {
+	readonly label: string;
+}
+class Sized {
+	readonly label = "t";
+	set weight(value: number) {
+		console.log("set " + String(value));
+	}
+}
+const built: Source = new Sized();
+const make = (() => {
+	return { ...built };
+}) satisfies () => Light;
+const value = make();
+console.log(value.label + " " + typeof value.weight + " " + String(value.weight));

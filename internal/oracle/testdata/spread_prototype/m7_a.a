@@ -1,0 +1,16 @@
+interface Tree { tag: string; peek(): string }
+interface Plain { tag: string }
+class Real implements Tree {
+	constructor(public tag: string) {}
+	peek(): string {
+		return "peeked " + this.tag;
+	}
+}
+const tree: Tree = new Real("t");
+let p: Plain = { tag: "start" };
+const v = (p = { ...tree }) || p;
+try {
+	console.log(v.peek());
+} catch (caught) {
+	console.log("caught " + p.tag);
+}
