@@ -2,9 +2,12 @@ package lower
 
 import (
 	"math"
+	"path/filepath"
 	"reflect"
+	"slices"
 	"strconv"
 	"strings"
+	"sync"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -543,6 +546,16 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 					reference = parent
 				}
 				if hazard != enumTagNoHazard && !l.enumTagRefinementProven(reference, declared) {
+					// The swing (rulings.md:258 as amended for .ts, Adamic's ruling of Nov 25 on #x2cjvy9): in .ts,
+					// a refinement the walk can't prove is read through each narrowed object member's checked view,
+					// as an open-enum predicate's true branch is (#k1t2wp9), so a lying layout stops loudly at its
+					// read or write instead of being refused at compile time. .a refuses as before.
+					if file := l.program.FileName(ast.GetSourceFileOfNode(node)); !strings.HasSuffix(file, ".a") {
+						if enumTagSwingSites != nil {
+							enumTagSwingSites.record(filepath.Dir(file), l.program.Where(node))
+						}
+						return l.enumTagCheckedViews(node, declared, observed)
+					}
 					if hazard == enumTagSharedValueHazard {
 						return &Refused{Where: l.program.Where(node), What: "an object refinement by tags from different numeric enums that share a value", Fix: "give the members tags from one enum, or tags with distinct values (adamic/enum-tag)"}
 					}
@@ -817,3 +830,61 @@ func (l *lowering) enumSwitchCovered(node *ast.Node) bool {
 	}
 	return true
 }
+
+// enumTagCheckedViews registers each object member of observed, the type the checker narrowed the refined
+// reference to, as a checked view of declared, its declared union, once per pair, so every read or write
+// narrowed to the member is a checked one: a value whose kind says the member while its layout is another's
+// stops there. A member the view can't hold (a getter, a callable field, a whole-object copy) stays NotYet
+// in the view's own words. The view is registered narrowing, as a predicate's is.
+func (l *lowering) enumTagCheckedViews(node *ast.Node, declared, observed *checker.Type) error {
+	members := []*checker.Type{observed}
+	if observed.Flags()&checker.TypeFlagsUnion != 0 {
+		members = observed.Types()
+	}
+	if l.enumTagCheckedViewsDone == nil {
+		l.enumTagCheckedViewsDone = map[enumTagCheckedViewKey]error{}
+	}
+	for _, member := range members {
+		if member.Flags()&checker.TypeFlagsPrimitive != 0 {
+			continue
+		}
+		key := enumTagCheckedViewKey{declared, member}
+		err, done := l.enumTagCheckedViewsDone[key]
+		if !done {
+			_, err = l.view(node, nil, declared, member)
+			if err == nil {
+				l.viewSources[len(l.viewSources)-1].narrows = true
+			}
+			l.enumTagCheckedViewsDone[key] = err
+		}
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// enumTagSwingSites, when a test sets it, records each .ts refinement that took the swing's checked view in
+// place of family 1's refusal, at the site the refusal names, keyed by its file's directory. A refusal in .ts
+// can't be seen once the swing lowers it, so a .ts test pins the same site the .a refusal names here, and a
+// mutant that proves a refinement it shouldn't leaves no site and goes red. Production leaves it nil.
+var enumTagSwingSites *enumTagSwingRecord
+
+type enumTagSwingRecord struct {
+	mutex sync.Mutex
+	sites map[string][]string
+}
+
+func (r *enumTagSwingRecord) record(directory, where string) {
+	r.mutex.Lock()
+	defer r.mutex.Unlock()
+	if r.sites == nil {
+		r.sites = map[string][]string{}
+	}
+	if !slices.Contains(r.sites[directory], where) {
+		r.sites[directory] = append(r.sites[directory], where)
+	}
+}
+
+// enumTagCheckedViewKey is a registration's declared union and member, a named struct as brandedViewKey is.
+type enumTagCheckedViewKey struct{ source, target *checker.Type }
