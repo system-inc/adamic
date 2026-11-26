@@ -211,7 +211,10 @@ func (l *lowering) castRefusal(node *ast.Node) error {
 			}
 			l.refusal.checkedCasts[node] = true
 		}
-		if proof.overlap || proof.structuralView {
+		// An untagged union's cast is a view cast too: its write judgment walks past its tag, which its own test
+		// checks at the cast (untaggedWidening), so the unchecked-widening rule judges it past the slots its view
+		// checks (viewCastRefusal), never as a plain widening that would refuse the open kind it tests (#qxt10dd).
+		if proof.overlap || proof.structuralView || proof.untagged {
 			if l.refusal.viewCasts == nil {
 				l.refusal.viewCasts = map[*ast.Node]bool{}
 			}
@@ -339,7 +342,7 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 		return castProof{dictionaryView: true}, nil
 	}
 	if present := l.absentArm(source, target); present != nil {
-		proof, err := l.unionMemberProof(present, target, stop)
+		proof, err := l.unionMemberProof(node, present, target, stop)
 		proof.absent = err == nil
 		return proof, err
 	}
@@ -403,7 +406,7 @@ func (l *lowering) castRoad(node *ast.Node, source, target *checker.Type, stop f
 		}
 		return castProof{}, stop(cause, detail)
 	}
-	return l.unionMemberProof(source, target, stop)
+	return l.unionMemberProof(node, source, target, stop)
 }
 
 // absentArm is source without its undefined, where the cast is a member cast over a represented union
@@ -532,8 +535,9 @@ func (l *lowering) overlapTarget(members, targets []*checker.Type) bool {
 }
 
 // unionMemberProof proves a cast from a represented union to some of its members by a tag every
-// member holds as a distinct literal. stop words the branch that finds no proof (castStop).
-func (l *lowering) unionMemberProof(source, target *checker.Type, stop func(castCause, string) error) (castProof, error) {
+// member holds as a distinct literal. stop words the branch that finds no proof (castStop). node is the
+// cast, whose target's view contract the untagged arm's write judgment reads (untaggedWidening).
+func (l *lowering) unionMemberProof(node *ast.Node, source, target *checker.Type, stop func(castCause, string) error) (castProof, error) {
 	members, targets := castMembers(source), castMembers(target)
 	if field := l.castUnionWrites(source); field != "" {
 		// A primitive's apparent members (valueOf) and an array's methods (pop) read as writable fields here;
@@ -548,7 +552,7 @@ func (l *lowering) unionMemberProof(source, target *checker.Type, stop func(cast
 	if l.overlapTarget(members, targets) {
 		return castProof{overlap: true}, nil
 	}
-	if l.untaggedUnionArm(source, target, members, targets) {
+	if l.untaggedUnionArm(node, source, target, members, targets) {
 		return castProof{untagged: true}, nil
 	}
 	// Checking kind cannot prove a refinement of a member's payload or callback signature.
