@@ -1,0 +1,1 @@
+- **Type-only, casts cause 1d (#bbssdcy, Adamic's Nov 5 10:48:21Z spelling under docs/rulings.md:33, Compiler under the split):** 99-seats-casts-diagnostic-collection-mint spells the empty located-diagnostic array in createDiagnosticCollection.add as `[] as unknown as SortedArray<DiagnosticWithLocation>`. The fresh literal mints the existing array brand and the cast erases.
