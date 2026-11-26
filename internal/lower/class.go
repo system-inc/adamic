@@ -414,6 +414,9 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if !ast.HasSyntacticModifier(method.Declarations[0], ast.ModifierFlagsStatic) {
+		l.notePrototypeMemberUse(callee, object)
+	}
 	object = l.privateStaticReceiver(callee.Name(), object, false)
 	values, spread, err := l.callArguments(node.AsCallExpression().Arguments.Nodes)
 	if err != nil {
