@@ -233,7 +233,15 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		lent := e.lendable && lendable(expression.Of) && !expression.Optional
 		object := e.value(expression.Object)
-		slot := e.fieldSlot(object, expression.Name, expression.Class)
+		// Only a read that loads through the slot takes readFieldSlot's guard and the field cache its miss
+		// needs. A readiness, maybe or absent read goes by its own road below and the slot is discarded, so
+		// it's fieldSlot's, whose bare uniform slot declares no cache.
+		var slot string
+		if expression.Readiness == "" && !expression.Of.IsMaybe() && !expression.Absent {
+			slot = e.readFieldSlot(object, expression.Name, expression.Class)
+		} else {
+			slot = e.fieldSlot(object, expression.Name, expression.Class)
+		}
 		if expression.Readiness != "" {
 			slot = fmt.Sprintf("adamic_object_read(%s, %s, &%s, %s)", object, cString(expression.Name), e.cache(), cString(expression.Readiness))
 			if expression.Optional {

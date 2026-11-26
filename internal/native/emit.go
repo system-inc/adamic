@@ -537,8 +537,10 @@ type emitter struct {
 	// thunks are the methods whose adamic_method is declared (methodThunk).
 	thunks map[string]bool
 
-	// fieldOffsets proves uniform named slots across the program (fields.go).
-	fieldOffsets map[string]int
+	// fieldOffsets proves uniform named slots across the program (fields.go), and uniformShapes holds, by
+	// name, the literal layouts a uniform slot's shape guard compares with (literalShapesHolding).
+	fieldOffsets  map[string]int
+	uniformShapes map[string][]string
 
 	// initialized is every global main declares, in the order their declarations run: modules in
 	// ECMAScript's order, and each module's from the top.
