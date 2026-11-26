@@ -1,11 +1,16 @@
 package lower
 
 import (
+	"context"
 	"errors"
+	"path/filepath"
+	"slices"
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // The swing (#x2cjvy9, Adamic's ruling of Nov 25) moved 134 rows of lower's verbose run, each a .ts
@@ -14,6 +19,36 @@ import (
 // row here is the program its test lowered in .ts, built from the same shared constants and the same
 // concatenation, so it's byte for byte that program. The constants below are the tests' own locals,
 // copied, since a test's local can't be named from here.
+
+func init() { enumTagSwingSites = &enumTagSwingRecord{} }
+
+// enumTagSwungAt is every site in the program whose entry file is path where a .ts refinement took the
+// swing's checked view in place of family 1's refusal (enumTagSwingSites), sorted. Each test writes its
+// program in a directory of its own, so the sites are that program's alone.
+func enumTagSwungAt(path string) []string {
+	enumTagSwingSites.mutex.Lock()
+	defer enumTagSwingSites.mutex.Unlock()
+	sites := slices.Clone(enumTagSwingSites.sites[filepath.Dir(path)])
+	slices.Sort(sites)
+	return sites
+}
+
+// lowerSourceSwung lowers source as main.ts and gives the sites where the swing took a refinement.
+func lowerSourceSwung(t *testing.T, source string) (*ir.Program, []string, error) {
+	t.Helper()
+	path := writeAgreementSource(t, "main.ts", source)
+	loaded, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatalf("Load: %v", err)
+	}
+	program, err := Lower(context.Background(), loaded)
+	return program, enumTagSwungAt(path), err
+}
+
+// swungAtSuffix says whether one of sites ends with the given file, line and column, as a Where does.
+func swungAtSuffix(sites []string, suffix string) bool {
+	return slices.ContainsFunc(sites, func(site string) bool { return strings.HasSuffix(site, suffix) })
+}
 
 // TestEnumTagAccessRefusals' reset.
 const swingAccessReset = "function reset(m: M): void { m.n = b; }\n"

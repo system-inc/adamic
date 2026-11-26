@@ -159,6 +159,17 @@ func TestKindPredicateWalkRefusals(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
+			if probe.refusal == "share a value" {
+				// .a keeps the shared-value refusal (Adamic's condition 3); in .ts the swing reads the refinement
+				// through the checked view at the same site, and its agreement is enumTagSwingRows' row.
+				if _, err := lowerSourceAs(t, probe.types+probe.source, ".a"); err == nil || !strings.Contains(err.Error(), probe.refusal) {
+					t.Fatalf("want %q in .a, got %v", probe.refusal, err)
+				}
+				if _, sites, err := lowerSourceSwung(t, probe.types+probe.source); err != nil || len(sites) == 0 {
+					t.Fatalf("want .ts lowered through the swing, got sites %v and %v", sites, err)
+				}
+				return
+			}
 			ext := ".ts"
 			if probe.refusal == kindPredicateRefusal {
 				ext = ".a"
@@ -178,7 +189,9 @@ func TestKindPredicateWalkRefusals(t *testing.T) {
 }
 
 // An import under another name and a re-export under another name both resolve to the one
-// declaration, so they count; a call through a namespace import is a property access and doesn't.
+// declaration, so they count; a call through a namespace import is a property access and doesn't, so
+// its refinement is the walk's to refuse, and in .ts the swing reads it through the checked view at
+// that site instead (enumTagSwingSites).
 func TestKindPredicateThroughModules(t *testing.T) {
 	t.Parallel()
 	library := kindPredicateTypes + "export function isA(n: N): n is A { return n.kind === K.A; }\nexport { K, F };\nexport type { A, B, N };\n"
@@ -204,14 +217,12 @@ func TestKindPredicateThroughModules(t *testing.T) {
 				t.Fatalf("Load: %v", err)
 			}
 			_, err = Lower(context.Background(), program)
-			if probe.refusal == "" {
-				if err != nil {
-					t.Fatalf("want it lowered, got %v", err)
-				}
-				return
+			swung := enumTagSwungAt(filepath.Join(directory, "main.ts"))
+			if err != nil {
+				t.Fatalf("want it lowered, got %v", err)
 			}
-			if err == nil || !strings.Contains(err.Error(), probe.refusal) {
-				t.Fatalf("want %q, got %v", probe.refusal, err)
+			if (probe.refusal != "") != (len(swung) > 0) {
+				t.Fatalf("want the swing at a site %v, got sites %v", probe.refusal != "", swung)
 			}
 		})
 	}
@@ -254,7 +265,16 @@ func TestEnumTagRuntimeRefinementPosition(t *testing.T) {
 	t.Parallel()
 	const read = "function read(value: X): Tagged { if (value.kind === Kind.B) { return value.literal; } return value.literal; }\n"
 	const wide = "function numeric(): number { return 1; }\nconst wide: X = { kind: numeric(), literal: { kind: Kind.A, value: 1 }, name: { kind: Kind.A, value: 2 } };\n"
-	for _, extension := range []string{".a", ".ts"} {
+	t.Run(".ts", func(t *testing.T) {
+		// In .ts the swing reads the refinement at 4:71 through the checked view instead, and the
+		// program stops next at wide's build, a number into the Kind.A slot.
+		t.Parallel()
+		_, sites, err := lowerSourceSwung(t, enumTagTypePositionTypes+read+wide)
+		if !swungAtSuffix(sites, "/main.ts:4:71") || err == nil || !strings.Contains(err.Error(), "main.ts:6:25: Adamic 0.1 refuses an unproven value assigned to a numeric literal or enum member slot Kind.A") {
+			t.Fatalf("want the swing at main.ts:4:71 and the stop at wide's build, got sites %v and %v", sites, err)
+		}
+	})
+	for _, extension := range []string{".a"} {
 		t.Run(extension, func(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSourceAs(t, enumTagTypePositionTypes+read+wide, extension)

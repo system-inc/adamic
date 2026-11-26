@@ -79,7 +79,7 @@ func TestClosedKindSourcesNarrowByThePredicate(t *testing.T) {
 // The program names WideIdent only as a parameter's type, never in an alias of its own, since an alias in a
 // program file is a declared source too and hid the declaration file's (J-8gfsn48).
 // Mutant: the declared sources read from the program's own files only (closedKindDeclaredTypes), never its
-// declaration files, lowers the first row.
+// declaration files, fits the first row, so it takes no swing site and goes red.
 func TestClosedKindSourcesReadTypeOnlyImports(t *testing.T) {
 	t.Parallel()
 	const exports = "export type { K, Ex, Ident };\nimport type { WideIdent } from './lib';\nfunction wideOther(w: WideIdent): number { return w.other; }\n"
@@ -101,9 +101,14 @@ func TestClosedKindSourcesReadTypeOnlyImports(t *testing.T) {
 				t.Fatalf("Load: %v", err)
 			}
 			program, err := Lower(context.Background(), loaded)
+			// Without a name the sources don't fit, so the walk can't prove the refinement and the swing reads
+			// it through the checked view (enumTagSwingSites); with one they fit, and cause A narrows it.
+			if swung := enumTagSwungAt(main); probe.lowers == (len(swung) > 0) {
+				t.Fatalf("want the swing at a site %v, got sites %v and %v", !probe.lowers, swung, err)
+			}
 			if !probe.lowers {
-				if err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
-					t.Fatalf("want %q, got %v", kindPredicateRefusal, err)
+				if err != nil {
+					t.Fatalf("want it lowered through the swing, got %v", err)
 				}
 				return
 			}

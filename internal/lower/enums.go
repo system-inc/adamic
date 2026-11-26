@@ -2,9 +2,12 @@ package lower
 
 import (
 	"math"
+	"path/filepath"
 	"reflect"
+	"slices"
 	"strconv"
 	"strings"
+	"sync"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -546,7 +549,10 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 					// Probe for Adamic's question on #x2cjvy9 (Nov 24, 19:02Z), never for landing: in .ts, the
 					// refined value is read through each narrowed object member's checked view instead, as an
 					// open-enum predicate's true branch is (#k1t2wp9), so the census counts what stops next.
-					if !strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".a") {
+					if file := l.program.FileName(ast.GetSourceFileOfNode(node)); !strings.HasSuffix(file, ".a") {
+						if enumTagSwingSites != nil {
+							enumTagSwingSites.record(filepath.Dir(file), l.program.Where(node))
+						}
 						return l.enumTagViewProbe(node, declared, observed)
 					}
 					if hazard == enumTagSharedValueHazard {
@@ -852,6 +858,28 @@ func (l *lowering) enumTagViewProbe(node *ast.Node, declared, observed *checker.
 		}
 	}
 	return nil
+}
+
+// enumTagSwingSites, when a test sets it, records each .ts refinement that took the swing's checked view in
+// place of family 1's refusal, at the site the refusal names, keyed by its file's directory. A refusal in .ts
+// can't be seen once the swing lowers it, so a .ts test pins the same site the .a refusal names here, and a
+// mutant that proves a refinement it shouldn't leaves no site and goes red. Production leaves it nil.
+var enumTagSwingSites *enumTagSwingRecord
+
+type enumTagSwingRecord struct {
+	mutex sync.Mutex
+	sites map[string][]string
+}
+
+func (r *enumTagSwingRecord) record(directory, where string) {
+	r.mutex.Lock()
+	defer r.mutex.Unlock()
+	if r.sites == nil {
+		r.sites = map[string][]string{}
+	}
+	if !slices.Contains(r.sites[directory], where) {
+		r.sites[directory] = append(r.sites[directory], where)
+	}
 }
 
 // enumTagViewKey is a probe registration's source and member, a named struct as brandedViewKey is.

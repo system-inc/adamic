@@ -1,7 +1,6 @@
 package lower
 
 import (
-	"strings"
 	"testing"
 )
 
@@ -54,8 +53,9 @@ func TestEnumTagWalkDropsMembersThatHoldNoValue(t *testing.T) {
 func TestEnumTagWalkKeepsMembersThatHoldAValue(t *testing.T) {
 	t.Parallel()
 	source := neverMemberTypes + "interface Q { readonly kind: K; readonly q: string }\nfunction numeric(): number { return 1; }\nconst wide: Q = { kind: numeric(), q: 'wide' };\nfunction isPQ(n: P | Q): n is P { return n.kind === K.P; }\nfunction show(n: (P | Q) & (P | Q | C)): string { return isPQ(n) ? `p ${n.p}` : 'other'; }\nconsole.log(show(p));\n"
-	_, err := lowerSourceAs(t, source, ".a")
-	if err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
-		t.Fatalf("want %q, got %v", kindPredicateRefusal, err)
+	// .a stops earlier at the predicate under rulings.md:142, so the walk is judged in .ts, where a refinement it
+	// can't prove takes the swing's checked view (enumTagSwingSites).
+	if _, sites, err := lowerSourceSwung(t, source); err != nil || len(sites) == 0 {
+		t.Fatalf("want the walk to keep Q and the swing to take the refinement, got sites %v and %v", sites, err)
 	}
 }

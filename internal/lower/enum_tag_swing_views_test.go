@@ -19,7 +19,7 @@ import (
 // swing's road again.
 const enumTagSwingViewTypes = `enum K { A = 1, B = 2 }
 enum F { X = 1 }
-interface A { readonly kind: K.A; readonly flag: F; readonly a: number }
+interface A { readonly kind: K.A; readonly flag: F; a: number }
 interface B { readonly kind: K.B; readonly b: string }
 type N = A | B;
 interface M { n: N }
@@ -34,7 +34,8 @@ function use(x: A): string { return String(x.a + 1); }
 // loudly at its read, never reading B's storage through A's layout: read directly, handed to a function taking
 // the member, stored in an array of the member and read back, and read through a wider structural view. Each
 // honest twin agrees with Node on both backends, and each lie stops with a deliberate panic at exit 70 on sanitized
-// native and the JavaScript backend, where Node prints what reading a missing field gives. Mutant: the view
+// native and the JavaScript backend, where Node prints what reading a missing field gives; a write through
+// the refined type stops at the write. A's a is writable for that row alone. Mutant: the view
 // registered without narrows (enums.go's enumTagViewProbe), under which the array and wider-view lies read B's
 // storage raw and the test goes red.
 func TestEnumTagSwingLiesStopAtEveryRead(t *testing.T) {
@@ -44,6 +45,9 @@ func TestEnumTagSwingLiesStopAtEveryRead(t *testing.T) {
 		{"through a function", "return use(m.n);"},
 		{"stored in an array", "const held: A[] = [m.n]; let out = ''; for (const x of held) { out += String(x.a + 1); } return out;"},
 		{"through a wider view", "const wide: { readonly a: number } = m.n; return String(wide.a + 1);"},
+		// Language's r03 on #x2cjvy9: the view checks the receiver's layout before it stores, so no A-layout
+		// store lands in a B.
+		{"written through the refined type", "m.n.a = 5; return String(m.n.a);"},
 	} {
 		for _, side := range []struct{ name, call, want string }{
 			{"honest", "keep", "AGREE"},

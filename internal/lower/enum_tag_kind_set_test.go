@@ -288,10 +288,12 @@ func TestKindSetClosedSourcesFitEveryKind(t *testing.T) {
 			t.Parallel()
 			source := closedKindTypes + p.source + predicate + "console.log(show(body)); console.log(show(ident)); console.log(show(numbered));\n"
 			if !p.fit {
-				if _, err := lowerSourceAs(t, source, ".a"); err == nil {
-					t.Fatal("kind-set all-kinds fit: a closed source with only its first kind fitting lowered")
+				// .a stops earlier at the predicate under rulings.md:142, so the fit is judged in .ts: a source that
+				// doesn't fit leaves the refinement to the swing's checked view (enumTagSwingSites), and its
+				// agreement is enumTagSwingRows' "TestKindSetClosedSourcesFitEveryKind/one_does_not_fit".
+				if _, sites, err := lowerSourceSwung(t, source); len(sites) == 0 {
+					t.Fatalf("kind-set all-kinds fit: a closed source with only its first kind fitting narrowed with no swing (%v)", err)
 				}
-				// one_does_not_fit: .a stops earlier at a type predicate whose return is not proven (rulings.md:142); its .ts side is enumTagSwingRows' "TestKindSetClosedSourcesFitEveryKind/one_does_not_fit".
 				return
 			}
 			program := lowersAndAgreesWithNodeAs(t, source, ".ts")
@@ -385,10 +387,12 @@ console.log(show(body)); console.log(show(a));
 				}
 				return
 			}
-			if _, err := lowerSourceAs(t, source, ".a"); err == nil {
-				t.Fatalf("kind-set union claim %s: a source fitting neither claimed member lowered", p.name)
+			// .a stops earlier at the predicate under rulings.md:142, so the fit is judged in .ts: a source fitting
+			// neither member leaves the refinement to the swing's checked view (enumTagSwingSites), and each row's
+			// agreement is enumTagSwingRows' "TestKindSetUnionClaimFitsEverySource/<row>".
+			if _, sites, err := lowerSourceSwung(t, source); len(sites) == 0 {
+				t.Fatalf("kind-set union claim %s: a source fitting neither claimed member narrowed with no swing (%v)", p.name, err)
 			}
-			// odd_declared, odd_built, odd_anonymous: .a stops earlier at a type predicate whose return is not proven (rulings.md:142); their .ts sides are enumTagSwingRows' "TestKindSetUnionClaimFitsEverySource/<row>".
 		})
 	}
 }
