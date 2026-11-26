@@ -1,0 +1,21 @@
+# Keeps-nullish over the untagged arm (Performance): the pin and its mutant only, the fast half.
+# Source after environment.sh, cloud/sandboxed-job.sh, sandboxed_npm stage3/api, sandboxed_products. Never merged.
+set -u
+fail=0
+P=./internal/lower
+pin='^TestKeepsNullishCastOverTheUntaggedArmIsChecked$'
+out=$(gofmt -l internal/lower); [ -z "$out" ] && echo "PASS gofmt" || { echo "FAIL gofmt: $out"; fail=1; }
+go vet $P > "$TMPDIR/vet.log" 2>&1 && echo "PASS vet" || { echo "FAIL vet"; head -20 "$TMPDIR/vet.log"; fail=1; }
+go test -count=1 -v -run "$pin|^TestKeepsNullishCastLowersAsItsPresentRoad$" $P > "$TMPDIR/pin.log" 2>&1; r=$?
+grep -E -- '^\s*--- (PASS|FAIL)|_test.go:[0-9]+:' "$TMPDIR/pin.log" | cut -c1-400
+[ $r = 0 ] && echo "PASS pins" || { echo "FAIL pins"; fail=1; }
+cp internal/lower/cast.go "$TMPDIR/cast.go.keep"
+sed -i 's/ \&\& !proof.untagged \&\& proof.kindUnion == nil/ \&\& proof.kindUnion == nil/' internal/lower/cast.go
+if cmp -s internal/lower/cast.go "$TMPDIR/cast.go.keep"; then echo "FAIL mutant not applied"; fail=1; else
+	go vet $P > "$TMPDIR/mvet.log" 2>&1 && echo "compiles" || { echo "FAIL mutant doesn't compile"; fail=1; }
+	go test -count=1 -v -run "$pin" $P > "$TMPDIR/mutant.log" 2>&1
+	grep -E -- '^\s*--- (PASS|FAIL)|_test.go:[0-9]+:' "$TMPDIR/mutant.log" | cut -c1-400
+	grep -qE -- '--- FAIL: TestKeepsNullishCastOverTheUntaggedArmIsChecked/a_member' "$TMPDIR/mutant.log" && echo "PASS mutant red" || { echo "FAIL mutant survived"; fail=1; }
+fi
+cp "$TMPDIR/cast.go.keep" internal/lower/cast.go
+[ $fail = 0 ] && echo "VERDICT PASS" || { echo "VERDICT FAIL"; false; }
