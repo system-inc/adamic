@@ -41,9 +41,11 @@ func TestRuntimeNotYetSpreadWithSourceForm(t *testing.T) {
 	}
 }
 
-// The tuple pin, the run-time stop's one witness (a tuple held in a union with a plain object type), binds its
-// exact bytes to the form, its ruling and its lifting task. A function stops at compile time (checkLibrarySpreads),
-// so backstop_closure.ts holds no row, and this test says so.
+// The run-time stop's reach as measured (Adamic's word on #k7g6f9h, Nov 26): one road meets it today, a tuple held
+// in a union with a plain object type, backstop_tuple.ts, whose row binds its exact bytes to the form, its ruling
+// and its lifting task. A function stops at compile time (checkLibrarySpreads), so backstop_closure.ts holds no row,
+// and this test says so. The check's own domain is wider (anything not stored as a plain object or an accessor-free
+// class instance): a change that opens another run-time road adds its witness here and its row in the same head.
 func TestRuntimeNotYetSpreadWithSourceRows(t *testing.T) {
 	t.Parallel()
 	root := filepath.Join("..", "..")
