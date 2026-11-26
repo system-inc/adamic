@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compare two latent census passes unit by unit, base against head, for cloud/gates/unit-census-pair.sh.
+"""Compare a latent census pass unit by unit, base against head, for cloud/gates/unit-census-{entry,directory}.sh.
 
 Usage: units-compare.py <base prefix> <head prefix> <base tree> <head tree> [--message <file>]
 
