@@ -839,8 +839,7 @@ func (l *lowering) fixedFieldRead(node *ast.Node, object ir.Expression, name str
 		return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)}), nil
 	}
 	if optional && !of.IsReference() {
-		// Scratch hack for the #0d56xpd scout, never to land: ?. lowered as a plain read, to see the next stop.
-		optional = false
+		return nil, l.notYet(node, "?. to a "+typeName(of)+", which would be "+typeName(of)+" | undefined")
 	}
 	return l.defined(node, l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)})), nil
 }
