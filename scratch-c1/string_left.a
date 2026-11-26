@@ -1,0 +1,13 @@
+// Scratch probe for #snypn8c c1, never landed: does tsc accept a string literal on an && left that reaches a member
+// slot? Expected TS2872 (this kind of expression is always truthy).
+enum Ternary { False = 0, Unknown = 1, Maybe = 3, True = -1 }
+function checked(n: number): Ternary.True {
+	if (n < 0) {
+		throw new Error("negative");
+	}
+	return Ternary.True;
+}
+function word(n: number): Ternary.True {
+	return "a" && checked(n);
+}
+console.log(String(word(1)));
