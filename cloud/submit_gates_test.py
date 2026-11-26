@@ -100,6 +100,86 @@ baseTree = {
 }
 
 
+class GoTestSummaryTests(unittest.TestCase):
+    latent = "github.com/system-inc/adamic/stage3/census/latent"
+    passing = ("", "/importclean", "/overlaytext", "/refusalrewrite", "/statecopy", "/statementrewrite", "/timing")
+    no_tests = ("/refusalrewrite/cmd", "/replay", "/replay/worker", "/tool")
+
+    def events(self, failed=False, latent_action=None, skipped_test=False):
+        def event(package, action, **fields):
+            return dict(Time="2026-11-24T00:00:00Z", Action=action, Package=package, **fields)
+
+        events = []
+        for suffix in self.passing + self.no_tests:
+            package = self.latent + suffix
+            events.append(event(package, "start"))
+            if suffix in self.no_tests:
+                events.append(event(package, "output", Output=f"?   \t{package}\t[no test files]\n"))
+                events.append(event(package, "skip", Elapsed=0))
+                continue
+            test = "TestLatent" if not suffix else "TestPackage"
+            action = "fail" if not suffix and failed else "pass"
+            if not suffix and skipped_test:
+                action = "skip"
+            events.extend([
+                event(package, "run", Test=test),
+                event(package, "output", Test=test, OutputType="frame", Output=f"=== RUN   {test}\n"),
+                event(package, "output", Test=test, OutputType="frame", Output=f"--- {action.upper()}: {test} (0.00s)\n"),
+                event(package, action, Test=test, Elapsed=0),
+                event(package, latent_action if not suffix and latent_action else action, Elapsed=0.01),
+            ])
+        return events
+
+    def summary(self, events):
+        lines = (Cloud / "gates" / "steps.sh").read_bytes().decode().split("\n")
+        starts = [index for index, line in enumerate(lines) if line == "gate_go_test() {"]
+        self.assertEqual(len(starts), 1, "steps.sh must define gate_go_test exactly once")
+        start = starts[0] + 1
+        end = next((index for index in range(start, len(lines)) if lines[index] == "}"), None)
+        self.assertIsNotNone(end, "steps.sh must close gate_go_test")
+        body = lines[start:end]
+        opening = "<< 'PYTHON'"
+        self.assertEqual(sum(line.count(opening) for line in body), 1,
+                         "gate_go_test must open exactly one PYTHON heredoc")
+        first = next(index for index, line in enumerate(body) if opening in line)
+        closings = [index for index, line in enumerate(body) if line == "PYTHON"]
+        self.assertEqual(len(closings), 1, "gate_go_test must have one exact PYTHON closing line")
+        summary = "\n".join(body[first + 1:closings[0]])
+        self.assertTrue(summary.strip(), "gate_go_test's PYTHON heredoc must contain a program")
+        with tempfile.TemporaryDirectory(prefix="gate-summary-") as scratch:
+            log = Path(scratch) / "test.jsonl"
+            log.write_text("".join(json.dumps(event) + "\n" for event in events))
+            return subprocess.run(["python3", "-I", "-", str(log)], input=summary, text=True, capture_output=True)
+
+    def test_latent_whole_passes_with_packages_without_test_files(self):
+        result = self.summary(self.events())
+        self.assertEqual(result.returncode, 0, result.stderr or result.stdout)
+        for suffix in self.no_tests:
+            self.assertIn(f"  skip {self.latent}{suffix}: 0 pass, 0 fail, 0 skip", result.stdout)
+
+    def test_latent_whole_rejects_a_failing_test(self):
+        # Keep the test result even if a conflicting package verdict follows in the log.
+        for package_action in ("fail", "pass", "skip"):
+            with self.subTest(package_action=package_action):
+                result = self.summary(self.events(failed=True, latent_action=package_action))
+                self.assertEqual(result.returncode, 1, result.stderr or result.stdout)
+                self.assertIn(f"  --- FAIL {self.latent} TestLatent, last 30 lines:", result.stdout)
+                self.assertIn("--- FAIL: TestLatent (0.00s)", result.stdout)
+
+    def test_latent_whole_rejects_a_package_with_a_skipped_test(self):
+        result = self.summary(self.events(skipped_test=True))
+        self.assertEqual(result.returncode, 1, result.stderr or result.stdout)
+        self.assertIn(f"  skip {self.latent}: 0 pass, 0 fail, 1 skip", result.stdout)
+
+    def test_the_summary_rejects_a_package_failure_with_passing_tests(self):
+        result = self.summary(self.events(latent_action="fail"))
+        self.assertEqual(result.returncode, 1, result.stderr or result.stdout)
+        self.assertIn(f"  fail {self.latent}: 1 pass, 0 fail, 0 skip", result.stdout)
+
+    def test_the_summary_rejects_an_empty_log(self):
+        self.assertEqual(self.summary([]).returncode, 1)
+
+
 class SubmitGatesTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -198,6 +278,30 @@ class SubmitGatesTests(unittest.TestCase):
         self.assertFires({"internal/lower/calls.go": "package lower\n\nfunc calls() error { return &Refused{} }\n"},
                          "refusal-added", "oracle-whole")
         self.assertQuiet({"internal/lower/lower_test.go": "package lower\n\nvar x = &Refused{}\n"}, "refusal-added")
+
+    def test_whole_gap_and_fixture_gates_follow_compiler_changes_and_refusals(self):
+        owed = ("stage1-gaps-whole", "stage3-fixtures-whole")
+        for rule, files in (
+            ("compiler-change", {"internal/native/emit.go": "package native\n\nvar emitted = 1\n"}),
+            ("refusal-added", {"internal/example/example.go": "package example\n\nvar stop = &Refused{}\n"}),
+        ):
+            with self.subTest(rule=rule):
+                head = self.commit(files)
+                report = self.judge(head)
+                self.assertIn(rule, report["fired"])
+                if rule == "refusal-added":
+                    self.assertNotIn("compiler-change", report["fired"])
+                self.assertTrue(set(owed) <= self.owed(report), report["gates"])
+                for gate in owed:
+                    self.assertFalse(self.gate(report, gate)["satisfied"])
+                jobs = [self.job(gate, head) for gate in owed]
+                report = self.judge(head, jobs)
+                for gate, job in zip(owed, jobs):
+                    entry = self.gate(report, gate)
+                    self.assertTrue(entry["satisfied"], entry)
+                    self.assertEqual(entry["job"], job["id"])
+        quiet = self.judge(self.commit({"README.md": "adamic, quiet\n"}))
+        self.assertTrue(set(owed).isdisjoint(self.owed(quiet)))
 
     def test_lower_tests_fire(self):
         self.assertFires({"internal/lower/lower_test.go": "package lower\n\nvar x = 1\n"}, "lower-tests-or-pass", "ir-whole")
@@ -381,6 +485,7 @@ class SubmitGatesTests(unittest.TestCase):
                                          "stage3/lane/check.mutants.md": "Undo check.py's line and test_check_rows goes red.\n"}))
         self.assertFalse(self.rows(report)["mutant-evidence-path"]["satisfied"])
         self.assertIn("mutants", report["fired"])  # the .mutants.md fires its own rule
+        self.assertIn("mutants-red", self.owed(report))
         declared = ("| Mutant | Patch | Red | Run |\n|---|---|---|---|\n"
                     "| The line undone | `stage3/lane/check.patch` | `test_check_rows` | `python3 -m unittest stage3.lane.test_check` |\n")
         report = self.judge(self.commit({"stage3/lane/check.py": "print('lane, checked')\n", "stage3/lane/check.mutants.md": declared}))
@@ -390,13 +495,66 @@ class SubmitGatesTests(unittest.TestCase):
         self.assertQuiet({"stage3/upstream/LEDGER.md": "# Ledger\n\nA line.\n"}, "harness")
 
     def test_adaptation_owes_its_gates_its_ledger_and_its_value_count(self):
-        report = self.assertFires({"stage3/adapt/99-x/adapt.cjs": "module.exports = 1;\n"}, "adaptation", "unit-census-pair")
-        self.assertIn("mutants", report["fired"])  # by its rule trigger
-        self.assertTrue({"stock-js-identical", "declarations-identical", "mutants-red", "value-count-reached"} <= self.owed(report))
-        self.assertFalse(self.rows(report)["ledger-line"]["satisfied"])
-        report = self.judge(self.commit({"stage3/adapt/99-x/adapt.cjs": "module.exports = 1;\n",
-                                         "stage3/upstream/LEDGER.md": "# Ledger\n\n99-x\n"}))
-        self.assertTrue(self.rows(report)["ledger-line"]["satisfied"])
+        files = {"stage3/adapt/99-x/adapt.cjs": "module.exports = 1;\n",
+                 "stage3/adapt/99-y/proofs/nested.cjs": "module.exports = 2;\n",
+                 "stage3/upstream/LEDGER.md": "# Ledger\n\n99-x and 99-y\n"}
+        report = self.assertFires(files, "adaptation", "unit-census-pair")
+        self.assertNotIn("mutants", report["fired"])
+        self.assertNotIn("mutants-red", self.owed(report))
+        self.assertTrue({"stock-js-identical", "declarations-identical", "adapter-plants-red",
+                         "value-count-reached"} <= self.owed(report))
+        row = self.rows(report)["ledger-line"]
+        self.assertFalse(row["satisfied"])
+        self.assertIn("stage3/adapt/99-x/LEDGER.md", row["why"])
+        self.assertIn("stage3/adapt/99-y/LEDGER.md", row["why"])
+        files["stage3/adapt/99-x/LEDGER.md"] = "# 99-x\n"
+        row = self.rows(self.judge(self.commit(files)))["ledger-line"]
+        self.assertFalse(row["satisfied"])
+        self.assertNotIn("stage3/adapt/99-x/LEDGER.md", row["why"])
+        self.assertIn("stage3/adapt/99-y/LEDGER.md", row["why"])
+        files["stage3/adapt/99-y/LEDGER.md"] = "# 99-y\n"
+        self.assertTrue(self.rows(self.judge(self.commit(files)))["ledger-line"]["satisfied"])
+
+    def test_a_deleted_file_in_a_remaining_adapter_owes_its_ledger(self):
+        adapter = "stage3/adapt/99-x/adapt.cjs"
+        ledger = "stage3/adapt/99-x/LEDGER.md"
+        note = "stage3/adapt/99-x/note.md"
+        main = self.commit({adapter: "module.exports = 1;\n", ledger: "# 99-x\n", note: "a note\n"})
+        for files in ({note: None}, {ledger: None}):
+            with self.subTest(files=files):
+                row = self.rows(self.judge(self.commit(files, parent=main), main=main))["ledger-line"]
+                self.assertFalse(row["satisfied"])
+                self.assertIn(ledger, row["why"])
+        files = {note: None, ledger: "# 99-x\n\nRemoved the note.\n"}
+        self.assertTrue(self.rows(self.judge(self.commit(files, parent=main), main=main))["ledger-line"]["satisfied"])
+        files = {adapter: None, ledger: None, note: None}
+        self.assertTrue(self.rows(self.judge(self.commit(files, parent=main), main=main))["ledger-line"]["satisfied"])
+
+    def test_an_adapter_plant_job_is_owed_by_hand(self):
+        head = self.commit({"stage3/adapt/99-x/adapt.cjs": "module.exports = 1;\n",
+                            "stage3/adapt/99-x/LEDGER.md": "# 99-x\n"})
+        labelled = self.hand_job(head, "J-plant", "adapter-plants-red", tail="PLANT swap red with TestAdapted\n"
+                                 "VERDICT 1 of 1 red (swap)\n")
+        report = self.judge(head, [labelled])
+        gate = self.gate(report, "adapter-plants-red")
+        self.assertTrue(gate["byHand"])
+        self.assertFalse(gate["satisfied"])
+        self.assertIsNone(gate["job"])
+        self.assertIsNone(gate["ask"])
+        self.assertIn("owed by hand, the accepter checks: ", gate["why"])
+        self.assertIn("each plant in the kit is red on its expected line", gate["why"])
+        self.assertIn("adapter-plants-red", report["missing"])
+
+    def test_an_adapter_table_audit_is_owed_by_hand(self):
+        head = self.commit({"stage3/adapt/99-x/adapt.cjs": "module.exports = 1;\n"})
+        row = self.rows(self.judge(head))["adapter-table-mentions"]
+        self.assertTrue(row["byHand"])
+        self.assertFalse(row["satisfied"])
+        self.assertEqual(row["why"], "owed by hand, the accepter checks: " + gates.ByHandRows["adapter-table-mentions"])
+        self.assertIn("where the adapter rests on a table tsc declares,", row["why"])
+        self.assertIn("each pinned by its -before text and declared once", row["why"])
+        quiet = self.judge(self.commit({"README.md": "adamic, quiet\n"}))
+        self.assertNotIn("adapter-table-mentions", self.rows(quiet))
 
     def test_buildcache_routes_alone(self):
         report = self.assertFires({"internal/buildcache/cache.go": "package buildcache\n\nvar x = 1\n"}, "buildcache")
@@ -542,7 +700,7 @@ class SubmitGatesTests(unittest.TestCase):
 
     def by_hand_head(self, mutants=None, adapter="module.exports = 2;\n", extra=None):
         """An adaptation head, its *.mutants.md as given (one machine-form mutant unless named), and its green recipe jobs."""
-        files = {"stage3/adapt/99-y/adapt.cjs": adapter, "stage3/upstream/LEDGER.md": "# Ledger\n\n99-y\n",
+        files = {"stage3/adapt/99-y/adapt.cjs": adapter, "stage3/adapt/99-y/LEDGER.md": "# 99-y\n",
                  self.mutantsFile: self.oneMutant if mutants is None else mutants, **(extra or {})}
         head = self.commit(files)
         return head, self.every_green(head, self.judge(head))
@@ -571,7 +729,7 @@ class SubmitGatesTests(unittest.TestCase):
         # Advisory (Adamic, 14:33Z): no attestation counts; a gate no recipe proves is printed with what to check
         head, rows = self.by_hand_head()
         report = self.judge(head, rows + [self.mutant_job(head, "J-mutant1")])
-        for gate in ("stock-js-identical", "value-count-reached"):
+        for gate in ("stock-js-identical", "value-count-reached", "adapter-plants-red"):
             with self.subTest(gate=gate):
                 entry = self.gate(report, gate)
                 self.assertFalse(entry["satisfied"])
@@ -579,7 +737,34 @@ class SubmitGatesTests(unittest.TestCase):
         self.assertTrue(self.gate(report, "mutants-red")["satisfied"], self.gate(report, "mutants-red"))
         # identity or value, the map's thenIf: neither side found, so the identity and the whole branch are listed
         self.assertEqual([choice["by"] for choice in report["choices"]], [None])
-        self.assertEqual(sorted(report["missing"]), ["adapter-output-test", "stock-js-identical", "value-count-reached"])
+        self.assertEqual(sorted(report["missing"]), ["adaptation-value-identical", "adapter-output-test",
+                                                     "adapter-plants-red", "adapter-table-mentions",
+                                                     "stock-js-identical", "value-count-reached"])
+
+    def test_adaptation_value_identity_is_owed_by_hand(self):
+        name = "adaptation-value-identical"
+        head = self.commit({"stage3/adapt/99-y/adapt.cjs": "module.exports = 2;\n"})
+        report = self.judge(head)
+        self.assertIn(name, self.owed(report))
+        self.assertIn("value-count-reached", self.owed(report))
+        entry = self.gate(report, name)
+        self.assertTrue(entry["byHand"])
+        self.assertFalse(entry["satisfied"])
+        self.assertEqual(entry["why"], "owed by hand, the accepter checks: " + gates.ByHandGates[name])
+        quiet = self.judge(self.commit({"README.md": "adamic, quiet\n"}))
+        self.assertNotIn(name, self.owed(quiet))
+
+    def test_the_adaptation_accepter_reads_as_compiler_ruled(self):
+        accepter = ("Adamic, unless the shape is one she ruled Compiler's (the enumerated-table shape), "
+                    "or the head shows value-identity under adaptation-value-identical (her Nov 24 widening); "
+                    "anything that changes identity, key order or a failure path stays hers")
+        gates_map = json.loads((Cloud / "gates" / "diff-to-gates.json").read_text())
+        rule = next(rule for rule in gates_map["rules"] if rule["id"] == "adaptation")
+        self.assertEqual(rule["thenIf"]["accepter"], accepter)
+        head = self.commit({"stage3/adapt/99-y/adapt.cjs": "module.exports = 2;\n"})
+        self.assertIn("adaptation: its accepter is " + accepter, self.judge(head)["notes"])
+        quiet = self.commit({"README.md": "adamic, quiet\n"})
+        self.assertFalse(any(note.startswith("adaptation: its accepter is") for note in self.judge(quiet)["notes"]))
 
     def test_a_labelled_green_is_no_evidence(self):
         head, rows = self.by_hand_head()
@@ -670,6 +855,7 @@ class SubmitGatesTests(unittest.TestCase):
         row = self.rows(self.judge(head))["adapter-output-test"]
         self.assertFalse(row["satisfied"])
         self.assertIn("owed by hand, the accepter checks", row["why"])
+        self.assertIn("compares against the -after ref", row["why"])
 
     def test_live_hole_submits_on_its_gates(self):
         head = self.commit({"internal/lower/calls.go": "package lower\n\nfunc calls() error { return &Refused{} }\n"})
@@ -810,6 +996,14 @@ class GateTreeTests(unittest.TestCase):
                 self.assertNotIn("\u2014", text)
                 self.assertNotIn("\u2013", text)
 
+    def test_new_whole_recipes_settle_and_test_their_packages(self):
+        for gate, package in (("stage1-gaps-whole", "./stage1/cohere/estree"),
+                              ("stage3-fixtures-whole", "./stage3/fixtures")):
+            with self.subTest(gate=gate):
+                lines = (Cloud / "gates" / (gate + ".sh")).read_text().splitlines()
+                self.assertIn(f"gate_products {package}", lines)
+                self.assertIn(f"gate_go_test {gate} {package}/", lines)
+
     def test_the_verdict_line_reads_as_the_script_reads_it(self):
         line = "VERDICT PASS unit-census-pair head " + "a" * 40 + " base " + "b" * 40
         self.assertEqual(gates.final_verdict("PASS a step\n" + line + "\n"), ("PASS", "unit-census-pair", "a" * 40, "b" * 40))
@@ -818,9 +1012,17 @@ class GateTreeTests(unittest.TestCase):
         self.assertIn("VERDICT PASS %s head %s base %s", (Cloud / "gates" / "steps.sh").read_text())
 
     def test_a_changed_definition_is_refused(self):
+        for name, before, after in (("compilerProduction", "outside", "inside"),
+                                    ("exposure", "only", "also"),
+                                    ("green", "tip", "head")):
+            with self.subTest(definition=name):
+                changed = json.loads((Cloud / "gates" / "diff-to-gates.json").read_text())
+                changed["definitions"][name] = changed["definitions"][name].replace(before, after, 1)
+                with self.assertRaisesRegex(gates.Unreadable, name):
+                    gates.read_map(json.dumps(changed))
         changed = json.loads((Cloud / "gates" / "diff-to-gates.json").read_text())
-        changed["definitions"]["compilerProduction"] += ", internal/flow2/"
-        with self.assertRaises(gates.Unreadable):
+        changed["version"] = 5
+        with self.assertRaisesRegex(gates.Unreadable, "version 5"):
             gates.read_map(json.dumps(changed))
         changed = json.loads((Cloud / "gates" / "diff-to-gates.json").read_text())
         changed["rules"][0]["triggers"].append({"goInterfaceChanged": "internal/ir"})

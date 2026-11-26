@@ -101,14 +101,16 @@ for line in open(sys.argv[1], errors='replace'):
             packages[package] = action
         elif '/' not in test:
             results[(package, test)] = action
+passed = bool(packages)
 for package, action in sorted(packages.items()):
     counted = [a for (p, t), a in results.items() if p == package]
+    passed = passed and (action == 'pass' or (action == 'skip' and not counted))
     print(f'  {action} {package}: {counted.count("pass")} pass, {counted.count("fail")} fail, {counted.count("skip")} skip')
 failed = sorted(key for key, action in results.items() if action == 'fail')
 for package, test in failed[:10]:
     print(f'  --- FAIL {package} {test}, last 30 lines:')
     print(''.join(outputs.get((package, test), [])[-30:]).rstrip())
-sys.exit(0 if packages and all(a == 'pass' for a in packages.values()) and not failed else 1)
+sys.exit(0 if passed and not failed else 1)
 PYTHON
 	if [ "$rc" -eq 0 ] && [ "$summary" -eq 0 ]; then
 		gate_pass "$step"
