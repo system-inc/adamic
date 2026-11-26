@@ -1,6 +1,8 @@
 package lower
 
 import (
+	"errors"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/system-inc/adamic/internal/ir"
 )
@@ -150,12 +152,7 @@ func (l *lowering) firstLinkMainAt(unit *ast.Node) (start, length int, placed bo
 func (l *lowering) firstLinkStubUnit(unit *ast.Node, stub ir.Panic) {
 	defer l.firstLinkStubHelpers()
 	for index, declaration := range l.functionNodes {
-		for ancestor := declaration; ancestor != nil; ancestor = ancestor.Parent {
-			if ancestor == unit {
-				l.result.Functions[index].Body = []ir.Statement{stub}
-				break
-			}
-		}
+		l.firstLinkStubDeclared(index, declaration, unit, stub)
 	}
 	if firstLinkFunctionUnit(unit) {
 		return
@@ -168,18 +165,54 @@ func (l *lowering) firstLinkStubUnit(unit *ast.Node, stub ir.Panic) {
 	}
 }
 
+// firstLinkStubDeclared stubs the function at index, lowered from declaration, when the declaration lies inside
+// unit, unit itself included.
+func (l *lowering) firstLinkStubDeclared(index int, declaration, unit *ast.Node, stub ir.Panic) {
+	for ancestor := declaration; ancestor != nil; ancestor = ancestor.Parent {
+		if ancestor == unit {
+			l.result.Functions[index].Body = []ir.Statement{stub}
+			return
+		}
+	}
+}
+
+// holdUnlowerable holds a construct found not lowerable where no error can be returned. The first is
+// l.unlowerable, which any lowering but a first-link one returns once every module has lowered. A first-link
+// lowering holds every one, in the order met, so each traps its own unit (firstLinkHeldStops): holding the
+// first alone left every later one untrapped, its unit lowered as it was, once the first's unit trapped.
+func (l *lowering) holdUnlowerable(stop error) {
+	if l.unlowerable == nil {
+		l.unlowerable = stop
+	}
+	if l.firstLinkTraps {
+		l.firstLinkUnlowerables = append(l.firstLinkUnlowerables, stop)
+	}
+}
+
 // firstLinkHeldStops records, in a first-link lowering, the stops lowering held rather than returned where
-// it met them: the first unlowerable construct, and every async payload it couldn't lower. Each is placed
-// and trapped as a pass's stop is. One that's neither a NotYet nor a Refused stays held, so it's returned
-// as it always is. First, every helper whose owners the bodies' and statements' traps left all trapped is
-// stubbed with them (firstLinkStubHelpers), before any pass judges its code.
+// it met them: every unlowerable construct (holdUnlowerable), and every async payload it couldn't lower.
+// Each is placed and trapped as a pass's stop is. An unlowerable construct inside a unit trapped already,
+// by its body's own trap or an earlier held stop's, is passed over (firstLinkSkipsAt): its code is the stub,
+// where its row was an Echo that abandoned the judgment (createScanner's scanNumber on tsc, #nxb3xh1). One
+// that's neither a NotYet nor a Refused stays held, so it's returned as it always is. First, every helper whose
+// owners the bodies' and statements' traps left all trapped is stubbed with them (firstLinkStubHelpers),
+// before any pass judges its code.
 func (l *lowering) firstLinkHeldStops() {
 	if !l.firstLinkTraps {
 		return
 	}
 	l.firstLinkStubHelpers()
 	if l.unlowerable != nil {
-		l.unlowerable = l.firstLinkPass("unlowerable", false, l.unlowerable, nil)
+		var kept error
+		for _, stop := range l.firstLinkUnlowerables {
+			if l.firstLinkSkipsAt(firstLinkStopSite(stop)) {
+				continue
+			}
+			if err := l.firstLinkPass("unlowerable", false, stop, nil); err != nil && kept == nil {
+				kept = err
+			}
+		}
+		l.unlowerable = kept
 	}
 	var held []error
 	for _, failure := range l.asyncPayloadFailures {
@@ -188,6 +221,19 @@ func (l *lowering) firstLinkHeldStops() {
 		}
 	}
 	l.asyncPayloadFailures = held
+}
+
+// firstLinkStopSite is the Where of a NotYet or a Refused, or "" for any other error.
+func firstLinkStopSite(stop error) string {
+	var notYet *NotYet
+	var refused *Refused
+	switch {
+	case errors.As(stop, &notYet):
+		return notYet.Where
+	case errors.As(stop, &refused):
+		return refused.Where
+	}
+	return ""
 }
 
 // firstLinkProgramStop records, in a first-link lowering, a stop that names the whole program, never a

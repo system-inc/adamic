@@ -976,6 +976,12 @@ func (f *cycleFinder) looseEntryStop(inits []looseInit) error {
 		if !declared.Captured || declared.Global || !f.looseCellEvery(local) || !f.looseReaches(l.localTypes[local], cycleNode{cell: local + 1}) || l.closedFrameInput(local) {
 			continue
 		}
+		// The table holds a trapped unit's locals too, whose cells its stub never makes, so a first-link lowering
+		// passes over a variable declared inside one (isJsonEqual's b on tsc, an Echo, #nxb3xh1). A live unit's
+		// variable is judged whatever a trapped unit's code did with it.
+		if l.firstLinkSkips(l.localNodes[local]) {
+			continue
+		}
 		what := "'" + declared.Name + "', a variable a function value captures, of type " + l.checker.TypeToString(l.localTypes[local]) + ", bound to whatever its callers or what it reads hand it, which can reach its own cell back through what a value held as unknown or object can be: " + looseStopWords
 		if node := l.localNodes[local]; node != nil {
 			return l.notYet(node, what)

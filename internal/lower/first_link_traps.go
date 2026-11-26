@@ -38,9 +38,25 @@ func (l *lowering) firstLinkBody(index int, declaration *ast.Node, pending signe
 	})
 	l.firstLinkNoteHelpers(from, declaration)
 	if trapped {
+		l.firstLinkStubInside(from, declaration, stub)
 		l.result.Functions[index].Body = []ir.Statement{stub}
 	}
 	return err
+}
+
+// firstLinkStubInside stubs, for a unit that just trapped, every function lowered from a declaration inside it
+// from from on, while the unit lowered: a nested function declaration, hoisted and lowered before the statement
+// that stopped, a closure, a class's methods. Its code is the unit's, and the trap's stub replaced only the unit's
+// own body, so a whole-program pass over the IR met it as live and its stop was an Echo that abandoned the
+// judgment: checkAccessorSpreads in transformRoot's copyFileReferenceAsSynthetic and checkViewWidenedReads in
+// emitDetachedComments' isPinnedCommentLocal on tsc (#nxb3xh1). A pass's trap stubs the same functions
+// (firstLinkStubUnit); a helper is stubbed by its owners (first_link_helpers.go).
+func (l *lowering) firstLinkStubInside(from int, unit *ast.Node, stub ir.Panic) {
+	for index := from; index < len(l.result.Functions); index++ {
+		if declaration := l.functionNodes[index]; declaration != nil {
+			l.firstLinkStubDeclared(index, declaration, unit, stub)
+		}
+	}
 }
 
 // firstLinkStatements lowers a module's top-level statements as statements does, each on its own, so a
@@ -85,6 +101,7 @@ func (l *lowering) firstLinkStatement(node *ast.Node) ([]ir.Statement, error) {
 	})
 	l.firstLinkNoteHelpers(from, node)
 	if trapped {
+		l.firstLinkStubInside(from, node, stub)
 		return []ir.Statement{stub}, nil
 	}
 	return statements, err
