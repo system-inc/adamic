@@ -85,8 +85,12 @@ func (l *lowering) narrowedNeverReadGap(node *ast.Node) error {
 }
 
 // narrowedArmReadGap stops a stale narrowing before a read can use the wrong layout.
-// The other twins own reads narrowed to nullish or never.
+// The other twins own reads narrowed to nullish or never. A property is the same, proved by name
+// (narrowedArmPropertyReadGap).
 func (l *lowering) narrowedArmReadGap(node *ast.Node) error {
+	if node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression {
+		return l.narrowedArmPropertyReadGap(node)
+	}
 	shorthand := node.Parent != nil && node.Parent.Kind == ast.KindShorthandPropertyAssignment
 	if node.Kind != ast.KindIdentifier || !l.isExpression(node) || (ast.IsDeclarationName(node) && !shorthand) || (ast.IsAssignmentTarget(node) && pureWrite(node)) {
 		return nil
