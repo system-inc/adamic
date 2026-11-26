@@ -529,8 +529,11 @@ type lowering struct {
 	// firstLinkMain is where each top-level statement's IR lies in Main (firstLinkStatements), which a
 	// whole-program pass's trap stubs, and firstLinkRewriteSkipped says such a pass that rewrites the IR
 	// skipped its work past a stop, so each row after it is Suspect (first_link_passes.go).
-	firstLinkMain           map[*ast.Node]firstLinkMainRange
-	firstLinkRewriteSkipped bool
+	// firstLinkJudgmentAbandoned says a pass that only judges gave up partway, which makes each row after
+	// it Suspect the same way (firstLinkJudgmentAbandon).
+	firstLinkMain              map[*ast.Node]firstLinkMainRange
+	firstLinkRewriteSkipped    bool
+	firstLinkJudgmentAbandoned bool
 
 	// flowDead is every function a flow graph built during lowering took to never run (flowGraph,
 	// iterableViewFlowGraph), which checkFlowLiveness holds to that once lowering is done.

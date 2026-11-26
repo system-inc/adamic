@@ -135,6 +135,19 @@ type Program struct {
 	// first-link lowering skipped, in the order skipped. What runs after such a skip may be lowering's own
 	// echo rather than a wall, so every Trap recorded after the first is Suspect.
 	TrapRewritesSkipped []string
+	// TrapJudgmentsAbandoned is each whole-program pass that only judges the IR which a first-link lowering
+	// stopped judging partway, in the order abandoned: its rerun met a stop it couldn't place or one it met
+	// before (a Gap), one inside a unit trapped already (an Echo), or an error that names no site (an Error),
+	// and every unit past it went unjudged. A program with any is no program to emit, since its units can't
+	// be told judged from not, and every Trap recorded after the first is Suspect.
+	TrapJudgmentsAbandoned []TrapJudgmentAbandoned
+}
+
+// TrapJudgmentAbandoned is one judging pass a first-link lowering gave up on (Program.TrapJudgmentsAbandoned):
+// the pass's Go name, the site of the stop it gave up at, file:line:col or empty for an Error's, and Why, the
+// kind of that stop's row: "Gap", "Echo" or "Error".
+type TrapJudgmentAbandoned struct {
+	Pass, Site, Why string
 }
 
 // Trap is one unit a first-link lowering couldn't lower, which it lowered as a Panic with Trap set instead:
@@ -162,7 +175,8 @@ type Trap struct {
 	Phase string
 	// Suspect says a recovered Go panic or an "Error" was trapped earlier in the same lowering. Either can
 	// leave lowering's state part written, so this row may be its echo rather than a wall of its own. A row
-	// recorded after a whole-program pass skipped a rewrite (Program.TrapRewritesSkipped) is Suspect too.
+	// recorded after a whole-program pass skipped a rewrite (Program.TrapRewritesSkipped) or gave up judging
+	// (Program.TrapJudgmentsAbandoned) is Suspect too.
 	Suspect bool
 	// Echo says a whole-program pass stopped inside a unit trapped already, whose leftover state may be
 	// what it stopped at: no wall of its own, so the report counts it apart.
