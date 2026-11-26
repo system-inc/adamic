@@ -235,6 +235,13 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 			return nil, err
 		}
 	}
+	// Before finishAccessors, while a getter's or setter's read is still the ir.Property lowering made: a
+	// read of a prototype member from a generic spread's copy stops (#y4gjeb8).
+	if err := lowering.checkGenericSpreadCopyReads(); err != nil {
+		if err = lowering.firstLinkPass("checkGenericSpreadCopyReads", false, err, lowering.checkGenericSpreadCopyReads); err != nil {
+			return nil, err
+		}
+	}
 	if err := lowering.finishAccessors(); err != nil {
 		if err = lowering.firstLinkPass("finishAccessors", true, err, lowering.finishAccessors); err != nil {
 			return nil, err
@@ -1100,6 +1107,11 @@ type lowering struct {
 	// two sides of the assignability spreadGetters asks (class_accessors.go).
 	spreadSources []*checker.Type
 	classHolders  map[int]*checker.Type
+	// genericSpreadSites are the SpreadSites of the spreads whose source the checker types with a type
+	// parameter, and prototypeMemberUses the class method calls and presence tests lowering made on a
+	// receiver other than this, which checkGenericSpreadCopyReads judges (generic_spread_copy_reads.go).
+	genericSpreadSites  map[int]bool
+	prototypeMemberUses []prototypeMemberUse
 
 	// toPrimitive is the program's to_string_hint helper plus one, or zero before a String of a union
 	// that may hold an object needs it (to_primitive.go).
