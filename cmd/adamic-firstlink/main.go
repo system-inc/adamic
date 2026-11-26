@@ -13,7 +13,9 @@
 //	firstlink   with --link, the native binary
 //
 // and prints each path it wrote, one a line. A trap is data, never a failure, so it exits 0 when its report is
-// written; 1 when the program doesn't check or a phase fails, naming the phase; 2 for a usage error.
+// written; 1 when the program doesn't check or a phase fails, naming the phase; 2 for a usage error. A lowering in
+// which a judging pass gave up partway (ir.Program.TrapJudgmentsAbandoned) left units nobody judged, so the door
+// writes its report, naming each, and exits 1 without emitting, the first one named as the wall (#nxb3xh1).
 //
 // The C it writes is a trap-mode program: a stopped unit runs as a stub that prints `adamic: first-link trap:` and
 // exits 75. So nothing it writes is ever a product a gate, the oracle or the agreement run reads, and it isn't part
@@ -106,9 +108,20 @@ func run(arguments []string, stdout, stderr io.Writer) int {
 		fmt.Fprintf(stderr, "adamic-firstlink: lower: %v\n", err)
 		return 1
 	}
-	written, err := writeReport(output, relativeSites(filepath.Dir(asked.root), lowered.Traps), lowered.TrapRewritesSkipped)
+	traps, abandoned := relativeSites(filepath.Dir(asked.root), lowered.Traps, lowered.TrapJudgmentsAbandoned)
+	written, err := writeReport(output, traps, lowered.TrapRewritesSkipped, abandoned)
 	if err != nil {
 		fmt.Fprintf(stderr, "adamic-firstlink: report: %v\n", err)
+		return 1
+	}
+	if len(abandoned) > 0 {
+		// A judging pass that gave up judged no unit past its stop, so a binary would be made of units nobody judged,
+		// which is worse than any panic (Compiler's ruling on #nxb3xh1): the report says where, and nothing is emitted.
+		for _, path := range written {
+			fmt.Fprintln(stdout, path)
+		}
+		wall := abandoned[0]
+		fmt.Fprintf(stderr, "adamic-firstlink: the program's judgment is incomplete, so nothing was emitted: %s gave up at %s (%s), and every unit past it went unjudged\n", wall.Pass, wall.Site, wall.Why)
 		return 1
 	}
 	// The backends refuse a program lowered in trap mode unless their options say this door is emitting it (#w2mmzwt),
@@ -140,36 +153,55 @@ func run(arguments []string, stdout, stderr io.Writer) int {
 	return 0
 }
 
-// relativeSites writes each trap's site relative to the program's common directory: the deepest directory holding
-// the root and every site, so a row reads the same on every box. Rooted at src/tsc/tsc.ts, tsc's sites in
-// src/compiler read compiler/checker.ts:..., where the root's own directory would leave them absolute (Correctness on
-// #nm7z8fv). When the only directory they share is the filesystem's root, or a site has no path, sites stay as they
-// came.
-func relativeSites(rootDirectory string, traps []ir.Trap) []ir.Trap {
+// relativeSites writes each trap's site, and each abandoned judgment's, relative to the program's common directory:
+// the deepest directory holding the root and every site, so a row reads the same on every box. Rooted at
+// src/tsc/tsc.ts, tsc's sites in src/compiler read compiler/checker.ts:..., where the root's own directory would leave
+// them absolute (Correctness on #nm7z8fv). When the only directory they share is the filesystem's root, or a site has
+// no path, sites stay as they came.
+func relativeSites(rootDirectory string, traps []ir.Trap, abandoned []ir.TrapJudgmentAbandoned) ([]ir.Trap, []ir.TrapJudgmentAbandoned) {
 	base, err := filepath.Abs(rootDirectory)
 	if err != nil {
-		return traps
+		return traps, abandoned
 	}
+	sites := []string{}
 	for _, trap := range traps {
-		if path, _, found := strings.Cut(trap.Site, ":"); found && filepath.IsAbs(path) {
+		sites = append(sites, trap.Site)
+	}
+	for _, judgment := range abandoned {
+		sites = append(sites, judgment.Site)
+	}
+	for _, site := range sites {
+		if path, _, found := strings.Cut(site, ":"); found && filepath.IsAbs(path) {
 			base = commonDirectory(base, filepath.Dir(path))
 		}
 	}
 	if filepath.Dir(base) == base {
-		return traps
+		return traps, abandoned
 	}
-	placed := make([]ir.Trap, len(traps))
+	placedTraps := make([]ir.Trap, len(traps))
 	for index, trap := range traps {
-		placed[index] = trap
-		path, position, found := strings.Cut(trap.Site, ":")
-		if !found || !filepath.IsAbs(path) {
-			continue
-		}
-		if relative, err := filepath.Rel(base, path); err == nil {
-			placed[index].Site = filepath.ToSlash(relative) + ":" + position
-		}
+		placedTraps[index] = trap
+		placedTraps[index].Site = relativeSite(base, trap.Site)
 	}
-	return placed
+	placedAbandoned := make([]ir.TrapJudgmentAbandoned, len(abandoned))
+	for index, judgment := range abandoned {
+		placedAbandoned[index] = judgment
+		placedAbandoned[index].Site = relativeSite(base, judgment.Site)
+	}
+	return placedTraps, placedAbandoned
+}
+
+// relativeSite is site, file:line:col, with its file relative to base, or as it came when its file has no absolute
+// path.
+func relativeSite(base, site string) string {
+	path, position, found := strings.Cut(site, ":")
+	if !found || !filepath.IsAbs(path) {
+		return site
+	}
+	if relative, err := filepath.Rel(base, path); err == nil {
+		return filepath.ToSlash(relative) + ":" + position
+	}
+	return site
 }
 
 // commonDirectory is the deepest directory holding both of two clean absolute directories.
@@ -217,8 +249,8 @@ type report struct {
 	// Unplaced counts the stops no unit holds, which trap nothing: a measurement gap.
 	Unplaced int `json:"unplaced"`
 
-	// Suspect counts the traps met after a recovered Go panic, or after a whole-program pass skipped a rewrite, in
-	// the same lowering: each may be lowering's own echo rather than a wall (ir.Trap.Suspect).
+	// Suspect counts the traps met after a recovered Go panic, or after a whole-program pass skipped a rewrite or gave
+	// up judging, in the same lowering: each may be lowering's own echo rather than a wall (ir.Trap.Suspect).
 	Suspect int `json:"suspect"`
 
 	// Echo counts a whole-program pass's stops inside a unit trapped already, whose leftover state may be what it
@@ -228,15 +260,23 @@ type report struct {
 	// RewritesSkipped names each whole-program pass whose rewriting past a stop the lowering skipped, in order
 	// (ir.Program.TrapRewritesSkipped). Every trap after the first is Suspect.
 	RewritesSkipped []string `json:"rewrites_skipped"`
+
+	// JudgmentsAbandoned names each whole-program pass that only judges and gave up partway, with the site and kind
+	// of the stop it gave up at, in order (ir.Program.TrapJudgmentsAbandoned). Every unit past it went unjudged, so
+	// a report with any is the whole of the door's output: nothing is emitted.
+	JudgmentsAbandoned []ir.TrapJudgmentAbandoned `json:"judgments_abandoned"`
 }
 
-func summarize(traps []ir.Trap, skipped []string) report {
-	counted := report{Findings: findingsRule, RewritesSkipped: skipped, Traps: traps, Total: len(traps), ByPhase: map[string]int{}, ByKind: map[string]int{}, ByReason: map[string]int{}}
+func summarize(traps []ir.Trap, skipped []string, abandoned []ir.TrapJudgmentAbandoned) report {
+	counted := report{Findings: findingsRule, RewritesSkipped: skipped, JudgmentsAbandoned: abandoned, Traps: traps, Total: len(traps), ByPhase: map[string]int{}, ByKind: map[string]int{}, ByReason: map[string]int{}}
 	if counted.Traps == nil {
 		counted.Traps = []ir.Trap{}
 	}
 	if counted.RewritesSkipped == nil {
 		counted.RewritesSkipped = []string{}
+	}
+	if counted.JudgmentsAbandoned == nil {
+		counted.JudgmentsAbandoned = []ir.TrapJudgmentAbandoned{}
 	}
 	for _, trap := range traps {
 		counted.ByPhase[trap.Phase]++
@@ -256,8 +296,8 @@ func summarize(traps []ir.Trap, skipped []string) report {
 }
 
 // writeReport writes traps.json and traps.md under directory and says where.
-func writeReport(directory string, traps []ir.Trap, skipped []string) ([]string, error) {
-	counted := summarize(traps, skipped)
+func writeReport(directory string, traps []ir.Trap, skipped []string, abandoned []ir.TrapJudgmentAbandoned) ([]string, error) {
+	counted := summarize(traps, skipped, abandoned)
 	data, err := json.MarshalIndent(counted, "", "  ")
 	if err != nil {
 		return nil, err
@@ -289,6 +329,13 @@ func markdown(counted report) string {
 	text.WriteString(".\n")
 	if len(counted.RewritesSkipped) > 0 {
 		fmt.Fprintf(&text, "\nRewrites skipped past a stop, in order: %s. Every trap after the first is suspect.\n", strings.Join(counted.RewritesSkipped, ", "))
+	}
+	if len(counted.JudgmentsAbandoned) > 0 {
+		given := make([]string, 0, len(counted.JudgmentsAbandoned))
+		for _, judgment := range counted.JudgmentsAbandoned {
+			given = append(given, fmt.Sprintf("%s at %s (%s)", judgment.Pass, cell(judgment.Site), judgment.Why))
+		}
+		fmt.Fprintf(&text, "\nJudgments abandoned past a stop, in order: %s. Every unit past each went unjudged, so the program's judgment is incomplete and nothing was emitted; every trap after the first is suspect.\n", strings.Join(given, "; "))
 	}
 	phases := make([]string, 0, len(counted.ByPhase))
 	for phase := range counted.ByPhase {

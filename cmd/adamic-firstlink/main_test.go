@@ -62,15 +62,18 @@ func TestWriteUnderStaysInItsDirectory(t *testing.T) {
 func TestSitesAreRelativeToTheProgramsCommonDirectory(t *testing.T) {
 	t.Parallel()
 	tree := t.TempDir()
-	placed := relativeSites(filepath.Join(tree, "src", "tsc"), []ir.Trap{
+	placed, judgments := relativeSites(filepath.Join(tree, "src", "tsc"), []ir.Trap{
 		{Site: filepath.Join(tree, "src", "compiler", "checker.ts") + ":3:5"},
 		{Site: filepath.Join(tree, "src", "tsc", "tsc.ts") + ":1:1"},
 		{Site: "a.ts:2:2"},
-	})
+	}, []ir.TrapJudgmentAbandoned{{Pass: "checkSomething", Site: filepath.Join(tree, "src", "compiler", "utilities.ts") + ":7:1", Why: "Echo"}, {Pass: "checkAccessorSpreads", Site: "checker.ts", Why: "Gap"}})
 	if placed[0].Site != "compiler/checker.ts:3:5" || placed[1].Site != "tsc/tsc.ts:1:1" || placed[2].Site != "a.ts:2:2" {
 		t.Fatalf("relativeSites: %+v", placed)
 	}
-	apart := relativeSites(filepath.Join(tree, "src"), []ir.Trap{{Site: filepath.Join(tree, "src", "a.ts") + ":1:1"}, {Site: "/b.ts:1:1"}})
+	if judgments[0].Site != "compiler/utilities.ts:7:1" || judgments[1].Site != "checker.ts" || judgments[0].Pass != "checkSomething" {
+		t.Fatalf("relativeSites' abandoned judgments: %+v", judgments)
+	}
+	apart, _ := relativeSites(filepath.Join(tree, "src"), []ir.Trap{{Site: filepath.Join(tree, "src", "a.ts") + ":1:1"}, {Site: "/b.ts:1:1"}}, nil)
 	if apart[0].Site != filepath.Join(tree, "src", "a.ts")+":1:1" || apart[1].Site != "/b.ts:1:1" {
 		t.Fatalf("sites sharing only the filesystem's root must stay as they came: %+v", apart)
 	}
@@ -85,7 +88,7 @@ func TestReportCountsAndNamesTheGap(t *testing.T) {
 		{Kind: "Panic", Reason: "index out of range", Site: "a.a:20:1", Unit: "a.a fourth", Phase: "Body", Suspect: true},
 		{Kind: "NotYet", Reason: "an echo", Site: "a.a:21:1", Unit: "a.a fourth", Phase: "findCycles", Echo: true},
 	}
-	counted := summarize(traps, []string{"normalizeAsync"})
+	counted := summarize(traps, []string{"normalizeAsync"}, nil)
 	if counted.Total != 5 || counted.Suspect != 1 || counted.Echo != 1 || len(counted.RewritesSkipped) != 1 || counted.ByPhase["Body"] != 3 || counted.ByPhase["checkSlotWrites"] != 1 || counted.ByKind["Refused"] != 2 ||
 		counted.ByReason["Refused: sort without a comparator"] != 2 || counted.Unplaced != 1 {
 		t.Fatalf("summarize: %+v", counted)
@@ -102,7 +105,7 @@ func TestReportCountsAndNamesTheGap(t *testing.T) {
 			t.Errorf("traps.md lacks %q:\n%s", want, text)
 		}
 	}
-	if empty := summarize(nil, nil); empty.Traps == nil || empty.RewritesSkipped == nil || empty.Total != 0 {
+	if empty := summarize(nil, nil, nil); empty.Traps == nil || empty.RewritesSkipped == nil || empty.JudgmentsAbandoned == nil || empty.Total != 0 {
 		t.Fatalf("no traps should write an empty list, not null: %+v", empty)
 	}
 }
@@ -184,5 +187,68 @@ func TestTheDoorReportsATrapAndTheBinaryStopsAtIt(t *testing.T) {
 	exit, isExit := err.(*exec.ExitError)
 	if !isExit || exit.ExitCode() != 75 || runOut.String() != "first\n" || !strings.HasPrefix(runErr.String(), "adamic: first-link trap: Refused: ") {
 		t.Fatalf("binary: %v, stdout %q, stderr %q, want exit 75 after first, at the trap", err, runOut.String(), runErr.String())
+	}
+}
+
+// spreadWithStatics spreads a parameter in a program with a static constructor object, which checkAccessorSpreads, a
+// judging pass, stops at with a NotYet whose Where names only the file, as it did on tsc (#nxb3xh1). In trap mode
+// no unit holds that stop, so the pass gives up there: a Gap, and an abandoned judgment.
+const spreadWithStatics = `class Counter {
+    static start(): number {
+        return 1;
+    }
+}
+interface Point {
+    readonly x: number;
+}
+function copy(point: Point): Point {
+    return { ...point };
+}
+console.log(String(copy({ x: 1 }).x + Counter.start()));
+`
+
+// A lowering in which a judging pass gave up left units nobody judged, so the door writes traps.json and traps.md,
+// each naming the pass, its site and why, and exits 1 naming the first as the wall, with no C, no JavaScript and no
+// binary written. Mutant: the door's check of TrapJudgmentsAbandoned dropped, so it emits and exits 0, red here.
+func TestTheDoorWontEmitPastAnAbandonedJudgment(t *testing.T) {
+	t.Parallel()
+	work := t.TempDir()
+	root := filepath.Join(work, "spread.ts")
+	if err := os.WriteFile(root, []byte(spreadWithStatics), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	output := filepath.Join(work, "out")
+	var stdout, stderr bytes.Buffer
+	code := run([]string{root, output, "--link"}, &stdout, &stderr)
+	const wall = "checkAccessorSpreads gave up at spread.ts (Gap)"
+	if code != 1 || !strings.Contains(stderr.String(), "adamic-firstlink: the program's judgment is incomplete, so nothing was emitted: "+wall) || strings.Contains(stderr.String(), "compiler bug") {
+		t.Fatalf("exit %d, stderr %q; want exit 1 naming %q as the wall", code, stderr.String(), wall)
+	}
+	if printed := strings.Fields(stdout.String()); len(printed) != 2 || printed[0] != filepath.Join(output, "traps.json") || printed[1] != filepath.Join(output, "traps.md") {
+		t.Fatalf("printed %q, want traps.json and traps.md alone", printed)
+	}
+	for _, name := range []string{"c/main.c", "js/main.js", "firstlink"} {
+		if _, err := os.Stat(filepath.Join(output, name)); !os.IsNotExist(err) {
+			t.Errorf("%s was written past an abandoned judgment: %v", name, err)
+		}
+	}
+	var counted report
+	data, err := os.ReadFile(filepath.Join(output, "traps.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := json.Unmarshal(data, &counted); err != nil {
+		t.Fatal(err)
+	}
+	want := ir.TrapJudgmentAbandoned{Pass: "checkAccessorSpreads", Site: "spread.ts", Why: "Gap"}
+	if len(counted.JudgmentsAbandoned) == 0 || counted.JudgmentsAbandoned[0] != want {
+		t.Fatalf("traps.json's judgments_abandoned: %s; want %+v first", data, want)
+	}
+	text, err := os.ReadFile(filepath.Join(output, "traps.md"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(string(text), "Judgments abandoned past a stop, in order: checkAccessorSpreads at spread.ts (Gap)") {
+		t.Fatalf("traps.md doesn't name the abandoned judgment:\n%s", text)
 	}
 }

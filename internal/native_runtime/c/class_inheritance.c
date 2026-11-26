@@ -11,6 +11,16 @@ bool adamic_instanceof(const void *value, const adamic_class *wanted) {
 	return false;
 }
 
+// A direct call names its one target by the receiver's static class, so nothing at the call reads the
+// receiver's identity: a plain object that reaches a class's method, as a generic spread's copy of an
+// instance did (#y4gjeb8), would run the method's code on a layout it doesn't have, reading inside the
+// copy's allocation where ASan sees nothing wrong. Every such object is the compiler's bug, so it stops here
+// rather than being called.
+adamic_object *adamic_method_this(adamic_object *object, const adamic_class *owner) {
+	if (!adamic_instanceof(object, owner)) { adamic_invariant("a class method entered with a this that isn't an instance of its class"); }
+	return object;
+}
+
 size_t adamic_virtual(const adamic_object *object, size_t slot) {
 	if (object == NULL || object->class == NULL) {
 		static const char message[] = "compiler bug: virtual call on an object without class identity";

@@ -19,8 +19,9 @@ var spreadGettersCallers = map[string]string{
 
 // classHolderReaders are the functions that read a class's holder type, each with how it reads it.
 var classHolderReaders = map[string]string{
-	"spreadGetters": "relates it to the spread's view, through relatedShape",
-	"slotWriteSite": "takes an object literal's own type as its layout, never relating it to a view",
+	"spreadGetters":       "relates it to the spread's view, through relatedShape",
+	"slotWriteSite":       "takes an object literal's own type as its layout, never relating it to a view",
+	"spreadAccessorClass": "relates only a class's instance type to the view; an object literal with accessors counts whatever the view, so its fresh type is never related (#k7g6f9h's W11)",
 }
 
 // A fresh object literal's type fails the checker's relation by excess properties, so a holder related

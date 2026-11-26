@@ -17,4 +17,6 @@ A spread copies presence per slot. The copy holds what its actual source holds a
 
 ## The running test, for #7nhzq7h
 
-Not run here, and no skipped test stands for it. It is #7nhzq7h's done-when for family 65: when a spread writes its own layout, `65-leading-overwrite.ts` and `../spread_overwrite/optional_number.ts` each lower and print `true`, `undefined`, `true`, `undefined` with exit 0 on Node, the JavaScript backend and native, and their stop pins in `typed_presence_test.go` turn into running pins.
+It is #7nhzq7h's done-when for family 65: when a spread writes its own layout, `65-leading-overwrite.ts` and `../spread_overwrite/optional_number.ts` each lower and print `true`, `undefined`, `true`, `undefined` with exit 0 on Node, the JavaScript backend and native, and their stop pins in `typed_presence_test.go` turn into running pins.
+
+Run by #k7g6f9h (Diagnostics, Nov 26), which builds the layout with `adamic_object_spread_with`: `65-leading-overwrite.ts`, `../spread_overwrite/optional_number.ts` and `copied-empty-object.ts` lower and agree, held to Node natively, sanitized and counted, and on the JavaScript backend, by `../../spread_with_test.go`'s `TestSpreadWithAgrees`, and their stop pins left `typed_presence_test.go`.
