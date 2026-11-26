@@ -164,3 +164,39 @@ console.log(String(viewed!.value.thing.n));
 		{"a write through the view", write + "setIt(view!, { id: 2 });\nconsole.log(String(node.flowNode === undefined));\n", "main.ts:7:2: stage 0 can't lower a write to optional field flowNode through a checked view, where what reaches its receiver isn't known yet"},
 	})
 }
+
+// A cast that keeps undefined over an untagged union takes the untagged arm's checked view on its present value,
+// as one with no undefined does. keepsNullishValue listed every road it checks but the untagged arm, so this
+// cast lowered to the bare operand and a lie read its fields with no check: natively, one with no field of the
+// name died at the runtime's own guard ("a field the checker proved is there is missing"), and nothing checked
+// one that held the name as another type (J-zewecvk, the scout of #qxt10dd). An honest value agrees with Node,
+// and each lie stops at the view's read with its message, never the guard's. Mutant: the untagged arm left out
+// of keepsNullishValue's list again, so both lies reach the guard or read past it.
+func TestKeepsNullishCastOverTheUntaggedArmIsChecked(t *testing.T) {
+	t.Parallel()
+	const types = "interface A { readonly a: number; readonly n: string } interface B { readonly b: string } interface C { readonly a: string; readonly c: number } " +
+		"function f(x: A | B | C | undefined): A | undefined { return x as A | undefined; } "
+	t.Run("honest", func(t *testing.T) {
+		t.Parallel()
+		program := lowersAndAgreesWithNodeAs(t, types+`const a: A = { a: 1, n: "x" }; const got = f(a); console.log(got === undefined ? "undefined" : String(got.a) + got.n); console.log(f(undefined) === undefined ? "undefined" : "present");`, ".ts")
+		if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != "1x\nundefined\n" {
+			t.Fatalf("native: exit %d, stdout %q, stderr %q; want 0 and %q", code, stdout, stderr, "1x\nundefined\n")
+		}
+	})
+	for _, lie := range []struct{ name, value string }{
+		{"a member without the field", `const b: B = { b: "bee" }; const got = f(b);`},
+		{"a member holding the field as another type", `const c: C = { a: "string", c: 2 }; const got = f(c);`},
+	} {
+		t.Run(lie.name, func(t *testing.T) {
+			t.Parallel()
+			program, err := lowerSourceAs(t, types+lie.value+` console.log(got === undefined ? "undefined" : String(got.a) + got.n);`, ".ts")
+			if err != nil {
+				t.Fatal(err)
+			}
+			code, stdout, stderr := brandedNative(t, program)
+			if code == 0 || !strings.Contains(stderr, "field read failed") || strings.Contains(stderr, "compiler bug") {
+				t.Fatalf("native: exit %d, stdout %q, stderr %q; want the view's own failure at the read, never the guard's", code, stdout, stderr)
+			}
+		})
+	}
+}

@@ -113,7 +113,10 @@ func (l *lowering) keepsNullishValue(node *ast.Node, proof castProof, source, ta
 	if err != nil {
 		return nil, err
 	}
-	if !proof.interfaceView && !proof.structuralView && !proof.overlap && proof.kindUnion == nil && len(proof.allowed) == 0 {
+	// Every road castRoadValue checks is listed, so only an upcast, a proof that asks no check, is the value
+	// itself. The untagged arm and the class road were missing: a cast that kept undefined over an untagged union
+	// lowered to the bare operand, and a lie read its fields unchecked (#qxt10dd's scout, J-zewecvk).
+	if !proof.interfaceView && !proof.structuralView && !proof.overlap && !proof.untagged && proof.kindUnion == nil && len(proof.allowed) == 0 && len(proof.classes) == 0 {
 		return value, nil
 	}
 	// An object that may be undefined or null is held as an Object whose nullish value is a null reference,
