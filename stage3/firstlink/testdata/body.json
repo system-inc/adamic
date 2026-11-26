@@ -1,0 +1,29 @@
+{
+  "findings": "leads only; reproduce without FirstLinkTraps before filing",
+  "traps": [
+    {
+      "Kind": "Refused",
+      "Reason": "sort without a comparator",
+      "Fix": "pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]",
+      "Site": "body.a:6:5",
+      "Unit": "body.a second",
+      "Phase": "Body",
+      "Suspect": false,
+      "Echo": false
+    }
+  ],
+  "total": 1,
+  "by_phase": {
+    "Body": 1
+  },
+  "by_kind": {
+    "Refused": 1
+  },
+  "by_reason": {
+    "Refused: sort without a comparator": 1
+  },
+  "unplaced": 0,
+  "suspect": 0,
+  "echo": 0,
+  "rewrites_skipped": []
+}
