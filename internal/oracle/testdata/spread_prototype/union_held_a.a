@@ -1,0 +1,16 @@
+interface Plain {
+	readonly tag: string;
+}
+interface Tree {
+	readonly tag: string;
+	peek(): string;
+}
+class Real implements Tree {
+	constructor(readonly tag: string) {}
+	peek(): string {
+		return "peeked " + this.tag;
+	}
+}
+const tree: Tree = new Real("t");
+const v: Plain | Tree = { ...tree };
+console.log("peek" in v ? typeof v.peek : "none");
