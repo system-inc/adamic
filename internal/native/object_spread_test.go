@@ -47,6 +47,8 @@ import (
 //   - an overwritten slot's kind taken from the source: width reads a number as a pointer, and
 //     number_source stops reading undefined as a scalar;
 //   - the kind and byte invariant dropped: wrong_byte stops later, in other words;
+//   - every accessor on the chain refused again, not only one named as a public field (#vjvcnnj): prototype_getter
+//     and prototype_getter_past stop where Node copies past the getter;
 //   - an interned shape's reference bit set against its kind, TestShapeProducerInventory's bitmap mutant for
 //     a shape made at run time: width and p01 stop in adamic_shape_check;
 //   - the result always made by adamic_object_new, never constructed (Memory's must 1): absent_kept shows
@@ -103,6 +105,8 @@ var objectSpreadModes = []objectSpreadMode{
 	{name: "p01_true", layout: []string{"layout: size 84 complete", "layout: kind kind 2 byte 3 initialized 1 order -", "layout: value kind 0 byte 9 initialized 1 order -"}},
 	{name: "p01_reverse", layout: []string{"layout: size 84 complete", "layout: kind kind 2 byte 3 initialized 1 order -", "layout: value kind 0 byte 1 initialized 1 order -"}},
 	{name: "absent_kept", layout: objectSpreadKept},
+	{name: "prototype_getter", layout: []string{"layout: size 84 complete", "layout: k kind 0 byte 1 initialized 1 order -", "layout: g kind 0 byte 1 initialized 1 order -"}},
+	{name: "prototype_getter_past", layout: []string{"layout: size 84 complete", "layout: k kind 0 byte 1 initialized 1 order -", "layout: w kind 0 byte 1 initialized 1 order -"}},
 	{name: "resolver_140", layout: []string{
 		"layout: size 138 complete",
 		"layout: path kind 2 byte 3 initialized 1 order -",
@@ -140,7 +144,7 @@ var objectSpreadModes = []objectSpreadMode{
 	{name: "refuse_groups", stop: "NotYet: a spread with overwrites of a runtime library value (a host or groups object)"},
 	{name: "refuse_error", stop: "NotYet: a spread with overwrites of an Error"},
 	{name: "refuse_tuple", stop: "NotYet: a spread with overwrites of a tuple"},
-	{name: "refuse_accessor", stop: "NotYet: a spread with overwrites of a class instance with accessors"},
+	{name: "refuse_accessor_field", stop: "NotYet: a spread with overwrites of a class instance with an accessor named as a public field"},
 	{name: "refuse_value", stop: "NotYet: a spread with overwrites of a value that isn't an object"},
 	{name: "wrong_byte", stop: "compiler bug: a spread's overwrite of k states kind 0 and representation 3, which don't describe its value"},
 	{name: "wrong_value", stop: "compiler bug: a spread's overwrite of k states kind 2 and representation 3, which don't describe its value"},
@@ -169,6 +173,7 @@ var objectSpreadMutations = []struct {
 		{"if (shape->references[index]) adamic_retain(found->reference);", "if (base->references[index]) adamic_retain(found->reference);"},
 	}, []string{"p01_reverse"}},
 	{"invariant-dropped", [][2]string{{"\t\tif (agrees(&overwrites[at])) continue;\n", "\t\tcontinue;\n"}}, []string{"wrong_byte"}},
+	{"accessor-refusal-wide", [][2]string{{"if (strcmp(public_shape->names[index], class->accessors[at].name) == 0) refuse(", "refuse("}}, []string{"prototype_getter", "prototype_getter_past"}},
 	{"reference-bit-against-kind", [][2]string{{"\t\t\treferences[index] = kinds[index] == adamic_field_reference;\n", "\t\t\treferences[index] = kinds[index] != adamic_field_reference;\n"}}, []string{"width", "p01"}},
 }
 

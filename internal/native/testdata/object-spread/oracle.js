@@ -39,6 +39,18 @@ const resolved = (source) => ({ ...source, path: '/b.ts', originalPath: '/c.ts' 
 const resolved140 = () => ({ path: '/a.ts', extension: '.ts', packageId: undefined, resolvedUsingTsExtension: false });
 const resolved2774 = () => ({ path: '/a.ts', extension: '.ts', packageId: undefined, originalPath: undefined, resolvedUsingTsExtension: false });
 
+// harness.c's accessor_class: a field k and a getter g on the prototype.
+class Getter {
+  k = 1;
+  get g() { return 1; }
+}
+
+function prototypeGetter(spread) {
+  const result = spread(new Getter());
+  print('result', result);
+  console.log(`has g ${'g' in result}`);
+}
+
 function region() {
   const source = { held: { held: undefined, label: 'n' }, label: 's' };
   const result = witness(source, (s) => ({ ...s, count: 1 }));
@@ -62,6 +74,8 @@ const modes = {
   p01: () => witness({ kind: 'Holder', value: 1234.5678 }, (source) => ({ ...source, value: undefined }), 'value'),
   p01_true: () => witness({ kind: 'Holder', value: 1234.5678 }, (source) => ({ ...source, value: true }), 'value'),
   p01_reverse: () => witness({ kind: 'Holder', value: 'v' }, (source) => ({ ...source, value: 1234.5678 }), 'value'),
+  prototype_getter: () => prototypeGetter((source) => ({ ...source, g: 21 })),
+  prototype_getter_past: () => prototypeGetter((source) => ({ ...source, w: 2 })),
   absent_kept: () => witness({ a: 'x' }, (source) => ({ ...source, c: 1 }), 'b'),
   resolver_140: () => witness(resolved140(), resolved),
   resolver_2774_undefined: () => witness(resolved2774(), resolved),
