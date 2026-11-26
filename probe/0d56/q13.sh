@@ -3,6 +3,7 @@
 set -u -o pipefail
 echo "box: $(hostname) at $(git rev-parse --short HEAD 2>/dev/null || echo "${LOOM_JOB_COMMIT:-unknown}")"
 work="${LOOM_JOB_SCRATCH:-$TMPDIR}/scout0d56"
+mkdir -p "$work"
 source cloud/sandboxed-job.sh || { echo "no sandboxed-job.sh"; exit 1; }
 echo "== setup"
 sandboxed_npm stage3/api stage3/typescript > "$work/npm.log" 2>&1; echo "npm exit=$?"
