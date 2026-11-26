@@ -21,7 +21,8 @@ import (
 // the trap and makes the trap the function's whole body, so the function that met the stop lowers on. Its
 // parameters and locals stay as its signature and the stopped lowering left them, and nothing reads them,
 // since the trap runs first and never returns. A function inside a unit trapped already lowers as that
-// unit's stub, without lowering, and records no second row.
+// unit's stub, without lowering, and records no second row. Each helper the body's lowering made is noted as
+// the function's, stopped or not (first_link_helpers.go).
 func (l *lowering) firstLinkBody(index int, declaration *ast.Node, pending signed) error {
 	if stub, trapped := l.firstLinkTrappedAt(declaration); trapped {
 		if l.functionNodes == nil {
@@ -31,9 +32,11 @@ func (l *lowering) firstLinkBody(index int, declaration *ast.Node, pending signe
 		l.result.Functions[index].Body = []ir.Statement{stub}
 		return nil
 	}
+	from := len(l.result.Functions)
 	stub, trapped, err := l.firstLinkCatch("Body", declaration, func() error {
 		return l.lowerBody(index, declaration, pending.this, pending.defaults, pending.patterns)
 	})
+	l.firstLinkNoteHelpers(from, declaration)
 	if trapped {
 		l.result.Functions[index].Body = []ir.Statement{stub}
 	}
@@ -67,17 +70,20 @@ func (l *lowering) firstLinkStatements(module *ast.SourceFile) ([]ir.Statement, 
 // firstLinkStatement lowers one top-level statement. When that stops, it records the trap and lowers the
 // statement as the trap alone, so main's run ends there, as the stop would have ended the lowering. A
 // statement trapped already lowers as its stub. A function declaration's own unit is its body, which
-// firstLinkBody stubs, so its statement lowers as it always does.
+// firstLinkBody stubs, so its statement lowers as it always does. Each helper the statement's lowering made
+// outside any body is noted as the statement's (first_link_helpers.go).
 func (l *lowering) firstLinkStatement(node *ast.Node) ([]ir.Statement, error) {
 	if stub, trapped := l.firstLinkStubs[node]; trapped && !firstLinkFunctionUnit(node) {
 		return []ir.Statement{stub}, nil
 	}
 	var statements []ir.Statement
+	from := len(l.result.Functions)
 	stub, trapped, err := l.firstLinkCatch("Statement", node, func() error {
 		var err error
 		statements, err = l.statement(node)
 		return err
 	})
+	l.firstLinkNoteHelpers(from, node)
 	if trapped {
 		return []ir.Statement{stub}, nil
 	}
