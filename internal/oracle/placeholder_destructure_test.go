@@ -12,18 +12,26 @@ import (
 // A field that may still hold its placeholder (undefined!), taken out by destructuring, is a placeholder use
 // as node.parent read into a const is (#jjf9ppe). Main read it with no check, so const { parent } = node and
 // then parent.kind dereferenced null natively (UBSan, record.c) where Node throws a TypeError. Now each road
-// that destructures a field, a declaration, a parameter and an assignment, checks it where it's read, and
-// stops loudly on both backends with the placeholder's words, before the program prints past "before". A
-// default over such a field is not yet: Node takes the default for the placeholder's undefined, where the
-// check would stop. The field is read at its placeholder storage, a union, so a view's read takes it
-// (const_binding's, root typed N, stopped natively on a compiler bug when the read was the name's own
-// representation). set_field, the same destructuring of a field that was set, and plain_field, a field no
-// placeholder reaches, agree with Node. Mutant: placeholderDestructuredRead hands back the read unchecked,
-// and the loud rows run on unchecked again.
+// that destructures a field, a declaration, a parameter and an assignment, checks it, and stops loudly on
+// both backends with the placeholder's words, before the program prints past "before". An unannotated
+// declaration's name, const or let as the plain form takes either, is a placeholder slot of its own, as const
+// parent = node.parent is (#s59xxn3): its read flows unset and its first use is checked, so const_binding stops
+// at parent.kind, and accessKind's shape (access_kind, let_binding), a switch over parent?.kind, agrees with
+// Node, where the check at the binding stopped it. A typed pattern (typed_binding), a parameter and an
+// assignment keep the check where they're bound. A default over such a field is not yet: Node takes the
+// default for the placeholder's undefined, where the check would stop. The field is read at its placeholder
+// storage, a union, so a view's read takes it (const_binding's, root typed N, stopped natively on a compiler
+// bug when the read was the name's own representation). set_field, the same destructuring of a field that was
+// set, and plain_field, a field no placeholder reaches, agree with Node. Mutants: placeholderDestructuredRead
+// hands back the read unchecked, and the loud rows run on unchecked again; the slot road dropped, and
+// access_kind and let_binding stop at the binding again.
 func TestPlaceholderDestructuredBindingIsChecked(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, panic, stop string }{
-		{"const_binding.ts", "placeholder 'parent' is unset at destructured binding via parent", ""},
+		{"const_binding.ts", "placeholder 'parent' is unset at property read via parent", ""},
+		{"access_kind.ts", "", ""},
+		{"let_binding.ts", "", ""},
+		{"typed_binding.ts", "placeholder 'parent' is unset at destructured binding via parent", ""},
 		{"parameter.ts", "placeholder 'parent' is unset at destructured binding via parent", ""},
 		{"assignment.ts", "placeholder 'parent' is unset at destructured binding via parent", ""},
 		{"defaulted.ts", "", "a destructuring default for field parent, which may still hold its placeholder"},

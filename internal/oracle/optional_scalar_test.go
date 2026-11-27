@@ -12,9 +12,9 @@ import (
 // value agrees with Node on both, natively sanitized and in release, leak-free, and on the JavaScript backend:
 // a switch over const parent = node.parent (u1_switch_plain), === and !== (u2), ?? 0 (u3), || 0 (u4), & as a
 // truth test (u5, undefined converted as ToNumber and ToInt32 convert it, so it's 0), a field typed number |
-// undefined (u6), and a chain of two (u7). accessKind's own shape, const { parent } = node (u1_switch), agrees
-// on the real parent and on the placeholder stops at #jjf9ppe's check of the destructured binding, in its
-// words, until that binding can be a placeholder slot as the plain const is (Lower's question). A use that
+// undefined (u6), a chain of two (u7), and accessKind's own shape, const { parent } = node (u1_switch), whose
+// binding is a placeholder slot as the plain const is (#s59xxn3), where #jjf9ppe checked it at the binding and
+// stopped it on the placeholder before the ?. was reached. A use that
 // needs the number agrees with Node on the real parent, and on the placeholder stops at its check in Adamic's
 // words, where Node carries undefined on: a non-null assertion into a number (s1), a return, an argument, a
 // field store and an element of a number[]. A plain read through the placeholder still stops in the
@@ -25,7 +25,7 @@ func TestOptionalScalarRead(t *testing.T) {
 	t.Parallel()
 	const absent = "a ?. read whose receiver the checker calls present was absent, through a non-null or definite-assignment assertion: node.parent?.kind"
 	for _, probe := range []struct{ name, node, panic string }{
-		{"u1_switch.ts", "one\nother\n", "placeholder 'parent' is unset at destructured binding via parent"},
+		{"u1_switch.ts", "one\nother\n", ""},
 		{"u1_switch_plain.ts", "one\nother\n", ""},
 		{"u2_strict_equal.ts", "true false\nfalse true\n", ""},
 		{"u3_coalesce.ts", "1\n0\n", ""},

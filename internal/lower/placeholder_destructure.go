@@ -16,7 +16,9 @@ import (
 // field is read at its placeholder storage, as typeOfSymbol says (a union, which can hold the undefined),
 // never at the name's own representation: native's view read takes nothing else, and the first cut, which
 // read it as the name's, stopped on a compiler bug there (placeholder view has untagged storage). read is the
-// destructuring's own read of the field; one that isn't a placeholder's comes back as it is.
+// destructuring's own read of the field; one that isn't a placeholder's comes back as it is. A declaration's
+// name that is a placeholder slot of its own (placeholderSlotBinding) takes the field's placeholder storage
+// unchecked, as const parent = node.parent does, and its first use is what's checked (#s59xxn3).
 func (l *lowering) placeholderDestructuredRead(binding *ast.Node, field *ast.Symbol, fieldType *checker.Type, read ir.Property, defaulted bool) (ir.Expression, error) {
 	origin := l.placeholderSymbolOrigin(field)
 	direct := origin != ""
@@ -48,9 +50,30 @@ func (l *lowering) placeholderDestructuredRead(binding *ast.Node, field *ast.Sym
 		unset.ViewAllowed = read.ViewAllowed
 		l.result.PlaceholderChecks = append(l.result.PlaceholderChecks, ir.PlaceholderCheck{Origin: origin, Use: "field representation", Path: path, Where: l.program.Where(binding), Status: "checked"})
 	}
+	if l.placeholderSlotBinding(binding, field) {
+		return unset, nil
+	}
 	of, known := l.representation(l.checker.GetNonNullableType(fieldType))
 	if !known {
 		of = ir.Union
 	}
 	return ir.PlaceholderUse{Value: unset, Origin: origin, Use: "destructured binding", Path: path, Where: l.program.Where(binding), Of: of}, nil
+}
+
+// placeholderSlotBinding is whether binding, a name an unannotated declaration's object pattern reads field into,
+// is a placeholder slot of its own (walkPlaceholderSlots, #s59xxn3) over a field that may hold one: then its read
+// flows unset, as const parent = node.parent's does, and is checked at its first use. A parameter's pattern, a
+// typed one and an assignment's are never one, and keep the check where they're bound.
+func (l *lowering) placeholderSlotBinding(binding *ast.Node, field *ast.Symbol) bool {
+	if binding.Kind != ast.KindBindingElement || binding.Parent == nil || binding.Parent.Kind != ast.KindObjectBindingPattern {
+		return false
+	}
+	declaration := binding.Parent.Parent
+	if declaration == nil || declaration.Kind != ast.KindVariableDeclaration || declaration.Type() != nil || declaration.Initializer() == nil {
+		return false
+	}
+	if l.placeholderOrigin(binding.Name()) == "" {
+		return false
+	}
+	return l.placeholderSymbolOrigin(field) != "" || l.result.PlaceholderViews[l.placeholderKey(field)] != ""
 }
