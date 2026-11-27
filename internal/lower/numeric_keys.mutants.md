@@ -19,6 +19,14 @@ then lowers or stops somewhere else.
 The proof's memo has its own: numeric_keys.go:158, the held answer never returned (`if closed, held := ...; held && false {`),
 reds TestNumericKeyTableIsWalkedOncePerBinding (three walks for one binding).
 
+The key's enum read has its own (#kgngvxj): numericKeyRead returning nil before anything else, so (A) names the field
+and never reads the ordinary enum member, reds TestEnumInitializationComputedKeyStops in internal/oracle (it prints
+`initializer` and `1` again where the pin wants exit 70 with the row's ReferenceError), and the fixture runner's row for
+stage3/fixtures/enum-init-reach/unknown-computed-key.a in backend_divergences.json.
+The placeholder stop that reads stays with the numeric road (`numericKey`, object.go): with it applied to every
+`keyRead` (`_ = numericKey` beside a bare `if keyRead != nil {`), road 2's placeholder field stops too, and
+TestEnumKeyPlaceholderFieldByRoad/road_2_keeps_its_read in internal/lower goes red while its numeric row stays green.
+
 ## Road 2: ordinary enum keys in enumeration order
 
 These patches are owed to Loom and have only been checked for applicability.
@@ -26,4 +34,4 @@ These patches are owed to Loom and have only been checked for applicability.
 | Condition | Mutant | Edit | Red |
 |---|---|---|---|
 | Array indices increase strictly | `wrong-drops-ascending-check.patch` | numeric_keys.go:310, disable the ascending comparison in keysInEnumerationOrder | TestNumericKeyOrderedEnumStops/descending at numeric_keys_test.go:266 and the descending order table row |
-| The enum must be initialized before the key is read | `wrong-key-without-readiness.patch` | object.go:88-92, omit the ordinary enum key's member read | TestNumericKeyOrderedEnumReadiness, the unresolved callback at numeric_keys_test.go:327 and checked key assertion at :374 |
+| The enum must be initialized before the key is read | `wrong-key-without-readiness.patch` | object.go:98-102, omit the ordinary enum key's member read | TestNumericKeyOrderedEnumReadiness, the unresolved callback at numeric_keys_test.go:327 and checked key assertion at :374 |
