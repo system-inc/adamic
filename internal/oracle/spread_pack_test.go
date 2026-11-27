@@ -11,12 +11,14 @@ import (
 
 // A call with a spread packs each argument as it's held, and its callee reads each slot as its own
 // parameter's type (#p9zm9q5). A number or a boolean packed where a union is read was its bits read
-// as a heap pointer: native crashed while JavaScript agreed. Those calls stop now; a reference read
-// as a union is the same pointer, so a string's spread still runs.
+// as a heap pointer: native crashed while JavaScript agreed. Each argument is made what its slots read
+// before it's packed now, a spread's elements converted one by one, where those slots read as one
+// type; where they read differently the call stops. A reference read as a union is the same pointer,
+// so a string's spread runs as it is.
 
 func TestSpreadPackAlikeAgreesWithNode(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"o03-string-spread-into-union-rest", "o05-number-after-spread", "o08-function-value-string-spread", "o09-function-value-fixed-beside-spread", "o12-function-value-two-union-rests-string-spread", "o13-function-value-number-rests-apart", "o14-function-declarations-union-rest-beside-number-rest", "o15-function-value-maybe-number-slot"} {
+	for _, name := range []string{"o01-number-spread-into-union-rest", "o02-number-fixed-into-union-parameter", "o03-string-spread-into-union-rest", "o04-boolean-spread-into-union-rest", "o05-number-after-spread", "o06-method-number-spread", "o07-function-value-number-spread", "o08-function-value-string-spread", "o09-function-value-fixed-beside-spread", "o12-function-value-two-union-rests-string-spread", "o13-function-value-number-rests-apart", "o14-function-declarations-union-rest-beside-number-rest", "o15-function-value-maybe-number-slot"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs(filepath.Join("testdata", "spread_pack", name+".ts"))
@@ -48,15 +50,13 @@ func TestSpreadPackUnlikeStops(t *testing.T) {
 	t.Parallel()
 	const union = "union of differently held members"
 	for _, row := range []struct{ name, where, what string }{
-		{"o01-number-spread-into-union-rest", "4:6", "a call with a spread of elements held as a number where the callee reads a " + union},
-		{"o02-number-fixed-into-union-parameter", "4:6", "a call with a spread passing a number where the callee reads a " + union},
-		{"o04-boolean-spread-into-union-rest", "4:6", "a call with a spread of elements held as a boolean where the callee reads a " + union},
-		{"o06-method-number-spread", "6:36", "a call with a spread of elements held as a number where the callee reads a " + union},
-		{"o07-function-value-number-spread", "4:6", "a call with a spread of elements held as a number where the callee reads a " + union},
 		// A function value's layout packs for every closure its type admits, so lead's call collects show's union
 		// rest from the pack too, though lead's own signature reads its number spread alike (#wzr4atz).
 		{"o10-function-value-layout-union-rest-beside-string-spread", "7:9", "a call with a spread through a function value whose layout reads a " + union + " where the call packs a number"},
 		{"o11-function-value-layout-union-rest", "6:9", "a call with a spread through a function value whose layout reads a " + union + " where the call packs a number"},
+		// After the empty spread, 7 lands in first or in rest, which read it differently, so there's no one
+		// type to make it; it's boxed for rest, which first would read as a number's bits.
+		{"o16-number-after-spread-into-two-slot-types", "3:13", "a call with a spread passing a " + union + " where the callee's slots read as a number | undefined and a " + union},
 	} {
 		t.Run(row.name, func(t *testing.T) {
 			t.Parallel()

@@ -60,15 +60,11 @@ func (l *lowering) arrayPackedValues(node *ast.Node, name string, element ir.Typ
 				}
 			}
 			if from != element {
-				b := l.libraryArrayBuilder([]ir.Expression{value})
-				packed := b.declare("spread_values", ir.ArrayLiteral{Element: element})
-				item := b.local("spread_item", from)
-				fitted := fit(b.read(item), element)
-				if fitted.Type() != element {
-					return ir.ArrayLiteral{}, l.notYet(source, "spreading elements with an incompatible representation into "+name+" (convert the elements explicitly first)")
+				converted, err := l.spreadConverted(node, source, value, from, element, "spreading elements with an incompatible representation into "+name+" (convert the elements explicitly first)")
+				if err != nil {
+					return ir.ArrayLiteral{}, err
 				}
-				b.body = append(b.body, ir.ForOf{Iterable: b.read(b.parameters[0]), Element: from, Local: item, Body: []ir.Statement{ir.Evaluate{Value: ir.ArrayPush{Array: b.read(packed), Value: fitted, Element: element, Site: l.libraryArraySyntheticWriteSite(node)}}}})
-				arguments[index] = b.finish("array_spread_convert", b.read(packed))
+				arguments[index] = converted
 			}
 		} else {
 			arguments[index] = fit(value, element)
@@ -78,6 +74,23 @@ func (l *lowering) arrayPackedValues(node *ast.Node, name string, element ir.Typ
 		}
 	}
 	return ir.ArrayLiteral{Element: element, Elements: arguments, Spread: spread}, nil
+}
+
+// spreadConverted is a spread's elements, held as from, made a new array of element, each fitted on the
+// way: an array_spread_convert helper whose for-of pushes fit(item, element), its push's write site at
+// site. Where fit can't make an element of one, it stops as NotYet at stop, in what's words.
+// arrayPackedValues converts a spread into an array's elements with it, and spreadPackFit a spread into
+// the slots its callee reads, so a spread converts the same on both roads.
+func (l *lowering) spreadConverted(site, stop *ast.Node, value ir.Expression, from, element ir.Type, what string) (ir.Expression, error) {
+	b := l.libraryArrayBuilder([]ir.Expression{value})
+	packed := b.declare("spread_values", ir.ArrayLiteral{Element: element})
+	item := b.local("spread_item", from)
+	fitted := fit(b.read(item), element)
+	if fitted.Type() != element {
+		return nil, l.notYet(stop, what)
+	}
+	b.body = append(b.body, ir.ForOf{Iterable: b.read(b.parameters[0]), Element: from, Local: item, Body: []ir.Statement{ir.Evaluate{Value: ir.ArrayPush{Array: b.read(packed), Value: fitted, Element: element, Site: l.libraryArraySyntheticWriteSite(site)}}}})
+	return b.finish("array_spread_convert", b.read(packed)), nil
 }
 
 // arraySpliceSpreads says whether a splice spreads among its items, the third argument on. tsc's own
