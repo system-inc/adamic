@@ -863,7 +863,14 @@ func (l *lowering) fixedFieldRead(node *ast.Node, object ir.Expression, name str
 		return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)}), nil
 	}
 	if optional && !of.IsReference() {
-		return nil, l.notYet(node, "?. to a "+typeName(of)+", which would be "+typeName(of)+" | undefined")
+		if !ir.Maybe(of).IsMaybe() {
+			return nil, l.notYet(node, "?. to a "+typeName(of)+", which would be "+typeName(of)+" | undefined")
+		}
+		// The checker calls the result a number or a boolean, since it calls the receiver present, but
+		// ?. tests the receiver as it runs, so the result is the maybe it evaluates to (optional_scalar.go).
+		// The field is stored as of; Optional makes the read that field's maybe pair.
+		read := l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: true, Class: l.classOf(node)})
+		return l.optionalScalarRead(node, read, of), nil
 	}
 	return l.defined(node, l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)})), nil
 }
