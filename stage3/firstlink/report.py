@@ -20,7 +20,8 @@ BODY_PHASES = {"Refusal", "Signature", "Statics", "Body", "Statement"}
 
 # ir.go:157 to :161 at 51d5dada names whole-program steps as a class.
 # The names come from each first argument of a firstLinkPass call at 51d5dada
-# (36 calls), plus the two firstLinkProgramStop calls.
+# (36 calls), plus the two firstLinkProgramStop calls, and checkSpreadPrototypeMembers
+# since #vjvcnnj head 2.
 WHOLE_PROGRAM_PHASES = {
     "NormalizeAsync",
     "ProgramRegion",
@@ -51,6 +52,7 @@ WHOLE_PROGRAM_PHASES = {
     "checkRelationViewsTaken",
     "checkSlotWrites",
     "checkSourceSlotPending",
+    "checkSpreadPrototypeMembers",
     "checkViewCopies",
     "checkViewLogicalWrites",
     "checkViewWidenedReads",
