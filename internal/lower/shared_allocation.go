@@ -4,7 +4,6 @@ import (
 	"sort"
 	"strconv"
 	"strings"
-	_ "unsafe"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -152,18 +151,12 @@ func (f *cycleFinder) allocationPlain(proven *checker.Type) bool {
 	if proven.Flags()&checker.TypeFlagsObject == 0 || f.template(proven) || proven.ObjectFlags()&checker.ObjectFlagsReverseMapped != 0 {
 		return false
 	}
+	// The checker's own isGenericObjectType (class.go's allocationGeneric).
 	if allocationGeneric(f.l.checker, proven) {
 		return false
 	}
 	return len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) == 0 && len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) == 0
 }
-
-// The checker's own test of a generic object type: for an object type, a generic mapped type (its constraint a
-// generic index type, or its as clause generic past the iteration type) or a tuple with a variadic element
-// (getGenericObjectFlags), pulled from its package as class.go pulls isTypeIdenticalTo.
-//
-//go:linkname allocationGeneric github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isGenericObjectType
-func allocationGeneric(receiver *checker.Checker, proven *checker.Type) bool
 
 // allocationIndex is one findCycles run's index for the two sweeps, so a node asks only the candidates whose names
 // it can satisfy, or that can satisfy its own, never a scan of every candidate (Compiler's condition 2). Plain
