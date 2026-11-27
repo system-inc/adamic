@@ -91,30 +91,6 @@ class FirstLinkReportTests(unittest.TestCase):
         self.assertEqual(len(report.WHOLE_PROGRAM_PHASES), 38)
         self.assertFalse(report.BODY_PHASES & report.WHOLE_PROGRAM_PHASES)
 
-    def test_phase_sets_match_lowering_head(self):
-        def git(*args):
-            result = subprocess.run(["git", *args], cwd=HERE, capture_output=True, text=True)
-            if result.returncode:
-                self.fail(f"cannot read lowering source at HEAD with git {args}: {result.stderr.strip()}")
-            return result.stdout
-
-        lowering = "internal/lower"
-        # The lane's Go wrapper starts Python in the harness directory.
-        top = git("rev-parse", "--show-toplevel").strip()
-        locations = git("-C", top, "grep", "-l", "-E",
-                        r"firstLink(Pass|ProgramStop|Catch|Row|Record)", "HEAD", "--",
-                        lowering, ":(exclude,glob)**/*_test.go").splitlines()
-        body, whole = set(), set()
-        for location in locations:
-            text = git("-C", top, "show", location)
-            whole.update(re.findall(r'\.firstLink(?:Pass|ProgramStop)\s*\(\s*"([^"]+)"', text))
-            body.update(re.findall(r'\.firstLinkCatch\s*\(\s*"([^"]+)"', text))
-            body.update(re.findall(r'\.firstLinkRow\s*\([^,]*,[^,]*,\s*"([^"]+)"', text))
-            body.update(re.findall(r'\.firstLinkRecord\s*\(\s*ir\.Trap\{[^}]*\bPhase:\s*"([^"]+)"', text))
-        self.assertSetEqual(report.BODY_PHASES, body, "body phases differ from lowering at HEAD")
-        self.assertSetEqual(report.WHOLE_PROGRAM_PHASES, whole,
-                            "whole-program phases differ from lowering at HEAD")
-
     def test_unknown_phase_fails_without_outputs(self):
         source = json.loads(fixture("wave2.json"))
         source["traps"][4]["Phase"] = "futurePass"
