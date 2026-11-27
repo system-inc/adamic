@@ -1,0 +1,12 @@
+interface Tree { readonly tag: string; peek(): string }
+interface Plain { readonly tag: string }
+class Real implements Tree {
+	constructor(readonly tag: string) {}
+	peek(): string {
+		return "peeked " + this.tag;
+	}
+}
+const tree: Tree = new Real("t");
+const holder: { p: Plain } = { p: { ...tree } };
+const { p } = holder;
+console.log(Object.keys(p).join(","));

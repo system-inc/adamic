@@ -49,7 +49,8 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			l.spreadNodes = append(l.spreadNodes, property)
 			literal.SpreadSite = len(l.spreadSources)
 			l.noteGenericSpread(property.AsSpreadAssignment().Expression, literal.SpreadSite)
-			l.librarySpreads = append(l.librarySpreads, librarySpread{node: property, source: spread, view: l.concrete(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression))})
+			held, heldInContext, heldOwnToo := l.spreadHeld(node)
+			l.librarySpreads = append(l.librarySpreads, librarySpread{node: property, source: spread, view: l.concrete(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression)), written: l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression), mapper: l.typeMapper, held: held, heldInContext: heldInContext, heldOwnToo: heldOwnToo})
 			l.wholeObjectCopies = append(l.wholeObjectCopies, wholeObjectCopy{node: property, source: spread, copied: l.concrete(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression))})
 			literal.SpreadMaybeUndefined = l.includesUndefined(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression))
 		case ast.KindMethodDeclaration:
