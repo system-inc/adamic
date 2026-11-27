@@ -2,6 +2,10 @@ package lower
 
 import (
 	"errors"
+	"fmt"
+	"os"
+	"time"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
@@ -124,7 +128,9 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 	}
 	// A cycle through a slot typed unknown or object is one no seed above can see, in every program, graph
 	// or not (loose_slots.go).
+	relationSizeTrace(f.l.checker, "looseSlotStop start")
 	if err := f.looseSlotStop(); err != nil {
+		relationSizeTrace(f.l.checker, "looseSlotStop stopped")
 		return err
 	}
 	if len(seeds) == 0 {
@@ -135,7 +141,17 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 	// component is reached from it, so the components the seeds reach are the ones built from every candidate. The
 	// queue holds each node once, by queued, since on tsc's first link a queue of every link held 1.5M entries
 	// (#nxb3xh1).
+	probeHeap("edges start")
+	edgesStart := time.Now()
 	f.allocation = f.allocationIndexOf(candidates)
+	edgeLoopTrace(f.l.checker, fmt.Sprintf("edges start seeds %d views %d groups %d looseViews %d shapes %d looseShapes %d index %s", len(seeds), len(f.allocation.views), len(f.allocation.groups), len(f.allocation.looseViews), len(f.allocation.shapes), len(f.allocation.looseShapes), time.Since(edgesStart).Round(time.Millisecond)), len(candidates), len(f.shapes), len(f.where), 0, 0)
+	for at, loose := range f.allocation.looseViews {
+		if at < 40 {
+			fmt.Fprintf(os.Stderr, "LOOSEVIEW %s flags=%d objectFlags=%d\n", f.l.checker.TypeToString(loose.proven), loose.proven.Flags(), loose.proven.ObjectFlags())
+		}
+	}
+	edgeNodes, edgeLinks := 0, 0
+	var linksTime time.Duration
 	edges := map[cycleNode][]cycleNode{}
 	queued := map[cycleNode]bool{}
 	queue := []cycleNode{}
@@ -146,7 +162,13 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 	for len(queue) != 0 {
 		node := queue[len(queue)-1]
 		queue = queue[:len(queue)-1]
+		edgeNodes++
+		if edgeNodes%500 == 0 {
+			edgeLoopTrace(f.l.checker, fmt.Sprintf("edges node %d queue %d queued %d links %d tests %d graphLinks %s wall %s", edgeNodes, len(queue), len(queued), edgeLinks, f.allocationTests, linksTime.Round(time.Second), time.Since(edgesStart).Round(time.Second)), len(candidates), len(f.shapes), len(f.where), edgeNodes, 0)
+		}
+		linksStart := time.Now()
 		links := f.graphLinks(node)
+		linksTime += time.Since(linksStart)
 		// Two structural views that may share an allocation are the same possible allocation, by the finder's
 		// own relation (mayShareAllocation), never the checker's: on tsc that sweep spent the checker's relation
 		// budget (#nxb3xh1). Weak views never become strong edges.
@@ -154,6 +176,7 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 			links = append(links, f.allocationViews(node.proven)...)
 		}
 		edges[node] = links
+		edgeLinks += len(links)
 		for _, link := range links {
 			if !queued[link] {
 				queued[link] = true
@@ -172,6 +195,11 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 	// (concrete) or a view's walk (viewAlsoTable) made: the old loop gave one a key when any candidate linked to
 	// it, and now only when a seed's closure does, so such a container, holding a selected type and reached from
 	// no seed, is the one thing the cache pass could add before and can't now.
+	probeHeap("edges done")
+	edgeLoopTrace(f.l.checker, fmt.Sprintf("edges done closure %d links %d tests %d graphLinks %s wall %s", len(edges), edgeLinks, f.allocationTests, linksTime.Round(time.Second), time.Since(edgesStart).Round(time.Second)), len(candidates), len(f.shapes), len(f.where), edgeNodes, 0)
+	if os.Getenv("ADAMIC_PROBE_CUTCHECK") == "1" || probeCutCheck {
+		allocationCutCheck(f, edges)
+	}
 	for _, candidate := range candidates {
 		if _, built := edges[candidate]; !built {
 			edges[candidate] = nil
@@ -229,6 +257,7 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 			visit(node)
 		}
 	}
+	probeSelected(f, edges, graph, seeds)
 	// A region frees a cycle only when every value on it is a member. A Promise never is (its
 	// payload is a counted value outside any region), so a cycle through one would keep its region
 	// alive forever: refuse it, as before graph regions.
