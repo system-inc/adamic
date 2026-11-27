@@ -16,13 +16,15 @@ import (
 // type; where they read differently the call stops. A reference read as a union is the same pointer,
 // so a string's spread runs as it is. Through a function value, the pack fills every target its type
 // admits, and each rest tail is copied from it segment by segment, each slot made what the tail holds:
-// o10's numbers boxed into show's rest and copied as they are into lead's (#whe5bdk). o18 to o20 run
-// the target whose tail converts: numbers with a fixed argument between two spreads, booleans, whose
-// boxes are constant, and a string, retained once.
+// o10's numbers boxed into show's rest and copied as they are into lead's (#whe5bdk). A tail that
+// converts is read only by a target the call never runs, since a rest function seen through a type
+// that hands its rest another element is refused where it's made, so o10, o11, o19 (booleans, whose
+// boxes are constant) and o20 (a string, retained once) are held to the leak check. o18's own rest of
+// number | undefined is copied by segment too and read, a fixed argument between two spreads.
 
 func TestSpreadPackAlikeAgreesWithNode(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"o01-number-spread-into-union-rest", "o02-number-fixed-into-union-parameter", "o03-string-spread-into-union-rest", "o04-boolean-spread-into-union-rest", "o05-number-after-spread", "o06-method-number-spread", "o07-function-value-number-spread", "o08-function-value-string-spread", "o09-function-value-fixed-beside-spread", "o10-function-value-layout-union-rest-beside-string-spread", "o11-function-value-layout-union-rest", "o12-function-value-two-union-rests-string-spread", "o13-function-value-number-rests-apart", "o14-function-declarations-union-rest-beside-number-rest", "o15-function-value-maybe-number-slot", "o18-function-value-layout-fixed-between-spreads", "o19-function-value-layout-boolean-segment", "o20-function-value-layout-reference-segment"} {
+	for _, name := range []string{"o01-number-spread-into-union-rest", "o02-number-fixed-into-union-parameter", "o03-string-spread-into-union-rest", "o04-boolean-spread-into-union-rest", "o05-number-after-spread", "o06-method-number-spread", "o07-function-value-number-spread", "o08-function-value-string-spread", "o09-function-value-fixed-beside-spread", "o10-function-value-layout-union-rest-beside-string-spread", "o11-function-value-layout-union-rest", "o12-function-value-two-union-rests-string-spread", "o13-function-value-number-rests-apart", "o14-function-declarations-union-rest-beside-number-rest", "o15-function-value-maybe-number-slot", "o18-function-value-maybe-number-rest-fixed-between-spreads", "o19-function-value-layout-boolean-segment", "o20-function-value-layout-reference-segment"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs(filepath.Join("testdata", "spread_pack", name+".ts"))

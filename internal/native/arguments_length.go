@@ -216,9 +216,9 @@ type packSegment struct {
 
 // copySegments pushes a pack made at run time onto a rest array of element from start, segment by
 // segment, each slot made what the rest holds (restSlot): o10's numbers boxed into show's rest of a
-// union, and copied as they are into lead's rest of numbers, from the one pack. at is the slot's
-// position in the pack, past every slot the arguments before it took, so a fixed argument after a
-// spread is read where that spread's snapshot ended.
+// union, which only a target the call never runs reads, and copied as they are into lead's rest of
+// numbers, from the one pack. at is the slot's position in the pack, past every slot the arguments
+// before it took, so a fixed argument after a spread is read where that spread's snapshot ended.
 func (e *emitter) copySegments(result, packed string, start int, element ir.Type, segments []packSegment) {
 	at := e.temporary()
 	e.line("size_t %s = 0;", at)

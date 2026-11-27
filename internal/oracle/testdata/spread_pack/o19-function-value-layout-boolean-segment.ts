@@ -1,8 +1,6 @@
 type B = boolean | string;
 const flags: boolean[] = [true, false];
-const show = (...rest: B[]): void => { let text = ""; for (const value of rest) text += typeof value + ":" + String(value) + ","; console.log(text); };
-const all = (...rest: boolean[]): void => { console.log(String(rest.length)); };
-let pick: (...rest: boolean[]) => void = all;
-pick(...flags);
-pick = show;
-pick(...flags, false);
+const show = (...rest: B[]): void => { for (const value of rest) console.log(typeof value + ":" + String(value)); };
+show("a", "b");
+const lead = (first: B, ...rest: boolean[]): void => { console.log(typeof first + ":" + String(first) + ":" + String(rest.length)); };
+lead(true, ...flags, false);
