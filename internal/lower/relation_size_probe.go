@@ -131,7 +131,7 @@ func probeMayRelate(f *cycleFinder, one, other *checker.Type) bool {
 }
 
 // probeCutCheck turns on allocationCutCheck in the probe that asks it (#nxb3xh1 head 6, Compiler's condition 3).
-var probeCutCheck = false
+var probeCutCheck = true
 
 // allocationCutCheck asks the checker, by deriveRelated, of the pairs graphTypes' sweep cut over the seeds' closure:
 // a fixed seeded 1% of them by their type ids, and every one involving a type with an index signature or one the
