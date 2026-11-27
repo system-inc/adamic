@@ -1,0 +1,60 @@
+# #gbr6vs2 close (Performance): after road (c), builder.ts:2258 unit and any finding at 2262;: one side of the latent census at the commit as laid, in MODE entry (first stops,
+# LATENT_FULL=0) or full (every site, LATENT_FULL=1). Prints every unit's first stop and every finding of the untagged
+# family, gzipped in base64 with a count and a digest. Run with bash after the sealed opening (sandboxed_repositories,
+# sandboxed_npm stage3/api stage3/typescript, sandboxed_typescript_source). Never merged.
+set -uo pipefail
+MODE=${MODE:?entry or full}
+root=$PWD; R=$TMPDIR/gc; mkdir -p "$R"
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg); mode $MODE"
+step() { local name=$1 log=$2 begun=$SECONDS; shift 2; "$@" > "$log" 2>&1; local s=$?; if [ $s -eq 0 ]; then echo "PASS $name ($((SECONDS - begun)) s)"; return 0; fi; echo "FAIL $name (exit $s)"; tail -30 "$log"; echo "VERDICT FAIL $name"; exit 1; }
+ts=$root/stage3/api/node_modules/typescript
+[ -f "$ts/lib/typescript.js" ] || { echo "FAIL stock typescript"; exit 1; }
+step apply "$R/apply.log" bash stage3/apply.sh "$R/adapted"
+build() {
+	python3 stage3/census/latent/make_overlay.py "$root" "$R/latent-overlay" && gofmt -w "$R"/latent-overlay/*.go &&
+	python3 stage3/meter/entry_overlay.py "$R/latent-overlay" "$R/entry-overlay" && gofmt -w "$R"/entry-overlay/*.go &&
+	go build -buildvcs=false -overlay="$R/entry-overlay/overlay.json" -o "$R/entry-census" ./stage3/census/latent/tool
+}
+step build "$R/build.log" build
+full=0; [ "$MODE" = full ] && full=1
+run() { LATENT_FULL=$full LATENT_ASSERT_NO_OUTPUT=1 LATENT_TAIL=1 CENSUS_MODULE_FORMAT=CommonJSBundle "$R/entry-census" "$R/adapted/src/tsc/tsc.ts" "$R/out.jsonl"; }
+step census "$R/census.log" run
+echo "rows $(wc -l < "$R/out.jsonl")"
+python3 -I - "$R/out.jsonl" "$R/adapted" > "$R/rows.tsv" <<'PY'
+import json, sys
+path, tree = sys.argv[1], sys.argv[2].rstrip("/") + "/"
+rows = [json.loads(line) for line in open(path)]
+def short(where):
+	where = str(where)
+	return where.split("/src/", 1)[-1] if "/src/" in where else where.replace(tree, "")
+units, first = {}, {}
+for row in rows[1:]:
+	for unit in row.get("units") or []:
+		units[unit["where"]] = unit
+for row in rows[1:]:
+	for finding in row.get("findings") or []:
+		unit = finding.get("unit")
+		if finding.get("phase") in ("lowering", "deferred", "prepass") and unit in units:
+			first.setdefault(unit, finding)
+		reason = finding.get("reason", "")
+		if "no literal tag tells apart" in reason:
+			print("\t".join(["SITE", short(finding["where"]), short(unit), finding.get("kind", ""), finding.get("phase", ""), reason.replace("\t", " ").replace("\n", " ")]))
+for where, unit in units.items():
+	found = first.get(where)
+	print("\t".join(["UNIT", short(where), unit.get("kind", ""), unit.get("status", ""), short(found["where"]) if found else "-", found.get("kind", "") if found else "-", (found.get("reason", "") if found else "-").replace("\t", " ").replace("\n", " ")]))
+PY
+echo "UNITS $(grep -c '^UNIT' "$R/rows.tsv") STOPPED $(awk -F'\t' '$1=="UNIT" && $5!="-"' "$R/rows.tsv" | wc -l)"
+echo "== builder.ts's toBuilderStateFileInfoForMultiEmit unit, and anything at builder.ts:226x"
+grep -nE 'compiler/builder.ts:22(5[0-9]|6[0-9])' "$R/rows.tsv" | cut -c1-400
+python3 -I - "$R/out.jsonl" <<'PY'
+import json, sys
+hits = 0
+for line in open(sys.argv[1]):
+	row = json.loads(line)
+	for finding in row.get("findings") or []:
+		if "builder.ts:226" in str(finding.get("where", "")):
+			hits += 1
+			print("FINDING", finding.get("where"), finding.get("kind"), finding.get("phase"), str(finding.get("reason", ""))[:240])
+print("findings at builder.ts:226x:", hits)
+PY
+echo "VERDICT OK"
