@@ -488,6 +488,42 @@
       "test": "internal/oracle/readiness_test.go: TestReadinessMutantWeakGenericMessage"
     },
     {
+      "path": "internal/oracle/testdata/optional_scalar/s1_argument.ts",
+      "stderr": "adamic: panic: a ?. read whose receiver the checker calls present was absent, through a non-null or definite-assignment assertion: node.parent?.kind\n",
+      "hatch": "non-null, line 2: const root: N = { kind: 1, parent: undefined! };",
+      "test": "internal/oracle/optional_scalar_test.go: TestOptionalScalarRead"
+    },
+    {
+      "path": "internal/oracle/testdata/optional_scalar/s1_assertion.ts",
+      "stderr": "adamic: panic: a ?. read whose receiver the checker calls present was absent, through a non-null or definite-assignment assertion: node.parent?.kind\n",
+      "hatch": "non-null, line 2: const root: N = { kind: 1, parent: undefined! };",
+      "test": "internal/oracle/optional_scalar_test.go: TestOptionalScalarRead"
+    },
+    {
+      "path": "internal/oracle/testdata/optional_scalar/s1_element.ts",
+      "stderr": "adamic: panic: a ?. read whose receiver the checker calls present was absent, through a non-null or definite-assignment assertion: node.parent?.kind\n",
+      "hatch": "non-null, line 2: const root: N = { kind: 1, parent: undefined! };",
+      "test": "internal/oracle/optional_scalar_test.go: TestOptionalScalarRead"
+    },
+    {
+      "path": "internal/oracle/testdata/optional_scalar/s1_field.ts",
+      "stderr": "adamic: panic: a ?. read whose receiver the checker calls present was absent, through a non-null or definite-assignment assertion: node.parent?.kind\n",
+      "hatch": "non-null, line 2: const root: N = { kind: 1, parent: undefined! };",
+      "test": "internal/oracle/optional_scalar_test.go: TestOptionalScalarRead"
+    },
+    {
+      "path": "internal/oracle/testdata/optional_scalar/s1_return.ts",
+      "stderr": "adamic: panic: a ?. read whose receiver the checker calls present was absent, through a non-null or definite-assignment assertion: node.parent?.kind\n",
+      "hatch": "non-null, line 2: const root: N = { kind: 1, parent: undefined! };",
+      "test": "internal/oracle/optional_scalar_test.go: TestOptionalScalarRead"
+    },
+    {
+      "path": "internal/oracle/testdata/optional_scalar/u1_switch.ts",
+      "stderr": "adamic: panic: placeholder 'parent' is unset at destructured binding via parent\n",
+      "hatch": "non-null, line 2: const root: N = { kind: 1, parent: undefined! };",
+      "test": "internal/oracle/optional_scalar_test.go: TestOptionalScalarRead"
+    },
+    {
       "path": "internal/oracle/testdata/predicate_direction_uses/inferred_lie.ts",
       "stderr": "adamic: panic: predicate isExportAssignment at {root}/internal/oracle/testdata/predicate_direction_uses/inferred_lie.ts:40:12 true branch: source Statement, target ExportAssignment\n",
       "hatch": "predicate, line 19: function isExportAssignment(node: Statement): node is ExportAssignment {",
