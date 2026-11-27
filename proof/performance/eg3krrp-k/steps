@@ -1,0 +1,44 @@
+# #eg3krrp K proof (Performance): the absent arm over one object. Source after environment.sh, cloud/sandboxed-job.sh,
+# sandboxed_npm stage3/api and sandboxed_products. Never merged.
+set -u
+fail=0
+P=./internal/lower
+pins='^(TestAbsentArm.*|TestKeepsNullishCast.*|TestDropsNullish.*|TestCastDropsNullish.*|TestUntaggedUnionCast.*)$'
+out=$(gofmt -l internal/lower); [ -z "$out" ] && echo "PASS gofmt" || { echo "FAIL gofmt: $out"; fail=1; }
+go vet $P > "$TMPDIR/vet.log" 2>&1 && echo "PASS vet" || { echo "FAIL vet"; head -20 "$TMPDIR/vet.log"; fail=1; }
+go test -count=1 -v -run "$pins" $P > "$TMPDIR/pins.log" 2>&1; r=$?
+grep -E -- '^\s*--- FAIL|_test.go:[0-9]+:' "$TMPDIR/pins.log" | cut -c1-400 | head -30
+echo "pins: $(grep -cE -- '^\s*--- PASS' "$TMPDIR/pins.log") passed, $(grep -cE -- '^\s*--- FAIL' "$TMPDIR/pins.log") failed"
+[ $r = 0 ] && echo "PASS pins" || { echo "FAIL pins"; fail=1; }
+for f in cast_proof.go; do cp internal/lower/$f "$TMPDIR/$f.keep"; done
+mutant() {
+	local label=$1 file=$2 old=$3 new=$4 red=$5
+	echo "== mutant: $label"
+	cp "$TMPDIR/$file.keep" internal/lower/$file
+	python3 -I - internal/lower/$file "$old" "$new" <<'PY' || { echo "FAIL mutant $label: not applied"; fail=1; return; }
+import sys
+path, old, new = sys.argv[1:]
+text = open(path).read()
+if text.count(old) != 1:
+    sys.exit(1)
+open(path, "w").write(text.replace(old, new))
+PY
+	go vet $P > "$TMPDIR/mvet.log" 2>&1 || { echo "FAIL mutant $label: doesn't compile"; head -5 "$TMPDIR/mvet.log"; fail=1; cp "$TMPDIR/$file.keep" internal/lower/$file; return; }
+	echo "compiles"
+	go test -count=1 -v -run "$pins" $P > "$TMPDIR/m.log" 2>&1
+	grep -E -- '^\s*--- FAIL' "$TMPDIR/m.log" | cut -c1-200 | head -8
+	grep -qE -- "^\s*--- FAIL: ${red}" "$TMPDIR/m.log" && echo "PASS mutant red: $label" || { echo "FAIL mutant survived: $label"; fail=1; }
+	cp "$TMPDIR/$file.keep" internal/lower/$file
+}
+mutant "absentArm wants two present members again" cast_proof.go 'if undefined != 1 || others == 0 {' 'if undefined != 1 || others < 2 {' 'TestAbsentArmObjectDowncastLowers'
+mutant "no absent check on the object road" cast_proof.go '				proof.absent = true
+				return proof, nil' '				return proof, nil' 'TestAbsentArmObjectDowncastStopsUndefined'
+mutant "the present road skipped" cast_proof.go '				proof.absent = true
+				return proof, nil' '				proof.absent = true
+				proof.interfaceView = false
+				return proof, nil' 'TestAbsentArmObjectDowncastStopsAnotherKind'
+echo "== internal/lower, stage3/fixtures and internal/oracle whole"
+go test -count=1 -timeout 100m $P ./stage3/fixtures ./internal/oracle > "$TMPDIR/whole.log" 2>&1; r=$?
+grep -E -- '^(ok|FAIL)|--- FAIL|panic:' "$TMPDIR/whole.log" | cut -c1-300 | head -30
+[ $r = 0 ] && echo "PASS whole" || { echo "FAIL whole"; grep -E '_test.go:[0-9]+:' "$TMPDIR/whole.log" | cut -c1-300 | head -30; fail=1; }
+[ $fail = 0 ] && echo "VERDICT PASS" || { echo "VERDICT FAIL"; false; }
