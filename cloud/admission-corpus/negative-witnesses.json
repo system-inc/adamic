@@ -1529,6 +1529,18 @@
       "type_correct_sha256": "c0678cdc3776d81fc721bb726f55a76e7fcb49d0d9eb9afb7e967a54a90929fb",
       "exit": 70,
       "stderr": "adamic: panic: field read failed: (x as A | B).shared is not initialized; expected string, found missing\n"
+    },
+    "a120248532b32b2acbd94807a416ab193ab4eeee1f22db3b56d1d4ae4f7f0d75": {
+      "form": "checked_boundary",
+      "ruling_task": "#eg3krrp",
+      "ruling": "rulings.md:18: an untagged union's cast is a checked view with no test at the cast, its lie stopped at the read; applied to one object cast to a union target, the source taken as the union's one member (Compiler, cause U on #eg3krrp)",
+      "declaration": "internal/oracle/testdata/cast_object_union_target/lie.ts:4",
+      "declared_type": "number",
+      "repair_from": "const value: Type = { flags: 1 };",
+      "repair_to": "const value: ObjectType = { flags: 1, objectFlags: 4 };",
+      "type_correct_sha256": "a6f728ee5394a9bdf193d455b429369a195977828b4455605980312f5fcefe11",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: (t as ObjectType | UnionType).objectFlags is not initialized; expected number, found missing\n"
     }
   }
 }
