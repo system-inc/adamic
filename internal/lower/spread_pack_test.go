@@ -7,8 +7,9 @@ import (
 )
 
 // A call with a spread packs each argument as it's held and its callee reads each slot as its
-// parameter's type, so an argument held unlike its slot stops (#p9zm9q5, spreadPackStop). A
-// reference read as a union is the same pointer and lowers.
+// parameter's type, so an argument held unlike its slots is made the one type they all read, and
+// stops where they read differently (#p9zm9q5, spreadPackFit). A reference read as a union is the
+// same pointer and lowers as it is.
 func TestSpreadPackStops(t *testing.T) {
 	t.Parallel()
 	const union = "union of differently held members"
@@ -25,10 +26,12 @@ func TestSpreadPackStops(t *testing.T) {
 		t.Fatalf("got %v; want the function-value relation's stop, not the spread's", err)
 	}
 	for _, row := range []struct{ name, source, what string }{
-		{"number spread into a union rest", "function show(...rest: A[]): number { return rest.length; }\nconsole.log(String(show(...nums)));\n", "a call with a spread of elements held as a number where the callee reads a " + union},
-		{"number beside a spread into a union parameter", "function show(first: A, ...rest: number[]): number { return rest.length; }\nconsole.log(String(show(7, ...nums)));\n", "a call with a spread passing a number where the callee reads a " + union},
-		{"number spread that can land in a union parameter", "function show(first: number, second?: A, ...rest: number[]): number { return rest.length; }\nconsole.log(String(show(1, ...nums)));\n", "a call with a spread of elements held as a number where the callee reads a " + union},
-		{"number spread through a function value into a union rest", "const show = (...rest: A[]): number => rest.length;\nconsole.log(String(show(...nums)));\n", "a call with a spread of elements held as a number where the callee reads a " + union},
+		{"number spread into a union rest", "function show(...rest: A[]): number { return rest.length; }\nconsole.log(String(show(...nums)));\n", ""},
+		{"number beside a spread into a union parameter", "function show(first: A, ...rest: number[]): number { return rest.length; }\nconsole.log(String(show(7, ...nums)));\n", ""},
+		{"number spread that can land in a union parameter", "function show(first: number, second?: A, ...rest: number[]): number { return rest.length; }\nconsole.log(String(show(1, ...nums)));\n", "a call with a spread of elements held as a number where the callee's slots read as a " + union + " and a number"},
+		// After a spread, 7 can land in first or in rest. Boxed for rest, it isn't what first reads.
+		{"number after a spread that can land in a maybe number parameter or a union rest", "function show(first?: number, ...rest: A[]): number { return rest.length; }\nconsole.log(String(show(...[], 7)));\n", "a call with a spread passing a " + union + " where the callee's slots read as a number | undefined and a " + union},
+		{"number spread through a function value into a union rest", "const show = (...rest: A[]): number => rest.length;\nconsole.log(String(show(...nums)));\n", ""},
 		// lead's type admits show, so its layout collects show's union rest from the pack its number spread is in
 		// (#wzr4atz, checkClosureSpreadLayouts), though lead's own signature reads the spread alike.
 		{"number spread through a function value whose layout holds another target's union rest", "const show = (...rest: A[]): void => { for (const value of rest) console.log(typeof value + \":\" + String(value)); };\nshow(\"a\", \"b\");\nconst lead = (first: A, ...rest: number[]): void => { console.log(typeof first + \":\" + String(first) + \":\" + String(rest.length)); };\nlead(7, ...nums);\n", "a call with a spread through a function value whose layout reads a " + union + " where the call packs a number"},

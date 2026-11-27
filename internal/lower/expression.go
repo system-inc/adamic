@@ -2499,7 +2499,7 @@ func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expr
 	}
 	l.fitCallArguments(function, arguments, spread)
 	slots, rest := l.functionSlots(function)
-	if err := l.spreadPackStop(call.Arguments.Nodes, arguments, spread, 0, slots, rest); err != nil {
+	if err := l.spreadPackFit(call.Arguments.Nodes, arguments, spread, 0, slots, rest); err != nil {
 		return nil, err
 	}
 	return l.censusOverloadResult(call, ir.Call{Function: function, Arguments: arguments, Spread: spread, Returns: l.result.Functions[function].Returns})
@@ -2831,9 +2831,9 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 			position++
 		}
 	}
-	// A spread through a function value packs as a direct call's does, so it's judged against the one
-	// signature its fixed arguments are fitted by; with more than one there's no single slot to judge
-	// against, and it stops (#p9zm9q5).
+	// A spread through a function value packs as a direct call's does, so it's fitted to the one
+	// signature its fixed arguments are fitted by; with more than one there's no single slot to fit
+	// to, and it stops (#p9zm9q5).
 	if len(spread) != 0 {
 		signatures := l.checker.GetSignaturesOfType(l.optionalChainOperandType(node.AsCallExpression().Expression), checker.SignatureKindCall)
 		if len(signatures) != 1 {
@@ -2843,7 +2843,7 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		if err != nil {
 			return nil, err
 		}
-		if err := l.spreadPackStop(node.AsCallExpression().Arguments.Nodes, arguments, spread, 0, slots, rest); err != nil {
+		if err := l.spreadPackFit(node.AsCallExpression().Arguments.Nodes, arguments, spread, 0, slots, rest); err != nil {
 			return nil, err
 		}
 	}
