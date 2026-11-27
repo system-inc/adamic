@@ -1970,14 +1970,18 @@ reads internal/lower internal/ir/*.go
 reads stage3/census/latent/statecopy internal/ir/*.go
 reads stage3/census/latent/statecopy internal/lower/*.go
 # stage3/census/latent/overlaytext's tests hold make_overlay.py's text edits to main's internal/lower files
-# (anchors_test.go:95, carry_replay_test.go:75, module_format_test.go:131, relation_overflow_test.go:12) and read the
-# census templates and script beside it in stage3/census/latent, another package's files.
+# (anchors_test.go:95, carry_replay_test.go:75, module_format_test.go:131, relation_overflow_test.go:12,
+# array_sort_test.go:12, namespace_values_test.go:12-13) and read the census templates and script beside it in
+# stage3/census/latent, another package's files.
 reads stage3/census/latent/overlaytext internal/lower/lower.go
 reads stage3/census/latent/overlaytext internal/lower/expression.go
 reads stage3/census/latent/overlaytext internal/lower/functions.go
 reads stage3/census/latent/overlaytext internal/lower/generic.go
 reads stage3/census/latent/overlaytext internal/lower/locals.go
 reads stage3/census/latent/overlaytext internal/lower/entries_records.go
+reads stage3/census/latent/overlaytext internal/lower/object.go
+reads stage3/census/latent/overlaytext internal/lower/namespaces.go
+reads stage3/census/latent/overlaytext internal/lower/namespace_value.go
 reads stage3/census/latent/overlaytext stage3/census/latent/lower.go.txt
 reads stage3/census/latent/overlaytext stage3/census/latent/main.go.txt
 reads stage3/census/latent/overlaytext stage3/census/latent/make_overlay.py
