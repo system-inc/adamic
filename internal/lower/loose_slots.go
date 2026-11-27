@@ -931,6 +931,9 @@ func (f *cycleFinder) looseEntryStop(inits []looseInit) error {
 			break
 		}
 	}
+	// The writes are walked from the IR as it stands, where a trapped unit's code is its stub, so no write a
+	// trapped unit made is met here, and none is passed over: one whose site lies in a trapped unit is live code,
+	// a helper kept for its live owners among them, and a pass-over would drop a live unit's judgment (#nxb3xh1).
 	writes := f.looseWrites()
 	for _, write := range writes {
 		if write.value != nil && looseScalar(write.value) {
@@ -961,6 +964,13 @@ func (f *cycleFinder) looseEntryStop(inits []looseInit) error {
 		if !declared.Captured || declared.Global || l.localTypes[local] == nil || !f.holdsLoose(l.localTypes[local]) || !f.looseCaughtCell(local) || l.closedFrameInput(local) {
 			continue
 		}
+		// The table holds a trapped unit's catch bindings too, whose cells its stub never makes, so a first-link
+		// lowering passes over one declared inside a trapped unit, as it does a captured variable below (#nxb3xh1).
+		// What the trapped unit's code threw or handed on still joined what's caught and H, left wide on purpose:
+		// more of either only refuses more, so it fails closed.
+		if l.firstLinkSkips(l.localNodes[local]) {
+			continue
+		}
 		for _, caught := range f.looseCaught() {
 			if !f.looseReaches(caught, cycleNode{cell: local + 1}) {
 				continue
@@ -989,6 +999,15 @@ func (f *cycleFinder) looseEntryStop(inits []looseInit) error {
 		return &NotYet{Where: l.result.Source, What: what}
 	}
 	for _, made := range inits {
+		// The initializations are noted while lowering (l.looseInits), a trapped unit's literals among them, whose
+		// code its stub replaced, so a first-link lowering passes over one made inside a trapped unit: on tsc,
+		// checkAccessorSpreads trapped executeCommandLineWorker at its spread into ParsedCommandLine
+		// (executeCommandLine.ts:730:19), and this loop met the same spread, an Echo that abandoned the judgment
+		// (#nxb3xh1). Its value still entered H (looseSlotStop), left wide on purpose: more of H only refuses more,
+		// so it fails closed. A live unit's literal is judged whatever a trapped unit hands it.
+		if l.firstLinkSkips(made.node) {
+			continue
+		}
 		if made.value == nil || viewPairScalar(made.value) || !f.looseReaches(made.value, cycleNode{proven: made.holder}) {
 			continue
 		}
