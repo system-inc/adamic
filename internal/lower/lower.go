@@ -234,6 +234,9 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 	}
 	lowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)
 	lowering.finishClassCalls()
+	// Before certifySourceSlots and every stop: a recorded read a spread copy's stop would meet is read by name, and
+	// every other is left as main lowers it (spread_accessor_reads.go, #vjvcnnj head 3).
+	lowering.spreadAccessorReads()
 	// Before the accessors' dispatchers: a read this makes checked can't go through a dispatcher's
 	// unchecked fallback, which finishAccessors stops by asking CheckedField.
 	if err := lowering.certifySourceSlots(); err != nil || lowering.firstLinkTraps {
@@ -592,6 +595,12 @@ type lowering struct {
 	// checkDynamicKeyedGetters says why a class getter keeps the program from reading by a run-time key.
 	dynamicKeyedSite *ast.Node
 	reflectKeyedSite *ast.Node
+	// spreadAccessorNamesFound is spreadAccessorNames' answer, nil until it's asked (spread_accessor_reads.go).
+	spreadAccessorNamesFound map[string]bool
+	// spreadAccessorRecords are the reads spreadAccessorRead lowered as main does, which spreadAccessorReads may read
+	// by name, and spreadAccessorPlain the read it's lowering as main does, whose branch is skipped.
+	spreadAccessorRecords []spreadAccessorRecord
+	spreadAccessorPlain   *ast.Node
 	// getterDeclarations is each class getter's declaration, by its function (registerAccessor), which
 	// checkDynamicKeyedGetters reads.
 	getterDeclarations map[int]*ast.Node

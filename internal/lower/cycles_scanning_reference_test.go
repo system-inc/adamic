@@ -1782,6 +1782,9 @@ func scanLowerWithElementKey(key *viewElementKey, program *load.Program, typeChe
 	}
 	lowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)
 	lowering.finishClassCalls()
+	// As lowerWithElementKey does, before certifySourceSlots: a recorded read a spread copy's stop would meet is read
+	// by name in both modes alike (#vjvcnnj head 3).
+	lowering.spreadAccessorReads()
 	// As lowerWithElementKey does, before the accessors' dispatchers: the certificate adds checked
 	// fields and view contracts, which both modes' IR must hold alike.
 	if err := lowering.certifySourceSlots(); err != nil {
