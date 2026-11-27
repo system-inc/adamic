@@ -79,8 +79,18 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if !known {
 				fieldName, known = l.numericFieldName(node, property)
 			}
+			var keyRead ir.Expression
 			if !known {
-				return nil, l.notYet(name, "a computed field name")
+				fieldName, known = l.orderedEnumFieldName(node, property)
+				if !known {
+					return nil, l.notYet(name, "a computed field name")
+				}
+				// Evaluate the ordinary enum read at the key, before its initializer.
+				var err error
+				keyRead, err = l.expression(name.AsComputedPropertyName().Expression)
+				if err != nil {
+					return nil, err
+				}
 			}
 			if property.Kind == ast.KindPropertyAssignment && fieldName == "__proto__" {
 				return nil, &Refused{Where: l.program.Where(property), What: "__proto__ in an object literal", Fix: "JavaScript changes the prototype instead of making an own field; Adamic objects have fixed shapes and no prototype mutation"}
@@ -107,6 +117,9 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 					value = ir.Undefined{Of: declared}
 				}
 				value = l.placeholderInitialValue(property.AsPropertyAssignment().Initializer, declared)
+				if keyRead != nil {
+					value = ir.Comma{Left: keyRead, Right: value}
+				}
 				if literal.Spread != nil {
 					var reason string
 					var err error
@@ -150,7 +163,11 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if censusFieldSlotless(value.Type()) {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
 			}
-			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value, Nullish: l.fieldNullish(property, value)})
+			nullish := l.fieldNullish(property, value)
+			if keyRead != nil {
+				value = ir.Comma{Left: keyRead, Right: value}
+			}
+			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value, Nullish: nullish})
 		default:
 			return nil, l.notYet(property, describe(property)+" in an object literal")
 		}
@@ -630,11 +647,17 @@ func (l *lowering) propertyRead(node *ast.Node, object ir.Expression, name strin
 	if object.Type() == ir.Union && questionDot && l.nullableObjectUnion(l.checker.GetTypeAtLocation(access.Expression)) {
 		object = l.optionalNullableObject(object)
 	}
+	// A read by run-time key under ?. tests its receiver for null and undefined first, which the key read
+	// doesn't (optionalDynamicProperty); a plain read keeps the key read alone.
+	keyRead := l.dynamicProperty
+	if questionDot {
+		keyRead = l.optionalDynamicProperty
+	}
 	if object.Type() == ir.Union {
-		return l.dynamicProperty(node, object, name)
+		return keyRead(node, object, name)
 	}
 	if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil && l.checker.GetTypeOfSymbol(field).Flags()&checker.TypeFlagsUnknown != 0 {
-		return l.dynamicProperty(node, fit(object, ir.Union), name)
+		return keyRead(node, fit(object, ir.Union), name)
 	}
 	if object.Type() == ir.Object && l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)), "RegExp") {
 		switch name {
@@ -840,7 +863,14 @@ func (l *lowering) fixedFieldRead(node *ast.Node, object ir.Expression, name str
 		return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)}), nil
 	}
 	if optional && !of.IsReference() {
-		return nil, l.notYet(node, "?. to a "+typeName(of)+", which would be "+typeName(of)+" | undefined")
+		if !ir.Maybe(of).IsMaybe() {
+			return nil, l.notYet(node, "?. to a "+typeName(of)+", which would be "+typeName(of)+" | undefined")
+		}
+		// The checker calls the result a number or a boolean, since it calls the receiver present, but
+		// ?. tests the receiver as it runs, so the result is the maybe it evaluates to (optional_scalar.go).
+		// The field is stored as of; Optional makes the read that field's maybe pair.
+		read := l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: true, Class: l.classOf(node)})
+		return l.optionalScalarRead(node, read, of), nil
 	}
 	return l.defined(node, l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)})), nil
 }
@@ -1282,12 +1312,16 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 		return nil, l.notYet(initializer, "a for...of declaring more than one variable")
 	}
 	name := declarations[0].Name()
-	if !ast.IsIdentifier(name) && name.Kind != ast.KindArrayBindingPattern {
-		return nil, l.notYet(initializer, "a for...of destructuring an object")
-	}
+	// An object pattern is admitted on the plain array road alone, where the element is held once per step and the
+	// pattern destructures it as a declaration does (#rm22wzv); every other road still stops at it by this name.
+	objectPattern := name.Kind == ast.KindObjectBindingPattern
+	objectPatternStop := func() error { return l.notYet(initializer, "a for...of destructuring an object") }
 	if plan, err := l.planIteration(statement.Expression); err != nil {
 		return nil, err
 	} else if plan != nil {
+		if objectPattern {
+			return nil, objectPatternStop()
+		}
 		return l.forOfUser(node, plan, name)
 	}
 	// map.entries(), map.keys() and map.values() are the map itself, iterated for that part.
@@ -1313,7 +1347,13 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 		return nil, err
 	}
 	if element, iterator := l.libraryIteratorElement(iterated); iterator {
+		if objectPattern {
+			return nil, objectPatternStop()
+		}
 		return l.libraryForOfIterator(node, iterable, element, name)
+	}
+	if objectPattern && iterable.Type() != ir.Array {
+		return nil, objectPatternStop()
 	}
 	var element ir.Type
 	switch iterable.Type() {
@@ -1375,7 +1415,9 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 	lowered := ir.ForOf{Iterable: iterable, Element: element, RegexIterator: iterable.Type() == ir.Object}
 	if iterable.Type() == ir.Array {
 		lowered.ElementCheck, err = l.viewArrayElementCheck(node, iterated)
-		if err == nil && lowered.ElementCheck == nil && ast.IsIdentifier(name) {
+		// An object pattern reads the element as the identifier road does, so a viewed array with no element check
+		// is recorded for it too, and checkViewArrays stops it before destructureFrom reads the fields (#rm22wzv).
+		if err == nil && lowered.ElementCheck == nil && (ast.IsIdentifier(name) || objectPattern) {
 			l.recordViewArrayUse(node, iterable, "for-of")
 		}
 		if err != nil {
@@ -1391,6 +1433,24 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 			// variable holds one too, and each read of it is the target.
 			l.result.Locals[lowered.Local].Type = ir.Weak
 		}
+	} else if objectPattern {
+		// for (const { a, b } of items): the element is held in one local, read once per step, and the pattern
+		// destructures that local at the top of the body by destructureFrom, the declaration road, so every check
+		// a destructuring declaration makes runs here each step (#rm22wzv). A loop element has no producer
+		// refuseIncompatibleDestructuredView could follow, so its runtime boundary stands, as for any unknown one.
+		held := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured", Type: element, Function: l.functionIndex})
+		lowered.Local = held
+		declared, err := l.destructureFrom(name, l.checker.GetTypeAtLocation(name), element, held)
+		if err != nil {
+			return nil, err
+		}
+		body, err := l.statement(statement.Statement)
+		if err != nil {
+			return nil, err
+		}
+		lowered.Body = append(declared, body...)
+		return []ir.Statement{lowered}, nil
 	} else {
 		// for (const [a, b] of pairs): each name reads a field of the tuple, "0", "1", ...
 		if element != ir.Object {
@@ -1969,9 +2029,14 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 		return 0, 0, l.notYet(node, "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions")
 	}
 	// number | undefined is held in a value's one slot packed (native/slots.go).
-	// The existing union tag carries object, array and scalar members alike.
-	// Keep unknown/nonprimitive erasure and nullable mixed layouts outside this cut.
-	boxed := value == ir.Union && arguments[1].Flags()&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) == 0 && !l.includesNull(arguments[1])
+	// Box mixed unions, including null and undefined, in the existing Union slot.
+	// Reference arms use ordinary Map ownership. Keep erased and Weak arms
+	// outside the nullable extension, since a Union cannot hold a weak slot.
+	boxed := value == ir.Union && arguments[1].Flags()&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) == 0
+	if boxed && l.includesNull(arguments[1]) {
+		weak, _ := l.keepsWeak(arguments[1])
+		boxed = !weak && !dynamicObjectType(arguments[1])
+	}
 	if !valueKnown || (slotless(value) && !boxed) {
 		return 0, 0, l.notYet(node, "a Map of "+l.checker.TypeToString(arguments[1]))
 	}
@@ -2048,13 +2113,24 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 		}
 		// A number, or undefined, where number | undefined goes is made that pair.
 		entryKey = fit(entryKey, key)
-		entryValue = fit(entryValue, value)
+		entryValue = l.fitMapValue(elements[1], entryValue, value)
 		if entryKey.Type() != key || entryValue.Type() != value {
 			return nil, l.notYet(pair, "a Map entry whose key or value is of another type than the Map's")
 		}
 		lowered.Entries = append(lowered.Entries, [2]ir.Expression{entryKey, entryValue})
 	}
 	return lowered, nil
+}
+
+// fitMapValue preserves null when a legacy nullable reference enters a boxed Map slot.
+func (l *lowering) fitMapValue(node *ast.Node, value ir.Expression, to ir.Type) ir.Expression {
+	if _, literalNull := value.(ir.Null); !literalNull && to == ir.Union && value != nil && value.Type() != ir.Union && value.Type().IsReference() {
+		proven := l.concrete(l.checker.GetTypeAtLocation(node))
+		if l.includesNull(proven) && !l.includesUndefined(proven) {
+			return l.boxNullableReference(value)
+		}
+	}
+	return fit(value, to)
 }
 
 // writtenOut reports whether a new Map's argument is its pairs written out: an array literal of
@@ -2087,8 +2163,9 @@ func (l *lowering) mapMethod(node *ast.Node, receiver *ast.Node, name string) (i
 	if err != nil {
 		return nil, true, err
 	}
+	written := node.AsCallExpression().Arguments.Nodes
 	arguments := []ir.Expression{}
-	for _, argument := range node.AsCallExpression().Arguments.Nodes {
+	for _, argument := range written {
 		lowered, err := l.expression(argument)
 		if err != nil {
 			return nil, true, err
@@ -2103,7 +2180,7 @@ func (l *lowering) mapMethod(node *ast.Node, receiver *ast.Node, name string) (i
 		want = 2
 	}
 	if name == "set" && len(arguments) == 2 {
-		arguments[1] = fit(arguments[1], value)
+		arguments[1] = l.fitMapValue(written[1], arguments[1], value)
 	}
 	if len(arguments) != want || arguments[0].Type() != key || (name == "set" && arguments[1].Type() != value) {
 		return nil, true, l.notYet(node, "map."+name+" with arguments of other types")

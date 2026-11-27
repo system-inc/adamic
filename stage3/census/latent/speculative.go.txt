@@ -295,6 +295,7 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 	records := []LatentFile{}
  var facts *latentProgramFacts
  var modules []*ast.SourceFile
+	var namespaceFacts latentNamespaceFacts
 	latentSpecProgram = program
 	sites := map[string]*ast.Node{}
 	failed := map[*ast.Node]bool{}
@@ -323,7 +324,7 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 					latentRecord(fmt.Errorf("refusal scan panic: %v", crash))
 				}
 			}()
-			l.latentScan(file)
+			l.latentScan(file, &namespaceFacts)
 		}()
 		record := LatentFile{Measurement: LatentMeasurementLabel, File: program.FileName(file), Declarations: latentDeclarations(program, file), Units: []LatentUnit{}}
 		latentProgressPhase("registration")
@@ -356,6 +357,7 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 			func() { defer latentPrepassTimer("noteInheritance")(); l.noteInheritance(modules) }()
 			func() { defer latentPrepassTimer("noteAccessorNames")(); l.noteAccessorNames(modules) }()
 			if facts == nil { func() { defer latentPrepassTimer("noteOmittedOptionals")(); l.noteOmittedOptionals(modules) }() }
+			l.latentInstallNamespaceValues(&namespaceFacts)
 			l.latentRegister(program.Files())
 			l.latentRegisterNested(program.Files())
 			l.latentUseProgramFacts(&facts)

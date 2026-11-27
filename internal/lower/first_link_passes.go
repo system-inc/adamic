@@ -26,7 +26,10 @@ type firstLinkMainRange struct {
 // stop is skipped and named in Program.TrapRewritesSkipped, and every row after it is Suspect. Any other
 // pass runs again by run, and its next stop is taken the same way. A nil run is a stop nothing can run
 // again. An error that's neither a NotYet nor a Refused is a row of kind "Error" with no unit, and the
-// rest of the pass is skipped. Only a context's cancellation or deadline is returned.
+// rest of the pass is skipped. A pass that only judges and gives up so, at a Gap, an Echo or an Error,
+// leaves every unit past that stop unjudged, so it's named in Program.TrapJudgmentsAbandoned with the
+// stop's site and kind, and every row after it is Suspect (#nxb3xh1). Only a context's cancellation or
+// deadline is returned.
 func (l *lowering) firstLinkPass(name string, rewrites bool, err error, run func() error) error {
 	if !l.firstLinkTraps {
 		return err
@@ -41,6 +44,7 @@ func (l *lowering) firstLinkPass(name string, rewrites bool, err error, run func
 			// It names no site to place, and running the pass again could meet it again.
 			l.firstLinkRecord(row, nil)
 			l.firstLinkRewriteSkip(name, rewrites)
+			l.firstLinkJudgmentAbandon(name, rewrites, row)
 			return nil
 		}
 		unit := l.firstLinkPassUnit(row.Site)
@@ -50,11 +54,13 @@ func (l *lowering) firstLinkPass(name string, rewrites bool, err error, run func
 			row.Kind, row.Reason = "Gap", row.Kind+": "+row.Reason
 			l.firstLinkRecord(row, nil)
 			l.firstLinkRewriteSkip(name, rewrites)
+			l.firstLinkJudgmentAbandon(name, rewrites, row)
 			return nil
 		case echo:
 			row.Unit, row.Echo = l.firstLinkUnitName(unit), true
 			l.firstLinkRecord(row, nil)
 			l.firstLinkRewriteSkip(name, rewrites)
+			l.firstLinkJudgmentAbandon(name, rewrites, row)
 			return nil
 		}
 		seen[row.Site] = true
@@ -77,6 +83,20 @@ func (l *lowering) firstLinkRewriteSkip(name string, rewrites bool) {
 	}
 	l.firstLinkRewriteSkipped = true
 	l.result.TrapRewritesSkipped = append(l.result.TrapRewritesSkipped, name)
+}
+
+// firstLinkJudgmentAbandon notes that a pass that only judges the IR gave up past row, its stop: a Gap, an
+// Echo or an Error, by row's own kind. A rewriting pass's skip is firstLinkRewriteSkip's to note.
+func (l *lowering) firstLinkJudgmentAbandon(name string, rewrites bool, row ir.Trap) {
+	if rewrites {
+		return
+	}
+	why := row.Kind
+	if row.Echo {
+		why = "Echo"
+	}
+	l.firstLinkJudgmentAbandoned = true
+	l.result.TrapJudgmentsAbandoned = append(l.result.TrapJudgmentsAbandoned, ir.TrapJudgmentAbandoned{Pass: name, Site: row.Site, Why: why})
 }
 
 // firstLinkPassUnit places a whole-program pass's stop, by its Where, in the unit it lies in. A unit

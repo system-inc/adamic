@@ -122,6 +122,10 @@ type BlocksRule struct {
 	// MaximumBlocksLiveHoleHands hand names, each once. Optional, and never null or empty; absent reads as no hand
 	// (#rgwwnrr, #hp18dwz).
 	LiveHoleHands []string `json:"liveHoleHands"`
+	// Probes: the most bisect probes a red tip-first block holds at once, each a free builder's run of a prefix inside
+	// the bisect, a whole number from 0 to MaximumBlocksProbes. Optional, and never null; absent or 0 reads as off
+	// (#z0pt7fv).
+	Probes *int `json:"probes"`
 }
 
 // DefaultBlocksDepth and MaximumBlocksDepth are the queue's: one standing block and one on it, and the deepest tower;
@@ -135,6 +139,8 @@ const (
 	MaximumBlocksHeavyMaximum  = 16
 	MaximumBlocksRentedImages  = 16
 	MaximumBlocksLiveHoleHands = 8
+	// MaximumBlocksProbes is the queue's maximumBlockProbes (QueueRules.ts, #z0pt7fv).
+	MaximumBlocksProbes = 8
 )
 
 // SizingRule is a block-size policy: the largest block whose chance of coming back all green, at the red rate of the last
@@ -233,6 +239,11 @@ func ParseRules(data []byte) (Rules, error) {
 	if heavyMaximum, present := raw.Blocks["heavyMaximum"]; present {
 		if bytes.Equal(bytes.TrimSpace(heavyMaximum), []byte("null")) || rules.Blocks.HeavyMaximum == nil || *rules.Blocks.HeavyMaximum < 1 || *rules.Blocks.HeavyMaximum > MaximumBlocksHeavyMaximum {
 			return Rules{}, fmt.Errorf("rules.json: blocks' heavyMaximum is %s, and it's a whole number from 1 to %d", heavyMaximum, MaximumBlocksHeavyMaximum)
+		}
+	}
+	if probes, present := raw.Blocks["probes"]; present {
+		if bytes.Equal(bytes.TrimSpace(probes), []byte("null")) || rules.Blocks.Probes == nil || *rules.Blocks.Probes < 0 || *rules.Blocks.Probes > MaximumBlocksProbes {
+			return Rules{}, fmt.Errorf("rules.json: blocks' probes is %s, and it's a whole number from 0 to %d", probes, MaximumBlocksProbes)
 		}
 	}
 	// The lists the queue took since stacked, as the lander reads them: 1 to their most names, each matching its pattern,

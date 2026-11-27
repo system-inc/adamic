@@ -100,6 +100,86 @@ baseTree = {
 }
 
 
+class GoTestSummaryTests(unittest.TestCase):
+    latent = "github.com/system-inc/adamic/stage3/census/latent"
+    passing = ("", "/importclean", "/overlaytext", "/refusalrewrite", "/statecopy", "/statementrewrite", "/timing")
+    no_tests = ("/refusalrewrite/cmd", "/replay", "/replay/worker", "/tool")
+
+    def events(self, failed=False, latent_action=None, skipped_test=False):
+        def event(package, action, **fields):
+            return dict(Time="2026-11-24T00:00:00Z", Action=action, Package=package, **fields)
+
+        events = []
+        for suffix in self.passing + self.no_tests:
+            package = self.latent + suffix
+            events.append(event(package, "start"))
+            if suffix in self.no_tests:
+                events.append(event(package, "output", Output=f"?   \t{package}\t[no test files]\n"))
+                events.append(event(package, "skip", Elapsed=0))
+                continue
+            test = "TestLatent" if not suffix else "TestPackage"
+            action = "fail" if not suffix and failed else "pass"
+            if not suffix and skipped_test:
+                action = "skip"
+            events.extend([
+                event(package, "run", Test=test),
+                event(package, "output", Test=test, OutputType="frame", Output=f"=== RUN   {test}\n"),
+                event(package, "output", Test=test, OutputType="frame", Output=f"--- {action.upper()}: {test} (0.00s)\n"),
+                event(package, action, Test=test, Elapsed=0),
+                event(package, latent_action if not suffix and latent_action else action, Elapsed=0.01),
+            ])
+        return events
+
+    def summary(self, events):
+        lines = (Cloud / "gates" / "steps.sh").read_bytes().decode().split("\n")
+        starts = [index for index, line in enumerate(lines) if line == "gate_go_test() {"]
+        self.assertEqual(len(starts), 1, "steps.sh must define gate_go_test exactly once")
+        start = starts[0] + 1
+        end = next((index for index in range(start, len(lines)) if lines[index] == "}"), None)
+        self.assertIsNotNone(end, "steps.sh must close gate_go_test")
+        body = lines[start:end]
+        opening = "<< 'PYTHON'"
+        self.assertEqual(sum(line.count(opening) for line in body), 1,
+                         "gate_go_test must open exactly one PYTHON heredoc")
+        first = next(index for index, line in enumerate(body) if opening in line)
+        closings = [index for index, line in enumerate(body) if line == "PYTHON"]
+        self.assertEqual(len(closings), 1, "gate_go_test must have one exact PYTHON closing line")
+        summary = "\n".join(body[first + 1:closings[0]])
+        self.assertTrue(summary.strip(), "gate_go_test's PYTHON heredoc must contain a program")
+        with tempfile.TemporaryDirectory(prefix="gate-summary-") as scratch:
+            log = Path(scratch) / "test.jsonl"
+            log.write_text("".join(json.dumps(event) + "\n" for event in events))
+            return subprocess.run(["python3", "-I", "-", str(log)], input=summary, text=True, capture_output=True)
+
+    def test_latent_whole_passes_with_packages_without_test_files(self):
+        result = self.summary(self.events())
+        self.assertEqual(result.returncode, 0, result.stderr or result.stdout)
+        for suffix in self.no_tests:
+            self.assertIn(f"  skip {self.latent}{suffix}: 0 pass, 0 fail, 0 skip", result.stdout)
+
+    def test_latent_whole_rejects_a_failing_test(self):
+        # Keep the test result even if a conflicting package verdict follows in the log.
+        for package_action in ("fail", "pass", "skip"):
+            with self.subTest(package_action=package_action):
+                result = self.summary(self.events(failed=True, latent_action=package_action))
+                self.assertEqual(result.returncode, 1, result.stderr or result.stdout)
+                self.assertIn(f"  --- FAIL {self.latent} TestLatent, last 30 lines:", result.stdout)
+                self.assertIn("--- FAIL: TestLatent (0.00s)", result.stdout)
+
+    def test_latent_whole_rejects_a_package_with_a_skipped_test(self):
+        result = self.summary(self.events(skipped_test=True))
+        self.assertEqual(result.returncode, 1, result.stderr or result.stdout)
+        self.assertIn(f"  skip {self.latent}: 0 pass, 0 fail, 1 skip", result.stdout)
+
+    def test_the_summary_rejects_a_package_failure_with_passing_tests(self):
+        result = self.summary(self.events(latent_action="fail"))
+        self.assertEqual(result.returncode, 1, result.stderr or result.stdout)
+        self.assertIn(f"  fail {self.latent}: 1 pass, 0 fail, 0 skip", result.stdout)
+
+    def test_the_summary_rejects_an_empty_log(self):
+        self.assertEqual(self.summary([]).returncode, 1)
+
+
 class SubmitGatesTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -198,6 +278,30 @@ class SubmitGatesTests(unittest.TestCase):
         self.assertFires({"internal/lower/calls.go": "package lower\n\nfunc calls() error { return &Refused{} }\n"},
                          "refusal-added", "oracle-whole")
         self.assertQuiet({"internal/lower/lower_test.go": "package lower\n\nvar x = &Refused{}\n"}, "refusal-added")
+
+    def test_whole_gap_and_fixture_gates_follow_compiler_changes_and_refusals(self):
+        owed = ("stage1-gaps-whole", "stage3-fixtures-whole")
+        for rule, files in (
+            ("compiler-change", {"internal/native/emit.go": "package native\n\nvar emitted = 1\n"}),
+            ("refusal-added", {"internal/example/example.go": "package example\n\nvar stop = &Refused{}\n"}),
+        ):
+            with self.subTest(rule=rule):
+                head = self.commit(files)
+                report = self.judge(head)
+                self.assertIn(rule, report["fired"])
+                if rule == "refusal-added":
+                    self.assertNotIn("compiler-change", report["fired"])
+                self.assertTrue(set(owed) <= self.owed(report), report["gates"])
+                for gate in owed:
+                    self.assertFalse(self.gate(report, gate)["satisfied"])
+                jobs = [self.job(gate, head) for gate in owed]
+                report = self.judge(head, jobs)
+                for gate, job in zip(owed, jobs):
+                    entry = self.gate(report, gate)
+                    self.assertTrue(entry["satisfied"], entry)
+                    self.assertEqual(entry["job"], job["id"])
+        quiet = self.judge(self.commit({"README.md": "adamic, quiet\n"}))
+        self.assertTrue(set(owed).isdisjoint(self.owed(quiet)))
 
     def test_lower_tests_fire(self):
         self.assertFires({"internal/lower/lower_test.go": "package lower\n\nvar x = 1\n"}, "lower-tests-or-pass", "ir-whole")
@@ -381,6 +485,7 @@ class SubmitGatesTests(unittest.TestCase):
                                          "stage3/lane/check.mutants.md": "Undo check.py's line and test_check_rows goes red.\n"}))
         self.assertFalse(self.rows(report)["mutant-evidence-path"]["satisfied"])
         self.assertIn("mutants", report["fired"])  # the .mutants.md fires its own rule
+        self.assertIn("mutants-red", self.owed(report))
         declared = ("| Mutant | Patch | Red | Run |\n|---|---|---|---|\n"
                     "| The line undone | `stage3/lane/check.patch` | `test_check_rows` | `python3 -m unittest stage3.lane.test_check` |\n")
         report = self.judge(self.commit({"stage3/lane/check.py": "print('lane, checked')\n", "stage3/lane/check.mutants.md": declared}))
@@ -390,13 +495,66 @@ class SubmitGatesTests(unittest.TestCase):
         self.assertQuiet({"stage3/upstream/LEDGER.md": "# Ledger\n\nA line.\n"}, "harness")
 
     def test_adaptation_owes_its_gates_its_ledger_and_its_value_count(self):
-        report = self.assertFires({"stage3/adapt/99-x/adapt.cjs": "module.exports = 1;\n"}, "adaptation", "unit-census-pair")
-        self.assertIn("mutants", report["fired"])  # by its rule trigger
-        self.assertTrue({"stock-js-identical", "declarations-identical", "mutants-red", "value-count-reached"} <= self.owed(report))
-        self.assertFalse(self.rows(report)["ledger-line"]["satisfied"])
-        report = self.judge(self.commit({"stage3/adapt/99-x/adapt.cjs": "module.exports = 1;\n",
-                                         "stage3/upstream/LEDGER.md": "# Ledger\n\n99-x\n"}))
-        self.assertTrue(self.rows(report)["ledger-line"]["satisfied"])
+        files = {"stage3/adapt/99-x/adapt.cjs": "module.exports = 1;\n",
+                 "stage3/adapt/99-y/proofs/nested.cjs": "module.exports = 2;\n",
+                 "stage3/upstream/LEDGER.md": "# Ledger\n\n99-x and 99-y\n"}
+        report = self.assertFires(files, "adaptation", "unit-census-entry")
+        self.assertNotIn("mutants", report["fired"])
+        self.assertNotIn("mutants-red", self.owed(report))
+        self.assertTrue({"unit-census-directory", "stock-js-identical", "declarations-identical",
+                         "adapter-plants-red", "value-count-reached"} <= self.owed(report))
+        row = self.rows(report)["ledger-line"]
+        self.assertFalse(row["satisfied"])
+        self.assertIn("stage3/adapt/99-x/LEDGER.md", row["why"])
+        self.assertIn("stage3/adapt/99-y/LEDGER.md", row["why"])
+        files["stage3/adapt/99-x/LEDGER.md"] = "# 99-x\n"
+        row = self.rows(self.judge(self.commit(files)))["ledger-line"]
+        self.assertFalse(row["satisfied"])
+        self.assertNotIn("stage3/adapt/99-x/LEDGER.md", row["why"])
+        self.assertIn("stage3/adapt/99-y/LEDGER.md", row["why"])
+        files["stage3/adapt/99-y/LEDGER.md"] = "# 99-y\n"
+        self.assertTrue(self.rows(self.judge(self.commit(files)))["ledger-line"]["satisfied"])
+
+    def test_a_deleted_file_in_a_remaining_adapter_owes_its_ledger(self):
+        adapter = "stage3/adapt/99-x/adapt.cjs"
+        ledger = "stage3/adapt/99-x/LEDGER.md"
+        note = "stage3/adapt/99-x/note.md"
+        main = self.commit({adapter: "module.exports = 1;\n", ledger: "# 99-x\n", note: "a note\n"})
+        for files in ({note: None}, {ledger: None}):
+            with self.subTest(files=files):
+                row = self.rows(self.judge(self.commit(files, parent=main), main=main))["ledger-line"]
+                self.assertFalse(row["satisfied"])
+                self.assertIn(ledger, row["why"])
+        files = {note: None, ledger: "# 99-x\n\nRemoved the note.\n"}
+        self.assertTrue(self.rows(self.judge(self.commit(files, parent=main), main=main))["ledger-line"]["satisfied"])
+        files = {adapter: None, ledger: None, note: None}
+        self.assertTrue(self.rows(self.judge(self.commit(files, parent=main), main=main))["ledger-line"]["satisfied"])
+
+    def test_an_adapter_plant_job_is_owed_by_hand(self):
+        head = self.commit({"stage3/adapt/99-x/adapt.cjs": "module.exports = 1;\n",
+                            "stage3/adapt/99-x/LEDGER.md": "# 99-x\n"})
+        labelled = self.hand_job(head, "J-plant", "adapter-plants-red", tail="PLANT swap red with TestAdapted\n"
+                                 "VERDICT 1 of 1 red (swap)\n")
+        report = self.judge(head, [labelled])
+        gate = self.gate(report, "adapter-plants-red")
+        self.assertTrue(gate["byHand"])
+        self.assertFalse(gate["satisfied"])
+        self.assertIsNone(gate["job"])
+        self.assertIsNone(gate["ask"])
+        self.assertIn("owed by hand, the accepter checks: ", gate["why"])
+        self.assertIn("each plant in the kit is red on its expected line", gate["why"])
+        self.assertIn("adapter-plants-red", report["missing"])
+
+    def test_an_adapter_table_audit_is_owed_by_hand(self):
+        head = self.commit({"stage3/adapt/99-x/adapt.cjs": "module.exports = 1;\n"})
+        row = self.rows(self.judge(head))["adapter-table-mentions"]
+        self.assertTrue(row["byHand"])
+        self.assertFalse(row["satisfied"])
+        self.assertEqual(row["why"], "owed by hand, the accepter checks: " + gates.ByHandRows["adapter-table-mentions"])
+        self.assertIn("where the adapter rests on a table tsc declares,", row["why"])
+        self.assertIn("each pinned by its -before text and declared once", row["why"])
+        quiet = self.judge(self.commit({"README.md": "adamic, quiet\n"}))
+        self.assertNotIn("adapter-table-mentions", self.rows(quiet))
 
     def test_buildcache_routes_alone(self):
         report = self.assertFires({"internal/buildcache/cache.go": "package buildcache\n\nvar x = 1\n"}, "buildcache")
@@ -418,13 +576,20 @@ class SubmitGatesTests(unittest.TestCase):
         rows = self.every_green(head, self.judge(head))
         self.assertEqual(self.judge(head, rows, main=quiet)["missing"], [], "a base with no lowering change since is fresh")
         report = self.judge(head, rows, main=lowered)
-        self.assertEqual(sorted(report["missing"]), ["admission-delta", "unit-census-pair"])
-        self.assertIn("stale", next(e for e in report["gates"] if e["name"] == "unit-census-pair")["why"])
+        self.assertEqual(sorted(report["missing"]), ["admission-delta", "unit-census-directory", "unit-census-entry"])
+        for gate in ("unit-census-entry", "unit-census-directory"):
+            entry = next(e for e in report["gates"] if e["name"] == gate)
+            self.assertIn("stale", entry["why"])
+            # the printed ask is main's own recipe, on a machine that lays the history its base is read from
+            self.assertIn(f'"$(git -C {self.root} show {lowered}:cloud/gates/{gate}.sh)" --kind proof', entry["ask"])
+            self.assertTrue(entry["ask"].endswith(f"--at adamic@{head} --size F64 --ceiling 120m --needs History"),
+                            entry["ask"])
         # a base off main is never fresh
         side = self.commit({"README.md": "a side branch\n"})
         rows = [row if row["title"].split()[0] not in gates.PairedGates else self.job(row["title"].split()[0], head, side)
                 for row in rows]
-        self.assertEqual(sorted(self.judge(head, rows)["missing"]), ["admission-delta", "unit-census-pair"])
+        self.assertEqual(sorted(self.judge(head, rows)["missing"]),
+                         ["admission-delta", "unit-census-directory", "unit-census-entry"])
 
     def test_a_recipe_whose_hash_differs_is_missing(self):
         head = self.commit({"README.md": "adamic, hashed\n"})
@@ -464,8 +629,8 @@ class SubmitGatesTests(unittest.TestCase):
         # a paired gate's newest verdict, red, refuses it though an older green is fresh
         native = self.commit({"internal/native/emit.go": "package native\n\nvar paired = 1\n"})
         rows = self.every_green(native, self.judge(native))
-        paired = dict(self.job("unit-census-pair", native, self.main, exit=1, job_id="J-pairred"), endedAt="2026-11-23T11:00:00Z")
-        self.assertEqual(self.judge(native, rows + [paired])["missing"], ["unit-census-pair"])
+        paired = dict(self.job("unit-census-entry", native, self.main, exit=1, job_id="J-pairred"), endedAt="2026-11-23T11:00:00Z")
+        self.assertEqual(self.judge(native, rows + [paired])["missing"], ["unit-census-entry"])
 
     def test_ends_read_as_instants_and_a_tie_refuses(self):
         head = self.commit({"README.md": "adamic, at the same time\n"})
@@ -486,31 +651,31 @@ class SubmitGatesTests(unittest.TestCase):
         self.assertIn("no end that reads", next(e for e in report["gates"] if e["name"] == "compilercensus")["why"])
 
     def paired(self, tail, head=None, main=None):
-        """The report for a compiler head whose unit-census-pair job ends on this tail."""
+        """The report for a compiler head whose unit-census-entry job ends on this tail."""
         head = head or self.commit({"internal/native/emit.go": "package native\n\nvar verdict = 1\n"})
-        rows = [dict(row, tailText=tail(head)) if row["title"].startswith("unit-census-pair ") else row
+        rows = [dict(row, tailText=tail(head)) if row["title"].startswith("unit-census-entry ") else row
                 for row in self.every_green(head, self.judge(head, main=main), base=self.git("rev-parse", head + "^"))]
         return self.judge(head, rows, main=main)
 
     def test_a_paired_verdict_names_the_jobs_head(self):
-        self.assertEqual(self.paired(lambda head: f"VERDICT PASS unit-census-pair head {head} base {self.main}\n")["missing"], [])
-        report = self.paired(lambda head: f"VERDICT PASS unit-census-pair head {'e' * 40} base {self.main}\n")
-        self.assertEqual(report["missing"], ["unit-census-pair"])
-        self.assertIn("names the head eeeeeeee", next(e for e in report["gates"] if e["name"] == "unit-census-pair")["why"])
+        self.assertEqual(self.paired(lambda head: f"VERDICT PASS unit-census-entry head {head} base {self.main}\n")["missing"], [])
+        report = self.paired(lambda head: f"VERDICT PASS unit-census-entry head {'e' * 40} base {self.main}\n")
+        self.assertEqual(report["missing"], ["unit-census-entry"])
+        self.assertIn("names the head eeeeeeee", next(e for e in report["gates"] if e["name"] == "unit-census-entry")["why"])
 
     def test_a_paired_verdict_measured_the_heads_parent(self):
         # main moves outside lowering and the head is cut on it: the old main is fresh, but it isn't what HEAD^ measured
         moved = self.commit({"README.md": "adamic, before the head\n"})
         head = self.commit({"internal/native/emit.go": "package native\n\nvar parent = 1\n"}, parent=moved)
-        report = self.paired(lambda head: f"VERDICT PASS unit-census-pair head {head} base {self.main}\n", head=head, main=moved)
-        self.assertEqual(report["missing"], ["unit-census-pair"])
-        self.assertIn("not the head's parent", next(e for e in report["gates"] if e["name"] == "unit-census-pair")["why"])
+        report = self.paired(lambda head: f"VERDICT PASS unit-census-entry head {head} base {self.main}\n", head=head, main=moved)
+        self.assertEqual(report["missing"], ["unit-census-entry"])
+        self.assertIn("not the head's parent", next(e for e in report["gates"] if e["name"] == "unit-census-entry")["why"])
 
     def test_a_paired_verdict_is_the_tails_final_line(self):
-        report = self.paired(lambda head: f"VERDICT PASS unit-census-pair head {head} base {self.main}\n"
+        report = self.paired(lambda head: f"VERDICT PASS unit-census-entry head {head} base {self.main}\n"
                                           "Traceback (most recent call last):\n  a later failure\n")
-        self.assertEqual(report["missing"], ["unit-census-pair"])
-        self.assertIn("doesn't end on a passing verdict line", next(e for e in report["gates"] if e["name"] == "unit-census-pair")["why"])
+        self.assertEqual(report["missing"], ["unit-census-entry"])
+        self.assertIn("doesn't end on a passing verdict line", next(e for e in report["gates"] if e["name"] == "unit-census-entry")["why"])
 
     def test_a_head_is_one_change(self):
         # Adamic's rule (14:33Z): a head is one change's diff against main's tip
@@ -542,7 +707,7 @@ class SubmitGatesTests(unittest.TestCase):
 
     def by_hand_head(self, mutants=None, adapter="module.exports = 2;\n", extra=None):
         """An adaptation head, its *.mutants.md as given (one machine-form mutant unless named), and its green recipe jobs."""
-        files = {"stage3/adapt/99-y/adapt.cjs": adapter, "stage3/upstream/LEDGER.md": "# Ledger\n\n99-y\n",
+        files = {"stage3/adapt/99-y/adapt.cjs": adapter, "stage3/adapt/99-y/LEDGER.md": "# 99-y\n",
                  self.mutantsFile: self.oneMutant if mutants is None else mutants, **(extra or {})}
         head = self.commit(files)
         return head, self.every_green(head, self.judge(head))
@@ -571,7 +736,7 @@ class SubmitGatesTests(unittest.TestCase):
         # Advisory (Adamic, 14:33Z): no attestation counts; a gate no recipe proves is printed with what to check
         head, rows = self.by_hand_head()
         report = self.judge(head, rows + [self.mutant_job(head, "J-mutant1")])
-        for gate in ("stock-js-identical", "value-count-reached"):
+        for gate in ("stock-js-identical", "value-count-reached", "adapter-plants-red"):
             with self.subTest(gate=gate):
                 entry = self.gate(report, gate)
                 self.assertFalse(entry["satisfied"])
@@ -579,7 +744,34 @@ class SubmitGatesTests(unittest.TestCase):
         self.assertTrue(self.gate(report, "mutants-red")["satisfied"], self.gate(report, "mutants-red"))
         # identity or value, the map's thenIf: neither side found, so the identity and the whole branch are listed
         self.assertEqual([choice["by"] for choice in report["choices"]], [None])
-        self.assertEqual(sorted(report["missing"]), ["adapter-output-test", "stock-js-identical", "value-count-reached"])
+        self.assertEqual(sorted(report["missing"]), ["adaptation-value-identical", "adapter-output-test",
+                                                     "adapter-plants-red", "adapter-table-mentions",
+                                                     "stock-js-identical", "value-count-reached"])
+
+    def test_adaptation_value_identity_is_owed_by_hand(self):
+        name = "adaptation-value-identical"
+        head = self.commit({"stage3/adapt/99-y/adapt.cjs": "module.exports = 2;\n"})
+        report = self.judge(head)
+        self.assertIn(name, self.owed(report))
+        self.assertIn("value-count-reached", self.owed(report))
+        entry = self.gate(report, name)
+        self.assertTrue(entry["byHand"])
+        self.assertFalse(entry["satisfied"])
+        self.assertEqual(entry["why"], "owed by hand, the accepter checks: " + gates.ByHandGates[name])
+        quiet = self.judge(self.commit({"README.md": "adamic, quiet\n"}))
+        self.assertNotIn(name, self.owed(quiet))
+
+    def test_the_adaptation_accepter_reads_as_compiler_ruled(self):
+        accepter = ("Adamic, unless the shape is one she ruled Compiler's (the enumerated-table shape), "
+                    "or the head shows value-identity under adaptation-value-identical (her Nov 24 widening); "
+                    "anything that changes identity, key order or a failure path stays hers")
+        gates_map = json.loads((Cloud / "gates" / "diff-to-gates.json").read_text())
+        rule = next(rule for rule in gates_map["rules"] if rule["id"] == "adaptation")
+        self.assertEqual(rule["thenIf"]["accepter"], accepter)
+        head = self.commit({"stage3/adapt/99-y/adapt.cjs": "module.exports = 2;\n"})
+        self.assertIn("adaptation: its accepter is " + accepter, self.judge(head)["notes"])
+        quiet = self.commit({"README.md": "adamic, quiet\n"})
+        self.assertFalse(any(note.startswith("adaptation: its accepter is") for note in self.judge(quiet)["notes"]))
 
     def test_a_labelled_green_is_no_evidence(self):
         head, rows = self.by_hand_head()
@@ -670,6 +862,7 @@ class SubmitGatesTests(unittest.TestCase):
         row = self.rows(self.judge(head))["adapter-output-test"]
         self.assertFalse(row["satisfied"])
         self.assertIn("owed by hand, the accepter checks", row["why"])
+        self.assertIn("compares against the -after ref", row["why"])
 
     def test_live_hole_submits_on_its_gates(self):
         head = self.commit({"internal/lower/calls.go": "package lower\n\nfunc calls() error { return &Refused{} }\n"})
@@ -758,11 +951,13 @@ class SubmitGatesTests(unittest.TestCase):
                 changed = self.rows(self.judge(self.commit({path: "# changed by the head\n"})))["gates-changed"]
                 self.assertFalse(changed["satisfied"], changed)
                 self.assertIn(path, changed["why"])
-        # every tree path the census recipe names is judging code, but the npm project it installs in, whose package
-        # files are named, and the node_modules it links
-        named = set(re.findall(r"(?:cloud|stage3)/[A-Za-z0-9_./-]*[A-Za-z0-9_]", (Cloud / "gates" / "unit-census-pair.sh").read_text()))
-        self.assertEqual(sorted(path for path in named - {"stage3/api", "stage3/api/node_modules"}
-                                if not path.startswith(gates.JudgePaths)), [])
+        # every tree path the census recipes name is judging code, but the npm project they install in, whose package
+        # files are named, and the node_modules they link
+        for recipe in ("unit-census-entry.sh", "unit-census-directory.sh"):
+            with self.subTest(recipe=recipe):
+                named = set(re.findall(r"(?:cloud|stage3)/[A-Za-z0-9_./-]*[A-Za-z0-9_]", (Cloud / "gates" / recipe).read_text()))
+                self.assertEqual(sorted(path for path in named - {"stage3/api", "stage3/api/node_modules"}
+                                        if not path.startswith(gates.JudgePaths)), [])
 
     def test_the_script_runs_as_main_holds_it(self):
         other = self.commit({"cloud/submit-gates.py": "print('another judge')\n"})
@@ -810,22 +1005,163 @@ class GateTreeTests(unittest.TestCase):
                 self.assertNotIn("\u2014", text)
                 self.assertNotIn("\u2013", text)
 
+    def test_the_census_recipes_differ_by_their_pass_alone(self):
+        # One pass a job, since both no longer fit one ceiling (#hj3ajhz): the two recipes are one text but for their
+        # gate's name and the pass they set, so neither drifts from the other, and each caps its census inside its ask
+        entry = (Cloud / "gates" / "unit-census-entry.sh").read_text()
+        directory = (Cloud / "gates" / "unit-census-directory.sh").read_text()
+        first, rest = entry.split("\n", 1)
+        self.assertEqual(rest.count("\ncensusPass=entry\n"), 1)
+        self.assertEqual(first.replace("gate_begin unit-census-entry ", "gate_begin unit-census-directory ") + "\n"
+                         + rest.replace("\ncensusPass=entry\n", "\ncensusPass=directory\n"), directory)
+        self.assertEqual(gates.ask_flags(entry), ["--size", "F64", "--ceiling", "120m", "--needs", "History"])
+        caps = re.findall(r"timeout --signal=KILL (\d+)m ", entry)
+        self.assertEqual(caps, ["50"], "one census cap, run once on each side")
+        self.assertLess(2 * int(caps[0]), 120, "both sides' census inside the ceiling, with room for the installs")
+        self.assertNotIn("for pass in", entry)
+
+    def test_new_whole_recipes_settle_and_test_their_packages(self):
+        for gate, package in (("stage1-gaps-whole", "./stage1/cohere/estree"),
+                              ("stage3-fixtures-whole", "./stage3/fixtures"),
+                              ("projects-whole", "./internal/load/projects")):
+            with self.subTest(gate=gate):
+                lines = (Cloud / "gates" / (gate + ".sh")).read_text().splitlines()
+                self.assertIn(f"gate_products {package}", lines)
+                self.assertIn(f"gate_go_test {gate} {package}/", lines)
+
     def test_the_verdict_line_reads_as_the_script_reads_it(self):
-        line = "VERDICT PASS unit-census-pair head " + "a" * 40 + " base " + "b" * 40
-        self.assertEqual(gates.final_verdict("PASS a step\n" + line + "\n"), ("PASS", "unit-census-pair", "a" * 40, "b" * 40))
+        line = "VERDICT PASS unit-census-entry head " + "a" * 40 + " base " + "b" * 40
+        self.assertEqual(gates.final_verdict("PASS a step\n" + line + "\n"), ("PASS", "unit-census-entry", "a" * 40, "b" * 40))
         self.assertIsNone(gates.final_verdict(line + "\nmore output\n"))
         self.assertIsNone(gates.final_verdict(line + " and more"))
         self.assertIn("VERDICT PASS %s head %s base %s", (Cloud / "gates" / "steps.sh").read_text())
 
     def test_a_changed_definition_is_refused(self):
+        for name, before, after in (("compilerProduction", "outside", "inside"),
+                                    ("exposure", "only", "also"),
+                                    ("green", "tip", "head")):
+            with self.subTest(definition=name):
+                changed = json.loads((Cloud / "gates" / "diff-to-gates.json").read_text())
+                changed["definitions"][name] = changed["definitions"][name].replace(before, after, 1)
+                with self.assertRaisesRegex(gates.Unreadable, name):
+                    gates.read_map(json.dumps(changed))
         changed = json.loads((Cloud / "gates" / "diff-to-gates.json").read_text())
-        changed["definitions"]["compilerProduction"] += ", internal/flow2/"
-        with self.assertRaises(gates.Unreadable):
+        changed["version"] = 5
+        with self.assertRaisesRegex(gates.Unreadable, "version 5"):
             gates.read_map(json.dumps(changed))
         changed = json.loads((Cloud / "gates" / "diff-to-gates.json").read_text())
         changed["rules"][0]["triggers"].append({"goInterfaceChanged": "internal/ir"})
         with self.assertRaises(gates.Unreadable):
             gates.read_map(json.dumps(changed))
+
+
+class CensusRecipeTests(unittest.TestCase):
+    """Each census recipe run whole in bash with its laying, builds and census replaced (review-w read 9 on #hj3ajhz):
+    it measures its own pass, and a stream of the other pass, a line that doesn't read or a failed archive fails it.
+    Nothing is built or measured, and nothing is written outside the test's scratch."""
+
+    # The recipe's tools as shell functions, in place of the image's environment and sandboxed-job.sh: git answers from
+    # fixed shas, the apply lays a tree of three sources, and go records the overlay it builds with. The census is
+    # censusFake, first on the PATH as `timeout`.
+    stubs = """
+git() {
+    case "$1" in
+    rev-parse)
+        case "${@: -1}" in
+        HEAD) printf '%040d\\n' 2 ;;
+        'HEAD^') printf '%040d\\n' 1 ;;
+        *:cohere) printf '%040d\\n' 3 ;;
+        *) return 9 ;;
+        esac ;;
+    archive)
+        if [ "$CENSUS_FAKE" = archive ]; then return 9; fi
+        mkdir -p "$scratch/source/stage3/api" ;;
+    log) printf 'cloud: a census recipe test\\n' ;;
+    *) return 9 ;;
+    esac
+}
+tar() { return 0; }
+sandboxed_npm() { :; }
+sandboxed_typescript_source() { :; }
+bash() {
+    [ "$1" = stage3/apply.sh ] || return 8
+    mkdir -p "$2/src/compiler" "$2/src/tsc" && touch "$2/src/compiler/a.ts" "$2/src/compiler/b.ts" "$2/src/tsc/tsc.ts"
+}
+python3() {
+    case "$1" in
+    stage3/census/latent/make_overlay.py | stage3/meter/entry_overlay.py) mkdir -p "$3" && echo '{}' > "$3/overlay.json" ;;
+    *) command python3 "$@" ;;
+    esac
+}
+gofmt() { :; }
+go() { printf 'build %s\\n' "$3" >> "$CENSUS_TRACE"; }
+source cloud/gates/steps.sh
+"""
+
+    # `timeout --signal=KILL <cap> <census> <target> <stream>`: the stream the latent tool writes for its target, the
+    # entry pass's (its root and the sources its program loaded) for a file and the compiler directory's for a
+    # directory, or the other pass's when CENSUS_FAKE is `other`, with a line after its end that doesn't read when it is
+    # `unread`.
+    censusFake = """#!/usr/bin/env python3
+import json, os, sys
+from pathlib import Path
+cap, target, stream = sys.argv[2], Path(sys.argv[4]), Path(sys.argv[5])
+with open(os.environ["CENSUS_TRACE"], "a") as trace:
+    print("census", cap, target, file=trace)
+source = target.parents[1] if target.is_file() else target.parent
+compiler = sorted(str(path) for path in (source / "compiler").glob("*.ts"))
+header = {"status": "measurement", "latent_mode": "first-error", "module_format": "CommonJSBundle",
+          "checker_rejected": False, "diagnostics": []}
+files = compiler
+if target.is_file() != (os.environ["CENSUS_FAKE"] == "other"):
+    files = [str(source / "tsc" / "tsc.ts")] + compiler
+    header.update(roots=files[:1], sources=files)
+rows = [header] + [{"file": file, "units": [{"where": file + ":1:1", "name": "unit", "kind": "function"}], "findings": []}
+                   for file in files]
+rows.append({"status": "relation_report", "relation_overflow": {}, "findings": []})
+text = "".join(json.dumps(row) + "\\n" for row in rows)
+stream.write_text(text + ("{a line that doesn't read\\n" if os.environ["CENSUS_FAKE"] == "unread" else ""))
+"""
+
+    def run_recipe(self, gate, fake):
+        """The recipe's output, and each build and census it ran as (overlay, cap, target under the adapted tree)."""
+        opening, body = (Cloud / "gates" / (gate + ".sh")).read_text().split("\n", 1)
+        self.assertTrue(opening.endswith(f" && gate_begin {gate} || exit 1"), opening)
+        with tempfile.TemporaryDirectory(prefix="census-recipe-") as scratch:
+            scratch = Path(scratch)
+            (scratch / "bin").mkdir()
+            census = scratch / "bin" / "timeout"
+            census.write_text(self.censusFake)
+            census.chmod(0o755)
+            trace = scratch / "trace"
+            trace.touch()
+            environment = {"PATH": f"{scratch / 'bin'}{os.pathsep}{os.environ['PATH']}", "LOOM_JOB_SCRATCH": str(scratch),
+                           "TMPDIR": str(scratch), "CENSUS_FAKE": fake, "CENSUS_TRACE": str(trace),
+                           "UNITS_COMPARE_MINIMUM": "1", "LC_ALL": "C"}
+            result = subprocess.run(["bash", "-c", self.stubs + f"gate_begin {gate} || exit 1\n" + body], cwd=Cloud.parent,
+                                    env=environment, text=True, capture_output=True, timeout=120)
+            lines = trace.read_text().splitlines()
+        overlays = [Path(line.split("=", 1)[1]).parent.name for line in lines if line.startswith("build ")]
+        censuses = [line.split()[1:] for line in lines if line.startswith("census ")]
+        return result, [(overlay, cap, target.split("/adapted/", 1)[1]) for overlay, (cap, target) in zip(overlays, censuses)]
+
+    def test_each_census_recipe_measures_its_own_pass(self):
+        for gate, overlay, target in (("unit-census-entry", "entry-overlay", "src/tsc/tsc.ts"),
+                                      ("unit-census-directory", "latent-overlay", "src/compiler")):
+            with self.subTest(gate=gate):
+                result, routes = self.run_recipe(gate, "own")
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+                self.assertTrue(result.stdout.endswith(f"\nVERDICT PASS {gate} head {'0' * 39}2 base {'0' * 39}1\n"),
+                                result.stdout)
+                self.assertEqual(routes, [(overlay, "50m", target)] * 2)
+
+    def test_a_census_recipe_refuses_the_other_pass_an_unread_line_and_a_failed_archive(self):
+        for gate in ("unit-census-entry", "unit-census-directory"):
+            for fake in ("other", "unread", "archive"):
+                with self.subTest(gate=gate, fake=fake):
+                    result, _ = self.run_recipe(gate, fake)
+                    self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+                    self.assertTrue(result.stdout.endswith(f" base {'0' * 39}1 failed: base-census\n"), result.stdout)
 
 
 class UnitsCompareTests(unittest.TestCase):

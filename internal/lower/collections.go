@@ -513,6 +513,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 		}
 		var field string
 		var fieldType *checker.Type
+		var fieldSymbol *ast.Symbol
 		absent := false
 		if tuple {
 			if index >= len(elementTypes) {
@@ -534,6 +535,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 			}
 			fieldType = l.checker.GetTypeOfSymbol(property)
 			absent = property.Flags&ast.SymbolFlagsOptional != 0
+			fieldSymbol = property
 		}
 		var fallback ir.Expression
 		if declared.Initializer != nil {
@@ -565,8 +567,15 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 		value.ViewWhere = l.program.Where(binding)
 		value.ViewType = l.checker.TypeToString(fieldType)
 		value.ViewAllowed = l.viewLiterals(fieldType)
+		// A field that may hold a placeholder is read as one and checked as a use (#jjf9ppe).
+		var read ir.Expression = value
+		if fieldSymbol != nil {
+			if read, err = l.placeholderDestructuredRead(binding, fieldSymbol, fieldType, value, fallback != nil); err != nil {
+				return nil, err
+			}
+		}
 		if fallback == nil {
-			statements = append(statements, l.initializeLocal(local, value)...)
+			statements = append(statements, l.initializeLocal(local, read)...)
 			continue
 		}
 		defaulted, err := l.destructuredDefault(binding, fieldType, value, local, fallback)

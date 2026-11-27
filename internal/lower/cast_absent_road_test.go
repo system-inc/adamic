@@ -111,3 +111,58 @@ func TestAbsentArmGetterTagStopsFirst(t *testing.T) {
 		})
 	}
 }
+
+// absentObjectModel is tsc's `node as SourceFile` of a `Node | undefined` (cause K of #eg3krrp): one object beside
+// undefined, whose kind is the open SyntaxKind, cast to an interface that narrows kind to one member of it.
+const absentObjectModel = "enum SyntaxKind { Identifier, SourceFile, Block } interface Node { readonly kind: SyntaxKind; readonly pos: number } interface SourceFile extends Node { readonly kind: SyntaxKind.SourceFile; readonly fileName: string } function f(x: Node | undefined): string { return (x as SourceFile).fileName; } "
+
+// A downcast of the one object beside undefined lowers in .ts to the absent check, then that object's own interface
+// downcast by its kind tag: an honest SourceFile reads through it and agrees with Node, on the sanitized native too.
+// Mutant: absentArm wanting two or more present members again, and the cast stops with the untagged union's NotYet.
+func TestAbsentArmObjectDowncastLowers(t *testing.T) {
+	t.Parallel()
+	program := lowersAndAgreesWithNodeAs(t, absentObjectModel+"const file: SourceFile = { kind: SyntaxKind.SourceFile, pos: 0, fileName: 'a.ts' }; console.log(f(file));", ".ts")
+	if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != "a.ts\n" {
+		t.Fatalf("sanitized native exit %d, stdout %q, stderr %.300q; want a.ts, as Node prints", code, stdout, stderr)
+	}
+}
+
+// undefined fails the cast before its tag is read, with the cast's own message, which names the source as written.
+// Mutant: castValue's absent check dropped for this road, and native reads the tag of the undefined it was handed.
+func TestAbsentArmObjectDowncastStopsUndefined(t *testing.T) {
+	t.Parallel()
+	program, err := lowerSourceAs(t, absentObjectModel+"console.log(f(undefined));", ".ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if code, stdout, stderr := brandedNative(t, program); code == 0 || stdout != "" || !strings.Contains(stderr, "cast failed: this Node | undefined is not a SourceFile") {
+		t.Fatalf("sanitized native exit %d, stdout %q, stderr %.300q; want a stop at the cast's absent check, in row 9's words", code, stdout, stderr)
+	}
+}
+
+// A Node of another kind that holds the fileName the view reads fails at the cast's tag test, which interfaceCast
+// words from the present object, as a cast that keeps nullish does. Mutant: the present road skipped, so the value
+// passes the absent check unviewed, and native reads the Block's fileName and prints b.ts.
+func TestAbsentArmObjectDowncastStopsAnotherKind(t *testing.T) {
+	t.Parallel()
+	program, err := lowerSourceAs(t, absentObjectModel+"interface Block extends Node { readonly kind: SyntaxKind.Block; readonly fileName: string } const block: Block = { kind: SyntaxKind.Block, pos: 0, fileName: 'b.ts' }; console.log(f(block));", ".ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if code, stdout, stderr := brandedNative(t, program); code == 0 || stdout != "" || !strings.Contains(stderr, "cast failed: this Node is not a SourceFile") {
+		t.Fatalf("sanitized native exit %d, stdout %q, stderr %.300q; want a stop at the cast's tag test, in row 9's words", code, stdout, stderr)
+	}
+}
+
+// A null beside the one object is outside absentArm, so the cast keeps the untagged union's NotYet it had, and never
+// a refusal. Mutant: absentArm taking null as it takes undefined, and the cast lowers.
+func TestAbsentArmObjectDowncastBesideNullStops(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSourceAs(t, strings.Replace(absentObjectModel, "x: Node | undefined", "x: Node | null", 1), ".ts")
+	const want = "a checked view of SourceFile over the union Node | null, whose members no literal tag tells apart"
+	var refused *Refused
+	var notYet *NotYet
+	if errors.As(err, &refused) || !errors.As(err, &notYet) || !strings.Contains(err.Error(), want) {
+		t.Fatalf("want NotYet holding %q, never a refusal, got %v", want, err)
+	}
+}

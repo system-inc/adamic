@@ -111,13 +111,13 @@ func TestCheckedPredicatePendingContracts(t *testing.T) {
 		// #9xam9ds's shape in .ts: B's kind is the whole open Kind, so a B can hold Kind.A's 1 and pass isA's
 		// comparison. .a refuses the body; in .ts the predicate is checked, and the read it would narrow is
 		// refused as an open enum refinement, so the lie never reaches a field read (Node prints text1).
-		{"open enum union tag", `enum Kind { A = 1, B = 2 } interface A { readonly kind: Kind.A; readonly value: number } interface B { readonly kind: Kind; readonly value: string } type Node = A | B; function isA(n: Node): n is A { return n.kind === Kind.A; } function numeric(): number { return 1; } const b: B = { kind: numeric(), value: 'text' }; function use(n: Node): void { if (isA(n)) { console.log(` + "`${n.value + 1}`" + `); } } use(b);`, "an object refinement using an open numeric enum as a literal tag"},
+		// open enum union tag: .a stops earlier at an unproven type predicate; its .ts side is enumTagSwingRows' "TestCheckedPredicatePendingContracts/open_enum_union_tag".
 		// A false branch over a tag that can lie has no view to read through (#k1t2wp9). Its uses never reach the
 		// call's own false-direction NotYet: a refined use is refused as an open enum refinement, and an open
 		// member's domain stops at the call first. These pin that no false-side use is admitted. wide, an A whose
 		// kind is chosen at run time, keeps A open (closedKinds, enum_tag_closed_kind.go).
-		{"open tag false read", `enum Lone { A = 1 } enum Pair { B = 2, C = 3 } interface A { readonly kind: Lone.A; readonly a: number } interface B { readonly kind: Pair.B; readonly b: string } type N = A | B; function isA(n: N): n is A { return n.kind === Lone.A; } function f(n: N): void { if (!isA(n)) console.log(n.b); } function numeric(): number { return 1; } const wide: A = { kind: numeric(), a: 0 }; f({ kind: Pair.B, b: 'text' });`, "an object refinement using an open numeric enum as a literal tag"},
-		{"open tag false pass", `enum Lone { A = 1 } enum Pair { B = 2, C = 3 } interface A { readonly kind: Lone.A; readonly a: number } interface B { readonly kind: Pair.B; readonly b: string } type N = A | B; function isA(n: N): n is A { return n.kind === Lone.A; } function g(b: B): void { console.log(b.b); } function f(n: N): void { if (!isA(n)) g(n); } function numeric(): number { return 1; } const wide: A = { kind: numeric(), a: 0 }; f({ kind: Pair.B, b: 'text' });`, "an object refinement using an open numeric enum as a literal tag"},
+		// open tag false read: .a stops earlier at an unproven type predicate; its .ts side is enumTagSwingRows' "TestCheckedPredicatePendingContracts/open_tag_false_read".
+		// open tag false pass: .a stops earlier at an unproven type predicate; its .ts side is enumTagSwingRows' "TestCheckedPredicatePendingContracts/open_tag_false_pass".
 		{"open tag false domain", `enum Kind { A = 1, B = 2, C = 3 } interface A { readonly kind: Kind.A; readonly a: number } interface B { readonly kind: Kind.B | Kind.C; readonly b: string } type N = A | B; function isA(n: N): n is A { return n.kind === Kind.A; } function f(n: N): void { if (!isA(n)) console.log(n.b); } f({ kind: Kind.B, b: 'text' });`, "checked predicate membership over an open tag domain"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {

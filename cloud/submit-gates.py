@@ -61,7 +61,7 @@ import sys
 
 
 MapPath = "cloud/gates/diff-to-gates.json"
-MapVersion = 5
+MapVersion = 7
 ShaPattern = re.compile(r"[0-9a-f]{40}\Z")
 
 # The map's definitions this script reads, word for word. A changed definition is a changed rule, so the script refuses
@@ -74,7 +74,7 @@ DefinitionsRead = {
              "submit, or a main commit with no change under internal/lower, internal/ir, internal/flow, internal/native "
              "or internal/load since",
     "green": "the job's outcome is exit 0, and its command's sha256 equals the sha256 of the named gate recipe read at "
-             "the head (Loom keeps a command's hash, never its text, so a gate is a fixed recipe file, "
+             "main's tip (Loom keeps a command's hash, never its text, so a gate is a fixed recipe file, "
              "cloud/gates/<gate>.sh, and the script compares hashes)",
     "red": "for a mutant job: exit non-zero, with the named test's FAIL line in its kept tail",
     "goFunctionBodyChanged": "the named function's body differs between base and head by go/ast, comments and "
@@ -88,6 +88,9 @@ DefinitionsRead = {
                   "to the union of each head's own added sites, and any unit in two heads' cleared lists or holding an "
                   "extra site censused for those heads alone. If lower moves during the combined job it is re-asked "
                   "once, then the set submits on that green",
+    # Only the accepter can read the operands and types of a newly stopping lowering-phase unit in a unit census gate.
+    "exposure": "a lowering-phase stop the head's census newly lists is an exposure when the adapter neither wrote "
+                "nor changed the expression's operands or their types, only moved them; otherwise it's new",
 }
 CompilerProductionPrefixes = ("internal/lower/", "internal/ir/", "internal/flow/", "internal/native/",
                               "internal/javascript/", "internal/load/", "cmd/adamic/")
@@ -96,7 +99,7 @@ FreshDirectories = ("internal/lower", "internal/ir", "internal/flow", "internal/
 
 # Gates compared against a base: their recipe reads HEAD^ and ends on its verdict line naming it, which fresh holds to
 # main's tip.
-PairedGates = ("admission-delta", "unit-census-pair")
+PairedGates = ("admission-delta", "unit-census-entry", "unit-census-directory")
 # Outcomes that are no verdict on the head: Loom's or the machine's failure, an end someone asked for, a job replaced,
 # and a job not ended yet. Every other outcome is a verdict, and only Exit 0 is green.
 NotVerdicts = ("Infrastructure", "Cancelled", "Superseded", None)
@@ -104,6 +107,11 @@ NotVerdicts = ("Infrastructure", "Cancelled", "Superseded", None)
 # rounds found a label, a repeated job or a selector standing in for the proof. The script names what to check; the
 # accepter checks it.
 ByHandGates = {
+    "adaptation-value-identical": "test.cjs drives stock and adapted tsc on inputs reaching each changed branch, "
+                                  "the reader's line-by-line statement covers identity, key order, thrown errors "
+                                  "and the timing of reads, and any change in those observations goes to Adamic",
+    "adapter-plants-red": "the adapter's plant kit job ran at this head, its tail ends with VERDICT n of n red with "
+                          "n greater than zero, and each plant in the kit is red on its expected line",
     "value-count-reached": "the adaptation's value count job: 0 counterexamples, and calls observed above 0 on the "
                            "changed path, or a fixture held to Node that drives it",
     "stock-js-identical": "tsc's emit of the adapted files byte for byte against stock's; no tool on main compares them "
@@ -117,13 +125,19 @@ ByHandRows = {
                        "which the script can't read",
     "statecopy-row": "that irSpecFields names each new exported internal/ir field, by go/ast, which the script can't read",
     "adapter-output-test": "that test.cjs runs the edited output, on a tree stage3/apply.sh wrote with its -before and "
-                           "-after refs, and goes red on a reviewer's mutation of it (a swapped pair, a dropped entry)",
+                           "-after refs, compares against the -after ref, and goes red on a reviewer's mutation of it "
+                           "(a swapped pair, a dropped entry)",
+    "adapter-table-mentions": "where the adapter rests on a table tsc declares, every mention of the table across src/ "
+                              "is in a reviewed set, and every value read out of it is followed through each function "
+                              "it's passed to, each pinned by its -before text and declared once, until it's only read "
+                              "into primitives; a form outside that is named in the README as the pin-time audit's; "
+                              "any other mention refuses",
     "adapter-structural-pins": "that each digest or getText( pins a node the adapter edits, never a whole file, and that "
                                "its tests read its own -after snapshot, never the final applied tree or a constant "
                                "digest: whether it is a node is its receiver's type, which the script can't read",
     "gates-changed": "the change to the judging code the head's own jobs run (a recipe, steps.sh, units-compare.py, the "
-                     "map, sandboxed-job.sh, this script, or the census tooling unit-census-pair.sh runs), read whole, "
-                     "since a green of them is the head judging itself",
+                     "map, sandboxed-job.sh, this script, or the census tooling the unit census recipes run), read "
+                     "whole, since a green of them is the head judging itself",
 }
 # The mutants-red recipe names its mutant on a line the script writes into the command it asks, so each mutant's
 # command, and its sha256, is its own. The recipe holds the placeholder once.
@@ -137,16 +151,17 @@ MutantRunCell = re.compile(r"[^`\n]+\Z")
 # The judging code: what the recipes source from the tree they run in, and this script. A head that changes any of it
 # owes gates-changed by hand, since a job at the head runs the head's copy whatever recipe it was asked with.
 JudgePaths = (
-    "cloud/gates/",  # the map, every recipe, steps.sh and units-compare.py, which unit-census-pair.sh sources and runs
+    "cloud/gates/",  # the map, every recipe, steps.sh and units-compare.py, which the unit census recipes run
     "cloud/submit-gates.py",
-    "cloud/sandboxed-job.sh",  # every recipe sources it; unit-census-pair.sh calls its sandboxed_npm and sandboxed_typescript_source
+    "cloud/sandboxed-job.sh",  # every recipe sources it; the unit census recipes call its sandboxed_npm and
+                               # sandboxed_typescript_source
     # The census tooling: a head that changes what the census measures changes the judge's evidence (Seats, round 6)
     "stage3/census/",  # make_overlay.py and the go run tools it calls (statecopy, statementrewrite, refusalrewrite,
-                       # importclean), and ./stage3/census/latent/tool, which unit-census-pair.sh builds and runs
-    "stage3/apply.sh",  # unit-census-pair.sh runs it on each side
+                       # importclean), and ./stage3/census/latent/tool, which the unit census recipes build and run
+    "stage3/apply.sh",  # the unit census recipes run it on each side
     "stage3/apply.py",  # apply.sh execs it
     "stage3/caches.py",  # apply.py imports it
-    "stage3/meter/entry_overlay.py",  # unit-census-pair.sh runs it for the entry pass's overlay
+    "stage3/meter/entry_overlay.py",  # unit-census-entry.sh runs it for the entry pass's overlay
     "stage3/api/package.json",  # sandboxed_npm stage3/api runs npm ci there, which installs from these two
     "stage3/api/package-lock.json",
     # stage3/apply.py also runs stage3/adapt/00-setup/adapt.cjs and every adapter, but those are what an adaptation
@@ -157,7 +172,6 @@ ScriptPath = "cloud/submit-gates.py"
 LiveHoleGates = ("format", "compilercensus", "parallelcensus", "lower-whole")
 
 PassLedgerPath = "stage3/census/latent/pass_ledger.go.txt"
-LedgerPath = "stage3/upstream/LEDGER.md"
 # The map names statecopy/main.go, but irSpecFields lives beside it (ir_fields.go on main 96a1291b), so the whole
 # directory is read.
 StatecopyDirectory = "stage3/census/latent/statecopy/"
@@ -704,9 +718,15 @@ def row_pending(diff, rule_ids):
 
 
 def row_ledger(diff, rule_ids):
-    if LedgerPath in diff.status:
-        return True, f"{LedgerPath} changed"
-    return False, f"{LedgerPath} isn't in the head's diff"
+    """Every affected adapter that remains at the head has its own ledger in this diff."""
+    directories = sorted({found.group(1) for path in diff.paths()
+                          for found in [AdaptDirectory.match(path)] if found})
+    ledgers = [directory + "/LEDGER.md" for directory in directories
+               if diff.repository.files(diff.head, directory)]
+    absent = [path for path in ledgers if diff.status.get(path, "D") == "D"]
+    if absent:
+        return False, "ledger missing or deleted in this diff: " + ", ".join(absent)
+    return True, ", ".join(ledgers) + " changed" if ledgers else "no changed adapter directories remain"
 
 
 def row_mutant_evidence(diff, rule_ids):
@@ -802,6 +822,10 @@ def row_output_test(diff, rule_ids):
     return False, f"test.cjs is in {', '.join(directories)}; " + owed_by_hand("adapter-output-test")
 
 
+def row_table_mentions(diff, rule_ids):
+    return False, owed_by_hand("adapter-table-mentions")
+
+
 def row_skip_census(diff, rule_ids):
     skips = "; the new skips: " + ", ".join(added_skips(diff))
     return False, owed_by_hand("skip-census-row") + skips
@@ -811,6 +835,7 @@ RowReaders = {
     "skip-census-row": row_skip_census,
     "adapter-structural-pins": row_structural_pins,
     "adapter-output-test": row_output_test,
+    "adapter-table-mentions": row_table_mentions,
     "statecopy-row": row_statecopy,
     "pass-ledger-row": row_pass_ledger,
     "pending-sidecar": row_pending,
@@ -851,12 +876,13 @@ def recipe_hash(text):
 
 
 def ask_flags(text):
-    """The flags a recipe's `# ask:` line adds to its ask (a machine size, a ceiling)."""
+    """The flags a recipe's `# ask:` line adds to its ask (a machine size, a ceiling, what its machine must hold)."""
     found = re.search(r"^# ask: (.*)$", text, re.MULTILINE)
     flags = shlex.split(found.group(1)) if found else []
     for index in range(0, len(flags), 2):
-        if flags[index] not in ("--size", "--ceiling", "--about") or index + 1 >= len(flags):
-            raise Unreadable(f"a recipe's ask line {found.group(0)!r} holds {flags[index]!r}; it takes --size, --ceiling and --about")
+        if flags[index] not in ("--size", "--ceiling", "--about", "--needs") or index + 1 >= len(flags):
+            raise Unreadable(f"a recipe's ask line {found.group(0)!r} holds {flags[index]!r}; it takes --size, --ceiling, "
+                             "--about and --needs")
     return flags
 
 

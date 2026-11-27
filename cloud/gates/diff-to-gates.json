@@ -1,14 +1,15 @@
 {
-  "version": 5,
+  "version": 7,
   "about": "Adamic's submit script input: what a head's diff requires before it submits. Every rule is read from the head's diff against main's tip at submit. A rule fires when any of its triggers matches; a head owes the union of what its fired rules require. Written by Compiler from #system_adamic_compiler's standing rules (#mbtv3vv, #07a4th6). When unsure, a rule fires: a gate run needlessly costs a job, a gate missed costs a red block.",
   "definitions": {
     "productionGo": "a .go file not ending _test.go",
     "compilerProduction": "productionGo under internal/lower/, internal/ir/, internal/flow/, internal/native/ (outside internal/native_runtime/), internal/javascript/, internal/load/, cmd/adamic/",
     "fresh": "a job counts only when its commit is the head's own sha, and its base (for a paired job) is main's tip at submit, or a main commit with no change under internal/lower, internal/ir, internal/flow, internal/native or internal/load since",
-    "green": "the job's outcome is exit 0, and its command's sha256 equals the sha256 of the named gate recipe read at the head (Loom keeps a command's hash, never its text, so a gate is a fixed recipe file, cloud/gates/<gate>.sh, and the script compares hashes)",
+    "green": "the job's outcome is exit 0, and its command's sha256 equals the sha256 of the named gate recipe read at main's tip (Loom keeps a command's hash, never its text, so a gate is a fixed recipe file, cloud/gates/<gate>.sh, and the script compares hashes)",
     "red": "for a mutant job: exit non-zero, with the named test's FAIL line in its kept tail",
     "goFunctionBodyChanged": "the named function's body differs between base and head by go/ast, comments and formatting ignored",
-    "freshStack": "for several adaptation heads submitted together (Seats' stacked form, Compiler on #bbssdcy Nov 23): each head carries its own unit census at a recent main, 0 newly stopping; and the set carries one combined census at main's tip at submit, base the tip, head every change applied, read by unit and by site: 0 units newly stopping, every cleared unit attributable to a named head, the added sites equal to the union of each head's own added sites, and any unit in two heads' cleared lists or holding an extra site censused for those heads alone. If lower moves during the combined job it is re-asked once, then the set submits on that green"
+    "freshStack": "for several adaptation heads submitted together (Seats' stacked form, Compiler on #bbssdcy Nov 23): each head carries its own unit census at a recent main, 0 newly stopping; and the set carries one combined census at main's tip at submit, base the tip, head every change applied, read by unit and by site: 0 units newly stopping, every cleared unit attributable to a named head, the added sites equal to the union of each head's own added sites, and any unit in two heads' cleared lists or holding an extra site censused for those heads alone. If lower moves during the combined job it is re-asked once, then the set submits on that green",
+    "exposure": "a lowering-phase stop the head's census newly lists is an exposure when the adapter neither wrote nor changed the expression's operands or their types, only moved them; otherwise it's new"
   },
   "gates": {
     "format": "gofmt -l on the head's changed .go files prints nothing; go vet of every touched package",
@@ -21,22 +22,29 @@
     "ir-whole": "go test ./internal/ir/ whole (its call-target census)",
     "latent-whole": "go test ./stage3/census/latent/... whole (the statecopy guard and the pass ledger)",
     "admission-delta": "the admission delta against main's tip: its verdict line pass, and its admitted programs listed",
-    "unit-census-pair": "tsc's paired census, base main's tip and head, by stage3/census/pair/pair.py's rule: 0 units newly stopping, or each newly stopping unit named in the commit message with the ruling that allows it",
+    "unit-census-entry": "tsc's paired census in its entry pass, base main's tip and head, by stage3/census/pair/pair.py's rule: 0 units newly stopping, or each newly stopping unit named in the commit message with the ruling that allows it",
+    "unit-census-directory": "tsc's paired census in its compiler directory pass, base main's tip and head, by stage3/census/pair/pair.py's rule: 0 units newly stopping, or each newly stopping unit named in the commit message with the ruling that allows it",
     "lane-whole-sealed": "stage3/lane whole, sealed",
     "mutants-red": "for every mutant the head's *.mutants.md names: its own job, red on the test it names",
+    "adapter-plants-red": "the adapter's plant kit job at the head: the kept tail ends with a VERDICT n of n red verdict for a positive n, and every plant is red on the line the kit expects; the accepter reads the kit and job by hand",
     "value-count-reached": "the adaptation's value count job: 0 counterexamples, and calls observed above 0 on the changed path (a count that never reached its path proves nothing), or a fixture held to Node that drives it",
     "declarations-identical": "the adapted tree's public .d.ts byte-identical to stock, or the head carries Adamic's ruling on the declaration diff",
-    "stock-js-identical": "tsc's emitted JavaScript for the adapted files byte-identical to stock; true makes an adaptation type-only and drops value-count-reached"
+    "stock-js-identical": "tsc's emitted JavaScript for the adapted files byte-identical to stock; true makes an adaptation type-only and drops value-count-reached",
+    "stage1-gaps-whole": "go test ./stage1/cohere/estree/ whole: its gap tests pin recorded gaps as stops, and a head that closes one must update it (block 3532's TestPostfixValueGap, Nov 23)",
+    "stage3-fixtures-whole": "go test ./stage3/fixtures/ whole: its recorded stops (status.json) move when lowering refuses earlier (block 3532, Nov 23)",
+    "projects-whole": "go test ./internal/load/projects/ whole: its TestTheRootProjectsAreLoadsOwn holds the root tsconfig.json and internal/load/projects/node/tsconfig.json to what go run ./internal/load/projects writes from the tree as tested (#kyq0pyn, #w5zzdjp)",
+    "adaptation-value-identical": "a test.cjs drives stock and adapted tsc on inputs that reach each changed branch, and the reader states line by line that no input tells them apart (identity, key order, thrown errors and the timing of reads included); anything that changes identity, key order or a failure path is Adamic's to accept"
   },
   "sameDiff": {
     "statecopy-row": "stage3/census/latent/statecopy/main.go names each new exported internal/ir field in irSpecFields",
     "pass-ledger-row": "stage3/census/latent/pass_ledger.go.txt names each new lowering pass",
     "skip-census-row": "a skip-census row for each new t.Skip on a path Loom runs",
     "pending-sidecar": "a .pending sidecar naming a task, beside each newly added program whose expected outcome is a stop where Node runs",
-    "ledger-line": "stage3/upstream/LEDGER.md changed",
+    "ledger-line": "each added or changed adapter directory under stage3/adapt/ has its own LEDGER.md added or changed in the head's diff; a removed adapter directory needs no row",
     "mutant-evidence-path": "a file among the head's own paths naming the test that goes red with the change undone (Loom's HarnessWithoutMutant law)",
-    "adapter-output-test": "a test.cjs beside the adapter that runs its edited output and goes red when a reviewer's mutation of the adapter's output (a swapped pair, a dropped entry) is applied; required where stock-js-identical is false (family 101, Nov 23: a swapped pair passed every other check). It runs on a tree stage3/apply.sh wrote, so the gate runs the apply first and hands the test its -before and -after refs",
-    "adapter-structural-pins": "the adapter pins its input by the nodes it edits (kind and text), never by a whole-file digest: adapters run in sorted order (stage3/apply.py:272), so a whole-file pin refuses the apply once any earlier adapter edits that file (family 98's round 3 against 99-cli-resolution-cycle-length, Nov 23). Checked by refusing an adapt.cjs that hashes a whole input file it then edits. An adapter's tests are held to the same rule: a test reads its adapter's own snapshot (its -after ref, as 112's test does), never the final applied tree or a constant digest of a file, since a later adapter in sorted order may edit that file (89's and 88's tests, Nov 23)"
+    "adapter-output-test": "a test.cjs beside the adapter that runs its edited output and goes red when a reviewer's mutation of the adapter's output (a swapped pair, a dropped entry) is applied; required where stock-js-identical is false (family 101, Nov 23: a swapped pair passed every other check). It runs on a tree stage3/apply.sh wrote, so the gate runs the apply first and hands the test its -before and -after refs. Every output test also compares against -after.",
+    "adapter-structural-pins": "the adapter pins its input by the nodes it edits (kind and text), never by a whole-file digest: adapters run in sorted order (stage3/apply.py:272), so a whole-file pin refuses the apply once any earlier adapter edits that file (family 98's round 3 against 99-cli-resolution-cycle-length, Nov 23). Checked by refusing an adapt.cjs that hashes a whole input file it then edits. An adapter's tests are held to the same rule: a test reads its adapter's own snapshot (its -after ref, as 112's test does), never the final applied tree or a constant digest of a file, since a later adapter in sorted order may edit that file (89's and 88's tests, Nov 23)",
+    "adapter-table-mentions": "where the adapter's behavior rests on a table tsc declares: every mention of the table across src/ is in a reviewed set, and every value read out of it is followed through each function it's passed to, each pinned by its -before text and declared once, until it's only read into primitives; a form outside that is named in the README as the pin-time audit's; any other mention refuses"
   },
   "rules": [
     {
@@ -67,8 +75,60 @@
         "oracle-whole",
         "native-whole-wasi",
         "admission-delta",
-        "unit-census-pair"
+        "unit-census-entry",
+        "unit-census-directory",
+        "stage1-gaps-whole",
+        "stage3-fixtures-whole"
       ]
+    },
+    {
+      "id": "projects-lists",
+      "source": "Compiler on #w5zzdjp (Nov 26, 21:54Z): a head that adds or changes an Adamic source under the TypeScript projects' include directories, or touches internal/load, runs the projects generator's check, since the two tsconfigs name each program by file and Load's own predicate places it (#kyq0pyn's five landing reds were this list going stale under a head); the root tsconfig.json and cohere's pin, which carries typescript-go's checker that place() asks, fire it too (Compiler's accept, Nov 26 22:01Z)",
+      "triggers": [
+        {
+          "paths": "internal/load/**"
+        },
+        {
+          "paths": "tsconfig.json"
+        },
+        {
+          "paths": "cohere"
+        },
+        {
+          "paths": "dedication/**/*.a"
+        },
+        {
+          "paths": "dedication/**/*.ts"
+        },
+        {
+          "paths": "internal/load/testdata/**/*.a"
+        },
+        {
+          "paths": "internal/load/testdata/**/*.ts"
+        },
+        {
+          "paths": "internal/oracle/testdata/**/*.a"
+        },
+        {
+          "paths": "internal/oracle/testdata/**/*.ts"
+        },
+        {
+          "paths": "stage1/**/*.a"
+        },
+        {
+          "paths": "stage1/**/*.ts"
+        },
+        {
+          "paths": "bench/**/*.a"
+        },
+        {
+          "paths": "bench/**/*.ts"
+        }
+      ],
+      "requires": [
+        "projects-whole"
+      ],
+      "note": "A red here means the tsconfigs aren't what go run ./internal/load/projects writes from the head's tree: run it and commit both files. A head can red without its own hand being wrong when another change in line made a shared module import a node: module, so a fixture importing it became a Node program: regenerate on the second head. It's a red, never a wrong pass."
     },
     {
       "id": "refusal-added",
@@ -81,7 +141,9 @@
       ],
       "requires": [
         "oracle-whole",
-        "admission-delta"
+        "admission-delta",
+        "stage1-gaps-whole",
+        "stage3-fixtures-whole"
       ]
     },
     {
@@ -222,9 +284,6 @@
       "triggers": [
         {
           "addedOrChangedPaths": "**/*.mutants.md"
-        },
-        {
-          "rule": "adaptation"
         }
       ],
       "requires": [
@@ -240,21 +299,24 @@
         }
       ],
       "requires": [
-        "unit-census-pair",
+        "unit-census-entry",
+        "unit-census-directory",
         "stock-js-identical",
         "declarations-identical",
-        "mutants-red"
+        "adapter-plants-red"
       ],
       "sameDiff": [
         "adapter-structural-pins",
-        "ledger-line"
+        "ledger-line",
+        "adapter-table-mentions"
       ],
       "thenIf": {
         "stock-js-identical": false,
         "requires": [
-          "value-count-reached"
+          "value-count-reached",
+          "adaptation-value-identical"
         ],
-        "accepter": "Adamic, unless the shape is one she ruled Compiler's (the enumerated-table shape)",
+        "accepter": "Adamic, unless the shape is one she ruled Compiler's (the enumerated-table shape), or the head shows value-identity under adaptation-value-identical (her Nov 24 widening); anything that changes identity, key order or a failure path stays hers",
         "sameDiff": [
           "adapter-output-test"
         ]

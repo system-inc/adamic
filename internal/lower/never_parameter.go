@@ -233,6 +233,14 @@ func (l *lowering) checkNeverArguments(call *ast.CallExpression, function int) e
 			return l.notYet(call.AsNode(), condition)
 		}
 		argument := call.Arguments.Nodes[position]
+		// A numeric enum's never read isn't an honest never: an open enum can hold a number that is no
+		// member at main (`raw as E`, a number argument to an E parameter, e++), and then the default of a
+		// switch over every member runs. What keeps the call off that lie is the trap at the read: value()
+		// lowers the argument through enumNeverCheck, which stops loudly before the call is made, as it does
+		// every enum never read (Compiler on #xfpsqtn). A read with a write between keeps the stop below.
+		if l.enumNeverTrapped(argument) {
+			continue
+		}
 		making, err := l.neverRead(argument)
 		if err != nil || making == nil {
 			return l.notYet(argument, condition)

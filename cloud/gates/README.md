@@ -30,7 +30,8 @@ own sha, an exit code, or a fixed line the recipe itself prints. The map, the re
 copy of itself.
 
 A job still runs in the head's tree, so a head that changes judging code owes `gates-changed` by hand. Judging code is
-this directory, the script, `cloud/sandboxed-job.sh`, and the census tooling `unit-census-pair.sh` runs from the tree:
+this directory, the script, `cloud/sandboxed-job.sh`, and the census tooling `unit-census-entry.sh` and
+`unit-census-directory.sh` run from the tree:
 
 - `stage3/census/`
 - `stage3/apply.sh`, `stage3/apply.py` and `stage3/caches.py`
@@ -42,11 +43,11 @@ which is why the accepter reads the change itself.
 
 ## The map
 
-`diff-to-gates.json` is Compiler's, copied here at version 5. Compiler's version 6 on #mbtv3vv adds two gates,
-`stage1-gaps-whole` and `stage3-fixtures-whole`, which need recipes, so it isn't copied yet. The `ledger-line` row reads
-`stage3/upstream/LEDGER.md`, which the ledger split (chg_c5c1tfga, 8b613c8a) deletes. After the split, an adaptation's
-entry is its own `stage3/adapt/<dir>/LEDGER.md`, so the row goes stale when the split lands, and it is Compiler's to
-amend.
+`diff-to-gates.json` is Compiler's, copied here at version 7 (Compiler on #fj2ca6r, Nov 24, and on #hj3ajhz, Nov 26). Version 7
+replaces `unit-census-pair` with `unit-census-entry` and `unit-census-directory`, one census pass a job. Version 6 added
+`stage1-gaps-whole` and `stage3-fixtures-whole`, aligns `green` with main's recipe, and records `exposure`.
+Adaptations owe directory-local ledgers, an owed-by-hand plant proof and table review, and an `-after` comparison
+in every output test, while `mutants-red` is triggered by added or changed `*.mutants.md` files.
 
 ## One head
 

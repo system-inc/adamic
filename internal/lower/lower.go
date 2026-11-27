@@ -529,12 +529,19 @@ type lowering struct {
 	// firstLinkMain is where each top-level statement's IR lies in Main (firstLinkStatements), which a
 	// whole-program pass's trap stubs, and firstLinkRewriteSkipped says such a pass that rewrites the IR
 	// skipped its work past a stop, so each row after it is Suspect (first_link_passes.go).
-	firstLinkMain           map[*ast.Node]firstLinkMainRange
-	firstLinkRewriteSkipped bool
+	// firstLinkJudgmentAbandoned says a pass that only judges gave up partway, which makes each row after
+	// it Suspect the same way (firstLinkJudgmentAbandon).
+	firstLinkMain              map[*ast.Node]firstLinkMainRange
+	firstLinkRewriteSkipped    bool
+	firstLinkJudgmentAbandoned bool
 
 	// flowDead is every function a flow graph built during lowering took to never run (flowGraph,
 	// iterableViewFlowGraph), which checkFlowLiveness holds to that once lowering is done.
 	flowDead map[int]bool
+
+	// armFieldHolders is every type the program and its libraries make or hold a value as, by the names of
+	// the fields each holds, walked once (fieldHoldersOf): narrowedArmPropertyReadGap's silent case (#8nj5pn4).
+	armFieldHolders *fieldHolders
 
 	// Source-only sites for graph adoption diagnostics; never stored in emitted IR.
 	graphDynamicSite *ast.Node
@@ -872,6 +879,9 @@ type lowering struct {
 	// writtenAccessorNames is every name a getter or setter in the program has, "" for a computed one
 	// (enum_tag_flow.go's accessorName). accessorNames below holds getters alone.
 	writtenAccessorNames map[string]bool
+	// enumTagCheckedViewsDone holds each declared union and member pair the swing registered a view for
+	// (enumTagCheckedViews), so a pair registers once. A pair whose view failed isn't held, so each site asks again.
+	enumTagCheckedViewsDone map[enumTagCheckedViewKey]bool
 	// closedKindAnswers is closedKinds' answer by type and field, and closedKindDeclared and closedKindBuilt
 	// the program's declared types and build sites it judges each type against, found once; closedKindNewOnly
 	// is each function declaration with a declared this, and whether every use of it is a new callee or a
@@ -1117,9 +1127,10 @@ type lowering struct {
 	spreadNodes   []*ast.Node
 	classHolders  map[int]*checker.Type
 	// genericSpreadSites are the SpreadSites of the spreads whose source the checker types with a type
-	// parameter, and prototypeMemberUses the class method calls and presence tests lowering made on a
+	// parameter, or with a type that may hide a program class's instance, each with how a stop names its
+	// copy, and prototypeMemberUses the class method calls and presence tests lowering made on a
 	// receiver other than this, which checkGenericSpreadCopyReads judges (generic_spread_copy_reads.go).
-	genericSpreadSites  map[int]bool
+	genericSpreadSites  map[int]string
 	prototypeMemberUses []prototypeMemberUse
 
 	// spreadWithCopied is spreadCopiedGetters' copied for SpreadWith literals alone: each getter name one may

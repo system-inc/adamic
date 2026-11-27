@@ -140,7 +140,12 @@ adamic_value *adamic_object_find(const adamic_object *object, const char *name, 
 			return &mutable->slots[index];
 		}
 	}
-	static const char message[] = "compiler bug: a field the checker proved is there is missing";
+	// The shape lacks a name lowering proved is there. That proof can be stale: a property narrowed to one arm
+	// of a union, the narrowing kept across a call that put another arm's object there, reaches here for a
+	// field only the first arm holds, and the uniform slot's shape guard sends it here too (#8nj5pn4,
+	// uniformFieldGuard in emit_objects.go). Node reads undefined, which the read's typed slot can't hold, so
+	// the run stops in the words of what isn't built yet. A field a lowering bug loses stops the same way.
+	static const char message[] = "NotYet: a field missing from this object, where a narrowing kept across a call that rewrote the property said it is there (#8nj5pn4)";
 	adamic_panic(message, sizeof message - 1);
 }
 
@@ -449,6 +454,13 @@ adamic_value adamic_object_view(const adamic_object *object, const char *name, a
 		adamic_maybe_number unpacked = adamic_maybe_number_unpack(slot->number);
 		if (unpacked.present) { return (adamic_value){.number = unpacked.number}; }
 	}
+	// A boolean | undefined slot holding a boolean is a boolean, as a number | undefined one holding a
+	// number is a number above: read as boolean it passes, where it stopped natively while Node and the
+	// JavaScript backend ran on (#yf3k0aj's t4).
+	if (actual == adamic_rep_maybe_boolean && wanted == 2) {
+		adamic_maybe_boolean unpacked = adamic_maybe_boolean_unpack(slot->maybe_boolean);
+		if (unpacked.present) { return (adamic_value){.boolean = unpacked.boolean}; }
+	}
 	if (actual == wanted && wanted >= 1 && wanted <= 6) {
 		if (wanted <= 2) { return *slot; }
 		const adamic_heap *reference = slot->reference;
@@ -458,6 +470,13 @@ adamic_value adamic_object_view(const adamic_object *object, const char *name, a
 	const char *found = actual == 1 ? "number" : actual == 2 ? "boolean" : actual == 3 ? "string" : actual == 4 ? "object" : actual == 5 ? "array" : actual == 6 ? "Map" : actual == 7 ? "number" : actual == 8 ? "function" : actual == 11 ? "object" : "unsupported representation";
 	if (actual >= 3 && actual <= 6 && slot->reference == NULL) { found = "nullish"; }
 	if (actual == 7 && !adamic_maybe_number_unpack(slot->number).present) { found = "nullish"; }
+	// The found word is what the JavaScript backend's check names for the same value (readiness.go:
+	// undefined and null are nullish, an array is array, a Map is Map, anything else its typeof), so a
+	// stop reads alike on both backends (#yf3k0aj): an undefined or null slot is nullish, a boolean |
+	// undefined one a boolean or nullish, and a record or a typed array an object.
+	if (actual == adamic_rep_maybe_boolean) { found = adamic_maybe_boolean_unpack(slot->maybe_boolean).present ? "boolean" : "nullish"; }
+	if (actual == adamic_rep_null || actual == adamic_rep_undefined) { found = "nullish"; }
+	if (actual == adamic_rep_record || actual == adamic_rep_uint8_array || actual == adamic_rep_int32_array || actual == adamic_rep_float64_array) { found = "object"; }
 	if (actual == 10) {
 		const adamic_heap *boxed = slot->reference;
 		// A union's null is nullish, as the JavaScript backend's adamicViewField says.

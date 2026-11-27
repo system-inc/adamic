@@ -109,6 +109,13 @@ func (l *lowering) enumerationDescriptors(where, operand *ast.Node, deep, checke
 	if err != nil {
 		return err
 	}
+	// Ruling 10 follows #1atvfp5 (1c68b3ebd5): keys, values and entries
+	// read only own properties. Language's literal test excludes identifier,
+	// string and shorthand __proto__ keys and checks spreads recursively.
+	var keyLiterals map[*ast.Node]int
+	if !deep {
+		keyLiterals = l.enumerationLiteralKeys(operand, modules)
+	}
 	reach := enumerationAccessorReach{operand: operand, deep: deep, modules: modules}
 	var failure error
 	var visit ast.Visitor
@@ -118,12 +125,17 @@ func (l *lowering) enumerationDescriptors(where, operand *ast.Node, deep, checke
 		}
 		if node.Kind == ast.KindObjectLiteralExpression {
 			for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
-				if property.Name() != nil && property.Name().Kind == ast.KindComputedPropertyName && l.checker.GetTypeAtLocation(property.Name().AsComputedPropertyName().Expression).Flags()&checker.TypeFlagsESSymbolLike != 0 {
-					failure = &Refused{Where: l.program.Where(where), What: "Object enumeration with symbol keys", Fix: "use string-keyed own data properties for this first reflection implementation"}
-				}
-				name, known := l.methodName(property)
-				if known && (strings.ContainsRune(name, 0) || strings.HasPrefix(name, "#") || name == iteratorSlot) {
-					failure = l.notYet(where, "Object enumeration of a literal with reserved or symbol key storage")
+				if keyLiterals == nil || keyLiterals[node] != 0 {
+					if property.Name() != nil && property.Name().Kind == ast.KindComputedPropertyName && l.checker.GetTypeAtLocation(property.Name().AsComputedPropertyName().Expression).Flags()&checker.TypeFlagsESSymbolLike != 0 {
+						failure = &Refused{Where: l.program.Where(where), What: "Object enumeration with symbol keys", Fix: "use string-keyed own data properties for this first reflection implementation"}
+					}
+					name, known := l.methodName(property)
+					if keyLiterals != nil && property.Name() != nil {
+						name, known = property.Name().Text(), true
+					}
+					if known && (strings.ContainsRune(name, 0) || strings.HasPrefix(name, "#") || name == iteratorSlot) {
+						failure = l.notYet(where, "Object enumeration of a literal with reserved or symbol key storage")
+					}
 				}
 				if property.Kind == ast.KindSpreadAssignment && l.includesUndefined(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression)) {
 					failure = l.notYet(where, "Object enumeration of a nullable spread with synthetic absent slots")

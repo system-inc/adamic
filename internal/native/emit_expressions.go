@@ -233,7 +233,15 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		lent := e.lendable && lendable(expression.Of) && !expression.Optional
 		object := e.value(expression.Object)
-		slot := e.fieldSlot(object, expression.Name, expression.Class)
+		// Only a read that loads through the slot takes readFieldSlot's guard and the field cache its miss
+		// needs. A readiness, maybe or absent read goes by its own road below and the slot is discarded, so
+		// it's fieldSlot's, whose bare uniform slot declares no cache.
+		var slot string
+		if expression.Readiness == "" && !expression.Of.IsMaybe() && !expression.Absent {
+			slot = e.readFieldSlot(object, expression.Name, expression.Class)
+		} else {
+			slot = e.fieldSlot(object, expression.Name, expression.Class)
+		}
 		if expression.Readiness != "" {
 			slot = fmt.Sprintf("adamic_object_read(%s, %s, &%s, %s)", object, cString(expression.Name), e.cache(), cString(expression.Readiness))
 			if expression.Optional {
@@ -1107,6 +1115,11 @@ func (e *emitter) boundMethod(expression ir.BoundMethod) string {
 		return result
 	}
 	if !expression.Optional {
+		// A non-optional bind of a method the receiver doesn't hold, such as a spread's copy seen as a type
+		// declaring one, found nothing: no closure and no method code. It stops here with the words every
+		// other road to a missing method uses, which #8vptg16 turns into Node's catchable TypeError,
+		// rather than leave the bound closure a null code pointer to call (#1k4z29h).
+		e.checkDefinedWhen(fmt.Sprintf("%s == NULL && !(%s)", target, e.methodPresent(method)), "method "+expression.Name+" is absent")
 		return makeValue()
 	}
 	text, value, owned := e.asideWith(makeValue)

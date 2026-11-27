@@ -116,6 +116,12 @@ func (l *lowering) nullableObjectBoundary(node *ast.Node, value ir.Expression) i
 	if _, literal := value.(ir.Null); literal {
 		return value
 	}
+	return l.boxNullableReference(value)
+}
+
+// boxNullableReference converts a reference whose null uses the missing pointer
+// into a Union whose null has its own tag.
+func (l *lowering) boxNullableReference(value ir.Expression) ir.Expression {
 	b := l.libraryArrayBuilder([]ir.Expression{value})
 	held := b.read(b.parameters[0])
 	return b.finish("nullable_object_to_union", ir.Conditional{Condition: ir.IsNull{Value: held}, WhenTrue: ir.Box{Value: ir.Null{}}, WhenNot: ir.Box{Value: held}, Of: ir.Union})
@@ -127,6 +133,31 @@ func (l *lowering) optionalNullableObject(read ir.Expression) ir.Expression {
 	held := b.read(b.parameters[0])
 	absent := ir.Binary{Operator: ir.Or, Left: ir.IsNull{Value: held}, Right: ir.IsUndefined{Value: held}}
 	return b.finish("optional_nullable_object", ir.Conditional{Condition: absent, WhenTrue: ir.Undefined{Of: ir.Object}, WhenNot: ir.Narrow{Value: held, To: ir.Object}, Of: ir.Object})
+}
+
+// optionalDynamicProperty is a ?. read by run-time key (dynamicProperty) of a receiver held as a union, one
+// nullableObjectUnion doesn't take: a record that may be null or undefined, or a field declared unknown. The
+// key read tests nothing, and a nullish receiver stops it in both backends (union.c's dynamic_property, and
+// a TypeError on JavaScript), where Node gives undefined (#0q0cv0m). So the receiver is read once, and only
+// one that is neither null nor undefined reaches the key read.
+func (l *lowering) optionalDynamicProperty(node *ast.Node, receiver ir.Expression, name string) (ir.Expression, error) {
+	of, err := l.typeOf(node)
+	if err != nil {
+		return nil, err
+	}
+	// The read's own type holds the undefined a missing receiver gives: a maybe, or a reference other than a
+	// weak handle, whose undefined is the target's and not its own.
+	if !of.IsMaybe() && (!of.IsReference() || of == ir.Weak) {
+		return nil, l.notYet(node, "?. to a run-time key read of a "+typeName(of)+", which has no undefined for a missing receiver")
+	}
+	b := l.libraryArrayBuilder([]ir.Expression{receiver})
+	held := b.read(b.parameters[0])
+	read, err := l.dynamicProperty(node, held, name)
+	if err != nil {
+		return nil, err
+	}
+	missing := ir.Binary{Operator: ir.Or, Left: ir.IsNull{Value: held}, Right: ir.IsUndefined{Value: held}}
+	return b.finish("optional_dynamic_property", ir.Conditional{Condition: missing, WhenTrue: fit(ir.Undefined{}, of), WhenNot: read, Of: of}), nil
 }
 
 // A value boundary can normalize a pointer. Shared fields, elements and callable

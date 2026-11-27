@@ -1,0 +1,302 @@
+Roots: 713 harness: 38
+
+getEmitResolver: notImplemented
+src/compiler/types.ts:<coordinate> MethodSignature /** @internal */ getEmitResolver(): EmitResolver;
+src/compiler/transformers/utilities.ts:<coordinate> call const resolver = context.getEmitResolver();
+src/compiler/transformers/ts.ts:<coordinate> call const resolver = context.getEmitResolver();
+src/compiler/transformers/classFields.ts:<coordinate> call const resolver = context.getEmitResolver();
+src/compiler/transformers/typeSerializer.ts:<coordinate> call const resolver = context.getEmitResolver();
+src/compiler/transformers/legacyDecorators.ts:<coordinate> call const resolver = context.getEmitResolver();
+src/compiler/transformers/es2017.ts:<coordinate> call const resolver = context.getEmitResolver();
+src/compiler/transformers/es2018.ts:<coordinate> call const resolver = context.getEmitResolver();
+src/compiler/transformers/jsx.ts:<coordinate> call context.getEmitResolver().getJsxFactoryEntity(currentSourceFile),
+src/compiler/transformers/jsx.ts:<coordinate> call context.getEmitResolver().getJsxFactoryEntity(currentSourceFile),
+src/compiler/transformers/jsx.ts:<coordinate> call context.getEmitResolver().getJsxFragmentFactoryEntity(currentSourceFile),
+src/compiler/transformers/es2015.ts:<coordinate> call const resolver = context.getEmitResolver();
+src/compiler/transformers/generators.ts:<coordinate> call const resolver = context.getEmitResolver();
+src/compiler/transformers/module/module.ts:<coordinate> call const resolver = context.getEmitResolver();
+src/compiler/transformers/module/system.ts:<coordinate> call const resolver = context.getEmitResolver();
+src/compiler/transformers/module/esnextAnd2015.ts:<coordinate> call const resolver = context.getEmitResolver();
+src/compiler/transformers/declarations.ts:<coordinate> call const resolver = context.getEmitResolver();
+src/compiler/transformer.ts:<coordinate> PropertyAssignment getEmitResolver: () => resolver!, // TODO: GH#18217
+src/compiler/transformer.ts:<coordinate> PropertyAssignment definition getEmitResolver: (): EmitResolver => notImplemented(),
+Direct calls: 16
+Shared/local lengths: 0 0 outcome: Error: Not implemented
+
+getEmitHost: notImplemented
+src/compiler/types.ts:<coordinate> MethodSignature /** @internal */ getEmitHost(): EmitHost;
+src/compiler/transformers/module/module.ts:<coordinate> call const host = context.getEmitHost();
+src/compiler/transformers/module/system.ts:<coordinate> call const host = context.getEmitHost();
+src/compiler/transformers/module/esnextAnd2015.ts:<coordinate> call const host = context.getEmitHost();
+src/compiler/transformers/module/impliedNodeFormatDependent.ts:<coordinate> call const getEmitModuleFormatOfFile = (file: SourceFile) => context.getEmitHost().getEmitModuleFormatOfFile(file);
+src/compiler/transformers/declarations.ts:<coordinate> call const host = context.getEmitHost();
+src/compiler/transformers/declarations.ts:<coordinate> call factory.createStringLiteral(getResolvedExternalModuleName(context.getEmitHost(), sourceFile)),
+src/compiler/transformers/declarations.ts:<coordinate> call const newName = getExternalModuleNameFromDeclaration(context.getEmitHost(), resolver, parent);
+src/compiler/transformer.ts:<coordinate> PropertyAssignment getEmitHost: () => host!, // TODO: GH#18217
+src/compiler/transformer.ts:<coordinate> PropertyAssignment definition getEmitHost: (): EmitHost => notImplemented(),
+Direct calls: 7
+Shared/local lengths: 0 0 outcome: Error: Not implemented
+
+getEmitHelperFactory: notImplemented
+src/compiler/types.ts:<coordinate> MethodSignature /** @internal */ getEmitHelperFactory(): EmitHelperFactory;
+src/compiler/transformers/utilities.ts:<coordinate> call const externalHelpersImportDeclaration = createExternalHelpersImportDeclarationIfNeeded(context.factory, context.getEmitHelperFactory(), sourceFile, compilerOptions, hasExportStarsToExportValues, hasImportStar, hasImportDefault);
+src/compiler/transformers/destructuring.ts:<coordinate> call const rhsValue = flattenContext.context.getEmitHelperFactory().createRestHelper(value, elements, computedTempVariables, pattern);
+src/compiler/transformers/destructuring.ts:<coordinate> call flattenContext.context.getEmitHelperFactory().createReadHelper(
+src/compiler/transformers/namedEvaluation.ts:<coordinate> call const key = context.getEmitHelperFactory().createPropKeyHelper(name.expression);
+src/compiler/transformers/namedEvaluation.ts:<coordinate> call const expression = context.getEmitHelperFactory().createSetFunctionNameHelper(thisExpression, assignedName);
+src/compiler/transformers/namedEvaluation.ts:<coordinate> call context.getEmitHelperFactory().createSetFunctionNameHelper(innerExpression, assignedName);
+src/compiler/transformers/taggedTemplate.ts:<coordinate> call const helperCall = context.getEmitHelperFactory().createTemplateObjectHelper(
+src/compiler/transformers/ts.ts:<coordinate> call const emitHelpers = (): EmitHelperFactory => context.getEmitHelperFactory();
+src/compiler/transformers/classFields.ts:<coordinate> call const emitHelpers = (): EmitHelperFactory => context.getEmitHelperFactory();
+src/compiler/transformers/legacyDecorators.ts:<coordinate> call const emitHelpers = (): EmitHelperFactory => context.getEmitHelperFactory();
+src/compiler/transformers/esDecorators.ts:<coordinate> call const emitHelpers = (): EmitHelperFactory => context.getEmitHelperFactory();
+src/compiler/transformers/es2017.ts:<coordinate> call const emitHelpers = (): EmitHelperFactory => context.getEmitHelperFactory();
+src/compiler/transformers/es2018.ts:<coordinate> call const emitHelpers = (): EmitHelperFactory => context.getEmitHelperFactory();
+src/compiler/transformers/esnext.ts:<coordinate> call const emitHelpers = (): EmitHelperFactory => context.getEmitHelperFactory();
+src/compiler/transformers/jsx.ts:<coordinate> call const emitHelpers = (): EmitHelperFactory => context.getEmitHelperFactory();
+src/compiler/transformers/es2015.ts:<coordinate> call const emitHelpers = (): EmitHelperFactory => context.getEmitHelperFactory();
+src/compiler/transformers/generators.ts:<coordinate> call const emitHelpers = (): EmitHelperFactory => context.getEmitHelperFactory();
+src/compiler/transformers/module/module.ts:<coordinate> call const emitHelpers = (): EmitHelperFactory => context.getEmitHelperFactory();
+src/compiler/transformers/module/esnextAnd2015.ts:<coordinate> call const emitHelpers = (): EmitHelperFactory => context.getEmitHelperFactory();
+src/compiler/transformer.ts:<coordinate> PropertyAssignment getEmitHelperFactory: memoize(() => createEmitHelperFactory(context)),
+src/compiler/transformer.ts:<coordinate> PropertyAssignment definition getEmitHelperFactory: (): import("./factory/emitHelpers.js").EmitHelperFactory => notImplemented(),
+Direct calls: 19
+Shared/local lengths: 0 0 outcome: Error: Not implemented
+
+startLexicalEnvironment: noop
+src/compiler/types.ts:<coordinate> MethodSignature startLexicalEnvironment(): void;
+src/compiler/visitorPublic.ts:<coordinate> call context.startLexicalEnvironment();
+src/compiler/visitorPublic.ts:<coordinate> call context.startLexicalEnvironment();
+src/compiler/visitorPublic.ts:<coordinate> call context.startLexicalEnvironment();
+src/compiler/transformers/ts.ts:<coordinate> call const startLexicalEnvironment = (): void => context.startLexicalEnvironment();
+src/compiler/transformers/ts.ts:<coordinate> call context.startLexicalEnvironment();
+src/compiler/transformers/classFields.ts:<coordinate> call const startLexicalEnvironment = (): void => context.startLexicalEnvironment();
+src/compiler/transformers/esDecorators.ts:<coordinate> call const startLexicalEnvironment = (): void => context.startLexicalEnvironment();
+src/compiler/transformers/esnext.ts:<coordinate> call const startLexicalEnvironment = (): void => context.startLexicalEnvironment();
+src/compiler/transformers/es2015.ts:<coordinate> call const startLexicalEnvironment = (): void => context.startLexicalEnvironment();
+src/compiler/transformers/module/module.ts:<coordinate> call const startLexicalEnvironment = (): void => context.startLexicalEnvironment();
+src/compiler/transformers/module/system.ts:<coordinate> call const startLexicalEnvironment = (): void => context.startLexicalEnvironment();
+src/compiler/transformer.ts:<coordinate> ShorthandPropertyAssignment startLexicalEnvironment,
+src/compiler/transformer.ts:<coordinate> PropertyAssignment definition startLexicalEnvironment: (_unused?: unknown): void => {},
+Direct calls: 11
+Shared/local lengths: 1 1 outcome: returns undefined
+
+resumeLexicalEnvironment: noop
+src/compiler/types.ts:<coordinate> MethodSignature resumeLexicalEnvironment(): void;
+src/compiler/visitorPublic.ts:<coordinate> call context.resumeLexicalEnvironment();
+src/compiler/transformers/ts.ts:<coordinate> call const resumeLexicalEnvironment = (): void => context.resumeLexicalEnvironment();
+src/compiler/transformers/classFields.ts:<coordinate> call const resumeLexicalEnvironment = (): void => context.resumeLexicalEnvironment();
+src/compiler/transformers/es2017.ts:<coordinate> call const resumeLexicalEnvironment = (): void => context.resumeLexicalEnvironment();
+src/compiler/transformers/es2018.ts:<coordinate> call const resumeLexicalEnvironment = (): void => context.resumeLexicalEnvironment();
+src/compiler/transformers/es2015.ts:<coordinate> call const resumeLexicalEnvironment = (): void => context.resumeLexicalEnvironment();
+src/compiler/transformers/generators.ts:<coordinate> call const resumeLexicalEnvironment = (): void => context.resumeLexicalEnvironment();
+src/compiler/transformer.ts:<coordinate> ShorthandPropertyAssignment resumeLexicalEnvironment,
+src/compiler/transformer.ts:<coordinate> PropertyAssignment definition resumeLexicalEnvironment: (_unused?: unknown): void => {},
+Direct calls: 7
+Shared/local lengths: 1 1 outcome: returns undefined
+
+suspendLexicalEnvironment: noop
+src/compiler/types.ts:<coordinate> MethodSignature suspendLexicalEnvironment(): void;
+src/compiler/visitorPublic.ts:<coordinate> call context.suspendLexicalEnvironment();
+src/compiler/visitorPublic.ts:<coordinate> call context.suspendLexicalEnvironment();
+src/compiler/transformer.ts:<coordinate> ShorthandPropertyAssignment suspendLexicalEnvironment,
+src/compiler/transformer.ts:<coordinate> PropertyAssignment definition suspendLexicalEnvironment: (_unused?: unknown): void => {},
+Direct calls: 2
+Shared/local lengths: 1 1 outcome: returns undefined
+
+hoistVariableDeclaration: noop
+src/compiler/types.ts:<coordinate> MethodSignature hoistVariableDeclaration(node: Identifier): void;
+src/compiler/transformers/destructuring.ts:<coordinate> call context.hoistVariableDeclaration(temp);
+src/compiler/transformers/destructuring.ts:<coordinate> call flattenContext.context.hoistVariableDeclaration(temp);
+src/compiler/transformers/destructuring.ts:<coordinate> call flattenContext.context.hoistVariableDeclaration(temp);
+src/compiler/transformers/namedEvaluation.ts:<coordinate> call context.hoistVariableDeclaration(assignedName);
+src/compiler/transformers/ts.ts:<coordinate> call const hoistVariableDeclaration = (node: Identifier): void => context.hoistVariableDeclaration(node);
+src/compiler/transformers/classFields.ts:<coordinate> call const hoistVariableDeclaration = (node: Identifier): void => context.hoistVariableDeclaration(node);
+src/compiler/transformers/typeSerializer.ts:<coordinate> call const hoistVariableDeclaration = (node: Identifier): void => context.hoistVariableDeclaration(node);
+src/compiler/transformers/legacyDecorators.ts:<coordinate> call const hoistVariableDeclaration = (node: Identifier): void => context.hoistVariableDeclaration(node);
+src/compiler/transformers/esDecorators.ts:<coordinate> call const hoistVariableDeclaration = (node: Identifier): void => context.hoistVariableDeclaration(node);
+src/compiler/transformers/es2017.ts:<coordinate> call const hoistVariableDeclaration = (node: Identifier): void => context.hoistVariableDeclaration(node);
+src/compiler/transformers/es2018.ts:<coordinate> call const hoistVariableDeclaration = (node: Identifier): void => context.hoistVariableDeclaration(node);
+src/compiler/transformers/es2020.ts:<coordinate> call const hoistVariableDeclaration = (node: Identifier): void => context.hoistVariableDeclaration(node);
+src/compiler/transformers/es2021.ts:<coordinate> call const hoistVariableDeclaration = (node: Identifier): void => context.hoistVariableDeclaration(node);
+src/compiler/transformers/esnext.ts:<coordinate> call const hoistVariableDeclaration = (node: Identifier): void => context.hoistVariableDeclaration(node);
+src/compiler/transformers/es2016.ts:<coordinate> call const hoistVariableDeclaration = (node: Identifier): void => context.hoistVariableDeclaration(node);
+src/compiler/transformers/es2015.ts:<coordinate> call const hoistVariableDeclaration = (node: Identifier): void => context.hoistVariableDeclaration(node);
+src/compiler/transformers/generators.ts:<coordinate> call const hoistVariableDeclaration = (node: Identifier): void => context.hoistVariableDeclaration(node);
+src/compiler/transformers/module/module.ts:<coordinate> call const hoistVariableDeclaration = (node: Identifier): void => context.hoistVariableDeclaration(node);
+src/compiler/transformers/module/system.ts:<coordinate> call const hoistVariableDeclaration = (node: Identifier): void => context.hoistVariableDeclaration(node);
+src/compiler/transformer.ts:<coordinate> ShorthandPropertyAssignment hoistVariableDeclaration,
+src/compiler/transformer.ts:<coordinate> PropertyAssignment definition hoistVariableDeclaration: (_node: Identifier): void => {},
+Direct calls: 19
+Shared/local lengths: 1 1 outcome: returns undefined
+
+hoistFunctionDeclaration: noop
+src/compiler/types.ts:<coordinate> MethodSignature hoistFunctionDeclaration(node: FunctionDeclaration): void;
+src/compiler/transformers/generators.ts:<coordinate> call const hoistFunctionDeclaration = (node: FunctionDeclaration): void => context.hoistFunctionDeclaration(node);
+src/compiler/transformer.ts:<coordinate> ShorthandPropertyAssignment hoistFunctionDeclaration,
+src/compiler/transformer.ts:<coordinate> PropertyAssignment definition hoistFunctionDeclaration: (_node: FunctionDeclaration): void => {},
+Direct calls: 1
+Shared/local lengths: 1 1 outcome: returns undefined
+
+addInitializationStatement: noop
+src/compiler/types.ts:<coordinate> MethodSignature addInitializationStatement(node: Statement): void;
+src/compiler/visitorPublic.ts:<coordinate> call context.addInitializationStatement(
+src/compiler/visitorPublic.ts:<coordinate> call context.addInitializationStatement(
+src/compiler/transformer.ts:<coordinate> ShorthandPropertyAssignment addInitializationStatement,
+src/compiler/transformer.ts:<coordinate> PropertyAssignment definition addInitializationStatement: (_node: Statement): void => {},
+Direct calls: 2
+Shared/local lengths: 1 1 outcome: returns undefined
+
+startBlockScope: noop
+src/compiler/types.ts:<coordinate> MethodSignature /** @internal */ startBlockScope(): void;
+src/compiler/visitorPublic.ts:<coordinate> call context.startBlockScope();
+src/compiler/transformer.ts:<coordinate> ShorthandPropertyAssignment startBlockScope,
+src/compiler/transformer.ts:<coordinate> PropertyAssignment definition startBlockScope: (_unused?: unknown): void => {},
+Direct calls: 1
+Shared/local lengths: 1 1 outcome: returns undefined
+
+addBlockScopedVariable: noop
+src/compiler/types.ts:<coordinate> MethodSignature /** @internal */ addBlockScopedVariable(node: Identifier): void;
+src/compiler/transformers/classFields.ts:<coordinate> call const addBlockScopedVariable = (node: Identifier): void => context.addBlockScopedVariable(node);
+src/compiler/transformer.ts:<coordinate> ShorthandPropertyAssignment addBlockScopedVariable,
+src/compiler/transformer.ts:<coordinate> PropertyAssignment definition addBlockScopedVariable: (_node: Identifier): void => {},
+Direct calls: 1
+Shared/local lengths: 1 1 outcome: returns undefined
+
+requestEmitHelper: noop
+src/compiler/types.ts:<coordinate> MethodSignature requestEmitHelper(helper: EmitHelper): void;
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(decorateHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(metadataHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(paramHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(esDecorateHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(runInitializersHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(assignHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(awaitHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(awaitHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(asyncGeneratorHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(awaitHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(asyncDelegator);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(asyncValues);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(restHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(awaiterHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(extendsHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(templateObjectHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(spreadArrayHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(propKeyHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(setFunctionNameHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(valuesHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(readHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(generatorHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(importStarHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(importStarHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(importDefaultHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(exportStarHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(createBindingHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(classPrivateFieldGetHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(classPrivateFieldSetHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(classPrivateFieldInHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(addDisposableResourceHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(disposeResourcesHelper);
+src/compiler/factory/emitHelpers.ts:<coordinate> call context.requestEmitHelper(rewriteRelativeImportExtensionsHelper);
+src/compiler/transformer.ts:<coordinate> ShorthandPropertyAssignment requestEmitHelper,
+src/compiler/transformer.ts:<coordinate> PropertyAssignment definition requestEmitHelper: (_helper: EmitHelper): void => {},
+Direct calls: 33
+Shared/local lengths: 1 1 outcome: returns undefined
+
+readEmitHelpers: notImplemented
+src/compiler/types.ts:<coordinate> MethodSignature readEmitHelpers(): EmitHelper[] | undefined;
+src/compiler/transformers/ts.ts:<coordinate> call addEmitHelpers(visited, context.readEmitHelpers());
+src/compiler/transformers/classFields.ts:<coordinate> call addEmitHelpers(visited, context.readEmitHelpers());
+src/compiler/transformers/legacyDecorators.ts:<coordinate> call addEmitHelpers(visited, context.readEmitHelpers());
+src/compiler/transformers/esDecorators.ts:<coordinate> call addEmitHelpers(visited, context.readEmitHelpers());
+src/compiler/transformers/es2017.ts:<coordinate> call addEmitHelpers(visited, context.readEmitHelpers());
+src/compiler/transformers/es2018.ts:<coordinate> call addEmitHelpers(visited, context.readEmitHelpers());
+src/compiler/transformers/esnext.ts:<coordinate> call addEmitHelpers(visited, context.readEmitHelpers());
+src/compiler/transformers/jsx.ts:<coordinate> call addEmitHelpers(visited, context.readEmitHelpers());
+src/compiler/transformers/es2015.ts:<coordinate> call addEmitHelpers(visited, context.readEmitHelpers());
+src/compiler/transformers/generators.ts:<coordinate> call addEmitHelpers(visited, context.readEmitHelpers());
+src/compiler/transformers/module/module.ts:<coordinate> call addEmitHelpers(updated, context.readEmitHelpers());
+src/compiler/transformers/module/module.ts:<coordinate> call addEmitHelpers(updated, context.readEmitHelpers());
+src/compiler/transformers/module/module.ts:<coordinate> call addEmitHelpers(updated, context.readEmitHelpers());
+src/compiler/transformers/module/esnextAnd2015.ts:<coordinate> call addEmitHelpers(result, context.readEmitHelpers());
+src/compiler/transformer.ts:<coordinate> ShorthandPropertyAssignment readEmitHelpers,
+src/compiler/transformer.ts:<coordinate> PropertyAssignment definition readEmitHelpers: (): EmitHelper[] | undefined => notImplemented(),
+Direct calls: 14
+Shared/local lengths: 0 0 outcome: Error: Not implemented
+
+enableEmitNotification: noop
+src/compiler/types.ts:<coordinate> MethodSignature enableEmitNotification(kind: SyntaxKind): void;
+src/compiler/transformers/ts.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.ModuleDeclaration);
+src/compiler/transformers/classFields.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.FunctionDeclaration);
+src/compiler/transformers/classFields.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.FunctionExpression);
+src/compiler/transformers/classFields.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.Constructor);
+src/compiler/transformers/classFields.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.GetAccessor);
+src/compiler/transformers/classFields.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.SetAccessor);
+src/compiler/transformers/classFields.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.MethodDeclaration);
+src/compiler/transformers/classFields.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.PropertyDeclaration);
+src/compiler/transformers/classFields.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.ComputedPropertyName);
+src/compiler/transformers/es2017.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.ClassDeclaration);
+src/compiler/transformers/es2017.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.MethodDeclaration);
+src/compiler/transformers/es2017.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.GetAccessor);
+src/compiler/transformers/es2017.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.SetAccessor);
+src/compiler/transformers/es2017.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.Constructor);
+src/compiler/transformers/es2017.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.VariableStatement);
+src/compiler/transformers/es2018.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.ClassDeclaration);
+src/compiler/transformers/es2018.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.MethodDeclaration);
+src/compiler/transformers/es2018.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.GetAccessor);
+src/compiler/transformers/es2018.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.SetAccessor);
+src/compiler/transformers/es2018.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.Constructor);
+src/compiler/transformers/es2018.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.VariableStatement);
+src/compiler/transformers/es2015.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.Constructor);
+src/compiler/transformers/es2015.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.MethodDeclaration);
+src/compiler/transformers/es2015.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.GetAccessor);
+src/compiler/transformers/es2015.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.SetAccessor);
+src/compiler/transformers/es2015.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.ArrowFunction);
+src/compiler/transformers/es2015.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.FunctionExpression);
+src/compiler/transformers/es2015.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.FunctionDeclaration);
+src/compiler/transformers/module/module.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.SourceFile); // Restore state when substituting nodes in a file.
+src/compiler/transformers/module/system.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.SourceFile); // Restore state when substituting nodes in a file.
+src/compiler/transformers/module/esnextAnd2015.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.SourceFile);
+src/compiler/transformers/module/impliedNodeFormatDependent.ts:<coordinate> call context.enableEmitNotification(SyntaxKind.SourceFile);
+src/compiler/transformer.ts:<coordinate> ShorthandPropertyAssignment enableEmitNotification,
+src/compiler/transformer.ts:<coordinate> PropertyAssignment definition enableEmitNotification: (_kind: SyntaxKind): void => {},
+Direct calls: 32
+Shared/local lengths: 1 1 outcome: returns undefined
+
+isSubstitutionEnabled: notImplemented
+src/compiler/types.ts:<coordinate> MethodSignature isSubstitutionEnabled(node: Node): boolean;
+src/compiler/transformer.ts:<coordinate> ShorthandPropertyAssignment isSubstitutionEnabled,
+src/compiler/transformer.ts:<coordinate> PropertyAssignment definition isSubstitutionEnabled: (_node: Node | undefined = undefined): boolean => notImplemented(),
+Direct calls: 0
+Shared/local lengths: 0 0 outcome: Error: Not implemented
+
+isEmitNotificationEnabled: notImplemented
+src/compiler/types.ts:<coordinate> MethodSignature isEmitNotificationEnabled(node: Node): boolean;
+src/compiler/transformer.ts:<coordinate> ShorthandPropertyAssignment isEmitNotificationEnabled,
+src/compiler/transformer.ts:<coordinate> PropertyAssignment definition isEmitNotificationEnabled: (_node: Node | undefined = undefined): boolean => notImplemented(),
+Direct calls: 0
+Shared/local lengths: 0 0 outcome: Error: Not implemented
+
+addDiagnostic: noop
+src/compiler/types.ts:<coordinate> MethodSignature /** @internal */ addDiagnostic(diag: DiagnosticWithLocation): void;
+src/compiler/transformers/declarations.ts:<coordinate> call context.addDiagnostic(createDiagnosticForNode(
+src/compiler/transformers/declarations.ts:<coordinate> call context.addDiagnostic(getIsolatedDeclarationError(node));
+src/compiler/transformers/declarations.ts:<coordinate> call context.addDiagnostic(createDiagnosticForNode(symbolAccessibilityResult.errorNode || errorInfo.errorNode, errorInfo.diagnosticMessage, getTextOfNode(errorInfo.typeName), symbolAccessibilityResult.errorSymbolName!, symbolAccessibilityResult.errorModuleName!));
+src/compiler/transformers/declarations.ts:<coordinate> call context.addDiagnostic(createDiagnosticForNode(symbolAccessibilityResult.errorNode || errorInfo.errorNode, errorInfo.diagnosticMessage, symbolAccessibilityResult.errorSymbolName!, symbolAccessibilityResult.errorModuleName!));
+src/compiler/transformers/declarations.ts:<coordinate> call context.addDiagnostic(
+src/compiler/transformers/declarations.ts:<coordinate> call context.addDiagnostic(createDiagnosticForNode((errorNameNode || errorFallbackNode)!, Diagnostics.The_inferred_type_of_0_references_an_inaccessible_1_type_A_type_annotation_is_necessary, errorDeclarationNameWithFallback(), "unique symbol"));
+src/compiler/transformers/declarations.ts:<coordinate> call context.addDiagnostic(createDiagnosticForNode((errorNameNode || errorFallbackNode)!, Diagnostics.The_inferred_type_of_0_references_a_type_with_a_cyclic_structure_which_cannot_be_trivially_serialized_A_type_annotation_is_necessary, errorDeclarationNameWithFallback()));
+src/compiler/transformers/declarations.ts:<coordinate> call context.addDiagnostic(createDiagnosticForNode((errorNameNode || errorFallbackNode)!, Diagnostics.The_inferred_type_of_0_references_an_inaccessible_1_type_A_type_annotation_is_necessary, errorDeclarationNameWithFallback(), "this"));
+src/compiler/transformers/declarations.ts:<coordinate> call context.addDiagnostic(createDiagnosticForNode((errorNameNode || errorFallbackNode)!, Diagnostics.The_inferred_type_of_0_cannot_be_named_without_a_reference_to_2_from_1_This_is_likely_not_portable_A_type_annotation_is_necessary, errorDeclarationNameWithFallback(), specifier, symbolName));
+src/compiler/transformers/declarations.ts:<coordinate> call context.addDiagnostic(createDiagnosticForNode((errorNameNode || errorFallbackNode)!, Diagnostics.The_inferred_type_of_0_cannot_be_named_without_a_reference_to_1_This_is_likely_not_portable_A_type_annotation_is_necessary, errorDeclarationNameWithFallback(), specifier));
+src/compiler/transformers/declarations.ts:<coordinate> call context.addDiagnostic(createDiagnosticForNode((errorNameNode || errorFallbackNode)!, Diagnostics.The_inferred_type_of_this_node_exceeds_the_maximum_length_the_compiler_will_serialize_An_explicit_type_annotation_is_needed));
+src/compiler/transformers/declarations.ts:<coordinate> call context.addDiagnostic(addRelatedInfo(
+src/compiler/transformers/declarations.ts:<coordinate> call context.addDiagnostic(createDiagnosticForNode((errorNameNode || errorFallbackNode)!, Diagnostics.The_type_of_this_node_cannot_be_serialized_because_its_property_0_cannot_be_serialized, propertyName));
+src/compiler/transformers/declarations.ts:<coordinate> call context.addDiagnostic(createDiagnosticForNode(decl, Diagnostics.Declaration_emit_for_this_file_requires_preserving_this_import_for_augmentations_This_is_not_supported_with_isolatedDeclarations));
+src/compiler/transformers/declarations.ts:<coordinate> call context.addDiagnostic(createDiagnosticForNode(input, Diagnostics.Computed_property_names_on_class_or_object_literals_cannot_be_inferred_with_isolatedDeclarations));
+src/compiler/transformers/declarations.ts:<coordinate> call context.addDiagnostic(createDiagnosticForNode(input, Diagnostics.Computed_properties_must_be_number_or_string_literals_variables_or_dotted_expressions_with_isolatedDeclarations));
+src/compiler/transformers/declarations.ts:<coordinate> call context.addDiagnostic(createDiagnosticForNode(m, Diagnostics.Enum_member_initializers_must_be_computable_without_references_to_external_symbols_with_isolatedDeclarations));
+src/compiler/transformer.ts:<coordinate> MethodDeclaration addDiagnostic(diag) {
+src/compiler/transformer.ts:<coordinate> PropertyAssignment definition addDiagnostic: (_diag: DiagnosticWithLocation): void => {},
+Direct calls: 17
+Shared/local lengths: 1 1 outcome: returns undefined

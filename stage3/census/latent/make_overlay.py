@@ -123,6 +123,18 @@ needle = 'func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expre
 assert needle in expressions
 expressions = expressions.replace(needle, needle + '\n if err := l.latentSignature(target); err != nil { return nil, err }')
 overlay('internal/lower/expression.go', expressions)
+
+# A named sort comparator reads the same lazily prepared record as a call or value.
+objects = (repository / 'internal/lower/object.go').read_text()
+sort_header = 'func (l *lowering) arraySort(node *ast.Node, array ir.Expression, element ir.Type) (ir.Expression, bool, error) {'
+assert objects.count(sort_header) == 1, 'arraySort signature hook'
+sort_start = objects.index(sort_header)
+sort_end = objects.index('\n}\n', sort_start)
+sort_body = objects[sort_start:sort_end]
+sort_read = '\n\tdeclared := l.result.Functions[function]\n'
+assert sort_body.count(sort_read) == 1, 'arraySort named comparator signature read'
+sort_body = sort_body.replace(sort_read, '\n if err := l.latentSignature(function); err != nil { return nil, true, err }' + sort_read, 1)
+overlay('internal/lower/object.go', objects[:sort_start] + sort_body + objects[sort_end:])
 functions = (repository / 'internal/lower/functions.go').read_text()
 needle = 'l.signed[index] = signed{this: this, defaults: defaults, patterns: patterns}'
 assert needle in functions

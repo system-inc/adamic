@@ -682,27 +682,43 @@ func (l *lowering) checkAccessorSpreads() error {
 	if !throwing && !setterOnly && len(l.staticGlobals) == 0 {
 		return nil
 	}
-	spread := false
-	staticSpread := false
-	check := func(node any) bool {
-		if literal, ok := node.(ir.ObjectLiteral); ok && literal.Spread != nil {
-			spread = true
-			staticSpread = staticSpread || !plainDataSpreadSource(literal.Spread)
+	// The first spread, and the first whose source isn't a fresh data literal, each with where it lies, so the
+	// stop names the spread it's about (stopWhere): the spread's own node, or the function or the statement of
+	// Main holding it, where lowering kept no node.
+	var spread, staticSpread *stopSite
+	check := func(function, statement int) func(node any) bool {
+		return func(node any) bool {
+			literal, ok := node.(ir.ObjectLiteral)
+			if !ok || literal.Spread == nil {
+				return true
+			}
+			site := stopSite{function: function, statement: statement}
+			if literal.SpreadSite > 0 && literal.SpreadSite <= len(l.spreadNodes) {
+				site.node = l.spreadNodes[literal.SpreadSite-1]
+			}
+			if spread == nil {
+				spread = &site
+			}
+			if staticSpread == nil && !plainDataSpreadSource(literal.Spread) {
+				staticSpread = &site
+			}
+			return true
 		}
-		return true
 	}
-	walk(l.result.Main, check)
-	for _, function := range l.result.Functions {
-		walk(function.Body, check)
+	for index, statement := range l.result.Main {
+		walk(statement, check(-1, index))
 	}
-	if staticSpread && len(l.staticGlobals) > 0 {
-		return &NotYet{Where: l.result.Source, What: "spreading in a program with static constructor objects"}
+	for index, function := range l.result.Functions {
+		walk(function.Body, check(index, -1))
 	}
-	if spread && setterOnly {
-		return &NotYet{Where: l.result.Source, What: "spreading a setter-only property, whose read value is undefined"}
+	if staticSpread != nil && len(l.staticGlobals) > 0 {
+		return &NotYet{Where: l.stopWhere(*staticSpread), What: "spreading in a program with static constructor objects"}
 	}
-	if spread && throwing {
-		return &NotYet{Where: l.result.Source, What: "spreading an accessor literal whose getter may throw"}
+	if spread != nil && setterOnly {
+		return &NotYet{Where: l.stopWhere(*spread), What: "spreading a setter-only property, whose read value is undefined"}
+	}
+	if spread != nil && throwing {
+		return &NotYet{Where: l.stopWhere(*spread), What: "spreading an accessor literal whose getter may throw"}
 	}
 	return nil
 }

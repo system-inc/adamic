@@ -191,7 +191,7 @@ console.log(textOf({ name: ns }));
 }
 
 // An open remainder (Expression's kind is the whole SyntaxKind) never reaches this rule: the refinement is
-// refused first as an open numeric enum used as a literal tag, so it's held fail closed there. wide, an
+// family 1's first, held fail closed there, and in .ts read through the swing's checked view. wide, an
 // Expression whose kind is chosen at run time, keeps Expression open (closedKinds, enum_tag_closed_kind.go).
 func TestClosedRemainderOpenRemainderRefusedFirst(t *testing.T) {
 	t.Parallel()
@@ -201,9 +201,11 @@ const wide: Expression = { kind: numeric(), pos: 9, _expressionBrand: undefined 
 function textOf(node: Identifier | Expression): string { return isIdentifier(node) ? node.escapedText : String(node.pos); }
 console.log(textOf(id));
 `
-	_, err := lowerSourceAs(t, source, ".ts")
-	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "an object refinement using an open numeric enum as a literal tag") {
-		t.Fatalf("want the open enum refinement refused, got %v", err)
+	// .a stops earlier at isIdentifier under rulings.md:142, so it's judged in .ts, where the open refinement takes
+	// the swing's checked view (enumTagSwingSites) before this rule could see it. The program then stops at
+	// isIdentifier's call, R-T80's false side over the open domain, never at the closed remainder's rule.
+	_, sites, err := lowerSourceSwung(t, source)
+	if len(sites) == 0 || err == nil || !strings.Contains(err.Error(), "checked predicate membership over an open tag domain") {
+		t.Fatalf("want the open refinement taken by the swing and the stop at R-T80's open domain, got sites %v and %v", sites, err)
 	}
 }

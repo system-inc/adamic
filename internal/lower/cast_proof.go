@@ -29,7 +29,8 @@ type castProof struct {
 	// checks presence before the tag, and an undefined value fails the cast as a wrong tag does. It rests on
 	// the tag being a field the checked view loads: a getter-backed tag stops first as "a getter in a checked
 	// field contract" (Language's v03 on #ha4hbqt), so the absent test and the tag test can't disagree through
-	// one.
+	// one. A source of one object beside undefined is the same check before that object's own interface
+	// downcast, whose tag test interfaceCast words from the present object, as a cast that keeps nullish does.
 	absent bool
 	// present is a .ts cast that only removes undefined or null (presentCast): the presence check a non-null
 	// assertion makes, and nothing after it.
@@ -211,7 +212,10 @@ func (l *lowering) castRefusal(node *ast.Node) error {
 			}
 			l.refusal.checkedCasts[node] = true
 		}
-		if proof.overlap || proof.structuralView {
+		// An untagged union's cast is a view cast too: its write judgment walks past its tag, which its own test
+		// checks at the cast (untaggedWidening), so the unchecked-widening rule judges it past the slots its view
+		// checks (viewCastRefusal), never as a plain widening that would refuse the open kind it tests (#qxt10dd).
+		if proof.overlap || proof.structuralView || proof.untagged {
 			if l.refusal.viewCasts == nil {
 				l.refusal.viewCasts = map[*ast.Node]bool{}
 			}
@@ -333,15 +337,28 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	}
 	// object with undefined beside it, cast to a dictionary of unknown values that keeps undefined, is the checked
 	// dictionary view, taken where unionCastCause would answer castIndexSignature: absentArm wants two members beside
-	// undefined, and the view never more than one. dictionaryView's own tests come first, since they turn away
-	// nearly every cast before the cause is asked.
+	// undefined, or one beside a target that is a plain object, which a dictionary isn't. dictionaryView's own tests
+	// come first, since they turn away nearly every cast before the cause is asked.
 	if source.Flags()&checker.TypeFlagsUnion != 0 && l.dictionaryView(node, source, target) && l.unionCastCause(members, target) == castIndexSignature {
 		return castProof{dictionaryView: true}, nil
 	}
 	if present := l.absentArm(source, target); present != nil {
-		proof, err := l.unionMemberProof(present, target, stop)
-		proof.absent = err == nil
-		return proof, err
+		if present.Flags()&checker.TypeFlagsUnion != 0 {
+			proof, err := l.unionMemberProof(node, present, target, stop)
+			proof.absent = err == nil
+			return proof, err
+		}
+		// One object beside undefined takes castRoad's road for that object alone (`node as SourceFile` of a
+		// `Node | undefined`, cause K of #eg3krrp), and only where that road is the interface downcast its tag
+		// proves. Any other road, or a stop on that one, leaves the cast to the stop it had, so a view's own refusal
+		// never replaces a NotYet. Only in .ts: .a refuses the checked downcast (keptCheckDowncastRefusal), and the
+		// narrowing it would offer an interface view doesn't read the tag through ?., so .a keeps main's refusal.
+		if l.checkedAssertionSource(node) {
+			if proof, err := l.castRoad(node, present, target, stop); err == nil && proof.interfaceView {
+				proof.absent = true
+				return proof, nil
+			}
+		}
 	}
 	if l.presentCast(node, source, target) {
 		return castProof{present: true}, nil
@@ -403,14 +420,18 @@ func (l *lowering) castRoad(node *ast.Node, source, target *checker.Type, stop f
 		}
 		return castProof{}, stop(cause, detail)
 	}
-	return l.unionMemberProof(source, target, stop)
+	return l.unionMemberProof(node, source, target, stop)
 }
 
 // absentArm is source without its undefined, where the cast is a member cast over a represented union
-// with undefined beside it (`node as IsContainer` of a `HasContainerFlags | undefined`): the source holds
-// one plain undefined and two or more other members, none of them void, null or a phantom undefined, and
-// the target holds no undefined, void or null. Otherwise nil, and the cast is judged as it was. A target
-// that keeps undefined passes an absent value through, which is keepsNullishCast's road.
+// with undefined beside it (`node as IsContainer` of a `HasContainerFlags | undefined`), or a downcast of the
+// one object beside it (`node as SourceFile` of a `Node | undefined`): the source holds one plain undefined
+// and other members, none of them void, null or a phantom undefined, and the target holds no undefined, void
+// or null. Two or more other members are the union unionMemberProof proves. One is a plain object a checked
+// view reads (plainViewObject), cast to another, and not assignable to it, so the cast claims more than
+// presence: a cast that only removes undefined is presentCast's road, which makes one presence check and
+// nothing after it. Otherwise nil, and the cast is judged as it was. A target that keeps undefined passes an
+// absent value through, which is keepsNullishCast's road.
 func (l *lowering) absentArm(source, target *checker.Type) *checker.Type {
 	if source.Flags()&checker.TypeFlagsUnion == 0 || l.includesUndefined(target) || l.includesNull(target) {
 		return nil
@@ -426,10 +447,16 @@ func (l *lowering) absentArm(source, target *checker.Type) *checker.Type {
 			others++
 		}
 	}
-	if undefined != 1 || others < 2 {
+	if undefined != 1 || others == 0 {
 		return nil
 	}
 	present := l.checker.GetNonNullableType(source)
+	if others == 1 {
+		if !l.plainViewObject(present) || !l.plainViewObject(target) || l.checker.IsTypeAssignableTo(present, target) {
+			return nil
+		}
+		return present
+	}
 	if present.Flags()&checker.TypeFlagsUnion == 0 || len(present.Types()) != others {
 		return nil
 	}
@@ -532,8 +559,9 @@ func (l *lowering) overlapTarget(members, targets []*checker.Type) bool {
 }
 
 // unionMemberProof proves a cast from a represented union to some of its members by a tag every
-// member holds as a distinct literal. stop words the branch that finds no proof (castStop).
-func (l *lowering) unionMemberProof(source, target *checker.Type, stop func(castCause, string) error) (castProof, error) {
+// member holds as a distinct literal. stop words the branch that finds no proof (castStop). node is the
+// cast, whose target's view contract the untagged arm's write judgment reads (untaggedWidening).
+func (l *lowering) unionMemberProof(node *ast.Node, source, target *checker.Type, stop func(castCause, string) error) (castProof, error) {
 	members, targets := castMembers(source), castMembers(target)
 	if field := l.castUnionWrites(source); field != "" {
 		// A primitive's apparent members (valueOf) and an array's methods (pop) read as writable fields here;
@@ -548,7 +576,7 @@ func (l *lowering) unionMemberProof(source, target *checker.Type, stop func(cast
 	if l.overlapTarget(members, targets) {
 		return castProof{overlap: true}, nil
 	}
-	if l.untaggedUnionArm(source, target, members, targets) {
+	if l.untaggedUnionArm(node, source, target, members, targets) {
 		return castProof{untagged: true}, nil
 	}
 	// Checking kind cannot prove a refinement of a member's payload or callback signature.
