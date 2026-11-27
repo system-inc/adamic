@@ -11,7 +11,9 @@ import (
 // and the target are plain objects held as ir.Object: no class instance, callable, array, tuple, dictionary
 // or phantom extension, so nothing reaches the view that a field read can't check. The target is one object,
 // or a union of them (union target (a), #b5w3ycg), each a member or narrower than one (castAssignable to it),
-// so the cast is a downcast; a sideways target keeps its stop. A union target's view reads the checker's common
+// so the cast is a downcast; a sideways target keeps its stop. One plain object cast to a union target is the
+// same view, the source taken as the union's one member (castRoad, cause U of #eg3krrp); one object cast to one
+// object never comes here, since that's interfaceCast's road. A union target's view reads the checker's common
 // properties of its members, each through its own field contract, and a field the members hold in different
 // representations stops at that contract (supportsUntaggedRead, view_unions_untagged.go), which is (b)'s, never
 // a read this arm admits (Lower, on #b5w3ycg). A union with a field every member holds as a literal is tagged,
@@ -29,7 +31,7 @@ import (
 // cast, so the write judgment walks past it, and judges every other slot as widened does (#qxt10dd; Diagnostics'
 // must on the census, J-2f10jv9).
 func (l *lowering) untaggedUnionArm(node *ast.Node, source, target *checker.Type, members, targets []*checker.Type) bool {
-	if len(members) < 2 || len(targets) == 0 || l.unionHoldsLiterals(members) || len(targets) > 1 && l.unionHoldsLiterals(targets) {
+	if len(members) == 0 || len(members) == 1 && len(targets) < 2 || len(targets) == 0 || l.unionHoldsLiterals(members) || len(targets) > 1 && l.unionHoldsLiterals(targets) {
 		return false
 	}
 	for _, member := range members {
