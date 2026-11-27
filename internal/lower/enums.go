@@ -582,7 +582,7 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 			if enumTagSwingSites != nil {
 				enumTagSwingSites.record(filepath.Dir(file), l.program.Where(node))
 			}
-			return l.enumTagCheckedViews(node, declared, observed)
+			return l.narrowedCheckedViews(node, declared, observed)
 		}
 		if hazard == enumTagSharedValueHazard {
 			return &Refused{Where: l.program.Where(node), What: "an object refinement by tags from different numeric enums that share a value", Fix: "give the members tags from one enum, or tags with distinct values (adamic/enum-tag)"}
@@ -856,25 +856,27 @@ func (l *lowering) enumSwitchCovered(node *ast.Node) bool {
 	return true
 }
 
-// enumTagCheckedViews registers each object member of observed, the type the checker narrowed the refined
-// reference to, as a checked view of declared, its declared union, once per pair, so every read or write
-// narrowed to the member is a checked one: a value whose kind says the member while its layout is another's
+// narrowedCheckedViews registers the narrowed members of a narrowing the walk can't prove: the swing's open-enum
+// refinement (enumRefusal) and the narrowed-arm floor's property read across a call that may have rewritten it
+// (narrowedArmPropertyReadGap, #8nj5pn4). Each object member of observed, the type the checker narrowed the
+// reference to, is registered as a checked view of declared, its declared type, once per pair, so every read or
+// write narrowed to the member is a checked one: a value whose kind says the member while its layout is another's
 // stops there. A member the view can't hold (a getter, a callable field, a whole-object copy) stays NotYet
 // in the view's own words. The view is registered narrowing, as a predicate's is.
-func (l *lowering) enumTagCheckedViews(node *ast.Node, declared, observed *checker.Type) error {
+func (l *lowering) narrowedCheckedViews(node *ast.Node, declared, observed *checker.Type) error {
 	members := []*checker.Type{observed}
 	if observed.Flags()&checker.TypeFlagsUnion != 0 {
 		members = observed.Types()
 	}
-	if l.enumTagCheckedViewsDone == nil {
-		l.enumTagCheckedViewsDone = map[enumTagCheckedViewKey]bool{}
+	if l.narrowedCheckedViewsDone == nil {
+		l.narrowedCheckedViewsDone = map[narrowedCheckedViewKey]bool{}
 	}
 	for _, member := range members {
 		if member.Flags()&checker.TypeFlagsPrimitive != 0 {
 			continue
 		}
-		key := enumTagCheckedViewKey{declared, member}
-		if l.enumTagCheckedViewsDone[key] {
+		key := narrowedCheckedViewKey{declared, member}
+		if l.narrowedCheckedViewsDone[key] {
 			continue
 		}
 		// view appends its own entry first and may append nested contracts' after it, so the entry to
@@ -886,7 +888,7 @@ func (l *lowering) enumTagCheckedViews(node *ast.Node, declared, observed *check
 			return err
 		}
 		l.viewSources[views].narrows = true
-		l.enumTagCheckedViewsDone[key] = true
+		l.narrowedCheckedViewsDone[key] = true
 	}
 	return nil
 }
@@ -913,5 +915,5 @@ func (r *enumTagSwingRecord) record(directory, where string) {
 	}
 }
 
-// enumTagCheckedViewKey is a registration's declared union and member, a named struct as brandedViewKey is.
-type enumTagCheckedViewKey struct{ source, target *checker.Type }
+// narrowedCheckedViewKey is a registration's declared union and member, a named struct as brandedViewKey is.
+type narrowedCheckedViewKey struct{ source, target *checker.Type }
