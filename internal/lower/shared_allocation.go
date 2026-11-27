@@ -112,7 +112,7 @@ func (f *cycleFinder) allocationShapeOf(proven *checker.Type) *allocationShape {
 		for _, property := range f.l.checker.GetPropertiesOfType(read) {
 			shape.held[property.Name] = true
 			held = append(held, property.Name)
-			if property.Flags&ast.SymbolFlagsOptional == 0 && !universal[property.Name] {
+			if !universal[property.Name] {
 				shape.required = append(shape.required, property.Name)
 			}
 		}
