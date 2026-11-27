@@ -1,0 +1,16 @@
+interface Type { flags: number }
+interface TypeParameter extends Type { constraint?: Type; isThisType?: boolean }
+class TypeObject {
+	flags: number;
+	isThisType?: boolean;
+	constructor(flags: number) {
+		this.flags = flags;
+	}
+}
+function createType(flags: number): Type {
+	return new TypeObject(flags);
+}
+function isThisTypeParameter(type: Type): boolean {
+	return !!(type.flags & 1 && (type as TypeParameter).isThisType);
+}
+console.log(String(isThisTypeParameter(createType(1))) + " " + String(isThisTypeParameter(createType(2))));

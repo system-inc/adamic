@@ -1,0 +1,8 @@
+interface Type { flags: number }
+interface TypeParameter extends Type { constraint?: Type; isThisType?: boolean }
+function isThisTypeParameter(type: Type): boolean {
+	return !!(type.flags & 1 && (type as TypeParameter).isThisType);
+}
+const parameter: TypeParameter = { flags: 1, isThisType: true };
+const plain: Type = { flags: 2 };
+console.log(String(isThisTypeParameter(parameter)) + " " + String(isThisTypeParameter(plain)));
