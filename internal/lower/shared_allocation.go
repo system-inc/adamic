@@ -227,10 +227,14 @@ func (f *cycleFinder) allocationIndexOf(candidates []cycleNode) *allocationIndex
 		}
 		return index.groups[at]
 	}
+	// A type is a candidate once for where and once more for shapes when use takes it in as both, so each is
+	// indexed once, and a node's links name each view once.
+	indexed := map[cycleNode]bool{}
 	for _, candidate := range candidates {
-		if !f.allocationView(candidate.proven) {
+		if !f.allocationView(candidate.proven) || indexed[candidate] {
 			continue
 		}
+		indexed[candidate] = true
 		index.views = append(index.views, candidate)
 		if shape := f.allocationShapeOf(candidate.proven); shape.plain {
 			group(shape).views = append(group(shape).views, candidate)
@@ -238,7 +242,12 @@ func (f *cycleFinder) allocationIndexOf(candidates []cycleNode) *allocationIndex
 			index.looseViews = append(index.looseViews, candidate)
 		}
 	}
+	shaped := map[*checker.Type]bool{}
 	for _, shape := range f.shapes {
+		if shaped[shape] {
+			continue
+		}
+		shaped[shape] = true
 		index.shapes = append(index.shapes, shape)
 		if read := f.allocationShapeOf(shape); read.plain {
 			group(read).shapes = append(group(read).shapes, shape)
