@@ -98,3 +98,38 @@ func TestSpreadAccessorReadChecksTheKind(t *testing.T) {
 		t.Fatal("the helper isn't called with Reflect's run-time key read of weight")
 	}
 }
+
+// Only a read a stop would meet today is read by name, judged by its receiver's reach as the stops judge it
+// (spreadAccessorReads): a plain literal's own weight read under typeof, in a program that also reads a spread's
+// copy of Sized, keeps main's ir.Property, and the copy's read is the program's one run-time key read. Behavior
+// can't tell the two roads apart for the literal, which both answer number (read_literal.ts agrees with Node in
+// TestSpreadPrototypeField), so this holds the road. Mutant (spread_accessor_reads.mutants.md): spreadAccessorStops
+// answering true for every read, the wide gate, reds this test.
+func TestSpreadAccessorReadKeepsMainsRead(t *testing.T) {
+	t.Parallel()
+	program, err := lowerSourceAs(t, spreadAccessorPrelude+"class Sized { readonly label = \"t\"; get weight(): number { return 20; } }\nconst built: Source = new Sized();\nconst copy: Source = { ...built };\nconst plain: Source = { label: \"l\", weight: 3 };\nconsole.log(typeof plain.weight);\nconsole.log(typeof copy.weight);\n", ".ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	keyed, properties := 0, 0
+	count := func(node any) bool {
+		switch read := node.(type) {
+		case ir.DynamicKeyedProperty:
+			if key, named := read.Key.(ir.StringConstant); named && program.Strings[key.Index] == "weight" {
+				keyed++
+			}
+		case ir.Property:
+			if read.Name == "weight" {
+				properties++
+			}
+		}
+		return true
+	}
+	walk(program.Main, count)
+	for _, function := range program.Functions {
+		walk(function.Body, count)
+	}
+	if keyed != 1 || properties == 0 {
+		t.Fatalf("%d run-time key reads of weight and %d ir.Property reads of it, want the copy's one key read and the literal's Property", keyed, properties)
+	}
+}
