@@ -113,10 +113,10 @@ func (l *lowering) keepsNullishValue(node *ast.Node, proof castProof, source, ta
 	if err != nil {
 		return nil, err
 	}
-	// Every road castRoadValue checks is listed, so only an upcast, a proof that asks no check, is the value
-	// itself. The untagged arm and the class road were missing: a cast that kept undefined over an untagged union
-	// lowered to the bare operand, and a lie read its fields unchecked (#qxt10dd's scout, J-zewecvk).
-	if !proof.interfaceView && !proof.structuralView && !proof.overlap && !proof.untagged && proof.kindUnion == nil && len(proof.allowed) == 0 && len(proof.classes) == 0 {
+	// Only an upcast, a proof that asks no check, is the value itself. checksRoad is castRoadValue's own list, so a
+	// road added there is a road here: a list of this function's own once missed the untagged arm and the class
+	// road, and a cast that kept undefined over an untagged union lowered to the bare operand (#ejthypb, J-zewecvk).
+	if !proof.checksRoad() {
 		return value, nil
 	}
 	// An object that may be undefined or null is held as an Object whose nullish value is a null reference,
@@ -143,6 +143,15 @@ func (l *lowering) keepsNullishValue(node *ast.Node, proof castProof, source, ta
 	return ir.Effects{Body: []ir.Statement{ir.Declare{Local: local, Value: value}}, Result: ir.Conditional{
 		Condition: nullish, WhenTrue: read, WhenNot: cast, Of: ir.Object,
 	}}, nil
+}
+
+// checksRoad is whether castRoadValue lowers the proof to a check: a view (overlap, untagged, structural or
+// interface), a kind union's test, a tag test, or a class test. A proof that answers false is an upcast, which
+// castRoadValue gives back as the value itself. It's the one list of castRoadValue's roads, read by castRoadValue's
+// own fallback, by keepsNullishValue and by keptCheckDowncastRefusal, so a road added to castRoadValue is added here
+// and every reader sees it (Compiler's one-list ask on #eg3krrp, after #ejthypb).
+func (proof castProof) checksRoad() bool {
+	return proof.overlap || proof.untagged || proof.kindUnion != nil || proof.structuralView || proof.interfaceView || len(proof.allowed) > 0 || len(proof.classes) > 0
 }
 
 // castRoadValue lowers the road a proof found over a value already lowered: the view, the tag test or the
@@ -172,7 +181,7 @@ func (l *lowering) castRoadValue(node *ast.Node, proof castProof, value ir.Expre
 		}
 		return checked, err
 	}
-	if len(proof.allowed) == 0 && len(proof.classes) == 0 {
+	if !proof.checksRoad() {
 		return value, nil
 	}
 	refused := &Refused{Where: l.program.Where(node), What: "a cast without an object tag representation", Fix: l.castRepair(node)}
