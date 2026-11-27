@@ -75,8 +75,9 @@ func terminalStackProgram(t *testing.T) *ir.Program {
 	// divergences of one bundled image one each (TestInstalledLayoutPathDivergences). The last eight are the
 	// departures a test holds on purpose, each row naming that test (#d358hc1): weak/'s four, weak_miscompiles' two
 	// and non_null_weak_freed.ts, a Weak read native frees, and records_checked_names' widened_view_lie.ts, whose
-	// backends stop in their own words.
-	if len(ruledBackendDivergences) != 21 || ruledBackendDivergences[0].fixture != "internal/oracle/testdata/d96d304_try_stack.a" {
+	// backends stop in their own words. The last is enum-init-reach's unknown-computed-key.a, two meanings by who strips
+	// its types, where Adamic stops at the unproven read (#kgngvxj).
+	if len(ruledBackendDivergences) != 22 || ruledBackendDivergences[0].fixture != "internal/oracle/testdata/d96d304_try_stack.a" {
 		t.Fatal("only the named-stack fixture is ruled to diverge between backends, and it's the first row")
 	}
 	path := filepath.Join(repository, "internal/oracle/testdata/d96d304_try_stack.a")
