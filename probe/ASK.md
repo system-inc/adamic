@@ -1,0 +1,12 @@
+# First stops at main ef741d4f, entry pass, base only: units per cause U1 to U26 of the 58 unheld firm walls, the ask (Seats, Nov 26 16:1xZ)
+
+Kit for `firm-walls-plan-1600.md` section 4 (#bcbp175): every unit's first stop at main's tip, then which of the 26 causes (U1 to U26) each first stop is, and which of the 58 walls' sites are among them. One pass a job, as `HEARTBEAT.md`'s census line asks; its twin is `firststops-main-1610-directory/`. Read whole and `causes.py` tested on a synthetic input; the census itself not run on this Mac.
+
+- `run.sh`: `probes/family12-f12r19-units-census-entry-2340/run.sh` byte for byte but line 23, `base=` moved from c49a335f to origin/main ef741d4f0860597ff8d4df5dd042973b2f20819d (fetched Nov 26, 13:19:30Z commit). Base mode applies no patch; the kit has no `change.patch`, so head mode isn't for this kit.
+- `one.sh`: the driver, after `probes/firststops-tip/one.sh`: `run.sh base entry`, then `firststops.py` over that pass (FS lines saved and printed whole into the log), then `causes.py` over them.
+- `firststops.py`: `probes/firststops-tip/firststops.py` byte for byte. The newest kit's `units-compare.py` and `focus.py` read the same fields (`file`, `units[].where/name/kind`, `findings[].phase/unit/kind/where/reason`) and the same first-stop rule, so no change. It drops a finding whose unit isn't listed, where `units-compare.py` keys it as `unlisted`.
+- `causes.py`: new. The plan's section 4 patterns exactly (`re.search` on the reason), the 58 walls as data from the plan's section 1 (re-parsed from `firstlink-row1-J-nsy6d40.md`, each site checked present there and its reason matched by its own cause only). Ends `CAUSE U<n> units=<k> sites=<s>`, s the walls' sites among those units' first stops, matched by exact `compiler/<path>:<line>:<column>`, so a wall whose line moved since J-nsy6d40 shows under its cause's units but not in s. Exits 1 on no FS line.
+
+Task: #bcbp175.
+
+Ask: `cd /Users/kirkouimet/Projects/ahra && ./node_modules/.bin/ahra loom job 'source /opt/adamic-block/environment.sh && export LOOM_JOB_SCRATCH="${LOOM_JOB_SCRATCH:-$(mktemp -d /tmp/seats-firststops-entry.XXXXXX)}" && bash probe/one.sh' --kind proof --ceiling 2h --size F64 --task bcbp175 --title "First stops at main ef741d4f, entry pass, base only: units per cause U1 to U26 of the 58 unheld firm walls" --at adamic@ef741d4f0860597ff8d4df5dd042973b2f20819d --probe /Users/kirkouimet/Projects/system/scratch-system_adamic_seats/probes/firststops-main-1610-entry`
