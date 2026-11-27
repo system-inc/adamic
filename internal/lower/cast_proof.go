@@ -206,6 +206,9 @@ func (l *lowering) castRefusal(node *ast.Node) error {
 		if err != nil {
 			return err
 		}
+		// Every road checksRoad lists (cast.go), and the array arm castValue takes before castRoadValue, lands in one of
+		// the two maps below: a check the runtime makes (checkedCasts) or a view (viewCasts). A road added to checksRoad
+		// joins one of them here too, or the unchecked-widening rule never judges it (Lower's should on #eg3krrp).
 		if proof.interfaceView || len(proof.allowed) > 0 || len(proof.classes) > 0 || proof.kindUnion != nil || proof.arrayArm != nil {
 			if l.refusal.checkedCasts == nil {
 				l.refusal.checkedCasts = map[*ast.Node]bool{}
