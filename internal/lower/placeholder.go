@@ -564,8 +564,8 @@ func (l *lowering) placeholderRead(node *ast.Node, value ir.Expression, origin s
 	if symbol := l.symbol(node); symbol != nil {
 		declared, _ := l.representation(l.checker.GetNonNullableType(l.checker.GetTypeOfSymbol(symbol)))
 		checkArm = declared == ir.Union && of != ir.Union
-		if checkArm && (of == ir.Weak || of.IsTypedArray()) && l.unlowerable == nil {
-			l.unlowerable = l.notYet(node, "a placeholder narrowing without a present-arm storage check")
+		if checkArm && (of == ir.Weak || of.IsTypedArray()) {
+			l.holdUnlowerable(l.notYet(node, "a placeholder narrowing without a present-arm storage check"))
 		}
 	}
 	return ir.PlaceholderUse{Value: value, Origin: origin, Use: use, Path: sourceExpression(node), Where: l.program.Where(node), CheckArm: checkArm, Of: of}
