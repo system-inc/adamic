@@ -40,6 +40,8 @@ if [ "$part" = a ]; then
 	# mutant name file old new: replace exactly one line, run both pins, report each failing subtest and its words, put back.
 	mutant() {
 		name=$1 file=$2 old=$3 new=$4
+		# MUTANTS, when set, names the mutants this run makes (a ceiling split), the pins run first either way.
+		case " ${MUTANTS:-$name} " in *" $name "*) ;; *) echo "SKIP $name (not in MUTANTS)"; return ;; esac
 		python3 -I - "$file" "$old" "$new" <<'PY'
 import sys
 path, old, new = sys.argv[1:4]
@@ -66,7 +68,7 @@ PY
 		'		if l.placeholderChainObject(original) {' \
 		'		if false && l.placeholderChainObject(original) {'
 	mutant M4 internal/lower/placeholder.go \
-		'	if access == nil || access.Kind != ast.KindPropertyAccessExpression || access.AsPropertyAccessExpression().Expression != at || access.AsPropertyAccessExpression().QuestionDotToken == nil {' \
+		'	if access == nil || access.Kind != ast.KindPropertyAccessExpression || access.AsPropertyAccessExpression().Expression != at || !l.questionDot(access) {' \
 		'	if access == nil || access.Kind != ast.KindPropertyAccessExpression || access.AsPropertyAccessExpression().Expression != at {'
 	mutant M5 internal/lower/optional_scalar.go \
 		'	if of == ir.Number && bitwiseOperand(node) {' \
