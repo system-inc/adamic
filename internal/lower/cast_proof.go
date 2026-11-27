@@ -402,7 +402,13 @@ func (l *lowering) castRoad(node *ast.Node, source, target *checker.Type, stop f
 		}
 		from, fromKnown := l.representation(source)
 		to, toKnown := l.representation(target)
-		if source.Flags()&checker.TypeFlagsObject != 0 && target.Flags()&checker.TypeFlagsObject != 0 && fromKnown && toKnown && from == ir.Object && to == ir.Object && !isClassInstance(target) && l.checker.IsTypeAssignableTo(target, source) && l.widened(target, source, map[[2]*checker.Type]bool{}) == nil && len(l.checker.GetIndexInfosOfType(target)) == 0 {
+		// An intersection of plain objects takes the same view where its cast only reads a field narrower (#gbr6vs2,
+		// item 19: tsc's toBuilderStateFileInfoForMultiEmit). The view reads each field as the value stores it and checks
+		// it against the target's contract at the read, so the source's wider slot is read by its own kind. It's taken only
+		// where the view-site rule (viewCastRefusal) wouldn't refuse that view, so the arm never turns its own cast from
+		// NotYet into Refused: tsc's own, whose FileInfo makes the readonly signature writable, keeps its stop until an
+		// adaptation keeps the field readonly (Compiler, on #gbr6vs2).
+		if (source.Flags()&checker.TypeFlagsObject != 0 || source.Flags()&checker.TypeFlagsIntersection != 0 && l.objectCastCause(source, target) == castFieldRefinement && l.viewCastRefusal(node) == nil) && target.Flags()&checker.TypeFlagsObject != 0 && fromKnown && toKnown && from == ir.Object && to == ir.Object && !isClassInstance(target) && l.checker.IsTypeAssignableTo(target, source) && l.widened(target, source, map[[2]*checker.Type]bool{}) == nil && len(l.checker.GetIndexInfosOfType(target)) == 0 {
 			return castProof{structuralView: true}, nil
 		}
 

@@ -26,7 +26,7 @@ func (l *lowering) structuralViewCast(node *ast.Node, value ir.Expression, sourc
 	if value.Type() != ir.Object {
 		return nil, l.notYet(node, "a checked cast from "+l.checker.TypeToString(source)+" to "+l.checker.TypeToString(target)+" whose value isn't a plain object")
 	}
-	if source.Flags()&checker.TypeFlagsObject == 0 || target.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(target) || !l.checker.IsTypeAssignableTo(target, source) {
+	if source.Flags()&checker.TypeFlagsObject == 0 && source.Flags()&checker.TypeFlagsIntersection == 0 || target.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(target) || !l.checker.IsTypeAssignableTo(target, source) {
 		return nil, l.notYet(node, "a structural checked view of "+l.checker.TypeToString(target)+" over "+l.checker.TypeToString(source)+" that its proof didn't hold")
 	}
 	if len(l.checker.GetIndexInfosOfType(target)) != 0 {
