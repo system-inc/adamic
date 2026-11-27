@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"reflect"
+	"sort"
 	"strings"
 	"time"
 
@@ -31,4 +32,36 @@ func relationSizeTrace(typeChecker *checker.Checker, label string) {
 		parts = append(parts, fmt.Sprintf("enum=%d", enum.Len()))
 	}
 	fmt.Fprintf(os.Stderr, "RELSIZE %s %s total=%d %s\n", time.Now().UTC().Format("15:04:05"), label, total, strings.Join(parts, " "))
+}
+
+// armPairs and armCalls are the probe's count, per arm of graphLinks, of assignable pairs added and calls made,
+// printed and reset at each findCycles end (#nxb3xh1, Compiler's (b)).
+var (
+	armPairs = map[string]int{}
+	armCalls = map[string]int{}
+)
+
+func assignableSize(typeChecker *checker.Checker) int {
+	relation := reflect.ValueOf(typeChecker).Elem().FieldByName("assignableRelation")
+	if !relation.IsValid() || relation.Kind() != reflect.Pointer || relation.IsNil() {
+		return -1
+	}
+	results := relation.Elem().FieldByName("results")
+	if !results.IsValid() || results.Kind() != reflect.Map {
+		return -1
+	}
+	return results.Len()
+}
+
+func armTrace(label string) {
+	keys := make([]string, 0, len(armPairs))
+	for key := range armCalls {
+		keys = append(keys, key)
+	}
+	sort.Strings(keys)
+	for _, key := range keys {
+		fmt.Fprintf(os.Stderr, "ARM %s %s pairs=%d calls=%d\n", label, key, armPairs[key], armCalls[key])
+	}
+	armPairs = map[string]int{}
+	armCalls = map[string]int{}
 }

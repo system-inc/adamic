@@ -408,6 +408,8 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 }
 
 func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
+	label, start := "cell", assignableSize(f.l.checker)
+	defer func() { armPairs[label] += assignableSize(f.l.checker) - start; armCalls[label]++ }()
 	if node.cell != 0 {
 		links := []cycleNode{}
 		if proven := f.l.localTypes[node.cell-1]; proven != nil {
@@ -435,6 +437,7 @@ func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 		}
 		return links
 	}
+	label = "proven-other"
 	proven := node.proven
 	if proven == nil || f.weak(proven) || f.template(proven) {
 		return nil
@@ -455,8 +458,10 @@ func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 	}
 	switch {
 	case f.l.isLibraryType(proven, "MapIterator", "SetIterator"):
+		label = "iterator"
 		links = append(links, f.libraryIteratorCaptures(proven)...)
 	case f.isFunction(proven):
+		label = "function-statics"
 		if len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
 			for symbol := range f.l.statics {
 				actual := f.l.checker.GetTypeOfSymbol(symbol)
@@ -465,7 +470,10 @@ func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 				}
 			}
 		}
+		closures := assignableSize(f.l.checker)
 		links = append(links, f.closureLinksTo(proven)...)
+		armPairs["function-closures"] += assignableSize(f.l.checker) - closures
+		start += assignableSize(f.l.checker) - closures
 	case f.l.recordElement(proven) != nil:
 		// A record holds its values, as reachLinks follows them (#1vb0x5s).
 		links = append(links, cycleNode{proven: f.l.recordElement(proven)})
@@ -482,11 +490,16 @@ func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 		for _, field := range f.fields(proven) {
 			links = append(links, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)})
 		}
+		label = "default-fields"
+		shapesStart := assignableSize(f.l.checker)
+		armCalls["default-shapes"] += len(f.shapes)
 		for _, shape := range f.shapes {
 			if shape != proven && f.l.checker.IsTypeAssignableTo(f.l.relatedShape(shape), proven) {
 				links = append(links, cycleNode{proven: shape})
 			}
 		}
+		armPairs["default-shapes"] += assignableSize(f.l.checker) - shapesStart
+		start += assignableSize(f.l.checker) - shapesStart
 		for _, accessor := range f.l.accessorCaptures {
 			if f.l.checker.IsTypeAssignableTo(accessor.holder, proven) {
 				for _, local := range f.l.result.Functions[accessor.function].Environment {

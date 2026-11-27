@@ -135,6 +135,7 @@ type cycleFinder struct {
 func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 	relationSizeTrace(l.checker, "findCycles start")
 	defer relationSizeTrace(l.checker, "findCycles end")
+	defer armTrace("findCycles end")
 	// Generated frame/Promise/reaction layouts are IR identities, never checker declarations.
 	// Only their runtime-owned protocol edges are exempt. Source types, including a class
 	// called adamic_async_frame, continue through slotsOf with no name-based escape hatch.
