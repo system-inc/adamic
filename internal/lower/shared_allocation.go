@@ -4,6 +4,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	_ "unsafe"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -26,16 +27,20 @@ import (
 // counts as missing. Two types are related when either one's required names are all held by the other.
 //
 // That test reads only what a type lists, so it's asked only of plain types (allocationPlain): an object type
-// with no call or construct signature, which isn't mapped, reverse-mapped or generic (the checker's
-// isGenericObjectType) and isn't a template. A library type, a reference with concrete type arguments and a type
-// with an index signature are plain (Compiler's ruling at 14:16 on #nxb3xh1, replacing her first list): a
-// reference lists its target's members, since instantiation maps their types and never their names, and an index
-// signature on either side adds a requirement but never stands in for a missing required property. Anything else
-// is related to everything, failing closed: unions and intersections, which are never judged as one object, and
-// any, unknown, type parameters, primitives and literals, which the checker reads through their apparent types,
-// none of them object types; and a callable or constructable type, whose missing names the checker also finds on
-// Function. Were one of these a candidate, every node would link to it and it to every node, so a run that meets
-// one selects every object type the seeds reach: a cost, never a missed cycle.
+// with no call or construct signature, which isn't reverse-mapped, generic (the checker's isGenericObjectType, for
+// an object type a generic mapped type or a variadic tuple) or a template. A library type, a reference with
+// concrete type arguments, a type with an index signature and a mapped type that isn't generic are plain
+// (Compiler's ruling at 14:16 on #nxb3xh1, replacing her first list, and Lower's on the mapped types): a reference
+// lists its target's members, since instantiation maps their types and never their names; a mapped type that
+// isn't generic lists its resolved members, each with its own optional flag, so Mutable<StringLiteral> lists
+// StringLiteral's and Partial<A> requires nothing; and an index signature on either side adds a requirement but
+// never stands in for a missing required property. Anything else is related to everything, failing closed:
+// unions and intersections, which are never judged as one object, and any, unknown, type parameters, primitives
+// and literals, which the checker reads through their apparent types, none of them object types; and a callable or
+// constructable type, whose missing names the checker also finds on Function. Were one of these a candidate, every
+// node would link to it and it to every node, so a run that meets one selects every object type the seeds reach:
+// a cost, never a missed cycle. On tsc's first link 1,020 mapped types were such hubs until the ones that aren't
+// generic were read by their names (#nxb3xh1).
 //
 // Everything else in the finder keeps the checker's exact relation (related, deriveRelated): viewAlsoTable skips an
 // edge for a pair related exactly, on the premise the finder walks that pair as one allocation, and reachLinks'
@@ -144,22 +149,21 @@ func (f *cycleFinder) allocationUniversal() map[string]bool {
 
 // allocationPlain is whether a type's listed properties are all the relation needs to read (the comment above).
 func (f *cycleFinder) allocationPlain(proven *checker.Type) bool {
-	if proven.Flags()&checker.TypeFlagsObject == 0 || f.template(proven) {
+	if proven.Flags()&checker.TypeFlagsObject == 0 || f.template(proven) || proven.ObjectFlags()&checker.ObjectFlagsReverseMapped != 0 {
 		return false
 	}
-	if proven.ObjectFlags()&(checker.ObjectFlagsMapped|checker.ObjectFlagsReverseMapped) != 0 {
+	if allocationGeneric(f.l.checker, proven) {
 		return false
-	}
-	// isGenericObjectType, for an object type that isn't mapped: a tuple with a variadic element.
-	if checker.IsTupleType(proven) {
-		for _, element := range proven.TargetTupleType().ElementFlags() {
-			if element&checker.ElementFlagsVariadic != 0 {
-				return false
-			}
-		}
 	}
 	return len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) == 0 && len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) == 0
 }
+
+// The checker's own test of a generic object type: for an object type, a generic mapped type (its constraint a
+// generic index type, or its as clause generic past the iteration type) or a tuple with a variadic element
+// (getGenericObjectFlags), pulled from its package as class.go pulls isTypeIdenticalTo.
+//
+//go:linkname allocationGeneric github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isGenericObjectType
+func allocationGeneric(receiver *checker.Checker, proven *checker.Type) bool
 
 // allocationIndex is one findCycles run's index for the two sweeps, so a node asks only the candidates whose names
 // it can satisfy, or that can satisfy its own, never a scan of every candidate (Compiler's condition 2). Plain

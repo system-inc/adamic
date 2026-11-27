@@ -27,6 +27,12 @@ interface Callable { (): number; size: number }
 interface Constructable { new (): Plain; size: number }
 interface Box<T> { inner: T }
 type Mapped = { readonly [K in keyof Other]: Other[K] };
+type Mutable<T> = { -readonly [K in keyof T]: T[K] };
+function wrap<T>(value: T): T {
+	let inner!: { readonly [K in keyof T]: T[K] };
+	console.log(typeof inner);
+	return value;
+}
 declare const plain: Plain;
 declare const sub: Sub;
 declare const other: Other;
@@ -44,6 +50,10 @@ declare const callable: Callable;
 declare const constructable: Constructable;
 declare const box: Box<number>;
 declare const mapped: Mapped;
+declare const mutable: Mutable<Plain>;
+declare const partial: Partial<Plain>;
+declare const picked: Pick<Plain, "kind">;
+declare const frozen: Readonly<Plain>;
 declare const map: Map<string, number>;
 declare const error: Error;
 declare const text: string;
@@ -76,7 +86,13 @@ func TestMayShareAllocationFailsClosed(t *testing.T) {
 		{"an intersection", "both", "far", true, false},
 		{"a callable", "callable", "far", true, false},
 		{"a constructable", "constructable", "far", true, false},
-		{"a mapped type", "mapped", "far", true, false},
+		{"a generic mapped type, inside a generic function", "inner", "far", true, false},
+		{"a mapped type that isn't generic, cut", "mapped", "far", false, false},
+		{"Mutable<Plain>, cut", "mutable", "far", false, false},
+		{"Partial<Plain>, all optional, related", "partial", "far", true, false},
+		{"Partial<Plain> beside Plain", "partial", "plain", true, true},
+		{"Pick<Plain, kind>, cut where kind is missing", "picked", "other", false, false},
+		{"Readonly<Plain> beside Plain", "frozen", "plain", true, true},
 		{"a primitive", "text", "lengthy", true, true},
 		{"a primitive against a type it shares no name with", "text", "far", true, false},
 		{"a literal", "unit", "lengthy", true, true},
@@ -111,6 +127,11 @@ func TestMayShareAllocationFailsClosed(t *testing.T) {
 	t.Run("Object's toString, related to everything", func(t *testing.T) {
 		printable := types["printable"]
 		for name, proven := range types {
+			// A generic mapped type is related to everything already, and the checker reads it through its
+			// constraint, so it holds nothing here.
+			if allocationGeneric(f.l.checker, proven) {
+				continue
+			}
 			if !f.mayShareAllocation(printable, proven) || !f.mayBeSeenAs(proven, printable) {
 				t.Errorf("Printable isn't related to %s (%s)", name, f.l.checker.TypeToString(proven))
 			}
@@ -189,7 +210,8 @@ const sharedAllocationPoint = "class Point {\n\tconstructor(readonly x: number) 
 // (Lower's ask on #nxb3xh1 head 6): each program is lowered, its candidates gathered as graphTypes gathers them,
 // and every candidate pair the index doesn't relate is asked of deriveRelated, every shape it doesn't take as a node
 // of IsTypeAssignableTo. A cut the checker relates fails, naming both types. The programs are graph-region programs
-// from the oracle and Point, whose toString only the global Object type gives a Located.
+// from the oracle and Point, whose toString only the global Object type gives a Located, beside the pins' own
+// declared types, every group among them: index signatures, references, library and mapped types.
 func TestMayShareAllocationCutsOnlyWhatTheCheckerRefuses(t *testing.T) {
 	t.Parallel()
 	paths := []string{}
@@ -202,6 +224,30 @@ func TestMayShareAllocationCutsOnlyWhatTheCheckerRefuses(t *testing.T) {
 	}
 	paths = append(paths, writeAgreementSource(t, "point.a", sharedAllocationPoint))
 	cut := 0
+	// The pins' declared types, mapped ones among them, every pair of them asked as the sweep and the shapes road
+	// ask a pair.
+	t.Run("the declared types", func(t *testing.T) {
+		f, types := cycleIndexTypes(t, sharedAllocationSource)
+		for _, one := range types {
+			for _, other := range types {
+				if !f.allocationView(one) || !f.allocationView(other) {
+					continue
+				}
+				if !f.mayShareAllocation(one, other) {
+					cut++
+					if f.deriveRelated(one, other) {
+						t.Errorf("mayShareAllocation cut %s from %s, which deriveRelated relates", f.l.checker.TypeToString(one), f.l.checker.TypeToString(other))
+					}
+				}
+				if one != other && !f.mayBeSeenAs(one, other) {
+					cut++
+					if f.l.checker.IsTypeAssignableTo(f.l.relatedShape(one), other) {
+						t.Errorf("mayBeSeenAs cut %s from %s, which the checker takes as one", f.l.checker.TypeToString(one), f.l.checker.TypeToString(other))
+					}
+				}
+			}
+		}
+	})
 	for _, path := range paths {
 		t.Run(filepath.Base(path), func(t *testing.T) {
 			loaded, err := load.Load([]string{path})
