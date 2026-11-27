@@ -991,8 +991,10 @@ type lowering struct {
 	// substitution is what each type parameter stands for in the instantiation being lowered.
 	substitution map[*checker.Type]ir.Type
 
-	// unlowerable is the first construct found not lowerable somewhere that can't return an error.
-	unlowerable error
+	// unlowerable is the first construct found not lowerable somewhere that can't return an error, and
+	// firstLinkUnlowerables, in a first-link lowering, every one, in the order met (holdUnlowerable).
+	unlowerable           error
+	firstLinkUnlowerables []error
 
 	// alwaysUndefined are parameters that only ever receive undefined, whatever the checker calls
 	// their type: the first of an Array.from callback's (from.go). Each is a reference that's always
