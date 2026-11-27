@@ -1553,6 +1553,18 @@
       "type_correct_sha256": "a6f728ee5394a9bdf193d455b429369a195977828b4455605980312f5fcefe11",
       "exit": 70,
       "stderr": "adamic: panic: field read failed: (t as ObjectType | UnionType).objectFlags is not initialized; expected number, found missing\n"
+    },
+    "0cb8c362d564b0ebb8c59fda1431c768ae0771d934e4dc67965bb36f9254d8c0": {
+      "form": "checked_boundary",
+      "ruling_task": "#gbr6vs2",
+      "ruling": "item 19 on #bbssdcy: a cast that only reads a field narrower is a checked view, its lie stopped at the read; applied to an intersection source through castRoad's structural view (Compiler and Lower, on #gbr6vs2)",
+      "declaration": "internal/oracle/testdata/cast_intersection_view/lie.ts:3",
+      "declared_type": "string | undefined",
+      "repair_from": "signature: false",
+      "repair_to": "signature: \"s2\"",
+      "type_correct_sha256": "e08c68aca7e4b4a02677bcb30bd3956cc16750cb6138d31e64e10c5217da4dd7",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: direct(b).signature matches no member of string | undefined; expected string | undefined, found boolean\n"
     }
   }
 }

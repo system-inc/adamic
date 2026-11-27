@@ -104,12 +104,11 @@ var castStopProbes = []struct {
 		"stage 0 can't lower a checked view of the type parameter T, constrained to N, over N yet"},
 	{"mixed source", "interface O { readonly n: number } function f(x: O | string): O { return x as O; }", false,
 		"stage 0 can't lower a checked cast from string | O, which holds primitives, to O, which needs a typeof test before its view yet"},
-	// tsc's toBuilderStateFileInfoForMultiEmit (#bbssdcy, item 19): the source's signature is readonly, as the adapted
-	// tree declares it (99-readonly-family3-views). Writable, it's a field Encoded can write wider than Info reads it,
-	// which castWidenedTarget refuses, as the first control shows for another field; the second keeps a union source
-	// holding a primitive on its own cause.
-	{"field refinement", "interface Info { readonly version: string; signature: string | undefined } type Encoded = Omit<Info, \"signature\"> & { readonly signature: string | false | undefined }; function f(x: Encoded): Info { return x as Info; }", false,
-		"stage 0 can't lower a checked view of Info over Encoded, which reads the field signature of Encoded narrower yet"},
+	// tsc's toBuilderStateFileInfoForMultiEmit (#bbssdcy, item 19) lowers as a structural view since #gbr6vs2
+	// (cast_intersection_view_test.go). The source's signature is readonly there, as the adapted tree declares it
+	// (99-readonly-family3-views). Writable, it's a field Encoded can write wider than Info reads it, which
+	// castWidenedTarget refuses, as the first control shows for another field; the second keeps a union source holding
+	// a primitive on its own cause.
 	{"field refinement widening another field", "interface Info { readonly version: string; signature: string | undefined; count: number } type Encoded = Omit<Info, \"signature\" | \"count\"> & { readonly signature: string | false | undefined; count: number | string }; function f(x: Encoded): Info { return x as Info; }", true,
 		"a cast the runtime can't check: a cast from Encoded to Info, which Encoded can write string | number where number is read"},
 	{"field refinement from a primitive", "interface Info { readonly version: string; signature: string | undefined } type Encoded = Omit<Info, \"signature\"> & { readonly signature: string | false | undefined }; function f(x: Encoded | string): Info { return x as Info; }", false,
