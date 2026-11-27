@@ -249,6 +249,11 @@ reads internal/lower stage3/fixtures/cycles/ledger.json
 reads internal/lower stage3/fixtures/cycles/order.json
 # TestOriginalCycleLedger — internal/lower/import_cycle_ledger_test.go:113
 reads internal/lower stage3/fixtures/cycles/trace.json.gz
+# TestFirstLinkPhasesMatchHarnessReport, internal/lower/firstlinkphases/firstlinkphases_test.go:301-302: it holds
+# stage3/firstlink/report.py's phase sets to the phases internal/lower's non-test files name, a test-only package of
+# its own so no product of lower's keys on report.py (#nm7z8fv).
+reads internal/lower/firstlinkphases stage3/firstlink/report.py
+reads internal/lower/firstlinkphases internal/lower/*.go
 # TestNbodyIndexedElementsBorrow — internal/native/element_borrow_test.go:18
 # TestNbodyBorrowedLoopC — internal/native/loop_borrow_test.go:64
 # TestLoopArrayHoldC — internal/native/loop_borrow_test.go:120
