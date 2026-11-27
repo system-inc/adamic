@@ -37,6 +37,12 @@ func TestUntaggedUnionCastLowers(t *testing.T) {
 		// question on #b5w3ycg; J-q94k2e4 ran it at both). The one-target mutant leaves it green.
 		{"a member keeping undefined", members + "interface C { readonly c: boolean } function f(x: A | B | C | undefined): A | undefined { return x as A | undefined; } console.log(String(f({ a: 1, shared: 's' })?.a));", false},
 		{"an optional literal field", "interface A { readonly kind?: 'a'; readonly a: number } interface B { readonly kind?: 'b'; readonly b: string } function f(x: A | B): A { return x as A; } console.log(String(f({ kind: 'a', a: 1 }).a));", false},
+		// One plain object cast to a union target takes the same view, the source as the union's one member (cause U
+		// of #eg3krrp, castRoad): tsc's objectFlags read through ObjectType | UnionType of a Type (utilities.ts:8319),
+		// and fileNames through a union of build infos of a BuildInfo (builder.ts:1207). Mutants: castRoad without its
+		// union target arm, or untaggedUnionArm's gate wanting two members again, red both rows alone.
+		{"one object to a union target", "interface Type { readonly flags: number } interface ObjectType extends Type { readonly objectFlags: number } interface UnionType extends Type { readonly types: readonly Type[]; readonly objectFlags: number } function f(t: Type): number { return (t as ObjectType | UnionType).objectFlags; } const o: ObjectType = { flags: 1, objectFlags: 4 }; console.log(String(f(o)));", false},
+		{"one object to tsc's build info union target", "interface BuildInfo { readonly version: string } interface BundleInfo extends BuildInfo { readonly fileNames: readonly string[]; readonly outSignature?: string } interface ProjectInfo extends BuildInfo { readonly fileNames: readonly string[]; readonly root: readonly number[] } function f(info: BuildInfo): number { return (info as BundleInfo | ProjectInfo).fileNames.length; } const b: BundleInfo = { version: '1', fileNames: ['a.ts'] }; console.log(String(f(b)));", false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -108,6 +114,10 @@ func TestUntaggedUnionCastsKeepTheirStops(t *testing.T) {
 		{"a writable field nested in a readonly one", "interface X { readonly x: number } interface Y { readonly y: string } interface CX { v: X } interface CY { v: Y } interface A { readonly child: CX } interface B { readonly child: CY } function f(u: A | B): A { return u as A; }", ".ts", false, ""},
 		{"a tagged union's refinement", "interface P { readonly kind: 'p'; readonly v: string | number } interface Q { readonly kind: 'q' } interface PN { readonly kind: 'p'; readonly v: number } function f(x: P | Q): PN { return x as PN; }", ".ts", true, "which is narrower than a member of P | Q"},
 		{"in .a", members + "function f(x: A | B): A { return x as A; }", ".a", true, "in .a whose checks no proof erases"},
+		// One object cast to a union target (cause U of #eg3krrp) keeps its stop where the arm's own tests fail: a
+		// target member no narrower than the source is no downcast, and in .a the view's checks are refused as above.
+		{"one object to a union target with a sideways member", "interface Base { readonly flags: number } interface A extends Base { readonly a: number } interface Z { readonly z: string } function f(x: Base): A | Z { return x as A | Z; }", ".ts", false, "a checked view of the union A | Z over Base, whose members no literal tag tells apart"},
+		{"one object to a union target in .a", "interface Base { readonly flags: number } interface A extends Base { readonly a: number } interface B extends Base { readonly b: string } function f(x: Base): number { return (x as A | B).flags; }", ".a", true, "in .a whose checks no proof erases"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()

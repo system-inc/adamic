@@ -70,8 +70,10 @@ var castStopProbes = []struct {
 	// this stop.
 	{"untagged union", "interface A { readonly kind: 'a'; readonly a: number } interface B { readonly kind: 'b'; readonly b: string } interface C { readonly c: boolean } function f(x: A | B | C): A | B { return x as A | B; }", false,
 		"stage 0 can't lower a checked view of A | B over the union A | B | C, whose members no literal tag tells apart yet"},
-	{"union target", "interface Base { readonly flags: number } interface A extends Base { readonly a: number } interface B extends Base { readonly b: string } function f(x: Base): A | B { return x as A | B; }", false,
-		"stage 0 can't lower a checked view of the union A | B over Base, whose members no literal tag tells apart yet"},
+	// One object cast to a union of its downcasts lowers as union target (a)'s view (cause U of #eg3krrp, castRoad); to
+	// a union holding a member no narrower than the source it keeps this stop.
+	{"union target", "interface Base { readonly flags: number } interface A extends Base { readonly a: number } interface Z { readonly z: string } function f(x: Base): A | Z { return x as A | Z; }", false,
+		"stage 0 can't lower a checked view of the union A | Z over Base, whose members no literal tag tells apart yet"},
 	// A cast that keeps the source's own undefined lowers through its present road (cast_keeps_nullish_test.go);
 	// a source's null kept as undefined is past it, and still stops with this cause.
 	{"keeps undefined", "interface Base { readonly n: number } interface Sub extends Base { readonly m: number } function f(x: Base | null): Sub | undefined { return x as Sub | undefined; }", false,
