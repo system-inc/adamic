@@ -327,7 +327,8 @@ func (l *lowering) objectCastCause(source, target *checker.Type) castCause {
 // which asks castWidenedTarget first, and a target that does keeps that refusal: no view can hold its claim once
 // source writes the wider value. tsc's toBuilderStateFileInfoForMultiEmit (builder.ts:2233 in TypeScript 6.0.3) is
 // one: its source is an Omit<...> & { readonly signature } in the adapted tree, which castRoad's structural view
-// doesn't take, since that view wants a source that is one object.
+// takes since #gbr6vs2 only where the view-site rule wouldn't refuse it. tsc's own target makes the readonly signature
+// writable, which that rule refuses, so it keeps this stop (TestCastStopNamesItsCause's field refinement row).
 func (l *lowering) refinedField(source, present *checker.Type) string {
 	if present.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(present) || len(l.checker.GetIndexInfosOfType(present)) != 0 || l.castSignatures(present) {
 		return ""
