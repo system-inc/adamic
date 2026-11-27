@@ -16,7 +16,9 @@ LOWER_REWRITES = [
     ('body, err := lowering.moduleStatements(module)', 'scoutPhase = "lowering.moduleStatements"\nbody, err := lowering.moduleStatements(module)'),
     ('if lowering.unlowerable != nil {', 'scoutPhase = "lowering.unlowerable"\nif lowering.unlowerable != nil {'),
 ]
-PIPELINE_PATTERN = r'(\t*)(if err := ([^;\n]+); err != nil \{)'
+# A first-link lowering hands every whole-program pass to firstLinkPass, stopped or not, so its sites read
+# `err != nil || lowering.firstLinkTraps`, and each is still the pipeline site of the call it names.
+PIPELINE_PATTERN = r'(\t*)(if err := ([^;\n]+); err != nil(?: \|\| lowering\.firstLinkTraps)? \{)'
 PREFLIGHT_PATTERN = r'if err := l\.(\w+)\(module\); err != nil \{'
 REFUSE_SIGNATURE = 'func (l *lowering) refuse(module *ast.SourceFile) error {'
 PRAGMA_ANCHOR = 'for _, pragma := range module.Pragmas {'
