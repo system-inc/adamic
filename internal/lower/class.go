@@ -1001,6 +1001,15 @@ func (l *lowering) useOfThis(node *ast.Node) error {
 //go:linkname identicalTypes github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isTypeIdenticalTo
 func identicalTypes(checker *checker.Checker, source, target *checker.Type) bool
 
+// The checker's own test of a generic object type, for the cycle finder's relation for selection
+// (shared_allocation.go's allocationPlain, #nxb3xh1 head 6): for an object type, a generic mapped type (its
+// constraint a generic index type, or its as clause generic past the iteration type) or a tuple with a variadic
+// element (getGenericObjectFlags). Kept beside identicalTypes, the checker's identity, as lower's links to the
+// checker's own judgments of a type.
+//
+//go:linkname allocationGeneric github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isGenericObjectType
+func allocationGeneric(checker *checker.Checker, proven *checker.Type) bool
+
 func (l *lowering) classKeyPrefix(declaration *ast.Node) string {
 	return l.program.Where(declaration) + ":" + declaration.Name().Text()
 }

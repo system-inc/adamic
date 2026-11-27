@@ -1,0 +1,12 @@
+# Mutants for the finder's own relation for selection (#nxb3xh1 head 6)
+
+Each is one edit, run on a house box through Loom against the pins in shared_allocation_test.go and internal/oracle's
+graph_shared_allocation_test.go, TestGraphViewDepthEdges and the view-pair guard's rows among them, then put back
+(J-31bkgce at wip 4, whose relation this head keeps).
+
+| Mutant | File | Old text | New text | Red |
+|---|---|---|---|---|
+| Object's members no longer stripped from required sets (Lower's) | shared_allocation.go | `if property.Flags&ast.SymbolFlagsOptional == 0 && !universal[property.Name] {` | `if property.Flags&ast.SymbolFlagsOptional == 0 && universal != nil {` | TestMayShareAllocationFailsClosed's toString row, and TestMayShareAllocationCutsOnlyWhatTheCheckerRefuses on point.a and the declared types: the shapes road cuts Located from Point, which the checker takes as one. On tsc's first link the cut check reports disagreements with it planted (J-gh65hvv) |
+| A union side cut by its first member alone (Compiler's) | shared_allocation.go | `oneShape, otherShape := f.allocationShapeOf(one), f.allocationShapeOf(other)` in mayShareAllocation | the same, after `one` and `other` are each taken as their first member when a union | TestMayShareAllocationFailsClosed's union row. No cycle program goes red: both call sites hand the relation object types only (the sweep's guard and the shapes road's), and a union is never one, so the union arm is the relation's own contract, held by its pin |
+| viewAlsoTable widened to mayShareAllocation alone (Memory's condition A) | cycles.go | `viewAlsoTable(f.l, f.related, f.isFunction, f.shapes)` | `viewAlsoTable(f.l, f.mayShareAllocation, f.isFunction, f.shapes)` | TestGraphViewDepthSharedNames, both rows, by the counted build: Y2 holds Y1's a, so the widened relation takes the pair for one allocation and skips its edge, which reachLinks' shapes road never walks. TestGraphViewDepthEdges' own rows stay green, since their arms share no name |
+| The edges built from every candidate, the queued set dropped | graph_types.go | the queue seeded from `seeds`, each link queued once by `queued` | the queue seeded from every candidate, a node built once by its edges key, every link queued | nothing, a cost-only mutant: the selection is the same, so no pin can tell; its cost is tsc's queue of 1.5M entries and every candidate's sweep (#nxb3xh1) |

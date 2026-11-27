@@ -130,59 +130,52 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 	if len(seeds) == 0 {
 		return nil
 	}
-	// Literals may have narrower types than the mutable view through which they
-	// are later written. Include those allocation identities without creating seeds.
-	for _, module := range modules {
-		var visit ast.Visitor
-		visit = func(node *ast.Node) bool {
-			if ast.IsPartOfTypeNode(node) {
-				return false
-			}
-			if ast.IsExpressionNode(node) {
-				f.use(f.l.checker.GetTypeAtLocation(node), node)
-				if contextual := f.l.slotType(node); contextual != nil {
-					f.use(contextual, node)
-				}
-			}
-			return node.ForEachChild(visit)
-		}
-		module.AsNode().ForEachChild(visit)
-	}
-	for _, closure := range f.l.closureRecords {
-		f.use(closure.proven, closure.node)
-	}
-	candidates := []cycleNode{}
-	for proven := range f.where {
-		candidates = append(candidates, cycleNode{proven: proven})
-	}
-	for _, shape := range f.shapes {
-		candidates = append(candidates, cycleNode{proven: shape})
-	}
-	for local, declared := range f.l.result.Locals {
-		if declared.Captured && !declared.Global {
-			candidates = append(candidates, cycleNode{cell: local + 1})
-		}
-	}
+	candidates := f.graphCandidates(modules)
+	// The edges are built from the seeds only: a selected component holds a seed, and every member of a seed's
+	// component is reached from it, so the components the seeds reach are the ones built from every candidate. The
+	// queue holds each node once, by queued, since on tsc's first link a queue of every link held 1.5M entries
+	// (#nxb3xh1).
+	f.allocation = f.allocationIndexOf(candidates)
 	edges := map[cycleNode][]cycleNode{}
-	queue := append([]cycleNode{}, candidates...)
+	queued := map[cycleNode]bool{}
+	queue := []cycleNode{}
+	for seed := range seeds {
+		queued[seed] = true
+		queue = append(queue, seed)
+	}
 	for len(queue) != 0 {
 		node := queue[len(queue)-1]
 		queue = queue[:len(queue)-1]
-		if _, seen := edges[node]; seen {
-			continue
-		}
 		links := f.graphLinks(node)
-		// The finder's related relation treats compatible structural views as the
-		// same possible allocation. Weak views never become strong edges.
+		// Two structural views that may share an allocation are the same possible allocation, by the finder's
+		// own relation (mayShareAllocation), never the checker's: on tsc that sweep spent the checker's relation
+		// budget (#nxb3xh1). Weak views never become strong edges.
 		if node.proven != nil && node.proven.Flags()&checker.TypeFlagsObject != 0 && !f.weak(node.proven) && !f.template(node.proven) && !f.isFunction(node.proven) {
-			for _, view := range candidates {
-				if view.proven != nil && view.proven.Flags()&checker.TypeFlagsObject != 0 && !f.weak(view.proven) && !f.template(view.proven) && f.related(node.proven, view.proven) {
-					links = append(links, view)
-				}
-			}
+			links = append(links, f.allocationViews(node.proven)...)
 		}
 		edges[node] = links
-		queue = append(queue, links...)
+		for _, link := range links {
+			if !queued[link] {
+				queued[link] = true
+				queue = append(queue, link)
+			}
+		}
+	}
+	// Every candidate no seed reaches still has its key, with no links, so the passes below that range over edges
+	// see what they saw when the edges were built from every candidate. Tarjan's visit makes such a candidate a
+	// component of its own with no seed, never selected, and a node no seed reaches was never in a selected
+	// component, so the records pass, which only takes away from graph, is unchanged. The cache pass adds a
+	// record, an array, a tuple, a Map or a Set whose value or argument is selected, and every such type is a
+	// candidate: graphTypes' walk uses every expression's type and its contextual one, findCycles' walk every
+	// declared name's, and use takes in each type's fields, arms, arguments and record values, so what a link
+	// names is a type in where, or a shape, and has its key. What isn't is a type only lowering's instantiation
+	// (concrete) or a view's walk (viewAlsoTable) made: the old loop gave one a key when any candidate linked to
+	// it, and now only when a seed's closure does, so such a container, holding a selected type and reached from
+	// no seed, is the one thing the cache pass could add before and can't now.
+	for _, candidate := range candidates {
+		if _, built := edges[candidate]; !built {
+			edges[candidate] = nil
+		}
 	}
 	// Tarjan's components, with a component selected iff it contains a seed.
 	next := 0
@@ -407,6 +400,45 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 	return flows
 }
 
+// graphCandidates is every type and captured cell graphTypes' edges may link: every type the program uses, each
+// expression's own and contextual one among them, every shape, and every captured local's cell.
+func (f *cycleFinder) graphCandidates(modules []*ast.SourceFile) []cycleNode {
+	// Literals may have narrower types than the mutable view through which they
+	// are later written. Include those allocation identities without creating seeds.
+	for _, module := range modules {
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			if ast.IsPartOfTypeNode(node) {
+				return false
+			}
+			if ast.IsExpressionNode(node) {
+				f.use(f.l.checker.GetTypeAtLocation(node), node)
+				if contextual := f.l.slotType(node); contextual != nil {
+					f.use(contextual, node)
+				}
+			}
+			return node.ForEachChild(visit)
+		}
+		module.AsNode().ForEachChild(visit)
+	}
+	for _, closure := range f.l.closureRecords {
+		f.use(closure.proven, closure.node)
+	}
+	candidates := []cycleNode{}
+	for proven := range f.where {
+		candidates = append(candidates, cycleNode{proven: proven})
+	}
+	for _, shape := range f.shapes {
+		candidates = append(candidates, cycleNode{proven: shape})
+	}
+	for local, declared := range f.l.result.Locals {
+		if declared.Captured && !declared.Global {
+			candidates = append(candidates, cycleNode{cell: local + 1})
+		}
+	}
+	return candidates
+}
+
 func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 	if node.cell != 0 {
 		links := []cycleNode{}
@@ -482,10 +514,11 @@ func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 		for _, field := range f.fields(proven) {
 			links = append(links, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)})
 		}
-		for _, shape := range f.shapes {
-			if shape != proven && f.l.checker.IsTypeAssignableTo(f.l.relatedShape(shape), proven) {
-				links = append(links, cycleNode{proven: shape})
-			}
+		// A value seen as this type may be any shape that may be seen as it, by the finder's own relation
+		// (mayBeSeenAs), never the checker's: asked of every shape for every node, it was the sweep's twin on tsc
+		// (#nxb3xh1).
+		for _, shape := range f.allocationShapesSeenAs(proven) {
+			links = append(links, cycleNode{proven: shape})
 		}
 		for _, accessor := range f.l.accessorCaptures {
 			if f.l.checker.IsTypeAssignableTo(accessor.holder, proven) {
