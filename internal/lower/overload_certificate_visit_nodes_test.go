@@ -11,6 +11,7 @@ import (
 	"testing"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
@@ -482,13 +483,31 @@ const pair = createNodeArray([first, second]);
 // The scan itself reads each top type hop as a writable view of a NodeArray, at its cast to Node[], since the
 // hop's source may hold one without saying so (overloadGuardedMayHoldNodeArray), while the certificate's own
 // program holds none: judged on a lowering of the program's checker alone, so the refusal passes that stop
-// each hop's program first (TestVisitNodesCertificateWritableViewStops) don't hide the scan's answer. Mutant:
-// MayHold, today's reading restored, and every hop row reads no view.
+// each hop's program first (TestVisitNodesCertificateWritableViewStops) don't hide the scan's answer. Two more
+// rows hold the list as a typed structure with properties, ArrayLike<Node> and Iterable<Node>, each by an
+// annotated declaration, no cast, and then cast it to Node[] (Lower's should on #ytagqs5). Two hold it as a
+// string-index-only structure, { [k: string]: Node } and { [k: string]: unknown } (her condition on followup-1):
+// tsc takes no direct cast between a NodeArray and either, since an interface has no inferable index, so each
+// enters and leaves through unknown, and the cast into it is a writable view whatever the arms say, since its
+// target has an index signature (overloadGuardedReadonlyHolder). So these rows also hold the may-hold answer
+// for the holder type itself, the fact the scan reads at any later cast from it. Mutants: MayHold, today's
+// reading restored, and every hop row reads no view; Holder, the object case's property test of -8 alone, and
+// the ArrayLike and Iterable rows read none; AssignableOnly, -8's arm dropped, and the string-index rows'
+// holder types may hold none.
 func TestVisitNodesCertificateScanReadsHops(t *testing.T) {
 	t.Parallel()
 	rows := []struct{ name, tail string }{{"the certificate's own program", visitNodesCalls}}
 	for _, row := range visitNodesHops {
 		rows = append(rows, struct{ name, tail string }{row.name, row.tail})
+	}
+	for _, holder := range []string{"ArrayLike<Node>", "Iterable<Node>"} {
+		rows = append(rows, struct{ name, tail string }{"through " + holder, "const kept: " + holder + " = list;\nconst raw = kept as Node[];\nraw.push(keyword());\n" + visitNodesCalls})
+	}
+	stringIndex := map[string]bool{}
+	for _, held := range []string{"Node", "unknown"} {
+		name := "through string index " + held
+		stringIndex[name] = true
+		rows = append(rows, struct{ name, tail string }{name, "const kept = list as unknown as { [k: string]: " + held + " };\nconst raw = kept as unknown as Node[];\nraw.push(keyword());\n" + visitNodesCalls})
 	}
 	for index, row := range rows {
 		t.Run(row.name, func(t *testing.T) {
@@ -507,9 +526,63 @@ func TestVisitNodesCertificateScanReadsHops(t *testing.T) {
 				}
 				return
 			}
+			if stringIndex[row.name] {
+				if writable == nil {
+					t.Fatal("want the hop read as a writable view of a NodeArray, got none")
+				}
+				var kept *ast.Node
+				var find ast.Visitor
+				find = func(node *ast.Node) bool {
+					if node.Kind == ast.KindVariableDeclaration && ast.IsIdentifier(node.Name()) && node.Name().Text() == "kept" {
+						kept = node.Name()
+					}
+					return kept != nil || node.ForEachChild(find)
+				}
+				program.Files()[0].AsNode().ForEachChild(find)
+				if kept == nil {
+					t.Fatal("no kept declaration")
+				}
+				holder := l.checker.GetTypeAtLocation(kept)
+				if !l.overloadGuardedMayHoldNodeArray(holder, map[*checker.Type]bool{}) {
+					t.Fatalf("want %s read as a type that may hold a NodeArray, got none", l.checker.TypeToString(holder))
+				}
+				return
+			}
 			if writable == nil || writable.Kind != ast.KindAsExpression || l.checker.TypeToString(l.checker.GetTypeAtLocation(writable)) != "Node[]" {
 				t.Fatalf("want the hop's cast to Node[] read as a writable view of a NodeArray, got %v", writable)
 			}
+		})
+	}
+}
+
+// Language's q01 and q03 (her attack on -8, J-2tqzj0e): tsc ignores readonly in relations, so a NodeArray can be
+// held with no cast at all as a mutable number-indexed structure, a { [i: number]: Node } local, or an interface
+// parameter { [i: number]: Node; length: number }, and written through it during a later check. Each stops today
+// at the view's own type, since stage 0 lowers no mutable number-index storage (records.go), before the
+// certificate is asked. These are the pins for the day a mutable number-index view lowers: that day the
+// certificate must count such a view of a NodeArray, or of anything overloadGuardedMayHoldNodeArray answers, as
+// writable, since its scan sees no cast here, and these rows must stop at condition 1's words instead.
+func TestVisitNodesCertificateNumberIndexViewStops(t *testing.T) {
+	t.Parallel()
+	const later = `let calls = 0;
+function isIdentifierPoking(node: Node): node is Identifier {
+    calls++;
+    const answer = node.kind === 80;
+    if (calls === 4) {
+        DURING;
+    }
+    return answer;
+}
+const checked = visitNodes(list, same, isIdentifierPoking);
+console.log(String(checked.length) + " " + texts(checked));
+`
+	for _, row := range []struct{ name, setup, during string }{
+		{"q01 a number-indexed local", "const w: { [i: number]: Node } = list;\n", "w[0] = keyword()"},
+		{"q03 a number-indexed interface parameter", "interface Indexed {\n    [i: number]: Node;\n    length: number;\n}\nfunction poke(x: Indexed): void {\n    x[0] = keyword();\n}\n", "poke(list)"},
+	} {
+		t.Run(row.name, func(t *testing.T) {
+			t.Parallel()
+			visitNodesStops(t, visitNodesProgram(visitNodesImplementation, row.setup+strings.Replace(later, "DURING", row.during, 1)), "a non-mutable unrestricted string signature, or numeric, symbol, patterned or callable dictionary storage")
 		})
 	}
 }

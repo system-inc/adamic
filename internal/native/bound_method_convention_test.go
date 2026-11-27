@@ -114,7 +114,8 @@ func TestWASICountedBoundMethodConvention(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	const dispatch = "  if (self->bound_method_storage.counted) {\n   return self->bound_method_storage.counted_code(self->cells[1]->value.reference, arguments, argument_count);\n  }\n"
+	// The counted arm, with #1k4z29h's null-code invariant ahead of its call: the mutant drops the arm whole.
+	const dispatch = "  if (self->bound_method_storage.counted) {\n   if (self->bound_method_storage.counted_code == NULL) adamic_invariant(\"a bound method has no code to call\");\n   return self->bound_method_storage.counted_code(self->cells[1]->value.reference, arguments, argument_count);\n  }\n"
 	if strings.Count(string(closure), dispatch) != 1 {
 		t.Fatal("counted dispatch mutation site moved")
 	}

@@ -42,11 +42,10 @@ which is why the accepter reads the change itself.
 
 ## The map
 
-`diff-to-gates.json` is Compiler's, copied here at version 5. Compiler's version 6 on #mbtv3vv adds two gates,
-`stage1-gaps-whole` and `stage3-fixtures-whole`, which need recipes, so it isn't copied yet. The `ledger-line` row reads
-`stage3/upstream/LEDGER.md`, which the ledger split (chg_c5c1tfga, 8b613c8a) deletes. After the split, an adaptation's
-entry is its own `stage3/adapt/<dir>/LEDGER.md`, so the row goes stale when the split lands, and it is Compiler's to
-amend.
+`diff-to-gates.json` is Compiler's, copied here at version 6 (Compiler on #fj2ca6r, Nov 24). Version 6 adds
+`stage1-gaps-whole` and `stage3-fixtures-whole`, aligns `green` with main's recipe, and records `exposure`.
+Adaptations owe directory-local ledgers, an owed-by-hand plant proof and table review, and an `-after` comparison
+in every output test, while `mutants-red` is triggered by added or changed `*.mutants.md` files.
 
 ## One head
 

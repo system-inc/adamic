@@ -168,6 +168,10 @@ func (l *lowering) checkRangeUnionReads() error {
 			}
 			for _, operand := range stopped {
 				if operand != nil && operand.Type() == ir.Union && operands.held(operand) {
+					// Probe only, never for main (#nxb3xh1): a stop inside a helper is traced (range_unions_trace.go).
+					if l.firstLinkTraps && site.function >= 0 && site.function < len(l.functionNodes) && l.functionNodes[site.function] == nil {
+						l.rangeTrace(operands, site.function, operand, road, site)
+					}
 					refused = &NotYet{Where: l.stopWhere(site), What: road + " in " + where + ", whose operand may be a range type's value held as a union, where a NodeArray may stand for it"}
 					return false
 				}

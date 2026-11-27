@@ -2931,10 +2931,13 @@
     "internal/lower TestProduct_EnumerationReachViewPassMutant": [],
     "internal/lower TestProduct_VisitNodesWritableViewMutant": [],
     "internal/lower TestProduct_VisitNodesMayHoldMutant": [],
+    "internal/lower TestProduct_VisitNodesHolderMutant": [],
+    "internal/lower TestProduct_VisitNodesAssignableOnlyMutant": [],
     "internal/lower TestProduct_VisitNodesAdjacentMutant": [],
     "internal/lower TestProduct_VisitNodesStorageMutant": [],
     "internal/lower TestProduct_VisitNodesFirstStatementMutant": [],
     "internal/lower TestProduct_VisitNodesDelayedMutatorMutant": [],
-    "internal/lower TestProduct_VisitNodesReadonlyMembershipMutant": []
+    "internal/lower TestProduct_VisitNodesReadonlyMembershipMutant": [],
+    "internal/lower TestProduct_OverloadValueStopMutant": []
   }
 }
