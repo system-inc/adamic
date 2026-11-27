@@ -2,6 +2,9 @@ package lower
 
 import (
 	"errors"
+	"fmt"
+	"os"
+	"time"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/system-inc/adamic/internal/ir"
@@ -72,7 +75,10 @@ func (l *lowering) firstLinkPass(name string, rewrites bool, err error, run func
 			l.firstLinkRewriteSkip(name, rewrites)
 			return nil
 		}
-		if err = run(); err == nil {
+		started := time.Now()
+		err = run()
+		fmt.Fprintf(os.Stderr, "PASSRUN %s %d %.1fs %v\n", name, len(seen), time.Since(started).Seconds(), err != nil)
+		if err == nil {
 			return nil
 		}
 	}
