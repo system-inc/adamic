@@ -252,8 +252,8 @@ func (l *lowering) localOf(identifier *ast.Node, symbol *ast.Symbol) (int, bool)
 	local, isLocal := l.locals[symbol]
 	if isLocal {
 		l.touch(local)
-		if declared := l.result.Locals[local]; declared.Placeholder != "" && declared.Captured && declared.Preallocated && declared.Ready == 0 && l.unlowerable == nil {
-			l.unlowerable = l.notYet(identifier, "an unset-capable capture before its declaration without a separate declaration-readiness cell")
+		if declared := l.result.Locals[local]; declared.Placeholder != "" && declared.Captured && declared.Preallocated && declared.Ready == 0 {
+			l.holdUnlowerable(l.notYet(identifier, "an unset-capable capture before its declaration without a separate declaration-readiness cell"))
 		}
 	}
 	return local, isLocal
@@ -276,10 +276,10 @@ func (l *lowering) touch(local int) {
 		return
 	}
 	l.result.Locals[local].Captured = true
-	if name, isInitializing := l.initializing[local]; isInitializing && l.unlowerable == nil {
+	if name, isInitializing := l.initializing[local]; isInitializing {
 		// const f = () => f(): the function value is made before the variable's cell is, so it has
 		// nothing to capture yet.
-		l.unlowerable = l.notYet(name, "a function value that captures the variable its own initializer declares")
+		l.holdUnlowerable(l.notYet(name, "a function value that captures the variable its own initializer declares"))
 	}
 	start := 0
 	for position, closure := range l.closures {

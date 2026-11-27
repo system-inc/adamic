@@ -18,9 +18,9 @@ type stopSite struct {
 
 // stopWhere is where a judging pass's stop lies, inside a unit, or the unit's own declaration when the stop is
 // about the unit as a whole: the node's where; else where, when it names a position; else the declaration the
-// function's body was lowered from; else the top-level statement whose IR holds that statement of Main, by where
-// firstLinkMainAt finds each now. Otherwise, in a first-link lowering, it's "", no site: never the file alone and
-// never a module's node, which name no unit. An empty where is unplaced, so the lowering records the stop as a Gap
+// function's body was lowered from, or, for a helper, the unit that made it; else the top-level statement whose IR
+// holds that statement of Main, by where firstLinkMainAt finds each now. Otherwise, in a first-link lowering, it's
+// "", no site: never the file alone and never a module's node, which name no unit. An empty where is unplaced, so the lowering records the stop as a Gap
 // and the pass's judgment as abandoned, which fails closed. Any other lowering has nothing to place, and its stop
 // keeps the words it always had, the file alone (l.result.Source), never a message that names no site. Only a
 // first-link lowering records where each top-level statement's IR lies, so a statement of Main is placed in no
@@ -34,6 +34,11 @@ func (l *lowering) stopWhere(site stopSite) string {
 	}
 	if declaration := l.functionNodes[site.function]; site.function >= 0 && declaration != nil {
 		return l.program.Where(declaration)
+	}
+	// A helper has no declaration; its code is the unit's whose lowering made it (first_link_helpers.go), a
+	// range_field_read's checkRangeUnionReads stop on tsc, which named no site.
+	if maker := l.firstLinkHelperUnits[site.function]; site.function >= 0 && maker != nil {
+		return l.program.Where(maker)
 	}
 	if site.statement >= 0 {
 		for statement := range l.firstLinkMain {
