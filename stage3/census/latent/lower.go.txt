@@ -384,6 +384,7 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 	expansiveGenericsHeld := &expansiveGenericsCache{}
 	var facts *latentProgramFacts
  var modules []*ast.SourceFile
+	var namespaceFacts latentNamespaceFacts
 	for _, file := range program.Files() {
 		latentFindings = nil
 		latentFindingOwner, latentFindingPhase = program.Where(file.AsNode()), "refusal_scan"
@@ -398,7 +399,7 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 					latentFindings = append(latentFindings, LatentFinding{Measurement: LatentMeasurementLabel, Unit: latentFindingOwner, Phase: latentFindingPhase, Kind: "panic", Where: program.Where(file.AsNode()), Reason: fmt.Sprint(failure), Text: fmt.Sprint(failure)})
 				}
 			}()
-			fresh().latentScan(file)
+			fresh().latentScan(file, &namespaceFacts)
 		}()
 		for _, node := range file.Statements.Nodes {
 			latentFindingOwner, latentFindingPhase = program.Where(node), "lowering"
@@ -435,6 +436,7 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 					}
 				}()
 				l := fresh()
+				l.latentInstallNamespaceValues(&namespaceFacts)
 				if modules == nil {
 					var err error
 					modules, err = l.latentPrepassModules()
@@ -568,9 +570,38 @@ func (l *lowering) latentDeferredUnit(node *ast.Node) bool {
     return true
 }
 
+// A run's file checkers agree on the program's namespace symbols. Prepare
+// production's read-only map once for both the scan and unit lowering.
+type latentNamespaceFacts struct {
+	prepared bool
+	values   map[*ast.Symbol]bool
+}
+
+func (facts *latentNamespaceFacts) prepare(l *lowering) {
+	if facts.prepared {
+		return
+	}
+	facts.prepared = true
+	if modules, err := l.latentPrepassModules(); err == nil {
+		previous := l.namespaceValues
+		defer func() { l.namespaceValues = previous }()
+		l.noteNamespaceValues(modules)
+		facts.values = l.namespaceValues
+	}
+}
+
+func (l *lowering) latentInstallNamespaceValues(facts *latentNamespaceFacts) {
+	facts.prepare(l)
+	l.namespaceValues = facts.values
+}
+
 // The continuing scan clears its ordinary error binding after each finding.
 // Its deferred state is valid only if no ordinary finding was collected.
-func (l *lowering) latentScan(file *ast.SourceFile) {
+func (l *lowering) latentScan(file *ast.SourceFile, facts *latentNamespaceFacts) {
+	facts.prepare(l)
+	previous := l.namespaceValues
+	defer func() { l.namespaceValues = previous }()
+	l.namespaceValues = facts.values
 	first := len(latentFindings)
 	err := l.latentRefuse(file)
 	latentRecord(err)
