@@ -155,27 +155,10 @@ func (f *cycleFinder) allocationPlain(proven *checker.Type) bool {
 	if objectFlags&checker.ObjectFlagsAnonymous != 0 && objectFlags&checker.ObjectFlagsInstantiated != 0 {
 		return false
 	}
-	if objectFlags&checker.ObjectFlagsReference != 0 && len(f.l.checker.GetTypeArguments(proven)) != 0 {
-		return false
-	}
 	if len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) != 0 || len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) != 0 {
 		return false
 	}
-	if len(f.l.checker.GetIndexInfosOfType(proven)) != 0 {
-		return false
-	}
-	symbol := proven.Symbol()
-	if symbol == nil && objectFlags&checker.ObjectFlagsReference != 0 && proven.Target() != nil {
-		symbol = proven.Target().Symbol()
-	}
-	if symbol != nil {
-		for _, declaration := range symbol.Declarations {
-			if file := ast.GetSourceFileOfNode(declaration); file == nil || load.IsLibrary(file) || load.IsPrelude(file) || load.IsNodeLibrary(file) {
-				return false
-			}
-		}
-	}
-	return true
+	return load.IsLibrary != nil
 }
 
 // allocationIndex is one findCycles run's index for the two sweeps, so a node asks only the candidates whose names
