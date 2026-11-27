@@ -13,7 +13,9 @@ func (l *lowering) nullishNumericSwitch(statement *ast.SwitchStatement, storage 
 		return false
 	}
 	proven := l.checker.GetTypeAtLocation(statement.Expression)
-	numeric, nullish := false, false
+	// A number | undefined pair may be missing whatever the checker proved: a ?. read the checker calls a
+	// number is held as one, since its receiver may be absent (optional_scalar.go).
+	numeric, nullish := false, storage == ir.MaybeNumber
 	for _, member := range flattenedMembers(proven) {
 		flags := member.Flags()
 		switch {
