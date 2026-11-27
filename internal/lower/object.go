@@ -1304,12 +1304,16 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 		return nil, l.notYet(initializer, "a for...of declaring more than one variable")
 	}
 	name := declarations[0].Name()
-	if !ast.IsIdentifier(name) && name.Kind != ast.KindArrayBindingPattern {
-		return nil, l.notYet(initializer, "a for...of destructuring an object")
-	}
+	// An object pattern is admitted on the plain array road alone, where the element is held once per step and the
+	// pattern destructures it as a declaration does (#rm22wzv); every other road still stops at it by this name.
+	objectPattern := name.Kind == ast.KindObjectBindingPattern
+	objectPatternStop := func() error { return l.notYet(initializer, "a for...of destructuring an object") }
 	if plan, err := l.planIteration(statement.Expression); err != nil {
 		return nil, err
 	} else if plan != nil {
+		if objectPattern {
+			return nil, objectPatternStop()
+		}
 		return l.forOfUser(node, plan, name)
 	}
 	// map.entries(), map.keys() and map.values() are the map itself, iterated for that part.
@@ -1335,7 +1339,13 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 		return nil, err
 	}
 	if element, iterator := l.libraryIteratorElement(iterated); iterator {
+		if objectPattern {
+			return nil, objectPatternStop()
+		}
 		return l.libraryForOfIterator(node, iterable, element, name)
+	}
+	if objectPattern && iterable.Type() != ir.Array {
+		return nil, objectPatternStop()
 	}
 	var element ir.Type
 	switch iterable.Type() {
@@ -1397,7 +1407,9 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 	lowered := ir.ForOf{Iterable: iterable, Element: element, RegexIterator: iterable.Type() == ir.Object}
 	if iterable.Type() == ir.Array {
 		lowered.ElementCheck, err = l.viewArrayElementCheck(node, iterated)
-		if err == nil && lowered.ElementCheck == nil && ast.IsIdentifier(name) {
+		// An object pattern reads the element as the identifier road does, so a viewed array with no element check
+		// is recorded for it too, and checkViewArrays stops it before destructureFrom reads the fields (#rm22wzv).
+		if err == nil && lowered.ElementCheck == nil && (ast.IsIdentifier(name) || objectPattern) {
 			l.recordViewArrayUse(node, iterable, "for-of")
 		}
 		if err != nil {
@@ -1413,6 +1425,24 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 			// variable holds one too, and each read of it is the target.
 			l.result.Locals[lowered.Local].Type = ir.Weak
 		}
+	} else if objectPattern {
+		// for (const { a, b } of items): the element is held in one local, read once per step, and the pattern
+		// destructures that local at the top of the body by destructureFrom, the declaration road, so every check
+		// a destructuring declaration makes runs here each step (#rm22wzv). A loop element has no producer
+		// refuseIncompatibleDestructuredView could follow, so its runtime boundary stands, as for any unknown one.
+		held := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured", Type: element, Function: l.functionIndex})
+		lowered.Local = held
+		declared, err := l.destructureFrom(name, l.checker.GetTypeAtLocation(name), element, held)
+		if err != nil {
+			return nil, err
+		}
+		body, err := l.statement(statement.Statement)
+		if err != nil {
+			return nil, err
+		}
+		lowered.Body = append(declared, body...)
+		return []ir.Statement{lowered}, nil
 	} else {
 		// for (const [a, b] of pairs): each name reads a field of the tuple, "0", "1", ...
 		if element != ir.Object {
