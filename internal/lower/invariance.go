@@ -2,6 +2,7 @@ package lower
 
 import (
 	"slices"
+	"strings"
 	_ "unsafe"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
