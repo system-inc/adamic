@@ -1,12 +1,14 @@
 package lower
 
 import (
+	"strconv"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// Array reads have no field symbol. Recover their stored element type before flow narrowing.
+// Array and tuple reads have no field symbol. Recover their stored element type before flow narrowing.
 func (l *lowering) enumStoredType(node *ast.Node) *checker.Type {
 	node = ast.SkipParentheses(node)
 	if symbol := l.flagValueSymbol(node); symbol != nil {
@@ -19,6 +21,41 @@ func (l *lowering) enumStoredType(node *ast.Node) *checker.Type {
 				return arguments[0]
 			}
 		}
+		if checker.IsTupleType(stored) {
+			return l.tupleElementStoredType(stored, node.AsElementAccessExpression().ArgumentExpression)
+		}
+	}
+	return nil
+}
+
+// tupleElementStoredType is the declared type of the one element a literal key reads, judged by that
+// element and never by the union of the tuple's elements, which would let a value of another element's
+// type pass a never read as a member (processEnding's allowedEndings[0], moduleSpecifiers.ts:1386). Each
+// nil is fail-closed: the caller stops in today's words rather than judge the read by a type the element
+// may not hold. A key that isn't a non-negative integer literal may read any element or none; an optional
+// element may be absent and read undefined; a variadic element spreads a tuple whose positions the key
+// can't place; a key past the end of a tuple with no rest reads undefined; and a rest followed by more
+// elements leaves the key's element unknown.
+func (l *lowering) tupleElementStoredType(tuple *checker.Type, key *ast.Node) *checker.Type {
+	key = ast.SkipParentheses(key)
+	if key.Kind != ast.KindNumericLiteral {
+		return nil
+	}
+	index, err := strconv.Atoi(key.Text())
+	if err != nil || index < 0 || strconv.Itoa(index) != key.Text() {
+		return nil // A key the source wrote as no integer index, a fraction or one past what an int holds.
+	}
+	elements := l.checker.GetTypeArguments(tuple)
+	flags := tuple.TargetTupleType().ElementFlags()
+	fixed := tuple.TargetTupleType().FixedLength()
+	if index < fixed {
+		if index < len(elements) && flags[index] == checker.ElementFlagsRequired {
+			return elements[index]
+		}
+		return nil
+	}
+	if len(flags) == fixed+1 && flags[fixed] == checker.ElementFlagsRest && fixed < len(elements) {
+		return elements[fixed]
 	}
 	return nil
 }
