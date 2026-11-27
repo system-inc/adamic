@@ -520,49 +520,74 @@ func (l *lowering) enumExpression(node *ast.Node) (ir.Expression, bool, error) {
 	return ir.Call{Function: index, Arguments: []ir.Expression{object, key}, Returns: of}, true, nil
 }
 
-func (l *lowering) enumRefusal(node *ast.Node) error {
-	if l.isExpression(node) && !hasTypeAncestor(node) {
-		if symbol := l.flagValueSymbol(node); symbol != nil {
-			declared := l.checker.GetTypeOfSymbol(symbol)
-			observed := l.checker.GetTypeAtLocation(node)
-			// A refinement can land on an intersection member or a smaller union of members, so
-			// every member that isn't a primitive counts, and so does any refined shape that is.
-			objectMembers := 0
-			if declared.Flags()&checker.TypeFlagsUnion != 0 {
-				for _, member := range declared.Types() {
-					if member.Flags()&checker.TypeFlagsPrimitive == 0 {
-						objectMembers++
-					}
-				}
-			}
-			if objectMembers > 1 && declared.Flags()&checker.TypeFlagsUnion != 0 && observed != declared && refinedToObject(observed) {
-				// A union whose tags can lie is admitted only where every step that refined this read
-				// is a comparison its incoming type proves (enum_tag_flow.go).
-				hazard := l.enumTagHazardOf(declared, "")
-				// A property's refused read is its name, which has no flow node: the walk follows the
-				// access the checker narrows (#qeanycw).
-				reference := node
-				if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Name() == node {
-					reference = parent
-				}
-				if hazard != enumTagNoHazard && !l.enumTagRefinementProven(reference, declared) {
-					// The swing (rulings.md:258 as amended for .ts, Adamic's ruling of Nov 25 on #x2cjvy9): in .ts,
-					// a refinement the walk can't prove is read through each narrowed object member's checked view,
-					// as an open-enum predicate's true branch is (#k1t2wp9), so a lying layout stops loudly at its
-					// read or write instead of being refused at compile time. .a refuses as before.
-					if file := l.program.FileName(ast.GetSourceFileOfNode(node)); !strings.HasSuffix(file, ".a") {
-						if enumTagSwingSites != nil {
-							enumTagSwingSites.record(filepath.Dir(file), l.program.Where(node))
-						}
-						return l.enumTagCheckedViews(node, declared, observed)
-					}
-					if hazard == enumTagSharedValueHazard {
-						return &Refused{Where: l.program.Where(node), What: "an object refinement by tags from different numeric enums that share a value", Fix: "give the members tags from one enum, or tags with distinct values (adamic/enum-tag)"}
-					}
-					return &Refused{Where: l.program.Where(node), What: "an object refinement using an open numeric enum as a literal tag", Fix: "use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"}
-				}
+// enumTagUnproven reports, for node, a read of a union whose object members' tags can lie, refined to an object
+// by a step the walk can't prove (enum_tag_flow.go): the union it was declared, the type it was refined to, and the
+// hazard that makes the tags lie. In .ts the swing reads it through each narrowed object member's checked view, and
+// .a refuses it (enumRefusal). narrowedArmPropertyReadGap asks it too, so a read the swing already checks at the
+// read isn't stopped as a stale arm (#8nj5pn4, Adamic's seam ruling of Nov 27).
+func (l *lowering) enumTagUnproven(node *ast.Node) (declared, observed *checker.Type, hazard enumTagHazard, unproven bool) {
+	if !l.isExpression(node) || hasTypeAncestor(node) {
+		return nil, nil, enumTagNoHazard, false
+	}
+	symbol := l.flagValueSymbol(node)
+	if symbol == nil {
+		return nil, nil, enumTagNoHazard, false
+	}
+	declared = l.checker.GetTypeOfSymbol(symbol)
+	observed = l.checker.GetTypeAtLocation(node)
+	// A refinement can land on an intersection member or a smaller union of members, so
+	// every member that isn't a primitive counts, and so does any refined shape that is.
+	objectMembers := 0
+	if declared.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range declared.Types() {
+			if member.Flags()&checker.TypeFlagsPrimitive == 0 {
+				objectMembers++
 			}
 		}
+	}
+	if objectMembers <= 1 || declared.Flags()&checker.TypeFlagsUnion == 0 || observed == declared || !refinedToObject(observed) {
+		return nil, nil, enumTagNoHazard, false
+	}
+	// A union whose tags can lie is admitted only where every step that refined this read
+	// is a comparison its incoming type proves (enum_tag_flow.go).
+	hazard = l.enumTagHazardOf(declared, "")
+	// A property's refused read is its name, which has no flow node: the walk follows the
+	// access the checker narrows (#qeanycw).
+	reference := node
+	if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Name() == node {
+		reference = parent
+	}
+	if hazard == enumTagNoHazard || l.enumTagRefinementProven(reference, declared) {
+		return nil, nil, enumTagNoHazard, false
+	}
+	return declared, observed, hazard, true
+}
+
+// enumTagSwings is whether the swing reads node through its narrowed members' checked views: an unproven
+// refinement (enumTagUnproven) in a .ts file.
+func (l *lowering) enumTagSwings(node *ast.Node) bool {
+	if _, _, _, unproven := l.enumTagUnproven(node); !unproven {
+		return false
+	}
+	return !strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".a")
+}
+
+func (l *lowering) enumRefusal(node *ast.Node) error {
+	if declared, observed, hazard, unproven := l.enumTagUnproven(node); unproven {
+		// The swing (rulings.md:258 as amended for .ts, Adamic's ruling of Nov 25 on #x2cjvy9): in .ts,
+		// a refinement the walk can't prove is read through each narrowed object member's checked view,
+		// as an open-enum predicate's true branch is (#k1t2wp9), so a lying layout stops loudly at its
+		// read or write instead of being refused at compile time. .a refuses as before.
+		if file := l.program.FileName(ast.GetSourceFileOfNode(node)); !strings.HasSuffix(file, ".a") {
+			if enumTagSwingSites != nil {
+				enumTagSwingSites.record(filepath.Dir(file), l.program.Where(node))
+			}
+			return l.enumTagCheckedViews(node, declared, observed)
+		}
+		if hazard == enumTagSharedValueHazard {
+			return &Refused{Where: l.program.Where(node), What: "an object refinement by tags from different numeric enums that share a value", Fix: "give the members tags from one enum, or tags with distinct values (adamic/enum-tag)"}
+		}
+		return &Refused{Where: l.program.Where(node), What: "an object refinement using an open numeric enum as a literal tag", Fix: "use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"}
 	}
 
 	if err := l.enumObjectView(node); err != nil {
