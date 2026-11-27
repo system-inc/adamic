@@ -539,6 +539,11 @@ type lowering struct {
 	// iterableViewFlowGraph), which checkFlowLiveness holds to that once lowering is done.
 	flowDead map[int]bool
 
+	// firstLinkHelperUnits is, in a first-link lowering, the unit whose lowering made each helper, a function with no
+	// declaration, by its index (firstLinkNoteHelpers), which a trap stubs once every unit owning it is trapped
+	// (first_link_helpers.go).
+	firstLinkHelperUnits map[int]*ast.Node
+
 	// Source-only sites for graph adoption diagnostics; never stored in emitted IR.
 	graphDynamicSite *ast.Node
 	// graphDecodeSite is the first decodeJson whose value can hold a container, and graphDecodeType
