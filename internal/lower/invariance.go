@@ -796,7 +796,11 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		source, target := l.checker.GetTypeAtLocation(as.Expression), l.checker.GetTypeAtLocation(node)
 		if l.checker.IsTypeAssignableTo(source, target) || l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(source), target) {
 			if err := l.provenRelation(node, as.Expression, target); err != nil {
-				return err
+				// SCRATCH (#zkp356b measure, never to land): the same #msn1j8r fall-through castProof takes.
+				reason, ok := err.(*Refused)
+				if !ok || !strings.Contains(reason.What, "has no proven compatible presence/type") || !l.checkedAssertionSource(node) || isClassInstance(l.concrete(source)) && isClassInstance(l.concrete(target)) {
+					return err
+				}
 			}
 		} else {
 			// Preserve the existing checks on downcasts; their lowering belongs to cast.go.
