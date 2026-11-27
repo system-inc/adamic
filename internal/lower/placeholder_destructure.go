@@ -16,14 +16,21 @@ import (
 // field is read at its placeholder storage, as typeOfSymbol says (a union, which can hold the undefined),
 // never at the name's own representation: native's view read takes nothing else, and the first cut, which
 // read it as the name's, stopped on a compiler bug there (placeholder view has untagged storage). read is the
-// destructuring's own read of the field; one that isn't a placeholder's comes back as it is.
-func (l *lowering) placeholderDestructuredRead(binding *ast.Node, field *ast.Symbol, fieldType *checker.Type, read ir.Property, defaulted bool) (ir.Expression, error) {
+// destructuring's own read of the field; one that isn't a placeholder's comes back as it is. slot says the name
+// is a placeholder slot itself, as an unannotated const { parent } = node makes it, the way const parent =
+// node.parent does (walkPlaceholderSlots, #0d56xpd): the unset flows into it unchecked (rulings.md:55, other
+// placeholder slots), and each read of the name is the placeholder read that checks it.
+func (l *lowering) placeholderDestructuredRead(binding *ast.Node, field *ast.Symbol, fieldType *checker.Type, read ir.Property, defaulted bool, slot bool) (ir.Expression, error) {
 	origin := l.placeholderSymbolOrigin(field)
 	direct := origin != ""
 	if !direct {
 		origin = l.result.PlaceholderViews[l.placeholderKey(field)]
 	}
 	if origin == "" {
+		if slot {
+			// The name took a placeholder this field doesn't hold; its storage would be the wrong one.
+			return nil, l.notYet(binding, "a destructured placeholder slot whose field holds no placeholder")
+		}
 		return read, nil
 	}
 	if defaulted {
@@ -47,6 +54,9 @@ func (l *lowering) placeholderDestructuredRead(binding *ast.Node, field *ast.Sym
 		unset.ViewType = read.ViewType
 		unset.ViewAllowed = read.ViewAllowed
 		l.result.PlaceholderChecks = append(l.result.PlaceholderChecks, ir.PlaceholderCheck{Origin: origin, Use: "field representation", Path: path, Where: l.program.Where(binding), Status: "checked"})
+	}
+	if slot {
+		return unset, nil
 	}
 	of, known := l.representation(l.checker.GetNonNullableType(fieldType))
 	if !known {

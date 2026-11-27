@@ -308,6 +308,20 @@ func (l *lowering) walkPlaceholderSlots() {
 					transfers = append(transfers, transfer{key, value})
 				}
 			}
+			if target.Kind == ast.KindObjectBindingPattern && node.AsVariableDeclaration().Type == nil && value != nil {
+				// const { parent } = node is the field read into a name, as const parent = node.parent is,
+				// so an unannotated name takes the field's placeholder the same way (#0d56xpd): each read
+				// of the name is then a placeholder read, and its ?. a presence test.
+				for _, element := range target.AsBindingPattern().Elements.Nodes {
+					binding := element.AsBindingElement()
+					if binding.DotDotDotToken != nil || binding.Initializer != nil || !ast.IsIdentifier(element.Name()) {
+						continue
+					}
+					key := l.placeholderKey(l.symbol(element.Name()))
+					inferred[key] = true
+					transfers = append(transfers, transfer{key, element})
+				}
+			}
 		case ast.KindPropertyDeclaration:
 			target, value = node.Name(), node.AsPropertyDeclaration().Initializer
 			key := l.placeholderKey(l.symbol(target))
@@ -402,6 +416,9 @@ func (l *lowering) walkPlaceholderSlots() {
 		if node.Kind == ast.KindAsExpression {
 			return origins(node.AsAsExpression().Expression)
 		}
+		if node.Kind == ast.KindBindingElement {
+			return l.placeholderBindingOrigin(node)
+		}
 		if ast.IsIdentifier(node) || node.Kind == ast.KindPropertyAccessExpression {
 			return l.placeholderReadOrigin(node)
 		}
@@ -430,12 +447,39 @@ func (l *lowering) walkPlaceholderSlots() {
 	}
 }
 
+// placeholderBindingOrigin is the placeholder origin of the field a binding element of a declaration's
+// object pattern takes out of its initializer, its own or a view's, as placeholderReadOrigin finds one for
+// the field's read written with a dot, or "" where it has none.
+func (l *lowering) placeholderBindingOrigin(element *ast.Node) string {
+	declaration := element.Parent.Parent
+	if declaration == nil || declaration.Kind != ast.KindVariableDeclaration || declaration.AsVariableDeclaration().Initializer == nil {
+		return ""
+	}
+	name := element.AsBindingElement().PropertyName
+	if name == nil {
+		name = element.Name()
+	}
+	if !ast.IsIdentifier(name) && name.Kind != ast.KindStringLiteral {
+		return ""
+	}
+	source := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(declaration.AsVariableDeclaration().Initializer))
+	field := l.checker.GetPropertyOfType(source, name.Text())
+	if field == nil {
+		return ""
+	}
+	if origin := l.placeholderSymbolOrigin(field); origin != "" {
+		return origin
+	}
+	return l.result.PlaceholderViews[l.placeholderKey(field)]
+}
+
 // placeholderAllowsUnset is deliberately narrower than acceptsUndefined: a
 // template or a container element is a use as T, even when Node tolerates it.
 func (l *lowering) placeholderAllowsUnset(node *ast.Node) bool {
 	if comparedWithUndefined(node) || l.placeholderNullishTest(node.Parent) {
 		return true
 	}
+	original := node
 	for node.Parent != nil && (node.Parent.Kind == ast.KindParenthesizedExpression || node.Parent.Kind == ast.KindAsExpression) {
 		node = node.Parent
 	}
@@ -444,6 +488,13 @@ func (l *lowering) placeholderAllowsUnset(node *ast.Node) bool {
 		return false
 	}
 	switch parent.Kind {
+	case ast.KindPropertyAccessExpression:
+		// The receiver of a ?. is a presence test (rulings.md:55): the ?. reads undefined where the
+		// placeholder is still unset, as Node does (#0d56xpd). Only ?. exactly: a plain read through the
+		// placeholder is a use as T, checked.
+		if l.placeholderChainObject(original) {
+			return true
+		}
 	case ast.KindIfStatement:
 		return parent.AsIfStatement().Expression == node
 	case ast.KindWhileStatement:
@@ -495,8 +546,30 @@ func (l *lowering) placeholderAllowsUnset(node *ast.Node) bool {
 	return contextual != nil && l.placeholderOptional(contextual)
 }
 
+// placeholderChainObject reports whether node, a placeholder's read, is the receiver a property access
+// tests with its ?., through parentheses and assertions, and holds an object when it's set (#0d56xpd). The
+// read is the placeholder's storage, a union that may hold undefined or null, which placeholderRead hands
+// the ?. as the nullable object pointer it tests. A receiver of any other representation keeps its checked
+// use, as before.
+func (l *lowering) placeholderChainObject(node *ast.Node) bool {
+	at := node
+	for at.Parent != nil && (at.Parent.Kind == ast.KindParenthesizedExpression || at.Parent.Kind == ast.KindAsExpression) {
+		at = at.Parent
+	}
+	access := at.Parent
+	if access == nil || access.Kind != ast.KindPropertyAccessExpression || access.AsPropertyAccessExpression().Expression != at || access.AsPropertyAccessExpression().QuestionDotToken == nil {
+		return false
+	}
+	present, known := l.representation(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node)))
+	return known && present == ir.Object
+}
+
 func (l *lowering) placeholderRead(node *ast.Node, value ir.Expression, origin string) ir.Expression {
 	if l.placeholderAllowsUnset(node) {
+		if value.Type() == ir.Union && l.placeholderChainObject(node) {
+			// An unset placeholder reads undefined at the ?., and a set one is the object it holds.
+			return l.optionalNullableObject(value)
+		}
 		return value
 	}
 	use := "use as T"

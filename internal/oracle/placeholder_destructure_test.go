@@ -13,7 +13,9 @@ import (
 // as node.parent read into a const is (#jjf9ppe). Main read it with no check, so const { parent } = node and
 // then parent.kind dereferenced null natively (UBSan, record.c) where Node throws a TypeError. Now each road
 // that destructures a field, a declaration, a parameter and an assignment, checks it where it's read, and
-// stops loudly on both backends with the placeholder's words, before the program prints past "before". A
+// stops loudly on both backends with the placeholder's words, before the program prints past "before". An
+// unannotated const { parent } = node makes parent a placeholder slot, as const parent = node.parent does
+// (#0d56xpd), so const_binding's check is at the name's read, parent.kind, and a ?. there reads undefined. A
 // default over such a field is not yet: Node takes the default for the placeholder's undefined, where the
 // check would stop. The field is read at its placeholder storage, a union, so a view's read takes it
 // (const_binding's, root typed N, stopped natively on a compiler bug when the read was the name's own
@@ -23,7 +25,7 @@ import (
 func TestPlaceholderDestructuredBindingIsChecked(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, panic, stop string }{
-		{"const_binding.ts", "placeholder 'parent' is unset at destructured binding via parent", ""},
+		{"const_binding.ts", "placeholder 'parent' is unset at property read via parent", ""},
 		{"parameter.ts", "placeholder 'parent' is unset at destructured binding via parent", ""},
 		{"assignment.ts", "placeholder 'parent' is unset at destructured binding via parent", ""},
 		{"defaulted.ts", "", "a destructuring default for field parent, which may still hold its placeholder"},

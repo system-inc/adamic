@@ -557,7 +557,13 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 		if fallback != nil {
 			stored = element
 		}
-		if !isKnown || element != stored || (slotless(stored) && stored != ir.Union) {
+		// A name that is a placeholder slot itself holds the field's placeholder storage (#0d56xpd).
+		placeholderSlot := l.result.Locals[local].Placeholder != "" && fallback == nil
+		fieldStored := element
+		if placeholderSlot {
+			fieldStored = placeholderStorage(element)
+		}
+		if !isKnown || fieldStored != stored || (slotless(stored) && stored != ir.Union) {
 			return nil, l.notYet(binding, "a destructured name held otherwise than its field")
 		}
 		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: stored, Absent: absent}
@@ -570,7 +576,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 		// A field that may hold a placeholder is read as one and checked as a use (#jjf9ppe).
 		var read ir.Expression = value
 		if fieldSymbol != nil {
-			if read, err = l.placeholderDestructuredRead(binding, fieldSymbol, fieldType, value, fallback != nil); err != nil {
+			if read, err = l.placeholderDestructuredRead(binding, fieldSymbol, fieldType, value, fallback != nil, placeholderSlot); err != nil {
 				return nil, err
 			}
 		}

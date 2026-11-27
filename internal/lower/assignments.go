@@ -304,7 +304,7 @@ func (l *lowering) objectDestructuringAssignment(pattern *ast.Node, valueNode *a
 		read.ViewType = l.checker.TypeToString(fieldType)
 		read.ViewAllowed = l.viewLiterals(fieldType)
 		// A field that may hold a placeholder is read as one and checked as a use (#jjf9ppe).
-		checked, err := l.placeholderDestructuredRead(property, symbol, fieldType, read, false)
+		checked, err := l.placeholderDestructuredRead(property, symbol, fieldType, read, false, false)
 		if err != nil {
 			return nil, err
 		}
