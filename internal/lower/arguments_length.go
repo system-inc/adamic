@@ -451,7 +451,11 @@ func (l *lowering) signatureSlots(node *ast.Node, signature *checker.Signature) 
 }
 
 // spreadElement is how a spread argument's elements are held: a tuple literal's own element, or the
-// element of the array type callArguments admitted.
+// element of the array type callArguments admitted. Its first type argument is every element's type
+// only because callArguments admits nothing else: a spread that isn't an array stops there, a tuple
+// that isn't a literal among them, and so does an array without exactly one element type. An iterable
+// admitted later must be read here too, or a tuple's first element would be taken for all of them
+// (Emit's should on #whe5bdk).
 func (l *lowering) spreadElement(node *ast.Node, argument ir.Expression) ir.Type {
 	if literal, isLiteral := argument.(ir.ArrayLiteral); isLiteral {
 		return literal.Element
