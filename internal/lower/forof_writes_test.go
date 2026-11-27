@@ -185,7 +185,7 @@ func TestForOfReassignedBindingIsNoPlainSpreadSource(t *testing.T) {
 			Body:     []ir.Statement{ir.Assign{Local: 0, Value: ir.ObjectLiteral{}}},
 		}},
 	}
-	if newAllocationFlowGraph(program).plainSpreadSources(ir.Read{Local: 0, Of: ir.Object}, map[int]bool{}) {
+	if newAllocationFlowGraph(program).plainSpreadSources(ir.Read{Local: 0, Of: ir.Object}, map[int]bool{}, everyClassPlain) {
 		t.Fatal("a for-of binding reassigned with a literal is taken as a plain spread source")
 	}
 }

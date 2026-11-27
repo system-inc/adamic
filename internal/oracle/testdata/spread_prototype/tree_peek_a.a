@@ -1,0 +1,17 @@
+interface Tree {
+	readonly tag: string;
+	peek(): string;
+}
+class Real implements Tree {
+	constructor(readonly tag: string) {}
+	peek(): string {
+		return "peeked " + this.tag;
+	}
+}
+const tree: Tree = new Real("t");
+const v = { ...tree };
+try {
+	console.log(v.peek());
+} catch (error) {
+	console.log("threw");
+}
