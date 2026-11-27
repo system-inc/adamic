@@ -1,0 +1,17 @@
+# #gbr6vs2 probe (Performance, never merged): does the structural view over an intersection read signature by the
+# value's stored representation? Source after environment.sh, cloud/sandboxed-job.sh, sandboxed_npm stage3/api and
+# sandboxed_products ./internal/oracle.
+set -u
+D=internal/oracle/testdata/gbr_probe
+for f in honest lie; do
+	echo "== adamic c $f"
+	go run ./cmd/adamic c "$D/$f.ts" > "$TMPDIR/$f.c" 2> "$TMPDIR/$f.err"; echo "exit $?"; head -c 1500 "$TMPDIR/$f.err"
+	wc -c < "$TMPDIR/$f.c"
+	grep -nE 'signature' "$TMPDIR/$f.c" | cut -c1-260 | head -40
+done
+echo "== the functions toState and direct in honest.c"
+awk '/toState|direct/ && /\{$/ {p=1} p {print; n++} n>120 {exit}' "$TMPDIR/honest.c" | cut -c1-240
+echo "== oracle probe"
+go test -count=1 -v -run '^TestGbrProbe$' ./internal/oracle > "$TMPDIR/probe.log" 2>&1; echo "exit $?"
+grep -E 'zz_gbr_probe_test.go|--- (PASS|FAIL)|panic' "$TMPDIR/probe.log" | cut -c1-600
+echo "VERDICT READ"
