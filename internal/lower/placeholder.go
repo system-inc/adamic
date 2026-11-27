@@ -436,6 +436,7 @@ func (l *lowering) placeholderAllowsUnset(node *ast.Node) bool {
 	if comparedWithUndefined(node) || l.placeholderNullishTest(node.Parent) {
 		return true
 	}
+	original := node
 	for node.Parent != nil && (node.Parent.Kind == ast.KindParenthesizedExpression || node.Parent.Kind == ast.KindAsExpression) {
 		node = node.Parent
 	}
@@ -444,6 +445,13 @@ func (l *lowering) placeholderAllowsUnset(node *ast.Node) bool {
 		return false
 	}
 	switch parent.Kind {
+	case ast.KindPropertyAccessExpression:
+		// The receiver of a ?. is a presence test (rulings.md:55): the ?. reads undefined where the
+		// placeholder is still unset, as Node does (#0d56xpd). Only ?. exactly: a plain read through the
+		// placeholder is a use as T, checked.
+		if l.placeholderChainObject(original) {
+			return true
+		}
 	case ast.KindIfStatement:
 		return parent.AsIfStatement().Expression == node
 	case ast.KindWhileStatement:
@@ -495,8 +503,31 @@ func (l *lowering) placeholderAllowsUnset(node *ast.Node) bool {
 	return contextual != nil && l.placeholderOptional(contextual)
 }
 
+// placeholderChainObject reports whether node, a placeholder's read, is the receiver a property access
+// tests with its ?., through parentheses and assertions, and holds an object when it's set (#0d56xpd). The
+// read is the placeholder's storage, a union that may hold undefined or null, which placeholderRead hands
+// the ?. as the nullable object pointer it tests. A receiver of any other representation keeps its checked
+// use, as before. The ?. is questionDot's: a guarded chain's step runs as a plain read (#cdpxjmb), and so
+// keeps the placeholder's check.
+func (l *lowering) placeholderChainObject(node *ast.Node) bool {
+	at := node
+	for at.Parent != nil && (at.Parent.Kind == ast.KindParenthesizedExpression || at.Parent.Kind == ast.KindAsExpression) {
+		at = at.Parent
+	}
+	access := at.Parent
+	if access == nil || access.Kind != ast.KindPropertyAccessExpression || access.AsPropertyAccessExpression().Expression != at || !l.questionDot(access) {
+		return false
+	}
+	present, known := l.representation(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node)))
+	return known && present == ir.Object
+}
+
 func (l *lowering) placeholderRead(node *ast.Node, value ir.Expression, origin string) ir.Expression {
 	if l.placeholderAllowsUnset(node) {
+		if value.Type() == ir.Union && l.placeholderChainObject(node) {
+			// An unset placeholder reads undefined at the ?., and a set one is the object it holds.
+			return l.optionalNullableObject(value)
+		}
 		return value
 	}
 	use := "use as T"
