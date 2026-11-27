@@ -75,8 +75,16 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				return nil, l.notYet(property, "a string field with the reserved iterator slot name")
 			}
 			fieldName, known := l.methodName(property)
+			// keyRead is a numeric key's enum member read, run before the field's value (numericKeyRead).
+			var keyRead ir.Expression
 			if !known {
 				fieldName, known = l.numericFieldName(node, property)
+				if known {
+					var err error
+					if keyRead, err = l.numericKeyRead(property); err != nil {
+						return nil, err
+					}
+				}
 			}
 			if !known {
 				return nil, l.notYet(name, "a computed field name")
@@ -85,6 +93,10 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				return nil, &Refused{Where: l.program.Where(property), What: "__proto__ in an object literal", Fix: "JavaScript changes the prototype instead of making an own field; Adamic objects have fixed shapes and no prototype mutation"}
 			}
 			if property.Kind == ast.KindPropertyAssignment && l.uninitializedInitializer(property.AsPropertyAssignment().Initializer) {
+				if keyRead != nil {
+					// A placeholder's field has no value to run its key's read before, so it stops (#kgngvxj).
+					return nil, l.notYet(property, "an uninitialized object field whose computed key reads an enum member")
+				}
 				declared := l.declaredField(node, fieldName)
 				initializer := ast.SkipParentheses(property.AsPropertyAssignment().Initializer)
 				if declared == 0 && initializer.Kind == ast.KindAsExpression {
@@ -148,6 +160,10 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			}
 			if censusFieldSlotless(value.Type()) {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
+			}
+			if keyRead != nil {
+				// Node evaluates the key, and so its enum's readiness, before the value.
+				value = ir.Comma{Left: keyRead, Right: value}
 			}
 			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value, Nullish: l.fieldNullish(property, value)})
 		default:
