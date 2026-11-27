@@ -183,11 +183,13 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 		}
 		module.AsNode().ForEachChild(visit)
 	}
+	relationSizeTrace(l.checker, "findCycles after the AST walk")
 	// Every instantiation lowering made, Box<Node> inside Maker<Node> included, which the source may
 	// never write.
 	for _, proven := range l.instantiated {
 		finder.use(proven, l.classNodeFor(proven))
 	}
+	relationSizeTrace(l.checker, "findCycles after instantiated")
 	if finder.deepest != nil {
 		where := finder.deepestAt
 		if where == nil && len(modules) > 0 {
@@ -196,7 +198,9 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 		return l.notYet(where, "finding cycles through a type that instantiates itself deeper at each level ("+l.checker.TypeToString(finder.deepest)+")")
 	}
 	// Program membership changes ownership only after every ordinary graph check passes.
+	relationSizeTrace(l.checker, "graphTypes start")
 	if err := finder.graphTypes(modules); err != nil {
+		relationSizeTrace(l.checker, "graphTypes stopped")
 		return err
 	}
 	if err := finder.jsonReferenceReach(); err != nil {

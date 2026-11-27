@@ -409,6 +409,7 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 
 func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 	label, start := "cell", assignableSize(f.l.checker)
+	graphLinksProgress(f.l.checker)
 	defer func() { armPairs[label] += assignableSize(f.l.checker) - start; armCalls[label]++ }()
 	if node.cell != 0 {
 		links := []cycleNode{}

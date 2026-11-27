@@ -37,6 +37,7 @@ func relationSizeTrace(typeChecker *checker.Checker, label string) {
 // armPairs and armCalls are the probe's count, per arm of graphLinks, of assignable pairs added and calls made,
 // printed and reset at each findCycles end (#nxb3xh1, Compiler's (b)).
 var (
+	graphLinksCalls int
 	armPairs = map[string]int{}
 	armCalls = map[string]int{}
 )
@@ -64,4 +65,12 @@ func armTrace(label string) {
 	}
 	armPairs = map[string]int{}
 	armCalls = map[string]int{}
+}
+
+// graphLinksProgress counts graphLinks' calls and prints the relation sizes every 5000.
+func graphLinksProgress(typeChecker *checker.Checker) {
+	graphLinksCalls++
+	if graphLinksCalls%5000 == 0 {
+		relationSizeTrace(typeChecker, fmt.Sprintf("graphLinks call %d", graphLinksCalls))
+	}
 }
