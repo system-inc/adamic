@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
@@ -140,4 +141,66 @@ func TestFirstLinkLiveCapturedVariableIsStillJudged(t *testing.T) {
 	t.Parallel()
 	program, err := lowerFirstLinkTS(t, "function live(c: unknown): number {\n\tconst read = (): unknown => c;\n\treturn read() === undefined ? 0 : 1;\n}\nfunction relay(d: unknown): number {\n\treturn live(d);\n}\nfunction trapped(b: unknown): number {\n\treturn relay(b) + Math.random();\n}\nconsole.log(`${relay(0) + trapped(0)}`);\n", true)
 	firstLinkEchoRows(t, program, err, [][2]string{{"main.ts trapped", "Body"}, {"main.ts live", "findCycles"}})
+}
+
+// looseHolder is a value with a loose field, data, so a literal spreading one into a Holder is an initialization
+// the cycle finder judges (loose_slots.go's looseInits): it can reach the Holder holding it back through data.
+const looseHolder = "interface Holder {\n    readonly x: number;\n    data: unknown;\n}\n"
+
+// A literal's initialization is noted while lowering, a trapped unit's too, whose code its stub replaced, so the
+// cycle finder passes over one made inside a trapped unit (#nxb3xh1). copy spreads a Holder into a Holder in a
+// program with a static constructor object, so checkAccessorSpreads traps copy at the spread, then findCycles met
+// the same spread, an Echo, as it met executeCommandLineWorker's spread into ParsedCommandLine on tsc
+// (executeCommandLine.ts:730:19).
+// Mutant (first_link_echo_guards.mutants.md): the initialization's pass-over dropped, and the Echo comes back.
+func TestFirstLinkLooseInitOfATrappedUnitIsPassedOver(t *testing.T) {
+	t.Parallel()
+	program, err := lowerFirstLinkTS(t, stopWhereStatics(looseHolder+"function copy(holder: Holder): Holder {\n    return { ...holder };\n}\nconsole.log(String(copy({ x: 1, data: 0 }).x + Counter.start()));\n"), true)
+	firstLinkEchoRows(t, program, err, [][2]string{{"main.ts copy", "checkAccessorSpreads"}})
+}
+
+// The initialization's pass-over is for a literal a trapped unit makes, and never for one a live unit does, though
+// a trapped unit hands it a value (Compiler's condition on #nxb3xh1). copy, live, spreads a Holder into a Holder
+// and still stops findCycles there, where trapped hands copy a Holder of its own before Math.random traps trapped.
+// Once copy traps, the pass runs again and meets the spread inside a trapped unit, which the pass-over passes over.
+// Mutants (first_link_echo_guards.mutants.md): the pass-over widened to every initialization once any unit is
+// trapped, and copy's stop goes missing; the pass-over dropped, and the rerun's spread is a Gap.
+func TestFirstLinkLiveLooseInitIsStillJudged(t *testing.T) {
+	t.Parallel()
+	program, err := lowerFirstLinkTS(t, looseHolder+"function copy(holder: Holder): Holder {\n    return { ...holder };\n}\nfunction trapped(): number {\n    return copy({ x: 2, data: 0 }).x + Math.random();\n}\nconsole.log(String(copy({ x: 1, data: 0 }).x + trapped()));\n", true)
+	firstLinkEchoRows(t, program, err, [][2]string{{"main.ts trapped", "Body"}, {"main.ts copy", "findCycles"}})
+	if rows := firstLinkLocalSites(program); len(rows) == 2 && !strings.HasPrefix(rows[1].Reason, "a spread into Holder") {
+		t.Errorf("copy's stop: got %q, want the spread's initialization, a spread into Holder", rows[1].Reason)
+	}
+}
+
+// firstLinkCatchBinding is a function name whose catch binding e is captured by read, and read is kept in an
+// unknown[], so lib's Error, what's caught, reaches e's cell back through its cause and what H holds. tail ends its
+// body.
+func firstLinkCatchBinding(name, tail string) string {
+	return "function " + name + "(): number {\n\ttry {\n\t\tconsole.log('try');\n\t} catch (e) {\n\t\tconst read = (): unknown => e;\n\t\tconst kept: unknown[] = [read];\n\t\tconsole.log(`${kept.length}`);\n\t}\n\treturn " + tail + ";\n}\n"
+}
+
+// A catch binding is read from the program's locals, a trapped unit's included, so the cycle finder passes over one
+// declared inside a trapped unit, as it does a captured variable (#nxb3xh1). trapped's e, captured by read, can
+// hold a caught Error that reaches its own cell back, and Math.random traps trapped.
+// Mutant (first_link_echo_guards.mutants.md): the catch binding's pass-over dropped, and findCycles meets e, an
+// Echo.
+func TestFirstLinkCatchBindingOfATrappedUnitIsPassedOver(t *testing.T) {
+	t.Parallel()
+	program, err := lowerFirstLinkTS(t, firstLinkCatchBinding("trapped", "Math.random()")+"console.log(`${trapped()}`);\n", true)
+	firstLinkEchoRows(t, program, err, [][2]string{{"main.ts trapped", "Body"}})
+}
+
+// The catch binding's pass-over is for one a trapped unit declares: live's e, the same shape, still stops findCycles
+// in live while Math.random traps trapped. Once live traps, the pass runs again and passes over its e.
+// Mutants (first_link_echo_guards.mutants.md): the pass-over widened to every catch binding once any unit is
+// trapped, and live's stop goes missing; the pass-over dropped, and the rerun's e is a Gap.
+func TestFirstLinkLiveCatchBindingIsStillJudged(t *testing.T) {
+	t.Parallel()
+	program, err := lowerFirstLinkTS(t, firstLinkCatchBinding("live", "0")+"function trapped(): number {\n\treturn Math.random();\n}\nconsole.log(`${live() + trapped()}`);\n", true)
+	firstLinkEchoRows(t, program, err, [][2]string{{"main.ts trapped", "Body"}, {"main.ts live", "findCycles"}})
+	if rows := firstLinkLocalSites(program); len(rows) == 2 && !strings.HasPrefix(rows[1].Reason, "'e', a catch binding") {
+		t.Errorf("live's stop: got %q, want its catch binding e", rows[1].Reason)
+	}
 }
