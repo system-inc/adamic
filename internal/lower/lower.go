@@ -529,10 +529,9 @@ type lowering struct {
 	// iterableViewFlowGraph), which checkFlowLiveness holds to that once lowering is done.
 	flowDead map[int]bool
 
-	// armFieldDeclarations is every declaration of every field the program and its libraries declare, with
-	// its owner and representation, walked once (fieldDeclarationsOf): narrowedArmPropertyReadGap's silent
-	// case (#8nj5pn4).
-	armFieldDeclarations *fieldDeclarations
+	// armFieldHolders is every type the program and its libraries make or hold a value as, by the names of
+	// the fields each holds, walked once (fieldHoldersOf): narrowedArmPropertyReadGap's silent case (#8nj5pn4).
+	armFieldHolders *fieldHolders
 
 	// Source-only sites for graph adoption diagnostics; never stored in emitted IR.
 	graphDynamicSite *ast.Node
