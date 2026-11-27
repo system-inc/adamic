@@ -92,28 +92,30 @@ class FirstLinkReportTests(unittest.TestCase):
         self.assertFalse(report.BODY_PHASES & report.WHOLE_PROGRAM_PHASES)
 
     def test_phase_sets_match_lowering_head(self):
-        def git(*args):
-            result = subprocess.run(["git", *args], cwd=HERE, capture_output=True, text=True)
-            if result.returncode:
-                self.fail(f"cannot read lowering source at HEAD with git {args}: {result.stderr.strip()}")
-            return result.stdout
-
-        lowering = "internal/lower"
-        # The lane's Go wrapper starts Python in the harness directory.
-        top = git("rev-parse", "--show-toplevel").strip()
-        locations = git("-C", top, "grep", "-l", "-E",
-                        r"firstLink(Pass|ProgramStop|Catch|Row|Record)", "HEAD", "--",
-                        lowering, ":(exclude,glob)**/*_test.go").splitlines()
+        # The lowering source is read from the laid tree, never from git: a line unit's tree has no .git (#nm7z8fv,
+        # Correctness, Nov 27). The tree's root is the first directory above this one holding internal/lower, and
+        # every lowering file sits at its top level, so the read is internal/lower/*.go without its tests, the
+        # pattern stage3/lane's reads line in cloud/fast-gate/executors.txt names.
+        root = next((parent for parent in HERE.parents if (parent / "internal" / "lower").is_dir()), None)
+        if root is None:
+            self.fail(f"no internal/lower above {HERE}")
+        sources = sorted(path for path in (root / "internal" / "lower").glob("*.go")
+                         if not path.name.endswith("_test.go"))
+        if not sources:
+            self.fail(f"no lowering source under {root / 'internal' / 'lower'}")
         body, whole = set(), set()
-        for location in locations:
-            text = git("-C", top, "show", location)
+        for path in sources:
+            text = path.read_text(encoding="utf-8")
             whole.update(re.findall(r'\.firstLink(?:Pass|ProgramStop)\s*\(\s*"([^"]+)"', text))
             body.update(re.findall(r'\.firstLinkCatch\s*\(\s*"([^"]+)"', text))
             body.update(re.findall(r'\.firstLinkRow\s*\([^,]*,[^,]*,\s*"([^"]+)"', text))
             body.update(re.findall(r'\.firstLinkRecord\s*\(\s*ir\.Trap\{[^}]*\bPhase:\s*"([^"]+)"', text))
-        self.assertSetEqual(report.BODY_PHASES, body, "body phases differ from lowering at HEAD")
+        if not body or not whole:
+            self.fail(f"the lowering source names no phase ({len(sources)} files read, body {len(body)}, "
+                      f"whole-program {len(whole)})")
+        self.assertSetEqual(report.BODY_PHASES, body, "body phases differ from the laid lowering source")
         self.assertSetEqual(report.WHOLE_PROGRAM_PHASES, whole,
-                            "whole-program phases differ from lowering at HEAD")
+                            "whole-program phases differ from the laid lowering source")
 
     def test_unknown_phase_fails_without_outputs(self):
         source = json.loads(fixture("wave2.json"))
