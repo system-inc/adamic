@@ -532,10 +532,6 @@ type lowering struct {
 	// iterableViewFlowGraph), which checkFlowLiveness holds to that once lowering is done.
 	flowDead map[int]bool
 
-	// armFieldHolders is every type the program and its libraries make or hold a value as, by the names of
-	// the fields each holds, walked once (fieldHoldersOf): narrowedArmPropertyReadGap's silent case (#8nj5pn4).
-	armFieldHolders *fieldHolders
-
 	// firstLinkHelperUnits is, in a first-link lowering, the unit whose lowering made each helper, a function with no
 	// declaration, by its index (firstLinkNoteHelpers), which a trap stubs once every unit owning it is trapped
 	// (first_link_helpers.go).
@@ -877,9 +873,9 @@ type lowering struct {
 	// writtenAccessorNames is every name a getter or setter in the program has, "" for a computed one
 	// (enum_tag_flow.go's accessorName). accessorNames below holds getters alone.
 	writtenAccessorNames map[string]bool
-	// enumTagCheckedViewsDone holds each declared union and member pair the swing registered a view for
-	// (enumTagCheckedViews), so a pair registers once. A pair whose view failed isn't held, so each site asks again.
-	enumTagCheckedViewsDone map[enumTagCheckedViewKey]bool
+	// narrowedCheckedViewsDone holds each declared type and member pair the swing or the narrowed-arm floor
+	// registered a view for (narrowedCheckedViews), so a pair registers once. A pair whose view failed isn't held, so each site asks again.
+	narrowedCheckedViewsDone map[narrowedCheckedViewKey]bool
 	// closedKindAnswers is closedKinds' answer by type and field, and closedKindDeclared and closedKindBuilt
 	// the program's declared types and build sites it judges each type against, found once; closedKindNewOnly
 	// is each function declaration with a declared this, and whether every use of it is a new callee or a
