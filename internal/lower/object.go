@@ -797,6 +797,10 @@ func (l *lowering) propertyRead(node *ast.Node, object ir.Expression, name strin
 				return nil, &Refused{Where: l.program.Where(node), What: "a narrowed accessor reread, which can return a different value", Fix: "read the getter into a local once, then narrow and use that local"}
 			}
 		}
+		// A spread copy's accessor name, read where undefined is observed, is read by name (#vjvcnnj head 3).
+		if read, handled, err := l.spreadAccessorRead(node, object, name); handled {
+			return read, err
+		}
 		// An iterator result's done and value are read through iteratorResultField's one rule, whatever the
 		// members' declared storage (#5t28afa).
 		if differs := l.unionFieldStorageDiffers(l.checker.GetTypeAtLocation(access.Expression), name); differs != "" && !l.iteratorResultField(access.Expression, l.memberSymbol(node)) {

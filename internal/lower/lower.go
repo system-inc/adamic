@@ -592,6 +592,8 @@ type lowering struct {
 	// checkDynamicKeyedGetters says why a class getter keeps the program from reading by a run-time key.
 	dynamicKeyedSite *ast.Node
 	reflectKeyedSite *ast.Node
+	// spreadAccessorNamesFound is spreadAccessorNames' answer, nil until it's asked (spread_accessor_reads.go).
+	spreadAccessorNamesFound map[string]bool
 	// getterDeclarations is each class getter's declaration, by its function (registerAccessor), which
 	// checkDynamicKeyedGetters reads.
 	getterDeclarations map[int]*ast.Node
