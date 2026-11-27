@@ -413,6 +413,14 @@ func (l *lowering) castRoad(node *ast.Node, source, target *checker.Type, stop f
 		switch cause {
 		case castUnionTarget, castWidenedMember, castIntersectionMember:
 			cause, detail = l.unionTargetCause(source, l.checker.GetNonNullableType(target))
+			// One plain object cast to a union target no literal tag tells apart (`type as ObjectFlagsType` of a
+			// Type, cause U of #eg3krrp) is union target (a)'s view, the source taken as the union's one member
+			// (Compiler's ruling, rulings.md:18). Only where unionTargetCause found no intersection member and no
+			// member widening a field the source writes, and only where the arm's own tests pass; otherwise the
+			// cast keeps the stop it had.
+			if cause == castUnionTarget && l.untaggedUnionArm(node, source, target, []*checker.Type{source}, castMembers(target)) {
+				return castProof{untagged: true}, nil
+			}
 		case castWidenedTarget:
 			detail = l.widenedWords(l.checker.GetNonNullableType(target), source)
 		case castFieldRefinement:
