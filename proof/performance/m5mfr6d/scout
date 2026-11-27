@@ -1,0 +1,36 @@
+# #m5mfr6d scout (Performance, never merged): where the [any, any] slot at moduleNameResolver.ts:1140:43 comes from,
+# and every site with the same reason. Run with bash after the sealed opening (sandboxed_repositories, sandboxed_npm
+# stage3/api stage3/typescript, sandboxed_typescript_source).
+set -uo pipefail
+root=$PWD; R=$TMPDIR/m5; mkdir -p "$R"
+echo "on $(hostname), $(nproc) cores"
+bash stage3/apply.sh "$R/adapted" > "$R/apply.log" 2>&1 || { echo "FAIL apply"; tail -20 "$R/apply.log"; exit 1; }
+A=$R/adapted/src/compiler/moduleNameResolver.ts
+stock=$(ls -d /run/loom-scratch/typescript-source "$TMPDIR"/typescript-source 2>/dev/null | head -1)
+echo "stock source: ${stock:-none}"
+echo "== adapted moduleNameResolver.ts 1100-1170"; sed -n '1100,1170p' "$A" | cat -n | sed 's/^/  /' | awk '{ $1 = $1 + 1099; print }'
+if [ -n "$stock" ]; then
+	S0=$stock/src/compiler/moduleNameResolver.ts
+	echo "== stock vs adapted, moduleNameResolver.ts"; diff -u "$S0" "$A" | head -200
+fi
+echo "== every [any, any] or any, any in the adapted src/compiler"
+grep -rnE '\[any, any\]|<any, any>|: any, any|any, any\]' "$R/adapted/src/compiler" | cut -c1-260 | head -40
+echo "== the entry census, every finding whose reason holds 'where [any, any] goes'"
+python3 stage3/census/latent/make_overlay.py "$root" "$R/lo" > "$R/b.log" 2>&1 && gofmt -w "$R"/lo/*.go && python3 stage3/meter/entry_overlay.py "$R/lo" "$R/eo" >> "$R/b.log" 2>&1 && gofmt -w "$R"/eo/*.go && go build -buildvcs=false -overlay="$R/eo/overlay.json" -o "$R/census" ./stage3/census/latent/tool >> "$R/b.log" 2>&1 || { echo "FAIL build"; tail -20 "$R/b.log"; exit 1; }
+LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 LATENT_TAIL=1 CENSUS_MODULE_FORMAT=CommonJSBundle "$R/census" "$R/adapted/src/tsc/tsc.ts" "$R/out.jsonl" > "$R/c.log" 2>&1 || { echo "FAIL census"; tail -20 "$R/c.log"; exit 1; }
+python3 -I - "$R/out.jsonl" <<'PY'
+import json, sys
+seen = set()
+for line in open(sys.argv[1]):
+	row = json.loads(line)
+	for f in row.get("findings") or []:
+		reason = str(f.get("reason", ""))
+		if "where [any, any] goes" in reason:
+			key = (str(f.get("where", "")).split("/src/", 1)[-1], reason)
+			if key in seen:
+				continue
+			seen.add(key)
+			print("SITE", key[0], f.get("kind"), f.get("phase"), "unit", str(f.get("unit", "")).split("/src/", 1)[-1], "|", reason[:300])
+print("distinct sites:", len(seen))
+PY
+echo "VERDICT READ"
