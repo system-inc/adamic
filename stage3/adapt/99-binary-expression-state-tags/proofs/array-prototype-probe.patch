@@ -1,0 +1,56 @@
+--- a/stage3/adapt/99-binary-expression-state-tags/test.cjs
++++ b/stage3/adapt/99-binary-expression-state-tags/test.cjs
+@@ -90,12 +90,27 @@
+ const duplicate = before + "\r\n" + original.state.getText() + "\r\n";
+ scratchRow("refusal: duplicate owner", duplicate, duplicate, "BinaryExpressionState: expected one declaration");
+ 
++function installPrototypeObserver(mode, record) {
++    Object.defineProperty(Array.prototype, "1", {
++        configurable: true,
++        set(value) {
++            const state = value === "enter" || (typeof value === "function" && value.name === "enter");
++            if (state) record(typeof value);
++            Object.defineProperty(this, "1", {
++                configurable: true, enumerable: true, writable: true,
++                value: mode === "corrupt" && value === "enter" ? "unknown-state" : value,
++            });
++        },
++    });
++}
++
+ function compile(declarations) {
+     const source = Object.values(declarations).map(node => node.getText()).join("\n");
+     const js = ts.transpileModule(source, {
+         compilerOptions: { target: ts.ScriptTarget.ES2020, module: ts.ModuleKind.CommonJS },
+     }).outputText;
+-    return new vm.Script(js + "\nexports[" + JSON.stringify(declarations.walker.name.text) + "](...callbacks)(root, outer);");
++    const prelude = "(" + installPrototypeObserver.toString() + ")(" + JSON.stringify(process.env.PROBE_MODE) + ", recordPrototype);\n";
++    return new vm.Script(prelude + js + "\nexports[" + JSON.stringify(declarations.walker.name.text) + "](...callbacks)(root, outer);");
+ }
+ 
+ function label(value) {
+@@ -176,9 +191,9 @@
+     }
+     const callbacks = [onEnter, left ? onLeft : undefined, operator ? onOperator : undefined,
+         right ? onRight : undefined, onExit, fold ? foldState : undefined];
+-    const context = vm.createContext({ ...stubs(trace), exports: {}, callbacks, root, outer: "outer" });
++    const context = vm.createContext({ ...stubs(trace), exports: {}, callbacks, root, outer: "outer", recordPrototype: value => trace.push(["prototype observed", value]) });
+     try {
+-        trace.push(["result", label(script.runInContext(context, { timeout: 5000 }))]);
++        trace.push(["result", label(script.runInContext(context, { timeout: 200 }))]);
+     } catch (error) {
+         if (error.code === "ERR_SCRIPT_EXECUTION_TIMEOUT") throw error;
+         trace.push(["throw", error.message]);
+@@ -202,9 +217,11 @@
+ 
+ const originalWalker = compile(original);
+ const adaptedWalker = compile(adapted);
+-for (const row of cases) {
++for (const row of cases.filter(row => row.name === "handlers=1 fold=true")) {
+     const expected = run(originalWalker, row);
++    console.log("ORIGINAL " + JSON.stringify(expected));
+     const actual = run(adaptedWalker, row);
++    console.log("ADAPTED " + JSON.stringify(actual));
+     assert.equal(expected.at(-1)[0], row.circular || row.throwing ? "throw" : "result", row.name);
+     assert.equal(JSON.stringify(actual), JSON.stringify(expected), row.name);
+     pass(`${row.name}: before=${expected.length} after=${actual.length}`);
