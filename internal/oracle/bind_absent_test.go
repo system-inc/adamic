@@ -15,25 +15,26 @@ const bindAbsentStop = "adamic: panic: method weigh is absent\n"
 // value.weigh.bind(value) found nothing: natively the bound closure kept a null code pointer and its call
 // was an ASan SEGV, where Node throws reading bind off undefined (#1k4z29h). The bind now stops natively
 // where it's made, before any fixed argument runs (fixed_argument: Node prints no note), and both forms of
-// weigh, a method signature and a function-typed field, stop alike. The JavaScript backend already throws as
-// Node does, but it runs fixed_argument's argument before it reads bind (#w8gg81z), so that row pins today's
-// output there. A bind of a method or a field the receiver holds agrees with Node on every backend.
-// Mutant (bind_absent.mutants.md): the emitter's check dropped, and the stopping rows end on closure.c's
-// invariant instead, "a bound method has no code to call", with no SEGV, which shows the backstop holds.
+// weigh, a method signature and a function-typed field, stop alike. The JavaScript backend throws as Node
+// does, reading bind off undefined, before any fixed argument runs: adamicBindMethod throws Node's TypeError
+// right after its lookup, where it once went on to make the bound closure and ran the argument first, so
+// fixed_argument printed note before threw (#wrvgvbd). A bind of a method or a field the receiver holds agrees
+// with Node on every backend. Each stopping row carries a .pending sidecar naming #8vptg16, which lifts
+// native's stop to Node's catchable TypeError. Mutants (bind_absent.mutants.md): the emitter's check dropped,
+// and the stopping rows end on closure.c's invariant instead, "a bound method has no code to call", with no
+// SEGV, which shows the backstop holds; and adamicBindMethod's throw dropped, so fixed_argument prints note
+// before threw on the JavaScript backend.
 func TestBindOfAbsentMethodStops(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct {
 		name, node string
 		stops      bool
-		// javascript is the JavaScript backend's stdout where it differs from Node's today, naming the task.
-		javascript string
 	}{
-		{"spread_method.ts", "threw\n", true, ""},
-		{"spread_field.ts", "threw\n", true, ""},
-		// The JavaScript backend runs the fixed argument before reading bind, so it prints note first (#w8gg81z).
-		{"fixed_argument.ts", "threw\n", true, "note\nthrew\n"},
-		{"present_method.ts", "20\n", false, ""},
-		{"present_field.ts", "5\n", false, ""},
+		{"spread_method.ts", "threw\n", true},
+		{"spread_field.ts", "threw\n", true},
+		{"fixed_argument.ts", "threw\n", true},
+		{"present_method.ts", "20\n", false},
+		{"present_field.ts", "5\n", false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -49,11 +50,7 @@ func TestBindOfAbsentMethodStops(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			want := node
-			if probe.javascript != "" {
-				want = run{stdout: []byte(probe.javascript)}
-			}
-			if difference := disagreement(want, onJavaScriptBackend(t, program)); difference != "" {
+			if difference := disagreement(node, onJavaScriptBackend(t, program)); difference != "" {
 				t.Fatalf("the JavaScript backend: %s", difference)
 			}
 			sanitized, binary := nativelyUncached(t, program)
