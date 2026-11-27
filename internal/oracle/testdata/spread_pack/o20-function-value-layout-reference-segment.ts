@@ -1,0 +1,10 @@
+type A = number | string;
+const nums: number[] = [1, 2];
+const label = "s" + String(nums.length);
+const show = (...rest: A[]): void => { let text = ""; for (const value of rest) text += typeof value + ":" + String(value) + ","; console.log(text); };
+const lead = (first: string, ...rest: number[]): void => { console.log(first + ":" + String(rest.length)); };
+let pick: (first: string, ...rest: number[]) => void = lead;
+pick(label, ...nums);
+pick = show;
+pick(label, ...nums);
+console.log(label);
