@@ -3,6 +3,7 @@ package lower
 import (
 	"reflect"
 	"strconv"
+	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -23,7 +24,8 @@ import (
 // armObservationOf) is followed by nothing that can run program code before the read, or by nothing that can
 // write its name or install an accessor (propertyWriteMayRunBetween). A read with no such place is judged
 // from the start of its own function.
-// It's a fail-closed stop: a checked view of the declared union is the read that lifts it.
+// Where a stale arm could be read silently, the floor is a stop in .a and, in .ts, a read through a checked view of
+// the declared type (narrowedArmView), so a stale arm stops loudly at the read and an honest one runs.
 func (l *lowering) narrowedArmPropertyReadGap(node *ast.Node) error {
 	if !l.isExpression(node) || (ast.IsAssignmentTarget(node) && pureWrite(node)) {
 		return nil
@@ -101,7 +103,7 @@ func (l *lowering) narrowedArmPropertyReadGap(node *ast.Node) error {
 		return nil // An enum's member is a constant no write reaches.
 	}
 	if l.enumTagSwings(node) || node.Kind == ast.KindPropertyAccessExpression && l.enumTagSwings(node.Name()) {
-		// The swing reads this refinement through each narrowed member's checked view (enumTagCheckedViews),
+		// The swing reads this refinement through each narrowed member's checked view (narrowedCheckedViews),
 		// which checks the value's layout at the read, so a stale arm stops loudly there and is never read
 		// silently (Adamic's seam ruling of Nov 27 on #8nj5pn4: a read already made through a checked view is
 		// exempt). The swing registers its views at the read's name, after this rule has judged the read, so
@@ -132,7 +134,7 @@ func (l *lowering) narrowedArmPropertyReadGap(node *ast.Node) error {
 		boundary := callBoundary(node)
 		if boundary == nil || boundary.Pos() < 0 {
 			if numeric || writes.everyName || len(writes.named[name]) > 0 {
-				return stop
+				return l.narrowedArmView(node, declared, narrowed, stop)
 			}
 			return nil
 		}
@@ -140,12 +142,25 @@ func (l *lowering) narrowedArmPropertyReadGap(node *ast.Node) error {
 	}
 	exempt := l.appendsBetween(observation, node, numeric)
 	if writes.accessors && l.codeBetween(observation.from, node, exempt) {
-		return stop
+		return l.narrowedArmView(node, declared, narrowed, stop)
 	}
 	if l.propertyWriteMayRunBetween(node, name, numeric, observation.from, observation.target, exempt) {
-		return stop
+		return l.narrowedArmView(node, declared, narrowed, stop)
 	}
 	return nil
+}
+
+// narrowedArmView is the floor's answer to a read narrowedArmPropertyReadGap can't prove: in .a, stop, the floor's
+// own words; in .ts, the read through a checked view of declared for each member it was narrowed to
+// (narrowedCheckedViews), as the swing reads an open-enum refinement it can't prove (Adamic's ruling on #8nj5pn4).
+// The view checks the value's layout at every read through the member's type, so a stale arm stops loudly there,
+// exit 70, and an honest one reads its field. nil when the views register; where one can't be built, its own NotYet,
+// which fails closed.
+func (l *lowering) narrowedArmView(node *ast.Node, declared, narrowed *checker.Type, stop error) error {
+	if strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".a") {
+		return stop
+	}
+	return l.narrowedCheckedViews(node, declared, narrowed)
 }
 
 // armObservationOf walks the read's flow straight back to the place it was last seen narrowed: a plain
