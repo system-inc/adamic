@@ -123,8 +123,9 @@ func genericClaim(class, member string) string {
 // read is observed as it is, is read by name (spreadAccessorRead, internal/lower/spread_accessor_reads.go).
 // read_typeof, read_undefined, read_nullish and read_template are typeof, === undefined, the left of ?? and
 // a template span over the copy, and read_setter_typeof the setter-only name under typeof; each lowers and
-// agrees. read_real reads a real Sized through the same road and answers its getter's 20, and read_title a
-// string getter's. String's argument doesn't reach acceptsUndefined, its contextual type being any, so
+// agrees. read_real reads a real Sized through the same road and answers its getter's 20, and read_flag a
+// boolean getter's true beside its copy's undefined. A string's undefined is a null string, which a consumer
+// keyed on the checker's string reads as present, so read_title's string read stays stopped. String's argument doesn't reach acceptsUndefined, its contextual type being any, so
 // read_string_argument, c13b and c13c still stop. Every read a consumer relies on as present stops as on
 // main: read_parameter, read_local, read_plus, read_less, read_destructure and read_return at spreadCopyRead,
 // read_narrowed's second read, after its typeof check (hold 3), there too, and read_setter_plain at the
@@ -187,7 +188,8 @@ func TestSpreadPrototypeField(t *testing.T) {
 		{"read_template.ts", "w undefined\n", "", ""},
 		{"read_setter_typeof.ts", "undefined\n", "", ""},
 		{"read_real.ts", "number 20 20\nundefined true\n", "", ""},
-		{"read_title.ts", "home undefined\nundefined true\n", "", ""},
+		{"read_title.ts", "home undefined\nundefined true\n", "stage 0 can't lower a read of title from { ...built }, a spread's copy of a Page instance, whose title is a getter on its prototype", ""},
+		{"read_flag.ts", "true undefined\nundefined true\n", "", ""},
 		{"read_string_argument.ts", "undefined\n", spreadCopyReadStop, ""},
 		{"read_parameter.ts", "NaN\n", spreadCopyReadStop, ""},
 		{"read_local.ts", "undefined\n", spreadCopyReadStop, ""},

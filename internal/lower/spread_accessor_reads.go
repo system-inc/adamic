@@ -19,10 +19,11 @@ import (
 // for any receiver. That is the run-time key read Reflect.get lowers to (ir.DynamicKeyedProperty, Reflect):
 // the accessor's getter value when the receiver holds the accessor, undefined when it holds one with no
 // getter, an own slot read by the kind the slot holds, and undefined otherwise. Its union is then narrowed
-// to the field's type or undefined, by a check of the tag it holds, so a slot of another kind, which only an
-// unsound road can bring, is a loud stop and never a number read from the wrong kind (Compiler's hold 1).
-// Every other read is lowered as before and stops as before, a narrowed second read among them (hold 3),
-// since it is no observer. The read is no ir.Property, so neither stop judges it.
+// to the field's type or undefined, a number's or a boolean's maybe, by a check of the tag it holds, so a
+// slot of another kind, which only an unsound road can bring, is a loud stop and never a number read from
+// the wrong kind (Compiler's hold 1). Every other read is lowered as before and stops as before, a narrowed
+// second read among them (hold 3), since it is no observer. The read is no ir.Property, so neither stop
+// judges it.
 //
 // The names are every accessor of a program class that some spread in the program may pass over, a
 // setter-only one included, found by the spreads' source types; a library class's accessor is none, since
@@ -119,8 +120,11 @@ func (l *lowering) spreadAccessorRead(node *ast.Node, object ir.Expression, name
 	if field == nil || field.Flags&ast.SymbolFlagsOptional != 0 {
 		return nil, false, nil
 	}
+	// A number's or a boolean's maybe is a type of its own, which every consumer reads. A string's is the string,
+	// undefined a null reference, and a consumer keyed on the checker's string, a template span's, reads it as
+	// present (read_title.ts ended in UBSan on a null string, J-65ewf3z), so a string read stays as it was.
 	of, err := l.typeOf(node)
-	if err != nil || (of != ir.Number && of != ir.Boolean && of != ir.String) {
+	if err != nil || (of != ir.Number && of != ir.Boolean) {
 		return nil, false, nil
 	}
 	if stored, known := l.representation(l.checker.GetTypeOfSymbol(field)); !known || stored != of {
@@ -140,7 +144,7 @@ func (l *lowering) spreadAccessorRead(node *ast.Node, object ir.Expression, name
 	read := ir.DynamicKeyedProperty{Object: fit(object, ir.Union), Key: ir.StringConstant{Index: l.constant(name)}, Reflect: true}
 	b := l.libraryArrayBuilder([]ir.Expression{read})
 	value := b.read(b.parameters[0])
-	kind := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[of]
+	kind := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean"}[of]
 	matches := ir.Binary{Operator: ir.Or, Left: ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: value}, Right: ir.StringConstant{Index: l.constant(kind)}}, Right: ir.IsUndefined{Value: value}}
 	b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(spreadAccessorReadMismatch)}}}})
 	result := b.finish("spread_accessor_read", ir.Narrow{Value: value, To: ir.Maybe(of)})
