@@ -1,0 +1,13 @@
+# #gbr6vs2 head: the admission delta against main cf4e9b62, the head's base, with the corpus manifest.
+# Source it in the job's shell after the sealed opening, sandboxed_repositories and sandboxed_npm stage3/api. Never merged.
+L="$TMPDIR/gdelta"; mkdir -p "$L"
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg)"
+base=520984b22a9d001b75d832fd7959c224b325bef9
+python3 -I cloud/admission-corpus/manifest.py --sha "$(git rev-parse HEAD)" > "$L/manifest.json"; code=$?
+if [ $code -ne 0 ]; then echo "FAIL manifest exit $code"; echo "VERDICT FAIL"; return 1 2>/dev/null || exit 1; fi
+python3 -I -c 'import json,sys; m=json.load(open(sys.argv[1])); print(" ".join("%s=%d" % (c["name"], len(c["programs"])) for c in m["corpora"]))' "$L/manifest.json"
+go run ./cmd/adamic-admission-delta --base "$base" --manifest "$L/manifest.json" > "$L/delta.log" 2>&1; code=$?
+echo "delta exit $code"
+grep -nE 'cast_intersection_view' "$L/delta.log" | cut -c1-300 | head -30
+tail -16 "$L/delta.log" | cut -c1-300
+if [ $code -eq 0 ] && grep -q 'verdict: pass' "$L/delta.log"; then echo "VERDICT PASS"; else echo "VERDICT FAIL"; fi
