@@ -13,9 +13,7 @@ from a copy of the head file. Each is red beside the same pins green at head.
 | M5 | `optionalScalarRead`: the bitwise operand's conversion dropped, so it takes the check | TestOptionalScalarRead/u5_bitwise.ts |
 | M6 | `nullishNumericSwitch` (switch_nullish_numeric.go): a number pair the checker calls a number not taken as nullish | TestOptionalScalarRead/u1_switch_plain.ts, TestOptionalScalarReadLowers/u1_switch_plain |
 
-accessKind's own shape, `const { parent } = node; switch (parent?.kind)` (u1_switch.ts), waits on Lower: #jjf9ppe checks
-a destructured binding of a field that may hold its placeholder where it's bound, so on the placeholder parent it
-stops there, in #jjf9ppe's words, before the `?.` is reached, where Node prints "other". The plain form, `const parent
-= node.parent` (u1_switch_plain.ts), is already a placeholder slot and agrees with Node. If Lower rules that an
-unannotated destructured const can be a placeholder slot like the plain one, her head moves u1_switch to agree with
-Node, and accessKind clears then.
+accessKind's own shape, `const { parent } = node; switch (parent?.kind)` (u1_switch.ts), agrees with Node since Lower's
+#s59xxn3: an unannotated destructured binding of a field that may hold its placeholder is a placeholder slot, as the
+plain form `const parent = node.parent` (u1_switch_plain.ts) is, so its `?.` reads undefined where #jjf9ppe's check at
+the binding had stopped it. Its mutant, the slot road dropped, is in internal/lower/placeholder_destructure.mutants.md.

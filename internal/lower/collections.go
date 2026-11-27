@@ -556,6 +556,9 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 		element, isKnown := l.representation(fieldType)
 		if fallback != nil {
 			stored = element
+		} else if fieldSymbol != nil && l.placeholderSlotBinding(binding, fieldSymbol) {
+			// A placeholder slot of its own holds its field's placeholder storage (#s59xxn3).
+			element = placeholderStorage(element)
 		}
 		if !isKnown || element != stored || (slotless(stored) && stored != ir.Union) {
 			return nil, l.notYet(binding, "a destructured name held otherwise than its field")
