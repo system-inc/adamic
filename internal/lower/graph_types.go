@@ -130,39 +130,7 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 	if len(seeds) == 0 {
 		return nil
 	}
-	// Literals may have narrower types than the mutable view through which they
-	// are later written. Include those allocation identities without creating seeds.
-	for _, module := range modules {
-		var visit ast.Visitor
-		visit = func(node *ast.Node) bool {
-			if ast.IsPartOfTypeNode(node) {
-				return false
-			}
-			if ast.IsExpressionNode(node) {
-				f.use(f.l.checker.GetTypeAtLocation(node), node)
-				if contextual := f.l.slotType(node); contextual != nil {
-					f.use(contextual, node)
-				}
-			}
-			return node.ForEachChild(visit)
-		}
-		module.AsNode().ForEachChild(visit)
-	}
-	for _, closure := range f.l.closureRecords {
-		f.use(closure.proven, closure.node)
-	}
-	candidates := []cycleNode{}
-	for proven := range f.where {
-		candidates = append(candidates, cycleNode{proven: proven})
-	}
-	for _, shape := range f.shapes {
-		candidates = append(candidates, cycleNode{proven: shape})
-	}
-	for local, declared := range f.l.result.Locals {
-		if declared.Captured && !declared.Global {
-			candidates = append(candidates, cycleNode{cell: local + 1})
-		}
-	}
+	candidates := f.graphCandidates(modules)
 	// The edges are built from the seeds only: a selected component holds a seed, and every member of a seed's
 	// component is reached from it, so the components the seeds reach are the ones built from every candidate. The
 	// queue holds each node once, by queued, since on tsc's first link a queue of every link held 1.5M entries
@@ -430,6 +398,45 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 		return f.recordStop
 	}
 	return flows
+}
+
+// graphCandidates is every type and captured cell graphTypes' edges may link: every type the program uses, each
+// expression's own and contextual one among them, every shape, and every captured local's cell.
+func (f *cycleFinder) graphCandidates(modules []*ast.SourceFile) []cycleNode {
+	// Literals may have narrower types than the mutable view through which they
+	// are later written. Include those allocation identities without creating seeds.
+	for _, module := range modules {
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			if ast.IsPartOfTypeNode(node) {
+				return false
+			}
+			if ast.IsExpressionNode(node) {
+				f.use(f.l.checker.GetTypeAtLocation(node), node)
+				if contextual := f.l.slotType(node); contextual != nil {
+					f.use(contextual, node)
+				}
+			}
+			return node.ForEachChild(visit)
+		}
+		module.AsNode().ForEachChild(visit)
+	}
+	for _, closure := range f.l.closureRecords {
+		f.use(closure.proven, closure.node)
+	}
+	candidates := []cycleNode{}
+	for proven := range f.where {
+		candidates = append(candidates, cycleNode{proven: proven})
+	}
+	for _, shape := range f.shapes {
+		candidates = append(candidates, cycleNode{proven: shape})
+	}
+	for local, declared := range f.l.result.Locals {
+		if declared.Captured && !declared.Global {
+			candidates = append(candidates, cycleNode{cell: local + 1})
+		}
+	}
+	return candidates
 }
 
 func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {

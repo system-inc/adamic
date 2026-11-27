@@ -150,48 +150,7 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 			}
 		}
 	}
-	finder := &cycleFinder{l: l, where: map[*checker.Type]*ast.Node{}}
-	if len(modules) > 0 {
-		finder.whereFallback = modules[0].AsNode()
-	}
-	for _, module := range modules {
-		var visit ast.Visitor
-		visit = func(node *ast.Node) bool {
-			if ast.IsPartOfTypeNode(node) {
-				return false
-			}
-			if l.firstLinkSkips(node) {
-				return false
-			}
-			finder.libraryIteratorMade(node)
-			finder.looseEntry(node)
-			switch {
-			case node.Kind == ast.KindObjectLiteralExpression:
-				// A literal is what a value may really be, and nothing is written through its own
-				// type: it's seen as the type it's written into, or kept in a variable whose type
-				// is used where it's declared.
-				finder.shape(l.checker.GetTypeAtLocation(node), node)
-			case node.Kind == ast.KindArrayLiteralExpression || node.Kind == ast.KindCallExpression || node.Kind == ast.KindNewExpression:
-				// A value just made, by a literal, a call or new, is written through only once it's
-				// kept somewhere, and where it's kept has a type of its own, used there. Until then
-				// it's what a value may really be.
-				finder.made(l.checker.GetTypeAtLocation(node), node)
-			case ast.IsIdentifier(node) || node.Kind == ast.KindThisKeyword || node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression:
-				// Where a value is named or reached, and so where a write can go through its type.
-				if ast.IsIdentifier(node) && !ast.IsDeclarationName(node) && !ast.IsExpressionNode(node) {
-					break
-				}
-				finder.use(l.checker.GetTypeAtLocation(node), node)
-			}
-			return node.ForEachChild(visit)
-		}
-		module.AsNode().ForEachChild(visit)
-	}
-	// Every instantiation lowering made, Box<Node> inside Maker<Node> included, which the source may
-	// never write.
-	for _, proven := range l.instantiated {
-		finder.use(proven, l.classNodeFor(proven))
-	}
+	finder := l.cycleDiscovery(modules)
 	if finder.deepest != nil {
 		where := finder.deepestAt
 		if where == nil && len(modules) > 0 {
@@ -264,6 +223,55 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 		return err
 	}
 	return l.checkLazyViewReads()
+}
+
+// cycleDiscovery is a finder that has met every type the program uses, by findCycles' walk of every module and
+// every instantiation lowering made. shared_allocation_test.go builds one after lowering the same way, to hold
+// the sweep's cuts to the checker.
+func (l *lowering) cycleDiscovery(modules []*ast.SourceFile) *cycleFinder {
+	finder := &cycleFinder{l: l, where: map[*checker.Type]*ast.Node{}}
+	if len(modules) > 0 {
+		finder.whereFallback = modules[0].AsNode()
+	}
+	for _, module := range modules {
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			if ast.IsPartOfTypeNode(node) {
+				return false
+			}
+			if l.firstLinkSkips(node) {
+				return false
+			}
+			finder.libraryIteratorMade(node)
+			finder.looseEntry(node)
+			switch {
+			case node.Kind == ast.KindObjectLiteralExpression:
+				// A literal is what a value may really be, and nothing is written through its own
+				// type: it's seen as the type it's written into, or kept in a variable whose type
+				// is used where it's declared.
+				finder.shape(l.checker.GetTypeAtLocation(node), node)
+			case node.Kind == ast.KindArrayLiteralExpression || node.Kind == ast.KindCallExpression || node.Kind == ast.KindNewExpression:
+				// A value just made, by a literal, a call or new, is written through only once it's
+				// kept somewhere, and where it's kept has a type of its own, used there. Until then
+				// it's what a value may really be.
+				finder.made(l.checker.GetTypeAtLocation(node), node)
+			case ast.IsIdentifier(node) || node.Kind == ast.KindThisKeyword || node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression:
+				// Where a value is named or reached, and so where a write can go through its type.
+				if ast.IsIdentifier(node) && !ast.IsDeclarationName(node) && !ast.IsExpressionNode(node) {
+					break
+				}
+				finder.use(l.checker.GetTypeAtLocation(node), node)
+			}
+			return node.ForEachChild(visit)
+		}
+		module.AsNode().ForEachChild(visit)
+	}
+	// Every instantiation lowering made, Box<Node> inside Maker<Node> included, which the source may
+	// never write.
+	for _, proven := range l.instantiated {
+		finder.use(proven, l.classNodeFor(proven))
+	}
+	return finder
 }
 
 // made notes the type of a value just made: an object type as a shape, and what anything else is

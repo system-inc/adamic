@@ -7,7 +7,6 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
-	"github.com/system-inc/adamic/internal/load"
 )
 
 // The finder's own relation for selection (#nxb3xh1 head 6, Compiler's ruling with Memory's conditions).
@@ -26,12 +25,17 @@ import (
 // and those names are dropped from every required set here (allocationUniversal). An optional property never
 // counts as missing. Two types are related when either one's required names are all held by the other.
 //
-// That test reads only what a type lists, so it's asked only of plain types, whose listed properties are all
-// there is (allocationPlain). Anything else is related to everything, failing closed: unions, intersections,
-// any, unknown, type parameters and primitives (none of them object types), and among object types a callable or
-// constructable one, one with an index signature, a generic or deferred one (a reference with type arguments, a
-// mapped or reverse-mapped type, an instantiated anonymous type, an evolving array, an instantiation expression's
-// or a single signature's type), and one declared in the library, the prelude or Node's types.
+// That test reads only what a type lists, so it's asked only of plain types (allocationPlain): an object type
+// with no call or construct signature, which isn't mapped, reverse-mapped or generic (the checker's
+// isGenericObjectType) and isn't a template. A library type, a reference with concrete type arguments and a type
+// with an index signature are plain (Compiler's ruling at 14:16 on #nxb3xh1, replacing her first list): a
+// reference lists its target's members, since instantiation maps their types and never their names, and an index
+// signature on either side adds a requirement but never stands in for a missing required property. Anything else
+// is related to everything, failing closed: unions and intersections, which are never judged as one object, and
+// any, unknown, type parameters, primitives and literals, which the checker reads through their apparent types,
+// none of them object types; and a callable or constructable type, whose missing names the checker also finds on
+// Function. Were one of these a candidate, every node would link to it and it to every node, so a run that meets
+// one selects every object type the seeds reach: a cost, never a missed cycle.
 //
 // Everything else in the finder keeps the checker's exact relation (related, deriveRelated): viewAlsoTable skips an
 // edge for a pair related exactly, on the premise the finder walks that pair as one allocation, and reachLinks'
@@ -138,44 +142,23 @@ func (f *cycleFinder) allocationUniversal() map[string]bool {
 	return f.allocationUniversalNames
 }
 
-// allocationPlain is whether a type's listed properties are all the relation needs to read: an object type with no
-// signature and no index signature, not generic or deferred, declared outside the library, the prelude and Node's
-// types. When unsure it isn't, and the type is related to everything.
+// allocationPlain is whether a type's listed properties are all the relation needs to read (the comment above).
 func (f *cycleFinder) allocationPlain(proven *checker.Type) bool {
 	if proven.Flags()&checker.TypeFlagsObject == 0 || f.template(proven) {
 		return false
 	}
-	objectFlags := proven.ObjectFlags()
-	if objectFlags&(checker.ObjectFlagsClassOrInterface|checker.ObjectFlagsReference|checker.ObjectFlagsAnonymous) == 0 {
+	if proven.ObjectFlags()&(checker.ObjectFlagsMapped|checker.ObjectFlagsReverseMapped) != 0 {
 		return false
 	}
-	if objectFlags&(checker.ObjectFlagsMapped|checker.ObjectFlagsReverseMapped|checker.ObjectFlagsEvolvingArray|checker.ObjectFlagsInstantiationExpressionType|checker.ObjectFlagsSingleSignatureType|checker.ObjectFlagsJsxAttributes) != 0 {
-		return false
-	}
-	if objectFlags&checker.ObjectFlagsAnonymous != 0 && objectFlags&checker.ObjectFlagsInstantiated != 0 {
-		return false
-	}
-	if objectFlags&checker.ObjectFlagsReference != 0 && len(f.l.checker.GetTypeArguments(proven)) != 0 {
-		return false
-	}
-	if len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) != 0 || len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) != 0 {
-		return false
-	}
-	if len(f.l.checker.GetIndexInfosOfType(proven)) != 0 {
-		return false
-	}
-	symbol := proven.Symbol()
-	if symbol == nil && objectFlags&checker.ObjectFlagsReference != 0 && proven.Target() != nil {
-		symbol = proven.Target().Symbol()
-	}
-	if symbol != nil {
-		for _, declaration := range symbol.Declarations {
-			if file := ast.GetSourceFileOfNode(declaration); file == nil || load.IsLibrary(file) || load.IsPrelude(file) || load.IsNodeLibrary(file) {
+	// isGenericObjectType, for an object type that isn't mapped: a tuple with a variadic element.
+	if checker.IsTupleType(proven) {
+		for _, element := range proven.TargetTupleType().ElementFlags() {
+			if element&checker.ElementFlagsVariadic != 0 {
 				return false
 			}
 		}
 	}
-	return true
+	return len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) == 0 && len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) == 0
 }
 
 // allocationIndex is one findCycles run's index for the two sweeps, so a node asks only the candidates whose names
