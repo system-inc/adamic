@@ -9,9 +9,9 @@ import (
 func TestLatentDeferredDriverHooksZb0q0zd(t *testing.T) {
 	t.Parallel()
 	for file, hooks := range map[string][]string{
-		"lower.go.txt":                     {"fresh().latentScan(file)", "if l.latentDeferredUnit(node)", "latent.DeferredStop(ordinary, probe.refusal.deferred)", `finding.Phase = "deferred"`, "if len(latentFindings) != first"},
-		"units.go.txt":                     {"fresh().latentScan(file)", "if l.latentDeferredUnit(node)"},
-		"speculative.go.txt":               {"l.latentScan(file)", "copy.latentDeferredUnit(node)"},
+		"lower.go.txt":                     {"fresh().latentScan(file, &namespaceFacts)", "if l.latentDeferredUnit(node)", "latent.DeferredStop(ordinary, probe.refusal.deferred)", `finding.Phase = "deferred"`, "if len(latentFindings) != first"},
+		"units.go.txt":                     {"fresh().latentScan(file, &namespaceFacts)", "if l.latentDeferredUnit(node)"},
+		"speculative.go.txt":               {"l.latentScan(file, &namespaceFacts)", "copy.latentDeferredUnit(node)"},
 		"../predicates/tools/lower.go.txt": {"fresh().latentScan(file)", "if l.latentDeferredUnit(node)", "latent.DeferredStop(ordinary, probe.refusal.deferred)"},
 	} {
 		source, err := os.ReadFile(file)
