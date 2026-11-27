@@ -32,12 +32,20 @@ type firstLinkMainRange struct {
 // leaves every unit past that stop unjudged, so it's named in Program.TrapJudgmentsAbandoned with the
 // stop's site and kind, and every row after it is Suspect (#nxb3xh1). Only a context's cancellation or
 // deadline is returned.
+//
+// A first-link lowering hands every whole-program pass here, stopped or not (err nil), so the checker's
+// relation budget is read after each of its runs, the first included, and once more before each run again,
+// and a pass that finds it spent is abandoned and never runs again (firstLinkBudgetSpent). The held stops
+// come here before the budget's baseline is read, so it isn't read for them.
 func (l *lowering) firstLinkPass(name string, rewrites bool, err error, run func() error) error {
 	if !l.firstLinkTraps {
 		return err
 	}
 	seen := map[string]bool{}
 	for {
+		if l.firstLinkBudgetSpent(name, rewrites) {
+			return nil
+		}
 		row, stopped := l.firstLinkRow(nil, err, name, nil, nil)
 		if !stopped {
 			return err
@@ -72,10 +80,63 @@ func (l *lowering) firstLinkPass(name string, rewrites bool, err error, run func
 			l.firstLinkRewriteSkip(name, rewrites)
 			return nil
 		}
-		if err = run(); err == nil {
+		if l.firstLinkBudgetSpent(name, rewrites) {
 			return nil
 		}
+		err = run()
 	}
+}
+
+// firstLinkBudgetBaseline reads, in a first-link lowering, whether the checker's relation budget is spent
+// before the first judging pass runs. Spent already, it's the program's and no pass's: it's recorded once as
+// the RelationOverflow row with no unit, as lowerCheckedWithCycleTypes records one, and every judging pass
+// after it abandons (firstLinkBudgetSpent).
+func (l *lowering) firstLinkBudgetBaseline() {
+	if !l.firstLinkTraps {
+		return
+	}
+	l.firstLinkBudgetRead = true
+	l.firstLinkOverflow = l.firstLinkOverflowNow()
+	if l.firstLinkOverflow != "" {
+		l.firstLinkProgramStop("RelationOverflow", l.relationOverflowStop(l.firstLinkOverflow))
+	}
+}
+
+// firstLinkBudgetSpent reads, past the baseline, whether the checker's relation budget is spent, and when it
+// is, abandons the judging pass name with no run again and reports that it did. Past the budget every
+// relation query overflows, reports TS2859 and dedupes it against every diagnostic before it, so a run goes
+// quadratic and may never return, as findCycles' third run on tsc didn't (J-5cj56ea). It's read as a change
+// from the baseline, never as a flag set once: the pass during whose run the budget is first seen spent gets
+// the Error row naming it, and every pass after it gets the same row, so each is named in
+// TrapJudgmentsAbandoned, or TrapRewritesSkipped for one that rewrites, and the first names the wall.
+// RelationOverflow ranges over every relation cache, up to some 16M pairs, so firstLinkPass reads it a
+// bounded number of times, once after each run and once before each run again, never in a walk over units,
+// and once it's seen spent it isn't read again, since a spent budget stays spent.
+//
+// A read between runs doesn't bound one run that overflows partway: that run goes on, as long as it takes,
+// before anything here reads the budget, and would be its own wall.
+func (l *lowering) firstLinkBudgetSpent(name string, rewrites bool) bool {
+	if !l.firstLinkBudgetRead {
+		return false
+	}
+	if l.firstLinkOverflow == "" {
+		if l.firstLinkOverflow = l.firstLinkOverflowNow(); l.firstLinkOverflow == "" {
+			return false
+		}
+	}
+	row, _ := l.firstLinkRow(nil, errors.New("the checker's relation budget is spent: "+l.firstLinkOverflow), name, nil, nil)
+	l.firstLinkRecord(row, nil)
+	l.firstLinkRewriteSkip(name, rewrites)
+	l.firstLinkJudgmentAbandon(name, rewrites, row)
+	return true
+}
+
+// firstLinkOverflowNow is RelationOverflow's text for the lowering's checker now, or a test's stand-in's.
+func (l *lowering) firstLinkOverflowNow() string {
+	if l.firstLinkOverflowCheck != nil {
+		return l.firstLinkOverflowCheck()
+	}
+	return l.program.RelationOverflow(l.checker)
 }
 
 // firstLinkRewriteSkip notes that a pass that rewrites the IR skipped its work past a stop.
