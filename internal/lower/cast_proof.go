@@ -286,6 +286,11 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 			return castProof{}, nil
 		}
 		rawSource, rawTarget := l.checker.GetTypeAtLocation(as.Expression), l.checker.GetTypeAtLocation(node)
+		// SCRATCH (#zkp356b measure, never to land): Adamic's #msn1j8r fall-through, an assignable cast in .ts whose
+		// only failure is an optional field the source lacks goes on to the untagged-cast road.
+		if reason, ok := err.(*Refused); ok && !allClasses && strings.Contains(reason.What, "has no proven compatible presence/type") && l.checkedAssertionSource(node) {
+			goto fallThrough
+		}
 		if !allClasses || l.optionalRelationFailure(rawSource, rawTarget, as.Expression, map[[2]*checker.Type]bool{}) != "" || l.freshOrWidened(as.Expression, rawSource, rawTarget) != nil {
 			if reason, ok := err.(*Refused); ok {
 				reason.Fix += "; " + l.castRepair(node)
@@ -297,6 +302,7 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 		}
 		upcastFailure = err
 	}
+fallThrough:
 
 	if !allClasses && l.checker.IsTypeAssignableTo(source, target) {
 		if err := l.refuseWidening(node); err != nil {
