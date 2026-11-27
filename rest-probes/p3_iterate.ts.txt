@@ -1,0 +1,9 @@
+function two(first: number, second: number): readonly [number, ...number[]] {
+	return [first, second];
+}
+const values = two(1, 2);
+let total = 0;
+for (const value of values) {
+	total += value;
+}
+console.log(String(total) + " " + String(values.length));

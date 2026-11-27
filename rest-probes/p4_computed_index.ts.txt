@@ -1,0 +1,8 @@
+function two(first: string, second: string): readonly [string, ...string[]] {
+	return [first, second];
+}
+const names = two("x" + String(1), "y" + String(2));
+for (let index = 0; index < 4; index++) {
+	const name = names[index];
+	console.log(String(index) + " " + (name === undefined ? "absent" : name));
+}

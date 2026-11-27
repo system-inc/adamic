@@ -1,0 +1,7 @@
+function two(first: string, second: string): readonly [string, ...string[]] {
+	return [first, second];
+}
+const names = two("a" + String(1), "b" + String(2));
+const past = names[3];
+console.log(String(past));
+console.log(past === undefined ? "absent" : "present " + past.length);
