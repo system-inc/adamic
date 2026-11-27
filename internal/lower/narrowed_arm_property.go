@@ -1,8 +1,10 @@
 package lower
 
 import (
+	"path/filepath"
 	"reflect"
 	"strconv"
+	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -19,11 +21,15 @@ import (
 // Node prints NaN, since m.n holds b by the read, and native read b's storage through a's layout and printed 1.
 // A property has no declaration that keeps its writes in one function, so it's proved by name, as the nullish
 // twin proves it: a getter of the name stops the read first, since a getter answers each read itself. Then
-// the read lowers when the place it was last seen narrowed (an assignment, or a check that mentions it,
-// armObservationOf) is followed by nothing that can run program code before the read, or by nothing that can
+// the read lowers as it stands when the place it was last seen narrowed (an assignment, or a check that mentions
+// it, armObservationOf) is followed by nothing that can run program code before the read, or by nothing that can
 // write its name or install an accessor (propertyWriteMayRunBetween). A read with no such place is judged
 // from the start of its own function.
-// It's a fail-closed stop: a checked view of the declared union is the read that lifts it.
+// Any other such read is a narrowing kept across a call that may rewrite the property, a claim the walk can't
+// prove whatever the field's representation (Adamic's ruling on #p1p7k3g): even where every type a stale value
+// could be holds the field at one representation, the stale value's field is read through the arm it isn't. So
+// every one is the floor's (narrowedArmView): a stop in .a and, in .ts, a read through a checked view of the
+// declared type, so a stale arm stops loudly at the read and an honest one runs.
 func (l *lowering) narrowedArmPropertyReadGap(node *ast.Node) error {
 	if !l.isExpression(node) || (ast.IsAssignmentTarget(node) && pureWrite(node)) {
 		return nil
@@ -100,14 +106,6 @@ func (l *lowering) narrowedArmPropertyReadGap(node *ast.Node) error {
 	if property != nil && property.Flags&ast.SymbolFlagsEnumMember != 0 {
 		return nil // An enum's member is a constant no write reaches.
 	}
-	if l.enumTagSwings(node) || node.Kind == ast.KindPropertyAccessExpression && l.enumTagSwings(node.Name()) {
-		// The swing reads this refinement through each narrowed member's checked view (enumTagCheckedViews),
-		// which checks the value's layout at the read, so a stale arm stops loudly there and is never read
-		// silently (Adamic's seam ruling of Nov 27 on #8nj5pn4: a read already made through a checked view is
-		// exempt). The swing registers its views at the read's name, after this rule has judged the read, so
-		// it's asked by its condition, never by its registry.
-		return nil
-	}
 	stop := l.notYet(node, "a read of property "+name+" narrowed to "+l.checker.TypeToString(narrowed)+" where a call may have rewritten it")
 	// A getter of the name answers each read itself, so it stops the read whatever the flow says. A program that
 	// could install one some other way (writes.accessors: a descriptor, a prototype) stops it only where program
@@ -115,12 +113,6 @@ func (l *lowering) narrowedArmPropertyReadGap(node *ast.Node) error {
 	writes := l.propertyWritesOf()
 	if l.accessorName(name) {
 		return stop
-	}
-	if !l.armReadMaySilentlyMisread(node, narrowed, declared) {
-		// A stale arm is read by the value's own shape or by a slot every layout holding the name shares, and
-		// a field the new value lacks stops loudly there (Emit's guard on #8nj5pn4), so only a field held at
-		// two representations can read the wrong bits silently.
-		return nil
 	}
 	_, notNumeric := strconv.ParseFloat(name, 64)
 	numeric := notNumeric == nil
@@ -132,7 +124,7 @@ func (l *lowering) narrowedArmPropertyReadGap(node *ast.Node) error {
 		boundary := callBoundary(node)
 		if boundary == nil || boundary.Pos() < 0 {
 			if numeric || writes.everyName || len(writes.named[name]) > 0 {
-				return stop
+				return l.narrowedArmView(node, declared, narrowed, stop)
 			}
 			return nil
 		}
@@ -140,13 +132,37 @@ func (l *lowering) narrowedArmPropertyReadGap(node *ast.Node) error {
 	}
 	exempt := l.appendsBetween(observation, node, numeric)
 	if writes.accessors && l.codeBetween(observation.from, node, exempt) {
-		return stop
+		return l.narrowedArmView(node, declared, narrowed, stop)
 	}
 	if l.propertyWriteMayRunBetween(node, name, numeric, observation.from, observation.target, exempt) {
-		return stop
+		return l.narrowedArmView(node, declared, narrowed, stop)
 	}
 	return nil
 }
+
+// narrowedArmView is the floor's answer to a read narrowedArmPropertyReadGap can't prove: in .a, stop, the floor's
+// own words; in .ts, the read through a checked view of declared for each member it was narrowed to
+// (narrowedCheckedViews), as the swing reads an open-enum refinement it can't prove (Adamic's ruling on #8nj5pn4).
+// The view checks the value's layout at every read through the member's type, so a stale arm stops loudly there,
+// exit 70, and an honest one reads its field. nil when the views register; where one can't be built, its own NotYet,
+// which fails closed.
+func (l *lowering) narrowedArmView(node *ast.Node, declared, narrowed *checker.Type, stop error) error {
+	file := l.program.FileName(ast.GetSourceFileOfNode(node))
+	if strings.HasSuffix(file, ".a") {
+		return stop
+	}
+	if narrowedArmViewSites != nil {
+		narrowedArmViewSites.record(filepath.Dir(file), l.program.Where(node))
+	}
+	return l.narrowedCheckedViews(node, declared, narrowed)
+}
+
+// narrowedArmViewSites, when a test sets it, records each .ts read the floor takes through checked views in place of
+// its stop (narrowedArmView), at the read's site, keyed by its file's directory, as enumTagSwingSites records the
+// swing's. A view taken or skipped where the program prints the same either way shows only in the record, so a
+// test pins that every read the floor judges leaves a site and every read it passes over leaves none, and a mutant
+// that moves a read across that line goes red there. Production leaves it nil.
+var narrowedArmViewSites *enumTagSwingRecord
 
 // armObservationOf walks the read's flow straight back to the place it was last seen narrowed: a plain
 // assignment of it, after which it holds what was assigned, or a condition that mentions it, the check that
@@ -206,170 +222,6 @@ func (l *lowering) armObservationAlong(read *ast.Node, flow *ast.FlowNode, joins
 			return nil
 		}
 		flow = flow.Antecedent
-	}
-	return nil
-}
-
-// armReadMaySilentlyMisread is whether a read through a property narrowed to an object arm could read a stale
-// value's field at the wrong representation, the one silent case Compiler left the floor on #8nj5pn4: the field
-// read off it, or, where the narrowed value is handed on whole, any field its arm declares, is held at two
-// representations by the types a stale value could be. Those are the types a value is made or held as, a class's
-// instance type, an object literal's, an intersection the program writes, an interface's or a type literal's,
-// that are assignable to the read's declared type, Node for node.parent, since only one of them can be what the
-// call left there (fieldHoldersOf). Each field is read through the holder's own type, so one it inherits from a
-// base class, takes from an interface it extends or from an intersection's member, or copies by a spread, counts
-// at the representation the holder gives it, whatever type declared it (Compiler's must on -11). A field whose
-// representation isn't known counts as one of its own, and a computed key the checker can't spell counts as one
-// when the type that declares it, or a holder that may be the value and is assignable to it, may be the value,
-// failing closed.
-func (l *lowering) armReadMaySilentlyMisread(read *ast.Node, narrowed, declared *checker.Type) bool {
-	at := read
-	for at.Parent != nil && at.Parent.Kind == ast.KindParenthesizedExpression {
-		at = at.Parent
-	}
-	var names []string
-	if parent := at.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == at {
-		names = []string{parent.Name().Text()}
-	} else {
-		for _, field := range l.checker.GetPropertiesOfType(narrowed) {
-			names = append(names, field.Name)
-		}
-	}
-	holders := l.fieldHoldersOf()
-	for _, name := range names {
-		held := map[ir.Type]bool{}
-		var mayHold []*checker.Type
-		for _, holder := range holders.named[name] {
-			if !holders.assignable(l, holder, declared) {
-				continue
-			}
-			mayHold = append(mayHold, holder)
-			held[l.fieldStorage(holder, name)] = true
-		}
-		if len(held) > 1 {
-			return true
-		}
-		if len(held) == 0 {
-			continue
-		}
-		for _, owner := range holders.unspelled {
-			if owner == nil || holders.assignable(l, owner, declared) {
-				return true
-			}
-			for _, holder := range mayHold {
-				if holders.assignable(l, holder, owner) {
-					return true
-				}
-			}
-		}
-	}
-	return false
-}
-
-// fieldStorage is the representation holder gives its field name, read through holder's own type, so an
-// inherited or intersected field has the holder's view of it, with undefined added for an optional one, or 0
-// where it isn't known.
-func (l *lowering) fieldStorage(holder *checker.Type, name string) ir.Type {
-	field := l.checker.GetPropertyOfType(holder, name)
-	if field == nil {
-		return 0
-	}
-	value := l.checker.GetTypeOfSymbol(field)
-	if field.Flags&ast.SymbolFlagsOptional != 0 {
-		value = l.checker.GetUnionType([]*checker.Type{value, l.checker.GetUndefinedType()})
-	}
-	if storage, known := l.representation(value); known {
-		return storage
-	}
-	return 0
-}
-
-// fieldHolders is every type the program and its libraries make or hold a value as, by the name of each field
-// it holds, own or not, and the type declaring each field whose name the checker can't spell, a computed key
-// typed string but no literal, nil where that type can't be named. related keeps each assignability answer,
-// since the same holder is asked about the same declared type at many reads.
-type fieldHolders struct {
-	named     map[string][]*checker.Type
-	unspelled []*checker.Type
-	related   map[[2]*checker.Type]bool
-}
-
-// assignable is from assignable to to, asked once per pair.
-func (h *fieldHolders) assignable(l *lowering, from, to *checker.Type) bool {
-	key := [2]*checker.Type{from, to}
-	if answer, asked := h.related[key]; asked {
-		return answer
-	}
-	answer := l.checker.IsTypeAssignableTo(from, to)
-	h.related[key] = answer
-	return answer
-}
-
-// fieldHoldersOf walks once per lowering every class, interface, object literal, type literal and written
-// intersection, each holder's fields indexed by name through GetPropertiesOfType, and every field declaration
-// whose name the checker can't spell, as sourceSlotDeclared reads them: a property, a method, an accessor, a
-// parameter property or an object literal's member.
-func (l *lowering) fieldHoldersOf() *fieldHolders {
-	if l.armFieldHolders != nil {
-		return l.armFieldHolders
-	}
-	found := &fieldHolders{named: map[string][]*checker.Type{}, related: map[[2]*checker.Type]bool{}}
-	seen := map[*checker.Type]bool{}
-	hold := func(holder *checker.Type) {
-		if holder == nil || seen[holder] {
-			return
-		}
-		seen[holder] = true
-		for _, field := range l.checker.GetPropertiesOfType(holder) {
-			found.named[field.Name] = append(found.named[field.Name], holder)
-		}
-	}
-	var visit ast.Visitor
-	visit = func(part *ast.Node) bool {
-		switch part.Kind {
-		case ast.KindClassDeclaration, ast.KindClassExpression, ast.KindInterfaceDeclaration:
-			if symbol := l.checker.GetSymbolOfDeclaration(part); symbol != nil {
-				hold(l.checker.GetDeclaredTypeOfSymbol(symbol))
-			}
-		case ast.KindObjectLiteralExpression, ast.KindTypeLiteral:
-			hold(l.checker.GetTypeAtLocation(part))
-		case ast.KindIntersectionType:
-			hold(l.checker.GetTypeFromTypeNode(part))
-		case ast.KindPropertySignature, ast.KindPropertyDeclaration, ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment, ast.KindMethodSignature, ast.KindMethodDeclaration, ast.KindGetAccessor, ast.KindSetAccessor, ast.KindParameter:
-			if part.Kind == ast.KindParameter && !parameterProperty(part) {
-				break
-			}
-			if _, named := l.sourceSlotDeclaredName(part); !named {
-				found.unspelled = append(found.unspelled, l.fieldOwner(part))
-			}
-		}
-		part.ForEachChild(visit)
-		return false
-	}
-	for _, file := range l.program.CompilerProgram().GetSourceFiles() {
-		file.AsNode().ForEachChild(visit)
-	}
-	l.armFieldHolders = found
-	return found
-}
-
-// fieldOwner is the type that declares a field's declaration, or nil where it can't be named.
-func (l *lowering) fieldOwner(declaration *ast.Node) *checker.Type {
-	holder := declaration.Parent
-	if declaration.Kind == ast.KindParameter && holder != nil {
-		holder = holder.Parent // A parameter property's constructor, then its class.
-	}
-	if holder == nil {
-		return nil
-	}
-	switch holder.Kind {
-	case ast.KindClassDeclaration, ast.KindClassExpression, ast.KindInterfaceDeclaration:
-		if symbol := l.checker.GetSymbolOfDeclaration(holder); symbol != nil {
-			return l.checker.GetDeclaredTypeOfSymbol(symbol)
-		}
-		return nil
-	case ast.KindTypeLiteral, ast.KindObjectLiteralExpression:
-		return l.checker.GetTypeAtLocation(holder)
 	}
 	return nil
 }
