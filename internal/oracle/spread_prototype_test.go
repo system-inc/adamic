@@ -118,6 +118,22 @@ func genericClaim(class, member string) string {
 // A name the literal writes after its spread is still judged: override_field_setter_a writes weight after a
 // spread of a Sized, whose weight is a setter on its prototype, and past #k7g6f9h's spread_with lowering it
 // still ends natively on the compiler bug where Node prints t number 5, so it stays refused until it lowers.
+// Head 3 (#vjvcnnj, Compiler's acceptance with three holds) makes the .ts reads Node answers honestly lower:
+// a read of a name some spread may pass over as a program class's accessor, where acceptsUndefined says the
+// read is observed as it is, is read by name (spreadAccessorRead, internal/lower/spread_accessor_reads.go).
+// read_typeof, read_undefined, read_nullish and read_template are typeof, === undefined, the left of ?? and
+// a template span over the copy, and read_setter_typeof the setter-only name under typeof; each lowers and
+// agrees. read_real reads a real Sized through the same road and answers its getter's 20, and read_flag a
+// boolean getter's true beside its copy's undefined. read_literal reads a plain literal's own weight beside the
+// copy's: only a read a stop would meet is read by name, so the literal's keeps main's read
+// (TestSpreadAccessorReadKeepsMainsRead holds which road each takes). A string's undefined is a null string, which a consumer
+// keyed on the checker's string reads as present, so read_title's string read stays stopped. String's argument doesn't reach acceptsUndefined, its contextual type being any, so
+// read_string_argument, c13b and c13c still stop. Every read a consumer relies on as present stops as on
+// main: read_parameter, read_local, read_plus, read_less, read_destructure and read_return at spreadCopyRead,
+// read_narrowed's second read, after its typeof check (hold 3), there too, and read_setter_plain at the
+// read of a copy whose source may hide a program class (#r8mazrh). read_map_size holds hold 2: a library
+// instance seen through a type declaring its getter stops before any spread, so the name set holds only the
+// program's classes' accessors.
 // Mutants: spreadCopyRead answering nil lowers c13b again (internal/lower/spread_copy_reads.mutants.md); the
 // .a refusal answering nil lowers the refused .a rows, the type parameter's arm answering false lowers the
 // generic rows, the union walk dropped lowers the union rows, prototypeFree answering false refuses
@@ -168,6 +184,25 @@ func TestSpreadPrototypeField(t *testing.T) {
 		{"m7_a.a", "caught t\n", "an assignment used as a value whose target write type Plain cannot be read as", ""},
 		{"satisfies_return_setter_a.a", "t undefined undefined\n", "", spreadPrototypeRefusalOf("built", ownClaim("weight", "a field"), "Sized", "weight", "setter", "Sized")},
 		{"override_field_setter_a.a", "t number 5\n", "", spreadPrototypeRefusal("Sized", "weight", "setter", "Sized")},
+		{"read_typeof.ts", "undefined\n", "", ""},
+		{"read_undefined.ts", "true\n", "", ""},
+		{"read_nullish.ts", "0\n", "", ""},
+		{"read_template.ts", "w undefined\n", "", ""},
+		{"read_setter_typeof.ts", "undefined\n", "", ""},
+		{"read_real.ts", "number 20 20\nundefined true\n", "", ""},
+		{"read_title.ts", "home undefined\nundefined true\n", "stage 0 can't lower a read of title from { ...built }, a spread's copy of a Page instance, whose title is a getter on its prototype", ""},
+		{"read_flag.ts", "true undefined\nundefined true\n", "", ""},
+		{"read_literal.ts", "number\nundefined\n", "", ""},
+		{"read_string_argument.ts", "undefined\n", spreadCopyReadStop, ""},
+		{"read_parameter.ts", "NaN\n", spreadCopyReadStop, ""},
+		{"read_local.ts", "undefined\n", spreadCopyReadStop, ""},
+		{"read_plus.ts", "NaN\n", spreadCopyReadStop, ""},
+		{"read_less.ts", "false\n", spreadCopyReadStop, ""},
+		{"read_destructure.ts", "undefined\n", spreadCopyReadStop, ""},
+		{"read_return.ts", "undefined\n", spreadCopyReadStop, ""},
+		{"read_narrowed.ts", "absent\n", spreadCopyReadStop, ""},
+		{"read_setter_plain.ts", "undefined\n", "a read of weight from { ...built }, which may be a spread's copy", ""},
+		{"read_map_size.ts", "undefined\n", "a Map or Set going where a plain object type is held", ""},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()

@@ -643,6 +643,11 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 // as, each road below. A range type's dispatch lowers its object arm through it again, with the receiver narrowed
 // to an object, so that arm is the read an object-held receiver of its type gets (range_fields.go).
 func (l *lowering) propertyRead(node *ast.Node, object ir.Expression, name string) (ir.Expression, error) {
+	// A spread copy's accessor name, read where undefined is observed, is lowered as below and recorded, and read by
+	// name where a stop would meet it (#vjvcnnj head 3, spreadAccessorReads).
+	if read, handled, err := l.spreadAccessorRead(node, object, name); handled {
+		return read, err
+	}
 	access := node.AsPropertyAccessExpression()
 	// The ?. this read tests its object with, as property reads it (optional_chain.go).
 	questionDot := l.questionDot(node)

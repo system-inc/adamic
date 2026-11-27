@@ -13,6 +13,10 @@ var latentPostLoweringSteps = []latent.PassStep{
 	{Name: "checkOverloadVerdictCalls"},
 	{Name: "forwarderValues", Scoped: true, Production: "lowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)"},
 	{Name: "finishClassCalls", Scoped: true},
+	// spreadAccessorReads reads by name each recorded read a spread copy's stop would meet, judged by the whole
+	// program's allocation graph (#vjvcnnj head 3): a body lowered on its own keeps every read as main lowers it,
+	// which the stops then judge as main's, so it's recorded as not run, as checkGenericSpreadCopyReads is.
+	{Name: "spreadAccessorReads"},
 	// certifySourceSlots holds every read of a name a checked view wrote to everything its slot can hold:
 	// every view write and every declaration in every source file (#2msw6t8). As checkOptionalMemberPresence,
 	// it's judged by the whole program, so a body lowered on its own is recorded as not run.

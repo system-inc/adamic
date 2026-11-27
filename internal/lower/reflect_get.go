@@ -95,13 +95,23 @@ const (
 	dynamicKeyedGetterPrimitive = "in a program with a class getter that converts an object field to a primitive (its toString or valueOf would run inside the read, unseen)"
 )
 
-// dynamicKeyedRead names the run-time key read a getter judgment stops at: Reflect.get's call, or a
-// readonly view's index (viewKeyedRead).
+// dynamicKeyedRead names the run-time key read a getter judgment stops at: Reflect.get's call, a spread
+// copy's accessor name read by name (spreadAccessorRead), or a readonly view's index (viewKeyedRead).
 func dynamicKeyedRead(site *ast.Node) string {
-	if site.Kind == ast.KindCallExpression {
+	switch site.Kind {
+	case ast.KindCallExpression:
 		return "Reflect.get by a run-time key"
+	case ast.KindPropertyAccessExpression:
+		return spreadAccessorReadWords
 	}
 	return "a readonly view read by a run-time key"
+}
+
+// reflectKeyedRead is whether site's read is Reflect.get's, which calls a getter as a call in the IR, with
+// its throw edge and its escaping receiver: Reflect.get's own call, or spreadAccessorRead's read, which is
+// one. A readonly view's index keeps the syntax judgment.
+func reflectKeyedRead(site *ast.Node) bool {
+	return site.Kind == ast.KindCallExpression || site.Kind == ast.KindPropertyAccessExpression
 }
 
 // checkDynamicKeyedGetterSyntax judges every module class's getters at the read itself, by their
@@ -124,7 +134,7 @@ func (l *lowering) dynamicKeyedGetterReason(site, declaration *ast.Node, getter 
 	reason := l.dynamicKeyedGetterBody(declaration)
 	// The early check has no IR. Defer this reason until the getter's
 	// lowered body and the bodies of its possible callees are available.
-	if site.Kind == ast.KindCallExpression && reason == dynamicKeyedGetterSyntax &&
+	if reflectKeyedRead(site) && reason == dynamicKeyedGetterSyntax &&
 		(getter < 0 || l.keyedGetterReadsAndThrows(getter)) {
 		return ""
 	}
