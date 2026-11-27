@@ -88,6 +88,10 @@ func TestRulesRefuseMistakes(t *testing.T) {
 		{"heavyMaximum zero", `{"blocks": {"on": true, "budget": 2, "heavyMaximum": 0}, "restack": {"on": false}}`, "a whole number from 1 to 16"},
 		{"heavyMaximum past the queue's", `{"blocks": {"on": true, "budget": 2, "heavyMaximum": 17}, "restack": {"on": false}}`, "a whole number from 1 to 16"},
 		{"heavyMaximum null", `{"blocks": {"on": true, "budget": 2, "heavyMaximum": null}, "restack": {"on": false}}`, "a whole number from 1 to 16"},
+		{"probes below zero", `{"blocks": {"on": true, "budget": 2, "probes": -1}, "restack": {"on": false}}`, "a whole number from 0 to 8"},
+		{"probes past the queue's", `{"blocks": {"on": true, "budget": 2, "probes": 9}, "restack": {"on": false}}`, "a whole number from 0 to 8"},
+		{"probes null", `{"blocks": {"on": true, "budget": 2, "probes": null}, "restack": {"on": false}}`, "a whole number from 0 to 8"},
+		{"probes a string", `{"blocks": {"on": true, "budget": 2, "probes": "2"}, "restack": {"on": false}}`, "cannot unmarshal string"},
 		{"rentedGrants null", `{"blocks": {"on": true, "budget": 2, "rentedGrants": null}, "restack": {"on": false}}`, "true or false"},
 		{"rentedGrants a number", `{"blocks": {"on": true, "budget": 2, "rentedGrants": 0}, "restack": {"on": false}}`, "cannot unmarshal number"},
 		{"measure null", `{"blocks": {"on": true, "budget": 2, "measure": null}, "restack": {"on": false}}`, "true or false"},
@@ -334,26 +338,28 @@ func TestRulesTakeAFullBlockAlone(t *testing.T) {
 }
 
 // Every blocks key the queue took since stacked reads here as the lander takes it (#hp18dwz), so a rules.json naming one
-// lands: heavyMaximum, rentedImages, rentedGrants, buildAhead, measure and liveHoleHands, each at its bounds, and each
-// absent as absent. Mutants: liveHoleHands dropped from BlocksRule (this file refused as an unknown field); the hand
-// pattern dropped (TestRulesRefuseMistakes' "liveHoleHands a capital" taken); an empty list taken ("liveHoleHands empty").
+// lands: heavyMaximum, rentedImages, rentedGrants, buildAhead, measure, liveHoleHands and probes, each at its bounds,
+// and each absent as absent. Mutants: liveHoleHands dropped from BlocksRule (this file refused as an unknown field); the
+// hand pattern dropped (TestRulesRefuseMistakes' "liveHoleHands a capital" taken); an empty list taken ("liveHoleHands
+// empty"); probes dropped from BlocksRule (refused as an unknown field); its bound's check dropped ("probes past the
+// queue's" taken).
 func TestRulesTakeTheBlocksKeysSinceStacked(t *testing.T) {
 	t.Parallel()
 	image := strings.Repeat("a", 64)
-	rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "heavyMaximum": 16, "rentedImages": ["` + image + `"], "rentedGrants": false, "buildAhead": ["Eve"], "measure": true, "liveHoleHands": ["system_adamic", "system_adamic_loom", "system_adamic_loom_landing"]}, "restack": {"on": false}}`))
+	rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "heavyMaximum": 16, "rentedImages": ["` + image + `"], "rentedGrants": false, "buildAhead": ["Eve"], "measure": true, "liveHoleHands": ["system_adamic", "system_adamic_loom", "system_adamic_loom_landing"], "probes": 8}, "restack": {"on": false}}`))
 	if err != nil {
 		t.Fatal(err)
 	}
 	blocks := rules.Blocks
-	if blocks.HeavyMaximum == nil || *blocks.HeavyMaximum != 16 || len(blocks.RentedImages) != 1 || blocks.RentedImages[0] != image || blocks.RentedGrants == nil || *blocks.RentedGrants || len(blocks.BuildAhead) != 1 || blocks.BuildAhead[0] != "Eve" || blocks.Measure == nil || !*blocks.Measure || len(blocks.LiveHoleHands) != 3 || blocks.LiveHoleHands[2] != "system_adamic_loom_landing" {
+	if blocks.HeavyMaximum == nil || *blocks.HeavyMaximum != 16 || len(blocks.RentedImages) != 1 || blocks.RentedImages[0] != image || blocks.RentedGrants == nil || *blocks.RentedGrants || len(blocks.BuildAhead) != 1 || blocks.BuildAhead[0] != "Eve" || blocks.Measure == nil || !*blocks.Measure || len(blocks.LiveHoleHands) != 3 || blocks.LiveHoleHands[2] != "system_adamic_loom_landing" || blocks.Probes == nil || *blocks.Probes != 8 {
 		t.Fatalf("blocks read as %+v", blocks)
 	}
-	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "heavyMaximum": 1}, "restack": {"on": false}}`))
-	if err != nil || *rules.Blocks.HeavyMaximum != 1 {
+	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "heavyMaximum": 1, "probes": 0}, "restack": {"on": false}}`))
+	if err != nil || *rules.Blocks.HeavyMaximum != 1 || rules.Blocks.Probes == nil || *rules.Blocks.Probes != 0 {
 		t.Fatalf("%+v, %v", rules.Blocks, err)
 	}
 	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
-	if err != nil || rules.Blocks.HeavyMaximum != nil || rules.Blocks.RentedImages != nil || rules.Blocks.RentedGrants != nil || rules.Blocks.BuildAhead != nil || rules.Blocks.Measure != nil || rules.Blocks.LiveHoleHands != nil {
+	if err != nil || rules.Blocks.HeavyMaximum != nil || rules.Blocks.RentedImages != nil || rules.Blocks.RentedGrants != nil || rules.Blocks.BuildAhead != nil || rules.Blocks.Measure != nil || rules.Blocks.LiveHoleHands != nil || rules.Blocks.Probes != nil {
 		t.Fatalf("a file without them read %+v, %v", rules.Blocks, err)
 	}
 }
