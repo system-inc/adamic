@@ -2,6 +2,9 @@ package lower
 
 import (
 	"errors"
+	"fmt"
+	"time"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
@@ -167,13 +170,23 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 	}
 	edges := map[cycleNode][]cycleNode{}
 	queue := append([]cycleNode{}, candidates...)
+	edgeLoopTrace(f.l.checker, "edges start", len(candidates), len(f.shapes), len(f.where), 0, 0)
+	edgeNodes, edgeRelated := 0, 0
+	var linksTime, relatedTime time.Duration
 	for len(queue) != 0 {
 		node := queue[len(queue)-1]
 		queue = queue[:len(queue)-1]
 		if _, seen := edges[node]; seen {
 			continue
 		}
+		edgeNodes++
+		if edgeNodes%500 == 0 {
+			edgeLoopTrace(f.l.checker, fmt.Sprintf("edges node %d queue %d links %s related %s", edgeNodes, len(queue), linksTime.Round(time.Second), relatedTime.Round(time.Second)), len(candidates), len(f.shapes), len(f.where), edgeNodes, edgeRelated)
+		}
+		linksStart := time.Now()
 		links := f.graphLinks(node)
+		linksTime += time.Since(linksStart)
+		relatedStart := time.Now()
 		// The finder's related relation treats compatible structural views as the
 		// same possible allocation. Weak views never become strong edges.
 		if node.proven != nil && node.proven.Flags()&checker.TypeFlagsObject != 0 && !f.weak(node.proven) && !f.template(node.proven) && !f.isFunction(node.proven) {
@@ -181,8 +194,10 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 				if view.proven != nil && view.proven.Flags()&checker.TypeFlagsObject != 0 && !f.weak(view.proven) && !f.template(view.proven) && f.related(node.proven, view.proven) {
 					links = append(links, view)
 				}
+				edgeRelated++
 			}
 		}
+		relatedTime += time.Since(relatedStart)
 		edges[node] = links
 		queue = append(queue, links...)
 	}

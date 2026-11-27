@@ -74,3 +74,8 @@ func graphLinksProgress(typeChecker *checker.Checker) {
 		relationSizeTrace(typeChecker, fmt.Sprintf("graphLinks call %d", graphLinksCalls))
 	}
 }
+
+// edgeLoopTrace prints graphTypes' edge loop's progress: candidates, shapes, where, nodes linked and related calls.
+func edgeLoopTrace(typeChecker *checker.Checker, label string, candidates, shapes, where, nodes, related int) {
+	fmt.Fprintf(os.Stderr, "EDGES %s %s candidates=%d shapes=%d where=%d nodes=%d related=%d assignable=%d\n", time.Now().UTC().Format("15:04:05"), label, candidates, shapes, where, nodes, related, assignableSize(typeChecker))
+}
