@@ -169,8 +169,14 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 		}
 	}
 	edges := map[cycleNode][]cycleNode{}
-	queue := append([]cycleNode{}, candidates...)
-	edgeLoopTrace(f.l.checker, "edges start", len(candidates), len(f.shapes), len(f.where), 0, 0)
+	// Probe cut A: the edges are built from the seeds only, since a selected component holds a seed and lies
+	// inside what that seed reaches.
+	queue := []cycleNode{}
+	for seed := range seeds {
+		queue = append(queue, seed)
+	}
+	edgeLoopTrace(f.l.checker, fmt.Sprintf("edges start seeds %d", len(seeds)), len(candidates), len(f.shapes), len(f.where), 0, 0)
+	edgeFiltered := 0
 	edgeNodes, edgeRelated := 0, 0
 	var linksTime, relatedTime time.Duration
 	for len(queue) != 0 {
@@ -191,15 +197,31 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 		// same possible allocation. Weak views never become strong edges.
 		if node.proven != nil && node.proven.Flags()&checker.TypeFlagsObject != 0 && !f.weak(node.proven) && !f.template(node.proven) && !f.isFunction(node.proven) {
 			for _, view := range candidates {
-				if view.proven != nil && view.proven.Flags()&checker.TypeFlagsObject != 0 && !f.weak(view.proven) && !f.template(view.proven) && f.related(node.proven, view.proven) {
+				if view.proven != nil && view.proven.Flags()&checker.TypeFlagsObject != 0 && !f.weak(view.proven) && !f.template(view.proven) && probeMayRelate(f, node.proven, view.proven) && func() bool { edgeFiltered++; return true }() && f.related(node.proven, view.proven) {
 					links = append(links, view)
 				}
 				edgeRelated++
 			}
 		}
 		relatedTime += time.Since(relatedStart)
+		// Probe cut C: each link once.
+		seenLink := map[cycleNode]bool{}
+		unique := links[:0]
+		for _, link := range links {
+			if !seenLink[link] {
+				seenLink[link] = true
+				unique = append(unique, link)
+			}
+		}
+		links = unique
 		edges[node] = links
 		queue = append(queue, links...)
+	}
+	edgeLoopTrace(f.l.checker, fmt.Sprintf("edges done links %s related %s asked %d", linksTime.Round(time.Second), relatedTime.Round(time.Second), edgeFiltered), len(candidates), len(f.shapes), len(f.where), edgeNodes, edgeRelated)
+	for _, candidate := range candidates {
+		if _, built := edges[candidate]; !built {
+			edges[candidate] = nil
+		}
 	}
 	// Tarjan's components, with a component selected iff it contains a seed.
 	next := 0
@@ -512,7 +534,7 @@ func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 		shapesStart := assignableSize(f.l.checker)
 		armCalls["default-shapes"] += len(f.shapes)
 		for _, shape := range f.shapes {
-			if shape != proven && f.l.checker.IsTypeAssignableTo(f.l.relatedShape(shape), proven) {
+			if shape != proven && probeMayAssign(f, f.l.relatedShape(shape), proven) && f.l.checker.IsTypeAssignableTo(f.l.relatedShape(shape), proven) {
 				links = append(links, cycleNode{proven: shape})
 			}
 		}

@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 )
 
@@ -78,4 +79,49 @@ func graphLinksProgress(typeChecker *checker.Checker) {
 // edgeLoopTrace prints graphTypes' edge loop's progress: candidates, shapes, where, nodes linked and related calls.
 func edgeLoopTrace(typeChecker *checker.Checker, label string, candidates, shapes, where, nodes, related int) {
 	fmt.Fprintf(os.Stderr, "EDGES %s %s candidates=%d shapes=%d where=%d nodes=%d related=%d assignable=%d\n", time.Now().UTC().Format("15:04:05"), label, candidates, shapes, where, nodes, related, assignableSize(typeChecker))
+}
+
+// probeNames is a type's property names and its required ones, the probe's cut B (#nxb3xh1): a required property of
+// the target the source lacks makes the source not assignable, so a pair failing that is never asked of the checker.
+type probeNames struct {
+	all      map[string]bool
+	required []string
+}
+
+var probeNamesOf = map[*checker.Type]*probeNames{}
+
+func probeNamesFor(f *cycleFinder, proven *checker.Type) *probeNames {
+	if names, found := probeNamesOf[proven]; found {
+		return names
+	}
+	names := &probeNames{all: map[string]bool{}}
+	for _, property := range f.l.checker.GetPropertiesOfType(proven) {
+		names.all[property.Name] = true
+		if property.Flags&ast.SymbolFlagsOptional == 0 {
+			names.required = append(names.required, property.Name)
+		}
+	}
+	probeNamesOf[proven] = names
+	return names
+}
+
+func probeMayAssign(f *cycleFinder, source, target *checker.Type) bool {
+	if source.Flags()&checker.TypeFlagsObject == 0 || target.Flags()&checker.TypeFlagsObject == 0 {
+		return true
+	}
+	held := probeNamesFor(f, source)
+	for _, name := range probeNamesFor(f, target).required {
+		if !held.all[name] {
+			return false
+		}
+	}
+	return true
+}
+
+func probeMayRelate(f *cycleFinder, one, other *checker.Type) bool {
+	if one == other {
+		return true
+	}
+	one, other = f.l.relatedShape(one), f.l.relatedShape(other)
+	return probeMayAssign(f, one, other) || probeMayAssign(f, other, one)
 }
