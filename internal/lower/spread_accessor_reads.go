@@ -194,9 +194,19 @@ func (l *lowering) spreadAccessorReads() {
 		return
 	}
 	// The read by name is made where its read is found, so a record a rolled-back lowering left, whose read isn't in
-	// the program, makes no helper and names no site.
+	// the program, makes no helper and names no site. A read is found by its value: two records whose lowered
+	// expressions are equal read the same name from the same receiver, so the stops judge them alike and either's
+	// read by name is the other's. Only a node of the wrapper's Go type can be one (fit's ir.MaybeOf), so no other
+	// node is compared.
 	byName := map[int]ir.Expression{}
+	wrappers := map[reflect.Type]bool{}
+	for _, index := range stopped {
+		wrappers[reflect.TypeOf(l.spreadAccessorRecords[index].lowered)] = true
+	}
 	rewrite := func(node any) any {
+		if !wrappers[reflect.TypeOf(node)] {
+			return node
+		}
 		for _, index := range stopped {
 			record := l.spreadAccessorRecords[index]
 			if !reflect.DeepEqual(node, record.lowered) {
