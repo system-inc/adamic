@@ -1,0 +1,11 @@
+function forward<T>(values: T[], through: (...rest: T[]) => string): string {
+	return through(...values);
+}
+function count(...rest: number[]): string {
+	return String(rest.length) + " " + String(rest[0] ?? 0);
+}
+function words(...rest: string[]): string {
+	return rest.join("+");
+}
+console.log(forward([3, 4, 5], count));
+console.log(forward(["x" + String(1), "y"], words));

@@ -1,0 +1,6 @@
+function show(...values: (number | string)[]): string {
+	return values.map((value) => String(value)).join(",");
+}
+const call: (...values: (number | string)[]) => string = show;
+const pair: [number, string] = [1, "a" + String(2)];
+console.log(call(...pair));

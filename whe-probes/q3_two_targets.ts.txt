@@ -1,0 +1,11 @@
+function lead(...rest: number[]): string {
+	return String(rest.reduce((sum, value) => sum + value, 0));
+}
+function show(...rest: (number | string)[]): string {
+	return rest.map((value) => typeof value === "number" ? "n" + String(value) : "s" + value).join(",");
+}
+const numbers = [1, 2, 3];
+for (const through of [lead, show]) {
+	const call: (...rest: number[]) => string = through;
+	console.log(call(7, ...numbers, 8));
+}
