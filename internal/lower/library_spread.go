@@ -14,6 +14,18 @@ type librarySpread struct {
 	node   *ast.Node
 	source ir.Expression
 	view   *checker.Type
+	// written is the view as the source writes it, before the instantiation being lowered replaces its
+	// type parameters (l.concrete), so a spread of a T is known as one (spread_prototype_members.go), and
+	// mapper is that instantiation's, since a pass after lowering has no instantiation in force.
+	written *checker.Type
+	mapper  *typeMapper
+	// held is the type the spread's copy is held as, as the source writes it, and heldInContext whether
+	// that is the literal's contextual type rather than its own (spreadHeld).
+	held          *checker.Type
+	heldInContext bool
+	// heldOwnToo is the literal's own type where the program holds the copy as that beside held, and nil
+	// otherwise (spreadHeld).
+	heldOwnToo *checker.Type
 }
 
 // Library storage is not a list of own enumerable properties. Until library
@@ -33,7 +45,7 @@ func (l *lowering) checkLibrarySpreads(modules []*ast.SourceFile) error {
 		}
 		// A complete producer proof preserves ordinary record and Adamic class
 		// spreads even when an unrelated compatible library object exists elsewhere.
-		if graph.plainSpreadSources(spread.source, map[int]bool{}) {
+		if graph.plainSpreadSources(spread.source, map[int]bool{}, everyClassPlain) {
 			continue
 		}
 		if err := l.librarySpreadRefusal(spread, candidates); err != nil {
@@ -45,7 +57,11 @@ func (l *lowering) checkLibrarySpreads(modules []*ast.SourceFile) error {
 
 // Follow joined assignments, arguments and returns. An unmodeled producer is
 // not evidence of a plain object: it falls back to the closed-world type set.
-func (graph *allocationFlowGraph) plainSpreadSources(expression ir.Expression, active map[int]bool) bool {
+// plainClass says whether an instance of an Adamic class, by its one-based index,
+// counts as plain: every one does for the library rule (everyClassPlain), and for
+// the prototype member rule (spread_prototype_members.go) only one whose chain
+// holds none of the view's fields on its prototype (prototypeFree).
+func (graph *allocationFlowGraph) plainSpreadSources(expression ir.Expression, active map[int]bool, plainClass func(class int) bool) bool {
 	sources := func(node int) bool {
 		if _, unknownSource := graph.unknownAt(node); active[node] || unknownSource || len(graph.sources[node]) == 0 {
 			return false
@@ -53,7 +69,7 @@ func (graph *allocationFlowGraph) plainSpreadSources(expression ir.Expression, a
 		active[node] = true
 		defer delete(active, node)
 		for _, source := range graph.sources[node] {
-			if !graph.plainSpreadSources(source, active) {
+			if !graph.plainSpreadSources(source, active, plainClass) {
 				return false
 			}
 		}
@@ -61,8 +77,9 @@ func (graph *allocationFlowGraph) plainSpreadSources(expression ir.Expression, a
 	}
 	switch value := expression.(type) {
 	case ir.ObjectLiteral:
-		// A spread result has already been checked at its own source.
-		return true
+		// A spread result has already been checked at its own source. An accessor
+		// literal's synthetic class holds its accessors as its own, which a spread copies.
+		return value.Class == 0 || graph.program.Classes[value.Class-1].Literal || plainClass(value.Class)
 	case ir.Undefined, ir.Null:
 		return true
 	case ir.Read:
@@ -90,21 +107,49 @@ func (graph *allocationFlowGraph) plainSpreadSources(expression ir.Expression, a
 		}
 		return true
 	case ir.Conditional:
-		return graph.plainSpreadSources(value.WhenTrue, active) && graph.plainSpreadSources(value.WhenNot, active)
+		return graph.plainSpreadSources(value.WhenTrue, active, plainClass) && graph.plainSpreadSources(value.WhenNot, active, plainClass)
 	case ir.Coalesce:
-		return graph.plainSpreadSources(value.Value, active) && graph.plainSpreadSources(value.Fallback, active)
+		return graph.plainSpreadSources(value.Value, active, plainClass) && graph.plainSpreadSources(value.Fallback, active, plainClass)
 	case ir.Box:
-		return graph.plainSpreadSources(value.Value, active)
+		return graph.plainSpreadSources(value.Value, active, plainClass)
 	case ir.Narrow:
-		return graph.plainSpreadSources(value.Value, active)
+		return graph.plainSpreadSources(value.Value, active, plainClass)
 	case ir.Unwrap:
-		return graph.plainSpreadSources(value.Value, active)
+		return graph.plainSpreadSources(value.Value, active, plainClass)
 	case ir.Defined:
-		return graph.plainSpreadSources(value.Value, active)
+		return graph.plainSpreadSources(value.Value, active, plainClass)
 	case ir.CheckedCast:
-		return graph.plainSpreadSources(value.Value, active)
+		return graph.plainSpreadSources(value.Value, active, plainClass)
 	}
 	return false
+}
+
+// everyClassPlain counts every Adamic class instance as a plain spread source, as the library rule
+// does: its concern is library storage, which no Adamic class holds.
+func everyClassPlain(int) bool {
+	return true
+}
+
+// prototypeFree is the prototype member rule's plainClass: a class is plain when neither it nor any
+// base holds a getter, a setter or a method under a name in fields, so a spread of its instance
+// copies every field the view declares. A static member is on the constructor, not the prototype,
+// and the class lowering never lists one in Methods.
+func (graph *allocationFlowGraph) prototypeFree(fields map[string]bool) func(class int) bool {
+	return func(class int) bool {
+		for holder := class; holder != 0; holder = graph.program.Classes[holder-1].Base {
+			for _, accessor := range graph.program.Classes[holder-1].Accessors {
+				if fields[accessor.Name] {
+					return false
+				}
+			}
+			for _, method := range graph.program.Classes[holder-1].Methods {
+				if method >= 0 && fields[graph.program.Functions[method].MethodName] {
+					return false
+				}
+			}
+		}
+		return true
+	}
 }
 
 func (l *lowering) librarySpreadCandidates(modules []*ast.SourceFile) map[*checker.Type]string {
