@@ -102,6 +102,13 @@ type cycleFinder struct {
 	// how many relation queries that arm has asked, which TestClosureArmRelatesEachCapturingTypeOnce reads.
 	closures       *closureGroups
 	closureQueries int
+	// allocationShapes and allocationUniversalNames are what mayShareAllocation reads of each type and of the
+	// global Object type, allocation graphTypes' index of its candidates and the shapes by their names, and
+	// allocationTests how many name tests that index has made (shared_allocation.go).
+	allocationShapes         map[*checker.Type]*allocationShape
+	allocationUniversalNames map[string]bool
+	allocation               *allocationIndex
+	allocationTests          int
 
 	// recordSlots are the seeds slotsOf found whose written value may be a record (noteRecordSlot), and
 	// recordCells the captured cells graphTypes seeds, each judged once the graph types are selected
