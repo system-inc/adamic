@@ -317,18 +317,21 @@ func (l *lowering) fitCallArguments(function int, arguments []ir.Expression, spr
 	}
 }
 
-// spreadPackStop judges a call with a spread against the slots its callee reads (#p9zm9q5). Such a
-// call packs each argument as it's held (packCallArguments), and the callee reads each slot as its
-// own parameter's type and copies a rest slot for slot (copyRest), so nothing converts on the way:
-// a number or a boolean packed where a union is read is its bits read as a heap pointer. So an
-// argument is admitted only where it's held as the slot is (packedAlike). A fixed argument before
-// the first spread meets its own parameter; a spread's elements, and every argument after a spread,
-// meet each slot they can land in. The first skip arguments, a method's receiver, have no node and
-// aren't judged. slots are the callee's parameters before its rest, and rest its rest's element, or 0
-// for none: a function's from its locals (functionSlots), a function value's from its one signature
-// (signatureSlots). Stopping here fails closed; packing each value as its slot is #p9zm9q5's Must for
-// Lower.
-func (l *lowering) spreadPackStop(nodes []*ast.Node, arguments []ir.Expression, spread []bool, skip int, slots []ir.Type, rest ir.Type) error {
+// spreadPackFit makes each argument of a call with a spread what the slots its callee reads hold
+// (#p9zm9q5). Such a call packs each argument as it's held (packCallArguments), and the callee reads
+// each slot as its own parameter's type and copies a rest slot for slot (copyRest), so nothing
+// converts on the way: a number or a boolean packed where a union is read is its bits read as a heap
+// pointer. So each argument is converted here, before it's packed, into arguments in place. A fixed
+// argument before the first spread meets its own parameter; a spread's elements, and every argument
+// after a spread, meet each slot they can land in. An argument held as each slot it can land in reads
+// (packedAlike) stays as it is. Otherwise every slot it can land in must be one type, the one it's
+// made: a fixed argument fitted to it, and a spread's elements converted element by element
+// (spreadConverted). Slots that differ stop, even where they're alike to each other, since a union's
+// box landing in a string slot would be read as a string. The first skip arguments, a method's
+// receiver, have no node and aren't judged. slots are the callee's parameters before its rest, and
+// rest its rest's element, or 0 for none: a function's from its locals (functionSlots), a function
+// value's from its one signature (signatureSlots). Stopping here fails closed.
+func (l *lowering) spreadPackFit(nodes []*ast.Node, arguments []ir.Expression, spread []bool, skip int, slots []ir.Type, rest ir.Type) error {
 	if len(spread) == 0 {
 		return nil
 	}
@@ -345,8 +348,9 @@ func (l *lowering) spreadPackStop(nodes []*ast.Node, arguments []ir.Expression, 
 		var landing []ir.Type
 		held := argument.Type()
 		doing := "passing a " + typeName(held)
+		spreads := len(spread) > index && spread[index]
 		switch {
-		case len(spread) > index && spread[index]:
+		case spreads:
 			expanded = true
 			if literal, isLiteral := argument.(ir.ArrayLiteral); isLiteral && len(literal.Elements) == 0 {
 				continue
@@ -366,11 +370,32 @@ func (l *lowering) spreadPackStop(nodes []*ast.Node, arguments []ir.Expression, 
 		if index < skip {
 			continue
 		}
+		if !slices.ContainsFunc(landing, func(slot ir.Type) bool { return !packedAlike(slot, held) }) {
+			continue
+		}
+		to := landing[0]
 		for _, slot := range landing {
-			if !packedAlike(slot, held) {
-				return l.notYet(nodes[index-skip], "a call with a spread "+doing+" where the callee reads a "+typeName(slot))
+			if slot != to {
+				return l.notYet(nodes[index-skip], "a call with a spread "+doing+" where the callee's slots read as a "+typeName(to)+" and a "+typeName(slot))
 			}
 		}
+		stop := "a call with a spread " + doing + " where the callee reads a " + typeName(to)
+		if !spreads {
+			arguments[index] = fit(argument, to)
+			if arguments[index].Type() != to {
+				return l.notYet(nodes[index-skip], stop)
+			}
+			continue
+		}
+		converted, err := l.spreadConverted(nodes[index-skip], nodes[index-skip], argument, held, to, stop)
+		if err != nil {
+			return err
+		}
+		// spreadPacks and checkClosureSpreadLayouts read a spread's elements through spreadElement, which
+		// takes an ir.ArrayLiteral's Element and anything else's from the checker's type of the spread's
+		// source, the elements before they were converted. Wrapped in a literal of to that spreads the
+		// converted array, the spread reads as to, as it's packed.
+		arguments[index] = ir.ArrayLiteral{Element: to, Elements: []ir.Expression{converted}, Spread: []bool{true}}
 	}
 	return nil
 }
@@ -478,7 +503,7 @@ func (l *lowering) spreadPacks(nodes []*ast.Node, arguments []ir.Expression, spr
 }
 
 // checkClosureSpreadLayouts judges each call with a spread through a function value against every target
-// its layout packs for (#wzr4atz). spreadPackStop judged it against the function value's one signature,
+// its layout packs for (#wzr4atz). spreadPackFit fitted it to the function value's one signature,
 // but the emitter packs the arguments once and fills every slot of ir.ClosureArgumentLayout from that
 // pack: each fixed slot read as the layout's type, and each rest tail copied raw from its start (copyRest
 // with nothing converted). The layout's targets are every closure record its function type admits
