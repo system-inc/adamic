@@ -88,7 +88,7 @@ class FirstLinkReportTests(unittest.TestCase):
 
     def test_phase_sets_are_closed(self):
         self.assertEqual(len(report.BODY_PHASES), 5)
-        self.assertEqual(len(report.WHOLE_PROGRAM_PHASES), 38)
+        self.assertEqual(len(report.WHOLE_PROGRAM_PHASES), 39)
         self.assertFalse(report.BODY_PHASES & report.WHOLE_PROGRAM_PHASES)
 
     def test_unknown_phase_fails_without_outputs(self):
