@@ -14,16 +14,25 @@ import (
 // twin whose call writes an a, which the rule, keyed by the name, stops too; a getter named n stops even with
 // nothing between, since it answers each read itself. The same read where both arms hold v as a string, rows
 // with nothing between the check and the read, a held binding the call can't rewrite, and an unrelated getter
-// lower and agree with Node. Language's r08 is the same hole through an element, arr[0] after a call that writes
+// lower and agree with Node, and so does a read of v where only a type no stale value can be declares v at another
+// representation, or where an unrelated literal has a computed key the checker can't spell (-11, the
+// assignable-declarer filter). A stale value whose field comes from a base class, an interface it extends or an
+// intersection's member, made by a class or a spread, stops where that field is held at another representation, and
+// lowers beside its twin where it isn't (-12, Compiler's must on -11: holders, never declaring types). Language's r08 is the same hole through an element, arr[0] after a call that writes
 // x[0], pinned with its honest twin and its nothing-between control, and through a const index, which tsc narrows by
 // its literal type (Language's e02) or a const enum member (e05). A read held into a const after the call is still the checker's A, so it stops too (Language's e01). Mutants (narrowed_arm_property.mutants.md): the property dispatch dropped, the
-// write test dropped, and the silent test dropped (the same-representation row stops).
+// write test dropped, the silent test dropped (the same-representation row stops), the holder test dropped (the
+// unrelated declarer stops) and the holders indexed only by the fields they declare themselves (the three inherited
+// rows lower).
 func TestNarrowedArmPropertyRead(t *testing.T) {
 	t.Parallel()
 	const enumTypes = "enum K { A = 1, B = 2 }\ninterface A { readonly kind: K.A; readonly v: number }\ninterface B { readonly kind: K.B; readonly v: string }\ntype N = A | B;\ninterface M { n: N }\nconst a: A = { kind: K.A, v: 1 };\nconst b: B = { kind: K.B, v: \"x\" };\nfunction reset(m: M): void { m.n = b; }\nfunction keep(m: M): void { m.n = a; }\nfunction use(x: A): string { return String(x.v + 1); }\n"
 	const stringTypes = "type A = { readonly kind: 'a'; readonly v: number };\ntype B = { readonly kind: 'b'; readonly v: string };\ntype N = A | B;\ninterface M { n: N }\nconst a: A = { kind: 'a', v: 1 };\nconst b: B = { kind: 'b', v: \"x\" };\nfunction reset(m: M): void { m.n = b; }\nfunction keep(m: M): void { m.n = a; }\nfunction use(x: A): string { return String(x.v + 1); }\n"
 	const sameTypes = "type A = { readonly kind: 'a'; readonly v: string };\ntype B = { readonly kind: 'b'; readonly v: string };\ntype N = A | B;\ninterface M { n: N }\nconst a: A = { kind: 'a', v: \"y\" };\nconst b: B = { kind: 'b', v: \"x\" };\nfunction reset(m: M): void { m.n = b; }\n"
+	const numberTypes = "type A = { readonly kind: 'a'; readonly v: number };\ntype B = { readonly kind: 'b'; readonly v: number };\ntype N = A | B;\ninterface M { n: N }\nconst a: A = { kind: 'a', v: 1 };\nconst b: B = { kind: 'b', v: 5 };\nfunction reset(m: M): void { m.n = b; }\n"
 	const stop = "narrowed to A where a call may have rewritten it"
+	const inheritedTypes = "type A = { readonly kind: 'a'; readonly v: number };\ntype B = { readonly kind: 'b' };\ntype N = A | B;\ninterface M { n: N }\nconst a: A = { kind: 'a', v: 1 };\n"
+	const inheritedShow = "function show(m: M): string { if (m.n.kind === 'a') { reset(m); return String(m.n.v + 1); } return 'b'; }\nconsole.log(show({ n: a }));\n"
 	const elements = "function resetFirst(x: N[]): void { x[0] = b; }\nfunction keepFirst(x: N[]): void { x[0] = a; }\n"
 	for _, row := range []struct{ name, source, stdout string }{
 		{"string direct lie", stringTypes + "function show(m: M): string { if (m.n.kind === 'a') { reset(m); return String(m.n.v + 1); } return 'b'; }\nconsole.log(show({ n: a }));\n", ""},
@@ -42,6 +51,14 @@ func TestNarrowedArmPropertyRead(t *testing.T) {
 		{"element const enum index lie", stringTypes + elements + "const enum Slot { First = 0 }\nfunction show(arr: N[]): string { if (arr[Slot.First] !== undefined && arr[Slot.First].kind === 'a') { resetFirst(arr); return String(arr[Slot.First].v + 1); } return 'b'; }\nconsole.log(show([a]));\n", ""},
 		{"element held after the call", stringTypes + elements + "const index = 0;\nfunction show(arr: N[]): string { if (arr[index] !== undefined && arr[index].kind === 'a') { resetFirst(arr); const got = arr[index]; if (got !== undefined && got.kind === 'a') { return String(got.v + 1); } return 'changed'; } return 'b'; }\nconsole.log(show([a]));\n", ""},
 		{"element nothing between", stringTypes + elements + "function show(arr: N[]): string { if (arr[0] !== undefined && arr[0].kind === 'a') { return String(arr[0].v + 1); } return 'b'; }\nconsole.log(show([a]));\nconsole.log(show([b]));\n", "2\nb\n"},
+		{"unrelated declarer", numberTypes + "interface Other { readonly v: string }\nconst other: Other = { v: \"o\" };\nfunction show(m: M): string { if (m.n.kind === 'a') { reset(m); return String(m.n.v + 1); } return other.v; }\nconsole.log(show({ n: a }));\n", "6\n"},
+		{"computed key elsewhere", numberTypes + "const key: string = \"q\";\nconst bag: Record<string, number> = { [key]: 1 };\nfunction show(m: M): string { if (m.n.kind === 'a') { reset(m); return String(m.n.v + 1); } return String(bag[key]); }\nconsole.log(show({ n: a }));\n", "6\n"},
+		{"base class lie", inheritedTypes + "class Base { readonly v: string = \"s\"; }\nclass Bin extends Base { readonly kind = 'b' as const; }\nfunction reset(m: M): void { m.n = new Bin(); }\n" + inheritedShow, ""},
+		{"base class twin", inheritedTypes + "class Base { readonly v: number = 5; }\nclass Bin extends Base { readonly kind = 'b' as const; }\nfunction reset(m: M): void { m.n = new Bin(); }\n" + inheritedShow, "6\n"},
+		{"extended interface lie", inheritedTypes + "interface Base { readonly v: string }\ninterface Bin extends Base { readonly kind: 'b' }\nfunction make(base: Base): Bin { return { ...base, kind: 'b' }; }\nfunction reset(m: M): void { m.n = make({ v: \"s\" }); }\n" + inheritedShow, ""},
+		{"extended interface twin", inheritedTypes + "interface Base { readonly v: number }\ninterface Bin extends Base { readonly kind: 'b' }\nfunction make(base: Base): Bin { return { ...base, kind: 'b' }; }\nfunction reset(m: M): void { m.n = make({ v: 5 }); }\n" + inheritedShow, "6\n"},
+		{"intersection member lie", inheritedTypes + "type Base = { readonly v: string };\ntype Bin = { readonly kind: 'b' } & Base;\nfunction make(base: Base): Bin { return { ...base, kind: 'b' }; }\nfunction reset(m: M): void { m.n = make({ v: \"s\" }); }\n" + inheritedShow, ""},
+		{"intersection member twin", inheritedTypes + "type Base = { readonly v: number };\ntype Bin = { readonly kind: 'b' } & Base;\nfunction make(base: Base): Bin { return { ...base, kind: 'b' }; }\nfunction reset(m: M): void { m.n = make({ v: 5 }); }\n" + inheritedShow, "6\n"},
 		{"string held binding", stringTypes + "function show(m: M): string { const n = m.n; if (n.kind === 'a') { reset(m); return String(n.v + 1); } return 'b'; }\nconsole.log(show({ n: a }));\n", "2\n"},
 	} {
 		t.Run(row.name, func(t *testing.T) {
