@@ -179,9 +179,15 @@ func (l *lowering) arrayExcludedArm(proven *checker.Type) bool {
 	if l.arrayStored(proven, map[*checker.Type]bool{}) {
 		return false
 	}
-	stored := l.arrayStoredPropertyNames()
+	return l.requiresPropertyOutside(proven, l.arrayStoredPropertyNames())
+}
+
+// requiresPropertyOutside is arrayExcludedArm's property rule: whether proven declares or inherits a required property
+// that isn't numeric-named, isn't length, and isn't in names. Handed the names array-stored types can have, a value of
+// proven, which has that property, is no array.
+func (l *lowering) requiresPropertyOutside(proven *checker.Type, names map[string]bool) bool {
 	for _, property := range l.checker.GetPropertiesOfType(proven) {
-		if property.Flags&ast.SymbolFlagsOptional == 0 && property.Name != "length" && !numericPropertyName(property.Name) && !stored[property.Name] {
+		if property.Flags&ast.SymbolFlagsOptional == 0 && property.Name != "length" && !numericPropertyName(property.Name) && !names[property.Name] {
 			return true
 		}
 	}
@@ -350,11 +356,29 @@ func (l *lowering) arrayStored(proven *checker.Type, seen map[*checker.Type]bool
 // or inherits. The closed world is each interface, class and type alias every file the program holds declares
 // (the files kindTagCarriersOf walks, never moduleOrder's runnable modules alone, which leave out a module the
 // program only imports types from), each intersection written in one, since `T & { pos: number }` over an array
-// type argument is an array holding pos, and each Object.assign's result. An intersection holding a type parameter
-// counts as one stored as an array, failing closed: its argument may be one. The bundled library and the prelude
-// are walked too, for their interfaces and classes that extend another, such as lib's RegExpExecArray, whose index
-// and input an array the program holds can have. The same walk sets arrayStoredIndex, whether any of those types has
-// an index signature other than a number's (a string's, failing closed on any other key), for arrayExcludedIndexArm.
+// type argument is an array holding pos, and each Object.assign's result. The bundled library and the prelude
+// are walked too, for their interfaces and classes that extend another (libraryExtensions), such as lib's
+// RegExpExecArray, whose index and input an array the program holds can have. The same walk sets arrayStoredIndex,
+// whether any of those types has an index signature other than a number's (a string's, failing closed on any other
+// key), for arrayExcludedIndexArm.
+//
+// An intersection holding a type parameter, and no member arrayStored calls an array, counts as one stored as an
+// array only when every type parameter it holds has a constraint that may hold an array (rulings.md:260's amendment,
+// Nov 27, @system_adamic on #67fpbxv). The premise: a type parameter's instantiations are bounded by its constraint,
+// so a constraint no array can satisfy admits no array-stored value at that arm, and anything the rule can't read
+// falls to may-hold (constraintMayHoldArray). A value of the intersection is a value of each parameter it holds, so
+// one parameter whose constraint no array satisfies rules an array out, and the intersection counts only when every
+// parameter's constraint may hold one. "May hold" is arrayExcludedArm's own property rule read against these names,
+// which every intersection counted adds to, so the walk settles them as a least fixpoint: each is counted once every
+// parameter's constraint may hold an array given the names found so far, until no more is. tsc's cloneNode casts,
+// `T & SourceFile` and its siblings with T extends Node, count only while Node may hold an array. Node's kind,
+// flags, parent and modifierFlagsCache are on no other array-stored type, so they don't count, and Node is in
+// Array.isArray's domain. It fails closed: an array-stored interface that also declares kind
+// (`interface ArrayNode extends Array<number>, Node {}`) makes Node a constraint that may hold an array, the casts
+// count again, and their names keep Node out (TestArrayPredicateConstraintMayHoldStops). The library is part of
+// that premise: its only array-extending types, RegExpExecArray, RegExpMatchArray, RegExpIndicesArray and
+// TemplateStringsArray, declare none of Node's names, and neither do Array and ReadonlyArray, which
+// TestArrayStoredLibraryTypesDeclareNoNodeName holds, so a library bump checks it again.
 func (l *lowering) arrayStoredPropertyNames() map[string]bool {
 	if l.arrayStoredNames != nil {
 		return l.arrayStoredNames
@@ -373,6 +397,9 @@ func (l *lowering) arrayStoredPropertyNames() map[string]bool {
 	}
 	add(predicateReadonlyArray(l.checker, l.checker.GetUnknownType(), false))
 	add(predicateReadonlyArray(l.checker, l.checker.GetUnknownType(), true))
+	// bounded is each intersection holding a type parameter and no member stored as an array, settled by its
+	// parameters' constraints once the walk is done.
+	var bounded []*checker.Type
 	var collect func(*checker.Type)
 	collect = func(proven *checker.Type) {
 		if proven == nil {
@@ -384,11 +411,16 @@ func (l *lowering) arrayStoredPropertyNames() map[string]bool {
 				collect(member)
 			}
 		case proven.Flags()&checker.TypeFlagsIntersection != 0:
+			parameter := false
 			for _, member := range proven.Types() {
-				if member.Flags()&checker.TypeFlagsTypeParameter != 0 || l.arrayStored(member, map[*checker.Type]bool{}) {
+				if l.arrayStored(member, map[*checker.Type]bool{}) {
 					add(proven)
 					return
 				}
+				parameter = parameter || member.Flags()&checker.TypeFlagsTypeParameter != 0
+			}
+			if parameter {
+				bounded = append(bounded, proven)
 			}
 		case l.arrayStored(proven, map[*checker.Type]bool{}):
 			add(proven)
@@ -417,30 +449,104 @@ func (l *lowering) arrayStoredPropertyNames() map[string]bool {
 		node.ForEachChild(visit)
 		return false
 	}
-	// The library declares thousands of members and no intersection a value is built at, so only its declarations
-	// that extend another are asked, and its bodies are never walked.
-	var visitLibrary ast.Visitor
-	visitLibrary = func(node *ast.Node) bool {
+	for _, extension := range l.libraryExtensions() {
+		declared(extension)
+	}
+	for _, file := range l.program.CompilerProgram().GetSourceFiles() {
+		if !load.IsLibrary(file) && !load.IsPrelude(file) {
+			file.AsNode().ForEachChild(visit)
+		}
+	}
+	// The least fixpoint: counting an intersection adds its names, which can make another parameter's constraint one
+	// that may hold an array, so the pass repeats until it counts none.
+	for counted := true; counted; {
+		counted = false
+		for at, proven := range bounded {
+			if proven != nil && l.parametersMayHoldArrays(proven, names) {
+				add(proven)
+				bounded[at] = nil
+				counted = true
+			}
+		}
+	}
+	l.arrayStoredNames, l.arrayStoredIndex = names, index
+	return names
+}
+
+// libraryExtensions is each interface and class the bundled library and the prelude declare that extends another, the
+// library's part of arrayStoredPropertyNames' closed world. The library declares thousands of members and no
+// intersection a value is built at, so only its declarations that extend another are asked, and its bodies are never
+// walked.
+func (l *lowering) libraryExtensions() []*ast.Node {
+	var extensions []*ast.Node
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
 		switch node.Kind {
 		case ast.KindInterfaceDeclaration, ast.KindClassDeclaration:
 			if ast.GetHeritageClause(node, ast.KindExtendsKeyword) != nil {
-				declared(node)
+				extensions = append(extensions, node)
 			}
 			return false
 		case ast.KindModuleDeclaration, ast.KindModuleBlock:
-			node.ForEachChild(visitLibrary)
+			node.ForEachChild(visit)
 		}
 		return false
 	}
 	for _, file := range l.program.CompilerProgram().GetSourceFiles() {
 		if load.IsLibrary(file) || load.IsPrelude(file) {
-			file.AsNode().ForEachChild(visitLibrary)
-		} else {
 			file.AsNode().ForEachChild(visit)
 		}
 	}
-	l.arrayStoredNames, l.arrayStoredIndex = names, index
-	return names
+	return extensions
+}
+
+// parametersMayHoldArrays is whether every type parameter proven, an intersection, holds has a constraint that may
+// hold an array given names, the names array-stored types are known to have so far (arrayStoredPropertyNames' least
+// fixpoint). Every one must: a value of the intersection is a value of each parameter, so a single constraint no
+// array satisfies rules an array out.
+func (l *lowering) parametersMayHoldArrays(proven *checker.Type, names map[string]bool) bool {
+	for _, member := range proven.Types() {
+		if member.Flags()&checker.TypeFlagsTypeParameter != 0 && !l.constraintMayHoldArray(l.checker.GetBaseConstraintOfType(member), names, map[*checker.Type]bool{}) {
+			return false
+		}
+	}
+	return true
+}
+
+// constraintMayHoldArray is whether a value of constraint, a type parameter's, may be stored as an array, given names,
+// the names array-stored types are known to have so far. A missing constraint, any, unknown and object may, since
+// they bound nothing. A union may when any member may. A type parameter, an indexed access or a conditional is read at
+// its base constraint, and may when it has none. An object or an intersection may when arrayStored calls it an array,
+// or when it requires no property outside names (arrayExcludedArm's own rule, requiresPropertyOutside); one that does
+// has a property every value of it has and no array has. Anything else, a primitive, a literal, keyof, a template
+// literal or never, may not, since no array is one. seen ends a constraint that refers to itself, failing closed: one
+// met again may hold an array.
+func (l *lowering) constraintMayHoldArray(constraint *checker.Type, names map[string]bool, seen map[*checker.Type]bool) bool {
+	if constraint == nil || seen[constraint] {
+		return true
+	}
+	seen[constraint] = true
+	flags := constraint.Flags()
+	switch {
+	case flags&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0:
+		return true
+	case flags&checker.TypeFlagsUnion != 0:
+		for _, member := range constraint.Types() {
+			if l.constraintMayHoldArray(member, names, seen) {
+				return true
+			}
+		}
+		return false
+	case flags&checker.TypeFlagsInstantiableNonPrimitive != 0:
+		base := l.checker.GetBaseConstraintOfType(constraint)
+		if base == nil || base == constraint {
+			return true
+		}
+		return l.constraintMayHoldArray(base, names, seen)
+	case flags&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) != 0:
+		return l.arrayStored(constraint, map[*checker.Type]bool{}) || !l.requiresPropertyOutside(constraint, names)
+	}
+	return false
 }
 
 // The pinned checker owns construction of the readonly array type, just as it
