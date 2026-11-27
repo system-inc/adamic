@@ -916,6 +916,7 @@ func (f *cycleFinder) looseSlotStop() error {
 		inits = append(inits, made)
 	}
 	// H is whole now: each value entering a loose slot is judged against it.
+	relationSizeTrace(f.l.checker, "looseSlotStop H gathered")
 	return f.looseEntryStop(inits)
 }
 
