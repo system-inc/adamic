@@ -10,7 +10,7 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"native-enum-map", "native-call-before-enum", "safe-helper", "safe-constructor", "callable-selection", "call-graph-24", "unknown-after", "computed-key-after", "computed-key-const", "unknown-computed-key"} {
+	for _, name := range []string{"native-enum-map", "native-call-before-enum", "safe-helper", "safe-constructor", "callable-selection", "call-graph-24", "unknown-after"} {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
@@ -20,7 +20,7 @@ func init() {
 
 func TestEnumInitializationNode(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"native-enum-map", "native-call-before-enum", "safe-helper", "safe-constructor", "callable-selection", "call-graph-24", "unknown-after", "computed-key-after", "computed-key-const"} {
+	for _, name := range []string{"native-enum-map", "native-call-before-enum", "safe-helper", "safe-constructor", "callable-selection", "call-graph-24", "unknown-after"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/enum-init-reach", name+".a"))
@@ -91,34 +91,5 @@ func TestEnumInitializationUnknownPinned(t *testing.T) {
 				}
 			}
 		})
-	}
-}
-
-// A computed key naming an ordinary enum member, met before the enum is initialized, has two meanings by who strips
-// its types: Node's transform-mode stripper, the oracle's Node, inlines Pending.Low and prints initializer and 1,
-// where tsc's emit keeps the run-time read and throws TypeError. Adamic stops at the unproven read under both, exit
-// 70 with the row's ReferenceError (Adamic's ruling on #kgngvxj), and backend_divergences.json holds the row the
-// fixture runner and the admission delta read. Mutant: numericKeyRead returning nil, so (A) names the field without
-// reading the member, prints initializer and 1 again, red here.
-func TestEnumInitializationComputedKeyStops(t *testing.T) {
-	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/enum-init-reach/unknown-computed-key.a"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	stripped := run{stdout: []byte("before\ninitializer\n1\n"), exitCode: 0}
-	if d := disagreement(stripped, onNode(t, path)); d != "" {
-		t.Fatalf("the oracle's Node, which inlines the member: %s", d)
-	}
-	program, err := lowered(t, path)
-	if err != nil {
-		t.Fatal(err)
-	}
-	want := run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: ReferenceError: Cannot access 'Pending' before initialization\n"), exitCode: 70}
-	sanitized, _ := nativelyUncached(t, program)
-	for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-		if d := disagreement(want, got); d != "" {
-			t.Fatalf("%s: %+v", d, got)
-		}
 	}
 }

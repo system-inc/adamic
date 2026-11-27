@@ -435,26 +435,6 @@
         "stderr": "adamic: panic: field read failed: seen.total is not a number; expected number, found string\n",
         "exit_code": 70
       }
-    },
-    {
-      "fixture": "stage3/fixtures/enum-init-reach/unknown-computed-key.a",
-      "ruling": "@system_adamic, task #kgngvxj",
-      "reason": "A computed key naming an ordinary enum member, read before the enum is initialized, has two meanings: Node's transform-mode stripper inlines Pending.Low and prints before, initializer and 1, where tsc's emit keeps the run-time read and throws TypeError reading Low of undefined. Adamic stops at the unproven read under both, as row 270's unresolved path does.",
-      "node": {
-        "stdout": "before\ninitializer\n1\n",
-        "stderr": "",
-        "exit_code": 0
-      },
-      "native": {
-        "stdout": "before\n",
-        "stderr": "adamic: panic: ReferenceError: Cannot access 'Pending' before initialization\n",
-        "exit_code": 70
-      },
-      "javascript": {
-        "stdout": "before\n",
-        "stderr": "adamic: panic: ReferenceError: Cannot access 'Pending' before initialization\n",
-        "exit_code": 70
-      }
     }
   ]
 }

@@ -2856,11 +2856,6 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, "a function value returning "+typeName(returns))
 	}
 	call := ir.CallClosure{Closure: closure, Arguments: arguments, Spread: spread, FunctionType: int(l.concrete(l.optionalChainOperandType(node.AsCallExpression().Expression)).Id()), Returns: returns, ArgumentTypeIDs: l.argumentTypeIDs(node.AsCallExpression().Arguments.Nodes)}
-	if len(spread) != 0 {
-		// Read last, from the arguments as they're packed (spreadPackFit's conversions among them), and
-		// one list for both readers: checkClosureSpreadLayouts judges it and the emitter copies by it.
-		call.Packs = l.spreadPacks(node.AsCallExpression().Arguments.Nodes, arguments, spread)
-	}
 	// A call through a checked function-type claim checks it (predicates_function_type.go).
 	value, err := l.checkedFunctionTypeCall(node, closure, call)
 	if err != nil {
@@ -2870,7 +2865,7 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	// FunctionTypeTargets, so the spread is judged against those too then (checkClosureSpreadLayouts,
 	// #wzr4atz).
 	if len(spread) != 0 {
-		l.closureSpreadSites = append(l.closureSpreadSites, closureSpreadSite{nodes: node.AsCallExpression().Arguments.Nodes, call: call})
+		l.closureSpreadSites = append(l.closureSpreadSites, closureSpreadSite{nodes: node.AsCallExpression().Arguments.Nodes, call: call, packs: l.spreadPacks(node.AsCallExpression().Arguments.Nodes, arguments, spread)})
 	}
 	// A nested overload set that captures is called through its closure value, so a narrow overload's
 	// result is checked here too.

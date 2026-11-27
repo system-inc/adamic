@@ -67,9 +67,6 @@ func TestLatentStatecopyCoversEveryLoweringStateField(t *testing.T) {
 					if name == "lowering" && id.Name == "impliedTargetQuery" && printed(field.Type) == "func(*ast.Node) *checker.Type" {
 						continue
 					}
-					if name == "lowering" && id.Name == "firstLinkOverflowCheck" && printed(field.Type) == "func() string" {
-						continue
-					}
 					if name == "lowering" && id.Name == "sourceIdentities" && printed(field.Type) == "map[*ast.Node]ir.SourceIdentity" {
 						continue
 					}

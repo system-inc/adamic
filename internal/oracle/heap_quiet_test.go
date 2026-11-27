@@ -25,8 +25,7 @@ import (
 //   - "fast timer churn": a 1 ms timer churns values every tick, so no wait ever reaches the quiet
 //     span, and nothing goes back (Adamic's condition 2).
 //   - "deadline": a 100 ms timer armed after a burst fires as late as the same timer with no burst,
-//     within 5 ms, since the wait's remainder runs to the loop's own deadline. That bound is a wall
-//     clock, so it's held only on the reference box (ADAMIC_UNIT_BUDGET=1) and logged elsewhere.
+//     within 5 ms, since the wait's remainder runs to the loop's own deadline.
 //   - "parked workers": parallelMap's workers build and drop values, park, and give theirs back while
 //     the main thread spins, so no quiet point of the main thread's can be what gave them back.
 //
@@ -242,16 +241,8 @@ func TestHeapQuietPoints(t *testing.T) {
 			return best
 		}
 		after, alone := least(burstPath, burstBinary), least(controlPath, controlBinary)
-		// A wall clock read under load: held to its 5 ms on the reference box, which sets
-		// ADAMIC_UNIT_BUDGET=1, and only logged elsewhere, where a loaded machine ran 124 and 127 ms
-		// against 100 at heads touching nothing of the runtime (#y3rsavj). Its mutant runs 10 ms late,
-		// inside a loaded box's noise, so the budget box is the only place the row can say anything.
 		if after > alone+5 {
-			if os.Getenv("ADAMIC_UNIT_BUDGET") == "1" {
-				t.Errorf("a 100 ms timer armed after a burst fired after %d ms, against %d ms with no burst: the wait after the quiet span overran the loop's deadline", after, alone)
-			} else {
-				t.Logf("a 100 ms timer armed after a burst fired after %d ms, against %d ms with no burst, over the 5 ms held on the reference box", after, alone)
-			}
+			t.Errorf("a 100 ms timer armed after a burst fired after %d ms, against %d ms with no burst: the wait after the quiet span overran the loop's deadline", after, alone)
 		}
 		t.Logf("after a burst %d ms, alone %d ms", after, alone)
 	})

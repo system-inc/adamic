@@ -451,11 +451,7 @@ func (l *lowering) signatureSlots(node *ast.Node, signature *checker.Signature) 
 }
 
 // spreadElement is how a spread argument's elements are held: a tuple literal's own element, or the
-// element of the array type callArguments admitted. Its first type argument is every element's type
-// only because callArguments admits nothing else: a spread that isn't an array stops there, a tuple
-// that isn't a literal among them, and so does an array without exactly one element type. An iterable
-// admitted later must be read here too, or a tuple's first element would be taken for all of them
-// (Emit's should on #whe5bdk).
+// element of the array type callArguments admitted.
 func (l *lowering) spreadElement(node *ast.Node, argument ir.Expression) ir.Type {
 	if literal, isLiteral := argument.(ir.ArrayLiteral); isLiteral {
 		return literal.Element
@@ -479,11 +475,13 @@ func packedAlike(slot, held ir.Type) bool {
 }
 
 // closureSpreadSite is a call with a spread through a function value, as callClosure made it: its
-// argument nodes, and the call whose layout the emitter packs for (ir.ClosureArgumentLayout), its
-// Packs what each argument packs.
+// argument nodes, the call whose layout the emitter packs for (ir.ClosureArgumentLayout), and what each
+// argument packs, a spread's elements as they're held and 0 for an empty array literal's, which packs
+// nothing (spreadPacks).
 type closureSpreadSite struct {
 	nodes []*ast.Node
 	call  ir.CallClosure
+	packs []ir.Type
 }
 
 // spreadPacks is how each argument of a call with a spread is packed: a fixed one as it's held, a
@@ -507,60 +505,56 @@ func (l *lowering) spreadPacks(nodes []*ast.Node, arguments []ir.Expression, spr
 // checkClosureSpreadLayouts judges each call with a spread through a function value against every target
 // its layout packs for (#wzr4atz). spreadPackFit fitted it to the function value's one signature,
 // but the emitter packs the arguments once and fills every slot of ir.ClosureArgumentLayout from that
-// pack. The layout's targets are every closure record its function type admits (FunctionTypeTargets).
-// Each rest tail is copied from the pack segment by segment, each slot made what the tail holds
-// (copySegments, by the call's Packs), so a number lands boxed in one target's rest of a union and as
-// itself in another's rest of numbers. A fixed slot is read as the layout's type with nothing converted
-// (packedParameter), so each argument is judged by packedAlike against each fixed slot it can land in: a
-// fixed argument before the first spread, at position p, against the fixed slot p; a spread's elements,
-// and every argument after a spread, against every fixed slot from p on, since where they land is known
-// only at run time. A rest tail holds a weak reference only as itself (restSlot converts none to or from
-// one), so a tail it lands in is judged as a fixed slot is where either is weak. Targets that aren't
-// bounded are every function, which may read anything, so such a call stops wherever it packs something.
-// FunctionTypeTargets is final once findCycles has run resolveCountTypes, the one pass that fills it, so
-// this runs after it. Stopping here fails closed.
+// pack: each fixed slot read as the layout's type, and each rest tail copied raw from its start (copyRest
+// with nothing converted). The layout's targets are every closure record its function type admits
+// (FunctionTypeTargets), so a rest the call never runs is still collected, and a number packed where
+// another target's rest of a union starts is its bits retained as a heap pointer. So each argument is
+// judged by packedAlike against each slot it can land in, read from the layout's own target set: a fixed
+// argument before the first spread, at position p, against the fixed slot p and every rest tail starting
+// at or before p; a spread's elements, and every argument after a spread, against every fixed slot from
+// p on and every rest tail. Targets that aren't bounded are every function, which may read anything, so
+// such a call stops wherever it packs something. FunctionTypeTargets is final once findCycles has run
+// resolveCountTypes, the one pass that fills it, so this runs after it. Stopping here fails closed;
+// packing each argument as every target its layout admits reads it is #wzr4atz's work.
 func (l *lowering) checkClosureSpreadLayouts() error {
 	for _, site := range l.closureSpreadSites {
 		if len(site.nodes) > 0 && l.firstLinkSkips(site.nodes[0]) {
 			continue
 		}
 		layout, unknown := l.result.ClosureArgumentSlots(site.call)
+		from := func(position int) []ir.Type {
+			landing := slices.Clone(layout.Fixed[min(position, len(layout.Fixed)):])
+			for _, rest := range layout.Rest {
+				landing = append(landing, rest.Element)
+			}
+			return landing
+		}
 		position := 0
 		expanded := false
-		for index, held := range site.call.Packs {
-			var landing, tails []ir.Type
+		for index, held := range site.packs {
+			var landing []ir.Type
 			switch {
 			case len(site.call.Spread) > index && site.call.Spread[index]:
 				expanded = true
 				if held == 0 {
 					continue
 				}
-				landing = layout.Fixed[min(position, len(layout.Fixed)):]
+				landing = from(position)
 			case expanded:
-				landing = layout.Fixed[min(position, len(layout.Fixed)):]
+				landing = from(position)
 			default:
 				if position < len(layout.Fixed) {
-					landing = layout.Fixed[position : position+1]
+					landing = append(landing, layout.Fixed[position])
 				}
 				for _, rest := range layout.Rest {
 					if rest.Start <= position {
-						tails = append(tails, rest.Element)
+						landing = append(landing, rest.Element)
 					}
 				}
 				position++
 			}
-			if expanded {
-				for _, rest := range layout.Rest {
-					tails = append(tails, rest.Element)
-				}
-			}
 			if unknown {
 				return l.notYet(site.nodes[index], "a call with a spread through a function value whose targets aren't bounded, so its layout may read anything where the call packs a "+typeName(held))
-			}
-			for _, tail := range tails {
-				if (tail == ir.Weak || held == ir.Weak) && tail != held {
-					landing = append(slices.Clone(landing), tail)
-				}
 			}
 			for _, slot := range landing {
 				if !packedAlike(slot, held) {

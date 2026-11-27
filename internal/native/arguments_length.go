@@ -12,18 +12,14 @@ import (
 // The actual count travels separately through the selected typed convention.
 func (e *emitter) closureArguments(call ir.CallClosure) (string, string) {
 	if len(call.Spread) != 0 {
-		packed, lengths := e.packCallArguments(call.Arguments, call.Spread)
-		segments := []packSegment{}
-		for index, length := range lengths {
-			segments = append(segments, packSegment{of: callPack(call, index), length: length})
-		}
+		packed := e.packCallArguments(call.Arguments, call.Spread)
 		layout := e.program.ClosureArgumentLayout(call)
 		slots := []string{}
 		for index, of := range layout.Fixed {
 			value := packedParameter(of, packed+"->elements", packed+"->length", index)
 			slots = append(slots, fmt.Sprintf("{.%s = %s}", member(of), slotted(of, value)))
 		}
-		return e.closureSlotsFrom(call, slots, nil, segments, packed+"->elements", packed+"->length"), packed + "->length"
+		return e.closureSlots(call, slots, nil, packed+"->elements", packed+"->length"), packed + "->length"
 	}
 	slots, of := []string{}, []ir.Type{}
 	for _, argument := range call.Arguments {
@@ -33,36 +29,11 @@ func (e *emitter) closureArguments(call ir.CallClosure) (string, string) {
 	return e.closureSlots(call, slots, of, "", fmt.Sprint(len(call.Arguments))), fmt.Sprint(len(call.Arguments))
 }
 
-// callPack is what the call's argument at index packs, from its Packs, which lowering sets on every call
-// with a spread. Packs that don't describe the arguments the emitter packs are a compiler bug, never a
-// guess: a list of another length, a fixed argument's entry other than its type, or a spread's 0 where
-// it's anything but an empty array literal.
-func callPack(call ir.CallClosure, index int) ir.Type {
-	if len(call.Packs) != len(call.Arguments) {
-		panic(fmt.Sprintf("native: compiler bug: a call with a spread packs %d arguments, and its Packs says %d", len(call.Arguments), len(call.Packs)))
-	}
-	of := call.Packs[index]
-	spread := len(call.Spread) > index && call.Spread[index]
-	if !spread && of != call.Arguments[index].Type() {
-		panic(fmt.Sprintf("native: compiler bug: a call with a spread packs argument %d as %d, and its Packs says %d", index, call.Arguments[index].Type(), of))
-	}
-	if literal, isLiteral := call.Arguments[index].(ir.ArrayLiteral); spread && of == 0 && (!isLiteral || len(literal.Elements) != 0) {
-		panic(fmt.Sprintf("native: compiler bug: a call with a spread has no Packs entry for its spread %d", index))
-	}
-	return of
-}
-
 // closureSlots is a call's packed slots: the fixed ones, padded, and each rest tail collected from
 // source, or from slots when source is "". of is each of slots' type when the caller made them, which
 // collecting a rest from them reads (copyRest); nil when source is a pack made at run time, or when
 // what slots hold isn't known here.
 func (e *emitter) closureSlots(call ir.CallClosure, slots []string, of []ir.Type, source, count string) string {
-	return e.closureSlotsFrom(call, slots, of, nil, source, count)
-}
-
-// closureSlotsFrom is closureSlots of a pack whose segments are known (copySegments): a call with a
-// spread's, made at run time, of nil.
-func (e *emitter) closureSlotsFrom(call ir.CallClosure, slots []string, of []ir.Type, segments []packSegment, source, count string) string {
 	layout := e.program.ClosureArgumentLayout(call)
 	if source == "" && len(slots) > 0 {
 		source = "(adamic_value[]){" + strings.Join(slots, ", ") + "}"
@@ -88,7 +59,7 @@ func (e *emitter) closureSlotsFrom(call ir.CallClosure, slots []string, of []ir.
 		entries = append(entries, fmt.Sprintf("[%d] = %s", index, slot))
 	}
 	for _, rest := range layout.Rest {
-		array := e.restArray(source, count, rest.Start, rest, of, segments)
+		array := e.restArray(source, count, rest.Start, rest, of)
 		entries = append(entries, fmt.Sprintf("[%d] = {.reference = %s}", e.program.RestArgumentSlots[rest], array))
 	}
 
@@ -135,11 +106,8 @@ func (e *emitter) closureComparator(sort ir.ArraySort) string {
 // packCallArguments expands each spread immediately. Its snapshot owns reference
 // elements until the statement ends, including across mutations in later arguments.
 // The heterogeneous packed array itself borrows those snapshots and scalar temporaries.
-// It returns the pack and how many slots each argument took: 1 for a fixed one, and
-// its snapshot's length for a spread.
-func (e *emitter) packCallArguments(arguments []ir.Expression, spread []bool) (string, []string) {
+func (e *emitter) packCallArguments(arguments []ir.Expression, spread []bool) string {
 	packed := e.own(ir.Array, "adamic_array_make(0, 0)")
-	lengths := []string{}
 	for index, argument := range arguments {
 		if len(spread) > index && spread[index] {
 			source := e.value(argument)
@@ -148,14 +116,12 @@ func (e *emitter) packCallArguments(arguments []ir.Expression, spread []bool) (s
 			e.line("for (size_t %s = 0; %s < %s->length; %s++) {", position, position, snapshot, position)
 			e.line("\tadamic_array_push(%s, %s->elements[%s]);", packed, snapshot, position)
 			e.line("}")
-			lengths = append(lengths, snapshot+"->length")
 		} else {
 			value := e.value(argument)
 			e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", packed, member(argument.Type()), slotted(argument.Type(), value))
-			lengths = append(lengths, "1")
 		}
 	}
-	return packed, lengths
+	return packed
 }
 
 func packedParameter(of ir.Type, packed, count string, index int) string {
@@ -169,27 +135,21 @@ func packedParameter(of ir.Type, packed, count string, index int) string {
 // restArray packs a tail for a spread or closure call, copying from start, which counts a
 // receiver where the packed source holds one, as rest.Start doesn't. It's made where an array
 // literal of the rest's type would be, so in a graph program a pack on a cycle lives in the
-// region (#2zhhwaz). of is each packed slot's type, or nil (closureSlots), and segments each
-// argument's run of slots in a pack made at run time where they're known, or nil.
-func (e *emitter) restArray(packed, count string, start int, rest ir.RestArguments, of []ir.Type, segments []packSegment) string {
+// region (#2zhhwaz). of is each packed slot's type, or nil (closureSlots).
+func (e *emitter) restArray(packed, count string, start int, rest ir.RestArguments, of []ir.Type) string {
 	result := e.graphArray(fmt.Sprintf("adamic_array_make(0, %s)", arrayElement(rest.Element)), e.program.RestGraphTypes[rest])
-	e.copyRest(result, packed, count, start, rest.Element, of, segments)
+	e.copyRest(result, packed, count, start, rest.Element, of)
 	return result
 }
 
 // copyRest pushes the packed slots from start to count onto a rest array of element. Slots the rest
 // holds as they are (every one a reference, into a rest of references, or every one the element's
-// own type) are copied by a loop, as is a pack made at run time (of nil) whose segments are all
-// that, or unknown, as a direct call's, whose slots lowering made the rest's. A pack made at run
-// time with a segment the rest doesn't hold as it is is copied segment by segment (copySegments). A
-// pack whose slots aren't all that, as a callback's (an element, the index's number, the array), is
-// pushed slot by slot, each made what the rest holds (restSlot): only a reference is retained,
-// since a number's bits retained as a pointer write a count into memory that has none (#9grybqc).
-func (e *emitter) copyRest(result, packed, count string, start int, element ir.Type, of []ir.Type, segments []packSegment) {
-	if slices.ContainsFunc(segments, func(segment packSegment) bool { return segment.of != 0 && !restHoldsAlike(element, segment.of) }) {
-		e.copySegments(result, packed, start, element, segments)
-		return
-	}
+// own type) are copied by a loop, as is a pack made at run time (of nil), whose slots lowering made
+// the rest's. A pack whose slots aren't all that, as a callback's (an element, the index's number,
+// the array), is pushed slot by slot, each made what the rest holds (restSlot): only a reference is
+// retained, since a number's bits retained as a pointer write a count into memory that has none
+// (#9grybqc).
+func (e *emitter) copyRest(result, packed, count string, start int, element ir.Type, of []ir.Type) {
 	if slices.ContainsFunc(of[min(start, len(of)):], func(slot ir.Type) bool { return !restHoldsAlike(element, slot) }) {
 		for index := start; index < len(of); index++ {
 			e.line("adamic_array_push(%s, %s);", result, e.restSlot(result, fmt.Sprintf("%s[%d]", packed, index), of[index], element))
@@ -204,38 +164,6 @@ func (e *emitter) copyRest(result, packed, count string, start int, element ir.T
 		e.line("\tadamic_array_push(%s, %s[%s]);", result, packed, index)
 	}
 	e.line("}")
-}
-
-// packSegment is one argument's run of slots in a pack made at run time: what each slot holds, from
-// the call's Packs (0 for an empty array literal's spread, which packs nothing), and how many there
-// are, 1 for a fixed argument and the snapshot's length for a spread (packCallArguments).
-type packSegment struct {
-	of     ir.Type
-	length string
-}
-
-// copySegments pushes a pack made at run time onto a rest array of element from start, segment by
-// segment, each slot made what the rest holds (restSlot): o10's numbers boxed into show's rest of a
-// union, which only a target the call never runs reads, and copied as they are into lead's rest of
-// numbers, from the one pack. at is the slot's position in the pack, past every slot the arguments
-// before it took, so a fixed argument after a spread is read where that spread's snapshot ended.
-func (e *emitter) copySegments(result, packed string, start int, element ir.Type, segments []packSegment) {
-	at := e.temporary()
-	e.line("size_t %s = 0;", at)
-	for _, segment := range segments {
-		if segment.of == 0 {
-			continue
-		}
-		end := e.temporary()
-		e.line("for (size_t %s = %s + %s; %s < %s; %s++) {", end, at, segment.length, at, end, at)
-		push := fmt.Sprintf("adamic_array_push(%s, %s);", result, e.restSlot(result, fmt.Sprintf("%s[%s]", packed, at), segment.of, element))
-		if start == 0 {
-			e.line("\t%s", push)
-		} else {
-			e.line("\tif (%s >= %d) %s", at, start, push)
-		}
-		e.line("}")
-	}
 }
 
 // restHoldsAlike says a rest of element holds a slot of type slot as the slot is: a reference among
@@ -283,11 +211,11 @@ func (e *emitter) restSlot(result, slot string, of, element ir.Type) string {
 
 func (e *emitter) spreadArguments(call ir.Call) []string {
 	function := e.program.Functions[call.Function]
-	packed, _ := e.packCallArguments(call.Arguments, call.Spread)
+	packed := e.packCallArguments(call.Arguments, call.Spread)
 	values := []string{}
 	for index, parameter := range function.Parameters {
 		if function.RestElement != 0 && index == len(function.Parameters)-1 {
-			value := e.restArray(packed+"->elements", packed+"->length", index, ir.FunctionRestArguments(function), nil, nil)
+			value := e.restArray(packed+"->elements", packed+"->length", index, ir.FunctionRestArguments(function), nil)
 			if e.reuse.callConsumes(e.program, call, index) {
 				value = "adamic_retain(" + value + ")"
 			}

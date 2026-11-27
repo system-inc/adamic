@@ -1048,13 +1048,6 @@ type (
 		// where a call was made without it.
 		ArgumentTypeIDs []int
 
-		// Packs is what each argument of a call with a Spread packs, in order: a fixed one as it's held, a
-		// spread's elements as they're held, and 0 for an empty array literal's spread, which packs
-		// nothing (lower's spreadPacks, set once the arguments are final). The emitter copies each rest
-		// tail from the pack by it, so a tail makes each slot what it holds (copySegments). nil without a
-		// Spread.
-		Packs []Type
-
 		// Optional is ?. on the call itself. Through an interface, object.name?.(...) (Closure is an
 		// ir.Property whose Method is set), the object's function value or method is looked up once,
 		// before the arguments, and called if it's there; where the object has none by that name, or its

@@ -5,7 +5,6 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
-	"github.com/system-inc/adamic/internal/ir"
 )
 
 // A computed key that's a number names the field its canonical number string names, ECMAScript's
@@ -54,25 +53,6 @@ func (l *lowering) numericFieldName(literal, property *ast.Node) (string, bool) 
 		return "", false
 	}
 	return name, true
-}
-
-// numericKeyRead is the read of the enum member property's computed key names, where numericFieldName named its
-// field by it, lowered so it runs before the field's value as Node evaluates the key: an ordinary enum's member is
-// read through the enum object, and that read is where its enum's readiness is judged (rulings.md's "A known read
-// before a regular enum's initialization is NotYet" and the computed-key entry after it). The field's name comes
-// from the checker's constant, so without this read a key met before its enum is initialized named a field where
-// Node throws TypeError (#kgngvxj). It's nil for a numeric literal and for a const enum's member, which Node's emit
-// inlines as a constant too; a key the checker reads as an enum member through any other declaration is read, so an
-// unknown one fails closed into the ordinary road.
-func (l *lowering) numericKeyRead(property *ast.Node) (ir.Expression, error) {
-	expression := ast.SkipParentheses(property.Name().AsComputedPropertyName().Expression)
-	if expression.Kind == ast.KindNumericLiteral {
-		return nil, nil
-	}
-	if member := l.enumMember(expression); member != nil && member.Parent != nil && member.Parent.Kind == ast.KindEnumDeclaration && ast.HasSyntacticModifier(member.Parent, ast.ModifierFlagsConst) {
-		return nil, nil
-	}
-	return l.expression(expression)
 }
 
 // numericKey is the name a computed key written as a numeric literal or a numeric enum member gives its

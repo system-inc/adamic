@@ -75,20 +75,10 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				return nil, l.notYet(property, "a string field with the reserved iterator slot name")
 			}
 			fieldName, known := l.methodName(property)
-			// keyRead is the key's enum member read, run before the field's value: a numeric key's
-			// (numericKeyRead, #kgngvxj) or an ordinary enum key's in enumeration order (road 2).
-			var keyRead ir.Expression
-			numericKey := false
 			if !known {
 				fieldName, known = l.numericFieldName(node, property)
-				if known {
-					numericKey = true
-					var err error
-					if keyRead, err = l.numericKeyRead(property); err != nil {
-						return nil, err
-					}
-				}
 			}
+			var keyRead ir.Expression
 			if !known {
 				fieldName, known = l.orderedEnumFieldName(node, property)
 				if !known {
@@ -105,12 +95,6 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				return nil, &Refused{Where: l.program.Where(property), What: "__proto__ in an object literal", Fix: "JavaScript changes the prototype instead of making an own field; Adamic objects have fixed shapes and no prototype mutation"}
 			}
 			if property.Kind == ast.KindPropertyAssignment && l.uninitializedInitializer(property.AsPropertyAssignment().Initializer) {
-				if numericKey && keyRead != nil {
-					// A numeric key's placeholder field stops (#kgngvxj): no fixture holds its read to Node yet.
-					// Road 2's ordinary enum key runs its read before the placeholder below, as both backends
-					// evaluate an unset field's value.
-					return nil, l.notYet(property, "an uninitialized object field whose computed key reads an enum member")
-				}
 				declared := l.declaredField(node, fieldName)
 				initializer := ast.SkipParentheses(property.AsPropertyAssignment().Initializer)
 				if declared == 0 && initializer.Kind == ast.KindAsExpression {
@@ -180,7 +164,6 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			}
 			nullish := l.fieldNullish(property, value)
 			if keyRead != nil {
-				// Node evaluates the key, and so its enum's readiness, before the value.
 				value = ir.Comma{Left: keyRead, Right: value}
 			}
 			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value, Nullish: nullish})
