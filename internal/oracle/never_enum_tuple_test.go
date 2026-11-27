@@ -11,19 +11,21 @@ import (
 
 // A numeric enum's never read of a tuple's element is judged by the element's own stored type, as an
 // array's is (enumStoredType, #xfpsqtn): processEnding's switch over allowedEndings[0], a
-// readonly [E, ...E[]] (moduleSpecifiers.ts:1386, first), the same through endings[2], which the rest
-// holds (rest), and a fixed [Phase, Level] switched over entry[1], judged by Level and never by
-// Phase | Level, each enum holding a value the other lacks (pair). Each program in range agrees with Node
-// on the JavaScript backend and natively under the leak check. Each _out program runs the same calls and
-// then one with `n as E` outside the element's enum: Node's assertNever throws there, and Adamic traps at
-// the read, before the call, naming the element's enum. Node's words differ, so stdout and the exit are
-// held to Node and stderr to the trap's own words. The stops are pinned below, and the mutants in
+// readonly [E, ...E[]] (moduleSpecifiers.ts:1386, first), the same through endings[1], which the rest holds
+// (rest), and a fixed [Phase, Level] switched over entry[1], judged by Level and never by Phase | Level,
+// each enum holding a value the other lacks (pair). The rest tuples come back from a function declared to
+// return one, as the adapted tree's allowedEndings comes from getAllowedEndingsInPreferredOrder, each a
+// literal of two, the one length that lowers into readonly [E, ...E[]] today. Each program in range agrees
+// with Node on the JavaScript backend and natively under the leak check. Each _out program runs the same
+// calls and then one with `n as E` outside the element's enum: Node's assertNever throws there, and Adamic
+// traps at the read, before the call, naming the element's enum. Node's words differ, so stdout and the
+// exit are held to Node and stderr to the trap's own words. The stops are pinned below, and the mutants in
 // testdata/never_enum_tuple/mutants.md.
 func TestNeverEnumTupleAgreesWithNode(t *testing.T) {
 	t.Parallel()
 	for name, stdout := range map[string]string{
 		"first": "js minimal ts index\n",
-		"rest":  "ts none js minimal\n",
+		"rest":  "ts js minimal index\n",
 		"pair":  "top low high top\n",
 	} {
 		t.Run(name, func(t *testing.T) {
@@ -65,7 +67,7 @@ func TestNeverEnumTupleTrapsBeforeTheCall(t *testing.T) {
 		name, stdout, value, identity string
 	}{
 		{"first_out", "js minimal ts index\n", "9", "ModuleSpecifierEnding"},
-		{"rest_out", "ts none js minimal\n", "8", "ModuleSpecifierEnding"},
+		{"rest_out", "ts js minimal index\n", "8", "ModuleSpecifierEnding"},
 		{"pair_out", "top low high top\n", "5", "Level"},
 	} {
 		t.Run(pin.name, func(t *testing.T) {
