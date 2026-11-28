@@ -85,7 +85,7 @@ func TestNamedContainerLayout(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 34 {
-		t.Fatalf("found %d programs, want 34", programs)
+	if programs != 50 {
+		t.Fatalf("found %d programs, want 50", programs)
 	}
 }
