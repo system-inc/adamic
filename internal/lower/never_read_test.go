@@ -82,9 +82,10 @@ func neverReadTraps(program *ir.Program) bool {
 // A read the checker types never, with something that can write its place between the earliest
 // narrowing the never is made of and the read, is rulings.md:151's case and stops as not yet at the read
 // (never_read.go). nv1 and nv5 hold the path road's call between the two checks, nv3 its call after the
-// last check. narrowedArmPropertyReadGap (#8nj5pn4) passes the second check's holder.node, narrowed to NodeB
-// across flip's write, since no field NodeA and NodeB declare is held at two representations. nv2 pins the let's never read in an exhaustive switch. The remaining let rows pin
-// the earlier arm read in the original two-check programs.
+// last check. narrowedArmPropertyReadGap (#8nj5pn4) judges the second check's holder.node, narrowed to NodeB
+// across flip's write, now that its silent filter is superseded, and the never read still stops as not yet
+// (J-9yvvsj4 at -6). nv2 pins the let's never read in an exhaustive switch. The remaining let rows pin the earlier arm read in
+// the original two-check programs.
 func TestNeverReadAcrossAWriteIsNotYet(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, read, what string }{
