@@ -47,6 +47,8 @@ type scanCycleFinder struct {
 
 	libraryIterators []libraryIteratorCapture
 	viewAlso         map[*checker.Type][]*checker.Type
+	// allocationFinder holds the live finder's relation for selection and what it read (allocationRelation).
+	allocationFinder *cycleFinder
 }
 
 func (l *lowering) scanFindCycles(modules []*ast.SourceFile) error {
@@ -655,7 +657,11 @@ func (f *scanCycleFinder) graphTypes(modules []*ast.SourceFile) error {
 		// same possible allocation. Weak views never become strong edges.
 		if node.proven != nil && node.proven.Flags()&checker.TypeFlagsObject != 0 && !f.weak(node.proven) && !f.template(node.proven) && !f.isFunction(node.proven) {
 			for _, view := range candidates {
-				if view.proven != nil && view.proven.Flags()&checker.TypeFlagsObject != 0 && !f.weak(view.proven) && !f.template(view.proven) && f.related(node.proven, view.proven) {
+				// The live finder's own relation for selection, never the checker's (#nxb3xh1 head 6): a ported
+				// decision, asked of every candidate by this scan, with no index, no seed rooting and no queued set,
+				// so the equality shards hold the index and the seed rooting to the same selection. deriveRelated
+				// related no function's type, and the sweep keeps that.
+				if view.proven != nil && view.proven.Flags()&checker.TypeFlagsObject != 0 && !f.weak(view.proven) && !f.template(view.proven) && !f.isFunction(view.proven) && f.allocationRelation().mayShareAllocation(node.proven, view.proven) {
 					links = append(links, view)
 				}
 			}
@@ -916,8 +922,9 @@ func (f *scanCycleFinder) graphLinks(node cycleNode) []cycleNode {
 		for _, field := range f.fields(proven) {
 			links = append(links, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)})
 		}
+		// The shapes road by the same ported relation, one way (mayBeSeenAs, #nxb3xh1 head 6), over every shape.
 		for _, shape := range f.shapes {
-			if shape != proven && f.l.checker.IsTypeAssignableTo(f.l.relatedShape(shape), proven) {
+			if shape != proven && f.allocationRelation().mayBeSeenAs(shape, proven) {
 				links = append(links, cycleNode{proven: shape})
 			}
 		}
@@ -930,6 +937,15 @@ func (f *scanCycleFinder) graphLinks(node cycleNode) []cycleNode {
 		}
 	}
 	return links
+}
+
+// allocationRelation is the live finder's mayShareAllocation and mayBeSeenAs, which read only the checker's property
+// lists and never its relation, so this reference asks them as they are rather than a copy (#nxb3xh1 head 6).
+func (f *scanCycleFinder) allocationRelation() *cycleFinder {
+	if f.allocationFinder == nil {
+		f.allocationFinder = &cycleFinder{l: f.l, where: map[*checker.Type]*ast.Node{}}
+	}
+	return f.allocationFinder
 }
 
 // viewAlsoOf asks the table lowering's finder builds (viewAlsoTable), with this reference's relation.
