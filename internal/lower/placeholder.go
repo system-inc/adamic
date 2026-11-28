@@ -291,6 +291,12 @@ func (l *lowering) walkPlaceholderSlots() {
 	}
 	var transfers []transfer
 	var views []transfer
+	// A destructured name's transfer: the field it's read from (placeholderBindingField).
+	type fieldTransfer struct {
+		to    string
+		field *ast.Symbol
+	}
+	var fieldTransfers []fieldTransfer
 	inferred := map[string]bool{}
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
@@ -306,6 +312,18 @@ func (l *lowering) walkPlaceholderSlots() {
 				inferred[key] = node.AsVariableDeclaration().Type == nil || l.placeholderOptional(l.checker.GetTypeOfSymbol(l.symbol(target)))
 				if value != nil {
 					transfers = append(transfers, transfer{key, value})
+				}
+			} else if target.Kind == ast.KindObjectBindingPattern && node.AsVariableDeclaration().Type == nil && value != nil {
+				// const { parent } = node is const parent = node.parent (#s59xxn3): each plain name the pattern
+				// reads a field into is a slot of the field's placeholder, its read flowing unset and its first
+				// use checked. A typed pattern, a default or a nested pattern stays checked at the binding.
+				destructured := l.checker.GetTypeAtLocation(value)
+				for _, binding := range target.AsBindingPattern().Elements.Nodes {
+					if field := l.placeholderBindingField(binding, destructured); field != nil {
+						key := l.placeholderKey(l.symbol(binding.Name()))
+						inferred[key] = true
+						fieldTransfers = append(fieldTransfers, fieldTransfer{key, field})
+					}
 				}
 			}
 		case ast.KindPropertyDeclaration:
@@ -427,7 +445,42 @@ func (l *lowering) walkPlaceholderSlots() {
 				changed = true
 			}
 		}
+		for _, edge := range fieldTransfers {
+			if edge.to == "" || l.result.PlaceholderSources[edge.to] != "" || !inferred[edge.to] {
+				continue
+			}
+			// The field's own placeholder, or the one a view of it holds, as placeholderDestructuredRead reads it.
+			origin := l.placeholderSymbolOrigin(edge.field)
+			if origin == "" {
+				origin = l.result.PlaceholderViews[l.placeholderKey(edge.field)]
+			}
+			if origin != "" {
+				l.result.PlaceholderSources[edge.to] = origin
+				changed = true
+			}
+		}
 	}
+}
+
+// placeholderBindingField is the field a declaration's object pattern reads into binding when the binding can
+// be a placeholder slot as a plain name is (#s59xxn3): a plain name at the pattern's top level, with no default
+// and no rest, read from a field destructured names, by an identifier or a string. Anything else is nil.
+func (l *lowering) placeholderBindingField(binding *ast.Node, destructured *checker.Type) *ast.Symbol {
+	if binding.Kind != ast.KindBindingElement || binding.Name() == nil || !ast.IsIdentifier(binding.Name()) {
+		return nil
+	}
+	element := binding.AsBindingElement()
+	if element.DotDotDotToken != nil || element.Initializer != nil {
+		return nil
+	}
+	field := binding.Name().Text()
+	if element.PropertyName != nil {
+		if !ast.IsIdentifier(element.PropertyName) && element.PropertyName.Kind != ast.KindStringLiteral {
+			return nil
+		}
+		field = element.PropertyName.Text()
+	}
+	return l.checker.GetPropertyOfType(destructured, field)
 }
 
 // placeholderAllowsUnset is deliberately narrower than acceptsUndefined: a
