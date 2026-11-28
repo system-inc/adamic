@@ -236,6 +236,7 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 		return castProof{}, nil
 	}
 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
+	source = l.probeUnbrand(source) // #eg3krrp unbrand probe, never merged
 	target := l.concrete(l.checker.GetTypeAtLocation(node))
 	if l.phantomCast(source, target) {
 		return castProof{}, nil
@@ -766,4 +767,31 @@ func (l *lowering) checkedClassCast(node *ast.Node, value ir.Expression, targets
 		ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}},
 	}})
 	return ir.Call{Function: function, Arguments: []ir.Expression{value}, Returns: ir.Object}, nil
+}
+
+// probeUnbrand is proof-only (#eg3krrp unbrand probe, never merged): each member of proven that phantomExtension
+// names as a phantom over a base held at the member's own representation reads as that base (Compiler's condition 1).
+func (l *lowering) probeUnbrand(proven *checker.Type) *checker.Type {
+	members := castMembers(proven)
+	changed := false
+	kept := make([]*checker.Type, 0, len(members))
+	for _, member := range members {
+		if base, _ := l.phantomExtension(member); base != nil {
+			of, known := l.representation(member)
+			baseOf, baseKnown := l.representation(base)
+			if known && baseKnown && of == baseOf {
+				kept = append(kept, base)
+				changed = true
+				continue
+			}
+		}
+		kept = append(kept, member)
+	}
+	if !changed {
+		return proven
+	}
+	if len(kept) == 1 {
+		return kept[0]
+	}
+	return l.checker.GetUnionType(kept)
 }

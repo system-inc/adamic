@@ -58,6 +58,7 @@ func (l *lowering) castValue(node *ast.Node) (ir.Expression, error) {
 		return l.dictionaryViewValue(node)
 	}
 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
+	source = l.probeUnbrand(source) // #eg3krrp unbrand probe, never merged
 	target := l.concrete(l.checker.GetTypeAtLocation(node))
 	// The message names the source as written, undefined included; everything after the absent check
 	// reads the present members (absentArm).
